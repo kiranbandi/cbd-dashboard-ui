@@ -1,0 +1,24 @@
+#information-root {
+    h4.sub-info {
+        text-transform: capitalize;
+        margin-bottom: 7px;
+        margin-top: 7px;
+    }
+    .pieText {
+        fill: white;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .filter-panel-container {
+        padding-top: 15px;
+        label {
+            padding: 0px 15px 15px 0px;
+        }
+        #track-btn {
+            margin-left: 10px;
+        }
+        .btn-primary-outline {
+            margin-top: 10px;
+        }
+    }
+}
