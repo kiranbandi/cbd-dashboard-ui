@@ -1,6 +1,43 @@
 import * as types from './actionTypes';
 import _ from 'lodash';
 import toastr from '../../utils/toastr';
+import { hashHistory } from 'react-router';
+
+
+export function loginSuccess() {
+    let { state = { nextPathname: '/' } } = hashHistory.getCurrentLocation();
+    hashHistory.push(state.nextPathname);
+    return { type: types.LOG_IN_SUCCESS };
+}
+
+export function logOutUser() {
+    localStorage.removeItem('jwt');
+    hashHistory.push("/");
+    return { type: types.LOG_OUT };
+
+}
+
+
+export function logInUser(credentials) {
+
+    return function (dispatch) {
+
+
+                localStorage.setItem('jwt', result.getAccessToken().getJwtToken());
+
+                toastr["success"]("Login Successful");
+                dispatch(loginSuccess());
+
+                // toastr["error"](err.message, "LOGIN ERROR");
+                // dispatch(toggleLoader());
+            
+
+    };
+
+}
+
+
+//////////////////////////////////////////////////////////////
 
 export function setLoaderState(loaderState) {
     return { type: types.SET_LOADER_STATE, loaderState };
@@ -179,10 +216,10 @@ export function filterData(sourceMarkers = [], targetMarkers = []) {
 
 export function findGeneMatch(geneId) {
     let searchResult = [];
-    if(geneId.length == 0 ){
+    if (geneId.length == 0) {
         toastr["error"]("Please enter a gene ID", "ERROR");
     }
-    else if(!window.synVisio.genomeLibrary.get(geneId)){
+    else if (!window.synVisio.genomeLibrary.get(geneId)) {
         toastr["error"]("No gene found for ID - " + geneId, "ERROR");
     }
     else {
@@ -192,11 +229,11 @@ export function findGeneMatch(geneId) {
                     searchResult.push(alignment);
                 }
             })
-    
+
         })
     }
 
-    if(searchResult.length == 0){
+    if (searchResult.length == 0) {
         toastr["error"]("Gene - " + geneId + " doesnt have any alignments", "ERROR");
     }
 

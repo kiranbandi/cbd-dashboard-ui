@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import * as sessionActions from '../redux/actions/sessionActions';
+import { bindActionCreators } from 'redux';
+import { logOutUser } from '../redux/actions/actions';
 
 class NavBar extends Component {
 
@@ -24,7 +25,7 @@ class NavBar extends Component {
 
     logOut(event) {
         event.preventDefault();
-        this.props.actions.logOutUser();
+        this.props.logOutUser();
     }
 
     render() {
@@ -48,11 +49,6 @@ class NavBar extends Component {
                             <li>
                                 <Link to={'/Dashboard'}>
                                     <span className="icon icon-line-graph"></span> Dashboard
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to='/Configuration'>
-                                    <span className="icon icon-tools"></span> Configuration
                                 </Link>
                             </li>
                         </ul>
@@ -81,8 +77,9 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(sessionActions, dispatch)
+        logOutUser: bindActionCreators(logOutUser, dispatch)
     };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+ 

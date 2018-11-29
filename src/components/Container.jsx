@@ -23,7 +23,7 @@ export default class Container extends Component {
                             </span>
                         </div>
                         <div className='w-md footer-inner text-xs-right'>
-                            <a className="footer-link right" href="http://hci.usask.ca/"> <img src="assets/img/interaction_lab.gif" height="30" /></a>
+                            <a className="footer-link right" href="http://vga.usask.ca/"> VGA Lab University of Saskatchewan</a>
                         </div>
                     </div>
                 </footer>

@@ -20,3 +20,6 @@ export const SET_MULTI_DUAL_FILTER = 'SET_MULTI_DUAL_FILTER';
 export const SET_SEARCH_RESULT = 'SET_SEARCH_RESULT';
 
 
+/////////////////////////////////////////////////////////
+export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS'; 
+export const LOG_OUT = 'LOG_OUT';  

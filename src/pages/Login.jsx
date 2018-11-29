@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as sessionActions from '../redux/actions/sessionActions';
-import Loading from 'react-loading';
+import { logInUser } from '../redux/actions/actions';
 
 class Login extends Component {
 
@@ -26,11 +25,11 @@ class Login extends Component {
     }
 
     onSubmit(e) {
-        const { actions, firstTimeUser, loaderStatus } = this.props;
+        const { logInUser, loaderStatus } = this.props;
         e.preventDefault();
         if (!loaderStatus) {
             this.props.actions.toggleLoader();
-            actions.logInUser(this.state.credentials);
+            logInUser(this.state.credentials);
         }
     }
 
@@ -69,7 +68,7 @@ class Login extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(sessionActions, dispatch)
+        logInUser: bindActionCreators(logInUser, dispatch)
     };
 }
 

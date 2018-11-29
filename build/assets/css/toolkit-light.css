@@ -6263,8 +6263,8 @@ body {
 }
 @font-face {
   font-family: "toolkit-entypo";
-  src: url('../fonts/toolkit-entypo.eot');
-  src: url('../fonts/toolkit-entypo.eot?#iefix') format('eot'), url('../fonts/toolkit-entypo.woff2') format('woff2'), url('../fonts/toolkit-entypo.woff') format('woff'), url('../fonts/toolkit-entypo.ttf') format('truetype');
+  src: url('fonts/toolkit-entypo.eot');
+  src: url('fonts/toolkit-entypo.eot?#iefix') format('eot'), url('fonts/toolkit-entypo.woff2') format('woff2'), url('fonts/toolkit-entypo.woff') format('woff'), url('fonts/toolkit-entypo.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }

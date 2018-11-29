@@ -7,20 +7,15 @@ class Home extends Component {
 
         <div className="home-header">
           <div className="container">
-            <div className='col-lg-12 text-lg-left text-md-center text-sm-center text-xs-center'><h1>SynVisio</h1>
-              <p>An Interactive Multiscale Synteny Visualization Tool for <a href="http://chibba.pgml.uga.edu/mcscan2/">McScanX</a>.</p>
+            <div className='col-lg-12 text-lg-left text-md-center text-sm-center text-xs-center'><h1>EM-CBD Dashboard</h1>
+              <p>A Dashboard Designed for Competency Committees in Emergency Medicine to Optimize Decision Making on Resident Progression.</p>
             </div>
           </div>
         </div>
 
         <div className="container home-body">
-          <h1>How does it work ?</h1>
-          <p>SynVisio lets you explore the results of <a href='http://chibba.pgml.uga.edu/mcscan2/'>McScanX</a> a popular synteny and collinearity detection toolkit. </p>
-          <p>SynVisio requires two files to run:</p>
-
-          <h1>What Next ?</h1>
-          <p>We are working on adding several new features to this tool.The current development progress is documented <a href="https://trello.com/b/ag1Upk33/mcscanx-synteny-visualizer">here</a>.We have loaded up several sample files below that you can play around with :</p>
-
+          <h1> What is this ?</h1>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, eaque placeat. Veritatis, alias quaerat eos, sint quisquam facere, velit cupiditate culpa dignissimos ipsam perferendis doloremque esse. Ad fugiat sunt, voluptatem accusamus laboriosam perspiciatis ullam repudiandae, qui vero doloribus accusantium quibusdam alias consequuntur magnam corporis harum laudantium ab deleniti error nihil! </p>
         </div>
       </div>
 
