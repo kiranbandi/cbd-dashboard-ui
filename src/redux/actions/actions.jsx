@@ -31,6 +31,10 @@ export function setResidentFilter(residentFilter) {
     return { type: types.SET_RESIDENT_FILTER, residentFilter };
 }
 
+export function setResidentData(residentData) {
+    return { type: types.SET_RESIDENT_DATA, residentData };
+}
+
 
 
 

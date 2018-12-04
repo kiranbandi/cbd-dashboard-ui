@@ -16,6 +16,8 @@ export default function oracleReducer(state = initialState.oracle, action) {
       return Object.assign({}, state, { residentList: action.residentList })
     case types.SET_RESIDENT_FILTER:
       return Object.assign({}, state, { residentFilter: action.residentFilter })
+    case types.SET_RESIDENT_DATA:
+      return Object.assign({}, state, { residentData: action.residentData })
     default:
       return state;
   }
