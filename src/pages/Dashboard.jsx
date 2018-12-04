@@ -9,7 +9,7 @@ class Dashboard extends Component {
 
     constructor(props) {
         super(props);
-        this.radioChange = this.radioChange.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
 
     componentDidMount() {
@@ -30,16 +30,16 @@ class Dashboard extends Component {
         }
     }
 
-    radioChange() {
-
+    onChange() {
 
     }
+
 
 
     render() {
         let { loaderState, residentList = [], residentFilter = {} } = this.props;
 
-        const { isAllData = false } = residentFilter;
+        const { isAllData = false, residentName = '', startDate = new Date(), endDate = new Date() } = residentFilter;
 
         return (
             <div className='dashboard-root m-t container'>
@@ -50,13 +50,13 @@ class Dashboard extends Component {
                             <div className='filter-panel m-t center-align'>
                                 <h2 className="text-primary text-xs-center m-b">Filter Panel</h2>
                                 <label className='filter-label'> Select Resident Name  </label>
-                                <select className="custom-select">
+                                <select className="custom-select" onChange={this.onChange}>
                                     {residentList.map((val, index) => <option key={index}>{val}</option>)}
                                 </select>
                                 <div className="checkbox custom-control custom-checkbox m-l-md">
                                     <label className='filter-label'>
                                         {"View All Data"}
-                                        <input type="checkbox" />
+                                        <input type="checkbox" checked={isAllData} onChange={this.onChange} />
                                         <span className="custom-control-indicator"></span>
                                     </label>
                                 </div>
@@ -65,14 +65,14 @@ class Dashboard extends Component {
                                     <span className="input-group-addon">
                                         <span className="icon icon-calendar"></span>
                                     </span>
-                                    <input type="text" defaultValue="01/01/2015" className="form-control" data-provide="datepicker" />
+                                    <input type="text" disabled={true} defaultValue="01/01/2015" className="form-control" data-provide="datepicker" onChange={this.onChange} />
                                 </div>
                                 <label className='filter-label'> End Date</label>
                                 <div className="input-group col-sm-2">
                                     <span className="input-group-addon">
                                         <span className="icon icon-calendar"></span>
                                     </span>
-                                    <input type="text" defaultValue="01/01/2016" className="form-control" data-provide="datepicker" />
+                                    <input type="text" disabled={true} defaultValue="01/01/2016" className="form-control" data-provide="datepicker" onChange={this.onChange} />
                                 </div>
                             </div> :
                             <h2 className='text-center text-danger'>No resident information is available currently</h2>

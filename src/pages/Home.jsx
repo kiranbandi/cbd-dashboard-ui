@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+//  Image url handling is convoluted in scss , much easier to set inline and get images from root
+let backgroundStyle = { background: 'url(assets/img/background.png)' };
 
 class Home extends Component {
   render() {
     return (
       <div>
 
-        <div className="home-header">
+        <div className="home-header" style={backgroundStyle}>
           <div className="container">
             <div className='col-lg-12 text-lg-left text-md-center text-sm-center text-xs-center'><h1>EM-CBD Dashboard</h1>
               <p>A Dashboard Designed for Competency Committees to Optimize Decision Making.</p>
