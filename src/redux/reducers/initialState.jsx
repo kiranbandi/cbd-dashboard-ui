@@ -3,6 +3,7 @@ export default {
     loaderState: false,
     sessionStatus: !!localStorage.jwt,
     residentList: null,
-    residentData: null
+    residentData: null,
+    residentFilter: {}
   }
 };

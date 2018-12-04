@@ -1,28 +1,84 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getResidentList, getResidentData } from '../utils/requestServer';
+import { getResidentList } from '../utils/requestServer';
+import { setResidentList, getResidentData, toggleLoader } from '../redux/actions/actions';
+import Loading from 'react-loading';
 
 class Dashboard extends Component {
 
     constructor(props) {
         super(props);
+        this.radioChange = this.radioChange.bind(this);
     }
 
     componentDidMount() {
         const { residentList } = this.props;
         if (residentList == null) {
-            getResidentList().then((residentList) => {
-                getResidentData(residentList[0]);
-            }).catch();
+            // toggle loader before fetching data
+            this.props.actions.toggleLoader();
+            // get list of all residents
+            getResidentList()
+                .then((residentList) => {
+                    this.props.actions.setResidentList(residentList);
+                })
+                // toggle loader again once the request completes
+                .catch(() => { console.log("error in fetching resident list"); })
+                .finally(() => {
+                    this.props.actions.toggleLoader();
+                });
         }
+    }
+
+    radioChange() {
+
+
     }
 
 
     render() {
-        let { loaderState, configuration, genome = {}, multiLevel, multiLevelType, plotType } = this.props;
+        let { loaderState, residentList = [], residentFilter = {} } = this.props;
+
+        const { isAllData = false } = residentFilter;
+
         return (
-            <div className='dashboard-root m-t'>
+            <div className='dashboard-root m-t container'>
+                {loaderState ?
+                    <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={-1} /> :
+                    <div className='m-t-md'>
+                        {(residentList != null && residentList.length > 0) ?
+                            <div className='filter-panel m-t center-align'>
+                                <h2 className="text-primary text-xs-center m-b">Filter Panel</h2>
+                                <label className='filter-label'> Select Resident Name  </label>
+                                <select className="custom-select">
+                                    {residentList.map((val, index) => <option key={index}>{val}</option>)}
+                                </select>
+                                <div className="checkbox custom-control custom-checkbox m-l-md">
+                                    <label className='filter-label'>
+                                        {"View All Data"}
+                                        <input type="checkbox" />
+                                        <span className="custom-control-indicator"></span>
+                                    </label>
+                                </div>
+                                <label className='filter-label'> Start Date</label>
+                                <div className="input-group col-sm-2">
+                                    <span className="input-group-addon">
+                                        <span className="icon icon-calendar"></span>
+                                    </span>
+                                    <input type="text" defaultValue="01/01/2015" className="form-control" data-provide="datepicker" />
+                                </div>
+                                <label className='filter-label'> End Date</label>
+                                <div className="input-group col-sm-2">
+                                    <span className="input-group-addon">
+                                        <span className="icon icon-calendar"></span>
+                                    </span>
+                                    <input type="text" defaultValue="01/01/2016" className="form-control" data-provide="datepicker" />
+                                </div>
+                            </div> :
+                            <h2 className='text-center text-danger'>No resident information is available currently</h2>
+                        }
+                    </div>
+                }
             </div>
         );
     }
@@ -30,14 +86,16 @@ class Dashboard extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({}, dispatch)
+        actions: bindActionCreators({ toggleLoader, setResidentList }, dispatch)
     };
 }
 
 function mapStateToProps(state) {
     return {
         residentList: state.oracle.residentList,
-        residentData: state.oracle.residentData
+        residentData: state.oracle.residentData,
+        loaderState: state.oracle.loaderState,
+        residentFilter: state.oracle.residentFilter
     };
 }
 

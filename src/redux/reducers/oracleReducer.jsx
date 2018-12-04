@@ -10,6 +10,10 @@ export default function oracleReducer(state = initialState.oracle, action) {
       return Object.assign({}, state, { sessionStatus: true })
     case types.LOG_OUT:
       return Object.assign({}, state, { sessionStatus: false })
+    case types.SET_RESIDENT_LIST:
+      return Object.assign({}, state, { residentList: action.residentList })
+    case types.SET_RESIDENT_FILTER:
+      return Object.assign({}, state, { residentFilter: action.residentFilter })
     default:
       return state;
   }
