@@ -1,25 +1,3 @@
-export const SET_LOADER_STATE = 'SET_LOADER_STATE';
-export const SET_SOURCEID = 'SET_SOURCEID';
-export const SET_GENOME_DATA = 'SET_GENOME_DATA';
-export const SET_ROOT_MARKERS = 'SET_ROOT_MARKERS';
-export const SET_ALIGNMENT_LIST = 'SET_ALIGNMENT_LIST';
-export const SET_FILTER_LEVEL = 'SET_FILTER_LEVEL';
-export const SET_SNAPSHOT_LIST = 'SET_SNAPSHOT_LIST';
-export const SET_CONFIGURATION = 'SET_CONFIGURATION';
-export const SET_CHROMOSOME_MODE = 'SET_CHROMOSOME_MODE';
-export const SET_BLOCK_MODE = 'SET_BLOCK_MODE';
-export const SET_PLOT_LEVEL = 'SET_PLOT_LEVEL';
-export const SET_PLOT_TYPE = 'SET_PLOT_TYPE';
-export const SET_NORMALIZED = 'SET_NORMALIZED';
-export const SET_HIVE_VIEW_SELECTED = 'SET_HIVE_VIEW_SELECTED';
-export const SET_CHROMOSOME_LABELS_STATE = 'SET_CHROMOSOME_LABELS_STATE';
-export const TOGGLE_TRACKS = 'TOGGLE_TRACKS';
-export const SET_TRACK_TYPE = 'SET_TRACK_TYPE';
-export const SET_MULTI_TYPE = 'SET_MULTI_TYPE';
-export const SET_MULTI_DUAL_FILTER = 'SET_MULTI_DUAL_FILTER';
-export const SET_SEARCH_RESULT = 'SET_SEARCH_RESULT';
-
-
-/////////////////////////////////////////////////////////
-export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS'; 
-export const LOG_OUT = 'LOG_OUT';  
+export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
+export const LOG_OUT = 'LOG_OUT';
+export const TOGGLE_LOADER = 'TOGGLE_LOADER';

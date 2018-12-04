@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { getGenomicsData } from '../utils/fetchData';
 import { hashHistory } from 'react-router';
 import { Loader, HiveView, TreeView, SingleLevel, SnapshotPanel, SnapshotCapture, GeneSearch } from '../components';
 import { connect } from 'react-redux';

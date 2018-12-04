@@ -8,15 +8,6 @@ import configureStore from './redux/store/configureStore';
 import { Provider } from 'react-redux';
 import { checkloginStatus } from './utils/authorization'
 
-/* BASIC FUNCTIONALITY RULES written by  "He who must not be named" - do not alter ¯\_(ツ)_/¯  */
-
-// Load the Data  
-// Parse the Data and store it in appropriate data structures 
-// Filter it for useful information and mine it to decide on what to represent 
-// Create the plots 
-// Add interactivity to the plots 
-// Refine the plots 
-
 
 //Root sass file for webpack to compile
 import './sass/main.scss';
