@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
-import { Loader, HiveView, TreeView, SingleLevel, SnapshotPanel, SnapshotCapture, GeneSearch } from '../components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { configureSourceID, setLoaderState, setGenomicData, setALignmentList } from '../redux/actions/actions';
-
+import { getResidentList, getResidentData } from '../utils/requestServer';
 
 class Dashboard extends Component {
 
@@ -13,63 +10,19 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        // get the source name based on window query params
-        let { sourceID } = this.props.params;
-        const { multiLevel, actions } = this.props,
-            { configureSourceID, setLoaderState, setGenomicData } = actions;
-
-        if (sourceID != 'uploaded-source') {
-            // Turn on loader
-            setLoaderState(true);
-            if (!sourceID) {
-                // If sourceID is not set then fetch default that is set in the initial state of the application
-                hashHistory.push('Dashboard/' + this.props.sourceID);
-                sourceID = this.props.sourceID;
-            }
-            else {
-                // update the sourceID set in the state with the new sourceID
-                configureSourceID(sourceID, multiLevel);
-            }
-            getGenomicsData(sourceID).then((data) => {
-                // set the genomic data
-                setGenomicData(data);
-            }).finally(() => {
-                // Turn off the loader
-                setLoaderState(false);
-            });
+        const { residentList } = this.props;
+        if (residentList == null) {
+            getResidentList().then((residentList) => {
+                getResidentData(residentList[0]);
+            }).catch();
         }
     }
 
-    componentWillUnmount() {
-        // clear alignment list 
-        this.props.actions.setALignmentList([]);
-    }
 
     render() {
         let { loaderState, configuration, genome = {}, multiLevel, multiLevelType, plotType } = this.props;
-
         return (
             <div className='dashboard-root m-t'>
-                {!loaderState ?
-                    <div className='dashboard-container'>
-                        {genome.chromosomeMap ?
-                            <div>
-                                <SnapshotPanel />
-                                <SnapshotCapture />
-                                <GeneSearch />
-                                {multiLevel ?
-                                    <div>
-                                        {multiLevelType == 'hive' ?
-                                            <HiveView configuration={configuration} /> :
-                                            <TreeView configuration={configuration} />}
-                                    </div>
-                                    : <SingleLevel
-                                        plotType={plotType}
-                                        configuration={configuration} />}
-                            </div>
-                            : <h2 className='text-danger text-xs-center m-t-lg'>No data found</h2>}
-                    </div>
-                    : <Loader />}
             </div>
         );
     }
@@ -77,19 +30,14 @@ class Dashboard extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ configureSourceID, setLoaderState, setGenomicData, setALignmentList }, dispatch)
+        actions: bindActionCreators({}, dispatch)
     };
 }
 
 function mapStateToProps(state) {
     return {
-        sourceID: state.oracle.sourceID,
-        loaderState: state.oracle.loaderState,
-        configuration: state.oracle.configuration,
-        multiLevel: state.oracle.multiLevel,
-        multiLevelType: state.oracle.multiLevelType,
-        plotType: state.oracle.plotType,
-        genome: state.genome
+        residentList: state.oracle.residentList,
+        residentData: state.oracle.residentData
     };
 }
 

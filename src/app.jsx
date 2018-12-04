@@ -8,7 +8,6 @@ import configureStore from './redux/store/configureStore';
 import { Provider } from 'react-redux';
 import { checkloginStatus } from './utils/authorization'
 
-
 //Root sass file for webpack to compile
 import './sass/main.scss';
 

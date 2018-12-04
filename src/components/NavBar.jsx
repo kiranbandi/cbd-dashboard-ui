@@ -72,7 +72,7 @@ class NavBar extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    return { sourceID: state.oracle.sourceID };
+    return { logged_in: state.oracle.sessionStatus };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -82,4 +82,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
- 
