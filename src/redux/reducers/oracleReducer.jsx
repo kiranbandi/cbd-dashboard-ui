@@ -6,6 +6,8 @@ export default function oracleReducer(state = initialState.oracle, action) {
   switch (action.type) {
     case types.TOGGLE_LOADER:
       return Object.assign({}, state, { loaderState: !state.loaderState })
+    case types.TOGGLE_FILTER_LOADER:
+      return Object.assign({}, state, { filterLoaderState: !state.filterLoaderState })
     case types.LOG_IN_SUCCESS:
       return Object.assign({}, state, { sessionStatus: true })
     case types.LOG_OUT:
