@@ -74,6 +74,7 @@ class Dashboard extends Component {
                                     </span>
                                     <input type="text" disabled={true} defaultValue="01/01/2016" className="form-control" data-provide="datepicker" onChange={this.onChange} />
                                 </div>
+                                <button type="submit" class="btn btn-primary-outline">GO <span class="icon icon-cw"></span></button>
                             </div> :
                             <h2 className='text-center text-danger'>No resident information is available currently</h2>
                         }
