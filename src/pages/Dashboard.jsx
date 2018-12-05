@@ -177,10 +177,12 @@ class Dashboard extends Component {
                                         {_.map(epaSourcesThatExist, (epaSources, innerKey) => {
                                             return <div className='observation-outer' key={'observation-outer-' + innerKey}>
                                                 {_.map(epaSources, (epaSource, sourceKey) => {
-                                                    const data = residentData[epaSource];
+                                                    const rectSize = Math.min((residentData[epaSource].length / 20) * 250, 250);
                                                     return <svg height={200} width={300} className='observation-svg' key={'observation-svg-' + sourceKey}>
                                                         <g>
-                                                            <rect className='bullet-range' width="250" height="25" x="25" y="10"></rect>
+                                                            <rect fill={'#eee'} className='bullet-range' width="280" height="25" x="20" y="10"></rect>
+                                                            <rect fill={'lightsteelblue'} className='bullet-measure' width={250} height="10" x="35" y="17.5"></rect>
+                                                            <rect fill={'steelblue'} className='bullet-measure' width={rectSize} height="10" x="35" y="17.5"></rect>
                                                         </g>
                                                     </svg>
                                                 })}
