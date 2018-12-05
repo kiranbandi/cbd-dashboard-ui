@@ -81,8 +81,27 @@
                 margin-top: 100px;
             }
             .observation-svg {
-                margin: 0px auto;
+                margin: 20px auto;
                 display: block;
+            }
+        }
+        .score-root {
+            .score-outer {
+                margin-top: 100px;
+                svg.score-svg {
+                    margin: 10px auto;
+                    display: block;
+                    background: white;
+                    .score-spark-line {
+                        fill: none;
+                        stroke: #1997c6;
+                        stroke-width: 2px;
+                    }
+                    line.track-trails {
+                        stroke-width: 0.5px;
+                        stroke: #525765;
+                    }
+                }
             }
         }
     }
