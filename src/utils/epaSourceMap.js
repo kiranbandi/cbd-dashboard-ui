@@ -1,29 +1,89 @@
 var epaSourceMap = {
     1: {
-        'topic': 'Vitae, ratione minus',
+        'topic': 'Transition to Discipline (D)',
         subRoot: {
-            '1.1': 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-            '1.2': 'Voluptatibus eius accusamus fugit voluptatem',
-            '1.3': 'id consequatur pariatur, quasi doloremque tempore corrupti deserunt'
+            '1.1': 'Recognizing the unstable/critically ill patient, mobilizing the healthcare team and supervisor, and initiating basic life support',
+            '1.2': 'Performing and documenting focused histories and physical exams, and providing preliminary management of cardinal emergency department presentations',
+            '1.3': 'Facilitating communication of information between a patient in the emergency department, caregivers and members of the healthcare team to organize care and disposition of the patient'
+        },
+        maxObservation: {
+            '1.1': 10,
+            '1.2': 20,
+            '1.3': 10
+
         }
     },
     2: {
-        'topic': 'Dolorem minima nihil',
+        'topic': 'Foundations of Discipline (F)',
         subRoot: {
-            '2.1': 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-            '2.2': 'Voluptatibus eius accusamus fugit voluptatem',
-            '2.2': 'Voluptatibus eius accusamus fugit voluptatem',
-            '2.4': 'id consequatur pariatur, quasi doloremque tempore corrupti deserunt'
+            '2.1': 'Initiating and assisting in resuscitation of critically ill patients',
+            '2.2': 'Assessing and managing uncomplicated urgent and non-urgent emergency department presentations',
+            '2.3': 'Contributing to the shared work of the emergency department health care team to achieve high quality, efficient and safe patient care',
+            '2.4': 'Performing basic procedures'
+        },
+        maxObservation: {
+            '2.1': 15,
+            '2.2': 30,
+            '2.3': 10,
+            '2.4': 25
+
         }
     },
     3: {
-        'topic': 'Nesciunt odit ratione',
+        'topic': 'Core of Discipline (C)',
         subRoot: {
-            '3.13': 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-            '3.14': 'Voluptatibus eius accusamus fugit voluptatem',
-            '3.4': 'id consequatur pariatur, quasi doloremque tempore corrupti deserunt'
+            '3.1': 'Resuscitating and coordinating care for critically ill patients',
+            '3.2': 'Resuscitating and coordinating care for critically injured trauma patients',
+            '3.3': 'Providing airway management and ventilation',
+            '3.4': 'Providing emergency sedation and systemic analgesia for diagnostic and therapeutic procedures',
+            '3.5': 'Identifying and managing patients with emergent medical or surgical conditions',
+            '3.6': 'Diagnosing and managing complicated urgent and non-urgent patient presentations',
+            '3.7': 'Managing the urgent and emergent presentations for pregnant and post-partum patients',
+            '3.8': 'Managing patients with acute toxic ingestion or exposure',
+            '3.9': 'Managing a patient with an emergency mental health condition or behavioural emergency',
+            '3.10': 'Managing and supporting patients in situational crisis to access health care and community resources',
+            '3.11': 'Recognizing and managing patients who are at risk of exposure to, or who have experienced violence and/or neglect',
+            '3.12': 'Liaising with prehospital emergency medical services ',
+            '3.13': 'Performing advanced procedures',
+            '3.14': 'Performing and interpreting point-of-care ultrasound to guide patient management',
+            '3.15': 'Providing end-of-life care for a patient'
+        },
+        maxObservation: {
+            '3.1': 40,
+            '3.2': 25,
+            '3.3': 20,
+            '3.4': 20,
+            '3.5': 40,
+            '3.6': 40,
+            '3.7': 15,
+            '3.8': 15,
+            '3.9': 15,
+            '3.10': 5,
+            '3.11': 5,
+            '3.12': 5,
+            '3.13': 25,
+            '3.14': 50,
+            '3.15': 5
         }
-    }
+    },
+    4: {
+        'topic': 'Transition to Practice (P)',
+        subRoot: {
+            '4.1': 'Managing the emergency department to optimize patient care and department flow',
+            '4.2': 'Teaching and supervising the learning of trainees and other health professionals',
+            '4.3': 'Managing complex interpersonal interactions that arise during the course of patient care',
+            '4.4': 'Providing expert EM consultation to physicians or other healthcare providers',
+            '4.5': 'Coordinating and collaborating with healthcare professional colleagues to safely transition the care of a patient including handover, consultations, and facilitating inter-institution transport',
+            '4.6': 'Dealing with uncertainty when managing patients with ambiguous presentations'
+        },
+        maxObservation: {
+            '4.1': 25,
+            '4.2': 15,
+            '4.3': 5,
+            '4.4': 5
+
+        }
+    },
 }
 
 module.exports = epaSourceMap;

@@ -38,20 +38,25 @@
     .graph-panel-root {
         background: #1a1c22;
         padding: 20px;
+        margin: 30px 30px 150px 30px;
         border-radius: 10px;
+        .graph-tooltip {
+            position: absolute;
+            width: 400px;
+            background: #253b46;
+            min-height: 200px;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 12px;
+            z-index: 100;
+        }
         .title-root {
             .title-bar {
                 text-align: center;
                 font-weight: bold;
             }
         }
-        .small-container {
-            width: 25%;
-            display: inline-block;
-            vertical-align: top;
-        }
-        .big-container {
-            width: 50%;
+        .panel-container {
             display: inline-block;
             vertical-align: top;
         }
@@ -61,7 +66,7 @@
                 vertical-align: middle;
             }
             .epa-label {
-                font-size: 18px;
+                font-size: 17px;
                 display: inline-block;
                 font-family: sans-serif;
             }
@@ -70,9 +75,8 @@
                 padding-top: 20px;
             }
             .inner-offset-label {
-                margin-left: 50px;
+                margin-left: 25px;
                 height: 200px;
-                padding-top: 20px;
                 text-overflow: ellipsis;
             }
         }
@@ -81,7 +85,7 @@
                 margin-top: 100px;
             }
             .observation-svg {
-                margin: 20px auto;
+                margin: 0px auto;
                 display: block;
             }
         }
@@ -89,7 +93,7 @@
             .score-outer {
                 margin-top: 100px;
                 svg.score-svg {
-                    margin: 10px auto;
+                    margin: 0px auto;
                     display: block;
                     background: white;
                     .score-spark-line {
@@ -100,6 +104,9 @@
                     line.track-trails {
                         stroke-width: 0.5px;
                         stroke: #525765;
+                    }
+                    .score-point {
+                        cursor: pointer;
                     }
                 }
             }

@@ -36,6 +36,23 @@ export function setResidentData(residentData) {
 }
 
 
+export function setTooltipVisibility(isTooltipVisible) {
+    return { type: types.SET_TOOLTIP_VISIBILITY, isTooltipVisible };
+}
+
+export function setTooltipData(tooltipData) {
+    return { type: types.SET_TOOLTIP_DATA, tooltipData };
+}
+
+
+export function showTooltip(tooltipData) {
+    return dispatch => {
+        dispatch(setTooltipData(tooltipData));
+        dispatch(setTooltipVisibility(true));
+    };
+}
+
+
 
 
 

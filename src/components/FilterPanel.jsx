@@ -22,17 +22,39 @@ class FilterPanel extends Component {
     onSubmit(event) {
         let { residentFilter = {}, actions } = this.props;
         residentFilter.startDate = document.getElementById('filter-startDate').value;
-        residentFilter.endDate = document.getElementById('filter-startDate').value;
+        residentFilter.endDate = document.getElementById('filter-endDate').value;
         residentFilter.residentName = document.getElementById('filter-residentName').value;
         // set all the parameters in the resident filter
         actions.setResidentFilter({ ...residentFilter });
         // toggle loader
         actions.toggleFilterLoader();
         // fetch data from server based on the filter params
+
+        // Dirty solution but eventually all filtering will happen on the server so no point 
+        //  in repeating this again.
         getResidentData(residentFilter.residentName)
             .then((residentData) => {
                 // group data on the basis of EPA
                 var groupedResidentData = _.groupBy(residentData, (d) => d.EPA);
+                // Filter grouped data 
+                if (residentFilter.isAllData === false) {
+                    _.each(groupedResidentData, (epaSourceData, key) => {
+                        //  filter out records not in the date range
+                        var remainingRecords = _.filter(epaSourceData, (record) => {
+                            return record.Date >= residentFilter.startDate && record.Date <= residentFilter.endDate;
+                        })
+                        if (remainingRecords.length == 0) {
+                            delete groupedResidentData[key];
+                        }
+                        else {
+                            groupedResidentData[key] = remainingRecords;
+                        }
+                    })
+                }
+
+                debugger;
+
+
                 actions.setResidentData(groupedResidentData);
             })
             .finally(() => { actions.toggleFilterLoader(); });
