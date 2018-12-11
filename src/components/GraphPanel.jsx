@@ -122,7 +122,7 @@ class GraphPanel extends Component {
         }
 
         //100px to offset the 30px margin on both sides and vertical scroll bar width
-        let widthOfRootGraphPanel = document.body.getBoundingClientRect().width - 100;
+        let widthOfRootGraphPanel = document.body.getBoundingClientRect().width - 125;
         let widthPartition = widthOfRootGraphPanel / 4;
 
         return (
