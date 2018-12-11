@@ -52,7 +52,7 @@ class Login extends Component {
                     <h4 className="hr-divider-content hr-divider-heading">USER LOGIN</h4>
                 </div>
 
-                <div className="admin-box">
+                <form className="admin-box">
                     <div className="input-group m-a">
                         <span className="input-group-addon icon icon-users"></span>
                         <input type="text" className="form-control" name="username" placeholder="USERID" onChange={this.onChange} />
@@ -61,12 +61,12 @@ class Login extends Component {
                         <span className="input-group-addon icon icon-lock"></span>
                         <input type="password" className="form-control" name="password" placeholder="PASSWORD" onChange={this.onChange} />
                     </div>
-                    <button className="btn btn-success admin-btn" type="button" onClick={this.onSubmit}>
+                    <button className="btn btn-success admin-btn" type="submit" onClick={this.onSubmit}>
                         <span className='login-span'>{"LOGIN"} </span>
                         {loaderState && <Loading type='spin' height='30px' width='30px' color='#d6e5ff' delay={-1} />}
                     </button>
 
-                </div>
+                </form>
 
             </div>
         )
