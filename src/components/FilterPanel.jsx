@@ -51,10 +51,6 @@ class FilterPanel extends Component {
                         }
                     })
                 }
-
-                debugger;
-
-
                 actions.setResidentData(groupedResidentData);
             })
             .finally(() => { actions.toggleFilterLoader(); });

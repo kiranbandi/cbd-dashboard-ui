@@ -42,7 +42,9 @@ class GraphPanel extends Component {
         return _.map(epaSourcesThatExist, (epaSources, innerKey) => {
             return <div className='observation-outer' key={'observation-outer-' + innerKey}>
                 {_.map(epaSources, (epaSource, sourceKey) => {
-                    const rectSize = Math.min((residentData[epaSource].length / 20) * innerWidth, innerWidth);
+                    // const maxObservation = +epaSourceMap[epaSource.split(".")[0]].maxObservation[epaSource];
+                    const maxObservation = 20;
+                    const rectSize = Math.min((residentData[epaSource].length / maxObservation) * innerWidth, innerWidth);
                     return <svg height={200} width={widthPartition} className='observation-svg' key={'observation-svg-' + sourceKey}>
                         <g>
                             <rect fill={'#eee'} className='bullet-range' width={widthPartition} height="25" x="0" y="5"></rect>
@@ -112,7 +114,12 @@ class GraphPanel extends Component {
     render() {
 
         let { residentData, isTooltipVisible, tooltipData } = this.props;
-        let epaSourcesThatExist = residentData ? _.groupBy(Object.keys(residentData), (key) => { return key.split('.')[0] }) : false;
+
+        // if no data then set flag to false if not group data by root key
+        let epaSourcesThatExist = false;
+        if (residentData && Object.keys(residentData).length > 0) {
+            epaSourcesThatExist = _.groupBy(Object.keys(residentData), (key) => { return key.split('.')[0] })
+        }
 
         //100px to offset the 30px margin on both sides and vertical scroll bar width
         let widthOfRootGraphPanel = document.body.getBoundingClientRect().width - 100;
