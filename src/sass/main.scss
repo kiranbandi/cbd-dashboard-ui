@@ -4,8 +4,10 @@
 @import 'components/container';
 @import 'components/navbar';
 @import 'components/radioButton';
+@import 'components/FileUpload';
 // import pages contains page-specific styling
 @import 'pages/home';
 @import 'pages/notFound';
 @import 'pages/dashboard';
 @import 'pages/login';
+@import 'pages/Tools';

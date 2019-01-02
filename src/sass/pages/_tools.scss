@@ -1,0 +1,22 @@
+.tools-root {
+    h1 {
+        margin-bottom: 5px;
+        font-size: 40px;
+        line-height: 1;
+        font-weight: bold;
+    }
+    p {
+        font-size: 1.20em;
+    }
+    .process-btn {
+        line-height: 25px;
+        .process-span {
+            vertical-align: top;
+            &+div {
+                margin-left: 10px;
+                vertical-align: top;
+                display: inline-block;
+            }
+        }
+    }
+}

@@ -28,7 +28,8 @@
         "redux": "^4.0.0",
         "redux-thunk": "^2.3.0",
         "toastr": "^2.1.4",
-        "uniqid": "^5.0.3"
+        "uniqid": "^5.0.3",
+        "xlsx": "^0.14.1"
     },
     "devDependencies": {
         "babel-core": "^6.26.3",

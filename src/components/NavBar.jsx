@@ -51,6 +51,11 @@ class NavBar extends Component {
                                     <span className="icon icon-line-graph"></span> Dashboard
                                 </Link>
                             </li>
+                            <li>
+                                <Link to={'/Tools'}>
+                                    <span className="icon icon-tools"></span> Tools
+                                </Link>
+                            </li>
                         </ul>
                         <ul className='nav navbar-nav navbar-right'>
                             <li> {this.props.logged_in ?
