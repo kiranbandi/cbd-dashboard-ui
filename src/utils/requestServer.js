@@ -15,7 +15,7 @@ requestServer.requestLogin = function(credentials) {
                     resolve(credentials.username);
                 })
                 .catch((error) => {
-                    if (!error.response.data.auth) {
+                    if (error.response.data && !error.response.data.auth) {
                         toastr["error"]("username or password dont match, Please try again", "LOGIN ERROR");
                     } else {
                         toastr["error"]("Error connecting to the server", "LOGIN ERROR");
