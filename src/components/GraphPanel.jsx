@@ -42,8 +42,8 @@ class GraphPanel extends Component {
         return _.map(epaSourcesThatExist, (epaSources, innerKey) => {
             return <div className='observation-outer' key={'observation-outer-' + innerKey}>
                 {_.map(epaSources, (epaSource, sourceKey) => {
-                    // const maxObservation = +epaSourceMap[epaSource.split(".")[0]].maxObservation[epaSource];
-                    const maxObservation = 20;
+                    // Get the maximum required observations for each EPA from source MAP
+                    const maxObservation = +epaSourceMap[epaSource.split(".")[0]].maxObservation[epaSource];
                     const rectSize = Math.min((residentData[epaSource].length / maxObservation) * innerWidth, innerWidth);
                     return <svg height={200} width={widthPartition} className='observation-svg' key={'observation-svg-' + sourceKey}>
                         <g>
