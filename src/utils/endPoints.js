@@ -1,6 +1,6 @@
-// var endPointRoot = 'https://cbd.usask.ca:8081/';
+var endPointRoot = 'https://cbd.usask.ca:8081/';
 
-var endPointRoot = 'http://localhost:8081/'
+// var endPointRoot = 'http://localhost:8081/'
 
 var endPoints = {
     login: endPointRoot + "login",
