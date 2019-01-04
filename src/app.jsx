@@ -23,7 +23,7 @@ class App extends Component {
           <Route path='/' component={Container}>
             <IndexRoute component={Home} />
             <Route path='Dashboard' component={Dashboard} onEnter={checkloginStatus} />
-            <Route path='Tools' component={Tools} />
+            <Route path='Tools' component={Tools} onEnter={checkloginStatus} />
             <Route path='Login' component={Login} />
             <Route path='*' component={NotFound} />
           </Route>
