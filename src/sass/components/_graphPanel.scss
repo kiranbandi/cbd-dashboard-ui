@@ -1,0 +1,77 @@
+.graph-panel-root {
+    background: #1a1c22;
+    padding: 20px;
+    margin: 30px 30px 150px 30px;
+    border-radius: 10px;
+    .graph-tooltip {
+        position: absolute;
+        width: 400px;
+        background: #253b46;
+        min-height: 200px;
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 12px;
+        z-index: 100;
+    }
+    .title-root {
+        .title-bar {
+            text-align: center;
+            font-weight: bold;
+        }
+    }
+    .panel-container {
+        display: inline-block;
+        vertical-align: top;
+    }
+    .epa-root {
+        .icon {
+            font-size: 22px;
+            vertical-align: middle;
+        }
+        .epa-label {
+            font-size: 17px;
+            display: inline-block;
+            font-family: sans-serif;
+        }
+        .inner-epa-head {
+            height: 100px;
+            padding-top: 20px;
+        }
+        .inner-offset-label {
+            margin-left: 25px;
+            height: 200px;
+            text-overflow: ellipsis;
+        }
+    }
+    .observation-root {
+        .observation-outer {
+            margin-top: 100px;
+        }
+        .observation-svg {
+            margin: 0px auto;
+            display: block;
+        }
+    }
+    .score-root {
+        .score-outer {
+            margin-top: 100px;
+            svg.score-svg {
+                margin: 0px auto;
+                display: block;
+                background: white;
+                .score-spark-line {
+                    fill: none;
+                    stroke: #1997c6;
+                    stroke-width: 2px;
+                }
+                line.track-trails {
+                    stroke-width: 0.5px;
+                    stroke: #525765;
+                }
+                .score-point {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

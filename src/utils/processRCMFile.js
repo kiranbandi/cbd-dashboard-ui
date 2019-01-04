@@ -8,16 +8,9 @@ export default function(rawData) {
 
             var workbook = XLSX.read((new Uint8Array(rawData)), { type: 'array' });
             var dataInRows = XLSX.utils.sheet_to_json(workbook.Sheets.Report);
-            // Empty store that will be populated with the data
-            // the first row contains the column names
-            var dataStore = [
-                ['Date', 'Resident_Name', 'EPA', 'Observer_Name', 'Observer_Type', 'Rating', 'Type', 'Situation', 'Feedback', 'Professionalism_Safety']
-            ];
+            var dataStore = [];
             var residentName = '';
             var tempEPA = '';
-
-            var a = 0;
-
 
             var iteratorIndex = 0;
             var maxLength = dataInRows.length;
@@ -44,24 +37,65 @@ export default function(rawData) {
                     // observations if the number is non zero then start adding the 
                     //  rows into the datastore  
                     else if (dataInColumnOne.indexOf('Snapshot') > -1) {
+                        // The second column has the count , parse it and  
+                        // use it as the ending index for internal loop
+                        var lastIndex = iteratorIndex + Number(row['__EMPTY'].split('(')[1].slice(0, -1));
+                        // push iterator by 2 to skip immediately following row which is empty
+                        iteratorIndex = iteratorIndex + 2;
+                        // intenal loop that repeats observation count times
+                        while (iteratorIndex < lastIndex + 2) {
 
-                        // The second column has the count , parse it 
-                        var observationCount = +row['__EMPTY'].split('(')[1].slice(0, -1);
-                        a = a + observationCount;
+                            let dataPoint = dataInRows[iteratorIndex];
+                            let epaRating;
 
+                            // Skip records that are in progress
+                            if (dataPoint.__EMPTY_2 == 'In Progress') {
+                                // internal loop increase iteratorIndex
+                                iteratorIndex += 1;
+                                continue;
+                            }
 
+                            switch (dataPoint.__EMPTY_2) {
+                                case "I had to do":
+                                    epaRating = 1;
+                                    break;
+                                case "I had to talk them through":
+                                    epaRating = 2;
+                                    break;
+                                case "I needed to prompt":
+                                    epaRating = 3;
+                                    break;
+                                case "I needed to be there just in case":
+                                    epaRating = 4;
+                                    break;
+                                case "I didn't need to be there":
+                                    epaRating = 5;
+                                    break;
+                                default:
+                                    epaRating = 1;
+                            }
 
+                            dataStore.push({
+                                'Date': dataPoint.__EMPTY_7,
+                                'Resident_Name': residentName,
+                                'EPA': tempEPA,
+                                'Observer_Name': dataPoint.__EMPTY,
+                                'Observer_Type': dataPoint.__EMPTY_1,
+                                'Rating': epaRating,
+                                'Type': dataPoint.__EMPTY_3,
+                                'Situation': dataPoint.__EMPTY_4,
+                                'Feedback': dataPoint.__EMPTY_5,
+                                'Professionalism_Safety': dataPoint.__EMPTY_6
+                            });
+                            // internal loop increase iteratorIndex
+                            iteratorIndex += 1;
+                        }
                     }
-
                 }
-
                 // increase the index count by one
                 iteratorIndex += 1;
             }
-
-
-            console.log(a);
-
+            resolve(dataStore);
         } catch (e) {
             reject();
         };

@@ -161,10 +161,10 @@ class GraphPanel extends Component {
                     </div>
 
                     <div style={{ width: widthPartition }} className='p-a-0 observation-root panel-container'>
-                        {/* margin of 20px oon either side reduces the available width by 40 */}
+                        {/* margin of 20px on either side reduces the available width by 40 */}
                         {this.getBulletChart(residentData, epaSourcesThatExist, widthPartition - 40)}
                     </div>
-                    {/* margin of 10px oon either side reduces the available width by 20 */}
+                    {/* margin of 10px on either side reduces the available width by 20 */}
                     <div style={{ width: widthPartition * 2 }} className='p-a-0 score-root panel-container'>
                         {this.getLineChart(residentData, epaSourcesThatExist, (widthPartition * 2) - 20)}
                     </div>

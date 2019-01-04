@@ -19,7 +19,7 @@ class Home extends Component {
           <h1> What is this ?</h1>
           <p>This dashboard has been designed and developed as part of a research project to determine the essential elements of <a href="http://www.royalcollege.ca/rcsite/cbd/competence-by-design-cbd-e">CBD</a>(Competence By Design) dashbaords for competency committees in Emergency Medicine.This dashboard will be primarily used for analysing resident progression.Competency Commitees often have to process huge amounts of assessment information that they receive under CBD and a dashboard that consolidates this data visually is an effective solution to this problem.</p>
           <h1> Where is the data coming from ?</h1>
-          <p>The data displayed on the dashboard has been compiled from assessment forms filled by physician observers based upon observations of EPAs(Entrustable Professional Activities). that are characteristic of each learners stage of training and discipline.</p>
+          <p>The data displayed on the dashboard has been compiled from assessment forms filled by physician observers based upon observations of EPAs(Entrustable Professional Activities) that are characteristic of each learners stage of training and discipline.</p>
         </div>
       </div>
 

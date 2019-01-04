@@ -4,8 +4,7 @@ import { bindActionCreators } from 'redux';
 import { getResidentList } from '../utils/requestServer';
 import { setResidentList, toggleLoader } from '../redux/actions/actions';
 import Loading from 'react-loading';
-import { FilterPanel } from '../components';
-import GraphPanel from '../components/GraphPanel';
+import { FilterPanel,GraphPanel } from '../components';
 
 class Dashboard extends Component {
 
