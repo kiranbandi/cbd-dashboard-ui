@@ -1,6 +1,7 @@
 import toastr from './toastr';
 import XLSX from 'xlsx';
 import _ from 'lodash';
+import moment from 'moment';
 
 export default function(rawData) {
     return new Promise((resolve, reject) => {
@@ -75,8 +76,10 @@ export default function(rawData) {
                                     epaRating = 1;
                             }
 
+                            var isDateSlashFormat = dataPoint.__EMPTY_7.indexOf('/') > -1;
+
                             dataStore.push({
-                                'Date': dataPoint.__EMPTY_7,
+                                'Date': moment(dataPoint.__EMPTY_7, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD'),
                                 'Resident_Name': residentName,
                                 'EPA': tempEPA,
                                 'Observer_Name': dataPoint.__EMPTY,

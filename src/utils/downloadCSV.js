@@ -8,6 +8,7 @@ export default function() {
     var convertedData = _.map(rcmData, (dataPoint) => {
         return _.map(dataPoint, (value) => '"' + value + '"').join(',');
     });
+
     // Add file headers to top of the file
     convertedData.unshift(['Date', 'Resident_Name', 'EPA', 'Observer_Name', 'Observer_Type', 'Rating', 'Type', 'Situation', 'Feedback', 'Professionalism_Safety']);
     var csvContent = "data:text/csv;charset=utf-8," + convertedData.join("\n"),
