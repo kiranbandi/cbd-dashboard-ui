@@ -10,7 +10,7 @@ export default function() {
     });
 
     // Add file headers to top of the file
-    convertedData.unshift(['Date', 'Resident_Name', 'EPA', 'Observer_Name', 'Observer_Type', 'Rating', 'Type', 'Situation', 'Feedback', 'Professionalism_Safety']);
+    convertedData.unshift(['Date', 'Resident_Name', 'EPA', 'Observer_Name', 'Observer_Type', 'Rating', 'Type', 'Situation Context', 'Feedback', 'Professionalism_Safety']);
     var csvContent = "data:text/csv;charset=utf-8," + convertedData.join("\n"),
         encodedUri = encodeURI(csvContent),
         link = document.createElement("a"),

@@ -70,7 +70,7 @@ class GraphPanel extends Component {
         var innerHeight = height - 20;
         var width = widthPartition;
 
-        var yScale = scaleLinear().domain([1, 5]).range([marginVertical, innerHeight - marginVertical])
+        var yScale = scaleLinear().domain([5, 1]).range([marginVertical, innerHeight - marginVertical])
 
         var trackTrailPositions = _.map([...Array(5)], (d, i) => {
             return {

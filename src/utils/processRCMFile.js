@@ -76,6 +76,14 @@ export default function(rawData) {
                                     epaRating = 1;
                             }
 
+
+                            // Also if the rating is verbal like Achieved or Met then give a 5
+                            if (dataPoint.__EMPTY_2.indexOf('Achieved') > -1 || dataPoint.__EMPTY_2.indexOf('Met') > -1) {
+                                // internal loop increase iteratorIndex
+                                epaRating = 5;
+                            }
+
+
                             var isDateSlashFormat = dataPoint.__EMPTY_7.indexOf('/') > -1;
 
                             dataStore.push({
@@ -86,7 +94,7 @@ export default function(rawData) {
                                 'Observer_Type': dataPoint.__EMPTY_1,
                                 'Rating': epaRating,
                                 'Type': dataPoint.__EMPTY_3,
-                                'Situation': dataPoint.__EMPTY_4,
+                                'Situation_Context': dataPoint.__EMPTY_4,
                                 'Feedback': dataPoint.__EMPTY_5,
                                 'Professionalism_Safety': dataPoint.__EMPTY_6
                             });
