@@ -6,7 +6,11 @@ export default function() {
     // commas within the strings that can cause the csv file 
     // format to be changed
     var convertedData = _.map(rcmData, (dataPoint) => {
-        return _.map(dataPoint, (value) => '"' + value + '"').join(',');
+        return _.map(dataPoint, (value) => {
+            if (typeof(value) == 'string') {
+                return '"' + value.split('"').join('""') + '"';
+            } else return '"' + value + '"';
+        }).join(',');
     });
 
     // Add file headers to top of the file
