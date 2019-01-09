@@ -3,6 +3,8 @@
 var endPointRoot = 'http://localhost:8081/'
 
 var endPoints = {
+
+    setRecords: endPointRoot + "records/store",
     login: endPointRoot + "users/authenticate",
     register: endPointRoot + "users/register",
     allUsers: endPointRoot + "users/all",

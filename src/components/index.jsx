@@ -7,3 +7,4 @@ export { default as TrackTrails } from './TrackTrails';
 export { default as FileUpload } from './FileUpload';
 export { default as CreateUser } from './CreateUser';
 export { default as ModifyUser } from './ModifyUser';
+export { default as AddData } from './AddData';

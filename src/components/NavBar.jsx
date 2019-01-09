@@ -52,18 +52,18 @@ class NavBar extends Component {
                                     <span className="icon icon-line-graph"></span> Dashboard
                                 </Link>
                             </li>
+                            {accessType == 'admin' &&
+                                <li>
+                                    <Link to={'/Admin'}>
+                                        <span className="icon icon-add-user"></span> Admin
+                                </Link>
+                                </li>
+                            }
                             <li>
                                 <Link to={'/Tools'}>
                                     <span className="icon icon-tools"></span> Tools
                                 </Link>
                             </li>
-                            {accessType == 'admin' &&
-                                <li>
-                                    <Link to={'/Admin'}>
-                                        <span className="icon icon-v-card"></span> Admin
-                                </Link>
-                                </li>
-                            }
                         </ul>
                         <ul className='nav navbar-nav navbar-right'>
                             <li> {this.props.logged_in ?
@@ -84,7 +84,7 @@ class NavBar extends Component {
     }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
     return {
         logged_in: state.oracle.sessionStatus,
         userDetails: state.oracle.userDetails

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FileUpload, CreateUser, ModifyUser } from '../components';
+import { AddData, CreateUser, ModifyUser } from '../components';
 
 class Admin extends Component {
 
@@ -33,26 +33,14 @@ class Admin extends Component {
                             <a id='modify-tab' onClick={this.onTabClick}>Modify User</a>
                         </li>
                         <li className={activeTab == 'addData-tab' ? 'active' : ''}>
-                            <a id='addData-tab' onClick={this.onTabClick}>Add Data</a>
+                            <a id='addData-tab' onClick={this.onTabClick}>Upload Data</a>
                         </li>
                     </ul>
                 </div>
                 <div className='admin-inner-container'>
                     {(activeTab == 'create-tab') && <CreateUser />}
                     {(activeTab == 'modify-tab') && <ModifyUser />}
-                    {(activeTab == 'addData-tab') && <div>
-                        <form>
-                            <div className="input-group m-a">
-                                <span className='inner-span'>ACCESS TYPE</span>
-                                <select id='select-access-type' className='custom-select' defaultValue={'resident'}>
-                                    <option value='resident' >RESIDENT</option>
-                                    <option value='supervisor' >SUPERVISOR</option>
-                                    <option value='admin' >ADMIN</option>
-                                </select>
-                            </div>
-                        </form>
-                        <FileUpload id='admin-rcm-file' label='File Exported from Royal College Portal' />
-                    </div>}
+                    {(activeTab == 'addData-tab') && <AddData />}
                 </div>
             </div >
         );

@@ -71,7 +71,7 @@ class FilterPanel extends Component {
                 <div className='col-sm-3 col-xs-12'>
                     <label className='filter-label'>Resident Name  </label>
                     <select id='filter-residentName' defaultValue={residentName} className="custom-select">
-                        {residentList.map((val, index) => { return <option key={index} > {val}</option> })}
+                        {residentList.map((val, index) => { return <option key={index} value={val.username}> {val.fullname}</option> })}
                     </select>
                 </div>
                 <div className="checkbox custom-control text-center custom-checkbox col-sm-2 col-xs-12">

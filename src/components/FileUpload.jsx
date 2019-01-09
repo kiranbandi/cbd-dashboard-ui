@@ -18,9 +18,9 @@ export default class FileUpload extends Component {
 
     render() {
 
-        const { id = 'file', label = 'Upload file' } = this.props;
+        const { id = 'file', label = 'Upload file', className = '' } = this.props;
         return (
-            <div className='upload-file-container'>
+            <div className={'upload-file-container ' + className}>
                 <h4>{label}</h4>
                 <p>{this.state.fileName}</p>
                 <input type="file" name="file" id={id} className="inputfile" onChange={this.onFileChange} />

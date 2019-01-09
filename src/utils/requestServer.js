@@ -98,7 +98,32 @@ requestServer.deleteUser = function(username) {
 requestServer.getResidentList = function() {
     return new Promise((resolve, reject) => {
         axios.get(endPoints.residents, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
-            .then((response) => { resolve(response.data.map((user) => user.username)) })
+            .then((response) => { resolve(response.data) })
+            .catch((err) => errorCallback(err, reject));
+    });
+}
+
+requestServer.setRecords = function(records, username) {
+
+    var recordsList = records.map((record) => {
+        return {
+            username,
+            observation_date: record.Date,
+            epa: record.EPA,
+            feedback: record.Feedback,
+            observer_name: record.Observer_Name,
+            observer_type: record.Observer_Type,
+            professionalism_safety: record.Professionalism_Safety,
+            rating: record.Rating,
+            resident_name: record.Resident_Name,
+            situation_context: record.Situation_Context,
+            type: record.Type
+        }
+    })
+
+    return new Promise((resolve, reject) => {
+        axios.post(endPoints.setRecords, { recordsList }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            .then((response) => { resolve(response.data) })
             .catch((err) => errorCallback(err, reject));
     });
 }
