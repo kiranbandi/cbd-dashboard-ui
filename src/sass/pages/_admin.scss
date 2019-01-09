@@ -1,0 +1,45 @@
+.admin-root {
+    .nav-pills {
+        a {
+            font-size: 15px;
+            margin: 12px;
+            cursor: pointer;
+        }
+    }
+    .admin-inner-container {
+        .loader-modify {
+            margin: 50px auto;
+        }
+        .inner-span {
+            display: table-cell;
+            padding-right: 10px;
+            width: 125px;
+            vertical-align: middle;
+        }
+        .form-control {
+            width: 250px;
+            border-radius: 4px;
+        }
+        .create-btn {
+            margin: 0px auto 20px auto;
+            font-size: 16px;
+            display: block;
+        }
+        .create-btn {
+            line-height: 25px;
+            .create-span {
+                vertical-align: top;
+                &+div {
+                    margin-left: 10px;
+                    vertical-align: top;
+                    display: inline-block;
+                }
+            }
+        }
+        .modify-user-container {
+            .create-btn {
+                display: inline-block;
+            }
+        }
+    }
+}

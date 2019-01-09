@@ -2,10 +2,14 @@ export default {
   oracle: {
     loaderState: false,
     filterLoaderState: false,
-    sessionStatus: !!localStorage.jwt,
+    sessionStatus: !!sessionStorage.jwt,
     residentData: null,
     residentFilter: { isAllData: true },
     isTooltipVisible: false,
-    tooltipData: null
+    tooltipData: null,
+    userDetails: {
+      username: sessionStorage.username,
+      accessType: sessionStorage.accessType
+    }
   }
 };

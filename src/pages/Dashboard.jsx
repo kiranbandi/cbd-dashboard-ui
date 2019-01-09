@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { getResidentList } from '../utils/requestServer';
 import { setResidentList, toggleLoader } from '../redux/actions/actions';
 import Loading from 'react-loading';
-import { FilterPanel,GraphPanel } from '../components';
+import { FilterPanel, GraphPanel } from '../components';
 
 class Dashboard extends Component {
 
@@ -14,20 +14,18 @@ class Dashboard extends Component {
 
     componentDidMount() {
         const { residentList } = this.props;
-        if (residentList == null) {
-            // toggle loader before fetching data
-            this.props.actions.toggleLoader();
-            // get list of all residents
-            getResidentList()
-                .then((residentList) => {
-                    this.props.actions.setResidentList(residentList);
-                })
-                // toggle loader again once the request completes
-                .catch(() => { console.log("error in fetching resident list"); })
-                .finally(() => {
-                    this.props.actions.toggleLoader();
-                });
-        }
+        // toggle loader before fetching data
+        this.props.actions.toggleLoader();
+        // get list of all residents
+        getResidentList()
+            .then((residentList) => {
+                this.props.actions.setResidentList(residentList);
+            })
+            // toggle loader again once the request completes
+            .catch(() => { console.log("error in fetching resident list"); })
+            .finally(() => {
+                this.props.actions.toggleLoader();
+            });
     }
 
     render() {

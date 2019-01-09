@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { logOutUser } from '../redux/actions/actions';
+import { setLogoutData } from '../redux/actions/actions';
 
 class NavBar extends Component {
 
@@ -25,10 +25,11 @@ class NavBar extends Component {
 
     logOut(event) {
         event.preventDefault();
-        this.props.logOutUser();
+        this.props.setLogoutData();
     }
 
     render() {
+        const { accessType = '' } = this.props.userDetails;
         return (
             <nav className="navbar navbar-inverse navbar-fixed-top">
                 <div className="container-fluid">
@@ -56,6 +57,13 @@ class NavBar extends Component {
                                     <span className="icon icon-tools"></span> Tools
                                 </Link>
                             </li>
+                            {accessType == 'admin' &&
+                                <li>
+                                    <Link to={'/Admin'}>
+                                        <span className="icon icon-v-card"></span> Admin
+                                </Link>
+                                </li>
+                            }
                         </ul>
                         <ul className='nav navbar-nav navbar-right'>
                             <li> {this.props.logged_in ?
@@ -77,12 +85,15 @@ class NavBar extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    return { logged_in: state.oracle.sessionStatus };
+    return {
+        logged_in: state.oracle.sessionStatus,
+        userDetails: state.oracle.userDetails
+    };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        logOutUser: bindActionCreators(logOutUser, dispatch)
+        setLogoutData: bindActionCreators(setLogoutData, dispatch)
     };
 }
 

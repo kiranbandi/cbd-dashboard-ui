@@ -2,11 +2,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
-import { NotFound, Home, Dashboard, Login, Tools } from './pages';
+import { NotFound, Home, Dashboard, Login, Tools, Admin } from './pages';
 import { Container } from './components';
 import configureStore from './redux/store/configureStore';
 import { Provider } from 'react-redux';
-import { checkloginStatus } from './utils/authorization'
+import { checkloginStatus, checkAdminStatus } from './utils/authorization'
 
 //Root sass file for webpack to compile
 import './sass/main.scss';
@@ -25,6 +25,7 @@ class App extends Component {
             <Route path='Dashboard' component={Dashboard} onEnter={checkloginStatus} />
             <Route path='Tools' component={Tools} />
             <Route path='Login' component={Login} />
+            <Route path='Admin' component={Admin} onEnter={checkAdminStatus} />
             <Route path='*' component={NotFound} />
           </Route>
         </Router>

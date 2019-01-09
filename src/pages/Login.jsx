@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loginSuccess, toggleLoader } from '../redux/actions/actions';
+import { setLoginData, toggleLoader } from '../redux/actions/actions';
 import Loading from 'react-loading';
 import { requestLogin } from '../utils/requestServer';
 
@@ -32,8 +32,8 @@ class Login extends Component {
         e.preventDefault();
         if (!loaderState) {
             this.props.actions.toggleLoader();
-            requestLogin(credentials).then((username) => {
-                this.props.actions.loginSuccess();
+            requestLogin(credentials).then((userDetails) => {
+                this.props.actions.setLoginData(userDetails);
             }).finally(() => {
                 this.props.actions.toggleLoader();
             });
@@ -75,7 +75,7 @@ class Login extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ loginSuccess, toggleLoader }, dispatch)
+        actions: bindActionCreators({ setLoginData, toggleLoader }, dispatch)
     };
 }
 

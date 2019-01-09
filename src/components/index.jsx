@@ -5,3 +5,5 @@ export { default as FilterPanel } from './FilterPanel';
 export { default as GraphPanel } from './GraphPanel';
 export { default as TrackTrails } from './TrackTrails';
 export { default as FileUpload } from './FileUpload';
+export { default as CreateUser } from './CreateUser';
+export { default as ModifyUser } from './ModifyUser';

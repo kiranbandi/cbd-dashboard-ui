@@ -3,14 +3,19 @@ import _ from 'lodash';
 import { hashHistory } from 'react-router';
 
 
-export function loginSuccess() {
+export function loginSuccess(userDetails) {
+    sessionStorage.setItem('jwt', userDetails.token);
+    sessionStorage.setItem('username', userDetails.username);
+    sessionStorage.setItem('accessType', userDetails.accessType);
     let { state = { nextPathname: '/Dashboard' } } = hashHistory.getCurrentLocation();
     hashHistory.push(state.nextPathname);
     return { type: types.LOG_IN_SUCCESS };
 }
 
 export function logOutUser() {
-    localStorage.removeItem('jwt');
+    sessionStorage.removeItem('jwt');
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('accessType');
     hashHistory.push("/");
     return { type: types.LOG_OUT };
 }
@@ -44,6 +49,23 @@ export function setTooltipData(tooltipData) {
     return { type: types.SET_TOOLTIP_DATA, tooltipData };
 }
 
+export function setUserDetails(userDetails) {
+    return { type: types.SET_USER_DATA, userDetails };
+}
+
+export function setLoginData(userDetails) {
+    return dispatch => {
+        dispatch(setUserDetails(userDetails));
+        dispatch(loginSuccess(userDetails));
+    };
+}
+
+export function setLogoutData() {
+    return dispatch => {
+        dispatch(setUserDetails({}));
+        dispatch(logOutUser());
+    };
+}
 
 export function showTooltip(tooltipData) {
     return dispatch => {
@@ -51,6 +73,7 @@ export function showTooltip(tooltipData) {
         dispatch(setTooltipVisibility(true));
     };
 }
+
 
 
 
