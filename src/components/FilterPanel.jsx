@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getResidentData } from '../utils/requestServer';
+import moment from 'moment';
 import { toggleFilterLoader, setResidentFilter, setResidentData } from '../redux/actions/actions';
 
 class FilterPanel extends Component {
@@ -24,6 +25,7 @@ class FilterPanel extends Component {
         residentFilter.startDate = document.getElementById('filter-startDate').value;
         residentFilter.endDate = document.getElementById('filter-endDate').value;
         residentFilter.username = document.getElementById('filter-residentName').value;
+
         // set all the parameters in the resident filter
         actions.setResidentFilter({ ...residentFilter });
         // toggle loader
@@ -41,7 +43,7 @@ class FilterPanel extends Component {
                     _.each(groupedResidentData, (epaSourceData, key) => {
                         //  filter out records not in the date range
                         var remainingRecords = _.filter(epaSourceData, (record) => {
-                            return record.Date >= residentFilter.startDate && record.Date <= residentFilter.endDate;
+                            return moment(record.Date, 'YYYY-MM-DD').isAfter(moment(residentFilter.startDate, 'MM/DD/YYYY')) && moment(record.Date, 'YYYY-MM-DD').isBefore(moment(residentFilter.endDate, 'MM/DD/YYYY'))
                         })
                         if (remainingRecords.length == 0) {
                             delete groupedResidentData[key];
@@ -62,8 +64,8 @@ class FilterPanel extends Component {
 
         const { isAllData = false,
             residentName = '',
-            startDate = (new Date()).toLocaleDateString(),
-            endDate = (new Date()).toLocaleDateString() } = residentFilter;
+            startDate = moment().format('MM/DD/YYYY'),
+            endDate = moment().format('MM/DD/YYYY') } = residentFilter;
 
         return (
             <div className='filter-panel m-t center-align container'>

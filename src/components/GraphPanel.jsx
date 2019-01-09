@@ -121,8 +121,6 @@ class GraphPanel extends Component {
             epaSourcesThatExist = _.groupBy(Object.keys(residentData), (key) => { return key.split('.')[0] })
         }
 
-        debugger;
-        
         //100px to offset the 30px margin on both sides and vertical scroll bar width
         let widthOfRootGraphPanel = document.body.getBoundingClientRect().width - 125;
         let widthPartition = widthOfRootGraphPanel / 4;
