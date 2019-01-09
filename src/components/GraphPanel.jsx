@@ -121,6 +121,8 @@ class GraphPanel extends Component {
             epaSourcesThatExist = _.groupBy(Object.keys(residentData), (key) => { return key.split('.')[0] })
         }
 
+        debugger;
+        
         //100px to offset the 30px margin on both sides and vertical scroll bar width
         let widthOfRootGraphPanel = document.body.getBoundingClientRect().width - 125;
         let widthPartition = widthOfRootGraphPanel / 4;
@@ -146,6 +148,7 @@ class GraphPanel extends Component {
 
                     <div style={{ width: widthPartition }} className='p-a-0 epa-root panel-container'>
                         {_.map(epaSourcesThatExist, (epaSources, innerKey) => {
+
                             return <div key={'inner-epa-' + innerKey}>
                                 <div className='inner-epa-head'>
                                     <span className="icon icon-chevron-right"></span>

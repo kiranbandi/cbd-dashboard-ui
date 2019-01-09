@@ -103,6 +103,34 @@ requestServer.getResidentList = function() {
     });
 }
 
+requestServer.getResidentData = function(username) {
+    return new Promise((resolve, reject) => {
+        axios.get(endPoints.residentRecords + "/" + username, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            .then((response) => {
+                if (response.data.length == 0) {
+                    toastr["error"]("No records found", "ERROR");
+                } else {
+                    var recordsList = response.data.map((record) => {
+                        return {
+                            username,
+                            Date: record.observation_date,
+                            EPA: record.epa,
+                            Feedback: record.feedback,
+                            Observer_Name: record.observer_name,
+                            Observer_Type: record.observer_type,
+                            Professionalism_Safety: record.professionalism_safety,
+                            Rating: record.rating,
+                            Resident_Name: record.resident_name,
+                            Situation_Context: record.situation_context,
+                            Type: record.type
+                        }
+                    })
+                    resolve(recordsList);
+                }
+            })
+            .catch((err) => errorCallback(err, reject));
+    });
+}
 requestServer.setRecords = function(records, username) {
 
     var recordsList = records.map((record) => {

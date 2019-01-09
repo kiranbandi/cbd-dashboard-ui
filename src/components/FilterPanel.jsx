@@ -23,7 +23,7 @@ class FilterPanel extends Component {
         let { residentFilter = {}, actions } = this.props;
         residentFilter.startDate = document.getElementById('filter-startDate').value;
         residentFilter.endDate = document.getElementById('filter-endDate').value;
-        residentFilter.residentName = document.getElementById('filter-residentName').value;
+        residentFilter.username = document.getElementById('filter-residentName').value;
         // set all the parameters in the resident filter
         actions.setResidentFilter({ ...residentFilter });
         // toggle loader
@@ -32,7 +32,7 @@ class FilterPanel extends Component {
 
         // Dirty solution but eventually all filtering will happen on the server so no point 
         //  in repeating this again.
-        getResidentData(residentFilter.residentName)
+        getResidentData(residentFilter.username)
             .then((residentData) => {
                 // group data on the basis of EPA
                 var groupedResidentData = _.groupBy(residentData, (d) => d.EPA);
@@ -69,7 +69,7 @@ class FilterPanel extends Component {
             <div className='filter-panel m-t center-align container'>
                 <h2 className="text-primary text-center m-b col-sm-12">Filter Panel</h2>
                 <div className='col-sm-3 col-xs-12'>
-                    <label className='filter-label'>Resident Name  </label>
+                    <label className='filter-label'>Name  </label>
                     <select id='filter-residentName' defaultValue={residentName} className="custom-select">
                         {residentList.map((val, index) => { return <option key={index} value={val.username}> {val.fullname}</option> })}
                     </select>
