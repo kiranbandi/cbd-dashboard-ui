@@ -67,6 +67,10 @@ class FilterPanel extends Component {
             startDate = moment().format('MM/DD/YYYY'),
             endDate = moment().format('MM/DD/YYYY') } = residentFilter;
 
+
+        // Sort the residents alphabetically so that they are easier to look up
+        residentList.sort((previous, current) => previous.fullname.localeCompare(current.fullname));
+
         return (
             <div className='filter-panel m-t center-align container'>
                 <h2 className="text-primary text-center m-b col-sm-12">Filter Panel</h2>

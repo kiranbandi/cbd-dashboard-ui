@@ -93,6 +93,9 @@ export default class ModifyUser extends Component {
 
         const { userList, loaderState, innerLoaderState, deleteLoaderState, username, fullname = '', password, email, accessType, accessList } = this.state;
 
+        // Sort the residents alphabetically so that they are easier to look up
+        userList.sort((previous, current) => previous.localeCompare(current));
+
         return (
             <div className='modify-user-container'>
                 {loaderState ?

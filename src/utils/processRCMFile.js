@@ -32,6 +32,7 @@ export default function(rawData) {
                     // if the row is about the EPA then store the EPA number and move on
                     else if (dataInColumnOne.indexOf('EPA') > -1) {
                         tempEPA = dataInColumnOne.slice(4);
+                        debugger;
                     }
                     // if the row has snapshot in column one 
                     //  then look for the column that has the count of the total

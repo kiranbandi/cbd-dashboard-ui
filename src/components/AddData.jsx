@@ -63,7 +63,7 @@ export default class AddData extends Component {
                 })
                 .then((data) => {
                     const { insertedCount } = data;
-                    toastr["success"](insertedCount + " records were added for user " + username, "ERROR");
+                    toastr["success"](insertedCount + " records were added for user " + username);
                     // reset form params
                     this.setState({ selectedIndex: 0, username: '', fullname: '' });
                 })
