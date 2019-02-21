@@ -2,11 +2,9 @@ export { default as NavBar } from './NavBar';
 export { default as Container } from './Container';
 export { default as Loader } from './Loader';
 export { default as FilterPanel } from './FilterPanel';
-export { default as GraphPanel } from './GraphPanel';
-export { default as TrackTrails } from './TrackTrails';
+export { default as GraphPanel } from './GraphPanelGroup/GraphPanel';
 export { default as FileUpload } from './FileUpload';
-export { default as CreateUser } from './CreateUser';
-export { default as ModifyUser } from './ModifyUser';
-export { default as AddData } from './AddData';
-export { default as BulletChartColumn } from './BulletChartColumn';
-export { default as LineChartColumn } from './LineChartColumn';
+export { default as CreateUser } from './AdminGroup/CreateUser';
+export { default as ModifyUser } from './AdminGroup/ModifyUser';
+export { default as AddData } from './AdminGroup/AddData';
+

@@ -1,17 +1,34 @@
 /*global $*/
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import templateEpaSourceMap from '../utils/epaSourceMap';
-import { BulletChartColumn, LineChartColumn } from './';
+import templateEpaSourceMap from '../../utils/epaSourceMap';
+import BulletChartColumn from './BulletChartColumn';
+import LineChartColumn from './LineChartColumn';
 import { bindActionCreators } from 'redux';
-import { showTooltip, setTooltipVisibility } from '../redux/actions/actions';
+import { showTooltip, setTooltipVisibility } from '../../redux/actions/actions';
 
 class GraphPanel extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            visibilityOpenStatus: {
+                1: true,
+                2: true,
+                3: true,
+                4: true
+            }
+        }
         this.onMouseOver = this.onMouseOver.bind(this);
         this.onMouseOut = this.onMouseOut.bind(this);
+        this.onEPALabelClick = this.onEPALabelClick.bind(this);
+    }
+
+    onEPALabelClick(event) {
+        const clickedID = +event.target.className.split('label-index-')[1];
+        let { visibilityOpenStatus } = this.state;
+        visibilityOpenStatus[clickedID] = !visibilityOpenStatus[clickedID];
+        this.setState({ visibilityOpenStatus });
     }
 
     onMouseOver(event) {
@@ -77,7 +94,7 @@ class GraphPanel extends Component {
                             return <div key={'inner-epa-' + innerKey}>
                                 <div className='inner-epa-head'>
                                     <span className="icon icon-chevron-right"></span>
-                                    <span className='epa-label' >{innerKey + " - " + epaSourceMap[innerKey].topic}</span>
+                                    <span className={'epa-label label-index-' + innerKey} onClick={this.onEPALabelClick}>{innerKey + " - " + epaSourceMap[innerKey].topic}</span>
                                 </div>
                                 <div className='inner-epa-body'>
                                     {_.map(epaSources, (epaSource, sourceKey) => {

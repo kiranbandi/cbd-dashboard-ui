@@ -1,6 +1,6 @@
 /*global $*/
 import React, { Component } from 'react';
-import { registerUser } from '../utils/requestServer';
+import { registerUser } from '../../utils/requestServer';
 import Loading from 'react-loading';
 
 export default class CreateUser extends Component {

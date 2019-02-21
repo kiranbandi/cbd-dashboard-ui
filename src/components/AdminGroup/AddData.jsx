@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { FileUpload } from '../components';
-import getFile from '../utils/getFile';
-import processRCMFile from '../utils/processRCMFile';
-import toastr from '../utils/toastr';
+import { FileUpload } from '../';
+import getFile from '../../utils/getFile';
+import processRCMFile from '../../utils/processRCMFile';
+import toastr from '../../utils/toastr';
 import Loading from 'react-loading';
-import { getResidentList, setRecords } from '../utils/requestServer';
+import { getResidentList, setRecords } from '../../utils/requestServer';
 
 export default class AddData extends Component {
 

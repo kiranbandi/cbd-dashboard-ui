@@ -1,6 +1,6 @@
 /*global $*/
 import React, { Component } from 'react';
-import { getAllUsers, getUser, updateUser, deleteUser } from '../utils/requestServer';
+import { getAllUsers, getUser, updateUser, deleteUser } from '../../utils/requestServer';
 import Loading from 'react-loading';
 
 export default class ModifyUser extends Component {
