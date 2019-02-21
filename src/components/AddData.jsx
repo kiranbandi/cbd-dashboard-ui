@@ -47,25 +47,30 @@ export default class AddData extends Component {
             // fetch the file from the system and then process it 
             getFile('add-data-rcm-file')
                 .then((response) => { return processRCMFile(response) })
-                .then((data) => {
-                    // List of records that have a Resident_Name different than 
-                    // the selected full name , which means there could have been a mistake 
+                .then((processedOutput) => {
+                    var { data } = processedOutput;
+                    // List of records that have a Resident_Name different than
+                    // the selected full name, which means there could have been a mistake
                     // while the files were uploaded so cross check with the user
                     var mismatchedRecords = data.filter((record) => record.Resident_Name != fullname);
                     if (mismatchedRecords.length > 0 && !warningGiven) {
                         toastr["warning"]("There are " + mismatchedRecords.length + " records which dont have a resident name that matches with the selected resident name.If you are okay with this select upload again", "ERROR");
                         this.setState({ warningGiven: true });
-                        return Promise.reject();
+                        // resolve the promise without an error but throw a false flag incase of warning
+                        return Promise.resolve(false);
                     }
                     else {
                         return setRecords(data, username);
                     }
                 })
                 .then((data) => {
-                    const { insertedCount } = data;
-                    toastr["success"](insertedCount + " records were added for user " + username);
-                    // reset form params
-                    this.setState({ selectedIndex: 0, username: '', fullname: '' });
+                    // If there were no mismatched records or the warning was overidden
+                    if (!!data) {
+                        const { insertedCount } = data;
+                        toastr["success"](insertedCount + " records were added for user " + username, "SUCCESS");
+                        // reset form params
+                        this.setState({ selectedIndex: 0, username: '', fullname: '' });
+                    }
                 })
                 .catch(() => {
                     toastr["error"]("Failed to process files , Please try again.", "ERROR");
@@ -80,7 +85,11 @@ export default class AddData extends Component {
     }
 
     render() {
-        const { loaderState, processing, selectedIndex, userList } = this.state;
+        let { loaderState, processing, selectedIndex, userList } = this.state;
+
+        // Sort the residents alphabetically so that they are easier to look up
+        userList.sort((previous, current) => previous.username.localeCompare(current.username));
+
         return (
             <div className='add-data-root m-t' >
                 {

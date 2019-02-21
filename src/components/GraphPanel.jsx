@@ -1,7 +1,7 @@
 /*global $*/
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import epaSourceMap from '../utils/epaSourceMap';
+import templateEpaSourceMap from '../utils/epaSourceMap';
 import { line, scaleLinear } from 'd3';
 import TrackTrails from './TrackTrails';
 import { bindActionCreators } from 'redux';
@@ -36,7 +36,7 @@ class GraphPanel extends Component {
         this.props.actions.setTooltipVisibility(false);
     }
 
-    getBulletChart(residentData, epaSourcesThatExist, widthPartition) {
+    getBulletChart(epaSourceMap, residentData, epaSourcesThatExist, widthPartition) {
         // 15px bullet chart padding on either sides
         const innerWidth = widthPartition - 30;
         return _.map(epaSourcesThatExist, (epaSources, innerKey) => {
@@ -113,7 +113,10 @@ class GraphPanel extends Component {
 
     render() {
 
-        let { residentData, isTooltipVisible, tooltipData } = this.props;
+        let { residentData, isTooltipVisible, tooltipData, epaSourceMap } = this.props;
+
+        // if there is no source map provided then use the Emergency medicine Template Map
+        epaSourceMap = !!epaSourceMap ? epaSourceMap : templateEpaSourceMap;
 
         // if no data then set flag to false if not group data by root key
         let epaSourcesThatExist = false;
@@ -163,7 +166,7 @@ class GraphPanel extends Component {
 
                     <div style={{ width: widthPartition }} className='p-a-0 observation-root panel-container'>
                         {/* margin of 20px on either side reduces the available width by 40 */}
-                        {this.getBulletChart(residentData, epaSourcesThatExist, widthPartition - 40)}
+                        {this.getBulletChart(epaSourceMap, residentData, epaSourcesThatExist, widthPartition - 40)}
                     </div>
                     {/* margin of 10px on either side reduces the available width by 20 */}
                     <div style={{ width: widthPartition * 2 }} className='p-a-0 score-root panel-container'>

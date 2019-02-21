@@ -18,7 +18,8 @@ class Tools extends Component {
         this.state = {
             processing: false,
             dataReady: false,
-            showGraphPanel: false
+            showGraphPanel: false,
+            epaSourceMap: false
         }
         this.onProcessFile = this.onProcessFile.bind(this);
         this.visualizeRecords = this.visualizeRecords.bind(this);
@@ -42,14 +43,15 @@ class Tools extends Component {
         // fetch the file from the system and then process it 
         getFile('rcm-file')
             .then((response) => { return processRCMFile(response) })
-            .then((data) => {
+            .then((processedOutput) => {
+                var { data, epaSourceMap } = processedOutput;
                 // quick hack so the data can be easily pulled in non group format
                 window.emCBD = { 'rcmData': data };
                 // group data on the basis of EPA
                 var groupedResidentData = _.groupBy(data, (d) => d.EPA);
                 // store data in json format in redux 
                 this.props.actions.setResidentData(groupedResidentData);
-                this.setState({ dataReady: true });
+                this.setState({ dataReady: true, epaSourceMap });
             })
             .catch(() => {
                 toastr["error"]("Failed to process files , Please try again.", "ERROR");
@@ -69,7 +71,7 @@ class Tools extends Component {
     }
 
     render() {
-        const { processing, dataReady, showGraphPanel } = this.state;
+        const { processing, dataReady, showGraphPanel, epaSourceMap } = this.state;
         return (
             <div className='tools-root m-t' >
                 <div className='container'>
@@ -96,7 +98,7 @@ class Tools extends Component {
                             <button className="btn btn-success-outline " onClick={this.visualizeRecords}>Visualize Records</button>
                         </div>
                         <div>
-                            {showGraphPanel && <GraphPanel />}
+                            {showGraphPanel && <GraphPanel epaSourceMap={epaSourceMap} />}
                         </div>
                     </div>}
             </div>

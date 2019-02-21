@@ -3,6 +3,7 @@ import XLSX from 'xlsx';
 import _ from 'lodash';
 import moment from 'moment';
 
+
 export default function(rawData) {
     return new Promise((resolve, reject) => {
         try {
@@ -12,6 +13,31 @@ export default function(rawData) {
             var dataStore = [];
             var residentName = '';
             var tempEPA = '';
+
+            // Dummy empty source map that is populated on the fly if and when used 
+            var epaSourceMap = {
+                1: {
+                    'topic': 'Transition to Discipline (D)',
+                    subRoot: {},
+                    maxObservation: {}
+                },
+                2: {
+                    'topic': 'Foundations of Discipline (F)',
+                    subRoot: {},
+                    maxObservation: {}
+                },
+                3: {
+                    'topic': 'Core of Discipline (C)',
+                    subRoot: {},
+                    maxObservation: {}
+                },
+                4: {
+                    'topic': 'Transition to Practice (P)',
+                    subRoot: {},
+                    maxObservation: {}
+                }
+            };
+
 
             var iteratorIndex = 0;
             var maxLength = dataInRows.length;
@@ -32,7 +58,26 @@ export default function(rawData) {
                     // if the row is about the EPA then store the EPA number and move on
                     else if (dataInColumnOne.indexOf('EPA') > -1) {
                         tempEPA = dataInColumnOne.slice(4);
-                        debugger;
+                        // The following piece of code creates a EPA map which can be used 
+                        // if the data being uploaded isnt for a resident from the Emergency Medicine Department
+                        // Get EPA root identifier
+                        var epaRootIdentifier = +tempEPA.split(".")[0];
+                        // Set the EPA title
+                        epaSourceMap[epaRootIdentifier].subRoot[tempEPA] = row.__EMPTY;
+                        // Set the MAX required number of observations
+                        // This only works under the assumption that the number following the word Collect has the count
+                        // and so might fail if that were not the case
+                        var requiredObservations = 0;
+                        if (dataInRows[iteratorIndex + 1].__EMPTY.indexOf('Collect') > -1) {
+                            requiredObservations = +dataInRows[iteratorIndex + 1].__EMPTY.split('Collect ')[1].split(" ")[0];
+                        } else {
+                            // special scenario because of typo that occurs when files are created by the portal
+                            requiredObservations = +dataInRows[iteratorIndex + 1].__EMPTY.split('Collest ')[1].split(" ")[0];
+                        }
+                        // if the value provided is textual instead of being a number 
+                        // (again because of issues with the old portal) then simply store it as 10
+                        requiredObservations = isNaN(requiredObservations) ? 10 : requiredObservations;
+                        epaSourceMap[epaRootIdentifier].maxObservation[tempEPA] = requiredObservations;
                     }
                     // if the row has snapshot in column one 
                     //  then look for the column that has the count of the total
@@ -77,13 +122,11 @@ export default function(rawData) {
                                     epaRating = 1;
                             }
 
-
                             // Also if the rating is verbal like Achieved or Met then give a 5
                             if (dataPoint.__EMPTY_2.indexOf('Achieved') > -1 || dataPoint.__EMPTY_2.indexOf('Met') > -1) {
                                 // internal loop increase iteratorIndex
                                 epaRating = 5;
                             }
-
 
                             var isDateSlashFormat = dataPoint.__EMPTY_7.indexOf('/') > -1;
 
@@ -107,7 +150,7 @@ export default function(rawData) {
                 // increase the index count by one
                 iteratorIndex += 1;
             }
-            resolve(dataStore);
+            resolve({ 'data': dataStore, epaSourceMap });
         } catch (e) {
             reject();
         };
