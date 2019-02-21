@@ -8,3 +8,5 @@ export { default as FileUpload } from './FileUpload';
 export { default as CreateUser } from './CreateUser';
 export { default as ModifyUser } from './ModifyUser';
 export { default as AddData } from './AddData';
+export { default as BulletChartColumn } from './BulletChartColumn';
+export { default as LineChartColumn } from './LineChartColumn';
