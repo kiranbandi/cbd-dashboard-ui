@@ -27,9 +27,16 @@ export default class GraphRow extends Component {
         // Get the maximum required observations for each EPA from source MAP *
         const maxObservation = +epaSourceMap[epaSource.split(".")[0]].maxObservation[epaSource];
            
-        const firstMeasure = Math.min((residentData[epaSource].length / maxObservation) * bulletInnerWidth, bulletInnerWidth);
-        // Get high performance observations , 4 or 5 
-        const secondMeasure = Math.min((residentData[epaSource].filter((record)=> +record.Rating>=4).length / maxObservation) * bulletInnerWidth, bulletInnerWidth);
+                
+        // Get recorded observation count
+        const recordedCount = residentData[epaSource].length;
+        // Get high performance observations count, 4 or 5 
+        const achievedCount = residentData[epaSource].filter((record)=> +record.Rating>=4).length;
+        // Get remaining count 
+        const remainingCount = Math.max((maxObservation-achievedCount),0)
+
+        const firstMeasure = Math.min((recordedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
+        const secondMeasure = Math.min((achievedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
         
         var xScale = scaleLinear().domain([0, residentData[epaSource].length - 1]).range([marginHorizontal, width - marginHorizontal])
         var yScale = scaleLinear().domain([5, 1]).range([marginVertical, innerHeight - marginVertical])
@@ -57,6 +64,26 @@ export default class GraphRow extends Component {
                         bulletInnerWidth={bulletInnerWidth}
                         firstMeasure={firstMeasure}
                         secondMeasure={secondMeasure} />
+
+                    <div className='card-container'>
+                        <div className='graph-card first-card'>
+                            <span className='card-text'>{remainingCount}</span>
+                            <span className='card-title remaining-title'>TO GO</span>
+                        </div>
+                        <div className='graph-card'>
+                        <span className='card-text'>{recordedCount}</span>
+                            <span className='card-title recorded-title'>RECORDED</span>
+                        </div>
+                        <div className='graph-card achieved-title'>
+                            <span className='card-text'>{maxObservation}</span>
+                            <span className='card-title required-title'>REQUIRED</span>
+                        </div>
+                        <div className='graph-card '>
+                        <span className='card-text'>{achievedCount}</span>
+                            <span className='card-title achieved-title'>ACHIEVED</span>
+                        </div>
+                    </div>
+
                 </div>
                 <div style={{ width: widthPartition * 2 }} className='inner-cell score-cell'>
                     <LineChart

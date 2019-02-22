@@ -69,6 +69,50 @@
                         margin: 0px auto;
                         display: block;
                     }
+                    .card-container {
+                        margin: 5px 15px;
+                        text-align: center;
+                        .graph-card {
+                            display: inline-block;
+                            margin: 2px;
+                            padding: 10px;
+                            border-radius: 10px;
+                            &.first-card {
+                                margin-right: 5px;
+                                .card-text {
+                                    font-size: 50px;
+                                    display: inline-block;
+                                    margin-right: 9px;
+                                }
+                            }
+                            .card-title {
+                                display: block;
+                                font-size: 14px;
+                                font-family: sans-serif;
+                                font-weight: bold;
+                                &.recorded-title {
+                                    color: steelblue
+                                }
+                                &.required-title {
+                                    color: lightsteelblue
+                                }
+                                &.achieved-title {
+                                    color: #b44646
+                                }
+                                &.remaining-title {
+                                    color: #46b44a;
+                                    display: inline-block;
+                                    width: 20px;
+                                    font-size: 15px;
+                                }
+                            }
+                            .card-text {
+                                display: block;
+                                font-size: 16px;
+                                font-weight: bold;
+                            }
+                        }
+                    }
                 }
                 &.score-cell {
                     margin: 25px 0px 20px 0px;

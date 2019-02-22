@@ -6,7 +6,7 @@ export default (props) => {
     const width = props.widthPartition - 40;
 
     return (
-        <svg height={200} width={width} className='observation-svg'>
+        <svg height={40} width={width} className='observation-svg'>
             <g>
                 <rect fill="#eee" width={width} height="40" x="0" y="0"></rect>
                 <rect fill="lightsteelblue" width={props.bulletInnerWidth} height="25" x="15" y="7.5"></rect>
