@@ -25,8 +25,11 @@
             padding: 5px;
             cursor: pointer;
             margin: 15px 0px 0px 0;
-            background: #363944;
+            background: #252830;
             border-radius: 5px 5px 0px 0px;
+            &.bottom-line {
+                border-bottom: 2px solid #777373;
+            }
             .icon {
                 font-size: 22px;
                 vertical-align: middle;
@@ -53,40 +56,39 @@
                 text-overflow: ellipsis;
                 margin: 20px 0px;
                 vertical-align: top;
-            }
-            .inner-offset-label {
-                margin-left: 25px;
-                text-overflow: ellipsis;
-                font-size: 16px;
-                display: inline-block;
-                font-family: sans-serif;
-            }
-            .observation-cell {
-                .observation-svg {
-                    margin: 0px auto;
-                    display: block;
+                .inner-offset-label {
+                    margin-left: 25px;
+                    text-overflow: ellipsis;
+                    font-size: 16px;
+                    display: inline-block;
+                    font-family: sans-serif;
                 }
-            }
-        }
-    }
-    .score-root {
-        .score-outer {
-            margin-top: 100px;
-            svg.score-svg {
-                margin: 0px auto;
-                display: block;
-                background: white;
-                .score-spark-line {
-                    fill: none;
-                    stroke: #1997c6;
-                    stroke-width: 2px;
+                &.observation-cell {
+                    margin: 25px 0px 20px 0px;
+                    .observation-svg {
+                        margin: 0px auto;
+                        display: block;
+                    }
                 }
-                line.track-trails {
-                    stroke-width: 0.5px;
-                    stroke: #525765;
-                }
-                .score-point {
-                    cursor: pointer;
+                &.score-cell {
+                    margin: 25px 0px 20px 0px;
+                    svg.score-svg {
+                        margin: 0px auto;
+                        display: block;
+                        background: white;
+                        .score-spark-line {
+                            fill: none;
+                            stroke: #1997c6;
+                            stroke-width: 2px;
+                        }
+                        line.track-trails {
+                            stroke-width: 0.5px;
+                            stroke: #525765;
+                        }
+                        .score-point {
+                            cursor: pointer;
+                        }
+                    }
                 }
             }
         }

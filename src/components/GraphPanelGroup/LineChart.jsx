@@ -1,7 +1,11 @@
 import React from 'react';
+import { line } from 'd3';
 import TrackTrails from './TrackTrails';
 
 export default (props) => {
+
+    // get d3 line function that returns path
+    let d3Line = line().x((d) => d.x).y((d) => d.y);
 
     return (
         <svg height={props.innerHeight} width={props.width} className='score-svg' >
