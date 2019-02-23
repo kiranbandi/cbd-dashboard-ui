@@ -104,7 +104,7 @@ class GraphPanel extends Component {
                                                 <GraphRow
                                                     key={'inner-row-' + sourceKey}
                                                     innerKey={innerKey}
-                                                    onMouseOver={this.onMouseOut}
+                                                    onMouseOver={this.onMouseOver}
                                                     onMouseOut={this.onMouseOut}
                                                     epaSource={epaSource}
                                                     widthPartition={widthPartition}

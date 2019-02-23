@@ -75,14 +75,12 @@
                         .graph-card {
                             display: inline-block;
                             margin: 2px;
-                            padding: 10px;
-                            border-radius: 10px;
+                            padding: 1%;
                             &.first-card {
-                                margin-right: 5px;
                                 .card-text {
-                                    font-size: 50px;
+                                    font-size: 45px;
                                     display: inline-block;
-                                    margin-right: 9px;
+                                    margin-right: 7px;
                                 }
                             }
                             .card-title {
@@ -103,7 +101,7 @@
                                     color: #46b44a;
                                     display: inline-block;
                                     width: 20px;
-                                    font-size: 15px;
+                                    font-size: 14px;
                                 }
                             }
                             .card-text {

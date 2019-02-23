@@ -33,7 +33,7 @@ export default class GraphRow extends Component {
         // Get high performance observations count, 4 or 5 
         const achievedCount = residentData[epaSource].filter((record)=> +record.Rating>=4).length;
         // Get remaining count 
-        const remainingCount = Math.max((maxObservation-achievedCount),0)
+        const remainingCount = Math.max((maxObservation-recordedCount),0)
 
         const firstMeasure = Math.min((recordedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
         const secondMeasure = Math.min((achievedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
@@ -72,7 +72,7 @@ export default class GraphRow extends Component {
                         </div>
                         <div className='graph-card'>
                         <span className='card-text'>{recordedCount}</span>
-                            <span className='card-title recorded-title'>RECORDED</span>
+                            <span className='card-title recorded-title'>OBSERVED</span>
                         </div>
                         <div className='graph-card achieved-title'>
                             <span className='card-text'>{maxObservation}</span>
