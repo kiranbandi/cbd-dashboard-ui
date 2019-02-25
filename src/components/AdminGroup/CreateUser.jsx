@@ -25,7 +25,7 @@ export default class CreateUser extends Component {
     }
 
     onChange(event) {
-        this.setState({ [event.target.name]: (event.target.name == 'fullname' || event.target.name == 'accessList') ? event.target.value : event.target.value.trim() });
+        this.setState({ [event.target.name]: (event.target.name == 'fullname' || event.target.name == 'rotationSchedule' || event.target.name == 'accessList') ? event.target.value : event.target.value.trim() });
     }
 
     onSubmit(event) {

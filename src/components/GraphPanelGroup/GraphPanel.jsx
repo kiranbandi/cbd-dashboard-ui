@@ -4,21 +4,13 @@ import { connect } from 'react-redux';
 import templateEpaSourceMap from '../../utils/epaSourceMap';
 import Tooltip from './Tooltip';
 import { bindActionCreators } from 'redux';
-import { showTooltip, setTooltipVisibility } from '../../redux/actions/actions';
+import { showTooltip, setTooltipVisibility, setLevelVisibilityStatus } from '../../redux/actions/actions';
 import GraphRow from './GraphRow';
 
 class GraphPanel extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            visibilityOpenStatus: {
-                1: true,
-                2: true,
-                3: true,
-                4: true
-            }
-        }
         this.onMouseOver = this.onMouseOver.bind(this);
         this.onMouseOut = this.onMouseOut.bind(this);
         this.onEPALabelClick = this.onEPALabelClick.bind(this);
@@ -26,9 +18,9 @@ class GraphPanel extends Component {
 
     onEPALabelClick(event) {
         const clickedID = +event.currentTarget.className.split('label-index-')[1];
-        let visibilityOpenStatus = { ...this.state.visibilityOpenStatus };
+        let visibilityOpenStatus = { ...this.props.levelVisibilityOpenStatus };
         visibilityOpenStatus[clickedID] = !visibilityOpenStatus[clickedID];
-        this.setState({ visibilityOpenStatus });
+        this.props.actions.setLevelVisibilityStatus(visibilityOpenStatus);
     }
 
     onMouseOver(event) {
@@ -54,8 +46,7 @@ class GraphPanel extends Component {
 
     render() {
 
-        let { residentData, isTooltipVisible, tooltipData, epaSourceMap } = this.props,
-            { visibilityOpenStatus } = this.state;
+        let { residentData, isTooltipVisible, tooltipData, epaSourceMap, levelVisibilityOpenStatus } = this.props;
 
         // if there is no source map provided then use the Emergency medicine Template Map
         epaSourceMap = !!epaSourceMap ? epaSourceMap : templateEpaSourceMap;
@@ -88,7 +79,7 @@ class GraphPanel extends Component {
                     <div style={{ width: widthOfRootGraphPanel }} className='panel-inner-root'>
                         {_.map(epaSourcesThatExist, (epaSources, innerKey) => {
 
-                            let isCurrentSubRootVisible = visibilityOpenStatus[innerKey];
+                            let isCurrentSubRootVisible = levelVisibilityOpenStatus[innerKey];
 
                             return (
                                 <div className="inner-sub-root" key={'sub-root-' + innerKey}>
@@ -125,13 +116,19 @@ function mapStateToProps(state) {
     return {
         residentData: state.oracle.residentData,
         isTooltipVisible: state.oracle.isTooltipVisible,
-        tooltipData: state.oracle.tooltipData
+        tooltipData: state.oracle.tooltipData,
+        levelVisibilityOpenStatus: state.oracle.visibilityOpenStatus
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ showTooltip, setTooltipVisibility }, dispatch)
+        actions: bindActionCreators(
+            {
+                showTooltip,
+                setTooltipVisibility,
+                setLevelVisibilityStatus
+            }, dispatch)
     };
 }
 

@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getResidentData } from '../utils/requestServer';
 import moment from 'moment';
+import templateEpaSourceMap from '../utils/epaSourceMap';
+import _ from 'lodash';
 import { toggleFilterLoader, setResidentFilter, setResidentData } from '../redux/actions/actions';
 
 class FilterPanel extends Component {
@@ -12,6 +14,12 @@ class FilterPanel extends Component {
         super(props);
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onEPAToggle = this.onEPAToggle.bind(this);
+        this.onVisbilityToggle = this.onVisbilityToggle.bind(this);
+        this.state = {
+            hideUncommencedEPA: true,
+            openOnlyCurrentPhase: true
+        };
     }
 
     onChange(event) {
@@ -20,8 +28,18 @@ class FilterPanel extends Component {
         actions.setResidentFilter({ ...residentFilter });
     }
 
+    onEPAToggle(event) {
+        this.setState({ hideUncommencedEPA: !this.state.hideUncommencedEPA });
+    }
+
+    onVisbilityToggle(event) {
+        this.setState({ openOnlyCurrentPhase: !this.state.openOnlyCurrentPhase });
+    }
+
     onSubmit(event) {
-        let { residentFilter = {}, actions } = this.props;
+        let { residentFilter = {}, actions, residentList } = this.props,
+            { hideUncommencedEPA, openOnlyCurrentPhase } = this.state;
+
         residentFilter.startDate = document.getElementById('filter-startDate').value;
         residentFilter.endDate = document.getElementById('filter-endDate').value;
         residentFilter.username = document.getElementById('filter-residentName').value;
@@ -30,8 +48,11 @@ class FilterPanel extends Component {
         actions.setResidentFilter({ ...residentFilter });
         // toggle loader
         actions.toggleFilterLoader();
-        // fetch data from server based on the filter params
 
+        // Fitler out resident info from the list 
+        let residentInfo = _.find(residentList, (d) => d.username == residentFilter.username);
+
+        // fetch data from server based on the filter params
         // Dirty solution but eventually all filtering will happen on the server so no point 
         //  in repeating this again.
         getResidentData(residentFilter.username)
@@ -53,7 +74,22 @@ class FilterPanel extends Component {
                         }
                     })
                 }
-                actions.setResidentData(groupedResidentData);
+
+                // if uncommenced EPAs are needed to be seen then sub in empty records
+                if(!hideUncommencedEPA){
+                    _.map(templateEpaSourceMap,(source)=>{
+                        _.map(source.subRoot,(epa,innerKey)=>{ 
+                            if(!groupedResidentData.hasOwnProperty(innerKey)){
+                                groupedResidentData[innerKey]=[];
+                            }
+                        })
+                    })
+                    
+                }
+        
+                // store the info of visibility of phase into resident info
+                residentInfo.openOnlyCurrentPhase = openOnlyCurrentPhase;
+                actions.setResidentData(groupedResidentData, residentInfo);
             })
             .finally(() => { actions.toggleFilterLoader(); });
     }
@@ -74,43 +110,63 @@ class FilterPanel extends Component {
         return (
             <div className='filter-panel m-t center-align container'>
                 <h2 className="text-primary text-center m-b col-sm-12">Filter Panel</h2>
-                <div className='col-sm-3 col-xs-12'>
-                    <label className='filter-label'>Name  </label>
-                    <select id='filter-residentName' defaultValue={residentName} className="custom-select">
-                        {residentList.map((val, index) => { return <option key={index} value={val.username}> {val.fullname}</option> })}
-                    </select>
-                </div>
-                <div className="checkbox custom-control text-center custom-checkbox col-sm-2 col-xs-12">
-                    <label className='filter-label'>
-                        {"View All Records"}
-                        <input id='filter-isAllData' type="checkbox" checked={isAllData} onChange={this.onChange} />
-                        <span className="custom-control-indicator"></span>
-                    </label>
-                </div>
-                <div className='col-sm-3 col-xs-12 text-center'>
-                    <label className='filter-label'> Start Date</label>
-                    <div className="input-group col-sm-2">
-                        <span className="input-group-addon">
-                            <span className="icon icon-calendar"></span>
-                        </span>
-                        <input type="text" id='filter-startDate' defaultValue={startDate} disabled={isAllData} className="form-control" data-provide="datepicker" />
+
+                <div className='text-xs-center'>
+                    <div className='name-box'>
+                        <label className='filter-label'>Name  </label>
+                        <select id='filter-residentName' defaultValue={residentName} className="custom-select">
+                            {residentList.map((val, index) => { return <option key={index} value={val.username}> {val.fullname}</option> })}
+                        </select>
+                    </div>
+                    <div className="checkbox custom-control text-center custom-checkbox">
+                        <label className='filter-label'>
+                            {"HIDE UNCOMMENCED EPAs"}
+                            <input id='filter-hide-epa' type="checkbox" checked={this.state.hideUncommencedEPA} onChange={this.onEPAToggle} />
+                            <span className="custom-control-indicator"></span>
+                        </label>
+                    </div>
+                    <div className="checkbox custom-control text-center custom-checkbox">
+                        <label className='filter-label'>
+                            {"OPEN CURRENT PHASE ONLY"}
+                            <input id='filter-hide-phases' type="checkbox" checked={this.state.openOnlyCurrentPhase} onChange={this.onVisbilityToggle} />
+                            <span className="custom-control-indicator"></span>
+                        </label>
                     </div>
                 </div>
 
-                <div className='col-sm-3 col-xs-12 text-xs-center'>
-                    <label className='filter-label'> End Date</label>
-                    <div className="input-group col-sm-2">
-                        <span className="input-group-addon">
-                            <span className="icon icon-calendar"></span>
-                        </span>
-                        <input type="text" id='filter-endDate' disabled={isAllData} defaultValue={endDate} className="form-control" data-provide="datepicker" />
+                <div className='text-xs-center'>
+                    <div className="checkbox custom-control text-center custom-checkbox">
+                        <label className='filter-label'>
+                            {"VIEW ALL RECORDS (without date limit) "}
+                            <input id='filter-isAllData' type="checkbox" checked={isAllData} onChange={this.onChange} />
+                            <span className="custom-control-indicator"></span>
+                        </label>
+                    </div>
+                    <div className='text-center date-box'>
+                        <label className='filter-label'> Start Date</label>
+                        <div className="input-group col-sm-2">
+                            <span className="input-group-addon">
+                                <span className="icon icon-calendar"></span>
+                            </span>
+                            <input type="text" id='filter-startDate' defaultValue={startDate} disabled={isAllData} className="form-control" data-provide="datepicker" />
+                        </div>
+                    </div>
+                    <div className='text-xs-center date-box'>
+                        <label className='filter-label'> End Date</label>
+                        <div className="input-group col-sm-2">
+                            <span className="input-group-addon">
+                                <span className="icon icon-calendar"></span>
+                            </span>
+                            <input type="text" id='filter-endDate' disabled={isAllData} defaultValue={endDate} className="form-control" data-provide="datepicker" />
+                        </div>
                     </div>
                 </div>
-
-                <button type="submit" className="filter-button btn btn-primary-outline" onClick={this.onSubmit}>
-                    GO
+                <div className='text-xs-center m-t'>
+                    <button type="submit" className="filter-button btn btn-primary-outline" onClick={this.onSubmit}>
+                        GET RECORDS
                     {filterLoaderState && <Loading className='filter-loader' type='spin' height='25px' width='25px' color='#1997c6' delay={-1} />}
-                </button>
+                    </button>
+                </div>
             </div>
         );
     }

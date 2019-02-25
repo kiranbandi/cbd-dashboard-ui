@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { getResidentList } from '../utils/requestServer';
 import { setResidentList, toggleLoader } from '../redux/actions/actions';
 import Loading from 'react-loading';
-import { FilterPanel, GraphPanel } from '../components';
+import { FilterPanel, GraphPanel, InfoPanel } from '../components';
 
 class Dashboard extends Component {
 
@@ -39,6 +39,7 @@ class Dashboard extends Component {
                         {residentList.length > 0 ?
                             <div>
                                 <FilterPanel />
+                                <InfoPanel />
                                 <GraphPanel />
                             </div> :
                             <h2 className='text-center text-danger'>No resident information is available currently</h2>}

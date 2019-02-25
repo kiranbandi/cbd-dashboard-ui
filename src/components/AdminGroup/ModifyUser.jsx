@@ -88,7 +88,7 @@ export default class ModifyUser extends Component {
     }
 
     onChange(event) {
-        this.setState({ [event.target.name]: event.target.value.trim() });
+        this.setState({ [event.target.name]: (event.target.name == 'fullname' || event.target.name == 'rotationSchedule' || event.target.name == 'accessList') ? event.target.value : event.target.value.trim() });
     }
 
     onSubmit(event) {
@@ -102,7 +102,6 @@ export default class ModifyUser extends Component {
             .then(() => {
                 // reset form values
                 this.setState({
-                    userList,
                     username: '',
                     fullname: '',
                     password: '',
@@ -195,7 +194,6 @@ export default class ModifyUser extends Component {
                                 <span className='inner-span'>ROTATION SCHEDULE</span>
                                 <input type="text" className="form-control" name="rotationSchedule" value={rotationSchedule} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
                             </div>}
-
 
                         <p className='m-a text-warning'> <span className="icon icon-key"></span> For the purpose of secrecy, passwords are not shared.If you dont want to change the password, leave this field blank.</p>
                         <div className="input-group m-a">

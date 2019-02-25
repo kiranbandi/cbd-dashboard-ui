@@ -3,8 +3,16 @@
         margin: 100px auto;
     }
     .filter-panel {
-        #filter-residentName {
-            width: 175px;
+        .name-box {
+            #filter-residentName {
+                width: 175px;
+            }
+            display: inline-block;
+            margin: 10px 20px;
+        }
+        .date-box {
+            display: inline-block;
+            width: 270px;
         }
         .filter-label {
             margin-right: 10px;
@@ -13,10 +21,8 @@
         }
         .checkbox {
             display: inline-block;
-            margin: 5px;
-            .filter-label {
-                padding-left: 15px;
-            }
+            margin: 20px;
+            text-align: left;
             .custom-control-indicator {
                 top: 3px;
             }
