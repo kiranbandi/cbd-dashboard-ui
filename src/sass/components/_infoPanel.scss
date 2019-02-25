@@ -1,0 +1,54 @@
+.info-panel {
+    background: #1a1c22;
+    margin: 30px 30px 20px 30px;
+    border-radius: 5px;
+    .info-panel-inner {
+        margin: 20px;
+        padding: 20px;
+        .titular-block {
+            text-align: center;
+            span {
+                display: inline-block;
+                margin: 10px;
+                text-transform: uppercase;
+                font-size: 17px;
+            }
+        }
+        .schedule-box {
+            margin-bottom: 20px;
+            .hr-divider {
+                h4 {
+                    padding: 10px;
+                    margin-top: 12px;
+                    font-weight: bold;
+                }
+            }
+            span.yearBox {
+                background: #283a5d;
+                display: inline-block;
+                text-align: center;
+                padding: 10px 0px;
+                font-weight: bold;
+                border-right: 2px solid #1a1c22;
+            }
+            .custom-gannt-style-chart {
+                margin: 0px auto;
+                .chart-line {
+                    background: #285d54;
+                    border-radius: 7px;
+                    display: block;
+                    height: 22px;
+                    margin: 10px 0px;
+                    color: white;
+                    font-weight: bold;
+                }
+                .lined-border {
+                    background: white;
+                    height: 1px;
+                    width: 100%;
+                    display: block;
+                }
+            }
+        }
+    }
+}

@@ -26,18 +26,18 @@ export default class GraphRow extends Component {
 
         // Get the maximum required observations for each EPA from source MAP *
         const maxObservation = +epaSourceMap[epaSource.split(".")[0]].maxObservation[epaSource];
-           
-                
+
+
         // Get recorded observation count
         const recordedCount = residentData[epaSource].length;
         // Get high performance observations count, 4 or 5 
-        const achievedCount = residentData[epaSource].filter((record)=> +record.Rating>=4).length;
+        const achievedCount = residentData[epaSource].filter((record) => +record.Rating >= 4).length;
         // Get remaining count 
-        const remainingCount = Math.max((maxObservation-recordedCount),0)
+        const remainingCount = Math.max((maxObservation - recordedCount), 0)
 
         const firstMeasure = Math.min((recordedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
         const secondMeasure = Math.min((achievedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
-        
+
         var xScale = scaleLinear().domain([0, residentData[epaSource].length - 1]).range([marginHorizontal, width - marginHorizontal])
         var yScale = scaleLinear().domain([5, 1]).range([marginVertical, innerHeight - marginVertical])
 
@@ -53,7 +53,8 @@ export default class GraphRow extends Component {
 
         return (
             <div>
-                <div style={{ width: widthPartition }} className='inner-cell epa-title-cell'>
+                {/* widthly reduced slightly by 10px to facilitate extra gap at the last */}
+                <div style={{ width: widthPartition - 10 }} className='inner-cell epa-title-cell'>
                     <span className='inner-offset-label'>
                         {epaSource + " - " + epaSourceMap[innerKey].subRoot[epaSource]}
                     </span>
@@ -71,7 +72,7 @@ export default class GraphRow extends Component {
                             <span className='card-title remaining-title'>TO GO</span>
                         </div>
                         <div className='graph-card'>
-                        <span className='card-text'>{recordedCount}</span>
+                            <span className='card-text'>{recordedCount}</span>
                             <span className='card-title recorded-title'>OBSERVED</span>
                         </div>
                         <div className='graph-card achieved-title'>
@@ -79,7 +80,7 @@ export default class GraphRow extends Component {
                             <span className='card-title required-title'>REQUIRED</span>
                         </div>
                         <div className='graph-card '>
-                        <span className='card-text'>{achievedCount}</span>
+                            <span className='card-text'>{achievedCount}</span>
                             <span className='card-title achieved-title'>ACHIEVED</span>
                         </div>
                     </div>
