@@ -31,7 +31,7 @@ export default class CreateUser extends Component {
     onSubmit(event) {
         event.preventDefault();
         const { username, password, fullname, email, accessType, accessList, currentPhase, rotationSchedule } = this.state;
-        const programStartDate = document.getElementById('programStartDate').value;
+        const programStartDate = document.getElementById('programStartDate') ? document.getElementById('programStartDate').value : '';
 
         // toggle loader on before request 
         this.setState({ loaderState: true });

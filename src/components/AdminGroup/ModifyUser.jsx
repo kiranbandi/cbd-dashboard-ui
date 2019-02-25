@@ -94,7 +94,7 @@ export default class ModifyUser extends Component {
     onSubmit(event) {
         event.preventDefault();
         const { username, password, email, fullname, accessType, accessList, currentPhase, rotationSchedule } = this.state;
-        const programStartDate = document.getElementById('modify-programStartDate').value;
+        const programStartDate = document.getElementById('programStartDate') ? document.getElementById('programStartDate').value : '';
 
         // toggle loader on before request 
         this.setState({ innerLoaderState: true });
