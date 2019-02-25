@@ -7,6 +7,14 @@
         }
     }
     .admin-inner-container {
+        .input-group>select.custom-select {
+            width: 250px !important;
+        }
+        #programStartDate,
+        #modify-programStartDate {
+            width: 210px;
+            border-radius: 0px 4px 4px 0px;
+        }
         .loader-modify {
             margin: 50px auto;
         }

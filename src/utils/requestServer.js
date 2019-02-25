@@ -24,7 +24,7 @@ requestServer.requestLogin = function(credentials) {
 
 requestServer.registerUser = function(userData) {
 
-    let { username, fullname, password, email, accessType, accessList } = userData;
+    let { username, fullname, password, email, accessType, accessList, currentPhase, rotationSchedule, programStartDate } = userData;
 
     return new Promise((resolve, reject) => {
         if (username.length == 0 || password.length == 0) {
@@ -36,7 +36,7 @@ requestServer.registerUser = function(userData) {
         } else {
             // convert accessList from string to array of values
             accessList = accessList.length > 0 ? accessList.split(',') : [];
-            axios.post(endPoints.register, { username, fullname, password, email, accessList, accessType }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            axios.post(endPoints.register, { username, fullname, password, email, accessList, accessType, currentPhase, rotationSchedule, programStartDate }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
                 .then((response) => {
                     toastr["success"]("User " + username + " created successfully");
                     resolve();
@@ -48,7 +48,7 @@ requestServer.registerUser = function(userData) {
 
 requestServer.updateUser = function(userData) {
 
-    let { username, password, email, fullname, accessType, accessList } = userData;
+    let { username, password, email, fullname, accessType, accessList, currentPhase, rotationSchedule, programStartDate } = userData;
 
     return new Promise((resolve, reject) => {
         if (username.length == 0 || email.length == 0 || fullname.length == 0) {
@@ -57,7 +57,7 @@ requestServer.updateUser = function(userData) {
         } else {
             // convert accessList from string to array of values
             accessList = accessList.length > 0 ? accessList.split(',') : [];
-            axios.post(endPoints.updateUser + "/" + username, { username, password, email, accessList, fullname, accessType }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            axios.post(endPoints.updateUser + "/" + username, { username, password, email, accessList, fullname, accessType, currentPhase, rotationSchedule, programStartDate }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
                 .then((response) => {
                     toastr["success"]("User " + username + " updated successfully");
                     resolve();
@@ -89,7 +89,10 @@ requestServer.getUser = function(username) {
 requestServer.deleteUser = function(username) {
     return new Promise((resolve, reject) => {
         axios.delete(endPoints.getUser + "/" + username, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
-            .then((response) => { resolve(response.data) })
+            .then((response) => {
+                toastr["success"]("User " + username + " deleted successfully");
+                resolve(response.data)
+            })
             .catch((err) => errorCallback(err, reject));
     });
 }
@@ -109,6 +112,7 @@ requestServer.getResidentData = function(username) {
             .then((response) => {
                 if (response.data.length == 0) {
                     toastr["error"]("No records found", "ERROR");
+                    resolve([]);
                 } else {
                     var recordsList = response.data.map((record) => {
                         return {
@@ -150,7 +154,7 @@ requestServer.setRecords = function(records, username) {
     })
 
     return new Promise((resolve, reject) => {
-        axios.post(endPoints.setRecords, { recordsList }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+        axios.post(endPoints.setRecords, { username, recordsList }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
             .then((response) => { resolve(response.data) })
             .catch((err) => errorCallback(err, reject));
     });

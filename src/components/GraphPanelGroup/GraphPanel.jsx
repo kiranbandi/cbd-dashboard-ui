@@ -5,7 +5,7 @@ import templateEpaSourceMap from '../../utils/epaSourceMap';
 import Tooltip from './Tooltip';
 import { bindActionCreators } from 'redux';
 import { showTooltip, setTooltipVisibility } from '../../redux/actions/actions';
-import GraphRow from './graphRow';
+import GraphRow from './GraphRow';
 
 class GraphPanel extends Component {
 

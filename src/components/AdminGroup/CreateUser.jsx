@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { registerUser } from '../../utils/requestServer';
 import Loading from 'react-loading';
+import moment from 'moment';
 
 export default class CreateUser extends Component {
 
@@ -14,7 +15,10 @@ export default class CreateUser extends Component {
             password: '',
             email: '',
             accessType: 'resident',
-            accessList: ''
+            accessList: '',
+            programStartDate: moment().format('MM/DD/YYYY'),
+            currentPhase: 'transition-to-discipline',
+            rotationSchedule: ''
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -26,13 +30,26 @@ export default class CreateUser extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-        const { username, password, fullname, email, accessType, accessList } = this.state;
+        const { username, password, fullname, email, accessType, accessList, currentPhase, rotationSchedule } = this.state;
+        const programStartDate = document.getElementById('programStartDate').value;
+
         // toggle loader on before request 
         this.setState({ loaderState: true });
-        registerUser({ username, password, fullname, email, accessType, accessList })
+        registerUser({ username, password, fullname, email, accessType, accessList, currentPhase, rotationSchedule, programStartDate })
             .then(() => {
                 // reset form values
-                this.setState({ username: '', fullname: '', password: '', email: '', accessType: 'resident', accessList: '' })
+                this.setState(
+                    {
+                        username: '',
+                        fullname: '',
+                        password: '',
+                        email: '',
+                        accessType: 'resident',
+                        accessList: '',
+                        programStartDate: moment().format('MM/DD/YYYY'),
+                        currentPhase: 'transition-to-discipline',
+                        rotationSchedule: ''
+                    })
             })
             // toggle loader once request is completed
             .finally(() => {
@@ -41,7 +58,10 @@ export default class CreateUser extends Component {
     }
 
     render() {
-        const { loaderState, username, fullname, password, email, accessType, accessList } = this.state;
+        const { loaderState, username, fullname,
+            password, email, accessType, accessList,
+            currentPhase, programStartDate, rotationSchedule } = this.state;
+
         return (
             <div>
                 <form className="col-lg-5 col-lg-offset-1 col-xs-10 col-xs-offset-1">
@@ -66,6 +86,7 @@ export default class CreateUser extends Component {
                         <select id='select-access-type' name="accessType" className='custom-select' value={accessType} onChange={this.onChange}>
                             <option value='resident' >RESIDENT</option>
                             <option value='supervisor' >SUPERVISOR</option>
+                            <option value='reviewer' >COMMITEE REVIEWER</option>
                             <option value='admin' >ADMIN</option>
                         </select>
                     </div>
@@ -74,6 +95,38 @@ export default class CreateUser extends Component {
                             <span className='inner-span'>ACCESS LIST</span>
                             <input type="text" className="form-control" name="accessList" value={accessList} placeholder="COMMA SEPARATED USERNAMES" onChange={this.onChange} />
                         </div>}
+
+
+                    {this.state.accessType == 'resident' &&
+                        <div className="input-group m-a">
+                            <span className='inner-span'>CURRENT PHASE</span>
+                            <select id='select-current-phase' name="currentPhase" className='custom-select' value={currentPhase} onChange={this.onChange}>
+                                <option value='transition-to-discipline' >TRANSITION TO DISCIPLINE</option>
+                                <option value='foundations-of-discipline' >FOUNDATIONS OF DISCIPLINE</option>
+                                <option value='core-of-discipline' >CORE OF DISCIPLINE</option>
+                                <option value='transition-to-practice' >TRANSITION TO PRACTICE</option>
+                            </select>
+                        </div>}
+
+
+                    {this.state.accessType == 'resident' &&
+                        <div className="input-group m-a">
+                            <span className='inner-span'>START DATE</span>
+                            <div className="input-group">
+                                <span className="input-group-addon">
+                                    <span className="icon icon-calendar"></span>
+                                </span>
+                                <input type="text" id='programStartDate' defaultValue={programStartDate} className="form-control" data-provide="datepicker" />
+                            </div>
+                        </div>}
+
+                    {this.state.accessType == 'resident' &&
+                        <div className="input-group m-a">
+                            <span className='inner-span'>ROTATION SCHEDULE</span>
+                            <input type="text" className="form-control" name="rotationSchedule" value={rotationSchedule} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
+                        </div>}
+
+
                     <button className={"btn btn-success create-btn m-a m-t-md " + ((username.length > 0) ? "" : 'disabled')} type="submit" onClick={this.onSubmit}>
                         <span className='create-span'>{"CREATE USER"} </span>
                         {loaderState && <Loading type='spin' height='25px' width='25px' color='#d6e5ff' delay={-1} />}

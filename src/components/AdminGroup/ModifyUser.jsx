@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { getAllUsers, getUser, updateUser, deleteUser } from '../../utils/requestServer';
 import Loading from 'react-loading';
+import moment from 'moment';
 
 export default class ModifyUser extends Component {
 
@@ -17,7 +18,10 @@ export default class ModifyUser extends Component {
             fullname: '',
             accessType: 'resident',
             accessList: '',
-            userList: []
+            userList: [],
+            programStartDate: moment().format('MM/DD/YYYY'),
+            currentPhase: 'transition-to-discipline',
+            rotationSchedule: ''
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -42,7 +46,18 @@ export default class ModifyUser extends Component {
                     // splice deletes value in place 
                     userList.splice(indexOfDeletedElement, 1);
                     // reset form values and also remove the deleted username from the list 
-                    this.setState({ userList, username: '', fullname: '', password: '', email: '', accessType: 'resident', accessList: '' })
+                    this.setState({
+                        userList,
+                        username: '',
+                        fullname: '',
+                        password: '',
+                        email: '',
+                        accessType: 'resident',
+                        accessList: '',
+                        programStartDate: moment().format('MM/DD/YYYY'),
+                        currentPhase: 'transition-to-discipline',
+                        rotationSchedule: ''
+                    })
                 })
                 // toggle loader once request is completed
                 .finally(() => {
@@ -62,7 +77,10 @@ export default class ModifyUser extends Component {
                         email: userData.email,
                         fullname: userData.fullname || '',
                         accessType: userData.accessType,
-                        accessList: userData.accessList || ''
+                        accessList: userData.accessList || '',
+                        programStartDate: moment(userData.programStartDate).format('MM/DD/YYYY') || moment().format('MM/DD/YYYY'),
+                        currentPhase: userData.currentPhase || 'transition-to-discipline',
+                        rotationSchedule: userData.rotationSchedule || ''
                     });
                 })
                 .finally(() => { this.setState({ loaderState: false }) });
@@ -75,13 +93,26 @@ export default class ModifyUser extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-        const { username, password, email, fullname, accessType, accessList } = this.state;
+        const { username, password, email, fullname, accessType, accessList, currentPhase, rotationSchedule } = this.state;
+        const programStartDate = document.getElementById('modify-programStartDate').value;
+
         // toggle loader on before request 
         this.setState({ innerLoaderState: true });
-        updateUser({ username, password, email, fullname, accessType, accessList })
+        updateUser({ username, password, email, fullname, accessType, accessList, currentPhase, rotationSchedule, programStartDate })
             .then(() => {
                 // reset form values
-                this.setState({ username: '', fullname: '', password: '', email: '', accessType: 'resident', accessList: '' })
+                this.setState({
+                    userList,
+                    username: '',
+                    fullname: '',
+                    password: '',
+                    email: '',
+                    accessType: 'resident',
+                    accessList: '',
+                    programStartDate: moment().format('MM/DD/YYYY'),
+                    currentPhase: 'transition-to-discipline',
+                    rotationSchedule: ''
+                })
             })
             // toggle loader once request is completed
             .finally(() => {
@@ -91,7 +122,10 @@ export default class ModifyUser extends Component {
 
     render() {
 
-        const { userList, loaderState, innerLoaderState, deleteLoaderState, username, fullname = '', password, email, accessType, accessList } = this.state;
+        const { userList, loaderState, innerLoaderState,
+            deleteLoaderState, username, fullname = '', password,
+            email, accessType, accessList,
+            currentPhase, programStartDate, rotationSchedule } = this.state;
 
         // Sort the residents alphabetically so that they are easier to look up
         userList.sort((previous, current) => previous.localeCompare(current));
@@ -122,6 +156,7 @@ export default class ModifyUser extends Component {
                             <select name="accessType" className='custom-select' value={accessType} onChange={this.onChange}>
                                 <option value='resident' >RESIDENT</option>
                                 <option value='supervisor' >SUPERVISOR</option>
+                                <option value='reviewer' >COMMITEE REVIEWER</option>
                                 <option value='admin' >ADMIN</option>
                             </select>
                         </div>
@@ -130,6 +165,38 @@ export default class ModifyUser extends Component {
                                 <span className='inner-span'>ACCESS LIST</span>
                                 <input type="text" className="form-control" name="accessList" value={accessList} placeholder="COMMA SEPARATED USERNAMES" onChange={this.onChange} />
                             </div>}
+
+
+                        {this.state.accessType == 'resident' &&
+                            <div className="input-group m-a">
+                                <span className='inner-span'>CURRENT PHASE</span>
+                                <select id='select-current-phase' name="currentPhase" className='custom-select' value={currentPhase} onChange={this.onChange}>
+                                    <option value='transition-to-discipline' >TRANSITION TO DISCIPLINE</option>
+                                    <option value='foundations-of-discipline' >FOUNDATIONS OF DISCIPLINE</option>
+                                    <option value='core-of-discipline' >CORE OF DISCIPLINE</option>
+                                    <option value='transition-to-practice' >TRANSITION TO PRACTICE</option>
+                                </select>
+                            </div>}
+
+
+                        {this.state.accessType == 'resident' &&
+                            <div className="input-group m-a">
+                                <span className='inner-span'>START DATE</span>
+                                <div className="input-group">
+                                    <span className="input-group-addon">
+                                        <span className="icon icon-calendar"></span>
+                                    </span>
+                                    <input type="text" id='modify-programStartDate' defaultValue={programStartDate} className="form-control" data-provide="datepicker" />
+                                </div>
+                            </div>}
+
+                        {this.state.accessType == 'resident' &&
+                            <div className="input-group m-a">
+                                <span className='inner-span'>ROTATION SCHEDULE</span>
+                                <input type="text" className="form-control" name="rotationSchedule" value={rotationSchedule} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
+                            </div>}
+
+
                         <p className='m-a text-warning'> <span className="icon icon-key"></span> For the purpose of secrecy, passwords are not shared.If you dont want to change the password, leave this field blank.</p>
                         <div className="input-group m-a">
                             <span className='inner-span'>PASSWORD</span>
