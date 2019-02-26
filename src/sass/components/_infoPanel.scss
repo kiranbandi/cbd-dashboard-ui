@@ -14,39 +14,37 @@
                 font-size: 17px;
             }
         }
+        .hr-divider {
+            h4 {
+                padding: 10px;
+                margin-top: 12px;
+                font-size: 15px;
+                color: #cfd2da;
+            }
+        }
         .schedule-box {
             margin-bottom: 20px;
-            .hr-divider {
-                h4 {
-                    padding: 10px;
-                    margin-top: 12px;
-                    font-weight: bold;
-                }
-            }
+            height: 150px;
             span.yearBox {
                 background: #283a5d;
                 display: inline-block;
                 text-align: center;
-                padding: 10px 0px;
+                padding: 5px 0px;
                 font-weight: bold;
                 border-right: 2px solid #1a1c22;
             }
             .custom-gannt-style-chart {
-                margin: 0px auto;
+                margin: 5px auto;
+                position: relative;
                 .chart-line {
                     background: #285d54;
-                    border-radius: 7px;
+                    border-radius: 30px;
                     display: block;
+                    position: absolute;
+                    top: 35px;
                     height: 22px;
                     margin: 10px 0px;
                     color: white;
-                    font-weight: bold;
-                }
-                .lined-border {
-                    background: white;
-                    height: 1px;
-                    width: 100%;
-                    display: block;
                 }
             }
         }

@@ -76,17 +76,17 @@ class FilterPanel extends Component {
                 }
 
                 // if uncommenced EPAs are needed to be seen then sub in empty records
-                if(!hideUncommencedEPA){
-                    _.map(templateEpaSourceMap,(source)=>{
-                        _.map(source.subRoot,(epa,innerKey)=>{ 
-                            if(!groupedResidentData.hasOwnProperty(innerKey)){
-                                groupedResidentData[innerKey]=[];
+                if (!hideUncommencedEPA) {
+                    _.map(templateEpaSourceMap, (source) => {
+                        _.map(source.subRoot, (epa, innerKey) => {
+                            if (!groupedResidentData.hasOwnProperty(innerKey)) {
+                                groupedResidentData[innerKey] = [];
                             }
                         })
                     })
-                    
+
                 }
-        
+
                 // store the info of visibility of phase into resident info
                 residentInfo.openOnlyCurrentPhase = openOnlyCurrentPhase;
                 actions.setResidentData(groupedResidentData, residentInfo);
@@ -120,7 +120,7 @@ class FilterPanel extends Component {
                     </div>
                     <div className="checkbox custom-control text-center custom-checkbox">
                         <label className='filter-label'>
-                            {"HIDE UNCOMMENCED EPAs"}
+                            {"HIDE EPAs WITH NO DATA"}
                             <input id='filter-hide-epa' type="checkbox" checked={this.state.hideUncommencedEPA} onChange={this.onEPAToggle} />
                             <span className="custom-control-indicator"></span>
                         </label>
