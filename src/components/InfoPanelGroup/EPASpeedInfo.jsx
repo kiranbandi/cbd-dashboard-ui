@@ -35,7 +35,7 @@ export default (props) => {
 
             <div className='row'>
                 <StatCard title='EPAs observed per week' type='info' metric={averageEPAsPerWeek} />
-                <StatCard title='EPAs per week (last 3 months)' type='success' metric={averageEPAsSince3Months} />
+                <StatCard title='EPAs observed per week (last 3 months)' type='success' metric={averageEPAsSince3Months} />
                 <StatCard title='Total EPAs Observed' type='primary' metric={totalEPAs} />
                 <StatCard title='Total EPAs Achieved' type='danger' metric={totalEPAsAchieved} />
             </div>
