@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import moment from 'moment';
 import RotationSchedule from './RotationSchedule';
 import EPASpeedInfo from './EPASpeedInfo';
 
