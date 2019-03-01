@@ -74,6 +74,7 @@ export default class ModifyUser extends Component {
                 .then((userData) => {
                     this.setState({
                         username,
+                        password: '',
                         email: userData.email,
                         fullname: userData.fullname || '',
                         accessType: userData.accessType,
