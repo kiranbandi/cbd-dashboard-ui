@@ -3,29 +3,6 @@
     padding: 20px;
     margin: 30px 30px 150px 30px;
     border-radius: 5px;
-    // .panel-inner-root {
-    //     margin-left: 20px;
-    //     float: left;
-    //     height: 500px;
-    //     overflow-y: scroll;
-    //     margin-bottom: 25px;
-    //     // custom  styling for scroll bar from https://codepen.io/devstreak/pen/dMYgeO
-    //     &::-webkit-scrollbar-track {
-    //         -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    //         border-radius: 10px;
-    //         background-color: #F5F5F5;
-    //     }
-    //     &::-webkit-scrollbar {
-    //         width: 12px;
-    //         background-color: #F5F5F5;
-    //     }
-    //     &::-webkit-scrollbar-thumb {
-    //         border-radius: 10px;
-    //         -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-    //         background-color: #D62929;
-    //     }
-    //     // end of styling for custom scroll bar 
-    // }
     .graph-tooltip {
         position: absolute;
         width: 400px;
@@ -64,7 +41,6 @@
             }
         }
         .inner-graph-row {
-            transition: height 750ms ease-in;
             margin-top: 0px;
             background: #252830;
             overflow: hidden;

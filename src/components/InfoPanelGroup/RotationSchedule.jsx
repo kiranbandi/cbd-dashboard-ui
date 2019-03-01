@@ -15,7 +15,7 @@ export default (props) => {
         "24-Sep-2018", "22-Oct-2018", "19-Nov-2018",
         "17-Dec-2018", "14-Jan-2019", "11-Feb-2019",
         "11-Mar-2019", "08-Apr-2019", "06-May-2019",
-        "03-Jun-2019", "28-Jun-2019"],
+        "03-Jun-2019", "27-Jun-2019"],
         startDate = moment("01-07-2018", "DD-MM-YYYY");
 
     return (

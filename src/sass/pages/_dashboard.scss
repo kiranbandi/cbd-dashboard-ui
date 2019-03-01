@@ -3,6 +3,42 @@
         margin: 100px auto;
     }
     .filter-panel {
+        margin: 30px 30px 20px 30px;
+        .root-box {
+            border-radius: 5px;
+            background: #1a1c22;
+            @media (max-width: 768px) {
+                width: 100%;
+            }
+            width: 550px;
+        }
+        .button-box {
+            display: inline-block;
+        }
+        .filter-button-container {
+            display: inline-block;
+            .btn-primary-outline.active-button {
+                color: #ffffff;
+                background-color: #1997c6;
+                box-shadow: none;
+            }
+            .btn-primary-outline.not-active {
+                color: #1997c6;
+                background-color: transparent;
+                border-color: #1997c6;
+            }
+        }
+        .advanced-filter-box {
+            background: #1a1c22;
+            padding: 20px 20px 20px 20px;
+            margin-top: 5px;
+            &.hide-filter {
+                display: none;
+            }
+            &.show-filter {
+                display: block;
+            }
+        }
         .name-box {
             #filter-residentName {
                 width: 175px;
@@ -21,7 +57,7 @@
         }
         .checkbox {
             display: inline-block;
-            margin: 20px;
+            margin-right: 20px;
             text-align: left;
             .custom-control-indicator {
                 top: 3px;

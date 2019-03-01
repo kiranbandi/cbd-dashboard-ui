@@ -31,25 +31,27 @@
             margin-bottom: 20px;
             height: 150px;
             span.yearBox {
-                background: #283a5d;
                 display: inline-block;
                 text-align: center;
-                padding: 5px 0px;
-                font-weight: bold;
-                border-right: 2px solid #1a1c22;
+                padding: 4px 0;
+                border: 1px solid;
+                border-color: #1a1c22;
+                background: #2f323a;
             }
             .custom-gannt-style-chart {
                 margin: 5px auto;
                 position: relative;
                 .chart-line {
-                    background: #285d54;
+                    background: #283a5d;
                     border-radius: 30px;
                     display: block;
                     position: absolute;
                     top: 35px;
-                    height: 22px;
+                    height: 28px;
                     margin: 10px 0px;
                     color: white;
+                    padding-top: 3px;
+                    font-weight: 500;
                 }
             }
         }
