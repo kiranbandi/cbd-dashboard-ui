@@ -2,6 +2,10 @@
     background: #1a1c22;
     margin: 30px 30px 20px 30px;
     border-radius: 5px;
+    @media (max-width: 768px) {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
     .info-panel-inner {
         margin: 20px;
         padding: 20px;

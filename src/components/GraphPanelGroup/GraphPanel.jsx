@@ -64,6 +64,7 @@ class GraphPanel extends Component {
         let smallScreen = false;
 
         if (widthPartition < 200) {
+            widthOfRootGraphPanel += 50;
             widthPartition = widthOfRootGraphPanel - 20;
             smallScreen = true;
         }

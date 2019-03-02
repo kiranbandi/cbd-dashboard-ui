@@ -9,11 +9,16 @@
             background: #1a1c22;
             @media (max-width: 768px) {
                 width: 100%;
+                padding: 10px;
             }
             width: 550px;
         }
         .button-box {
             display: inline-block;
+            margin: 10px;
+            @media (max-width: 768px) {
+                margin: 10px;
+            }
         }
         .filter-button-container {
             display: inline-block;
@@ -26,6 +31,11 @@
                 color: #1997c6;
                 background-color: transparent;
                 border-color: #1997c6;
+            }
+            .btn {
+                @media (max-width: 768px) {
+                    font-size: 12px;
+                }
             }
         }
         .advanced-filter-box {
@@ -46,7 +56,7 @@
             display: inline-block;
             margin: 10px 20px;
             @media (max-width: 768px) {
-                margin-top: 25px;
+                margin-top: 10px;
                 margin-bottom: 0px;
             }
         }
@@ -81,6 +91,9 @@
                 margin-left: 10px;
                 vertical-align: top;
                 display: inline-block;
+            }
+            @media (max-width: 768px) {
+                font-size: 13px;
             }
         }
     }

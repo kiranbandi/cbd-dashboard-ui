@@ -131,7 +131,7 @@ class FilterPanel extends Component {
                         <button className={'btn btn-primary-outline ' + (isFilterOpen ? " active-button" : "not-active")} onClick={this.onFilterToggleClick} ><span className="icon icon-funnel"></span></button>
                     </div>
 
-                    <div className='text-xs-left m-a button-box'>
+                    <div className='text-xs-left button-box'>
                         <button type="submit" className="filter-button btn btn-primary-outline" onClick={this.onSubmit}>
                             GET RECORDS
                     {filterLoaderState && <Loading className='filter-loader' type='spin' height='25px' width='25px' color='#1997c6' delay={-1} />}

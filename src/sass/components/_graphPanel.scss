@@ -3,6 +3,10 @@
     padding: 20px;
     margin: 30px 30px 150px 30px;
     border-radius: 5px;
+    @media (max-width: 768px) {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
     .panel-inner-root {
         margin: 0px auto;
     }
@@ -42,7 +46,8 @@
                 display: inline-block;
                 font-family: sans-serif;
                 @media (max-width: 768px) {
-                    font-size: 15px;
+                    font-size: 14px;
+                    font-weight: bold;
                 }
             }
         }
