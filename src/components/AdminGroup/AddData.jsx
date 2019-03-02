@@ -96,15 +96,15 @@ export default class AddData extends Component {
                     loaderState ?
                         <Loading className='loader-modify' type='spin' height='100px' width='100px' color='#d6e5ff' delay={-1} /> :
 
-                        <form className="add-data-form">
+                        <form className="add-data-form col-lg-7 col-lg-offset-1 col-xs-10 col-xs-offset-1">
                             <div className="input-group m-a">
-                                <h4 className='inner-span'>RESIDENT USERNAME</h4>
+                                <span className='inner-span'>RESIDENT USERNAME</span>
                                 <select name="username" className='custom-select' value={'user-' + selectedIndex} onChange={this.onSelectUsername}>
                                     <option key={'user-default'} value={'user-0'} >{'Select Username'}</option>
                                     {userList.map((user, index) => <option key={'user-' + (index + 1)} value={'user-' + (index + 1)} >{user.username}</option>)}
                                 </select>
                             </div>
-                            <FileUpload className={'m-a'} id='add-data-rcm-file' label='File from Royal College Portal' />
+                            <FileUpload className={'m-a'} id='add-data-rcm-file' label='Royal College Data Export File' />
                             <button className={"btn btn-success create-btn m-a m-t-md "} type="submit" onClick={this.onProcessFile}>
                                 <span className='create-span'>{"UPLOAD"} </span>
                                 {processing && <Loading type='spin' height='25px' width='25px' color='#d6e5ff' delay={-1} />}

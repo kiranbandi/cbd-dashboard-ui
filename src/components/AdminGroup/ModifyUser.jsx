@@ -21,18 +21,25 @@ export default class ModifyUser extends Component {
             userList: [],
             programStartDate: moment().format('MM/DD/YYYY'),
             currentPhase: 'transition-to-discipline',
-            rotationSchedule: ''
+            rotationSchedule: '',
+            passwordBoxOpen: false
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onSelectUsername = this.onSelectUsername.bind(this);
         this.onDeleteClick = this.onDeleteClick.bind(this);
+        this.onPasswordToggleClick = this.onPasswordToggleClick.bind(this);
     }
 
     componentDidMount() {
         getAllUsers()
             .then((users) => { this.setState({ userList: [...users] }) })
             .finally(() => { this.setState({ loaderState: false }) });
+    }
+
+    onPasswordToggleClick(event) {
+        const { passwordBoxOpen } = this.state;
+        this.setState({ passwordBoxOpen: !passwordBoxOpen, password: '' });
     }
 
     onDeleteClick(event) {
@@ -56,7 +63,8 @@ export default class ModifyUser extends Component {
                         accessList: '',
                         programStartDate: moment().format('MM/DD/YYYY'),
                         currentPhase: 'transition-to-discipline',
-                        rotationSchedule: ''
+                        rotationSchedule: '',
+                        passwordBoxOpen: false
                     })
                 })
                 // toggle loader once request is completed
@@ -81,7 +89,8 @@ export default class ModifyUser extends Component {
                         accessList: userData.accessList || '',
                         programStartDate: moment(userData.programStartDate).format('MM/DD/YYYY') || moment().format('MM/DD/YYYY'),
                         currentPhase: userData.currentPhase || 'transition-to-discipline',
-                        rotationSchedule: userData.rotationSchedule || ''
+                        rotationSchedule: userData.rotationSchedule || '',
+                        passwordBoxOpen: false
                     });
                 })
                 .finally(() => { this.setState({ loaderState: false }) });
@@ -111,7 +120,8 @@ export default class ModifyUser extends Component {
                     accessList: '',
                     programStartDate: moment().format('MM/DD/YYYY'),
                     currentPhase: 'transition-to-discipline',
-                    rotationSchedule: ''
+                    rotationSchedule: '',
+                    passwordBoxOpen: false
                 })
             })
             // toggle loader once request is completed
@@ -125,7 +135,7 @@ export default class ModifyUser extends Component {
         const { userList, loaderState, innerLoaderState,
             deleteLoaderState, username, fullname = '', password,
             email, accessType, accessList,
-            currentPhase, programStartDate, rotationSchedule } = this.state;
+            currentPhase, programStartDate, rotationSchedule, passwordBoxOpen } = this.state;
 
         // Sort the residents alphabetically so that they are easier to look up
         userList.sort((previous, current) => previous.localeCompare(current));
@@ -196,11 +206,22 @@ export default class ModifyUser extends Component {
                                 <input type="text" className="form-control" name="rotationSchedule" value={rotationSchedule} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
                             </div>}
 
-                        <p className='m-a text-warning'> <span className="icon icon-key"></span> For the purpose of secrecy, passwords are not shared.If you dont want to change the password, leave this field blank.</p>
-                        <div className="input-group m-a">
+                        <p className='m-a text-warning'> <span className="icon icon-key"></span> For the purpose of secrecy, passwords are not shared.You can however overwrite it with a new one using the checkbox below.</p>
+
+
+                        <div className="input-group m-a checkbox custom-control text-center custom-checkbox">
+                            <label className='filter-label'>
+                                {"CHANGE PASSWORD"}
+                                <input id='toggle-password-box' type="checkbox" checked={passwordBoxOpen} onChange={this.onPasswordToggleClick} />
+                                <span className="custom-control-indicator"></span>
+                            </label>
+                        </div>
+
+                        {passwordBoxOpen && <div className="input-group m-a">
                             <span className='inner-span'>PASSWORD</span>
                             <input type="password" value={password} className="form-control" name="password" placeholder="PASSWORD" onChange={this.onChange} />
-                        </div>
+                        </div>}
+
                         <button className={"btn btn-success create-btn m-a m-t-md " + ((username.length > 0) ? "" : 'disabled')} type="submit" onClick={this.onSubmit}>
                             <span className='create-span'>{"UPDATE USER"} </span>
                             {innerLoaderState && <Loading type='spin' height='25px' width='25px' color='#d6e5ff' delay={-1} />}
