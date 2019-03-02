@@ -73,7 +73,7 @@ class Tools extends Component {
     render() {
         const { processing, dataReady, showGraphPanel, epaSourceMap } = this.state;
         return (
-            <div className='tools-root m-t text-xs-center' >
+            <div className='tools-root m-t text-xs-center text-sm-left' >
                 <div className='container'>
                     <h2 className='text-center text-primary'>Royal College of Medicine Export File Processor</h2>
                     <p className='tools-text m-t m-b'>

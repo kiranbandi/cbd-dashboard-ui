@@ -53,6 +53,8 @@ export default class GraphRow extends Component {
             }
         })
 
+        const overShotLineX = recordedCount > maxObservation ? xScale(maxObservation - 0.5) : 0;
+
         return (
             <div className='text-xs-center'>
                 {/* widthly reduced slightly by 10px to facilitate extra gap at the last */}
@@ -91,7 +93,7 @@ export default class GraphRow extends Component {
                 <div style={{ width: smallScreen ? widthPartition : widthPartition * 2 }} className='inner-cell score-cell'>
                     <LineChart
                         trackTrailPositions={trackTrailPositions}
-                        maxObservation={maxObservation}
+                        overShotLineX={overShotLineX}
                         width={width}
                         data={scoreData}
                         epaSource={epaSource}

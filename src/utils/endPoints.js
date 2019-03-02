@@ -1,4 +1,7 @@
 var endPointRoot = 'https://cbd.usask.ca:8081/';
+// When testing a local server uncomment below but for most
+// cases we will be working with the prod server , i know its not great to do this 
+// but for a project this size its got to be okay !!!
 // var endPointRoot = 'http://localhost:8081/'
 
 var endPoints = {
