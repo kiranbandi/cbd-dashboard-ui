@@ -6,6 +6,7 @@ import Tooltip from './Tooltip';
 import { bindActionCreators } from 'redux';
 import { showTooltip, setTooltipVisibility, setLevelVisibilityStatus } from '../../redux/actions/actions';
 import GraphRow from './GraphRow';
+import HeaderRow from './HeaderRow';
 
 class GraphPanel extends Component {
 
@@ -46,7 +47,12 @@ class GraphPanel extends Component {
 
     render() {
 
-        let { residentData, isTooltipVisible, tooltipData, epaSourceMap, levelVisibilityOpenStatus } = this.props;
+        let { residentData,
+            isTooltipVisible,
+            isEMDepartment = false,
+            tooltipData,
+            epaSourceMap,
+            levelVisibilityOpenStatus } = this.props;
 
         // if there is no source map provided then use the Emergency medicine Template Map
         epaSourceMap = !!epaSourceMap ? epaSourceMap : templateEpaSourceMap;
@@ -91,11 +97,16 @@ class GraphPanel extends Component {
 
                             return (
                                 <div className="inner-sub-root" key={'sub-root-' + innerKey}>
+
                                     {/* EPA Label Row head that can be clicked to expand or collapse */}
-                                    <div className={'inner-epa-head' + (isCurrentSubRootVisible ? ' bottom-line ' : ' ') + 'label-index-' + innerKey} onClick={this.onEPALabelClick}>
-                                        {isCurrentSubRootVisible ? <span className="icon icon-chevron-down"></span> : <span className="icon icon-chevron-right"></span>}
-                                        <span className='epa-label' >{innerKey + " - " + epaSourceMap[innerKey].topic}</span>
-                                    </div>
+                                    <HeaderRow
+                                        onEPALabelClick={this.onEPALabelClick}
+                                        innerKey={innerKey}
+                                        smallScreen={smallScreen}
+                                        isCurrentSubRootVisible={isCurrentSubRootVisible}
+                                        residentData={residentData}
+                                        epaSourceMap={epaSourceMap} />
+
                                     {/* Atual Row data containing labels and bullet and line charts */}
                                     <div className={'inner-graph-row ' + (isCurrentSubRootVisible ? 'show-row' : 'hide-row')}>
                                         {_.map(epaSources, (epaSource, sourceKey) => {
@@ -112,6 +123,7 @@ class GraphPanel extends Component {
                                                     residentData={residentData} />)
                                         })}
                                     </div>
+
                                 </div>)
                         })}
                     </div>

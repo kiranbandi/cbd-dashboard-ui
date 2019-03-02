@@ -50,6 +50,28 @@
                     font-weight: bold;
                 }
             }
+            .epa-label-status {
+                font-size: 15px;
+                text-transform: uppercase;
+                font-weight: bold;
+                padding: 4px 15px;
+                background: #283a5d;
+                border-radius: 10px;
+                margin-left: 15px;
+                vertical-align: middle;
+                text-align: center;
+                color: white;
+                .icon {
+                    margin-left: 5px;
+                    font-size: 20px;
+                }
+                @media (max-width: 768px) {
+                    display: block;
+                    margin-left: 0px;
+                    padding: 0px;
+                    margin: 5px 20px;
+                }
+            }
         }
         .inner-graph-row {
             margin-top: 0px;

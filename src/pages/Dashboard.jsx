@@ -40,7 +40,7 @@ class Dashboard extends Component {
                             <div>
                                 <FilterPanel />
                                 <InfoPanel />
-                                <GraphPanel />
+                                <GraphPanel isEMDepartment={true} />
                             </div> :
                             <h2 className='text-center text-danger'>No resident information is available currently</h2>}
                     </div>}
