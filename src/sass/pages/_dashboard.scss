@@ -45,6 +45,10 @@
             }
             display: inline-block;
             margin: 10px 20px;
+            @media (max-width: 768px) {
+                margin-top: 25px;
+                margin-bottom: 0px;
+            }
         }
         .date-box {
             display: inline-block;

@@ -15,7 +15,7 @@ export default class Container extends Component {
                 <div id='container-body'>
                     {this.props.children}
                 </div>
-                <footer className="footer w-full m-t">
+                <footer className="footer w-full m-t hidden-xs">
                     <div className="container-fluid">
                         <div className='w-md footer-inner'>
                             <span className="left text-xs-left">

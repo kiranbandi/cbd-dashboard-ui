@@ -13,7 +13,7 @@ export default (props) => {
             <TrackTrails trackTrailPositions={props.trackTrailPositions} />
             <g>
                 {_.map(props.data, (d, i) => {
-                    return <circle id={'point-inner-' + props.epaSource + '-outer-' + i} onMouseOver={props.onMouseOver} onMouseOut={props.onMouseOut} r={6} className='score-point' key={'score-point-' + i} cx={d.x} cy={d.y}></circle>;
+                    return <circle id={'point-inner-' + props.epaSource + '-outer-' + i} onMouseOver={props.onMouseOver} onMouseOut={props.onMouseOut} r={props.smallScreen ? 3 : 6} className='score-point' key={'score-point-' + i} cx={d.x} cy={d.y}></circle>;
                 })}
             </g>
         </svg>)

@@ -96,7 +96,7 @@ export default class AddData extends Component {
                     loaderState ?
                         <Loading className='loader-modify' type='spin' height='100px' width='100px' color='#d6e5ff' delay={-1} /> :
 
-                        <form className="add-data-form col-lg-7 col-lg-offset-1 col-xs-10 col-xs-offset-1">
+                        <form className="add-data-form col-lg-7 col-lg-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
                             <div className="input-group m-a">
                                 <span className='inner-span'>RESIDENT USERNAME</span>
                                 <select name="username" className='custom-select' value={'user-' + selectedIndex} onChange={this.onSelectUsername}>

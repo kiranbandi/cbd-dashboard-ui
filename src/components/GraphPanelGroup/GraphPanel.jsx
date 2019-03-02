@@ -61,6 +61,13 @@ class GraphPanel extends Component {
         let widthOfRootGraphPanel = document.body.getBoundingClientRect().width - 125;
         let widthPartition = widthOfRootGraphPanel / 4;
 
+        let smallScreen = false;
+
+        if (widthPartition < 200) {
+            widthPartition = widthOfRootGraphPanel - 20;
+            smallScreen = true;
+        }
+
         return (
             <div>
                 {epaSourcesThatExist && <div className='graph-panel-root'>
@@ -69,10 +76,10 @@ class GraphPanel extends Component {
                     {isTooltipVisible && <Tooltip {...tooltipData} />}
 
                     {/* code chunk for displaying titles above the table */}
-                    <div className='title-root'>
+                    <div className='title-root text-xs-center'>
                         <h4 style={{ width: widthPartition }} className='title-bar'>EPA(Entrustable Professional Activity)</h4>
                         <h4 style={{ width: widthPartition }} className='title-bar'>Observation Count</h4>
-                        <h4 style={{ width: widthPartition * 2 }} className='title-bar'>Score History</h4>
+                        <h4 style={{ width: smallScreen ? widthPartition : widthPartition * 2 }} className='title-bar'>Score History</h4>
                     </div>
 
                     {/* This is the main container which houses the table contents */}
@@ -100,6 +107,7 @@ class GraphPanel extends Component {
                                                     epaSource={epaSource}
                                                     widthPartition={widthPartition}
                                                     epaSourceMap={epaSourceMap}
+                                                    smallScreen={smallScreen}
                                                     residentData={residentData} />)
                                         })}
                                     </div>

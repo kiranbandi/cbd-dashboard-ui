@@ -64,7 +64,7 @@ export default class CreateUser extends Component {
 
         return (
             <div>
-                <form className="col-lg-5 col-lg-offset-1 col-xs-10 col-xs-offset-1">
+                <form className="col-lg-5 col-lg-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
                     <div className="input-group m-a">
                         <span className='inner-span'>USERNAME</span>
                         <input type="text" value={username} className="form-control" name="username" placeholder="USERNAME , NO SPACES" onChange={this.onChange} />

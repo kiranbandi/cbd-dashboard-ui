@@ -3,6 +3,9 @@
     padding: 20px;
     margin: 30px 30px 150px 30px;
     border-radius: 5px;
+    .panel-inner-root {
+        margin: 0px auto;
+    }
     .graph-tooltip {
         position: absolute;
         width: 400px;
@@ -38,6 +41,9 @@
                 font-size: 18px;
                 display: inline-block;
                 font-family: sans-serif;
+                @media (max-width: 768px) {
+                    font-size: 15px;
+                }
             }
         }
         .inner-graph-row {
@@ -61,6 +67,9 @@
                     font-size: 16px;
                     display: inline-block;
                     font-family: sans-serif;
+                    @media (max-width: 768px) {
+                        margin-left: 0px;
+                    }
                 }
                 &.observation-cell {
                     margin: 25px 0px 20px 0px;

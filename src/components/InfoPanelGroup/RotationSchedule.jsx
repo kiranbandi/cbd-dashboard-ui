@@ -19,7 +19,7 @@ export default (props) => {
         startDate = moment("01-07-2018", "DD-MM-YYYY");
 
     return (
-        <div className='schedule-box text-center'>
+        <div className='schedule-box text-center hidden-xs'>
             <div className="hr-divider">
                 <h4 className="hr-divider-content"> ROTATION SCHEDULE </h4>
             </div>

@@ -11,7 +11,7 @@ export default class GraphRow extends Component {
 
     render() {
 
-        let { epaSource, innerKey, widthPartition, epaSourceMap, residentData, onMouseOut, onMouseOver } = this.props;
+        let { epaSource, innerKey, widthPartition, smallScreen, epaSourceMap, residentData, onMouseOut, onMouseOver } = this.props;
 
         //  margin of 20px on either side reduces the available width by 40 
         // 15px bullet chart padding on either sides
@@ -22,7 +22,9 @@ export default class GraphRow extends Component {
         var marginHorizontal = 20;
         var height = 200;
         var innerHeight = height - 20;
-        var width = (widthPartition * 2) - 20;
+
+
+        var width = (smallScreen ? widthPartition : widthPartition * 2) - 20;
 
         // Get the maximum required observations for each EPA from source MAP *
         const maxObservation = +epaSourceMap[epaSource.split(".")[0]].maxObservation[epaSource];
@@ -52,7 +54,7 @@ export default class GraphRow extends Component {
         })
 
         return (
-            <div>
+            <div className='text-xs-center'>
                 {/* widthly reduced slightly by 10px to facilitate extra gap at the last */}
                 <div style={{ width: widthPartition - 10 }} className='inner-cell epa-title-cell'>
                     <span className='inner-offset-label'>
@@ -86,12 +88,14 @@ export default class GraphRow extends Component {
                     </div>
 
                 </div>
-                <div style={{ width: widthPartition * 2 }} className='inner-cell score-cell'>
+                <div style={{ width: smallScreen ? widthPartition : widthPartition * 2 }} className='inner-cell score-cell'>
                     <LineChart
                         trackTrailPositions={trackTrailPositions}
+                        maxObservation={maxObservation}
                         width={width}
                         data={scoreData}
                         epaSource={epaSource}
+                        smallScreen={smallScreen}
                         innerHeight={innerHeight}
                         onMouseOver={onMouseOver}
                         onMouseOut={onMouseOut} />

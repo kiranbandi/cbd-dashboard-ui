@@ -15,6 +15,9 @@
         display: inline-block;
         margin: 0px 20px 0px 0px;
         text-transform: uppercase;
+        @media (max-width: 768px) {
+            margin-bottom: 20px;
+        }
     }
     p {
         display: inline-block;
