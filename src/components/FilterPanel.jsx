@@ -6,6 +6,7 @@ import { getResidentData } from '../utils/requestServer';
 import moment from 'moment';
 import templateEpaSourceMap from '../utils/epaSourceMap';
 import _ from 'lodash';
+import Loading from 'react-loading';
 import { toggleFilterLoader, setResidentFilter, setResidentData } from '../redux/actions/actions';
 
 class FilterPanel extends Component {
@@ -134,7 +135,7 @@ class FilterPanel extends Component {
                     <div className='text-xs-left button-box'>
                         <button type="submit" className="filter-button btn btn-primary-outline" onClick={this.onSubmit}>
                             GET RECORDS
-                    {filterLoaderState && <Loading className='filter-loader' type='spin' height='25px' width='25px' color='#1997c6' delay={-1} />}
+                    {filterLoaderState && <Loading className='filter-loader' type='spin' height='25px' width='25px' color='white' delay={-1} />}
                         </button>
                     </div>
                 </div>
@@ -195,7 +196,8 @@ class FilterPanel extends Component {
 function mapStateToProps(state) {
     return {
         residentFilter: state.oracle.residentFilter,
-        residentList: state.oracle.residentList
+        residentList: state.oracle.residentList,
+        filterLoaderState: state.oracle.filterLoaderState
     };
 }
 

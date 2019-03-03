@@ -159,12 +159,8 @@ export default function(rawData) {
                     iteratorIndex += 1;
                 }
             } catch (error) {
-                debugger;
-
+                console.log(error);
             }
-
-            debugger;
-
             resolve({ 'data': dataStore, epaSourceMap });
         } catch (e) {
             reject();

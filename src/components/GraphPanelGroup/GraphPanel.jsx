@@ -103,6 +103,7 @@ class GraphPanel extends Component {
                                         onEPALabelClick={this.onEPALabelClick}
                                         innerKey={innerKey}
                                         smallScreen={smallScreen}
+                                        isEMDepartment={isEMDepartment}
                                         isCurrentSubRootVisible={isCurrentSubRootVisible}
                                         residentData={residentData}
                                         epaSourceMap={epaSourceMap} />
