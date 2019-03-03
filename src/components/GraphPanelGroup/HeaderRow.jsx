@@ -5,7 +5,7 @@ export default class HeaderRow extends Component {
 
     render() {
 
-        const { smallScreen, onEPALabelClick, innerKey, isCurrentSubRootVisible, epaSourceMap, residentData } = this.props;
+        const { onEPALabelClick, innerKey, isCurrentSubRootVisible, epaSourceMap, residentData } = this.props;
         let requiredEPACount = 0, completedEPACount = 0;
 
         _.map(epaSourceMap[innerKey].maxObservation, (count, epaID) => {
