@@ -8,7 +8,7 @@ export default (props) => {
         //200px to offset the 30px margin on both sides and vertical scroll bar width
         widthAvailable = document.body.getBoundingClientRect().width - 200,
         widthForEachMonth = widthAvailable / 12,
-        { scheduleMap } = props;
+        { scheduleMap, longitudinalScheduleMap } = props;
 
     // This will change once a year when systems are updated/upgraded :-D
     const currentSchedule = ["01-Jul-2018", "30-Jul-2018", "27-Aug-2018",
@@ -42,6 +42,9 @@ export default (props) => {
 
                 })}
             </div>
+            {!!longitudinalScheduleMap && _.map(longitudinalScheduleMap, (longEntry, longIndex) => {
+                return <span className='chart-line-long' key={"index-" + longIndex} style={{ width: widthAvailable }}>{longEntry}</span>
+            })}
         </div>)
 
 }

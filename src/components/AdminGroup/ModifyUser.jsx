@@ -22,6 +22,7 @@ export default class ModifyUser extends Component {
             programStartDate: moment().format('MM/DD/YYYY'),
             currentPhase: 'transition-to-discipline',
             rotationSchedule: '',
+            longitudinalSchedule: '',
             passwordBoxOpen: false
         };
         this.onChange = this.onChange.bind(this);
@@ -64,6 +65,7 @@ export default class ModifyUser extends Component {
                         programStartDate: moment().format('MM/DD/YYYY'),
                         currentPhase: 'transition-to-discipline',
                         rotationSchedule: '',
+                        longitudinalSchedule: '',
                         passwordBoxOpen: false
                     })
                 })
@@ -90,6 +92,7 @@ export default class ModifyUser extends Component {
                         programStartDate: moment(userData.programStartDate).format('MM/DD/YYYY') || moment().format('MM/DD/YYYY'),
                         currentPhase: userData.currentPhase || 'transition-to-discipline',
                         rotationSchedule: userData.rotationSchedule || '',
+                        longitudinalSchedule: userData.longitudinalSchedule || '',
                         passwordBoxOpen: false
                     });
                 })
@@ -98,17 +101,17 @@ export default class ModifyUser extends Component {
     }
 
     onChange(event) {
-        this.setState({ [event.target.name]: (event.target.name == 'fullname' || event.target.name == 'rotationSchedule' || event.target.name == 'accessList') ? event.target.value : event.target.value.trim() });
+        this.setState({ [event.target.name]: ['fullname', 'rotationSchedule', 'accessList', 'longitudinalSchedule'].indexOf(event.target.name) > -1 ? event.target.value : event.target.value.trim() });
     }
 
     onSubmit(event) {
         event.preventDefault();
-        const { username, password, email, fullname, accessType, accessList, currentPhase, rotationSchedule } = this.state;
+        const { username, password, email, fullname, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule } = this.state;
         const programStartDate = document.getElementById('modify-programStartDate') ? document.getElementById('modify-programStartDate').value : '';
 
         // toggle loader on before request 
         this.setState({ innerLoaderState: true });
-        updateUser({ username, password, email, fullname, accessType, accessList, currentPhase, rotationSchedule, programStartDate })
+        updateUser({ username, password, email, fullname, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule, programStartDate })
             .then(() => {
                 // reset form values
                 this.setState({
@@ -121,6 +124,7 @@ export default class ModifyUser extends Component {
                     programStartDate: moment().format('MM/DD/YYYY'),
                     currentPhase: 'transition-to-discipline',
                     rotationSchedule: '',
+                    longitudinalSchedule: '',
                     passwordBoxOpen: false
                 })
             })
@@ -135,7 +139,7 @@ export default class ModifyUser extends Component {
         const { userList, loaderState, innerLoaderState,
             deleteLoaderState, username, fullname = '', password,
             email, accessType, accessList,
-            currentPhase, programStartDate, rotationSchedule, passwordBoxOpen } = this.state;
+            currentPhase, programStartDate, rotationSchedule, longitudinalSchedule, passwordBoxOpen } = this.state;
 
         // Sort the residents alphabetically so that they are easier to look up
         userList.sort((previous, current) => previous.localeCompare(current));
@@ -204,6 +208,12 @@ export default class ModifyUser extends Component {
                             <div className="input-group m-a">
                                 <span className='inner-span'>ROTATION SCHEDULE</span>
                                 <input type="text" className="form-control" name="rotationSchedule" value={rotationSchedule} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
+                            </div>}
+
+                        {this.state.accessType == 'resident' &&
+                            <div className="input-group m-a">
+                                <span className='inner-span'>LONGITUDINAL SCHEDULE</span>
+                                <input type="text" className="form-control" name="longitudinalSchedule" value={longitudinalSchedule} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
                             </div>}
 
                         <p className='m-a text-warning'> <span className="icon icon-key"></span> For the purpose of secrecy, passwords are not shared.You can however overwrite it with a new one using the checkbox below.</p>

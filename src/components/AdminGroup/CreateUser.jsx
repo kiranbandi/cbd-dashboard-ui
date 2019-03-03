@@ -18,24 +18,25 @@ export default class CreateUser extends Component {
             accessList: '',
             programStartDate: moment().format('MM/DD/YYYY'),
             currentPhase: 'transition-to-discipline',
-            rotationSchedule: ''
+            rotationSchedule: '',
+            longitudinalSchedule: ''
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
     onChange(event) {
-        this.setState({ [event.target.name]: (event.target.name == 'fullname' || event.target.name == 'rotationSchedule' || event.target.name == 'accessList') ? event.target.value : event.target.value.trim() });
+        this.setState({ [event.target.name]: ['fullname', 'rotationSchedule', 'accessList', 'longitudinalSchedule'].indexOf(event.target.name) > -1 ? event.target.value : event.target.value.trim() });
     }
 
     onSubmit(event) {
         event.preventDefault();
-        const { username, password, fullname, email, accessType, accessList, currentPhase, rotationSchedule } = this.state;
+        const { username, password, fullname, email, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule } = this.state;
         const programStartDate = document.getElementById('programStartDate') ? document.getElementById('programStartDate').value : '';
 
         // toggle loader on before request 
         this.setState({ loaderState: true });
-        registerUser({ username, password, fullname, email, accessType, accessList, currentPhase, rotationSchedule, programStartDate })
+        registerUser({ username, password, fullname, email, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule, programStartDate })
             .then(() => {
                 // reset form values
                 this.setState(
@@ -48,7 +49,8 @@ export default class CreateUser extends Component {
                         accessList: '',
                         programStartDate: moment().format('MM/DD/YYYY'),
                         currentPhase: 'transition-to-discipline',
-                        rotationSchedule: ''
+                        rotationSchedule: '',
+                        longitudinalSchedule: ''
                     })
             })
             // toggle loader once request is completed
@@ -60,7 +62,7 @@ export default class CreateUser extends Component {
     render() {
         const { loaderState, username, fullname,
             password, email, accessType, accessList,
-            currentPhase, programStartDate, rotationSchedule } = this.state;
+            currentPhase, programStartDate, rotationSchedule, longitudinalSchedule } = this.state;
 
         return (
             <div>
@@ -125,6 +127,13 @@ export default class CreateUser extends Component {
                             <span className='inner-span'>ROTATION SCHEDULE</span>
                             <input type="text" className="form-control" name="rotationSchedule" value={rotationSchedule} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
                         </div>}
+
+                    {this.state.accessType == 'resident' &&
+                        <div className="input-group m-a">
+                            <span className='inner-span'>LOGITUDINAL SCHEDULE</span>
+                            <input type="text" className="form-control" name="longitudinalSchedule" value={longitudinalSchedule} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
+                        </div>}
+
 
 
                     <button className={"btn btn-success create-btn m-a m-t-md " + ((username.length > 0) ? "" : 'disabled')} type="submit" onClick={this.onSubmit}>

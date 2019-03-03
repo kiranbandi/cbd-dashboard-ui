@@ -36,7 +36,6 @@
         }
         .schedule-box {
             margin-bottom: 20px;
-            height: 150px;
             span.yearBox {
                 display: inline-block;
                 text-align: center;
@@ -48,6 +47,7 @@
             .custom-gannt-style-chart {
                 margin: 5px auto;
                 position: relative;
+                height: 75px;
                 .chart-line {
                     background: #283a5d;
                     border-radius: 30px;
@@ -60,6 +60,16 @@
                     padding-top: 3px;
                     font-weight: 500;
                 }
+            }
+            .chart-line-long {
+                background: #18634a;
+                border-radius: 30px;
+                display: block;
+                height: 28px;
+                margin: 15px auto;
+                color: white;
+                padding-top: 3px;
+                font-weight: 500;
             }
         }
     }

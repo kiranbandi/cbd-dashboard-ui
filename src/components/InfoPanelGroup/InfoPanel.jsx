@@ -15,11 +15,12 @@ class InfoPanel extends Component {
     render() {
 
         let { residentData, residentFilter, residentList } = this.props,
-            residentInfo = false, scheduleMap = false;
+            residentInfo = false, scheduleMap = false, longitudinalScheduleMap = false;
 
         if (residentFilter && residentFilter.username) {
             residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
             scheduleMap = residentInfo && residentInfo.rotationSchedule && residentInfo.rotationSchedule.split(",");
+            longitudinalScheduleMap = residentInfo && residentInfo.longitudinalSchedule && residentInfo.longitudinalSchedule.split(",");
         }
 
         return (
@@ -32,7 +33,7 @@ class InfoPanel extends Component {
                             <span><b>LAST UPDATED ON -</b> {(new Date(residentInfo.uploadedData)).toDateString()}</span>
                         </div>
                         {!!residentData && <EPASpeedInfo residentData={residentData} residentInfo={residentInfo} />}
-                        {!!scheduleMap && <RotationSchedule scheduleMap={scheduleMap} />}
+                        {!!scheduleMap && <RotationSchedule scheduleMap={scheduleMap} longitudinalScheduleMap={longitudinalScheduleMap} />}
                     </div>
                 }
             </div>
