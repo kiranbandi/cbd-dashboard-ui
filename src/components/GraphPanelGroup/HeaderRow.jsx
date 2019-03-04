@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 
 export default class HeaderRow extends Component {
 
-
+    constructor(props) {
+        super(props);
+    }
+    
     render() {
 
         const { onEPALabelClick, innerKey, isCurrentSubRootVisible, epaSourceMap, residentData, isEMDepartment } = this.props;
@@ -37,7 +40,7 @@ export default class HeaderRow extends Component {
             <div className={'text-xs-center text-sm-left inner-epa-head' + (isCurrentSubRootVisible ? ' bottom-line ' : ' ') + 'label-index-' + innerKey} onClick={onEPALabelClick}>
                 {isCurrentSubRootVisible ? <span className="icon icon-chevron-down"></span> : <span className="icon icon-chevron-right"></span>}
                 <span className='epa-label' >{innerKey + " - " + epaSourceMap[innerKey].topic}</span>
-                {!isCurrentSubRootVisible && isEMDepartment && <span className='epa-label-status' >{statusLabel}<span className={"icon " + iconLabel}></span> {percentageComplete}</span>}
+                {isEMDepartment && <span className='epa-label-status' >{statusLabel}<span className={"icon " + iconLabel}></span> {percentageComplete}</span>}
             </div>
         );
     }

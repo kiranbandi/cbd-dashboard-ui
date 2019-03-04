@@ -83,6 +83,33 @@
             &.hide-row {
                 height: 0px;
             }
+            .table-box {
+                margin: 30px auto;
+                background: #1a1c22;
+                padding: 10px;
+                border-radius: 10px;
+                .rt-thead.-header {
+                    font-weight: bold;
+                    text-transform: uppercase;
+                    background: #252830;
+                }
+                .ReactTable .rt-thead .rt-th.-sort-asc,
+                .ReactTable .rt-thead .rt-td.-sort-asc {
+                    box-shadow: inset 0 3px 0 0 rgb(70, 130, 180);
+                }
+                .ReactTable .rt-thead .rt-th.-sort-desc,
+                .ReactTable .rt-thead .rt-td.-sort-desc {
+                    box-shadow: inset 0 -3px 0 0 rgb(70, 130, 180);
+                }
+                .ReactTable .rt-thead .rt-th,
+                .ReactTable .rt-thead .rt-td {
+                    border-right: 2px solid #1a1c22;
+                }
+                .ReactTable .-pagination .-btn {
+                    color: white;
+                    font-weight: bold;
+                }
+            }
             .inner-cell {
                 display: inline-block;
                 text-overflow: ellipsis;
@@ -149,6 +176,22 @@
                 }
                 &.score-cell {
                     margin: 25px 0px 20px 0px;
+                    position: relative;
+                    .icon {
+                        position: absolute;
+                        top: 139px;
+                        font-size: 20px;
+                        color: #426a8c;
+                        border: 2px solid #426a8c;
+                        border-radius: 50px;
+                        padding: 0px 5px;
+                        left: 20px;
+                        cursor: pointer;
+                        &.open {
+                            background: #426a8c;
+                            color: white;
+                        }
+                    }
                     svg.score-svg {
                         margin: 0px auto;
                         display: block;
