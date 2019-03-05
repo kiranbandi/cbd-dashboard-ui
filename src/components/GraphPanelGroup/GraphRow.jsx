@@ -3,7 +3,6 @@ import LineChart from './LineChart';
 import BulletChart from './BulletChart';
 import { scaleLinear } from 'd3';
 import ReactTable from 'react-table';
-import matchSorter from 'match-sorter';
 
 export default class GraphRow extends Component {
 
@@ -158,7 +157,8 @@ export default class GraphRow extends Component {
                         defaultPageSize={5}
                         resizable={false}
                         filterable={true}
-                        className='-highlight' />
+                        className='-highlight'
+                        defaultSorted={[{ id: "Date", desc: true }]} />
                 </div>}
 
             </div>
