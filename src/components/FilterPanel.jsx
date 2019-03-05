@@ -92,7 +92,6 @@ class FilterPanel extends Component {
                             }
                         })
                     })
-
                 }
 
                 // store the info of visibility of phase into resident info

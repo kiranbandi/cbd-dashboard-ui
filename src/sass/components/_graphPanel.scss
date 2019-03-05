@@ -85,29 +85,51 @@
             }
             .table-box {
                 margin: 30px auto;
-                background: #1a1c22;
-                padding: 10px;
                 border-radius: 10px;
-                .rt-thead.-header {
-                    font-weight: bold;
-                    text-transform: uppercase;
-                    background: #252830;
-                }
-                .ReactTable .rt-thead .rt-th.-sort-asc,
-                .ReactTable .rt-thead .rt-td.-sort-asc {
-                    box-shadow: inset 0 3px 0 0 rgb(70, 130, 180);
-                }
-                .ReactTable .rt-thead .rt-th.-sort-desc,
-                .ReactTable .rt-thead .rt-td.-sort-desc {
-                    box-shadow: inset 0 -3px 0 0 rgb(70, 130, 180);
-                }
-                .ReactTable .rt-thead .rt-th,
-                .ReactTable .rt-thead .rt-td {
-                    border-right: 2px solid #1a1c22;
-                }
-                .ReactTable .-pagination .-btn {
-                    color: white;
-                    font-weight: bold;
+                .ReactTable {
+                    border-radius: 5px;
+                    .rt-thead.-header {
+                        font-weight: bold;
+                        text-transform: uppercase;
+                        background: #1a1c22;
+                        text-align: center;
+                        padding: 5px 0px;
+                        .rt-th.-sort-asc,
+                        .rt-td.-sort-asc {
+                            box-shadow: inset 0 3px 0 0 rgb(70, 130, 180);
+                        }
+                        .rt-th.-sort-desc,
+                        .rt-td.-sort-desc {
+                            box-shadow: inset 0 -3px 0 0 rgb(70, 130, 180);
+                        }
+                    }
+                    .rt-tbody .rt-tr-group {
+                        border-radius: 5px;
+                        border-bottom: solid 2px rgba(0, 0, 0, 0.10);
+                        &:hover {
+                            background: #283a5d;
+                        }
+                        .rt-td.feedback-cell {
+                            white-space: normal;
+                            text-overflow: inherit;
+                            text-align: left;
+                        }
+                    }
+                    .-pagination {
+                        input,
+                        select {
+                            color: black;
+                        }
+                        .-btn {
+                            color: white;
+                            font-weight: bold;
+                            text-transform: uppercase;
+                            background: #1a1c22;
+                            &:hover {
+                                background: #283a5d;
+                            }
+                        }
+                    }
                 }
             }
             .inner-cell {
@@ -179,12 +201,12 @@
                     position: relative;
                     .icon {
                         position: absolute;
-                        top: 139px;
-                        font-size: 20px;
+                        top: 145px;
+                        font-size: 15px;
                         color: #426a8c;
                         border: 2px solid #426a8c;
                         border-radius: 50px;
-                        padding: 0px 5px;
+                        padding: 0px 4px;
                         left: 20px;
                         cursor: pointer;
                         &.open {

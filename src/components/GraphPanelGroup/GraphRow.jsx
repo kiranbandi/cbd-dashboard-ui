@@ -3,6 +3,7 @@ import LineChart from './LineChart';
 import BulletChart from './BulletChart';
 import { scaleLinear } from 'd3';
 import ReactTable from 'react-table';
+import matchSorter from 'match-sorter';
 
 export default class GraphRow extends Component {
 
@@ -65,34 +66,41 @@ export default class GraphRow extends Component {
 
         const overShotLineX = recordedCount > maxObservation ? xScale(maxObservation - 0.5) : 0;
 
+        function customFilter(filter, rows) {
+            rows[filter.id] = rows[filter.id] || '';
+            filter.value = filter.value || '';
+            return rows[filter.id].toLowerCase().indexOf(filter.value.toLowerCase()) > -1;
+        }
+
         const columns = [{
             Header: 'Date',
-            accessor: 'Date'
-        }, {
-            Header: 'EPA',
-            accessor: 'EPA'
+            accessor: 'Date',
+            maxWidth: 150,
+            filterMethod: customFilter
         }, {
             Header: 'Rating',
-            accessor: 'Rating'
+            accessor: 'Rating',
+            maxWidth: 60,
+            filterMethod: customFilter
         },
         {
-            Header: 'Type',
-            accessor: 'Type'
-        }, {
             Header: 'Observer Name',
-            accessor: 'Observer_Name'
-        },
-        {
-            Header: 'Observer Type',
-            accessor: 'Observer_Type'
+            accessor: 'Observer_Name',
+            maxWidth: 150,
+            className: 'text-left',
+            filterMethod: customFilter
         },
         {
             Header: 'Situation Context',
-            accessor: 'Situation_Context'
+            accessor: 'Situation_Context',
+            className: 'text-left',
+            filterMethod: customFilter
         },
         {
             Header: 'Feedback',
-            accessor: 'Feedback'
+            accessor: 'Feedback',
+            className: 'feedback-cell',
+            filterMethod: customFilter
         }]
 
         return (
@@ -150,7 +158,7 @@ export default class GraphRow extends Component {
                         defaultPageSize={5}
                         resizable={false}
                         filterable={true}
-                    />
+                        className='-highlight' />
                 </div>}
 
             </div>
