@@ -3,6 +3,7 @@ import LineChart from './LineChart';
 import BulletChart from './BulletChart';
 import { scaleLinear } from 'd3';
 import SlideInTable from './SlideInTable';
+import SlideInFilter from './SlideInFilter';
 
 export default class GraphRow extends Component {
 
@@ -12,7 +13,11 @@ export default class GraphRow extends Component {
 
     render() {
 
-        let { epaSource, isTableVisible, innerKey, widthPartition, smallScreen, epaSourceMap, residentData, onMouseOut, onMouseOver, onTableExpandClick } = this.props;
+        let { epaSource, isTableVisible, innerKey,
+            widthPartition, smallScreen, epaSourceMap,
+            residentData, onMouseOut, onMouseOver,
+            onTableExpandClick, onFilterExpandClick,
+            isEMDepartment, isFilterVisible } = this.props;
 
         //  margin of 20px on either side reduces the available width by 40 
         // 15px bullet chart padding on either sides
@@ -99,9 +104,20 @@ export default class GraphRow extends Component {
                         innerHeight={innerHeight}
                         onMouseOver={onMouseOver}
                         onMouseOut={onMouseOut} />
-                    {!smallScreen && <span className={"icon icon-open-book " + epaSource + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}></span>}
+                    {!smallScreen && isEMDepartment && <span className={"icon table-icon icon-open-book " + epaSource + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}></span>}
+                    {!smallScreen && isEMDepartment && <span className={"icon filter-icon icon-sound-mix " + epaSource + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick}></span>}
+
                 </div>
-                {!smallScreen && isTableVisible && <SlideInTable data={residentData[epaSource]} width={widthPartition} />}
+                {!smallScreen && isTableVisible && isEMDepartment &&
+                    <SlideInTable
+                        data={residentData[epaSource]}
+                        width={widthPartition} />}
+                {!smallScreen && isFilterVisible && isEMDepartment &&
+                    <SlideInFilter
+                        data={residentData[epaSource]}
+                        width={widthPartition}
+                        innerKey={innerKey}
+                        epaSource={epaSource} />}
             </div>
         );
     }

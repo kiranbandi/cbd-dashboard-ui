@@ -83,8 +83,37 @@
             &.hide-row {
                 height: 0px;
             }
+            .filter-box {
+                margin: 10px auto 40px auto;
+                border-radius: 5px;
+                background: #1a1c22;
+                padding: 10px;
+                text-align: left;
+                display: inline-block;
+                .inner-filter-box {
+                    display: inline-block;
+                    margin: 5px 15px;
+                    .filter-label {
+                        margin-right: 10px;
+                        text-transform: uppercase;
+                    }
+                    .custom-select {
+                        width: 200px;
+                    }
+                }
+                .inner-button-box {
+                    display: inline-block;
+                    margin: 5px 5px;
+                    .icon-container {
+                        padding: 1px 10px;
+                        .icon-ccw {
+                            font-size: 20px;
+                        }
+                    }
+                }
+            }
             .table-box {
-                margin: 30px auto;
+                margin: 10px auto 40px auto;
                 border-radius: 10px;
                 .ReactTable {
                     border-radius: 5px;
@@ -202,17 +231,30 @@
                     position: relative;
                     .icon {
                         position: absolute;
-                        top: 145px;
                         font-size: 15px;
-                        color: #426a8c;
-                        border: 2px solid #426a8c;
                         border-radius: 50px;
                         padding: 0px 4px;
-                        left: 20px;
                         cursor: pointer;
-                        &.open-table {
-                            background: #426a8c;
-                            color: white;
+                        background: white;
+                        &.table-icon {
+                            top: 145px;
+                            left: 20px;
+                            color: #426a8c;
+                            border: 2px solid #426a8c;
+                            &.open-table {
+                                background: #426a8c;
+                                color: white;
+                            }
+                        }
+                        &.filter-icon {
+                            top: 145px;
+                            left: 55px;
+                            color: #426a8c;
+                            border: 2px solid #426a8c;
+                            &.open-filter {
+                                background: #426a8c;
+                                color: white;
+                            }
                         }
                     }
                     svg.score-svg {

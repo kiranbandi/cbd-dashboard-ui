@@ -16,8 +16,10 @@ class GraphPanel extends Component {
         this.onMouseOut = this.onMouseOut.bind(this);
         this.onEPALabelClick = this.onEPALabelClick.bind(this);
         this.onTableExpandClick = this.onTableExpandClick.bind(this);
+        this.onFilterExpandClick = this.onFilterExpandClick.bind(this);
         this.state = {
-            openTableID: ''
+            openTableID: '',
+            openFilterID: ''
         };
     }
 
@@ -30,13 +32,23 @@ class GraphPanel extends Component {
     }
 
     onTableExpandClick(event) {
-        const openTableID = event.target.className.split(" ")[2];
+        const openTableID = event.target.className.split(" ")[3];
         // if already open close it , if not open it !
         if (event.target.className.indexOf('open-table') > -1) {
-            this.setState({ openTableID: '' });
+            this.setState({ openTableID: '', openFilterID: '' });
         }
         else {
-            this.setState({ openTableID });
+            this.setState({ openTableID, openFilterID: '' });
+        }
+    }
+    onFilterExpandClick(event) {
+        const openFilterID = event.target.className.split(" ")[3];
+        // if already open close it , if not open it !
+        if (event.target.className.indexOf('open-filter') > -1) {
+            this.setState({ openFilterID: '', openTableID: '' });
+        }
+        else {
+            this.setState({ openFilterID, openTableID: '' });
         }
     }
 
@@ -70,7 +82,7 @@ class GraphPanel extends Component {
             epaSourceMap,
             levelVisibilityOpenStatus } = this.props;
 
-        const { openTableID } = this.state;
+        const { openTableID, openFilterID } = this.state;
 
         // if there is no source map provided then use the Emergency medicine Template Map
         epaSourceMap = !!epaSourceMap ? epaSourceMap : templateEpaSourceMap;
@@ -134,13 +146,16 @@ class GraphPanel extends Component {
                                                     innerKey={innerKey}
                                                     epaSource={epaSource}
                                                     isTableVisible={epaSource == openTableID}
+                                                    isFilterVisible={epaSource == openFilterID}
                                                     widthPartition={widthPartition}
                                                     epaSourceMap={epaSourceMap}
                                                     smallScreen={smallScreen}
                                                     residentData={residentData}
                                                     onMouseOver={this.onMouseOver}
                                                     onMouseOut={this.onMouseOut}
-                                                    onTableExpandClick={this.onTableExpandClick} />)
+                                                    isEMDepartment={isEMDepartment}
+                                                    onTableExpandClick={this.onTableExpandClick}
+                                                    onFilterExpandClick={this.onFilterExpandClick} />)
                                         })}
                                     </div>
 
