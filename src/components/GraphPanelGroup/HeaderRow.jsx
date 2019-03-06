@@ -1,21 +1,35 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-export default class HeaderRow extends Component {
+class HeaderRow extends Component {
 
     constructor(props) {
         super(props);
     }
-    
+
     render() {
 
-        const { onEPALabelClick, innerKey, isCurrentSubRootVisible, epaSourceMap, residentData, isEMDepartment } = this.props;
-        let requiredEPACount = 0, completedEPACount = 0;
+
+        const { onEPALabelClick, innerKey, isCurrentSubRootVisible, epaSourceMap, residentData, residentList, residentFilter, isEMDepartment } = this.props;
+        let requiredEPACount = 0, completedEPACount = 0, residentInfo, currentPhase;
 
         _.map(epaSourceMap[innerKey].maxObservation, (count, epaID) => {
             requiredEPACount += count;
             // reset the completed to max amount
             completedEPACount += Math.min(residentData[epaID] ? residentData[epaID].length : 0, count);
         })
+
+        if (residentFilter && residentFilter.username) {
+            residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
+            if (residentInfo.currentPhase) {
+                switch (residentInfo.currentPhase) {
+                    case 'transition-to-discipline': currentPhase = 1; break;
+                    case 'foundations-of-discipline': currentPhase = 2; break;
+                    case 'core-of-discipline': currentPhase = 3; break;
+                    case 'transition-to-practice': currentPhase = 4; break;
+                }
+            }
+        }
 
         let percentageComplete = Math.round((completedEPACount * 100) / requiredEPACount),
             statusLabel, iconLabel;
@@ -36,6 +50,10 @@ export default class HeaderRow extends Component {
             percentageComplete += '%';
         }
 
+        if (+innerKey < currentPhase) {
+            statusLabel = 'Promoted';
+        }
+
         return (
             <div className={'text-xs-center text-sm-left inner-epa-head' + (isCurrentSubRootVisible ? ' bottom-line ' : ' ') + 'label-index-' + innerKey} onClick={onEPALabelClick}>
                 {isCurrentSubRootVisible ? <span className="icon icon-chevron-down"></span> : <span className="icon icon-chevron-right"></span>}
@@ -46,3 +64,12 @@ export default class HeaderRow extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        residentData: state.oracle.residentData,
+        residentFilter: state.oracle.residentFilter,
+        residentList: state.oracle.residentList
+    };
+}
+
+export default connect(mapStateToProps, null)(HeaderRow);

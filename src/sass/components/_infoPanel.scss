@@ -59,6 +59,9 @@
                     color: white;
                     padding-top: 3px;
                     font-weight: 500;
+                    &.between-lot {
+                        background: #bf6c07;
+                    }
                 }
             }
             .chart-line-long {

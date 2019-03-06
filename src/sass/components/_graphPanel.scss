@@ -109,7 +109,8 @@
                         &:hover {
                             background: #283a5d;
                         }
-                        .rt-td.feedback-cell {
+                        .rt-td.feedback-cell,
+                        .rt-td.situation-cell {
                             white-space: normal;
                             text-overflow: inherit;
                             text-align: left;
@@ -209,7 +210,7 @@
                         padding: 0px 4px;
                         left: 20px;
                         cursor: pointer;
-                        &.open {
+                        &.open-table {
                             background: #426a8c;
                             color: white;
                         }

@@ -27,16 +27,18 @@ export default (props) => {
                 {dateBoxes.map((year, index) => {
                     return <span style={{ width: widthForEachMonth }} key={index} className='yearBox'>{year}</span>
                 })}
-                {currentSchedule.map((current, index) => {
+                {currentSchedule.map((periodStart, index) => {
                     // skip the last record
                     if (index < currentSchedule.length - 1) {
-                        const currentDate = moment(current, "DD-MMM-YYYY"),
+                        const periodStartDate = moment(periodStart, "DD-MMM-YYYY"),
                             endingDate = moment(currentSchedule[index + 1], "DD-MMM-YYYY"),
-                            distanceFromStart = currentDate.diff(startDate, "days"),
-                            distanceInBetween = endingDate.diff(currentDate, "days"),
+                            distanceFromStart = periodStartDate.diff(startDate, "days"),
+                            distanceInBetween = endingDate.diff(periodStartDate, "days"),
                             widthFromleft = (widthForEachMonth * distanceFromStart) / 30,
-                            internalWidth = (widthForEachMonth * distanceInBetween) / 30;
-                        return <span className='chart-line' key={"index-" + index} style={{ left: widthFromleft, width: internalWidth }}>{scheduleMap[index]}</span>
+                            internalWidth = (widthForEachMonth * distanceInBetween) / 30,
+                            isTodayInPeriod = moment().isBetween(periodStartDate, endingDate, 'days', '(]') ? 'between-lot' : '';
+
+                        return <span className={'chart-line ' + isTodayInPeriod} key={"index-" + index} style={{ left: widthFromleft, width: internalWidth }}>{scheduleMap[index]}</span>
                     }
                     return;
 

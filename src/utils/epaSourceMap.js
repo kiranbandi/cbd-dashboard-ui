@@ -13,7 +13,20 @@ var epaSourceMap = {
             '1.3': 10,
             '1.4': 2
 
+        },
+        clinicalPresentation: {
+            '1.1': ["cardiorespiratory arrest", "unstable dysrhythmia", "shock", "respiratory distress", "altered neurological status", "other"],
+            '1.2': ["chest pain", "shortness of breath", "abdominal pain", "minor trauma", "other"],
+            '1.3': [],
+            '1.4': []
+        },
+        patientDemographic: {
+            '1.1': ["infant", "child", "youth", "adult", "senior"],
+            '1.2': ["infant", "child", "youth", "adult", "senior"],
+            '1.3': ["infant", "child", "youth", "adult", "senior"],
+            '1.4': []
         }
+
     },
     2: {
         'topic': 'Foundations of Discipline (F)',
@@ -30,7 +43,20 @@ var epaSourceMap = {
             '2.3': 10,
             '2.4': 25,
             '2.5': 1
-
+        },
+        clinicalPresentation: {
+            '2.1': ["cardiorespiratory arrest", "unstable dysrhythmia", "shock", "respiratory distress", "altered neurological status", "other"],
+            '2.2': ["cough or wheeze", "musculoskeletal injury or pain", "eye complaint", "ENT complaint", "headache", "other"],
+            '2.3': [],
+            '2.4': ["simple wound repair including anesthesia", "abscess drainage", "casting or splinting", "anterior nasal packing", "arthrocentesis", "intraocular pressure measurement", "intraosseous access"],
+            '2.5': []
+        },
+        patientDemographic: {
+            '2.1': ["infant", "child", "youth", "adult", "senior"],
+            '2.2': ["infant", "child", "youth", "adult", "senior"],
+            '2.3': ["infant", "child", "youth", "adult", "senior"],
+            '2.4': ["infant", "child", "youth", "adult", "senior"],
+            '2.5': []
         }
     },
     3: {
@@ -78,6 +104,50 @@ var epaSourceMap = {
             '3.18': 1,
             '3.19': 1,
             '3.20': 1
+        },
+        clinicalPresentation: {
+            '3.1':  ["shock", "cardiorespiratory arrest", "respiratory failure", "severe sepsis", "other"],
+            '3.2': ["blunt trauma", "penetrating trauma", "other"],
+            '3.3': [],
+            '3.4': [],
+            '3.5': ["abdominal pain", "chest pain", "dysrhythmia", "respiratory distress", "altered mental status", "other"],
+            '3.6': ["fever", "vomiting", "rash", "syncope", "weakness", "acute gynecological", "other"],
+            '3.7': ["first trimester bleeding", "complications of pregnancy", "vaginal delivery", "post-partum hemorrhage", "other"],
+            '3.8': ["sympathomimetic toxidrome", "opioid toxidrome", "antidepressant toxicity", "toxic bradycardia", "other"],
+            '3.9': ["psychosis or mania", "major depressive disorder", "anxiety disorder", "suicidality", "personality disorder", "other"],
+            '3.10': [],
+            '3.11': [],
+            '3.12': [],
+            '3.13':  ["complex wound repair", "central venous access with ultrasound guidance", "reduction of an extremity fracture", "lumbar puncture", "reduction of large joint dislocation", "regional anesthesia (e.g. large peripheral nerve block, not a digital nerve)", "thoracostomy tube insertion"],
+            '3.14': ["pericardial effusion and cardiac tamponade", "global estimation of left ventricular fraction", "pneumothorax", "hemothorax", "pleural effusion", "abdominal aortic aneurysm", "abdominal or pelvic free fluid, first trimester intrauterine gestation"],
+            '3.15': [],
+            '3.16': [],
+            '3.17': [],
+            '3.18': [],
+            '3.19': [],
+            '3.20': []
+        },
+        patientDemographic: {
+            '3.1': ["infant", "child", "youth", "adult", "senior"],
+            '3.2': ["infant", "child", "youth", "adult", "senior"],
+            '3.3': ["infant", "child", "youth", "adult", "senior"],
+            '3.4': ["infant", "child", "youth", "adult", "senior"],
+            '3.5': ["infant", "child", "youth", "adult", "senior"],
+            '3.6': ["infant", "child", "youth", "adult", "senior"],
+            '3.7': ["infant", "child", "youth", "adult", "senior"],
+            '3.8': ["infant", "child", "youth", "adult", "senior"],
+            '3.9': ["infant", "child", "youth", "adult", "senior"],
+            '3.10': ["infant", "child", "youth", "adult", "senior"],
+            '3.11': ["infant", "child", "youth", "adult", "senior"],
+            '3.12': ["infant", "child", "youth", "adult", "senior"],
+            '3.13': ["infant", "child", "youth", "adult", "senior"],
+            '3.14': ["infant", "child", "youth", "adult", "senior"],
+            '3.15': [],
+            '3.16': [],
+            '3.17': [],
+            '3.18': [],
+            '3.19': [],
+            '3.20': []
         }
     },
     4: {
@@ -101,6 +171,26 @@ var epaSourceMap = {
             '4.6': 5,
             '4.7': 1,
             '4.8': 1
+        },
+        clinicalPresentation: {
+            '4.1': ["resuscitation", "acute care", "ambulatory", "other"],
+            '4.2': ["individual", "multiple"],
+            '4.3': [],
+            '4.4': ["consulting service", "community ED", "outpatient clinic", "family physician", "other"],
+            '4.5': ["EP to EP", "EP to OP within hospital", "EP to OP at another hospital", "EP to LTC", "EP to PCP", "EP to follow-up with OP", "other"],
+            '4.6': [],
+            '4.7': [],
+            '4.8': []
+        },
+        patientDemographic: {
+            '4.1': [],
+            '4.2': ["medical student", "off service resident", "EM resident", " other"],
+            '4.3': ["patient interaction", "family interaction", "physician interaction", "other health care professional interaction"],
+            '4.4': ["infant", "child", "youth", "adult", "senior"],
+            '4.5': ["infant", "child", "youth", "adult", "senior"],
+            '4.6': ["infant", "child", "youth", "adult", "senior"],
+            '4.7': [],
+            '4.8': []
         }
     },
 }

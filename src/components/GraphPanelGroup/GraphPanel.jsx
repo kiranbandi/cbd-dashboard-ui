@@ -15,6 +15,10 @@ class GraphPanel extends Component {
         this.onMouseOver = this.onMouseOver.bind(this);
         this.onMouseOut = this.onMouseOut.bind(this);
         this.onEPALabelClick = this.onEPALabelClick.bind(this);
+        this.onTableExpandClick = this.onTableExpandClick.bind(this);
+        this.state = {
+            openTableID: ''
+        };
     }
 
     onEPALabelClick(event) {
@@ -22,6 +26,18 @@ class GraphPanel extends Component {
         let visibilityOpenStatus = { ...this.props.levelVisibilityOpenStatus };
         visibilityOpenStatus[clickedID] = !visibilityOpenStatus[clickedID];
         this.props.actions.setLevelVisibilityStatus(visibilityOpenStatus);
+        this.setState({ openTableID: '' });
+    }
+
+    onTableExpandClick(event) {
+        const openTableID = event.target.className.split(" ")[2];
+        // if already open close it , if not open it !
+        if (event.target.className.indexOf('open-table') > -1) {
+            this.setState({ openTableID: '' });
+        }
+        else {
+            this.setState({ openTableID });
+        }
     }
 
     onMouseOver(event) {
@@ -53,6 +69,8 @@ class GraphPanel extends Component {
             tooltipData,
             epaSourceMap,
             levelVisibilityOpenStatus } = this.props;
+
+        const { openTableID } = this.state;
 
         // if there is no source map provided then use the Emergency medicine Template Map
         epaSourceMap = !!epaSourceMap ? epaSourceMap : templateEpaSourceMap;
@@ -105,23 +123,24 @@ class GraphPanel extends Component {
                                         smallScreen={smallScreen}
                                         isEMDepartment={isEMDepartment}
                                         isCurrentSubRootVisible={isCurrentSubRootVisible}
-                                        residentData={residentData}
                                         epaSourceMap={epaSourceMap} />
 
-                                    {/* Atual Row data containing labels and bullet and line charts */}
+                                    {/* Actual Row data containing labels and bullet and line charts */}
                                     <div className={'inner-graph-row ' + (isCurrentSubRootVisible ? 'show-row' : 'hide-row')}>
                                         {_.map(epaSources, (epaSource, sourceKey) => {
                                             return (
                                                 <GraphRow
                                                     key={'inner-row-' + sourceKey}
                                                     innerKey={innerKey}
-                                                    onMouseOver={this.onMouseOver}
-                                                    onMouseOut={this.onMouseOut}
                                                     epaSource={epaSource}
+                                                    isTableVisible={epaSource == openTableID}
                                                     widthPartition={widthPartition}
                                                     epaSourceMap={epaSourceMap}
                                                     smallScreen={smallScreen}
-                                                    residentData={residentData} />)
+                                                    residentData={residentData}
+                                                    onMouseOver={this.onMouseOver}
+                                                    onMouseOut={this.onMouseOut}
+                                                    onTableExpandClick={this.onTableExpandClick} />)
                                         })}
                                     </div>
 

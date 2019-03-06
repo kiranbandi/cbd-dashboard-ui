@@ -2,27 +2,18 @@ import React, { Component } from 'react';
 import LineChart from './LineChart';
 import BulletChart from './BulletChart';
 import { scaleLinear } from 'd3';
-import ReactTable from 'react-table';
+import SlideInTable from './SlideInTable';
 
 export default class GraphRow extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            isTableVisible: false
-        }
-        this.onTableExpandClick = this.onTableExpandClick.bind(this);
-    }
-
-    onTableExpandClick() {
-        this.setState({ isTableVisible: !this.state.isTableVisible });
     }
 
     render() {
 
-        let { epaSource, innerKey, widthPartition, smallScreen, epaSourceMap, residentData, onMouseOut, onMouseOver } = this.props;
+        let { epaSource, isTableVisible, innerKey, widthPartition, smallScreen, epaSourceMap, residentData, onMouseOut, onMouseOver, onTableExpandClick } = this.props;
 
-        const { isTableVisible } = this.state;
         //  margin of 20px on either side reduces the available width by 40 
         // 15px bullet chart padding on either sides
         const bulletInnerWidth = widthPartition - 70;
@@ -32,13 +23,10 @@ export default class GraphRow extends Component {
         var marginHorizontal = 20;
         var height = 200;
         var innerHeight = height - 20;
-
-
         var width = (smallScreen ? widthPartition : widthPartition * 2) - 20;
 
         // Get the maximum required observations for each EPA from source MAP *
         const maxObservation = +epaSourceMap[epaSource.split(".")[0]].maxObservation[epaSource];
-
 
         // Get recorded observation count
         const recordedCount = residentData[epaSource].length;
@@ -50,12 +38,12 @@ export default class GraphRow extends Component {
         const firstMeasure = Math.min((recordedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
         const secondMeasure = Math.min((achievedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
 
-        var xScale = scaleLinear().domain([0, residentData[epaSource].length - 1]).range([marginHorizontal, width - marginHorizontal])
-        var yScale = scaleLinear().domain([5, 1]).range([marginVertical, innerHeight - marginVertical])
+        const xScale = scaleLinear().domain([0, residentData[epaSource].length - 1]).range([marginHorizontal, width - marginHorizontal])
+        const yScale = scaleLinear().domain([5, 1]).range([marginVertical, innerHeight - marginVertical])
 
-        var scoreData = residentData[epaSource].map((d, i) => { return { x: xScale(i), y: yScale(d.Rating) }; });
+        const scoreData = residentData[epaSource].map((d, i) => { return { x: xScale(i), y: yScale(d.Rating) }; });
 
-        var trackTrailPositions = _.map([...Array(5)], (d, i) => {
+        const trackTrailPositions = _.map([...Array(5)], (d, i) => {
             return {
                 x: marginHorizontal,
                 dx: width - (2 * marginHorizontal),
@@ -64,43 +52,6 @@ export default class GraphRow extends Component {
         })
 
         const overShotLineX = recordedCount > maxObservation ? xScale(maxObservation - 0.5) : 0;
-
-        function customFilter(filter, rows) {
-            rows[filter.id] = rows[filter.id] || '';
-            filter.value = filter.value || '';
-            return rows[filter.id].toLowerCase().indexOf(filter.value.toLowerCase()) > -1;
-        }
-
-        const columns = [{
-            Header: 'Date',
-            accessor: 'Date',
-            maxWidth: 150,
-            filterMethod: customFilter
-        }, {
-            Header: 'Rating',
-            accessor: 'Rating',
-            maxWidth: 60,
-            filterMethod: customFilter
-        },
-        {
-            Header: 'Observer Name',
-            accessor: 'Observer_Name',
-            maxWidth: 150,
-            className: 'text-left',
-            filterMethod: customFilter
-        },
-        {
-            Header: 'Situation Context',
-            accessor: 'Situation_Context',
-            className: 'text-left',
-            filterMethod: customFilter
-        },
-        {
-            Header: 'Feedback',
-            accessor: 'Feedback',
-            className: 'feedback-cell',
-            filterMethod: customFilter
-        }]
 
         return (
             <div className='text-xs-center'>
@@ -148,19 +99,9 @@ export default class GraphRow extends Component {
                         innerHeight={innerHeight}
                         onMouseOver={onMouseOver}
                         onMouseOut={onMouseOut} />
-                    {!smallScreen && <span className={"icon icon-open-book " + (isTableVisible ? 'open' : '')} onClick={this.onTableExpandClick}></span>}
+                    {!smallScreen && <span className={"icon icon-open-book " + epaSource + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}></span>}
                 </div>
-                {!smallScreen && isTableVisible && <div className='table-box' style={{ width: (widthPartition * 4) - 75 }}>
-                    <ReactTable
-                        data={residentData[epaSource]}
-                        columns={columns}
-                        defaultPageSize={5}
-                        resizable={false}
-                        filterable={true}
-                        className='-highlight'
-                        defaultSorted={[{ id: "Date", desc: true }]} />
-                </div>}
-
+                {!smallScreen && isTableVisible && <SlideInTable data={residentData[epaSource]} width={widthPartition} />}
             </div>
         );
     }

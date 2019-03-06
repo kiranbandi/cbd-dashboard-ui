@@ -19,7 +19,7 @@ class FilterPanel extends Component {
         this.onVisbilityToggle = this.onVisbilityToggle.bind(this);
         this.onFilterToggleClick = this.onFilterToggleClick.bind(this);
         this.state = {
-            hideUncommencedEPA: true,
+            showUncommencedEPA: true,
             openOnlyCurrentPhase: true,
             isFilterOpen: false
         };
@@ -37,7 +37,7 @@ class FilterPanel extends Component {
     }
 
     onEPAToggle(event) {
-        this.setState({ hideUncommencedEPA: !this.state.hideUncommencedEPA });
+        this.setState({ showUncommencedEPA: !this.state.showUncommencedEPA });
     }
 
     onVisbilityToggle(event) {
@@ -46,7 +46,7 @@ class FilterPanel extends Component {
 
     onSubmit(event) {
         let { residentFilter = {}, actions, residentList } = this.props,
-            { hideUncommencedEPA, openOnlyCurrentPhase } = this.state;
+            { showUncommencedEPA, openOnlyCurrentPhase } = this.state;
 
         residentFilter.startDate = document.getElementById('filter-startDate').value;
         residentFilter.endDate = document.getElementById('filter-endDate').value;
@@ -84,7 +84,7 @@ class FilterPanel extends Component {
                 }
 
                 // if uncommenced EPAs are needed to be seen then sub in empty records
-                if (!hideUncommencedEPA) {
+                if (showUncommencedEPA) {
                     _.map(templateEpaSourceMap, (source) => {
                         _.map(source.subRoot, (epa, innerKey) => {
                             if (!groupedResidentData.hasOwnProperty(innerKey)) {
@@ -144,8 +144,8 @@ class FilterPanel extends Component {
                 <div className={'text-xs-left advanced-filter-box ' + (isFilterOpen ? 'show-filter' : 'hide-filter')}>
                     <div className="checkbox custom-control text-center custom-checkbox">
                         <label className='filter-label'>
-                            {"HIDE EPAs WITH NO DATA"}
-                            <input id='filter-hide-epa' type="checkbox" checked={this.state.hideUncommencedEPA} onChange={this.onEPAToggle} />
+                            {"SHOW EPAs WITH NO DATA"}
+                            <input id='filter-hide-epa' type="checkbox" checked={this.state.showUncommencedEPA} onChange={this.onEPAToggle} />
                             <span className="custom-control-indicator"></span>
                         </label>
                     </div>
