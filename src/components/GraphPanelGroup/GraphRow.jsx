@@ -55,7 +55,32 @@ export default class GraphRow extends Component {
         const xScale = scaleLinear().domain([0, residentData[epaSource].length - 1]).range([marginHorizontal, width - marginHorizontal])
         const yScale = scaleLinear().domain([5, 1]).range([marginVertical, innerHeight - marginVertical])
 
-        const scoreData = residentData[epaSource].map((d, i) => { return { x: xScale(i), y: yScale(d.Rating) }; });
+        const scoreData = residentData[epaSource].map((d, i) => {
+
+            let color = '#252830';
+
+            if (isFilterVisible) {
+
+                const context = d.Situation_Context.split(",").map((val_0) => val_0.trim());
+
+                if (clinicalFilter.length > 0 && patientDemographicFilter.length > 0) {
+                    color = (context.indexOf(clinicalFilter) > 0 && context.indexOf(patientDemographicFilter) > -1) ? 'red' : color;
+                }
+                else if (clinicalFilter.length > 0) {
+                    color = context.indexOf(clinicalFilter) > 0 ? 'red' : color;
+                }
+                else if (patientDemographicFilter.length > 0) {
+                    color = (context.indexOf(patientDemographicFilter) > -1) ? 'red' : color;
+                }
+            }
+
+            return {
+                x: xScale(i),
+                y: yScale(d.Rating),
+                color
+            };
+
+        });
 
         const trackTrailPositions = _.map([...Array(5)], (d, i) => {
             return {

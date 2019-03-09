@@ -7,28 +7,27 @@ export default class SlideInFilter extends Component {
 
     constructor(props) {
         super(props);
-        this.onSelectSubmit = this.onSelectSubmit.bind(this);
+        this.onSelectChange = this.onSelectChange.bind(this);
+        this.createSelect = this.createSelect.bind(this);
     }
 
-    onSelectSubmit(event) {
-
-        let clinicalPresentationValue = '', patientDemographicValue = '';
-
-        if (event.target.id.indexOf('highlight') > -1) {
-            clinicalPresentationValue = document.getElementById('filter-demographic-cp') ? document.getElementById('filter-demographic-cp').value : '';
-            patientDemographicValue = document.getElementById('filter-demographic-cp') ? document.getElementById('filter-demographic-dm').value : '';
+    onSelectChange(option, selectRef) {
+        const { clinicalFilter, patientDemographicFilter } = this.props;
+        if (selectRef.name == 'cp') {
+            this.props.onHighlightChange(selectRef.action == 'clear' ? '' : option.value, patientDemographicFilter);
         }
-
-        this.props.onHighlightChange(clinicalPresentationValue, patientDemographicValue);
+        else {
+            this.props.onHighlightChange(clinicalFilter, selectRef.action == 'clear' ? '' : option.value);
+        }
     }
 
+    createSelect(label, optionArray = [], filterKey, defaultValue) {
 
-    createSelect(label, optionArray = [], filterKey, records, defaultValue) {
+        const { data = [] } = this.props,
+            // create a count map that is then merged with the text at the end
+            optionCountMap = _.times(optionArray.length, () => 0);
 
-        // create a count map that is then merged with the text at the end
-        const optionCountMap = _.times(optionArray.length, () => 0);
-
-        _.map(records, (record) => {
+        _.map(data, (record) => {
             const context = record.Situation_Context.split(",").map((val_0) => val_0.trim());
             context.map((contextType, contextIndex) => {
                 // if a particular value is in the array then find its position and 
@@ -43,43 +42,55 @@ export default class SlideInFilter extends Component {
         });
 
         // Merge the option Array text with the count of records present in each type
-        const modifiedOptionArray = _.map(optionArray, (option, index) => option + "(" + optionCountMap[index] + ")");
+        const modifiedOptionArray = _.map(optionArray, (option, index) => {
+            return {
+                label: option + " (" + optionCountMap[index] + ") ",
+                value: optionArray[index]
+            }
+        });
 
         if (modifiedOptionArray.length > 0) {
-
-            // insert a fake option 
-            modifiedOptionArray.unshift("Select");
 
             return (
                 <div className='demographic-box inner-filter-box'>
                     <label className='filter-label'>{label}</label>
-                    <select onChange={this.onSelectChange} id={'filter-demographic-' + filterKey} defaultValue={defaultValue} className="custom-select">
-                        {_.map(modifiedOptionArray, (val, index) => { return <option key={index} value={index == 0 ? '' : optionArray[index - 1]}> &nbsp; {val} &nbsp;</option> })}
-                    </select>
+                    <div className='select-container-filter'>
+                        <Select
+                            isClearable={true}
+                            name={filterKey}
+                            // react select needs a value and so we need to set it in a complicated way with a function
+                            //  need to find a more elegant solution in future
+                            value={(modifiedOptionArray.find(option => option.value === defaultValue)) || ''}
+                            options={modifiedOptionArray}
+                            styles={{ option: (styles) => ({ ...styles, color: 'black' }) }}
+                            onChange={this.onSelectChange} />
+                    </div>
                 </div>)
         }
         else {
-            (<div className='demographic-box inner-filter-box'>
-                <label className='filter-label'>{label}</label>
-                <span className='no-option-text'>N/A</span>
-            </div>)
+            return (
+                <div className='demographic-box inner-filter-box'>
+                    <label className='filter-label'>{label}</label>
+                    <span className='no-option-text'>N/A</span>
+                </div>)
         }
     }
 
     render() {
 
-        const { innerKey, epaSource, width, data = [], clinicalFilter, patientDemographicFilter } = this.props,
+        const { innerKey, epaSource, width, clinicalFilter, patientDemographicFilter, onHighlightChange } = this.props,
             { clinicalPresentation, patientDemographic } = templateEpaSourceMap[innerKey];
 
         return (
             <div className='filter-box' style={{ width: (width * 4) - 75 }}>
-                {this.createSelect('Clinical Presentation', clinicalPresentation[epaSource], 'cp', data, clinicalFilter)}
-                {this.createSelect('Demographic', patientDemographic[epaSource], 'dm', data, patientDemographicFilter)}
+                {this.createSelect('Clinical Presentation', clinicalPresentation[epaSource], 'cp', clinicalFilter)}
+                {this.createSelect('Demographic', patientDemographic[epaSource], 'dm', patientDemographicFilter)}
                 <div className='inner-button-box'>
-                    <button type="submit" id='filter-highlight-button' className="btn btn-primary-outline" onClick={this.onSelectSubmit}>HIGHLIGHT</button>
-                </div>
-                <div className='inner-button-box'>
-                    <button type="submit" id='filter-reset-button' className="btn btn-primary-outline icon-container" onClick={this.onSelectSubmit}><span className="icon icon-ccw"></span></button>
+                    <button type="submit"
+                        className="btn btn-primary-outline icon-container"
+                        onClick={() => { onHighlightChange('', '') }}>
+                        RESET <span className="icon icon-ccw"></span>
+                    </button>
                 </div>
             </div>)
     }

@@ -12,9 +12,18 @@ export default (props) => {
             <path className='score-spark-line' d={d3Line(props.data)}></path>
             <TrackTrails trackTrailPositions={props.trackTrailPositions} />
             <g>
-                {_.map(props.data, (d, i) => {
-                    return <circle id={'point-inner-' + props.epaSource + '-outer-' + i} onMouseOver={props.onMouseOver} onMouseOut={props.onMouseOut} r={props.smallScreen ? 3 : 6} className='score-point' key={'score-point-' + i} cx={d.x} cy={d.y}></circle>;
-                })}
+                {_.map(props.data, (d, i) =>
+                    <circle
+                        id={'point-inner-' + props.epaSource + '-outer-' + i}
+                        onMouseOver={props.onMouseOver}
+                        onMouseOut={props.onMouseOut}
+                        r={props.smallScreen ? 3 : 6}
+                        className='score-point'
+                        key={'score-point-' + i}
+                        fill={d.color}
+                        cx={d.x} cy={d.y}>
+                    </circle>
+                )}
                 {(props.overShotLineX != 0) &&
                     <line className='over-shot-line'
                         x1={props.overShotLineX} y1="0"
