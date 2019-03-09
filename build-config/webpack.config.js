@@ -1,4 +1,6 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 
 'use strict';
 module.exports = {
@@ -20,6 +22,14 @@ module.exports = {
             ]
         }
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            filename: '../../../../build/index.html',
+            template: './src/assets/index.template.html',
+            alwaysWriteToDisk: true
+        }),
+        new HtmlWebpackHarddiskPlugin()
+    ],
     module: {
         rules: require("./rules.config"),
     },

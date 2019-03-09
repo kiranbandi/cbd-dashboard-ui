@@ -9,9 +9,18 @@ export default class GraphRow extends Component {
 
     constructor(props) {
         super(props);
+        this.state = { clinicalFilter: '', patientDemographicFilter: '' };
+        this.onHighlightChange = this.onHighlightChange.bind(this);
+
+    }
+
+    onHighlightChange(clinicalFilter, patientDemographicFilter) {
+        this.setState({ clinicalFilter, patientDemographicFilter });
     }
 
     render() {
+
+        const { clinicalFilter, patientDemographicFilter } = this.state;
 
         let { epaSource, isTableVisible, innerKey,
             widthPartition, smallScreen, epaSourceMap,
@@ -117,7 +126,11 @@ export default class GraphRow extends Component {
                         data={residentData[epaSource]}
                         width={widthPartition}
                         innerKey={innerKey}
-                        epaSource={epaSource} />}
+                        epaSource={epaSource}
+                        onHighlightChange={this.onHighlightChange}
+                        clinicalFilter={clinicalFilter}
+                        patientDemographicFilter={patientDemographicFilter}
+                    />}
             </div>
         );
     }
