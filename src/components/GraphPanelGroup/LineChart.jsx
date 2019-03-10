@@ -20,7 +20,7 @@ export default (props) => {
                         r={props.smallScreen ? 3 : 6}
                         className='score-point'
                         key={'score-point-' + i}
-                        fill={d.color}
+                        fill={d.highlight ? 'red' : '#252830'}
                         cx={d.x} cy={d.y}>
                     </circle>
                 )}

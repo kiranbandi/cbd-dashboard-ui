@@ -58,26 +58,28 @@ export default class GraphRow extends Component {
         const scoreData = residentData[epaSource].map((d, i) => {
 
             let color = '#252830';
+            let highlight = false;
 
             if (isFilterVisible) {
 
                 const context = d.Situation_Context.split(",").map((val_0) => val_0.trim());
 
                 if (clinicalFilter.length > 0 && patientDemographicFilter.length > 0) {
-                    color = (context.indexOf(clinicalFilter) > 0 && context.indexOf(patientDemographicFilter) > -1) ? 'red' : color;
+                    highlight = (context.indexOf(clinicalFilter) > 0 && context.indexOf(patientDemographicFilter) > -1) ? true : false;
                 }
                 else if (clinicalFilter.length > 0) {
-                    color = context.indexOf(clinicalFilter) > 0 ? 'red' : color;
+                    highlight = context.indexOf(clinicalFilter) > 0 ? true : false;
                 }
                 else if (patientDemographicFilter.length > 0) {
-                    color = (context.indexOf(patientDemographicFilter) > -1) ? 'red' : color;
+                    highlight = (context.indexOf(patientDemographicFilter) > -1) ? true : false;
                 }
             }
 
             return {
                 x: xScale(i),
                 y: yScale(d.Rating),
-                color
+                highlight,
+                pureData: d
             };
 
         });
@@ -148,7 +150,7 @@ export default class GraphRow extends Component {
                         width={widthPartition} />}
                 {!smallScreen && isFilterVisible && isEMDepartment &&
                     <SlideInFilter
-                        data={residentData[epaSource]}
+                        data={scoreData}
                         width={widthPartition}
                         innerKey={innerKey}
                         epaSource={epaSource}

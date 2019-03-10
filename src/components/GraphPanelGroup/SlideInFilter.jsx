@@ -23,12 +23,18 @@ export default class SlideInFilter extends Component {
 
     createSelect(label, optionArray = [], filterKey, defaultValue) {
 
-        const { data = [] } = this.props,
+        let { data = [], clinicalFilter, patientDemographicFilter } = this.props,
             // create a count map that is then merged with the text at the end
             optionCountMap = _.times(optionArray.length, () => 0);
 
+        // if a filter is active thi means that a filter has been activated 
+        // so now only count the elements that have all been highlighted.
+        if (clinicalFilter.length > 0 || patientDemographicFilter.length > 0) {
+            data = _.filter(data, (d) => d.highlight);
+        }
+
         _.map(data, (record) => {
-            const context = record.Situation_Context.split(",").map((val_0) => val_0.trim());
+            const context = record.pureData.Situation_Context.split(",").map((val_0) => val_0.trim());
             context.map((contextType, contextIndex) => {
                 // if a particular value is in the array then find its position and 
                 //  increase the count in that position by 1
