@@ -1,0 +1,100 @@
+.dashboard-root-resident {
+    .loading-spinner {
+        margin: 100px auto;
+    }
+    .filter-panel {
+        margin: 30px 30px 20px 30px;
+        .root-box {
+            border-radius: 5px;
+            background: #1a1c22;
+            @media (max-width: 768px) {
+                width: 100%;
+                padding: 10px;
+            }
+            width: 575px;
+        }
+        .button-box {
+            display: inline-block;
+            margin: 10px;
+            @media (max-width: 768px) {
+                margin: 10px;
+            }
+        }
+        .filter-button-container {
+            display: inline-block;
+            .btn-primary-outline.active-button {
+                color: #ffffff;
+                background-color: #1997c6;
+                box-shadow: none;
+            }
+            .btn-primary-outline.not-active {
+                color: #1997c6;
+                background-color: transparent;
+                border-color: #1997c6;
+            }
+            .btn {
+                @media (max-width: 768px) {
+                    font-size: 12px;
+                }
+            }
+        }
+        .advanced-filter-box {
+            background: #1a1c22;
+            padding: 20px 20px 20px 20px;
+            margin-top: 5px;
+            &.hide-filter {
+                display: none;
+            }
+            &.show-filter {
+                display: block;
+            }
+        }
+        .name-box {
+            #filter-residentName {
+                width: 175px;
+            }
+            display: inline-block;
+            margin: 10px 20px;
+            @media (max-width: 768px) {
+                margin-top: 10px;
+                margin-bottom: 0px;
+            }
+        }
+        .date-box {
+            display: inline-block;
+            width: 270px;
+        }
+        .filter-label {
+            margin-right: 10px;
+            font-size: 16px;
+            font-weight: normal;
+        }
+        .checkbox {
+            display: inline-block;
+            margin-right: 20px;
+            text-align: left;
+            .custom-control-indicator {
+                top: 3px;
+            }
+        }
+        .input-group {
+            display: inline-table;
+            vertical-align: middle;
+            input {
+                width: 120px;
+            }
+        }
+        .filter-button {
+            font-size: 16px;
+            font-weight: bold;
+            div.filter-loader {
+                margin-left: 10px;
+                vertical-align: top;
+                display: inline-block;
+            }
+            @media (max-width: 768px) {
+                font-size: 13px;
+            }
+        }
+    }
+}

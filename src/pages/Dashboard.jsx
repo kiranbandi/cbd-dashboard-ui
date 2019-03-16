@@ -1,49 +1,63 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getResidentList } from '../utils/requestServer';
-import { setResidentList, toggleLoader } from '../redux/actions/actions';
-import Loading from 'react-loading';
-import { FilterPanel, GraphPanel, InfoPanel } from '../components';
+import { ResidentDashboard, ProgramDashboard, SupervisorDashboard, DownloadDashboard } from '../components';
 
-class Dashboard extends Component {
+
+class DashboardRoot extends Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            activeBoard: 'resident'
+        };
+        this.onTabClick = this.onTabClick.bind(this);
     }
 
-    componentDidMount() {
-        const { residentList } = this.props;
-        // toggle loader before fetching data
-        this.props.actions.toggleLoader();
-        // get list of all residents
-        getResidentList()
-            .then((residentList) => {
-                this.props.actions.setResidentList(residentList);
-            })
-            // toggle loader again once the request completes
-            .catch(() => { console.log("error in fetching resident list"); })
-            .finally(() => {
-                this.props.actions.toggleLoader();
-            });
+
+    onTabClick(event) {
+        event.preventDefault();
+        const id = event.target.id.split("-")[0];
+        this.setState({ activeBoard: id });
     }
+
 
     render() {
-        let { loaderState, residentList = [] } = this.props;
+
+        const { userType } = this.props,
+            { activeBoard = 'resident' } = this.state,
+            isAllowedMultiMode = (userType == 'admin' || userType == "reviewer");
 
         return (
-            <div className='dashboard-root m-t' >
-                {loaderState ?
-                    <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
-                    <div className='m-t-md'>
-                        {residentList.length > 0 ?
-                            <div>
-                                <FilterPanel />
-                                <InfoPanel />
-                                <GraphPanel isEMDepartment={true} />
-                            </div> :
-                            <h2 className='text-center text-danger'>No resident information is available currently</h2>}
-                    </div>}
+            <div className='dashboard-page-root' >
+                {isAllowedMultiMode ?
+                    <div>
+                        <div className="hr-divider">
+                            <ul className="nav nav-pills hr-divider-content hr-divider-nav">
+                                <li className={activeBoard == 'resident' ? 'active' : ''}>
+                                    <a id='resident-tab' onClick={this.onTabClick} >RESIDENT METRICS</a>
+                                </li>
+                                <li className={activeBoard == 'supervisor' ? 'active' : ''}>
+                                    <a id='supervisor-tab' onClick={this.onTabClick}>SUPERVISORY METRICS</a>
+                                </li>
+                                <li className={activeBoard == 'program' ? 'active' : ''}>
+                                    <a id='program-tab' onClick={this.onTabClick}>PROGRAM EVALUATION</a>
+                                </li>
+                                <li className={activeBoard == 'table' ? 'active' : ''}>
+                                    <a id='table-tab' onClick={this.onTabClick}>EXPORT DATA</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className='admin-inner-container'>
+                            {(activeBoard == 'resident') && <ResidentDashboard />}
+                            {(activeBoard == 'supervisor') && <SupervisorDashboard />}
+                            {(activeBoard == 'program') && <ProgramDashboard />}
+                            {(activeBoard == 'table') && <DownloadDashboard />}
+                        </div>
+
+                    </div>
+                    : <ResidentDashboard />}
             </div >
         );
     }
@@ -51,18 +65,18 @@ class Dashboard extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ toggleLoader, setResidentList }, dispatch)
+        actions: bindActionCreators({}, dispatch)
     };
 }
 
 function mapStateToProps(state) {
     return {
-        residentList: state.oracle.residentList,
-        loaderState: state.oracle.loaderState
+        userType: state.oracle.userDetails.accessType,
+
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardRoot);
 
 
 

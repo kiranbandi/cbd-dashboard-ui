@@ -119,7 +119,7 @@ var epaSourceMap = {
             '3.11': [],
             '3.12': [],
             '3.13':  ["complex wound repair", "central venous access with ultrasound guidance", "reduction of an extremity fracture", "lumbar puncture", "reduction of large joint dislocation", "regional anesthesia (e.g. large peripheral nerve block, not a digital nerve)", "thoracostomy tube insertion"],
-            '3.14': ["pericardial effusion and cardiac tamponade", "global estimation of left ventricular fraction", "pneumothorax", "hemothorax", "pleural effusion", "abdominal aortic aneurysm", "abdominal or pelvic free fluid, first trimester intrauterine gestation"],
+            '3.14': ["pericardial effusion and cardiac tamponade", "global estimation of left ventricular fraction", "pneumothorax", "hemothorax", "pleural effusion", "abdominal aortic aneurysm", "abdominal or pelvic free fluid", " first trimester intrauterine gestation"],
             '3.15': [],
             '3.16': [],
             '3.17': [],

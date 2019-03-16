@@ -65,23 +65,16 @@ class FilterPanel extends Component {
         //  in repeating this again.
         getResidentData(residentFilter.username)
             .then((residentData) => {
+
+                // mark records in the selected date range with a flag
+                var markedResidentData = _.map(residentData, (d) => {
+                    d.mark = moment(d.Date, 'YYYY-MM-DD').isAfter(moment(residentFilter.startDate, 'MM/DD/YYYY')) && moment(d.Date, 'YYYY-MM-DD').isBefore(moment(residentFilter.endDate, 'MM/DD/YYYY'));
+                    return d;
+                })
+
                 // group data on the basis of EPA
-                var groupedResidentData = _.groupBy(residentData, (d) => d.EPA);
-                // Filter grouped data 
-                if (residentFilter.isAllData === false) {
-                    _.each(groupedResidentData, (epaSourceData, key) => {
-                        //  filter out records not in the date range
-                        var remainingRecords = _.filter(epaSourceData, (record) => {
-                            return moment(record.Date, 'YYYY-MM-DD').isAfter(moment(residentFilter.startDate, 'MM/DD/YYYY')) && moment(record.Date, 'YYYY-MM-DD').isBefore(moment(residentFilter.endDate, 'MM/DD/YYYY'))
-                        })
-                        if (remainingRecords.length == 0) {
-                            delete groupedResidentData[key];
-                        }
-                        else {
-                            groupedResidentData[key] = remainingRecords;
-                        }
-                    })
-                }
+                var groupedResidentData = _.groupBy(markedResidentData, (d) => d.EPA);
+
 
                 // if uncommenced EPAs are needed to be seen then sub in empty records
                 if (showUncommencedEPA) {
@@ -144,14 +137,14 @@ class FilterPanel extends Component {
                 <div className={'text-xs-left advanced-filter-box ' + (isFilterOpen ? 'show-filter' : 'hide-filter')}>
                     <div className="checkbox custom-control text-center custom-checkbox">
                         <label className='filter-label'>
-                            {"SHOW EPAs WITH NO DATA"}
+                            {"Show EPAs with No Data"}
                             <input id='filter-hide-epa' type="checkbox" checked={this.state.showUncommencedEPA} onChange={this.onEPAToggle} />
                             <span className="custom-control-indicator"></span>
                         </label>
                     </div>
                     <div className="checkbox custom-control text-center custom-checkbox">
                         <label className='filter-label'>
-                            {"OPEN CURRENT PHASE ONLY"}
+                            {"Open Current Phase Only"}
                             <input id='filter-hide-phases' type="checkbox" checked={this.state.openOnlyCurrentPhase} onChange={this.onVisbilityToggle} />
                             <span className="custom-control-indicator"></span>
                         </label>
@@ -160,7 +153,7 @@ class FilterPanel extends Component {
                     <div>
                         <div className="checkbox custom-control text-center custom-checkbox">
                             <label className='filter-label'>
-                                {"VIEW ALL RECORDS (without date limit) "}
+                                {"No Date Range Highlight"}
                                 <input id='filter-isAllData' type="checkbox" checked={isAllData} onChange={this.onChange} />
                                 <span className="custom-control-indicator"></span>
                             </label>
