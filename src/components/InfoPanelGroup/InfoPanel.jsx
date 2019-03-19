@@ -10,7 +10,7 @@ class InfoPanel extends Component {
     constructor(props) {
         super(props);
     }
-
+    
 
     render() {
 
@@ -32,8 +32,8 @@ class InfoPanel extends Component {
                             <span><b>PROGRAM START DATE -</b> {(new Date(residentInfo.programStartDate)).toDateString()}</span>
                             <span><b>LAST UPDATED ON -</b> {(new Date(residentInfo.uploadedData)).toDateString()}</span>
                         </div>
-                        {!!residentData && <EPASpeedInfo residentData={residentData} residentInfo={residentInfo} />}
                         {!!scheduleMap && <RotationSchedule scheduleMap={scheduleMap} longitudinalScheduleMap={longitudinalScheduleMap} />}
+                        {!!residentData && <EPASpeedInfo residentData={residentData} residentInfo={residentInfo} />}
                     </div>
                 }
             </div>

@@ -68,7 +68,12 @@ class FilterPanel extends Component {
 
                 // mark records in the selected date range with a flag
                 var markedResidentData = _.map(residentData, (d) => {
-                    d.mark = moment(d.Date, 'YYYY-MM-DD').isAfter(moment(residentFilter.startDate, 'MM/DD/YYYY')) && moment(d.Date, 'YYYY-MM-DD').isBefore(moment(residentFilter.endDate, 'MM/DD/YYYY'));
+                    if (residentFilter.isAllData) {
+                        d.mark = false;
+                    }
+                    else {
+                        d.mark = moment(d.Date, 'YYYY-MM-DD').isAfter(moment(residentFilter.startDate, 'MM/DD/YYYY')) && moment(d.Date, 'YYYY-MM-DD').isBefore(moment(residentFilter.endDate, 'MM/DD/YYYY'));
+                    }
                     return d;
                 })
 

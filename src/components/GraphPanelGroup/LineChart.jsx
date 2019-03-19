@@ -18,7 +18,7 @@ export default (props) => {
                     r={elementSize}
                     className='score-point'
                     key={'score-point-' + i}
-                    fill={d.highlight ? '#ff8e8e' : '#252830'}
+                    fill={d.highlight ? '#ff6a6a' : '#252830'}
                     cx={d.x} cy={d.y}>
                 </circle>
             }
@@ -29,7 +29,7 @@ export default (props) => {
                 className='score-point'
                 onMouseOver={props.onMouseOver}
                 onMouseOut={props.onMouseOut}
-                stroke={d.highlight ? '#ff8e8e' : '#252830'}
+                stroke={d.highlight ? '#ff6a6a' : '#252830'}
                 fill={'white'}
                 strokeWidth={elementSize / 2}
                 key={'score-point-' + i} />
