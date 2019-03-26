@@ -9,6 +9,23 @@ export default class ResidentDashboard extends Component {
         super(props);
     }
 
+    componentDidMount() {
+        const { allData } = this.props;
+
+    //     // toggle loader before fetching data
+    //     this.props.actions.toggleLoader();
+    //     // get list of all residents
+    //     getResidentList()
+    //         .then((residentList) => {
+    //             this.props.actions.setResidentList(residentList);
+    //         })
+    //         // toggle loader again once the request completes
+    //         .catch(() => { console.log("error in fetching resident list"); })
+    //         .finally(() => {
+    //             this.props.actions.toggleLoader();
+    //         });
+    }
+
 
     render() {
 

@@ -4,7 +4,6 @@ import TrackTrails from './TrackTrails';
 
 export default (props) => {
 
-
     // get d3 line function that returns path
     const d3Line = line().x((d) => d.x).y((d) => d.y),
         elementSize = props.smallScreen ? 3 : 6,

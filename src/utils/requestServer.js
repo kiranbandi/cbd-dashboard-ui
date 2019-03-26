@@ -149,7 +149,8 @@ requestServer.setRecords = function(records, username) {
             rating: record.Rating,
             resident_name: record.Resident_Name,
             situation_context: record.Situation_Context,
-            type: record.Type
+            type: record.Type,
+            isExpired: record.isExpired
         }
     })
 
