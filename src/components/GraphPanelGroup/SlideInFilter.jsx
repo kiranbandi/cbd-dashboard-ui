@@ -27,9 +27,13 @@ export default class SlideInFilter extends Component {
             // create a count map that is then merged with the text at the end
             optionCountMap = _.times(optionArray.length, () => 0);
 
-        // if a filter is active thi means that a filter has been activated 
-        // so now only count the elements that have all been highlighted.
-        if (clinicalFilter.length > 0 || patientDemographicFilter.length > 0) {
+        // The filter shows count on its labels which need to work synchronously with each other
+        // so if filter A is active then labels in filter B are modified based on value selected in A
+        //  and the same if B is active , but if both are active then count resets to original count
+        if (clinicalFilter.length > 0 && patientDemographicFilter.length == 0 && filterKey == 'dm') {
+            data = _.filter(data, (d) => d.highlight);
+        }
+        else if (patientDemographicFilter.length > 0 && clinicalFilter.length == 0 && filterKey == 'cp') {
             data = _.filter(data, (d) => d.highlight);
         }
 
