@@ -11,17 +11,17 @@ class SupervisorDashboard extends Component {
     componentDidMount() {
         const { allData } = this.props;
         // toggle loader before fetching data
-        this.props.actions.toggleLoader();
-        // get list of all residents
-        getResidentList()
-            .then((residentList) => {
-                this.props.actions.setResidentList(residentList);
-            })
-            // toggle loader again once the request completes
-            .catch(() => { console.log("error in fetching resident list"); })
-            .finally(() => {
-                this.props.actions.toggleLoader();
-            });
+        // this.props.actions.toggleLoader();
+        // // get list of all residents
+        // getResidentList()
+        //     .then((residentList) => {
+        //         this.props.actions.setResidentList(residentList);
+        //     })
+        //     // toggle loader again once the request completes
+        //     .catch(() => { console.log("error in fetching resident list"); })
+        //     .finally(() => {
+        //         this.props.actions.toggleLoader();
+        //     });
     }
 
 
@@ -36,7 +36,7 @@ class SupervisorDashboard extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ toggleLoader }, dispatch)
+        actions: bindActionCreators({  }, dispatch)
     };
 }
 

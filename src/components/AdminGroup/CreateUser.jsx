@@ -87,7 +87,7 @@ export default class CreateUser extends Component {
                         <span className='inner-span'>ACCESS TYPE</span>
                         <select id='select-access-type' name="accessType" className='custom-select' value={accessType} onChange={this.onChange}>
                             <option value='resident' >RESIDENT</option>
-                            <option value='supervisor' >SUPERVISOR</option>
+                            <option value='supervisor' >ACADEMIC SUPERVISOR</option>
                             <option value='reviewer' >COMMITEE REVIEWER</option>
                             <option value='admin' >ADMIN</option>
                         </select>
