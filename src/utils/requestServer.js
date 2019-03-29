@@ -126,7 +126,8 @@ requestServer.getResidentData = function(username) {
                             Rating: record.rating,
                             Resident_Name: record.resident_name,
                             Situation_Context: record.situation_context,
-                            Type: record.type
+                            Type: record.type,
+                            isExpired: record.isExpired || false
                         }
                     })
                     resolve(recordsList);
