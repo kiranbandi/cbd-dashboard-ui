@@ -8,8 +8,11 @@ export { default as InfoPanel } from './InfoPanelGroup/InfoPanel';
 export { default as CreateUser } from './AdminGroup/CreateUser';
 export { default as ModifyUser } from './AdminGroup/ModifyUser';
 export { default as AddData } from './AdminGroup/AddData';
+export { default as ExpiredRecordTable } from './ExpiredRecordTable';
 export { default as ResidentDashboard } from './DashboardGroup/ResidentDashboard';
 export { default as ProgramDashboard } from './DashboardGroup/ProgramDashboard';
 export { default as SupervisorDashboard } from './DashboardGroup/SupervisorDashboard';
 export { default as DownloadDashboard } from './DashboardGroup/DownloadDashboard';
+
+
 

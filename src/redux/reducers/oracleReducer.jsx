@@ -18,6 +18,8 @@ export default function oracleReducer(state = initialState.oracle, action) {
       return Object.assign({}, state, { residentFilter: action.residentFilter })
     case types.SET_RESIDENT_DATA:
       return Object.assign({}, state, { residentData: action.residentData })
+    case types.SET_EXPIRED_RESIDENT_DATA:
+      return Object.assign({}, state, { expiredResidentData: action.expiredResidentData })
     case types.SET_TOOLTIP_VISIBILITY:
       return Object.assign({}, state, { isTooltipVisible: action.isTooltipVisible })
     case types.SET_TOOLTIP_DATA:

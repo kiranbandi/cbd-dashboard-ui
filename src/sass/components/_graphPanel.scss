@@ -119,56 +119,6 @@
                     }
                 }
             }
-            .table-box {
-                margin: 10px auto 40px auto;
-                border-radius: 10px;
-                .ReactTable {
-                    border-radius: 5px;
-                    .rt-thead.-header {
-                        font-weight: bold;
-                        text-transform: uppercase;
-                        background: #1a1c22;
-                        text-align: center;
-                        padding: 5px 0px;
-                        .rt-th.-sort-asc,
-                        .rt-td.-sort-asc {
-                            box-shadow: inset 0 3px 0 0 rgb(70, 130, 180);
-                        }
-                        .rt-th.-sort-desc,
-                        .rt-td.-sort-desc {
-                            box-shadow: inset 0 -3px 0 0 rgb(70, 130, 180);
-                        }
-                    }
-                    .rt-tbody .rt-tr-group {
-                        border-radius: 5px;
-                        border-bottom: solid 2px rgba(0, 0, 0, 0.10);
-                        &:hover {
-                            background: #283a5d;
-                        }
-                        .rt-td.feedback-cell,
-                        .rt-td.situation-cell {
-                            white-space: normal;
-                            text-overflow: inherit;
-                            text-align: left;
-                        }
-                    }
-                    .-pagination {
-                        input,
-                        select {
-                            color: black;
-                        }
-                        .-btn {
-                            color: white;
-                            font-weight: bold;
-                            text-transform: uppercase;
-                            background: #1a1c22;
-                            &:hover {
-                                background: #283a5d;
-                            }
-                        }
-                    }
-                }
-            }
             .inner-cell {
                 display: inline-block;
                 text-overflow: ellipsis;

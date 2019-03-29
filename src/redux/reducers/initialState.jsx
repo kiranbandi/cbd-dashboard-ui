@@ -4,6 +4,7 @@ export default {
     filterLoaderState: false,
     sessionStatus: !!sessionStorage.jwt,
     residentData: null,
+    expiredResidentData: [],
     residentFilter: { isAllData: true },
     isTooltipVisible: false,
     tooltipData: null,

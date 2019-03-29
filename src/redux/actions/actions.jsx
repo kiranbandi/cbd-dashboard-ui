@@ -42,6 +42,17 @@ export function setResidentFilter(residentFilter) {
 
 export function setResidentData(residentData, residentInfo = false) {
 
+    let expiredResidentData = [];
+
+    if (residentData) {
+        _.map(residentData, (innerEPAs, index) => {
+            var splitGroup = _.partition(innerEPAs, (record) => record.isExpired);
+            // we split records on the basis of whether or not they have expired
+            residentData[index] = splitGroup[1];
+            expiredResidentData.push(...splitGroup[0]);
+        })
+    }
+
     let visibilityOpenStatus = {
         1: false,
         2: false,
@@ -77,10 +88,15 @@ export function setResidentData(residentData, residentInfo = false) {
         return dispatch => {
             dispatch(setLevelVisibilityStatus(visibilityOpenStatus));
             dispatch({ type: types.SET_RESIDENT_DATA, residentData });
+            dispatch({ type: types.SET_EXPIRED_RESIDENT_DATA, expiredResidentData });
         };
     }
     // if not simply dispatch the change to residentData alone
-    return { type: types.SET_RESIDENT_DATA, residentData };
+    return dispatch => {
+        dispatch({ type: types.SET_RESIDENT_DATA, residentData });
+        dispatch({ type: types.SET_EXPIRED_RESIDENT_DATA, expiredResidentData });
+    };
+
 
 }
 

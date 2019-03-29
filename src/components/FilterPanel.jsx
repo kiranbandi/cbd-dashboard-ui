@@ -80,7 +80,6 @@ class FilterPanel extends Component {
                 // group data on the basis of EPA
                 var groupedResidentData = _.groupBy(markedResidentData, (d) => d.EPA);
 
-
                 // if uncommenced EPAs are needed to be seen then sub in empty records
                 if (showUncommencedEPA) {
                     _.map(templateEpaSourceMap, (source) => {
