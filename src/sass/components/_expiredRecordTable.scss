@@ -1,0 +1,23 @@
+.expired-box {
+    margin: 30px 30px 60px 30px;
+    border-radius: 5px;
+    background: #1a1c22;
+    .hr-divider {
+        margin: 0px 30px !important;
+        padding-top: 10px;
+        h4 {
+            padding: 10px;
+            margin-top: 12px;
+            font-size: 15px;
+            color: #cfd2da;
+            text-transform: none;
+        }
+    }
+    .table-box {
+        margin: 0px auto 10px auto;
+        padding: 10px;
+        .ReactTable .rt-tbody .rt-td {
+            text-align: center;
+        }
+    }
+}
