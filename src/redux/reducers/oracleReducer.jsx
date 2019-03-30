@@ -26,6 +26,8 @@ export default function oracleReducer(state = initialState.oracle, action) {
       return Object.assign({}, state, { tooltipData: action.tooltipData })
     case types.SET_USER_DATA:
       return Object.assign({}, state, { userDetails: action.userDetails })
+    case types.SET_DATA_DUMP:
+      return Object.assign({}, state, { dataDumpPresent: action.dataDumpPresent })
     case types.SET_VISIBILITY_OPEN_STATUS:
       return Object.assign({}, state, { visibilityOpenStatus: action.visibilityOpenStatus })
     default:

@@ -162,6 +162,14 @@ requestServer.setRecords = function(records, username) {
     });
 }
 
+requestServer.getAllData = function() {
+    return new Promise((resolve, reject) => {
+        axios.get(endPoints.dataDump, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            .then((response) => { resolve(response.data) })
+            .catch((err) => errorCallback(err, reject));
+    });
+}
+
 function errorCallback(error, reject) {
     if (error.response && error.response.data) {
         toastr["error"](error.response.data.message, "ERROR");

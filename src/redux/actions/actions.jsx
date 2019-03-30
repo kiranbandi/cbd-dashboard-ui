@@ -40,6 +40,10 @@ export function setResidentFilter(residentFilter) {
     return { type: types.SET_RESIDENT_FILTER, residentFilter };
 }
 
+export function setDataDumpState(dataDumpPresent) {
+    return { type: types.SET_DATA_DUMP, dataDumpPresent };
+}
+
 export function setResidentData(residentData, residentInfo = false) {
 
     let expiredResidentData = [];
