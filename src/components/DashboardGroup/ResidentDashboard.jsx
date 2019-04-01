@@ -13,9 +13,12 @@ class ResidentDashboard extends Component {
         this.state = {
             isLoaderVisible: false
         }
+        this._isMounted = false;
     }
 
     componentDidMount() {
+
+        this._isMounted = true;
         // toggle loader before fetching data
         this.setState({ isLoaderVisible: true });
         // get list of all residents
@@ -24,9 +27,14 @@ class ResidentDashboard extends Component {
             // toggle loader again once the request completes
             .catch(() => { console.log("error in fetching resident list"); })
             .finally(() => {
-                this.setState({ isLoaderVisible: false });
+                this._isMounted && this.setState({ isLoaderVisible: false });
             });
     }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+    
 
     render() {
         let { residentList = [] } = this.props;

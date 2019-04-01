@@ -1,57 +1,58 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { getAllData } from '../../utils/requestServer';
-import { setDataDumpState } from '../../redux/actions/actions';
+import downloadCSV from '../../utils/downloadCSV';
 import Loading from 'react-loading';
 
-class SupervisorDashboard extends Component {
+export default class ExportDataTab extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             isLoaderVisible: false
-        }
+        };
+        this._isMounted = false;
+        this.downloadFile = this.downloadFile.bind(this);
     }
 
     componentDidMount() {
+        this._isMounted = true;
+    }
 
-        const { allData } = this.props;
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
+    downloadFile(event) {
+        event.preventDefault();
         // toggle loader before fetching data
         this.setState({ isLoaderVisible: true });
         // get list of all residents
         getAllData()
-            .then((residentList) => {
-                this.props.actions.setResidentList(residentList);
+            .then((data) => {
+                window.emCBD = {
+                    'rcmData': _.map(data, (_r) => {
+                        return [_r.observation_date, _r.resident_name, _r.epa, _r.observer_name, _r.observer_type, _r.rating, _r.type, _r.situation_context, _r.feedback, _r.professionalism_safety, _r.isExpired || false];
+                    })
+                };
+                downloadCSV();
             })
             // toggle loader again once the request completes
-            .catch(() => { console.log("error in fetching resident list"); })
+            .catch(() => { console.log("error in fetching all records"); })
             .finally(() => {
-                this.setState({ isLoaderVisible: false });
+                this._isMounted && this.setState({ isLoaderVisible: false });
             });
     }
 
-
     render() {
         return (
-            <div className='m-a' >
-                Supervisory Metrics Page Coming Soon...
+            <div className='m-a'>
+                <h4 className='m-a'>This page is meant purely for research purposes and can let you download the entire record collection of all residents in the program in an easily accessible CSV file.</h4>
+                <h4 className='text-warning m-a'> <span className="icon icon-info-with-circle"></span> Because of the secure nature of data involved and the fact that this is a bulk export please make sure that this file is stored and handled responsibily.</h4>
+                <button className="btn btn-success m-a" type="submit" onClick={this.downloadFile}>
+                    <span className='download-span'>{"Download CSV"} </span>
+                    {this.state.isLoaderVisible && <Loading type='spin' height='30px' width='30px' color='#d6e5ff' delay={-1} />}
+                </button>
             </div >
         );
     }
 }
-
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators({}, dispatch)
-    };
-}
-
-function mapStateToProps(state) {
-    return {
-        residentList: state.oracle.residentList,
-        loaderState: state.oracle.loaderState
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SupervisorDashboard);
