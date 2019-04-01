@@ -9,7 +9,10 @@
 @import 'components/graphPanel';
 @import 'components/infoPanel';
 @import 'components/expiredRecordTable';
+@import 'components/filterPanel';
 @import 'components/dashboard/residentDashboard';
+@import 'components/dashboard/supervisorDashboard';
+@import 'components/dashboard/exportData';
 // import pages contains page-specific styling
 @import 'pages/home';
 @import 'pages/notFound';

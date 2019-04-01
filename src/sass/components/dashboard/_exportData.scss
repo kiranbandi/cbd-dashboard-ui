@@ -1,0 +1,13 @@
+.export-data-container {
+    .bulk-export {
+        line-height: 30px;
+        .download-span {
+            vertical-align: top;
+            &+div {
+                margin-left: 10px;
+                vertical-align: top;
+                display: inline-block;
+            }
+        }
+    }
+}

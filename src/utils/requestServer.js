@@ -97,6 +97,13 @@ requestServer.deleteUser = function(username) {
     });
 }
 
+requestServer.getObserverList = function() {
+    return new Promise((resolve, reject) => {
+        axios.get(endPoints.observerList, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            .then((response) => { resolve(response.data) })
+            .catch((err) => errorCallback(err, reject));
+    });
+}
 
 requestServer.getResidentList = function() {
     return new Promise((resolve, reject) => {

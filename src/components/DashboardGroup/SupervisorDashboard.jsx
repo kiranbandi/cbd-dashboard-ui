@@ -1,58 +1,70 @@
 import React, { Component } from 'react';
-import { getAllData } from '../../utils/requestServer';
-import downloadCSV from '../../utils/downloadCSV';
+import { getObserverList } from '../../utils/requestServer';
 import Loading from 'react-loading';
+import Select from 'react-select';
 
 export default class ExportDataTab extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            isLoaderVisible: false
+            isLoaderVisible: false,
+            isfilterLoaderLoaderVisible: false,
+            observerList: [],
+            observerData: null
         };
         this._isMounted = false;
-        this.downloadFile = this.downloadFile.bind(this);
     }
 
     componentDidMount() {
         this._isMounted = true;
+        // toggle loader before fetching data
+        this.setState({ isLoaderVisible: true });
+        // get list of all residents
+        getObserverList()
+            .then((observerList) => { this._isMounted && this.setState({ observerList }); })
+            // toggle loader again once the request completes
+            .catch(() => { console.log("error in fetching observer list"); })
+            .finally(() => {
+                this._isMounted && this.setState({ isLoaderVisible: false });
+            });
     }
 
     componentWillUnmount() {
         this._isMounted = false;
     }
 
-    downloadFile(event) {
-        event.preventDefault();
-        // toggle loader before fetching data
-        this.setState({ isLoaderVisible: true });
-        // get list of all residents
-        getAllData()
-            .then((data) => {
-                window.emCBD = {
-                    'rcmData': _.map(data, (_r) => {
-                        return [_r.observation_date, _r.resident_name, _r.epa, _r.observer_name, _r.observer_type, _r.rating, _r.type, _r.situation_context, _r.feedback, _r.professionalism_safety, _r.isExpired || false];
-                    })
-                };
-                downloadCSV();
-            })
-            // toggle loader again once the request completes
-            .catch(() => { console.log("error in fetching all records"); })
-            .finally(() => {
-                this._isMounted && this.setState({ isLoaderVisible: false });
-            });
-    }
 
     render() {
+
+        const { isLoaderVisible, observerList, isfilterLoaderLoaderVisible } = this.state;
         return (
-            <div className='m-a'>
-                <h4 className='m-a'>This page is meant purely for research purposes and can let you download the entire record collection of all residents in the program in an easily accessible CSV file.</h4>
-                <h4 className='text-warning m-a'> <span className="icon icon-info-with-circle"></span> Because of the secure nature of data involved and the fact that this is a bulk export please make sure that this file is stored and handled responsibily.</h4>
-                <button className="btn btn-success m-a" type="submit" onClick={this.downloadFile}>
-                    <span className='download-span'>{"Download CSV"} </span>
-                    {this.state.isLoaderVisible && <Loading type='spin' height='30px' width='30px' color='#d6e5ff' delay={-1} />}
-                </button>
-            </div >
+            <div className='supervisor-dashboard-container center-align'>
+                {isLoaderVisible ?
+                    <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
+                    <div className='m-t-md'>
+                        {observerList.length > 0 ?
+                            <div>
+                                <div className='filter-panel m-t center-align'>
+                                    <div className='text-xs-center text-sm-left root-box'>
+                                        <div className='name-box'>
+                                            <label className='filter-label'>Faculty Name  </label>
+                                            <select id='filter-observername' defaultValue={''} className="custom-select">
+                                                {observerList.map((val, index) => { return <option key={index} value={val}> {val}</option> })}
+                                            </select>
+                                        </div>
+                                        <div className='text-xs-left button-box'>
+                                            <button type="submit" className="filter-button btn btn-primary-outline" onClick={this.onSubmit}>
+                                                GET RECORDS
+                                                {isfilterLoaderLoaderVisible && <Loading className='filter-loader' type='spin' height='25px' width='25px' color='white' delay={-1} />}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> :
+                            <h2 className='text-center text-danger'>No observer information is available currently</h2>}
+                    </div>}
+            </div>
         );
     }
 }

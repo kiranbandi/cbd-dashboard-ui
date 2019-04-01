@@ -13,6 +13,8 @@ var endPoints = {
     updateUser: endPointRoot + "users/update",
     residents: endPointRoot + "users/residents",
     residentRecords: endPointRoot + "records/all",
+    observerList: endPointRoot + "records/all-observers",
+    recordsByObserver: endPointRoot + "records/observer",
     dataDump: endPointRoot + "records/data-dump",
     getUser: endPointRoot + "users"
         // same end point for two use cases with the difference being the API method , get vs delete
