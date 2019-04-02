@@ -69,10 +69,9 @@ export default class ExportDataTab extends Component {
 
             //  Get the records that fall in that 3 month period
             expiredRecords = observerDataList.filter((d) => d.isExpired || false).length;
-            averageEPAScore = Math.round(_.meanBy(observerDataList, (d) => (+d.EPA || 0))*100)/100;
+            averageEPAScore = Math.round(_.meanBy(observerDataList, (d) => (+d.Rating || 0))*100)/100;
             doveScale = Math.round(observerDataList.filter((d) => (+d.Rating) >= 4).length * 100 / observerDataList.length);
         }
-
 
 
         return (
