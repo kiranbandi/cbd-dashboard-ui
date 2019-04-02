@@ -40,8 +40,8 @@ class ExpiredResidentData extends Component {
                 {expiredResidentData.length > 0 && !smallScreen &&
                     <div>
                         <h4 onClick={this.toggleVisibility} className="text-left">
-                            {this.state.isVisible ? <span className="icon icon-chevron-down"></span> : ''}
-                            EXPIRED EPA COUNT {expiredResidentData.length} , Most recent EPA expired on {expiredResidentData[0].Date} {this.state.isVisible ? '' : ', Click to view more...'}
+                            {this.state.isVisible ? <span className="icon icon-chevron-down"></span> : <span className="icon icon-chevron-right"></span>}
+                            Expired EPAs :{expiredResidentData.length} , Most recent EPA expired on {expiredResidentData[0].Date}
                         </h4>
                         <div className={'table-box ' + (this.state.isVisible ? '' : 'hidden-table-box')}>
                             <ReactTable

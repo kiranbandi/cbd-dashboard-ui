@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { getObserverList, getObserverData } from '../../utils/requestServer';
 import Loading from 'react-loading';
-import Select from 'react-select';
+import StatCard from '../InfoPanelGroup/StatCard';
+import moment from 'moment';
+import _ from 'lodash';
 
 export default class ExportDataTab extends Component {
 
@@ -11,7 +13,7 @@ export default class ExportDataTab extends Component {
             isLoaderVisible: false,
             isfilterLoaderLoaderVisible: false,
             observerList: [],
-            observerDataList: null
+            observerDataList: []
         };
         this._isMounted = false;
         this.onSubmit = this.onSubmit.bind(this);
@@ -54,7 +56,25 @@ export default class ExportDataTab extends Component {
 
     render() {
 
-        const { isLoaderVisible, observerList, isfilterLoaderLoaderVisible } = this.state;
+        const { isLoaderVisible, observerList, isfilterLoaderLoaderVisible, observerDataList = [] } = this.state;
+
+
+        let doveScale = 0, last3MonthRecords = 0, expiredRecords = 0, averageEPAScore = 0;
+
+        if (observerDataList.length > 0) {
+            //  Get the records that fall in that 3 month period
+            last3MonthRecords = observerDataList.filter((record) => {
+                return moment(record.Date, 'YYYY-MM-DD').isAfter(moment().subtract(3, 'month'));
+            });
+
+            //  Get the records that fall in that 3 month period
+            expiredRecords = observerDataList.filter((d) => d.isExpired || false).length;
+            averageEPAScore = Math.round(_.meanBy(observerDataList, (d) => (+d.EPA || 0))*100)/100;
+            doveScale = Math.round(observerDataList.filter((d) => (+d.Rating) >= 4).length * 100 / observerDataList.length);
+        }
+
+
+
         return (
             <div className='supervisor-dashboard-container center-align'>
                 {isLoaderVisible ?
@@ -78,6 +98,15 @@ export default class ExportDataTab extends Component {
                                         </div>
                                     </div>
                                 </div>
+                                {observerDataList.length > 0 &&
+                                    <div>
+                                        <StatCard title='EPAs observed' type='info' metric={observerDataList.length} />
+                                        <StatCard title='EPAs Expired' type='success' metric={expiredRecords} />
+                                        {/* <StatCard title='EPAs observed in the last 3 Months' type='success' metric={last3MonthRecords.length} /> */}
+                                        <StatCard title='Average EPA Score' type='primary' metric={averageEPAScore} />
+                                        <StatCard title='DOVE Factor' type='danger' metric={doveScale + "%"} />
+                                     
+                                    </div>}
                             </div> :
                             <h2 className='text-center text-danger'>No observer information is available currently</h2>}
                     </div>}
@@ -85,11 +114,4 @@ export default class ExportDataTab extends Component {
         );
     }
 }
-
-
-// Number of EPAs observed 
-// DOVE Scale : achieved / observed 
-// Number of EPAs in last 3 months 
-// Expired EPAs 
-// Click to view tabulated data
 
