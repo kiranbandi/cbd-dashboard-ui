@@ -7,6 +7,8 @@ import { bindActionCreators } from 'redux';
 import { showTooltip, setTooltipVisibility, setLevelVisibilityStatus } from '../../redux/actions/actions';
 import GraphRow from './GraphRow';
 import HeaderRow from './HeaderRow';
+import { ExpiredRecordTable } from '../';
+
 
 class GraphPanel extends Component {
 
@@ -105,6 +107,7 @@ class GraphPanel extends Component {
             smallScreen = true;
         }
 
+
         return (
             <div>
                 {epaSourcesThatExist && <div className='graph-panel-root'>
@@ -161,6 +164,7 @@ class GraphPanel extends Component {
 
                                 </div>)
                         })}
+                        <ExpiredRecordTable />
                     </div>
                 </div>}
             </div>

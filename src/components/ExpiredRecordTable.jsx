@@ -6,6 +6,15 @@ class ExpiredResidentData extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            isVisible: false
+        };
+        this.toggleVisibility = this.toggleVisibility.bind(this);
+    }
+
+    toggleVisibility(event) {
+        event.preventDefault();
+        this.setState({ isVisible: !this.state.isVisible });
     }
 
     render() {
@@ -26,14 +35,17 @@ class ExpiredResidentData extends Component {
         }],
             { width, expiredResidentData = [] } = this.props;
 
+        console.log(expiredResidentData);
+
         return (
-            <div className='expired-box'>
+            <div className='expired-box' >
                 {expiredResidentData.length > 0 &&
                     <div>
-                        <div className="hr-divider">
-                            <h4 className="hr-divider-content"> EXPIRED EPAs </h4>
-                        </div>
-                        <div className='table-box'>
+                        <h4 onClick={this.toggleVisibility} className="text-left">
+                            {this.state.isVisible ? <span className="icon icon-chevron-down"></span> : ''}
+                            EXPIRED EPA COUNT {expiredResidentData.length} , Most recent EPA expired on {expiredResidentData[0].Date} {this.state.isVisible ? '' : ', Click to view more...'}
+                        </h4>
+                        <div className={'table-box ' + (this.state.isVisible ? '' : 'hidden-table-box')}>
                             <ReactTable
                                 data={expiredResidentData}
                                 columns={columns}
@@ -58,7 +70,7 @@ function customFilter(filter, rows) {
 
 function mapStateToProps(state) {
     return {
-        expiredResidentData: state.oracle.expiredResidentData
+        expiredResidentData: _.reverse(_.sortBy(state.oracle.expiredResidentData, (d) => d.Date))
     };
 }
 

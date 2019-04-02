@@ -98,11 +98,7 @@ class Tools extends Component {
                             <button className="btn btn-success-outline " onClick={this.visualizeRecords}>Visualize Records</button>
                         </div>
                         <div>
-                            {showGraphPanel &&
-                                <div>
-                                    <GraphPanel epaSourceMap={epaSourceMap} />
-                                    <ExpiredRecordTable />
-                                </div>}
+                            {showGraphPanel && <div> <GraphPanel epaSourceMap={epaSourceMap} /> </div>}
                         </div>
                     </div>}
             </div>
