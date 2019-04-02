@@ -33,13 +33,11 @@ class ExpiredResidentData extends Component {
             className: 'text-left',
             filterMethod: customFilter
         }],
-            { width, expiredResidentData = [] } = this.props;
-
-        console.log(expiredResidentData);
+            { width, expiredResidentData = [], smallScreen = false } = this.props;
 
         return (
             <div className='expired-box' >
-                {expiredResidentData.length > 0 &&
+                {expiredResidentData.length > 0 && !smallScreen &&
                     <div>
                         <h4 onClick={this.toggleVisibility} className="text-left">
                             {this.state.isVisible ? <span className="icon icon-chevron-down"></span> : ''}

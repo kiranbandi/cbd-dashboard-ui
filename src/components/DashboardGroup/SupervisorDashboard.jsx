@@ -85,3 +85,11 @@ export default class ExportDataTab extends Component {
         );
     }
 }
+
+
+// Number of EPAs observed 
+// DOVE Scale : achieved / observed 
+// Number of EPAs in last 3 months 
+// Expired EPAs 
+// Click to view tabulated data
+

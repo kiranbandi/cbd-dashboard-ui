@@ -164,7 +164,7 @@ class GraphPanel extends Component {
 
                                 </div>)
                         })}
-                        <ExpiredRecordTable />
+                        <ExpiredRecordTable smallScreen={smallScreen} />
                     </div>
                 </div>}
             </div>

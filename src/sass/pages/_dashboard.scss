@@ -8,6 +8,11 @@
                 font-weight: bold !important;
                 cursor: pointer;
             }
+            @media (max-width: 768px) {
+                li {
+                    float: none;
+                }
+            }
         }
         margin:40px 30px;
     }

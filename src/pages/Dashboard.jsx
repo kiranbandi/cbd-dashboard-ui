@@ -33,7 +33,7 @@ class DashboardRoot extends Component {
             <div className='dashboard-page-root' >
                 {isAllowedMultiMode ?
                     <div>
-                        <div className="hr-divider">
+                        <div className="hr-divider nav-pill-container-dashboard">
                             <ul className="nav nav-pills hr-divider-content hr-divider-nav">
                                 <li className={activeBoard == 'resident' ? 'active' : ''}>
                                     <a id='resident-tab' onClick={this.onTabClick} >RESIDENT METRICS</a>
