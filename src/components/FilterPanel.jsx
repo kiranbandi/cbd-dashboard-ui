@@ -157,7 +157,7 @@ class FilterPanel extends Component {
                     <div>
                         <div className="checkbox custom-control text-center custom-checkbox">
                             <label className='filter-label'>
-                                {"No Date Range Highlight"}
+                                {"Disable Date Filter"}
                                 <input id='filter-isAllData' type="checkbox" checked={isAllData} onChange={this.onChange} />
                                 <span className="custom-control-indicator"></span>
                             </label>

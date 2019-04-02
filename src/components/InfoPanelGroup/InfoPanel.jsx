@@ -33,7 +33,7 @@ class InfoPanel extends Component {
                             <span><b>LAST UPDATED ON -</b> {(new Date(residentInfo.uploadedData)).toDateString()}</span>
                         </div>
                         {!!scheduleMap && <RotationSchedule scheduleMap={scheduleMap} longitudinalScheduleMap={longitudinalScheduleMap} />}
-                        {!!residentData && <EPASpeedInfo residentData={residentData} residentInfo={residentInfo} />}
+                        {!!residentData && <EPASpeedInfo residentData={residentData} residentInfo={residentInfo} residentFilter={residentFilter} />}
                     </div>
                 }
             </div>

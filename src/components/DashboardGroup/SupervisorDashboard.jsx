@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getObserverList } from '../../utils/requestServer';
+import { getObserverList, getObserverData } from '../../utils/requestServer';
 import Loading from 'react-loading';
 import Select from 'react-select';
 
@@ -11,9 +11,10 @@ export default class ExportDataTab extends Component {
             isLoaderVisible: false,
             isfilterLoaderLoaderVisible: false,
             observerList: [],
-            observerData: null
+            observerDataList: null
         };
         this._isMounted = false;
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -22,7 +23,7 @@ export default class ExportDataTab extends Component {
         this.setState({ isLoaderVisible: true });
         // get list of all residents
         getObserverList()
-            .then((observerList) => { this._isMounted && this.setState({ observerList }); })
+            .then((observerList) => { this._isMounted && this.setState({ observerList: _.sortBy(observerList) }); })
             // toggle loader again once the request completes
             .catch(() => { console.log("error in fetching observer list"); })
             .finally(() => {
@@ -32,6 +33,22 @@ export default class ExportDataTab extends Component {
 
     componentWillUnmount() {
         this._isMounted = false;
+    }
+
+    onSubmit(event) {
+        event.preventDefault();
+        // toggle loader before fetching data
+        this.setState({ isfilterLoaderLoaderVisible: true });
+
+        const observerName = document.getElementById('filter-observername').value;
+        getObserverData(observerName)
+            .then((observerDataList) => {
+                this._isMounted && this.setState({ observerDataList });
+            })
+            .catch(() => { console.log("error in fetching record list for observers"); })
+            .finally(() => {
+                this._isMounted && this.setState({ isfilterLoaderLoaderVisible: false });
+            });
     }
 
 
@@ -48,7 +65,7 @@ export default class ExportDataTab extends Component {
                                 <div className='filter-panel m-t center-align'>
                                     <div className='text-xs-center text-sm-left root-box'>
                                         <div className='name-box'>
-                                            <label className='filter-label'>Faculty Name  </label>
+                                            <label className='filter-label'>Faculty Name</label>
                                             <select id='filter-observername' defaultValue={''} className="custom-select">
                                                 {observerList.map((val, index) => { return <option key={index} value={val}> {val}</option> })}
                                             </select>
