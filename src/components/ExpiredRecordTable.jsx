@@ -1,6 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
+import { customFilter } from '../utils/genericUtility';
+
+const columns = [{
+    Header: 'Expired Date',
+    accessor: 'Date',
+    filterMethod: customFilter
+}, {
+    Header: 'EPA',
+    accessor: 'EPA',
+    filterMethod: customFilter
+},
+{
+    Header: 'Observer Name',
+    accessor: 'Observer_Name',
+    className: 'text-left',
+    filterMethod: customFilter
+}];
 
 class ExpiredResidentData extends Component {
 
@@ -18,22 +35,8 @@ class ExpiredResidentData extends Component {
     }
 
     render() {
-        let columns = [{
-            Header: 'Expired Date',
-            accessor: 'Date',
-            filterMethod: customFilter
-        }, {
-            Header: 'EPA',
-            accessor: 'EPA',
-            filterMethod: customFilter
-        },
-        {
-            Header: 'Observer Name',
-            accessor: 'Observer_Name',
-            className: 'text-left',
-            filterMethod: customFilter
-        }],
-            { width, expiredResidentData = [], smallScreen = false } = this.props;
+
+        let { expiredResidentData = [], smallScreen = false } = this.props;
 
         return (
             <div className='expired-box' >
@@ -57,13 +60,6 @@ class ExpiredResidentData extends Component {
                 }
             </div>)
     }
-}
-
-
-function customFilter(filter, rows) {
-    rows[filter.id] = rows[filter.id] || '';
-    filter.value = filter.value || '';
-    return rows[filter.id].toLowerCase().indexOf(filter.value.toLowerCase()) > -1;
 }
 
 function mapStateToProps(state) {

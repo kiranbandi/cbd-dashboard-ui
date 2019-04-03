@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import RotationSchedule from './RotationSchedule';
 import EPASpeedInfo from './EPASpeedInfo';
+import CiteScoreGraph from './CiteScoreGraph';
 
 
 class InfoPanel extends Component {
@@ -15,12 +16,14 @@ class InfoPanel extends Component {
     render() {
 
         let { residentData, residentFilter, residentList } = this.props,
-            residentInfo = false, scheduleMap = false, longitudinalScheduleMap = false;
+            residentInfo = false, scheduleMap = false,
+            longitudinalScheduleMap = false, citeExamScoreList = [];
 
         if (residentFilter && residentFilter.username) {
             residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
             scheduleMap = residentInfo && residentInfo.rotationSchedule && residentInfo.rotationSchedule.split(",");
             longitudinalScheduleMap = residentInfo && residentInfo.longitudinalSchedule && residentInfo.longitudinalSchedule.split(",");
+            citeExamScoreList = residentInfo && residentInfo.citeExamScoreList && residentInfo.citeExamScoreList.split(",") || [];
         }
 
         return (
@@ -34,6 +37,7 @@ class InfoPanel extends Component {
                         </div>
                         {!!scheduleMap && <RotationSchedule scheduleMap={scheduleMap} longitudinalScheduleMap={longitudinalScheduleMap} />}
                         {!!residentData && <EPASpeedInfo residentData={residentData} residentInfo={residentInfo} residentFilter={residentFilter} />}
+                        <CiteScoreGraph citeExamScoreList={citeExamScoreList}/>
                     </div>
                 }
             </div>

@@ -2,9 +2,42 @@ import React, { Component } from 'react';
 import { getObserverList, getObserverData } from '../../utils/requestServer';
 import Loading from 'react-loading';
 import StatCard from '../InfoPanelGroup/StatCard';
-import moment from 'moment';
+import { customFilter } from '../../utils/genericUtility';
 import _ from 'lodash';
 import ReactTable from 'react-table';
+
+const columns = [{
+    Header: 'Date',
+    accessor: 'Date',
+    maxWidth: 150,
+    className: 'text-center',
+    filterMethod: customFilter
+}, {
+    Header: 'Resident Name',
+    accessor: 'Resident_Name',
+    maxWidth: 150,
+    filterMethod: customFilter
+},
+{
+    Header: 'EPA',
+    accessor: 'EPA',
+    maxWidth: 60,
+    className: 'text-center',
+    filterMethod: customFilter
+},
+{
+    Header: 'Rating',
+    accessor: 'Rating',
+    maxWidth: 60,
+    className: 'text-center',
+    filterMethod: customFilter
+},
+{
+    Header: 'Feedback',
+    accessor: 'Feedback',
+    className: 'feedback-cell',
+    filterMethod: customFilter
+}]
 
 export default class ExportDataTab extends Component {
 
@@ -59,39 +92,8 @@ export default class ExportDataTab extends Component {
 
         const { isLoaderVisible, observerList, isfilterLoaderLoaderVisible, observerDataList = [] } = this.state;
 
-        let doveScale = 0, expiredRecords = 0, averageEPAScore = 0, properObserverDataList = [],
-            columns = [{
-                Header: 'Date',
-                accessor: 'Date',
-                maxWidth: 150,
-                className: 'text-center',
-                filterMethod: customFilter
-            }, {
-                Header: 'Resident Name',
-                accessor: 'Resident_Name',
-                maxWidth: 150,
-                filterMethod: customFilter
-            },
-            {
-                Header: 'EPA',
-                accessor: 'EPA',
-                maxWidth: 60,
-                className: 'text-center',
-                filterMethod: customFilter
-            },
-            {
-                Header: 'Rating',
-                accessor: 'Rating',
-                maxWidth: 60,
-                className: 'text-center',
-                filterMethod: customFilter
-            },
-            {
-                Header: 'Feedback',
-                accessor: 'Feedback',
-                className: 'feedback-cell',
-                filterMethod: customFilter
-            }]
+        let doveScale = 0, expiredRecords = 0, averageEPAScore = 0, properObserverDataList = [];
+
 
         if (observerDataList.length > 0) {
             // Get the non expired records 
@@ -100,7 +102,6 @@ export default class ExportDataTab extends Component {
             averageEPAScore = Math.round((_.meanBy(properObserverDataList, (d) => (+d.Rating || 0)) || 0) * 100) / 100;
             doveScale = (Math.round(properObserverDataList.filter((d) => (+d.Rating) >= 4).length * 100 / properObserverDataList.length)) || 0;
         }
-
 
         return (
             <div className='supervisor-dashboard-container center-align'>
@@ -149,10 +150,4 @@ export default class ExportDataTab extends Component {
             </div>
         );
     }
-}
-
-function customFilter(filter, rows) {
-    rows[filter.id] = rows[filter.id] || '';
-    filter.value = filter.value || '';
-    return rows[filter.id].toLowerCase().indexOf(filter.value.toLowerCase()) > -1;
 }

@@ -23,6 +23,7 @@ export default class ModifyUser extends Component {
             currentPhase: 'transition-to-discipline',
             rotationSchedule: '',
             longitudinalSchedule: '',
+            citeExamScore: '',
             passwordBoxOpen: false
         };
         this.onChange = this.onChange.bind(this);
@@ -66,6 +67,7 @@ export default class ModifyUser extends Component {
                         currentPhase: 'transition-to-discipline',
                         rotationSchedule: '',
                         longitudinalSchedule: '',
+                        citeExamScore: '',
                         passwordBoxOpen: false
                     })
                 })
@@ -93,6 +95,7 @@ export default class ModifyUser extends Component {
                         currentPhase: userData.currentPhase || 'transition-to-discipline',
                         rotationSchedule: userData.rotationSchedule || '',
                         longitudinalSchedule: userData.longitudinalSchedule || '',
+                        citeExamScore: userData.citeExamScore || '',
                         passwordBoxOpen: false
                     });
                 })
@@ -101,17 +104,22 @@ export default class ModifyUser extends Component {
     }
 
     onChange(event) {
-        this.setState({ [event.target.name]: ['fullname', 'rotationSchedule', 'accessList', 'longitudinalSchedule'].indexOf(event.target.name) > -1 ? event.target.value : event.target.value.trim() });
+        this.setState({
+            [event.target.name]:
+                ['fullname', 'rotationSchedule', 'accessList', 'longitudinalSchedule', 'citeExamScore'].indexOf(event.target.name) > -1 ? event.target.value : event.target.value.trim()
+        });
     }
 
     onSubmit(event) {
         event.preventDefault();
-        const { username, password, email, fullname, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule } = this.state;
-        const programStartDate = document.getElementById('modify-programStartDate') ? document.getElementById('modify-programStartDate').value : '';
+        const { username, password, email, fullname,
+            accessType, accessList, currentPhase,
+            citeExamScore, rotationSchedule, longitudinalSchedule } = this.state,
+            programStartDate = document.getElementById('modify-programStartDate') ? document.getElementById('modify-programStartDate').value : '';
 
         // toggle loader on before request 
         this.setState({ innerLoaderState: true });
-        updateUser({ username, password, email, fullname, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule, programStartDate })
+        updateUser({ username, password, email, fullname, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule, programStartDate, citeExamScore })
             .then(() => {
                 // reset form values
                 this.setState({
@@ -125,6 +133,7 @@ export default class ModifyUser extends Component {
                     currentPhase: 'transition-to-discipline',
                     rotationSchedule: '',
                     longitudinalSchedule: '',
+                    citeExamScore: '',
                     passwordBoxOpen: false
                 })
             })
@@ -139,7 +148,8 @@ export default class ModifyUser extends Component {
         const { userList, loaderState, innerLoaderState,
             deleteLoaderState, username, fullname = '', password,
             email, accessType, accessList,
-            currentPhase, programStartDate, rotationSchedule, longitudinalSchedule, passwordBoxOpen } = this.state;
+            currentPhase, programStartDate,
+            rotationSchedule, longitudinalSchedule, passwordBoxOpen, citeExamScore } = this.state;
 
         // Sort the residents alphabetically so that they are easier to look up
         userList.sort((previous, current) => previous.localeCompare(current));
@@ -216,9 +226,13 @@ export default class ModifyUser extends Component {
                                 <input type="text" className="form-control" name="longitudinalSchedule" value={longitudinalSchedule} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
                             </div>}
 
+                        {this.state.accessType == 'resident' &&
+                            <div className="input-group m-a">
+                                <span className='inner-span'>CITE SCORE</span>
+                                <input type="text" className="form-control" name="citeExamScore" value={citeExamScore} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
+                            </div>}
+
                         <p className='m-a text-warning'> <span className="icon icon-key"></span> For the purpose of secrecy, passwords are not shared.You can however overwrite it with a new one using the checkbox below.</p>
-
-
                         <div className="input-group m-a checkbox custom-control text-center custom-checkbox">
                             <label className='filter-label'>
                                 {"CHANGE PASSWORD"}
