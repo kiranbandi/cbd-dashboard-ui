@@ -97,9 +97,8 @@ export default class ExportDataTab extends Component {
             // Get the non expired records 
             properObserverDataList = observerDataList.filter((d) => !d.isExpired);
             expiredRecords = observerDataList.length - properObserverDataList.length;
-
-            averageEPAScore = Math.round(_.meanBy(properObserverDataList, (d) => (+d.Rating || 0)) * 100) / 100;
-            doveScale = Math.round(properObserverDataList.filter((d) => (+d.Rating) >= 4).length * 100 / properObserverDataList.length);
+            averageEPAScore = Math.round((_.meanBy(properObserverDataList, (d) => (+d.Rating || 0)) || 0) * 100) / 100;
+            doveScale = (Math.round(properObserverDataList.filter((d) => (+d.Rating) >= 4).length * 100 / properObserverDataList.length)) || 0;
         }
 
 
