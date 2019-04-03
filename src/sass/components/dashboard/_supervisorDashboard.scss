@@ -10,4 +10,12 @@
             margin: 10px 5px 10px 20px;
         }
     }
+    .table-box {
+        margin: 20px;
+        .feedback-cell {
+            white-space: normal;
+            text-overflow: inherit;
+            text-align: left;
+        }
+    }
 }

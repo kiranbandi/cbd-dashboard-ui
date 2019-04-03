@@ -4,6 +4,7 @@ import Loading from 'react-loading';
 import StatCard from '../InfoPanelGroup/StatCard';
 import moment from 'moment';
 import _ from 'lodash';
+import ReactTable from 'react-table';
 
 export default class ExportDataTab extends Component {
 
@@ -58,19 +59,47 @@ export default class ExportDataTab extends Component {
 
         const { isLoaderVisible, observerList, isfilterLoaderLoaderVisible, observerDataList = [] } = this.state;
 
-
-        let doveScale = 0, last3MonthRecords = 0, expiredRecords = 0, averageEPAScore = 0;
+        let doveScale = 0, expiredRecords = 0, averageEPAScore = 0, properObserverDataList = [],
+            columns = [{
+                Header: 'Date',
+                accessor: 'Date',
+                maxWidth: 150,
+                className: 'text-center',
+                filterMethod: customFilter
+            }, {
+                Header: 'Resident Name',
+                accessor: 'Resident_Name',
+                maxWidth: 150,
+                filterMethod: customFilter
+            },
+            {
+                Header: 'EPA',
+                accessor: 'EPA',
+                maxWidth: 60,
+                className: 'text-center',
+                filterMethod: customFilter
+            },
+            {
+                Header: 'Rating',
+                accessor: 'Rating',
+                maxWidth: 60,
+                className: 'text-center',
+                filterMethod: customFilter
+            },
+            {
+                Header: 'Feedback',
+                accessor: 'Feedback',
+                className: 'feedback-cell',
+                filterMethod: customFilter
+            }]
 
         if (observerDataList.length > 0) {
-            //  Get the records that fall in that 3 month period
-            last3MonthRecords = observerDataList.filter((record) => {
-                return moment(record.Date, 'YYYY-MM-DD').isAfter(moment().subtract(3, 'month'));
-            });
+            // Get the non expired records 
+            properObserverDataList = observerDataList.filter((d) => !d.isExpired);
+            expiredRecords = observerDataList.length - properObserverDataList.length;
 
-            //  Get the records that fall in that 3 month period
-            expiredRecords = observerDataList.filter((d) => d.isExpired || false).length;
-            averageEPAScore = Math.round(_.meanBy(observerDataList, (d) => (+d.Rating || 0))*100)/100;
-            doveScale = Math.round(observerDataList.filter((d) => (+d.Rating) >= 4).length * 100 / observerDataList.length);
+            averageEPAScore = Math.round(_.meanBy(properObserverDataList, (d) => (+d.Rating || 0)) * 100) / 100;
+            doveScale = Math.round(properObserverDataList.filter((d) => (+d.Rating) >= 4).length * 100 / properObserverDataList.length);
         }
 
 
@@ -99,12 +128,21 @@ export default class ExportDataTab extends Component {
                                 </div>
                                 {observerDataList.length > 0 &&
                                     <div>
-                                        <StatCard title='EPAs observed' type='info' metric={observerDataList.length} />
+                                        <StatCard title='EPAs observed' type='info' metric={properObserverDataList.length} />
                                         <StatCard title='EPAs Expired' type='success' metric={expiredRecords} />
-                                        {/* <StatCard title='EPAs observed in the last 3 Months' type='success' metric={last3MonthRecords.length} /> */}
                                         <StatCard title='Average EPA Score' type='primary' metric={averageEPAScore} />
                                         <StatCard title='DOVE Factor' type='danger' metric={doveScale + "%"} />
-                                     
+
+                                        <div className='table-box'>
+                                            <ReactTable
+                                                data={properObserverDataList}
+                                                columns={columns}
+                                                defaultPageSize={5}
+                                                resizable={false}
+                                                filterable={true}
+                                                className='-highlight'
+                                                defaultSorted={[{ id: "Date", desc: true }]} />
+                                        </div>
                                     </div>}
                             </div> :
                             <h2 className='text-center text-danger'>No observer information is available currently</h2>}
@@ -114,3 +152,8 @@ export default class ExportDataTab extends Component {
     }
 }
 
+function customFilter(filter, rows) {
+    rows[filter.id] = rows[filter.id] || '';
+    filter.value = filter.value || '';
+    return rows[filter.id].toLowerCase().indexOf(filter.value.toLowerCase()) > -1;
+}
