@@ -12,7 +12,8 @@
     }
     .table-box {
         margin: 20px;
-        .feedback-cell {
+        .feedback-cell,
+        .epa-cell {
             white-space: normal;
             text-overflow: inherit;
             text-align: left;

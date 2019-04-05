@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getObserverList, getObserverData } from '../../utils/requestServer';
+import templateEpaSourceMap from '../../utils/epaSourceMap';
 import Loading from 'react-loading';
 import StatCard from '../InfoPanelGroup/StatCard';
 import { customFilter } from '../../utils/genericUtility';
@@ -21,8 +22,8 @@ const columns = [{
 {
     Header: 'EPA',
     accessor: 'EPA',
-    maxWidth: 60,
-    className: 'text-center',
+    maxWidth: 300,
+    className: 'epa-cell',
     filterMethod: customFilter
 },
 {
@@ -79,6 +80,19 @@ export default class ExportDataTab extends Component {
         const observerName = document.getElementById('filter-observername').value;
         getObserverData(observerName)
             .then((observerDataList) => {
+
+                try {
+                    // modify EPA labels
+                    observerDataList.map((d) => {
+                        let tempEPA = d['EPA'].split(".");
+                        d['EPA'] += " - " + templateEpaSourceMap[tempEPA[0]].subRoot[d['EPA']];
+                    });
+                }
+                catch (error) {
+                    debugger;
+                }
+
+
                 this._isMounted && this.setState({ observerDataList });
             })
             .catch(() => { console.log("error in fetching record list for observers"); })
