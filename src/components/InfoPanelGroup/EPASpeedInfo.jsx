@@ -21,7 +21,7 @@ export default (props) => {
 
     // Get the required Metrics 
     const totalEPAs = residentDataList.length,
-        achievementRatio = Math.round(highPerformanceEPAList.length * 100 / totalEPAs),
+        achievementRatio = totalEPAs!=0 ? Math.round(highPerformanceEPAList.length * 100 / totalEPAs) : 0,
         averageEPAsPerWeek = Math.round((totalEPAs / weeksPassed) * 100) / 100,
         averageEPAsSince3Months = Math.round((recordsSinceLast3Months / (moment().diff(dateSinceMeasure, "weeks"))) * 100) / 100;
 
@@ -52,7 +52,7 @@ export default (props) => {
                 <div className='row'>
                     <StatCard dual={true} title='EPAs observed per week' type='info' metric={averageEPAsPerWeek} secondMetric={averageEPAsPerWeekInPeriod} />
                     <StatCard dual={true} title='Total EPAs Observed' type='primary' metric={totalEPAs} secondMetric={recordsInPeriodCount} />
-                    <StatCard dual={true} title='EPA Achievement Ratio' type='danger' metric={achievementRatio + "%"} secondMetric={achievementRatioInPeriod + "%"} />
+                    <StatCard dual={true} title='EPA Achievement Rate' type='danger' metric={achievementRatio + "%"} secondMetric={achievementRatioInPeriod + "%"} />
                     <StatCard dual={true} title='Timeline in weeks' type='success' metric={weeksPassed} secondMetric={weeksInPeriod} />
 
                 </div>

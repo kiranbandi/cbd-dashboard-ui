@@ -9,8 +9,8 @@ class Home extends Component {
 
         <div className="home-header" style={backgroundStyle}>
           <div className="container">
-            <div className='col-lg-12 text-lg-left text-md-center text-sm-center text-xs-center'><h1>EM-CBD Dashboard</h1>
-              <p>A Dashboard Designed for Competency Committees to Optimize Decision Making.</p>
+            <div className='col-lg-12 text-lg-left text-md-center text-sm-center text-xs-center'><h1>The CBD Dashboard Project</h1>
+              <p>Designing Dashboards to Enhance Resident Learning, Facilitate Competency Committee Decision Making, Support Faculty Development, Enable Program Evaluation, and Foster Educational Research</p>
             </div>
           </div>
         </div>

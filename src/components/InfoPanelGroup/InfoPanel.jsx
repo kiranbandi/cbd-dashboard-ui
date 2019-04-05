@@ -4,6 +4,7 @@ import _ from 'lodash';
 import RotationSchedule from './RotationSchedule';
 import EPASpeedInfo from './EPASpeedInfo';
 import CiteScoreGraph from './CiteScoreGraph';
+import RecentEPATrend from './RecentEPATrend';
 
 
 class InfoPanel extends Component {
@@ -23,7 +24,7 @@ class InfoPanel extends Component {
             residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
             scheduleMap = residentInfo && residentInfo.rotationSchedule && residentInfo.rotationSchedule.split(",");
             longitudinalScheduleMap = residentInfo && residentInfo.longitudinalSchedule && residentInfo.longitudinalSchedule.split(",");
-            citeExamScoreList = residentInfo && residentInfo.citeExamScoreList && residentInfo.citeExamScoreList.split(",") || [];
+            citeExamScoreList = residentInfo && residentInfo.citeExamScore && residentInfo.citeExamScore.split(",") || [];
         }
 
         return (
@@ -37,7 +38,8 @@ class InfoPanel extends Component {
                         </div>
                         {!!scheduleMap && <RotationSchedule scheduleMap={scheduleMap} longitudinalScheduleMap={longitudinalScheduleMap} />}
                         {!!residentData && <EPASpeedInfo residentData={residentData} residentInfo={residentInfo} residentFilter={residentFilter} />}
-                        <CiteScoreGraph citeExamScoreList={citeExamScoreList}/>
+                        <CiteScoreGraph citeExamScoreList={citeExamScoreList} />
+                        {!!residentData && <RecentEPATrend residentData={residentData} />}
                     </div>
                 }
             </div>

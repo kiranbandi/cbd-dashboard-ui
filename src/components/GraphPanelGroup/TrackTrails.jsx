@@ -9,7 +9,13 @@ export default class TrackTrails extends Component {
 
     generateTrackTrails(trackTrailPositions) {
         return _.map(trackTrailPositions, (track, index) => {
-            return <line x1={track.x} y1={track.y} x2={track.x + track.dx} y2={track.y} key={'track-' + index} className={'track-trails'}> </line >
+            return <line
+                x1={track.x} y1={track.y}
+                x2={track.x + track.dx} y2={track.y}
+                strokeWidth={0.5}
+                stroke={'#525765'}
+                key={'track-' + index}
+                className={'track-trails'}> </line >
         });
     }
 
