@@ -39,7 +39,7 @@ class InfoPanel extends Component {
                         {!!scheduleMap && <RotationSchedule scheduleMap={scheduleMap} longitudinalScheduleMap={longitudinalScheduleMap} />}
                         {!!residentData && <EPASpeedInfo residentData={residentData} residentInfo={residentInfo} residentFilter={residentFilter} />}
                         <CiteScoreGraph citeExamScoreList={citeExamScoreList} />
-                        {!!residentData && <RecentEPATrend residentData={residentData} />}
+                        <RecentEPATrend residentData={residentData} />
                     </div>
                 }
             </div>

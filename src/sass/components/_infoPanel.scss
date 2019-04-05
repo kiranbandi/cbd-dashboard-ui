@@ -81,7 +81,6 @@
             display: inline-block;
             .hr-divider {
                 margin-top: 0px;
-                margin-bottom: 27px;
             }
             .cite-svg {
                 margin: 0px auto;
@@ -109,14 +108,14 @@
         .recent-epa-container {
             display: inline-block;
             margin-left: 15px;
+            position: relative;
             .hr-divider {
                 margin-top: 0px;
-                margin-bottom: 0px;
             }
             .recent-range-selection {
-                margin-bottom: 10px;
-                margin-top: -18px;
-                text-align: right;
+                position: absolute;
+                right: 0px;
+                top: 38px;
                 .filter-label,
                 #recent-resident-data {
                     margin-right: 10px;
@@ -129,6 +128,19 @@
             .recent-svg {
                 margin: 0px auto;
                 background: white;
+                .score-spark-line {
+                    fill: none;
+                    stroke: #1997c6;
+                    stroke-width: 2px;
+                }
+                .score-point {
+                    cursor: pointer;
+                }
+            }
+            .no-data-banner {
+                fill: #1ca8dd;
+                font-size: 20px;
+                font-weight: bold;
             }
         }
     }

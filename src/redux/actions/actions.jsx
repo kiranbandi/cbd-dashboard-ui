@@ -104,10 +104,6 @@ export function setResidentData(residentData, residentInfo = false) {
 
 }
 
-export function setTooltipVisibility(isTooltipVisible) {
-    return { type: types.SET_TOOLTIP_VISIBILITY, isTooltipVisible };
-}
-
 export function setTooltipData(tooltipData) {
     return { type: types.SET_TOOLTIP_DATA, tooltipData };
 }
@@ -130,10 +126,12 @@ export function setLogoutData() {
     };
 }
 
-export function showTooltip(tooltipData) {
+export function showTooltip(isTooltipVisible, tooltipData) {
     return dispatch => {
-        dispatch(setTooltipData(tooltipData));
-        dispatch(setTooltipVisibility(true));
+        if (!!tooltipData) {
+            dispatch(setTooltipData(tooltipData));
+        }
+        dispatch({ type: types.SET_TOOLTIP_VISIBILITY, isTooltipVisible });
     };
 }
 

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import templateEpaSourceMap from '../../utils/epaSourceMap';
 import Tooltip from './Tooltip';
 import { bindActionCreators } from 'redux';
-import { showTooltip, setTooltipVisibility, setLevelVisibilityStatus } from '../../redux/actions/actions';
+import { showTooltip, setLevelVisibilityStatus } from '../../redux/actions/actions';
 import GraphRow from './GraphRow';
 import HeaderRow from './HeaderRow';
 import { ExpiredRecordTable } from '../';
@@ -59,20 +59,19 @@ class GraphPanel extends Component {
         let pointId = event.target.id.split("-");
         let data = residentData[pointId[2]][pointId[4]];
         var pageWidth = document.body.getBoundingClientRect().width;
-        actions.showTooltip({
+        actions.showTooltip(true, {
             'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,
             'y': event.pageY - 50,
             'feedback': data['Feedback'],
             'name': data['Observer_Name'],
             'date': data['Date'],
-            'type': data['Observer_Type'],
             'context': data['Situation_Context']
         });
 
     }
 
     onMouseOut(event) {
-        this.props.actions.setTooltipVisibility(false);
+        this.props.actions.showTooltip(false);
     }
 
     render() {
@@ -186,7 +185,6 @@ function mapDispatchToProps(dispatch) {
         actions: bindActionCreators(
             {
                 showTooltip,
-                setTooltipVisibility,
                 setLevelVisibilityStatus
             }, dispatch)
     };
