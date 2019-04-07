@@ -116,6 +116,11 @@
                 position: absolute;
                 right: 0px;
                 top: 38px;
+                @media (max-width: 768px) {
+                    position: static;
+                    margin-bottom: 15px;
+                    margin-top: -15px;
+                }
                 .filter-label,
                 #recent-resident-data {
                     margin-right: 10px;

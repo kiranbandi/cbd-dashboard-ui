@@ -48,7 +48,7 @@ export default (props) => {
     return (
         <div className='cite-exam-score-container'>
             <div className="hr-divider">
-                <h4 className="hr-divider-content"> Canadian In-Training Exam Percentiles </h4>
+                <h4 className="hr-divider-content">Canadian In-Training Exam Scores (Percentile in Cohort)</h4>
             </div>
             <svg height={innerHeight} width={width} className='cite-svg' >
                 {dotList.length == 0 &&
