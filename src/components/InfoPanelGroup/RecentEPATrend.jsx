@@ -64,7 +64,7 @@ class RecentEPATrend extends Component {
             //  Get the records that fall in that X month period from now
             return temp.filter((d) =>
                 moment(d.Date, 'YYYY-MM-DD')
-                    .isAfter(moment().startOf('month').subtract(+filterRange.split('-')[0], 'month')))
+                    .isAfter(moment().subtract(+filterRange.split('-')[0], 'month')))
         }
         return temp.slice(0, +filterRange);
     }
