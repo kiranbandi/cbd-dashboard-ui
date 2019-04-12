@@ -57,5 +57,9 @@ typings/
 # next.js build output
 .next
 
+# ignore prod/dev build files
+build/index.html
+build/assets/bundle
+
 
 
