@@ -19,15 +19,14 @@
     <link href="assets/img/favicon.png" rel="icon">
     <script>
         if (document.location.hostname.search("cbd.usask.ca") !== -1) {
-            //google analytics code goes here
-        }
-        window.dataLayer = window.dataLayer || [];
+            window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', 'UA-138225592-1');
         }
-        gtag('js', new Date());
-        gtag('config', 'UA-138225592-1');
     </script>
 </head>
 
