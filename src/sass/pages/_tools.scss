@@ -10,6 +10,18 @@
     }
     .process-btn {
         line-height: 25px;
+        .sample-span {
+            vertical-align: top;
+            &+.icon {
+                margin-left: 10px;
+                font-size: 20px;
+            }
+            &+div {
+                margin-left: 10px;
+                vertical-align: top;
+                display: inline-block;
+            }
+        }
         .process-span {
             vertical-align: top;
             &+div {

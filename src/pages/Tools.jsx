@@ -8,6 +8,7 @@ import downloadCSV from '../utils/downloadCSV';
 import { setResidentData } from '../redux/actions/actions';
 import toastr from '../utils/toastr';
 import Loading from 'react-loading';
+import axios from 'axios';
 
 // component might be refacored out so not involving Redux at this point 
 //  and relying on internal state 
@@ -17,11 +18,13 @@ class Tools extends Component {
         super(props);
         this.state = {
             processing: false,
+            processingSample: false,
             dataReady: false,
             showGraphPanel: false,
             epaSourceMap: false
         }
         this.onProcessFile = this.onProcessFile.bind(this);
+        this.loadSampleData = this.loadSampleData.bind(this);
         this.visualizeRecords = this.visualizeRecords.bind(this);
     }
 
@@ -37,7 +40,31 @@ class Tools extends Component {
         this.props.actions.setResidentData(null);
     }
 
+    loadSampleData(event) {
+        event.preventDefault();
+        this.setState({ processingSample: true, dataReady: false });
+        // fetch the file from the server and then process it 
+        axios({ method: 'get', url: '/assets/files/mock-data.xlsx', responseType: 'arraybuffer' })
+            .then((response) => { return processRCMFile(response.data) })
+            .then((processedOutput) => {
+                var { data, epaSourceMap } = processedOutput;
+                // quick hack so the data can be easily pulled in non group format
+                window.emCBD = { 'rcmData': data };
+                // group data on the basis of EPA
+                var groupedResidentData = _.groupBy(data, (d) => d.EPA);
+                // store data in json format in redux 
+                this.props.actions.setResidentData(groupedResidentData);
+                this.setState({ dataReady: true, epaSourceMap });
+            })
+            .catch(() => {
+                toastr["error"]("Failed to load sample file , Please try again later.", "ERROR");
+            })
+            // turn off file processing loader
+            .finally(() => { this.setState({ processingSample: false }) });
+    }
+
     onProcessFile() {
+        event.preventDefault();
         // turn on file processing loader
         this.setState({ processing: true, dataReady: false });
         // fetch the file from the system and then process it 
@@ -71,7 +98,7 @@ class Tools extends Component {
     }
 
     render() {
-        const { processing, dataReady, showGraphPanel, epaSourceMap } = this.state;
+        const { processing, processingSample, dataReady, showGraphPanel, epaSourceMap } = this.state;
         return (
             <div className='tools-root m-t text-xs-center text-sm-left' >
                 <div className='container'>
@@ -84,6 +111,12 @@ class Tools extends Component {
                     <button className="btn btn-primary-outline m-t process-btn" onClick={this.onProcessFile}>
                         <span className='process-span'>{"PROCESS FILE"} </span>
                         {processing && <Loading type='spin' height='25px' width='25px' color='#d6e5ff' delay={-1} />}
+                    </button>
+                    <button className="btn btn-primary-outline m-t process-btn m-l" onClick={this.loadSampleData}>
+                        <span className='sample-span'>{"LOAD SAMPLE EXPORT FILE"}</span>
+                        {processingSample ?
+                            <Loading type='spin' height='25px' width='25px' color='#d6e5ff' delay={-1} /> :
+                            <span className="icon icon-info-with-circle sample-icon"></span>}
                     </button>
                 </div>
 
