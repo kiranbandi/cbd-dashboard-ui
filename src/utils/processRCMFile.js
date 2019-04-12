@@ -1,4 +1,3 @@
-import toastr from './toastr';
 import XLSX from 'xlsx';
 import _ from 'lodash';
 import moment from 'moment';

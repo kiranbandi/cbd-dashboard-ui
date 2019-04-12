@@ -1,7 +1,7 @@
 var endPointRoot = 'https://cbd.usask.ca:8081/';
 // When testing a local server uncomment below but for most
-// cases we will be working with the prod server , i know its not great to do this 
-// but for a project this size its got to be okay !!!
+// cases we will be working with the prod server , I know this is not the
+// the most efficient solution to do this !!!
 // var endPointRoot = 'http://localhost:8081/'
 
 var endPoints = {
@@ -18,7 +18,7 @@ var endPoints = {
     dataDump: endPointRoot + "records/data-dump",
     getUser: endPointRoot + "users"
         // same end point for two use cases with the difference being the API method , get vs delete
-        // should I change the name (O_O) ? oh god this is getting too complex for me 
+        // should I change the name (O_O) ?  
 }
 
 module.exports = endPoints;

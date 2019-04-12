@@ -11,12 +11,11 @@ export default (props) => {
     let widthOfRoot = document.body.getBoundingClientRect().width - 155;
 
     const innerHeight = 200,
-        marginHorizontal = 20,
-        marginVertical = 20,
+        margin = (widthOfRoot < 800) ? 20 : 50,
         width = (widthOfRoot < 800) ? widthOfRoot : widthOfRoot / 2;
 
-    const xScale = scaleLinear().domain([0, citeScoreData.length - 1]).range([marginHorizontal, width - marginHorizontal])
-    const yScale = scaleLinear().domain([100, 0]).range([marginVertical, innerHeight - marginVertical])
+    const xScale = scaleLinear().domain([0, citeScoreData.length - 1]).range([margin, width - margin])
+    const yScale = scaleLinear().domain([100, 0]).range([margin, innerHeight - margin])
 
     const pointsList = citeScoreData.map((d, i) => {
         return {
