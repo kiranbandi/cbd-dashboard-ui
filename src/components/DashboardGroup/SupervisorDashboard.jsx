@@ -40,8 +40,7 @@ const columns = [{
     filterMethod: customFilter
 }]
 
-export default class ExportDataTab extends Component {
-
+export default class SupervisorDashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -60,7 +59,9 @@ export default class ExportDataTab extends Component {
         this.setState({ isLoaderVisible: true });
         // get list of all residents
         getObserverList()
-            .then((observerList) => { this._isMounted && this.setState({ observerList: _.sortBy(observerList) }); })
+            .then((observerList) => {
+                this._isMounted && this.setState({ observerList: _.sortBy(observerList, (d) => d.name) });
+            })
             // toggle loader again once the request completes
             .catch(() => { console.log("error in fetching observer list"); })
             .finally(() => {
@@ -88,11 +89,7 @@ export default class ExportDataTab extends Component {
                         d['EPA'] += " - " + templateEpaSourceMap[tempEPA[0]].subRoot[d['EPA']];
                     });
                 }
-                catch (error) {
-                    debugger;
-                }
-
-
+                catch (error) { console.log(error); }
                 this._isMounted && this.setState({ observerDataList });
             })
             .catch(() => { console.log("error in fetching record list for observers"); })
@@ -129,7 +126,7 @@ export default class ExportDataTab extends Component {
                                         <div className='name-box'>
                                             <label className='filter-label'>Faculty Name</label>
                                             <select id='filter-observername' defaultValue={''} className="custom-select">
-                                                {observerList.map((val, index) => { return <option key={index} value={val}> {val}</option> })}
+                                                {observerList.map((val, index) => { return <option key={index} value={val.name}> {val.name}</option> })}
                                             </select>
                                         </div>
                                         <div className='text-xs-left button-box'>

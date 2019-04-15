@@ -1,6 +1,7 @@
 import toastr from './toastr';
 import axios from 'axios';
 import endPoints from './endPoints';
+import _ from 'lodash';
 
 var requestServer = {};
 
@@ -100,7 +101,8 @@ requestServer.deleteUser = function(username) {
 requestServer.getObserverList = function() {
     return new Promise((resolve, reject) => {
         axios.get(endPoints.observerList, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
-            .then((response) => { resolve(response.data) })
+            // we take the zeroth index because mongo returns an object inside the array 
+            .then((response) => { resolve(_.map(response.data[0], (d, k) => { return { 'name': k, 'count': d } })); })
             .catch((err) => errorCallback(err, reject));
     });
 }
