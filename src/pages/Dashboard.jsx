@@ -27,7 +27,7 @@ class DashboardRoot extends Component {
 
         const { userType } = this.props,
             { activeBoard = 'resident' } = this.state,
-            isAllowedMultiMode = (userType == 'admin' || userType == "reviewer");
+            isAllowedMultiMode = (userType == 'admin' || userType == "director");
 
         return (
             <div className='dashboard-page-root' >
@@ -49,7 +49,7 @@ class DashboardRoot extends Component {
                                 </li>
                             </ul>
                         </div>
-                        <div className='admin-inner-container'>
+                        <div className='control-inner-container'>
                             {(activeBoard == 'resident') && <ResidentDashboard />}
                             {(activeBoard == 'supervisor') && <SupervisorDashboard />}
                             {(activeBoard == 'program') && <ProgramDashboard />}

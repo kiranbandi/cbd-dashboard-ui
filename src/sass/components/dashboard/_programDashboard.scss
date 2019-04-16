@@ -1,0 +1,41 @@
+.dashboard-root-program {
+    .loading-spinner {
+        margin: 100px auto;
+    }
+    .epa-select-container {
+        background: #1a1c22;
+        padding: 20px;
+        border-radius: 10px;
+        .left-pane {
+            text-align: center;
+        }
+        .right-pane {
+            text-align: center;
+            canvas {
+                display: block;
+                margin: 0px auto;
+            }
+        }
+    }
+    .selection-box-container {
+        display: inline-block;
+        width: 80%;
+        margin: 0px auto;
+        .selection-box {
+            padding: 5px 20px;
+            cursor: pointer;
+            margin: 10px 10px;
+            font-size: 15px;
+            border: 2px solid #5b6367;
+            border-radius: 10px;
+            display: inline-block;
+            font-weight: 400;
+            text-transform: capitalize;
+            &.selected-button {
+                background: #43b98e;
+                color: white;
+                border-color: #43b98e;
+            }
+        }
+    }
+}

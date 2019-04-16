@@ -97,6 +97,7 @@ export default class CreateUser extends Component {
                             <option value='resident' >RESIDENT</option>
                             <option value='supervisor' >ACADEMIC ADVISOR</option>
                             <option value='reviewer' >COMMITEE REVIEWER</option>
+                            <option value='director' >PROGRAM DIRECTOR</option>
                             <option value='admin' >ADMIN</option>
                         </select>
                     </div>
