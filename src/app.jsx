@@ -2,11 +2,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
-import { NotFound, Home, Dashboard, Login, Tools, Admin } from './pages';
+import { NotFound, Home, Dashboard, Tools, Admin } from './pages';
 import { Container } from './components';
 import configureStore from './redux/store/configureStore';
 import { Provider } from 'react-redux';
-import { checkloginStatus, checkAdminStatus } from './utils/authorization'
+import { checkloginStatus, checkAdminStatus } from './utils/authorization';
+import processQueryParams from './utils/processQueryParams';
 
 //Root sass file for webpack to compile
 import './sass/main.scss';
@@ -14,17 +15,20 @@ import './sass/main.scss';
 //Initial Default settings 
 const store = configureStore();
 
-class App extends Component {
+// Custom implementation , if a ticket is being passed it is consumed here 
+// and the root path is set back to normal
+//  This can be rewritten more gracefully in future with updated version of react-router
+var pawsTicket = processQueryParams().ticket || false;
 
+class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <Router history={hashHistory}>
-          <Route path='/' component={Container}>
+          <Route path='/' component={Container} pawsTicket={pawsTicket}>
             <IndexRoute component={Home} />
             <Route path='Dashboard' component={Dashboard} onEnter={checkloginStatus} />
             <Route path='Tools' component={Tools} />
-            <Route path='Login' component={Login} />
             <Route path='Admin' component={Admin} onEnter={checkAdminStatus} />
             <Route path='*' component={NotFound} />
           </Route>

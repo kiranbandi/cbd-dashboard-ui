@@ -1,4 +1,5 @@
 const path = require('path');
+var webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 
@@ -15,6 +16,7 @@ module.exports = {
         inline: true,
         contentBase: './build',
         port: 8888,
+        https: true,
         watchOptions: {
             ignored: [
                 path.resolve(__dirname, 'build'),
@@ -22,7 +24,11 @@ module.exports = {
             ]
         }
     },
-    plugins: [
+    plugins: [new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('development')
+            }
+        }),
         new HtmlWebpackPlugin({
             filename: '../../../../build/index.html',
             template: './src/assets/index.template.html',

@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setLogoutData } from '../redux/actions/actions';
 
+//  Image url handling is convoluted in scss , much easier to set inline and get images from root
+let logoIconStyle = { background: 'url(assets/img/pawslogo.png)', backgroundSize: '100%' };
+
 class NavBar extends Component {
 
     constructor(props) {
@@ -29,7 +32,9 @@ class NavBar extends Component {
     }
 
     render() {
-        const { accessType = '' } = this.props.userDetails;
+        const { accessType = '' } = this.props.userDetails,
+            loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent('https://localhost:8888/');
+
         return (
             <nav className="navbar navbar-inverse navbar-fixed-top">
                 <div className="container-fluid">
@@ -71,9 +76,10 @@ class NavBar extends Component {
                                     <span className="icon icon-log-out"></span> Logout
                                         </Link>
                                 :
-                                <Link to='/Login'>
-                                    <span className="icon icon-user"></span> Login
-                                        </Link>
+                                <a href={loginRedirectURL}>
+                                    <span style={logoIconStyle} className="paws-icon"></span>
+                                    <span>Login</span>
+                                </a>
                             }
                             </li>
                         </ul>

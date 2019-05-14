@@ -5,20 +5,18 @@ import _ from 'lodash';
 
 var requestServer = {};
 
-requestServer.requestLogin = function(credentials) {
+requestServer.requestLogin = function(ticket) {
     return new Promise((resolve, reject) => {
-        if (credentials.username.length > 0 && credentials.password.length > 0) {
-            // Call the login API , if successfull store token and resolve else reject promise
-            axios.post(endPoints.login, {...credentials })
-                .then((response) => {
-                    toastr["success"]("Login Successful");
+        axios.post(endPoints.login, { ticket, isDevSite: (process.env.NODE_ENV == 'development') })
+            .then((response) => {
+                if (response.data.isRegistered) {
                     resolve(response.data);
-                })
-                .catch((err) => errorCallback(err, reject));
-        } else {
-            toastr["error"]("username or password is empty", "LOGIN ERROR");
-            reject();
-        }
+                } else {
+                    toastr["error"]("Sorry but we don't have your information on our records.Please drop a mail to our IT team to get registered", "User Not Registered");
+                    reject();
+                }
+            })
+            .catch((err) => errorCallback(err, reject));
     });
 }
 

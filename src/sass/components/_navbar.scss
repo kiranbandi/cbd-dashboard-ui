@@ -2,7 +2,17 @@
     a {
         font-weight: bold;
         text-transform: uppercase;
-
+    }
+    .paws-icon {
+        display: inline-block;
+        width: 55px;
+        height: 19px;
+        background-size: 100%;
+        margin-right: 10px;
+        vertical-align: top;
+        &+span {
+            font-size: 15px;
+        }
     }
     #navbar span.icon {
         padding: 4px 5px;
@@ -22,4 +32,3 @@
         padding: 0px 2px;
     }
 }
-
