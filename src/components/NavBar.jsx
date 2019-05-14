@@ -33,7 +33,7 @@ class NavBar extends Component {
 
     render() {
         const { accessType = '' } = this.props.userDetails,
-            loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent('https://localhost:8888/');
+            loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent((process.env.NODE_ENV == 'development') ? 'https://localhost:8888/' : 'https://cbd.usask.ca/' );
 
         return (
             <nav className="navbar navbar-inverse navbar-fixed-top">
