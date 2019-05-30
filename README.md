@@ -17,6 +17,7 @@ https://cbd.usask.ca
 Please read the design document and the site map provided below, to get an understanding of the base architecture of the project.
 
 https://github.com/kiranbandi/cbd-dashboard-ui/blob/master/cbd_sitemap.png
+
 https://github.com/kiranbandi/cbd-dashboard-ui/blob/master/design_document.pdf
 
 
