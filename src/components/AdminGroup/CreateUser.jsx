@@ -12,7 +12,6 @@ export default class CreateUser extends Component {
             loaderState: false,
             username: '',
             fullname: '',
-            password: '',
             email: '',
             accessType: 'resident',
             accessList: '',
@@ -36,21 +35,20 @@ export default class CreateUser extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-        const { username, password, fullname,
+        const { username, fullname,
             email, accessType, accessList, currentPhase,
             rotationSchedule, longitudinalSchedule, citeExamScore } = this.state,
             programStartDate = document.getElementById('programStartDate') ? document.getElementById('programStartDate').value : '';
 
         // toggle loader on before request 
         this.setState({ loaderState: true });
-        registerUser({ username, password, fullname, email, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule, citeExamScore, programStartDate })
+        registerUser({ username, fullname, email, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule, citeExamScore, programStartDate })
             .then(() => {
                 // reset form values
                 this.setState(
                     {
                         username: '',
                         fullname: '',
-                        password: '',
                         email: '',
                         accessType: 'resident',
                         accessList: '',
@@ -68,20 +66,15 @@ export default class CreateUser extends Component {
     }
 
     render() {
-        const { loaderState, username, fullname, citeExamScore,
-            password, email, accessType, accessList,
+        const { loaderState, username, fullname, citeExamScore, email, accessType, accessList,
             currentPhase, programStartDate, rotationSchedule, longitudinalSchedule } = this.state;
 
         return (
             <div>
                 <form className="col-lg-5 col-lg-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
                     <div className="input-group m-a">
-                        <span className='inner-span'>USERNAME</span>
-                        <input type="text" value={username} className="form-control" name="username" placeholder="USERNAME , NO SPACES" onChange={this.onChange} />
-                    </div>
-                    <div className="input-group m-a">
-                        <span className='inner-span'>PASSWORD</span>
-                        <input type="password" value={password} className="form-control" name="password" placeholder="PASSWORD" onChange={this.onChange} />
+                        <span className='inner-span'>NSID</span>
+                        <input type="text" value={username} className="form-control" name="username" placeholder="UNIVERSITY NSID, NO SPACES" onChange={this.onChange} />
                     </div>
                     <div className="input-group m-a">
                         <span className='inner-span'>FULL NAME</span>
@@ -104,7 +97,7 @@ export default class CreateUser extends Component {
                     {this.state.accessType == 'supervisor' &&
                         <div className="input-group m-a">
                             <span className='inner-span'>ACCESS LIST</span>
-                            <input type="text" className="form-control" name="accessList" value={accessList} placeholder="COMMA SEPARATED USERNAMES" onChange={this.onChange} />
+                            <input type="text" className="form-control" name="accessList" value={accessList} placeholder="COMMA SEPARATED NSIDs" onChange={this.onChange} />
                         </div>}
 
 

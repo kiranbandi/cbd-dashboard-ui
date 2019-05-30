@@ -13,6 +13,10 @@ class NavBar extends Component {
     constructor(props) {
         super(props);
         this.logOut = this.logOut.bind(this);
+        this.state = {
+            program: 'EM'
+        };
+        this.onSelectProgram = this.onSelectProgram.bind(this);
     }
 
     componentDidMount() {
@@ -31,9 +35,14 @@ class NavBar extends Component {
         this.props.setLogoutData();
     }
 
+    onSelectProgram() {
+        const program = event.target.value;
+        this.setState({ program });
+    }
+
     render() {
-        const { accessType = '' } = this.props.userDetails,
-            loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent((process.env.NODE_ENV == 'development') ? 'https://localhost:8888/' : 'https://cbd.usask.ca/' );
+        const { program } = this.state, { accessType = '' } = this.props.userDetails,
+            loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent((process.env.NODE_ENV == 'development') ? 'https://localhost:8888/' : 'https://cbd.usask.ca/');
 
         return (
             <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -71,6 +80,19 @@ class NavBar extends Component {
                             </li>
                         </ul>
                         <ul className='nav navbar-nav navbar-right'>
+
+                            {accessType == 'admin' &&
+                                <li>
+                                    <div className="input-group">
+                                        <span className='inner-span'>Program</span>
+                                        <select name="program" className='custom-select' value={program} onChange={this.onSelectProgram}>
+                                            <option key={'pg-1'} value={'EM'} >{'Emergency Medicine'}</option>
+                                            <option key={'pg-2'} value={'AN'} >{'Anesthesia '}</option>
+                                        </select>
+                                    </div>
+                                </li>
+                            }
+
                             <li> {this.props.logged_in ?
                                 <Link to='/Logout' onClick={this.logOut}>
                                     <span className="icon icon-log-out"></span> Logout

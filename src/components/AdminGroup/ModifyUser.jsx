@@ -13,7 +13,6 @@ export default class ModifyUser extends Component {
             innerLoaderState: false,
             deleteLoaderState: false,
             username: '',
-            password: '',
             email: '',
             fullname: '',
             accessType: 'resident',
@@ -23,25 +22,18 @@ export default class ModifyUser extends Component {
             currentPhase: 'transition-to-discipline',
             rotationSchedule: '',
             longitudinalSchedule: '',
-            citeExamScore: '',
-            passwordBoxOpen: false
+            citeExamScore: ''
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onSelectUsername = this.onSelectUsername.bind(this);
         this.onDeleteClick = this.onDeleteClick.bind(this);
-        this.onPasswordToggleClick = this.onPasswordToggleClick.bind(this);
     }
 
     componentDidMount() {
         getAllUsers()
             .then((users) => { this.setState({ userList: [...users] }) })
             .finally(() => { this.setState({ loaderState: false }) });
-    }
-
-    onPasswordToggleClick(event) {
-        const { passwordBoxOpen } = this.state;
-        this.setState({ passwordBoxOpen: !passwordBoxOpen, password: '' });
     }
 
     onDeleteClick(event) {
@@ -59,7 +51,6 @@ export default class ModifyUser extends Component {
                         userList,
                         username: '',
                         fullname: '',
-                        password: '',
                         email: '',
                         accessType: 'resident',
                         accessList: '',
@@ -67,8 +58,7 @@ export default class ModifyUser extends Component {
                         currentPhase: 'transition-to-discipline',
                         rotationSchedule: '',
                         longitudinalSchedule: '',
-                        citeExamScore: '',
-                        passwordBoxOpen: false
+                        citeExamScore: ''
                     })
                 })
                 // toggle loader once request is completed
@@ -86,7 +76,6 @@ export default class ModifyUser extends Component {
                 .then((userData) => {
                     this.setState({
                         username,
-                        password: '',
                         email: userData.email,
                         fullname: userData.fullname || '',
                         accessType: userData.accessType,
@@ -95,8 +84,7 @@ export default class ModifyUser extends Component {
                         currentPhase: userData.currentPhase || 'transition-to-discipline',
                         rotationSchedule: userData.rotationSchedule || '',
                         longitudinalSchedule: userData.longitudinalSchedule || '',
-                        citeExamScore: userData.citeExamScore || '',
-                        passwordBoxOpen: false
+                        citeExamScore: userData.citeExamScore || ''
                     });
                 })
                 .finally(() => { this.setState({ loaderState: false }) });
@@ -112,20 +100,19 @@ export default class ModifyUser extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-        const { username, password, email, fullname,
+        const { username, email, fullname,
             accessType, accessList, currentPhase,
             citeExamScore, rotationSchedule, longitudinalSchedule } = this.state,
             programStartDate = document.getElementById('modify-programStartDate') ? document.getElementById('modify-programStartDate').value : '';
 
         // toggle loader on before request 
         this.setState({ innerLoaderState: true });
-        updateUser({ username, password, email, fullname, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule, programStartDate, citeExamScore })
+        updateUser({ username, email, fullname, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule, programStartDate, citeExamScore })
             .then(() => {
                 // reset form values
                 this.setState({
                     username: '',
                     fullname: '',
-                    password: '',
                     email: '',
                     accessType: 'resident',
                     accessList: '',
@@ -133,8 +120,7 @@ export default class ModifyUser extends Component {
                     currentPhase: 'transition-to-discipline',
                     rotationSchedule: '',
                     longitudinalSchedule: '',
-                    citeExamScore: '',
-                    passwordBoxOpen: false
+                    citeExamScore: ''
                 })
             })
             // toggle loader once request is completed
@@ -146,10 +132,10 @@ export default class ModifyUser extends Component {
     render() {
 
         const { userList, loaderState, innerLoaderState,
-            deleteLoaderState, username, fullname = '', password,
+            deleteLoaderState, username, fullname = '',
             email, accessType, accessList,
             currentPhase, programStartDate,
-            rotationSchedule, longitudinalSchedule, passwordBoxOpen, citeExamScore } = this.state;
+            rotationSchedule, longitudinalSchedule, citeExamScore } = this.state;
 
         // Sort the residents alphabetically so that they are easier to look up
         userList.sort((previous, current) => previous.localeCompare(current));
@@ -161,9 +147,9 @@ export default class ModifyUser extends Component {
 
                     <form className="col-lg-5 col-lg-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
                         <div className="input-group m-a">
-                            <span className='inner-span'>USERNAME</span>
+                            <span className='inner-span'>NSID</span>
                             <select name="username" className='custom-select' value={username} onChange={this.onSelectUsername}>
-                                <option key={'user-default'} value={''} >{'Select Username'}</option>
+                                <option key={'user-default'} value={''} >{'Select NSID'}</option>
                                 {userList.map((user, index) => <option key={'user-' + index} value={user} >{user}</option>)}
                             </select>
                         </div>
@@ -188,7 +174,7 @@ export default class ModifyUser extends Component {
                         {this.state.accessType == 'supervisor' &&
                             <div className="input-group m-a">
                                 <span className='inner-span'>ACCESS LIST</span>
-                                <input type="text" className="form-control" name="accessList" value={accessList} placeholder="COMMA SEPARATED USERNAMES" onChange={this.onChange} />
+                                <input type="text" className="form-control" name="accessList" value={accessList} placeholder="COMMA SEPARATED NSIDs" onChange={this.onChange} />
                             </div>}
 
 
@@ -232,20 +218,6 @@ export default class ModifyUser extends Component {
                                 <span className='inner-span'>CITE SCORE</span>
                                 <input type="text" className="form-control" name="citeExamScore" value={citeExamScore} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
                             </div>}
-
-                        <p className='m-a text-warning'> <span className="icon icon-key"></span> For the purpose of secrecy, passwords are not shared.You can however overwrite it with a new one using the checkbox below.</p>
-                        <div className="input-group m-a checkbox custom-control text-center custom-checkbox">
-                            <label className='filter-label'>
-                                {"CHANGE PASSWORD"}
-                                <input id='toggle-password-box' type="checkbox" checked={passwordBoxOpen} onChange={this.onPasswordToggleClick} />
-                                <span className="custom-control-indicator"></span>
-                            </label>
-                        </div>
-
-                        {passwordBoxOpen && <div className="input-group m-a">
-                            <span className='inner-span'>PASSWORD</span>
-                            <input type="password" value={password} className="form-control" name="password" placeholder="PASSWORD" onChange={this.onChange} />
-                        </div>}
 
                         <button className={"btn btn-success create-btn m-a m-t-md " + ((username.length > 0) ? "" : 'disabled')} type="submit" onClick={this.onSubmit}>
                             <span className='create-span'>{"UPDATE USER"} </span>

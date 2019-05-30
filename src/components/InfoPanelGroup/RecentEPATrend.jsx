@@ -56,9 +56,8 @@ class RecentEPATrend extends Component {
 
         const { residentData = {} } = this.props, { filterRange } = this.state;
         // when the records are loaded up we flatten them 
-        // then we sort them by data and then 
-        // reverse the list so the latest records are at the start
-        let temp = _.reverse(_.sortBy(_.flatMap(residentData), (d) => d.Date));
+        // then we sort them by data 
+        let temp = _.sortBy(_.flatMap(residentData), (d) => d.Date);
 
         if (filterRange.indexOf('month') > -1) {
             //  Get the records that fall in that X month period from now
