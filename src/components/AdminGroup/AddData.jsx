@@ -125,7 +125,7 @@ export default class AddData extends Component {
         let { loaderState, processing, selectedIndex, userList, yearTag } = this.state;
 
         // Sort the residents alphabetically so that they are easier to look up
-        userList.sort((previous, current) => previous.username.localeCompare(current.username));
+        userList.sort((previous, current) => previous.fullname.localeCompare(current.fullname));
 
         return (
             <div className='add-data-root m-t' >
@@ -139,7 +139,7 @@ export default class AddData extends Component {
                                 <span className='inner-span'>RESIDENT NSID</span>
                                 <select name="username" className='custom-select' value={'user-' + selectedIndex} onChange={this.onSelectUsername}>
                                     <option key={'user-default'} value={'user-0'} >{'Select NSID'}</option>
-                                    {userList.map((user, index) => <option key={'user-' + (index + 1)} value={'user-' + (index + 1)} >{user.username}</option>)}
+                                    {userList.map((user, index) => <option key={'user-' + (index + 1)} value={'user-' + (index + 1)} >{user.fullname} - {user.username}</option>)}
                                 </select>
                             </div>
 
