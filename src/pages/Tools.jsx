@@ -73,7 +73,11 @@ class Tools extends Component {
             .then((processedOutput) => {
                 var { data, epaSourceMap } = processedOutput;
                 // quick hack so the data can be easily pulled in non group format
-                window.emCBD = { 'rcmData': data };
+                window.emCBD = {
+                    'rcmData': _.map(data, (_r) => {
+                        return [_r.Date, _r.Resident_Name, _r.EPA, _r.Observer_Name, _r.Observer_Type, _r.Rating, _r.Type, _r.Situation_Context, _r.Feedback, _r.Professionalism_Safety, _r.isExpired || false];
+                    })
+                };
                 // group data on the basis of EPA
                 var groupedResidentData = _.groupBy(data, (d) => d.EPA);
                 // store data in json format in redux 

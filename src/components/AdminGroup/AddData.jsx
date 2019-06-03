@@ -73,24 +73,13 @@ export default class AddData extends Component {
                     // while the files were uploaded so cross check with the user
                     var mismatchedRecords = data.filter((record) => record.Resident_Name != fullname);
 
-                    const yearSlot = yearTag.split('-');
                     var recordsOutsideTimeperiod = data.filter((record) => {
                         //  no check if user is updating all records
                         if (yearTag == 'all') {
                             return false;
                         }
                         else {
-                            // Data is updated in two slots for each year
-                            // Jan 1 to Jun 30 - Slot 1
-                            // Jul 1 to Dec 31 - Slot 2
-                            if (yearSlot[1] == '1') {
-                                // return true if record is either after jun30th or before Jan 1st
-                                return moment(record.Date, 'YYYY-MM-DD').isAfter(moment('06/30/' + yearSlot[0], 'MM/DD/YYYY')) || moment(record.Date, 'YYYY-MM-DD').isBefore(moment('01/01/' + yearSlot[0], 'MM/DD/YYYY'));
-                            }
-                            else {
-                                // return false if record is after dec 31st or before Jul 1st
-                                return moment(record.Date, 'YYYY-MM-DD').isAfter(moment('12/31/' + yearSlot[0], 'MM/DD/YYYY')) || moment(record.Date, 'YYYY-MM-DD').isBefore(moment('07/01/' + yearSlot[0], 'MM/DD/YYYY'));
-                            }
+                            return yearTag != record.yearTag;
                         }
                     })
 

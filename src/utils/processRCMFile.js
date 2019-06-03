@@ -112,6 +112,7 @@ export default function(rawData) {
 
                                     dataStore.push({
                                         'Date': moment(dataPoint.__EMPTY_8, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD'),
+                                        'yearTag': findYearTag(moment(dataPoint.__EMPTY_8, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
                                         'Resident_Name': residentName,
                                         'EPA': tempEPA,
                                         'Observer_Name': dataPoint.__EMPTY,
@@ -157,6 +158,7 @@ export default function(rawData) {
 
                                     dataStore.push({
                                         'Date': moment(dataPoint.__EMPTY_7, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD'),
+                                        'yearTag': findYearTag(moment(dataPoint.__EMPTY_7, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
                                         'Resident_Name': residentName,
                                         'EPA': tempEPA,
                                         'Observer_Name': dataPoint.__EMPTY,
@@ -185,4 +187,17 @@ export default function(rawData) {
             reject();
         };
     })
+}
+
+
+function findYearTag(timeStamp) {
+    var year = moment(timeStamp, 'YYYY-MM-DD').year();
+    // Jan 1st of the given year
+    var startDate = moment('01/01/' + year, 'MM/DD/YYYY');
+    // Jun 30th of the same year
+    var endDate = moment('06/30/' + year, 'MM/DD/YYYY');
+    if (moment(timeStamp, 'YYYY-MM-DD').isBetween(startDate, endDate, 'days', '[]')) {
+        return year + '-1';
+    }
+    return year + '-2';
 }
