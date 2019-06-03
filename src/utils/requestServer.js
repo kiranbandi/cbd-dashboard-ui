@@ -182,6 +182,7 @@ requestServer.setRecords = function(records, username, yearTag) {
         return {
             username,
             observation_date: record.Date,
+            year_tag: record.yearTag,
             epa: record.EPA,
             feedback: record.Feedback,
             observer_name: record.Observer_Name,
