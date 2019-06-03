@@ -57,7 +57,7 @@ class RecentEPATrend extends Component {
         const { residentData = {} } = this.props, { filterRange } = this.state;
         // when the records are loaded up we flatten them 
         // then we sort them by data 
-        let temp = _.sortBy(_.flatMap(residentData), (d) => d.Date);
+        let temp = _.reverse(_.sortBy(_.flatMap(residentData), (d) => d.Date));
 
         if (filterRange.indexOf('month') > -1) {
             //  Get the records that fall in that X month period from now
@@ -100,7 +100,7 @@ class RecentEPATrend extends Component {
             };
         });
 
-        const elementList = _.map(pointList, (d, i) => {
+        const elementList = _.map(_.reverse(pointList), (d, i) => {
             return <circle
                 id={'recentPoint-' + i}
                 r={widthOfRoot < 800 ? 3 : 6}
