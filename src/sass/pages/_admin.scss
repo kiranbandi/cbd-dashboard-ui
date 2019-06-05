@@ -10,50 +10,94 @@
         .input-group>select.custom-select {
             width: 250px !important;
         }
-        #programStartDate,
-        #modify-programStartDate {
-            width: 210px;
-            border-radius: 0px 4px 4px 0px;
-        }
-        .loader-modify {
-            margin: 50px auto;
-        }
-        .inner-span {
-            display: table-cell;
-            padding-right: 10px;
-            width: 125px;
-            vertical-align: middle;
-        }
-        .form-control {
-            width: 250px;
-            border-radius: 4px;
-        }
-        .create-btn {
-            margin: 0px auto 20px auto;
-            font-size: 16px;
-            display: block;
-        }
-        .create-btn {
-            line-height: 25px;
-            .create-span {
-                vertical-align: top;
-                &+div {
-                    margin-left: 10px;
+        .academic-box {
+            margin-top: 25px;
+            .banner {
+                display: block;
+                text-transform: capitalize;
+                font-size: 18px;
+            }
+            .academic-inner {
+                border: 2px solid #9f86ff;
+                border-radius: 10px;
+                display: inline-block;
+                .rotation-span {
                     vertical-align: top;
-                    display: inline-block;
+                    padding-top: 5px;
+                }
+                .rotation-root {
+                    display: inline-table;
+                    width: 400px;
+                    .slot-set {
+                        display: inline-block;
+                        margin: 5px 0px;
+                        .slot-label {
+                            text-align: center;
+                            display: block;
+                        }
+                        .rotation-select {
+                            width: 100px;
+                        }
+                    }
+                }
+                .input-group {
+                    margin: 10px 15px 15px 10px;
                 }
             }
         }
-        .modify-user-container {
-            .create-btn {
+    }
+    #programStartDate,
+    #modify-programStartDate {
+        width: 210px;
+        border-radius: 0px 4px 4px 0px;
+    }
+    .promoted-container {
+        .inner-span {
+            text-transform: uppercase;
+        }
+        .program-start-date {
+            width: 210px;
+            border-radius: 0px 4px 4px 0px;
+        }
+    }
+    .loader-modify {
+        margin: 50px auto;
+    }
+    .inner-span {
+        display: table-cell;
+        padding-right: 10px;
+        width: 200px;
+        vertical-align: middle;
+    }
+    .form-control {
+        width: 250px;
+        border-radius: 4px;
+    }
+    .create-btn {
+        margin: 0px auto 20px auto;
+        font-size: 16px;
+        display: block;
+    }
+    .create-btn {
+        line-height: 25px;
+        .create-span {
+            vertical-align: top;
+            &+div {
+                margin-left: 10px;
+                vertical-align: top;
                 display: inline-block;
             }
         }
-        .add-data-form {
-            .inner-span {
-                font-size: 14px;
-                width: 245px;
-            }
+    }
+    .modify-user-container {
+        .create-btn {
+            display: inline-block;
+        }
+    }
+    .add-data-form {
+        .inner-span {
+            font-size: 14px;
+            width: 245px;
         }
     }
 }

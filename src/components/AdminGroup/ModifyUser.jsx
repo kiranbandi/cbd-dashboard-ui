@@ -4,6 +4,8 @@ import { getAllUsers, getUser, updateUser, deleteUser } from '../../utils/reques
 import Loading from 'react-loading';
 import moment from 'moment';
 
+const possiblePhases = ['transition-to-discipline', 'foundations-of-discipline', 'core-of-discipline', 'transition-to-practice'];
+
 export default class ModifyUser extends Component {
 
     constructor(props) {
@@ -20,6 +22,8 @@ export default class ModifyUser extends Component {
             userList: [],
             programStartDate: moment().format('MM/DD/YYYY'),
             currentPhase: 'transition-to-discipline',
+            earlierPhaseCount: 0,
+            promotedDate: [],
             rotationSchedule: '',
             longitudinalSchedule: '',
             citeExamScore: ''
@@ -28,6 +32,7 @@ export default class ModifyUser extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onSelectUsername = this.onSelectUsername.bind(this);
         this.onDeleteClick = this.onDeleteClick.bind(this);
+        this.onPhaseChange = this.onPhaseChange.bind(this);
     }
 
     componentDidMount() {
@@ -56,6 +61,8 @@ export default class ModifyUser extends Component {
                         accessList: '',
                         programStartDate: moment().format('MM/DD/YYYY'),
                         currentPhase: 'transition-to-discipline',
+                        earlierPhaseCount: 0,
+                        promotedDate: [],
                         rotationSchedule: '',
                         longitudinalSchedule: '',
                         citeExamScore: ''
@@ -82,6 +89,8 @@ export default class ModifyUser extends Component {
                         accessList: userData.accessList || '',
                         programStartDate: moment(userData.programStartDate).format('MM/DD/YYYY') || moment().format('MM/DD/YYYY'),
                         currentPhase: userData.currentPhase || 'transition-to-discipline',
+                        earlierPhaseCount: possiblePhases.indexOf(userData.currentPhase || 'transition-to-discipline'),
+                        promotedDate: userData.promotedDate || [],
                         rotationSchedule: userData.rotationSchedule || '',
                         longitudinalSchedule: userData.longitudinalSchedule || '',
                         citeExamScore: userData.citeExamScore || ''
@@ -90,6 +99,16 @@ export default class ModifyUser extends Component {
                 .finally(() => { this.setState({ loaderState: false }) });
         }
     }
+
+    onPhaseChange(event) {
+        // if he is in a phase > 1 then we need promoted dates for all previous phases
+        let currentPhase = event.target.value, earlierPhaseCount = 0;
+        if (possiblePhases.indexOf(currentPhase) > 0) {
+            earlierPhaseCount = possiblePhases.indexOf(currentPhase);
+        }
+        this.setState({ currentPhase, earlierPhaseCount });
+    }
+
 
     onChange(event) {
         this.setState({
@@ -100,14 +119,21 @@ export default class ModifyUser extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-        const { username, email, fullname,
-            accessType, accessList, currentPhase,
+        let { username, email, fullname,
+            accessType, accessList, currentPhase, earlierPhaseCount, promotedDate,
             citeExamScore, rotationSchedule, longitudinalSchedule } = this.state,
             programStartDate = document.getElementById('modify-programStartDate') ? document.getElementById('modify-programStartDate').value : '';
 
+        // reset promotedDate array
+        promotedDate = []
+        // then set the phase promoted dates one by one 
+        _.map(Array(earlierPhaseCount), (d, index) => {
+            promotedDate[index] = document.getElementById('promoted-' + index) ? document.getElementById('promoted-' + index).value : ''
+        })
+
         // toggle loader on before request 
         this.setState({ innerLoaderState: true });
-        updateUser({ username, email, fullname, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule, programStartDate, citeExamScore })
+        updateUser({ username, email, fullname, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule, programStartDate, citeExamScore, promotedDate })
             .then(() => {
                 // reset form values
                 this.setState({
@@ -118,6 +144,8 @@ export default class ModifyUser extends Component {
                     accessList: '',
                     programStartDate: moment().format('MM/DD/YYYY'),
                     currentPhase: 'transition-to-discipline',
+                    earlierPhaseCount: 0,
+                    promotedDate: [],
                     rotationSchedule: '',
                     longitudinalSchedule: '',
                     citeExamScore: ''
@@ -134,7 +162,7 @@ export default class ModifyUser extends Component {
         const { userList, loaderState, innerLoaderState,
             deleteLoaderState, username, fullname = '',
             email, accessType, accessList,
-            currentPhase, programStartDate,
+            currentPhase, programStartDate, earlierPhaseCount, promotedDate,
             rotationSchedule, longitudinalSchedule, citeExamScore } = this.state;
 
         // Sort the residents alphabetically so that they are easier to look up
@@ -171,28 +199,16 @@ export default class ModifyUser extends Component {
                                 <option value='admin' >ADMIN</option>
                             </select>
                         </div>
-                        {this.state.accessType == 'supervisor' &&
+                        {accessType == 'supervisor' &&
                             <div className="input-group m-a">
                                 <span className='inner-span'>ACCESS LIST</span>
                                 <input type="text" className="form-control" name="accessList" value={accessList} placeholder="COMMA SEPARATED NSIDs" onChange={this.onChange} />
                             </div>}
 
 
-                        {this.state.accessType == 'resident' &&
+                        {accessType == 'resident' &&
                             <div className="input-group m-a">
-                                <span className='inner-span'>CURRENT PHASE</span>
-                                <select id='select-current-phase' name="currentPhase" className='custom-select' value={currentPhase} onChange={this.onChange}>
-                                    <option value='transition-to-discipline' >TRANSITION TO DISCIPLINE</option>
-                                    <option value='foundations-of-discipline' >FOUNDATIONS OF DISCIPLINE</option>
-                                    <option value='core-of-discipline' >CORE OF DISCIPLINE</option>
-                                    <option value='transition-to-practice' >TRANSITION TO PRACTICE</option>
-                                </select>
-                            </div>}
-
-
-                        {this.state.accessType == 'resident' &&
-                            <div className="input-group m-a">
-                                <span className='inner-span'>START DATE</span>
+                                <span className='inner-span'>PROGRAM START DATE</span>
                                 <div className="input-group">
                                     <span className="input-group-addon">
                                         <span className="icon icon-calendar"></span>
@@ -201,19 +217,46 @@ export default class ModifyUser extends Component {
                                 </div>
                             </div>}
 
-                        {this.state.accessType == 'resident' &&
+                        {accessType == 'resident' &&
+                            <div className="input-group m-a">
+                                <span className='inner-span'>CURRENT PHASE</span>
+                                <select id='select-current-phase' name="currentPhase" className='custom-select' value={currentPhase} onChange={this.onPhaseChange}>
+                                    <option value='transition-to-discipline' >TRANSITION TO DISCIPLINE</option>
+                                    <option value='foundations-of-discipline' >FOUNDATIONS OF DISCIPLINE</option>
+                                    <option value='core-of-discipline' >CORE OF DISCIPLINE</option>
+                                    <option value='transition-to-practice' >TRANSITION TO PRACTICE</option>
+                                </select>
+                            </div>}
+
+
+                        {accessType == 'resident' && earlierPhaseCount > 0 &&
+                            <div className='promoted-container'>
+                                {_.map(Array(earlierPhaseCount), (d, index) => {
+                                    return <div className="input-group m-a" key={'date-promoted-' + index}>
+                                        <span className='inner-span'>PROMOTED DATE - {possiblePhases[index].split("-").join(" ")}</span>
+                                        <div className="input-group">
+                                            <span className="input-group-addon">
+                                                <span className="icon icon-calendar"></span>
+                                            </span>
+                                            <input className='program-start-date form-control' type="text" id={'promoted-' + index} defaultValue={promotedDate[index] || moment().format('MM/DD/YYYY')} data-provide="datepicker" />
+                                        </div>
+                                    </div>
+                                })}
+                            </div>}
+
+                        {accessType == 'resident' &&
                             <div className="input-group m-a">
                                 <span className='inner-span'>ROTATION SCHEDULE</span>
                                 <input type="text" className="form-control" name="rotationSchedule" value={rotationSchedule} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
                             </div>}
 
-                        {this.state.accessType == 'resident' &&
+                        {accessType == 'resident' &&
                             <div className="input-group m-a">
                                 <span className='inner-span'>LONGITUDINAL SCHEDULE</span>
                                 <input type="text" className="form-control" name="longitudinalSchedule" value={longitudinalSchedule} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
                             </div>}
 
-                        {this.state.accessType == 'resident' &&
+                        {accessType == 'resident' &&
                             <div className="input-group m-a">
                                 <span className='inner-span'>CITE SCORE</span>
                                 <input type="text" className="form-control" name="citeExamScore" value={citeExamScore} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
