@@ -23,7 +23,7 @@ requestServer.requestLogin = function(ticket) {
 
 requestServer.registerUser = function(userData) {
 
-    let { username, fullname, email, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule, citeExamScore, programStartDate } = userData;
+    let { username, fullname, email, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule, citeExamScore, programStartDate, promotedDate } = userData;
 
     return new Promise((resolve, reject) => {
         if (username.length == 0) {
@@ -35,7 +35,7 @@ requestServer.registerUser = function(userData) {
         } else {
             // convert accessList from string to array of values
             accessList = accessList.length > 0 ? accessList.split(',') : [];
-            axios.post(endPoints.register, { username, fullname, email, accessList, accessType, currentPhase, rotationSchedule, longitudinalSchedule, citeExamScore, programStartDate }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            axios.post(endPoints.register, { username, fullname, email, accessList, accessType, currentPhase, rotationSchedule, longitudinalSchedule, citeExamScore, programStartDate, promotedDate }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
                 .then((response) => {
                     toastr["success"]("User " + username + " created successfully");
                     resolve();
@@ -47,7 +47,7 @@ requestServer.registerUser = function(userData) {
 
 requestServer.updateUser = function(userData) {
 
-    let { username, email, fullname, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule, citeExamScore, programStartDate } = userData;
+    let { username, email, fullname, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule, citeExamScore, programStartDate, promotedDate } = userData;
 
     return new Promise((resolve, reject) => {
         if (username.length == 0 || email.length == 0 || fullname.length == 0) {
@@ -56,7 +56,7 @@ requestServer.updateUser = function(userData) {
         } else {
             // convert accessList from string to array of values
             accessList = accessList.length > 0 ? accessList.split(',') : [];
-            axios.post(endPoints.updateUser + "/" + username, { username, email, accessList, fullname, accessType, currentPhase, rotationSchedule, citeExamScore, longitudinalSchedule, programStartDate }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            axios.post(endPoints.updateUser + "/" + username, { username, email, accessList, fullname, accessType, currentPhase, rotationSchedule, citeExamScore, longitudinalSchedule, programStartDate, promotedDate }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
                 .then((response) => {
                     toastr["success"]("User " + username + " updated successfully");
                     resolve();
