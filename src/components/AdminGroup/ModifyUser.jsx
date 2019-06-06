@@ -3,7 +3,12 @@ import React, { Component } from 'react';
 import { getAllUsers, getUser, updateUser, deleteUser } from '../../utils/requestServer';
 import Loading from 'react-loading';
 import moment from 'moment';
+import ReactSelect from 'react-select';
+import rotationScheduleMap from '../../utils/rotationScheduleMap';
 
+const possibleAcademicYears = _.keys(rotationScheduleMap);
+
+const possibleRotations = ["EM", "EM(Regina)", "EM(Pediatric)", "EM(Regional)", "Anesthesia", "Cardio", "IC", "IM", "Surgery", "Neuro", "Optho", "Ortho", "Plastics", "Selective", "Toxicology", "Trauma"];
 const possiblePhases = ['transition-to-discipline', 'foundations-of-discipline', 'core-of-discipline', 'transition-to-practice'];
 
 export default class ModifyUser extends Component {
@@ -24,15 +29,18 @@ export default class ModifyUser extends Component {
             currentPhase: 'transition-to-discipline',
             earlierPhaseCount: 0,
             promotedDate: [],
-            rotationSchedule: '',
-            longitudinalSchedule: '',
-            citeExamScore: ''
+            academicYear: '2018',
+            rotationSchedule: {},
+            longitudinalSchedule: {},
+            citeExamScore: {}
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onSelectUsername = this.onSelectUsername.bind(this);
         this.onDeleteClick = this.onDeleteClick.bind(this);
         this.onPhaseChange = this.onPhaseChange.bind(this);
+        this.onYearlyInputChange = this.onYearlyInputChange.bind(this);
+        this.onRotationalScheduleChange = this.onRotationalScheduleChange.bind(this);
     }
 
     componentDidMount() {
@@ -63,9 +71,10 @@ export default class ModifyUser extends Component {
                         currentPhase: 'transition-to-discipline',
                         earlierPhaseCount: 0,
                         promotedDate: [],
-                        rotationSchedule: '',
-                        longitudinalSchedule: '',
-                        citeExamScore: ''
+                        academicYear: '2018',
+                        rotationSchedule: {},
+                        longitudinalSchedule: {},
+                        citeExamScore: {}
                     })
                 })
                 // toggle loader once request is completed
@@ -75,12 +84,26 @@ export default class ModifyUser extends Component {
         }
     }
 
-    onSelectUsername(event) {
-        const username = event.target.value;
+    onSelectUsername(user) {
+        const username = user.value;
         if (username.length > 0) {
             this.setState({ loaderState: true });
             getUser(username)
                 .then((userData) => {
+
+                    // code snippet to ensure old format doesnt break
+                    // and is migrated smoothly
+                    if(typeof(userData.rotationSchedule)=='string'){
+                        userData.rotationSchedule = {}
+                    }
+                    if(typeof(userData.longitudinalSchedule)=='string'){
+                        userData.longitudinalSchedule = {}
+                    }
+                    if(typeof(userData.citeExamScore)=='string'){
+                        userData.citeExamScore = {}
+                    }
+
+
                     this.setState({
                         username,
                         email: userData.email,
@@ -91,9 +114,10 @@ export default class ModifyUser extends Component {
                         currentPhase: userData.currentPhase || 'transition-to-discipline',
                         earlierPhaseCount: possiblePhases.indexOf(userData.currentPhase || 'transition-to-discipline'),
                         promotedDate: userData.promotedDate || [],
-                        rotationSchedule: userData.rotationSchedule || '',
-                        longitudinalSchedule: userData.longitudinalSchedule || '',
-                        citeExamScore: userData.citeExamScore || ''
+                        rotationSchedule: userData.rotationSchedule || {},
+                        longitudinalSchedule: userData.longitudinalSchedule || {},
+                        citeExamScore: userData.citeExamScore || {},
+                        academicYear: '2018'
                     });
                 })
                 .finally(() => { this.setState({ loaderState: false }) });
@@ -115,6 +139,29 @@ export default class ModifyUser extends Component {
             [event.target.name]:
                 ['fullname', 'rotationSchedule', 'accessList', 'longitudinalSchedule', 'citeExamScore'].indexOf(event.target.name) > -1 ? event.target.value : event.target.value.trim()
         });
+    }
+
+    onRotationalScheduleChange(event) {
+        const { academicYear, rotationSchedule } = this.state,
+            rotationID = event.target.id.split("-")[1],
+            rotationValue = event.target.value;
+        // if there is no array then create an empty array and set all the values to the first possible rotation
+        if (!rotationSchedule.hasOwnProperty(academicYear)) {
+            rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length, () => possibleRotations[0]);
+        }
+        rotationSchedule[academicYear][rotationID] = rotationValue;
+        this.setState({ rotationSchedule });
+    }
+
+    onYearlyInputChange(event) {
+        let { academicYear, longitudinalSchedule, citeExamScore } = this.state;
+        if (event.target.name == 'longitudinalSchedule') {
+            longitudinalSchedule[academicYear] = event.target.value;
+        }
+        else {
+            citeExamScore[academicYear] = event.target.value;
+        }
+        this.setState({ longitudinalSchedule, citeExamScore });
     }
 
     onSubmit(event) {
@@ -146,9 +193,10 @@ export default class ModifyUser extends Component {
                     currentPhase: 'transition-to-discipline',
                     earlierPhaseCount: 0,
                     promotedDate: [],
-                    rotationSchedule: '',
-                    longitudinalSchedule: '',
-                    citeExamScore: ''
+                    academicYear: '2018',
+                    rotationSchedule: {},
+                    longitudinalSchedule: {},
+                    citeExamScore: {}
                 })
             })
             // toggle loader once request is completed
@@ -161,25 +209,51 @@ export default class ModifyUser extends Component {
 
         const { userList, loaderState, innerLoaderState,
             deleteLoaderState, username, fullname = '',
-            email, accessType, accessList,
+            email, accessType, accessList, academicYear,
             currentPhase, programStartDate, earlierPhaseCount, promotedDate,
             rotationSchedule, longitudinalSchedule, citeExamScore } = this.state;
 
-        // Sort the residents alphabetically so that they are easier to look up
-        userList.sort((previous, current) => previous.localeCompare(current));
+
+        //  first convert the array into the format required by react-select 
+        let modifiedUserList = _.map(userList, (d) => {
+            return {
+                label: d.username + " - " + d.fullname,
+                value: d.username,
+                accessType:d.accessType
+            };
+        })
+
+        // then group the array based on access Type 
+        let groupedUserList = _.groupBy(modifiedUserList, (d) => d.accessType);
+        //  then remap the array without the access type in it 
+        // and also internally sort the elements
+        groupedUserList = _.map(groupedUserList, (options, label) => {
+            return { label, options: options.sort((prev, cur) => prev.value.localeCompare(cur.value)) }
+        })
+
+        // if there is no array then create an empty array and set all the values to the first possible rotation
+        if (!rotationSchedule.hasOwnProperty(academicYear)) {
+            rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length, () => possibleRotations[0]);
+        }
+
+        // 
+        const currentSelectedValue = _.find(modifiedUserList, (d) => d.value == username) || null;
 
         return (
             <div className='modify-user-container'>
                 {loaderState ?
                     <Loading className='loader-modify' type='spin' height='100px' width='100px' color='#d6e5ff' delay={-1} /> :
 
-                    <form className="col-lg-5 col-lg-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
-                        <div className="input-group m-a">
+                    <form className="col-lg-8 col-lg-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
+                        <div className="username-select m-a">
                             <span className='inner-span'>NSID</span>
-                            <select name="username" className='custom-select' value={username} onChange={this.onSelectUsername}>
-                                <option key={'user-default'} value={''} >{'Select NSID'}</option>
-                                {userList.map((user, index) => <option key={'user-' + index} value={user} >{user}</option>)}
-                            </select>
+                            <div className='react-select-root'>
+                                <ReactSelect
+                                    value={currentSelectedValue}
+                                    options={groupedUserList}
+                                    styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
+                                    onChange={this.onSelectUsername} />
+                            </div>
                         </div>
                         <div className="input-group m-a">
                             <span className='inner-span'>EMAIL</span>
@@ -245,21 +319,41 @@ export default class ModifyUser extends Component {
                             </div>}
 
                         {accessType == 'resident' &&
-                            <div className="input-group m-a">
-                                <span className='inner-span'>ROTATION SCHEDULE</span>
-                                <input type="text" className="form-control" name="rotationSchedule" value={rotationSchedule} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
-                            </div>}
+                            <div className='academic-box'>
+                                <h3 className='text-info m-a banner'>Set the following information for each academic year individually </h3>
+                                <div className="input-group m-a">
+                                    <span className='inner-span text-info'>ACADEMIC YEAR</span>
+                                    <select id='select-academic-year' name="academicYear" className='custom-select' value={academicYear} onChange={this.onChange}>
+                                        {_.map(possibleAcademicYears, (year => { return <option key={'year-' + year} value={year}>{year}</option> }))}
+                                    </select>
+                                </div>
+                                <div className='academic-inner'>
+                                    <div className="input-group">
+                                        <span className='inner-span rotation-span text-info'>ROTATION SCHEDULE</span>
+                                        <div className='rotation-root'>
+                                            {_.map(rotationScheduleMap[academicYear], (slot, slotID) => {
+                                                return <span className='slot-set' key={'rotation-' + "-" + slotID}>
+                                                    <span className='slot-label'>{slot}</span>
+                                                    <select
+                                                        id={'rotation' + "-" + slotID}
+                                                        name="rotationSelect" className='custom-select rotation-select'
+                                                        value={rotationSchedule[academicYear][slotID]} onChange={this.onRotationalScheduleChange}>
+                                                        {_.map(possibleRotations, (rotation, rId) => { return <option key={'rot-' + rId} value={rotation}>{rotation}</option> })}
+                                                    </select>
+                                                </span>
+                                            })}
 
-                        {accessType == 'resident' &&
-                            <div className="input-group m-a">
-                                <span className='inner-span'>LONGITUDINAL SCHEDULE</span>
-                                <input type="text" className="form-control" name="longitudinalSchedule" value={longitudinalSchedule} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
-                            </div>}
-
-                        {accessType == 'resident' &&
-                            <div className="input-group m-a">
-                                <span className='inner-span'>CITE SCORE</span>
-                                <input type="text" className="form-control" name="citeExamScore" value={citeExamScore} placeholder="COMMA SEPARATED VALUES" onChange={this.onChange} />
+                                        </div>
+                                    </div>
+                                    <div className="input-group">
+                                        <span className='inner-span text-info'>LOGITUDINAL SCHEDULE</span>
+                                        <input type="text" className="form-control extra-wide" name="longitudinalSchedule" value={longitudinalSchedule[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
+                                    </div>
+                                    <div className="input-group text-info">
+                                        <span className='inner-span'>CITE SCORE</span>
+                                        <input type="text" className="form-control extra-wide" name="citeExamScore" value={citeExamScore[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
+                                    </div>
+                                </div>
                             </div>}
 
                         <button className={"btn btn-success create-btn m-a m-t-md " + ((username.length > 0) ? "" : 'disabled')} type="submit" onClick={this.onSubmit}>

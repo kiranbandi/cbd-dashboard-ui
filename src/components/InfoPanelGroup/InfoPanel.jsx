@@ -22,9 +22,9 @@ class InfoPanel extends Component {
 
         if (residentFilter && residentFilter.username) {
             residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
-            scheduleMap = residentInfo && residentInfo.rotationSchedule && residentInfo.rotationSchedule.split(",");
-            longitudinalScheduleMap = residentInfo && residentInfo.longitudinalSchedule && residentInfo.longitudinalSchedule.split(",");
-            citeExamScoreList = residentInfo && residentInfo.citeExamScore && residentInfo.citeExamScore.split(",") || [];
+            scheduleMap = residentInfo && residentInfo.rotationSchedule && residentInfo.rotationSchedule['2018'];
+            longitudinalScheduleMap = residentInfo && residentInfo.longitudinalSchedule && residentInfo.longitudinalSchedule['2018'] && residentInfo.longitudinalSchedule['2018'].split(",");
+            citeExamScoreList = residentInfo && residentInfo.citeExamScore && residentInfo.citeExamScore['2018'] && residentInfo.citeExamScore['2018'].split(",") || [];
         }
 
         return (
