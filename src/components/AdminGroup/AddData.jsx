@@ -6,6 +6,7 @@ import toastr from '../../utils/toastr';
 import Loading from 'react-loading';
 import moment from 'moment';
 import { getResidentList, setRecords } from '../../utils/requestServer';
+import rotationScheduleMap from '../../utils/rotationScheduleMap';
 
 const possibleYearTags = ['2018-1', '2018-2', '2019-1', '2019-2', '2020-1', '2020-2', 'all'];
 const possibleSlots = {
@@ -27,6 +28,7 @@ export default class AddData extends Component {
             username: '',
             yearTag: '',
             fullname: '',
+            userData: {},
             selectedIndex: 0,
             warningGiven: false
         }
@@ -46,7 +48,7 @@ export default class AddData extends Component {
             let { userList } = this.state,
                 selectedIndex = event.target.value.split("-")[1],
                 user = userList[selectedIndex - 1];
-            this.setState({ selectedIndex, yearTag: '', username: user.username, fullname: user.fullname, warningGiven: false });
+            this.setState({ selectedIndex, yearTag: '', username: user.username, fullname: user.fullname, userData: { ...user }, warningGiven: false });
         }
     }
 
@@ -59,7 +61,7 @@ export default class AddData extends Component {
 
     onProcessFile(event) {
         event.preventDefault();
-        const { username, fullname, warningGiven, yearTag } = this.state;
+        const { username, fullname, warningGiven, yearTag, userData } = this.state;
         if (username.length > 0 && yearTag.length > 0) {
             // turn on file processing loader
             this.setState({ processing: true });
@@ -67,7 +69,35 @@ export default class AddData extends Component {
             getFile('add-data-rcm-file')
                 .then((response) => { return processRCMFile(response) })
                 .then((processedOutput) => {
-                    var { data } = processedOutput;
+                    let { data } = processedOutput,
+                        { rotationSchedule = {} } = userData;
+
+
+                    //  append every record with two tags 
+                    // first phase tag is to identify which phase resident was in when the epa was completed
+                    // the second tag is the rotation tag to identify which rotation the resident was in
+
+                    _.map(data, (record, recordID) => {
+
+                        // get the rotation list for the academic year in which the record lies
+                        let rotationScheduleList = rotationScheduleMap[record.academicYear];
+
+                        //  find the rotation slot in which the record lies
+                        let rotationIndex = _.findIndex(rotationScheduleList, (slotStart, slotIndex) => {
+                            const periodStartDate = moment(slotStart, "DD-MMM-YYYY"),
+                                endingDate = moment(rotationScheduleList[slotIndex + 1], "DD-MMM-YYYY");
+                            return moment(record.Date, 'YYYY-MM-DD').isBetween(periodStartDate, endingDate, 'days', '(]');
+                        })
+
+                        // find the rotation in which the resident was during that slot
+                        let rotationTag = rotationSchedule[record.academicYear] ?
+                            (rotationSchedule[record.academicYear][rotationIndex] ?
+                                rotationSchedule[record.academicYear][rotationIndex] : 'EM') : 'EM';
+
+                        console.log(rotationTag);
+
+                    });
+
                     // List of records that have a Resident_Name different than
                     // the selected full name, which means there could have been a mistake
                     // while the files were uploaded so cross check with the user
@@ -106,7 +136,7 @@ export default class AddData extends Component {
                         const { insertedCount } = data;
                         toastr["success"](insertedCount + " records were added for user " + username, "SUCCESS");
                         // reset form params
-                        this.setState({ selectedIndex: 0, username: '', fullname: '' });
+                        this.setState({ selectedIndex: 0, username: '', fullname: '', userData: {} });
                     }
                 })
                 .catch(() => {
@@ -176,4 +206,12 @@ export default class AddData extends Component {
             </div>
         );
     }
+}
+
+
+
+function getAcademicYear(timestamp) {
+
+
+
 }
