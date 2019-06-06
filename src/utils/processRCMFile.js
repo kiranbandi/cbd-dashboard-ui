@@ -113,6 +113,7 @@ export default function(rawData) {
                                     dataStore.push({
                                         'Date': moment(dataPoint.__EMPTY_8, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD'),
                                         'yearTag': findYearTag(moment(dataPoint.__EMPTY_8, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
+                                        'academicYear': findAcademicYear(moment(dataPoint.__EMPTY_8, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
                                         'Resident_Name': residentName,
                                         'EPA': tempEPA,
                                         'Observer_Name': dataPoint.__EMPTY,
@@ -159,6 +160,7 @@ export default function(rawData) {
                                     dataStore.push({
                                         'Date': moment(dataPoint.__EMPTY_7, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD'),
                                         'yearTag': findYearTag(moment(dataPoint.__EMPTY_7, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
+                                        'academicYear': findAcademicYear(moment(dataPoint.__EMPTY_7, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
                                         'Resident_Name': residentName,
                                         'EPA': tempEPA,
                                         'Observer_Name': dataPoint.__EMPTY,
@@ -200,4 +202,25 @@ function findYearTag(timeStamp) {
         return year + '-1';
     }
     return year + '-2';
+}
+
+
+function findAcademicYear(timeStamp) {
+    var timeObj = moment(timeStamp, 'YYYY-MM-DD');
+    // very poor implementation written in under 60 secs 
+    // need to replace when I have enough time
+    if (timeObj.isBetween(moment('07/01/2018', 'MM/DD/YYYY'), moment('06/30/2019', 'MM/DD/YYYY'), 'days', '[]')) {
+        return '2018';
+    } else if (timeObj.isBetween(moment('07/01/2019', 'MM/DD/YYYY'), moment('06/30/2020', 'MM/DD/YYYY'), 'days', '[]')) {
+        return '2019';
+    } else if (timeObj.isBetween(moment('07/01/2020', 'MM/DD/YYYY'), moment('06/30/2021', 'MM/DD/YYYY'), 'days', '[]')) {
+        return '2020';
+    } else if (timeObj.isBetween(moment('07/01/2021', 'MM/DD/YYYY'), moment('06/30/2022', 'MM/DD/YYYY'), 'days', '[]')) {
+        return '2021';
+    } else if (timeObj.isBetween(moment('07/01/2022', 'MM/DD/YYYY'), moment('06/30/2023', 'MM/DD/YYYY'), 'days', '[]')) {
+        return '2022';
+    } else if (timeObj.isBetween(moment('07/01/2023', 'MM/DD/YYYY'), moment('06/30/2024', 'MM/DD/YYYY'), 'days', '[]')) {
+        return '2023';
+    }
+    return '2024';
 }
