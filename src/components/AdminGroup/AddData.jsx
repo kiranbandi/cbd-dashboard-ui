@@ -13,6 +13,8 @@ const possibleSlots = {
     '1': 'Jan 1st - Jun 30th',
     '2': 'Jul 1st - Dec 31st',
 }
+const possiblePhases = ['transition-to-discipline', 'foundations-of-discipline', 'core-of-discipline', 'transition-to-practice'];
+
 // Data is updated in two slots for each year
 // Jan 1 to Jun 30 - Slot 1
 // Jul 1 to Dec 31 - Slot 2
@@ -70,7 +72,7 @@ export default class AddData extends Component {
                 .then((response) => { return processRCMFile(response) })
                 .then((processedOutput) => {
                     let { data } = processedOutput,
-                        { rotationSchedule = {} } = userData;
+                        { rotationSchedule = {}, promotedDate = [], currentPhase } = userData;
 
 
                     //  append every record with two tags 
@@ -94,8 +96,25 @@ export default class AddData extends Component {
                             (rotationSchedule[record.academicYear][rotationIndex] ?
                                 rotationSchedule[record.academicYear][rotationIndex] : 'EM') : 'EM';
 
-                        console.log(rotationTag);
 
+                        let phaseList = ['TTD', 'F', 'CORE', 'TP'], phaseIndex = 0;
+
+                        // code block for assigning phase tag
+                        if (promotedDate.length > 0) {
+                            phaseIndex = _.reduce(promotedDate, (accu, dateStamp, dateStampIndex) => {
+                                // datestamp is the date on which the user was promoted to the next phase
+                                // if the record is after the datestamp it means record is in the next phase
+                                if (moment(record.Date, 'YYYY-MM-DD').isAfter(moment(dateStamp, 'MM/DD/YYYY'))) {
+                                    return dateStampIndex + 1;
+                                }
+                                // if not return the accumulator which has the index of the last matching phase
+                                return accu;
+                            }, 0);
+                        }
+
+                        // tag the record with the two tags
+                        data[recordID]['PhaseTag'] = phaseList[phaseIndex];
+                        data[recordID]['rotationTag'] = rotationTag;
                     });
 
                     // List of records that have a Resident_Name different than
