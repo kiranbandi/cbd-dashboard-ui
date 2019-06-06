@@ -51,7 +51,7 @@ export default class CreateUser extends Component {
             rotationValue = event.target.value;
         // if there is no array then create an empty array and set all the values to the first possible rotation
         if (!rotationSchedule.hasOwnProperty(academicYear)) {
-            rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length, () => possibleRotations[0]);
+            rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length - 1, () => possibleRotations[0]);
         }
         rotationSchedule[academicYear][rotationID] = rotationValue;
         this.setState({ rotationSchedule });
@@ -130,8 +130,9 @@ export default class CreateUser extends Component {
 
         // if there is no array then create an empty array and set all the values to the first possible rotation
         if (!rotationSchedule.hasOwnProperty(academicYear)) {
-            rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length, () => possibleRotations[0]);
+            rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length - 1, () => possibleRotations[0]);
         }
+
 
         return (
             <div>
@@ -216,7 +217,8 @@ export default class CreateUser extends Component {
                                 <div className="input-group">
                                     <span className='inner-span rotation-span text-info'>ROTATION SCHEDULE</span>
                                     <div className='rotation-root'>
-                                        {_.map(rotationScheduleMap[academicYear], (slot, slotID) => {
+                                        {/* ignore the last slot as its a placeholder for end time slot */}
+                                        {_.map(rotationScheduleMap[academicYear].slice(0, rotationScheduleMap[academicYear].length - 1), (slot, slotID) => {
                                             return <span className='slot-set' key={'rotation-' + "-" + slotID}>
                                                 <span className='slot-label'>{slot}</span>
                                                 <select
@@ -227,7 +229,6 @@ export default class CreateUser extends Component {
                                                 </select>
                                             </span>
                                         })}
-
                                     </div>
                                 </div>
                                 <div className="input-group">
