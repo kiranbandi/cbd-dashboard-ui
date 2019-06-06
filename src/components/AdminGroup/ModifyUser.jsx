@@ -8,7 +8,7 @@ import rotationScheduleMap from '../../utils/rotationScheduleMap';
 
 const possibleAcademicYears = _.keys(rotationScheduleMap);
 
-const possibleRotations = ["EM", "EM(Regina)", "EM(Pediatric)", "EM(Regional)", "Anesthesia", "Cardio", "IC", "IM", "Surgery", "Neuro", "Optho", "Ortho", "Plastics", "Selective", "Toxicology", "Trauma"];
+const possibleRotations = ["EM", "EM(REGINA)", "EM(PED)", "EM(RGNL)", "ANESTHESIA", "CARDIO", "ICU", "GIM", "GEN SURG", "NEURO", "OPTHO", "ORTHO", "PLASTICS", "SELECTIVE", "TOXICOLOGY", "TRAUMA"];
 const possiblePhases = ['transition-to-discipline', 'foundations-of-discipline', 'core-of-discipline', 'transition-to-practice'];
 
 export default class ModifyUser extends Component {
