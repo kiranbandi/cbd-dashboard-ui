@@ -82,6 +82,58 @@ export default class ProgramDashboard extends Component {
 
         let radarData, LineData;
 
+
+        // find out records that have rotation and phase tag on them
+        const taggedRecords = _.filter(allRecords, (d) => (!!d.rotationTag && !!d.phaseTag));
+
+        const phaseGroupedTaggedRecords = _.groupBy(taggedRecords, (d) => d.phaseTag);
+
+        const possibleRotations = ["EM", "EM(REGINA)", "EM(PED)", "EM(RGNL)", "ANESTHESIA", "CARDIO", "ICU", "GIM", "GEN SURG", "NEURO", "OPTHO", "ORTHO", "PLASTICS", "SELECTIVE", "TOXICOLOGY", "TRAUMA", "OTHER"];
+
+
+        let selectedRotationSplit;
+
+        if (selected == 1) {
+            selectedRotationSplit = phaseGroupedTaggedRecords['TTD'] || []
+        }
+        else if (selected == 2) {
+            selectedRotationSplit = phaseGroupedTaggedRecords['F'] || []
+        }
+        else if (selected == 3) {
+            selectedRotationSplit = phaseGroupedTaggedRecords['CORE'] || []
+        }
+        else {
+            selectedRotationSplit = phaseGroupedTaggedRecords['TP'] || []
+        }
+
+
+        selectedRotationSplit = _.groupBy(selectedRotationSplit, (d) => d.rotationTag);
+
+
+        var newLineData;
+
+        if (taggedRecords.length > 0) {
+
+            newLineData = {
+                labels: possibleRotations,
+                datasets: [
+                    {
+                        label: "My First dataset",
+                        fillColor: "rgba(28,168,221,.03)",
+                        strokeColor: "#43b98e",
+                        pointColor: "#43b98e",
+                        pointStrokeColor: 'rgba(28,168,221,.03)',
+                        pointHighlightFill: "rgba(28,168,221,.03)",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: _.map(possibleRotations, (d) => (selectedRotationSplit[d] ? selectedRotationSplit[d].length : 0))
+                    }
+                ]
+            }
+        }
+
+
+
+
         if (allRecords.length > 0) {
             radarData = {
                 labels: subKeyList,
@@ -134,14 +186,23 @@ export default class ProgramDashboard extends Component {
                     <div className='m-t text-center'>
                         {allRecords.length > 0 ?
                             <div className='row'>
-                                <div className='col-sm-6 xol-xs-12'>
+                                {/* <div className='col-sm-6 xol-xs-12'>
                                     <div className='m-a epa-select-container row'>
                                         <h3 className='text-left'> EPA Split Distribution</h3>
                                         <div className='right-pane col-xs-12'>
                                             <Radar options={radarOptions} data={_.clone(radarData)} width={width} height={400} redraw={true} />
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
+                                {taggedRecords.length > 0 &&
+                                    <div className='col-sm-6 col-xs-12'>
+                                        <div className='m-a epa-select-container row'>
+                                            <h3 className='text-left'> EPA Rotation Distribution</h3>
+                                            <div className='right-pane col-xs-12'>
+                                                <Line data={newLineData} width={width} height={400} redraw={true} />
+                                            </div>
+                                        </div>
+                                    </div>}
                                 <div className='col-sm-6 col-xs-12'>
                                     <div className='m-a epa-select-container row'>
                                         <h3 className='text-left'> EPA Monthly Distribution</h3>
@@ -160,6 +221,7 @@ export default class ProgramDashboard extends Component {
                                         </div>
                                     })}
                                 </div>
+
                             </div> :
                             <h2 className='text-center text-danger'>No program information is available currently</h2>}
                     </div>}
