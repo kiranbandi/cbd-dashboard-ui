@@ -7,8 +7,7 @@ import rotationScheduleMap from '../../utils/rotationScheduleMap';
 
 const possibleAcademicYears = _.keys(rotationScheduleMap);
 
-const possibleRotations = ["EM", "EM (Regina)", "EM (Pediatric)", "EM (Regional)", "Anesthesia", "Cardiology", "Intensive Care", "Internal Medicine", "General Surgery", "Neurology", "Opthalmology", "Orthopedics", "Plastics", "Selective", "Toxicology", "Trauma"];
-
+const possibleRotations = ["EM", "EM(Regina)", "EM(Pediatric)", "EM(Regional)", "Anesthesia", "Cardio", "IC", "IM", "General Surgery", "Neuro", "Optho", "Ortho", "Plastics", "Selective", "Toxicology", "Trauma"];
 const possiblePhases = ['transition-to-discipline', 'foundations-of-discipline', 'core-of-discipline', 'transition-to-practice'];
 
 export default class CreateUser extends Component {
@@ -25,7 +24,7 @@ export default class CreateUser extends Component {
             programStartDate: moment().format('MM/DD/YYYY'),
             earlierPhaseCount: 0,
             promotedDate: [],
-            academicYear: '2016',
+            academicYear: '2018',
             currentPhase: 'transition-to-discipline',
             rotationSchedule: {},
             longitudinalSchedule: {},
@@ -105,16 +104,16 @@ export default class CreateUser extends Component {
                         accessList: '',
                         programStartDate: moment().format('MM/DD/YYYY'),
                         earlierPhaseCount: 0,
-                        academicYear: '2016',
+                        academicYear: '2018',
                         // array of dates
                         promotedDate: [],
                         currentPhase: 'transition-to-discipline',
                         // JSON Object with arrays of schedules for each year
-                        rotationSchedule: '',
+                        rotationSchedule: {},
                         // JSON Object with arrays of schedules for each year
-                        longitudinalSchedule: '',
+                        longitudinalSchedule: {},
                         // JSON Object with arrays of scores for each year
-                        citeExamScore: ''
+                        citeExamScore: {}
                     })
             })
             // toggle loader once request is completed
@@ -193,7 +192,7 @@ export default class CreateUser extends Component {
                         <div className='promoted-container'>
                             {_.map(Array(earlierPhaseCount), (d, index) => {
                                 return <div className="input-group m-a" key={'date-promoted-' + index}>
-                                    <span className='inner-span'>PROMOTED DATE - {possiblePhases[index].split("-").join(" ")}</span>
+                                    <span className='inner-span'>PROMOTED DATE FROM {possiblePhases[index].split("-").join(" ")}</span>
                                     <div className="input-group">
                                         <span className="input-group-addon">
                                             <span className="icon icon-calendar"></span>
@@ -206,16 +205,16 @@ export default class CreateUser extends Component {
 
                     {accessType == 'resident' &&
                         <div className='academic-box'>
-                            <h3 className='text-info m-a banner'>Set information for each academic year </h3>
+                            <h3 className='text-info m-a banner'>Set the following information for each academic year individually </h3>
                             <div className="input-group m-a">
-                                <span className='inner-span'>ACADEMIC YEAR</span>
+                                <span className='inner-span text-info'>ACADEMIC YEAR</span>
                                 <select id='select-academic-year' name="academicYear" className='custom-select' value={academicYear} onChange={this.onChange}>
                                     {_.map(possibleAcademicYears, (year => { return <option key={'year-' + year} value={year}>{year}</option> }))}
                                 </select>
                             </div>
                             <div className='academic-inner'>
                                 <div className="input-group">
-                                    <span className='inner-span rotation-span'>ROTATION SCHEDULE</span>
+                                    <span className='inner-span rotation-span text-info'>ROTATION SCHEDULE</span>
                                     <div className='rotation-root'>
                                         {_.map(rotationScheduleMap[academicYear], (slot, slotID) => {
                                             return <span className='slot-set' key={'rotation-' + "-" + slotID}>
@@ -232,12 +231,12 @@ export default class CreateUser extends Component {
                                     </div>
                                 </div>
                                 <div className="input-group">
-                                    <span className='inner-span'>LOGITUDINAL SCHEDULE</span>
-                                    <input type="text" className="form-control" name="longitudinalSchedule" value={longitudinalSchedule[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
+                                    <span className='inner-span text-info'>LOGITUDINAL SCHEDULE</span>
+                                    <input type="text" className="form-control extra-wide" name="longitudinalSchedule" value={longitudinalSchedule[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
                                 </div>
                                 <div className="input-group">
-                                    <span className='inner-span'>CITE SCORE</span>
-                                    <input type="text" className="form-control" name="citeExamScore" value={citeExamScore[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
+                                    <span className='inner-span text-info'>CITE SCORE</span>
+                                    <input type="text" className="form-control extra-wide" name="citeExamScore" value={citeExamScore[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
                                 </div>
                             </div>
                         </div>}

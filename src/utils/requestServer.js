@@ -70,7 +70,12 @@ requestServer.updateUser = function(userData) {
 requestServer.getAllUsers = function() {
     return new Promise((resolve, reject) => {
         axios.get(endPoints.allUsers, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
-            .then((response) => { resolve(response.data.map((user) => user.username)) })
+            .then((response) => {
+                resolve(response.data.map((user) => {
+                    const { username, fullname, accessType } = user;
+                    return { username, fullname, accessType }
+                }))
+            })
             .catch((err) => errorCallback(err, reject));
     });
 }

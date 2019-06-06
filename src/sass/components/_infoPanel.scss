@@ -61,6 +61,8 @@
                     color: white;
                     padding-top: 3px;
                     font-weight: 500;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                     &.between-lot {
                         background: #bf6c07;
                     }
