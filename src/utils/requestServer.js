@@ -197,7 +197,9 @@ requestServer.setRecords = function(records, username, yearTag) {
             resident_name: record.Resident_Name,
             situation_context: record.Situation_Context,
             type: record.Type,
-            isExpired: record.isExpired
+            isExpired: record.isExpired,
+            phaseTag: record.phaseTag,
+            rotationTag: record.rotationTag
         }
     })
 
