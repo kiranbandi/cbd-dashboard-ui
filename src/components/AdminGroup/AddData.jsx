@@ -113,7 +113,7 @@ export default class AddData extends Component {
                         }
 
                         // tag the record with the two tags
-                        data[recordID]['PhaseTag'] = phaseList[phaseIndex];
+                        data[recordID]['phaseTag'] = phaseList[phaseIndex];
                         data[recordID]['rotationTag'] = rotationTag;
                     });
 
