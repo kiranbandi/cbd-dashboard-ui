@@ -1,5 +1,5 @@
 import React from 'react';
-import { Line } from 'react-chartjs';
+import { Bar } from 'react-chartjs';
 
 export default (props) => {
 
@@ -35,7 +35,7 @@ export default (props) => {
             <div className='m-a program-vis-box row'>
                 <h3 className='text-left m-b'>EPA Count per Rotation</h3>
                 <div className='col-xs-12'>
-                    <Line
+                    <Bar
                         options={lineOptions}
                         data={lineData}
                         width={width} height={400}

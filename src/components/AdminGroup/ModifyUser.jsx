@@ -234,9 +234,8 @@ export default class ModifyUser extends Component {
         // if there is no array then create an empty array and set all the values to the first possible rotation
         if (!rotationSchedule.hasOwnProperty(academicYear)) {
             rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length-1, () => possibleRotations[0]);
-        }
+        };
 
-        // 
         const currentSelectedValue = _.find(modifiedUserList, (d) => d.value == username) || null;
 
         return (
