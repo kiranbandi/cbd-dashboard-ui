@@ -36,6 +36,9 @@
             }
         }
     }
+    .reel-in-left {
+        margin-left: -1.25% !important;
+    }
     .program-vis-box {
         background: #1a1c22;
         padding: 20px;
@@ -43,6 +46,22 @@
         canvas {
             display: block;
             margin: 0px auto;
+        }
+        .error-code {
+            min-height: 225px;
+            padding: 140px 20px;
+            text-align: center;
+        }
+    }
+    .epa-specific {
+        .epa-select {
+            text-align: left;
+            margin: 10px auto;
+            .react-select-root {
+                display: inline-block;
+                width: 215px;
+                margin-left: 20px;
+            }
         }
     }
 }

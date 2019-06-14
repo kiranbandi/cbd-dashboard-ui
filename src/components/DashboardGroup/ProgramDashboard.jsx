@@ -4,9 +4,10 @@ import Loading from 'react-loading';
 import { getResidentList } from '../../utils/requestServer';
 import templateEpaSourceMap from '../../utils/epaSourceMap';
 import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation';
+import EPAMonthlyRotation from '../ProgramEvaluationGroup/EPAMonthlyRotation';
+import EPAspecificRotation from '../ProgramEvaluationGroup/EPAspecificRotation';
+import RotationSpecificEPA from '../ProgramEvaluationGroup/RotationSpecificEPA';
 import moment from 'moment';
-
-const possibleRotations = ["EM", "EM(REGINA)", "EM(PED)", "EM(RGNL)", "ANESTHESIA", "CARDIO", "ICU", "GIM", "GEN SURG", "NEURO", "OPTHO", "ORTHO", "PLASTICS", "SELECTIVE", "TOXICOLOGY", "TRAUMA", "OTHER"];
 
 export default class ProgramDashboard extends Component {
 
@@ -86,7 +87,7 @@ export default class ProgramDashboard extends Component {
 
         const { allRecords, selected, rotationCount } = this.state;
 
-        let width = document.body.getBoundingClientRect().width - 300, filteredRecords = [];
+        let width = document.body.getBoundingClientRect().width - 250, filteredRecords = [];
         // for small screens use all available width
         width = width < 800 ? width : width / 2;
         // group records based on the phase the resident was in 
@@ -126,6 +127,17 @@ export default class ProgramDashboard extends Component {
                                 </div>
                                 {/* List all vis boxes */}
                                 <EPAOverallbyRotation
+                                    width={width}
+                                    rotationCount={rotationCount}
+                                    filteredRecords={filteredRecords} />
+                                <EPAMonthlyRotation
+                                    width={width}
+                                    filteredRecords={filteredRecords} />
+                                <EPAspecificRotation
+                                    width={width}
+                                    rotationCount={rotationCount}
+                                    filteredRecords={filteredRecords} />
+                                <RotationSpecificEPA
                                     width={width}
                                     rotationCount={rotationCount}
                                     filteredRecords={filteredRecords} />
