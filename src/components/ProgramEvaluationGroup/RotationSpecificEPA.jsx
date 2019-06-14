@@ -3,12 +3,16 @@ import { Bar } from 'react-chartjs';
 import ReactSelect from 'react-select';
 import templateEpaSourceMap from '../../utils/epaSourceMap';
 
+let EPAList = [];
 
 _.map(templateEpaSourceMap, (epaSource, key) => {
     _.map(epaSource.subRoot, (epa, epaKey) => {
         if (epa.indexOf('(SA)') > -1) {
             delete templateEpaSourceMap[key].subRoot[epaKey];
             delete templateEpaSourceMap[key].maxObservation[epaKey];
+        }
+        else {
+            EPAList.push(epaKey);
         }
     })
 });
@@ -37,17 +41,36 @@ export default class MarketBrand extends Component {
             { selectedRotation } = this.state,
             rotationList = _.map(possibleRotations, (d) => ({ 'label': d, 'value': d }));
 
-        let subFilteredRecords = _.filter(filteredRecords, (d) => d.rotationTag == selectedRotation.label);
+        // filter by tag and also remove non SA epas
+        let subFilteredRecords = _.filter(filteredRecords, (d) => ((d.rotationTag == selectedRotation.label) && (EPAList.indexOf(d.epa) > -1)));
 
         // group all the records by their rotation tag
         let groupedRecords = _.groupBy(subFilteredRecords, (d) => d.epa);
-        // Count records for each group and normalize by rotation count for that group
-        _.map(groupedRecords, (group, groupKey) => {
-            groupedRecords[groupKey] = Math.ceil(group.length);
+        // Count records for each group and normalize by epa MAX observation count for that group
+        let dataList = _.map(groupedRecords, (group, groupKey) => {
+            // const epaKey = groupKey.split(".")[0],
+            //     value = Math.ceil(group.length /
+            //         (templateEpaSourceMap[epaKey].maxObservation[groupKey]));
+
+                const epaKey = groupKey.split(".")[0],
+                value = group.length;
+
+            return { label: groupKey, value };
+        });
+
+        // sorted datalist
+        dataList.sort((a, b) => {
+            const aParts = a.label.split("."), bParts = b.label.split(".");
+            if (aParts[0] == bParts[0]) {
+                return aParts[1] - bParts[1];
+            }
+            else {
+                return aParts[0] - bParts[0];
+            }
         });
 
         let lineData = {
-            labels: _.map(groupedRecords, (d, key) => key),
+            labels: _.map(dataList, (d) => d.label),
             datasets: [{
                 label: "Rotations",
                 fillColor: "rgba(28,168,221,.03)",
@@ -56,7 +79,7 @@ export default class MarketBrand extends Component {
                 pointStrokeColor: 'rgba(28,168,221,.03)',
                 pointHighlightFill: "rgba(28,168,221,.03)",
                 pointHighlightStroke: "rgba(220,220,220,1)",
-                data: _.map(groupedRecords, (d) => d)
+                data: _.map(dataList, (d) => d.value)
             }]
         }
 
