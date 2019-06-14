@@ -26,16 +26,7 @@ export default class ProgramDashboard extends Component {
 
     selectionChange(event) {
         event.preventDefault();
-        let { selected } = this.state,
-            currentSelectedID = event.target.className.split(" ")[1].split("-")[2];
-
-        // if same button has been clicked then uncheck it
-        if (currentSelectedID == selected) {
-            selected = -1;
-        }
-        else {
-            selected = currentSelectedID;
-        }
+        let selected = event.target.className.split(" ")[1].split("-")[2];
         this.setState({ selected });
     }
 
