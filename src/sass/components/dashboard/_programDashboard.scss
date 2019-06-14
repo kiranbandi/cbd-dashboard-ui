@@ -2,26 +2,24 @@
     .loading-spinner {
         margin: 100px auto;
     }
-    .epa-select-container {
-        background: #1a1c22;
-        padding: 20px;
-        border-radius: 10px;
-        .left-pane {
-            text-align: center;
-        }
-        .right-pane {
-            text-align: center;
-            canvas {
-                display: block;
-                margin: 0px auto;
-            }
-        }
-    }
     .selection-box-container {
         display: inline-block;
         width: 80%;
         margin: 0px auto;
+        .header {
+            display: inline-block;
+            font-size: 18px;
+            margin: 10px auto;
+            margin-right: 15px;
+            font-weight: bold;
+        }
         .selection-box {
+            -webkit-user-select: none;
+            /* Chrome/Safari */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* IE10+ */
             padding: 5px 20px;
             cursor: pointer;
             margin: 10px 10px;
@@ -36,6 +34,15 @@
                 color: white;
                 border-color: #43b98e;
             }
+        }
+    }
+    .program-vis-box {
+        background: #1a1c22;
+        padding: 20px;
+        border-radius: 10px;
+        canvas {
+            display: block;
+            margin: 0px auto;
         }
     }
 }

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { getAllData } from '../../utils/requestServer';
 import Loading from 'react-loading';
-import { Radar, Line } from 'react-chartjs';
+import { getResidentList } from '../../utils/requestServer';
 import templateEpaSourceMap from '../../utils/epaSourceMap';
+import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation';
 import moment from 'moment';
 
-const monthList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const possibleRotations = ["EM", "EM(REGINA)", "EM(PED)", "EM(RGNL)", "ANESTHESIA", "CARDIO", "ICU", "GIM", "GEN SURG", "NEURO", "OPTHO", "ORTHO", "PLASTICS", "SELECTIVE", "TOXICOLOGY", "TRAUMA", "OTHER"];
 
 export default class ProgramDashboard extends Component {
 
@@ -14,54 +15,60 @@ export default class ProgramDashboard extends Component {
         this.state = {
             isLoaderVisible: false,
             allRecords: [],
-            groupedRecords: {},
-            groupedRecordCount: {},
-            selected: 1,
-            monthCount: {}
+            selected: 'all',
+            rotationCount: {}
         };
         this._isMounted = false;
-
         this.selectionChange = this.selectionChange.bind(this);
     }
 
     selectionChange(event) {
         event.preventDefault();
-        const selected = event.target.className.split(" ")[1].split("-")[2];
+        let { selected } = this.state,
+            currentSelectedID = event.target.className.split(" ")[1].split("-")[2];
+
+        // if same button has been clicked then uncheck it
+        if (currentSelectedID == selected) {
+            selected = -1;
+        }
+        else {
+            selected = currentSelectedID;
+        }
         this.setState({ selected });
     }
 
     componentDidMount() {
+        // initialize empty map
+        let rotationCount = {};
+
         this._isMounted = true;
         // toggle loader before fetching data
         this.setState({ isLoaderVisible: true });
-        // get list of all residents
-        getAllData()
+        // get list of all residents to get rotation count from schedule
+        getResidentList()
+            .then((residentList) => {
+                // temporary stopgap solution 
+                var currentResidentList = _.filter(residentList, (d) => (moment(d.programStartDate).isBefore(moment('07/01/2019', 'MM/DD/YYYY'))))
+                // count each rotation
+                _.map(currentResidentList, (resident) => {
+                    _.map(resident.rotationSchedule['2018'], (rotation) => {
+                        if (rotationCount.hasOwnProperty(rotation)) {
+                            rotationCount[rotation] += 1;
+                        }
+                        else {
+                            rotationCount[rotation] = 1;
+                        }
+                    });
+                })
+                return getAllData();
+            })
+            // now get all the records in DB
             .then((data) => {
-                let allRecords = _.filter(data, (d) => !d.isExpired),
-                    groupedRecords = _.groupBy(allRecords, (d) => d.epa),
-                    groupedRecordCount = {},
-                    internalMonthCount = {
-                        "Jan": 0, "Feb": 0, "Mar": 0,
-                        "Apr": 0, "May": 0, "Jun": 0, "Jul": 0,
-                        "Aug": 0, "Sep": 0, "Oct": 0, "Nov": 0, "Dec": 0
-                    },
-                    monthCount = {
-                        1: _.clone(internalMonthCount), 2: _.clone(internalMonthCount),
-                        3: _.clone(internalMonthCount), 4: _.clone(internalMonthCount)
-                    };
-
-                _.map(allRecords, (d) => {
-                    let monthKey = moment(d.observation_date, 'YYYY-MM-DD').format('MMM'),
-                        internalCount = +d.epa.split(".")[0];
-                    monthCount[internalCount][monthKey] += 1;
+                // filter out records that dont have rotation and phase tag on them or are expired
+                this._isMounted && this.setState({
+                    rotationCount,
+                    allRecords: _.filter(data, (d) => !d.isExpired && (!!d.rotationTag && !!d.phaseTag))
                 });
-
-                // get a count of each EPA
-                _.map(groupedRecords, (d, key) => {
-                    groupedRecordCount[key] = d.length;
-                });
-
-                this._isMounted && this.setState({ allRecords, groupedRecords, groupedRecordCount, monthCount })
             })
             // toggle loader again once the request completes
             .catch(() => { console.log("error in fetching records"); })
@@ -77,151 +84,51 @@ export default class ProgramDashboard extends Component {
 
     render() {
 
-        const { allRecords, groupedRecordCount, selected, monthCount } = this.state,
-            subKeyList = Object.keys(templateEpaSourceMap[selected].subRoot);
+        const { allRecords, selected, rotationCount } = this.state;
 
-        let radarData, LineData;
+        let width = document.body.getBoundingClientRect().width - 300, filteredRecords = [];
+        // for small screens use all available width
+        width = width < 800 ? width : width / 2;
+        // group records based on the phase the resident was in 
+        const phaseGroupedRecords = _.groupBy(allRecords, (d) => d.phaseTag);
 
-
-        // find out records that have rotation and phase tag on them
-        const taggedRecords = _.filter(allRecords, (d) => (!!d.rotationTag && !!d.phaseTag));
-
-        const phaseGroupedTaggedRecords = _.groupBy(taggedRecords, (d) => d.phaseTag);
-
-        const possibleRotations = ["EM", "EM(REGINA)", "EM(PED)", "EM(RGNL)", "ANESTHESIA", "CARDIO", "ICU", "GIM", "GEN SURG", "NEURO", "OPTHO", "ORTHO", "PLASTICS", "SELECTIVE", "TOXICOLOGY", "TRAUMA", "OTHER"];
-
-
-        let selectedRotationSplit;
-
-        if (selected == 1) {
-            selectedRotationSplit = phaseGroupedTaggedRecords['TTD'] || []
-        }
-        else if (selected == 2) {
-            selectedRotationSplit = phaseGroupedTaggedRecords['F'] || []
-        }
-        else if (selected == 3) {
-            selectedRotationSplit = phaseGroupedTaggedRecords['CORE'] || []
+        if (selected == 'all') {
+            filteredRecords = _.clone(allRecords);
         }
         else {
-            selectedRotationSplit = phaseGroupedTaggedRecords['TP'] || []
+            filteredRecords = _.clone(phaseGroupedRecords[selected]);
         }
 
-
-        selectedRotationSplit = _.groupBy(selectedRotationSplit, (d) => d.rotationTag);
-
-
-        var newLineData;
-
-        if (taggedRecords.length > 0) {
-
-            newLineData = {
-                labels: possibleRotations,
-                datasets: [
-                    {
-                        label: "My First dataset",
-                        fillColor: "rgba(28,168,221,.03)",
-                        strokeColor: "#43b98e",
-                        pointColor: "#43b98e",
-                        pointStrokeColor: 'rgba(28,168,221,.03)',
-                        pointHighlightFill: "rgba(28,168,221,.03)",
-                        pointHighlightStroke: "rgba(220,220,220,1)",
-                        data: _.map(possibleRotations, (d) => (selectedRotationSplit[d] ? selectedRotationSplit[d].length : 0))
-                    }
-                ]
-            }
-        }
-
-
-
-
-        if (allRecords.length > 0) {
-            radarData = {
-                labels: subKeyList,
-                datasets: [
-                    {
-                        label: "My First dataset",
-                        fillColor: "rgba(28,168,221,.03)",
-                        strokeColor: "#43b98e",
-                        pointColor: "#43b98e",
-                        pointStrokeColor: 'rgba(28,168,221,.03)',
-                        pointHighlightFill: "rgba(28,168,221,.03)",
-                        pointHighlightStroke: "rgba(220,220,220,1)",
-                        data: _.map(subKeyList, (d) => groupedRecordCount[d] || 0)
-                    }
-                ]
-            };
-
-            LineData = {
-                labels: moment.monthsShort(),
-                datasets: [
-                    {
-                        label: "My First dataset",
-                        fillColor: "rgba(28,168,221,.03)",
-                        strokeColor: "#43b98e",
-                        pointColor: "#43b98e",
-                        pointStrokeColor: 'rgba(28,168,221,.03)',
-                        pointHighlightFill: "rgba(28,168,221,.03)",
-                        pointHighlightStroke: "rgba(220,220,220,1)",
-                        data: _.map(monthList, (d) => monthCount[selected][d])
-                    }
-                ]
-            }
-        }
-
-        var width = document.body.getBoundingClientRect().width - 250;
-
-        width = width < 800 ? width : width / 2;
-
-        var radarOptions = {
-            angleLineColor: 'grey',
-            angleLineWidth: 0.5,
-            pointLabelFontColor: 'white',
-            pointLabelFontSize: 15,
-        };
 
         return (
             <div className='m-a dashboard-root-program' >
                 {this.state.isLoaderVisible ?
                     <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
                     <div className='m-t text-center'>
-                        {allRecords.length > 0 ?
+                        {filteredRecords.length > 0 ?
                             <div className='row'>
-                                {/* <div className='col-sm-6 xol-xs-12'>
-                                    <div className='m-a epa-select-container row'>
-                                        <h3 className='text-left'> EPA Split Distribution</h3>
-                                        <div className='right-pane col-xs-12'>
-                                            <Radar options={radarOptions} data={_.clone(radarData)} width={width} height={400} redraw={true} />
-                                        </div>
-                                    </div>
-                                </div> */}
-                                {taggedRecords.length > 0 &&
-                                    <div className='col-sm-6 col-xs-12'>
-                                        <div className='m-a epa-select-container row'>
-                                            <h3 className='text-left'> EPA Rotation Distribution</h3>
-                                            <div className='right-pane col-xs-12'>
-                                                <Line data={newLineData} width={width} height={400} redraw={true} />
-                                            </div>
-                                        </div>
-                                    </div>}
-                                <div className='col-sm-6 col-xs-12'>
-                                    <div className='m-a epa-select-container row'>
-                                        <h3 className='text-left'> EPA Monthly Distribution</h3>
-                                        <div className='right-pane col-xs-12'>
-                                            <Line data={LineData} width={width} height={400} redraw={true} />
-                                        </div>
-                                    </div>
-                                </div>
                                 <div className='selection-box-container'>
+                                    <h2 className='header'>Filter by Resident Phase : </h2>
+                                    <div
+                                        className={'selection-box box-id-all' + " " + (selected == 'all' ? 'selected-button' : '')}
+                                        key={'select-all'}
+                                        onClick={this.selectionChange}>
+                                        All Phases
+                                    </div>
                                     {_.map(templateEpaSourceMap, (inner, i) => {
                                         return <div
-                                            className={'selection-box box-id-' + (+i) + " " + (selected == (i) ? 'selected-button' : '')}
-                                            key={'select-' + i}
+                                            className={'selection-box box-id-' + (inner.ID) + " " + (selected == (inner.ID) ? 'selected-button' : '')}
+                                            key={'select-' + inner.ID}
                                             onClick={this.selectionChange}>
                                             {inner.topic}
                                         </div>
                                     })}
                                 </div>
-
+                                {/* List all vis boxes */}
+                                <EPAOverallbyRotation
+                                    width={width}
+                                    rotationCount={rotationCount}
+                                    filteredRecords={filteredRecords} />
                             </div> :
                             <h2 className='text-center text-danger'>No program information is available currently</h2>}
                     </div>}

@@ -91,7 +91,11 @@ class GraphPanel extends Component {
         // if no data then set flag to false if not group data by root key
         let epaSourcesThatExist = false;
         if (residentData && Object.keys(residentData).length > 0) {
-            epaSourcesThatExist = _.groupBy(Object.keys(residentData), (key) => { return key.split('.')[0] })
+            epaSourcesThatExist = _.groupBy(Object.keys(residentData), (key) => { return key.split('.')[0] });
+            // sort the values 
+            _.map(epaSourcesThatExist, (epaSource) => {
+                epaSource.sort((a, b) => Number(a.split(".")[1]) - Number(b.split(".")[1]));
+            });
         }
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
