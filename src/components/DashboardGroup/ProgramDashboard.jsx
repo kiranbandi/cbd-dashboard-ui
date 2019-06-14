@@ -8,7 +8,8 @@ import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation
 import EPAMonthlyRotation from '../ProgramEvaluationGroup/EPAMonthlyRotation';
 import EPAspecificRotation from '../ProgramEvaluationGroup/EPAspecificRotation';
 import RotationSpecificEPA from '../ProgramEvaluationGroup/RotationSpecificEPA';
-import EPACompletionRate from '../ProgramEvaluationGroup/EPACompletionRate';
+import EPACompletionRateUnder from '../ProgramEvaluationGroup/EPACompletionRateUnder';
+import EPACompletionRateOver from '../ProgramEvaluationGroup/EPACompletionRateOver';
 
 export default class ProgramDashboard extends Component {
 
@@ -133,7 +134,12 @@ export default class ProgramDashboard extends Component {
                                     width={width}
                                     rotationCount={rotationCount}
                                     filteredRecords={filteredRecords} />
-                                <EPACompletionRate
+                                <EPACompletionRateUnder
+                                    width={width}
+                                    selected={selected}
+                                    rotationCount={rotationCount}
+                                    allRecords={allRecords} />
+                                <EPACompletionRateOver
                                     width={width}
                                     selected={selected}
                                     rotationCount={rotationCount}

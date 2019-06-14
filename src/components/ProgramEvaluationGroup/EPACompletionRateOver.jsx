@@ -56,7 +56,7 @@ export default class EPACompletionRate extends Component {
 
             let value = Math.ceil((currentRatio / maxRequiredRatio) * 100);
 
-            if (value > 100) {
+            if (value < 100) {
                 value = 100;
             }
 
@@ -77,13 +77,14 @@ export default class EPACompletionRate extends Component {
         let lineData = {
             labels: _.map(dataList, (d) => d.label),
             datasets: [{
-                label: "Rotations",
-                fillColor: "rgba(255,141,115,0.2)",
-                strokeColor: "rgba(255,141,115,1)",
-                pointColor: "rgba(255,141,115,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(255,141,115,1)",
+                label: "Base",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#252830",
+                pointHighlightFill: "#252830",
+                pointHighlightStroke: "#252830",
+                pointRadius: 0.25,
                 data: _.map(dataList, (d) => d.value)
             }]
         }
@@ -93,7 +94,7 @@ export default class EPACompletionRate extends Component {
             pointLabelFontSize: 15,
             scaleOverride: true,
             scaleBeginAtZero: true,
-            scaleSteps: 10,
+            scaleSteps: 21,
             scaleStepWidth: 10,
             scaleStartValue: 0
         };
@@ -101,8 +102,8 @@ export default class EPACompletionRate extends Component {
         return (
             <div className='col-sm-6 col-xs-12  epa-specific'>
                 <div className='m-a program-vis-box row'>
-                    <h3 className='text-left m-b'>EPA Completion Rate</h3>
-                    <p className='text-left text-warn'>* over performing EPAs are ceiled at 100 and this chart is phase independent</p>
+                    <h3 className='text-left m-b'>EPA Completion Distribution to Identify Over Performing EPAs</h3>
+                    <p className='text-left text-warn' style={{ color: 'rgba(151,187,205)' }}>* under performing EPAs are set at 100 and this chart is phase independent</p>
                     <div className='col-xs-12'>
                         {lineData.labels.length > 0 ?
                             <Radar
