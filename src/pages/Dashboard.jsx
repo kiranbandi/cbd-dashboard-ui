@@ -10,7 +10,7 @@ class DashboardRoot extends Component {
         super(props);
 
         this.state = {
-            activeBoard: 'program'
+            activeBoard: 'resident'
         };
         this.onTabClick = this.onTabClick.bind(this);
     }
