@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs';
 import ReactSelect from 'react-select';
-import templateEpaSourceMap from '../../utils/epaSourceMap';
-
+import templateEpaSourceMapOriginal from '../../utils/epaSourceMap';
+let templateEpaSourceMap = _.cloneDeep(templateEpaSourceMapOriginal);
 _.map(templateEpaSourceMap, (epaSource, key) => {
     _.map(epaSource.subRoot, (epa, epaKey) => {
         if (epa.indexOf('(SA)') > -1) {
