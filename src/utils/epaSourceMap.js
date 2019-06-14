@@ -1,5 +1,6 @@
 var epaSourceMap = {
     1: {
+        'ID': 'TTD',
         'topic': 'Transition to Discipline (D)',
         subRoot: {
             '1.1': 'Recognizing the unstable/critically ill patient, mobilizing the healthcare team and supervisor, and initiating basic life support',
@@ -29,6 +30,7 @@ var epaSourceMap = {
 
     },
     2: {
+        'ID': 'F',
         'topic': 'Foundations of Discipline (F)',
         subRoot: {
             '2.1': 'Initiating and assisting in resuscitation of critically ill patients',
@@ -60,6 +62,7 @@ var epaSourceMap = {
         }
     },
     3: {
+        'ID': 'CORE',
         'topic': 'Core of Discipline (C)',
         subRoot: {
             '3.1': 'Resuscitating and coordinating care for critically ill patients',
@@ -151,6 +154,7 @@ var epaSourceMap = {
         }
     },
     4: {
+        'ID': 'TP',
         'topic': 'Transition to Practice (P)',
         subRoot: {
             '4.1': 'Managing the emergency department to optimize patient care and department flow',
