@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Radar } from 'react-chartjs';
-import templateEpaSourceMap from '../../utils/epaSourceMap';
-
-
+import templateEpaSourceMapOriginal from '../../utils/epaSourceMap';
+let templateEpaSourceMap = _.cloneDeep(templateEpaSourceMapOriginal);
 let EPAList = [];
 
 _.map(templateEpaSourceMap, (epaSource, key) => {
