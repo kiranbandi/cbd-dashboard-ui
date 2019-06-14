@@ -3,11 +3,12 @@ import { getAllData } from '../../utils/requestServer';
 import Loading from 'react-loading';
 import { getResidentList } from '../../utils/requestServer';
 import templateEpaSourceMap from '../../utils/epaSourceMap';
+import moment from 'moment';
 import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation';
 import EPAMonthlyRotation from '../ProgramEvaluationGroup/EPAMonthlyRotation';
 import EPAspecificRotation from '../ProgramEvaluationGroup/EPAspecificRotation';
 import RotationSpecificEPA from '../ProgramEvaluationGroup/RotationSpecificEPA';
-import moment from 'moment';
+import EPACompletionRate from '../ProgramEvaluationGroup/EPACompletionRate';
 
 export default class ProgramDashboard extends Component {
 
@@ -141,6 +142,11 @@ export default class ProgramDashboard extends Component {
                                     width={width}
                                     rotationCount={rotationCount}
                                     filteredRecords={filteredRecords} />
+                                <EPACompletionRate
+                                    width={width}
+                                    selected={selected}
+                                    rotationCount={rotationCount}
+                                    allRecords={allRecords} />
                             </div> :
                             <h2 className='text-center text-danger'>No program information is available currently</h2>}
                     </div>}
