@@ -48,14 +48,7 @@ export default class MarketBrand extends Component {
         let groupedRecords = _.groupBy(subFilteredRecords, (d) => d.epa);
         // Count records for each group and normalize by epa MAX observation count for that group
         let dataList = _.map(groupedRecords, (group, groupKey) => {
-            // const epaKey = groupKey.split(".")[0],
-            //     value = Math.ceil(group.length /
-            //         (templateEpaSourceMap[epaKey].maxObservation[groupKey]));
-
-                const epaKey = groupKey.split(".")[0],
-                value = group.length;
-
-            return { label: groupKey, value };
+            return { label: groupKey, value:group.length };
         });
 
         // sorted datalist

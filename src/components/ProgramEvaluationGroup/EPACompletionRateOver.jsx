@@ -13,10 +13,9 @@ _.map(templateEpaSourceMap, (epaSource, key) => {
         else {
             EPAList.push(epaKey);
         }
-    })
+    });
     epaSource.maxRequired = _.reduce(epaSource.maxObservation, (acc, d) => (acc + d), 0);
 });
-
 
 
 export default class EPACompletionRate extends Component {
@@ -25,19 +24,15 @@ export default class EPACompletionRate extends Component {
         super(props);
     }
 
-
     render() {
 
         const { allRecords, width, selected } = this.props;
-
         // filter and remove non SA epas
         let subFilteredRecords = _.filter(allRecords, (d) => (EPAList.indexOf(d.epa) > -1));
-
         // group all the records by their rotation tag
         let groupedRecords = _.groupBy(subFilteredRecords, (d) => d.epa);
         //  group by EPA PHASE
         let phaseGroupedRecords = _.groupBy(subFilteredRecords, (d) => d.epa.split(".")[0]);
-
         // Count records for each group and normalize by epa MAX observation count for that group
         let dataList = _.map(groupedRecords, (group, groupKey) => {
 
@@ -87,9 +82,9 @@ export default class EPACompletionRate extends Component {
                 pointRadius: 0.25,
                 data: _.map(dataList, (d) => d.value)
             }]
-        }
+        };
 
-        var radarOptions = {
+        let radarOptions = {
             angleLineWidth: 0.5,
             pointLabelFontSize: 15,
             scaleOverride: true,
