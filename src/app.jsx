@@ -11,10 +11,8 @@ import processQueryParams from './utils/processQueryParams';
 
 //Root sass file for webpack to compile
 import './sass/main.scss';
-
 //Initial Default settings 
 const store = configureStore();
-
 // Custom implementation , if a ticket is being passed it is consumed here 
 // and the root path is set back to normal
 //  This can be rewritten more gracefully in future with updated version of react-router
