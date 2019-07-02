@@ -16,7 +16,6 @@ export default class MarketBrand extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             selectedEPA: { 'label': '1.1,Recognizing the unstable/critically ill patien…and supervisor, and initiating basic life support', 'value': '1.1' }
         };
