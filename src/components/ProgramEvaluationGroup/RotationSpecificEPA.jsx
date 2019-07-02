@@ -17,7 +17,7 @@ _.map(templateEpaSourceMap, (epaSource, key) => {
     })
 });
 
-const possibleRotations = ["EM", "EM(REGINA)", "EM(PED)", "EM(RGNL)", "ANESTHESIA", "CARDIO", "ICU", "GIM", "GEN SURG", "NEURO", "OPTHO", "ORTHO", "PLASTICS", "SELECTIVE", "TOXICOLOGY", "TRAUMA", "OTHER"];
+const possibleRotations = ["EM", "EM(REGINA)", "EM(PED)", "EM(RGNL)", "ANESTHESIA", "CARDIO", "ICU", "GIM", "GEN SURG", "NEURO", "OPTHO", "ORTHO", "PLASTICS", "SELECTIVE", "TOXICOLOGY", "TRAUMA", "OBS/GYN", "OTHER"];
 
 
 export default class MarketBrand extends Component {
@@ -48,7 +48,7 @@ export default class MarketBrand extends Component {
         let groupedRecords = _.groupBy(subFilteredRecords, (d) => d.epa);
         // Count records for each group and normalize by epa MAX observation count for that group
         let dataList = _.map(groupedRecords, (group, groupKey) => {
-            return { label: groupKey, value:group.length };
+            return { label: groupKey, value: group.length };
         });
 
         // sorted datalist
