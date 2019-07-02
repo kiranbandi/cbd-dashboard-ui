@@ -96,14 +96,15 @@ export default class EPACompletionRate extends Component {
             scaleBeginAtZero: true,
             scaleSteps: 10,
             scaleStepWidth: 10,
-            scaleStartValue: 0
+            scaleStartValue: 0,
+            customTooltips: (tooltip) => { customToolTip(tooltip, 'chartjs-tooltip-rate-under') }
         };
 
         return (
             <div className='col-sm-6 col-xs-12  epa-specific'>
                 <div className='m-a program-vis-box row'>
                     <h3 className='text-left m-b'>EPA Completion Distribution to Identify Under Performing EPAs</h3>
-                    <p className='text-left text-warn'>* over performing EPAs are ceiled at 100 and this chart is phase independent</p>
+                    <p className='text-left text-warn'>* over performing EPAs are capped at 100 and this chart is phase independent</p>
                     <div className='col-xs-12'>
                         {lineData.labels.length > 0 ?
                             <Radar
@@ -113,8 +114,52 @@ export default class EPACompletionRate extends Component {
                                 redraw={true} /> :
                             <h3 className='error-code text-left m-b'>No Records</h3>
                         }
+                        <div className='chart-tooltip' id="chartjs-tooltip-rate-under"></div>
                     </div>
                 </div>
             </div>)
     }
+}
+
+
+
+// This is a custom tool that uses bootstrap and works in hand with ChartJS standards
+// could be replace in future with custom tooltip
+function customToolTip(tooltip, elementId) {
+
+    // Tooltip Element
+    let tooltipEl = $('#' + elementId);
+    // Hide if no tooltip
+    if (!tooltip) {
+        tooltipEl.css({
+            opacity: 0
+        });
+        return;
+    }
+
+    let epaId = tooltip.text.split(":")[0],
+        epaRootId = epaId.split(".")[0];
+
+    // Set caret Position
+    tooltipEl.removeClass('above below');
+    tooltipEl.addClass(tooltip.yAlign);
+    // Set Text
+    tooltipEl.html(tooltip.text + ", " + templateEpaSourceMap[epaRootId].subRoot[epaId]);
+    // Find Y Location on page
+    var top;
+    if (tooltip.yAlign == 'above') {
+        top = tooltip.y - tooltip.caretHeight - tooltip.caretPadding;
+    } else {
+        top = tooltip.y + tooltip.caretHeight + tooltip.caretPadding;
+    }
+    // Display, position, and set styles for font
+    tooltipEl.css({
+        opacity: 1,
+        left: tooltip.chart.canvas.offsetLeft + tooltip.x + 'px',
+        top: tooltip.chart.canvas.offsetTop + top + 'px',
+        fontFamily: tooltip.fontFamily,
+        fontSize: tooltip.fontSize,
+        fontStyle: tooltip.fontStyle,
+    });
+
 }
