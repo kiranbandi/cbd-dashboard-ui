@@ -1,13 +1,14 @@
 #!/bin/sh
 # Script to update apache server
+git pull origin master
 # create new build folder
 npm run build
-# stop apache server
-service apache2 stop
+# stop nginx  server
+sudo systemctl stop nginx
 # clear old assets
 rm -rf /var/www/html/
 # copy new assets
 cp -a build/. /var/www/html/
-# restart apache server
-service apache2 restart
+# restart nginx server
+sudo systemctl start nginx
 echo "Deploy complete successfully"
