@@ -18,7 +18,7 @@ export default class MarketBrand extends Component {
         super(props);
 
         this.state = {
-            selectedEPA: { 'label': '1.1', 'option': '1.1' }
+            selectedEPA: { 'label': '1.1,Recognizing the unstable/critically ill patien…and supervisor, and initiating basic life support', 'value': '1.1' }
         };
         this.onSelectChange = this.onSelectChange.bind(this);
     }
@@ -35,13 +35,13 @@ export default class MarketBrand extends Component {
                 'label': d.topic,
                 'options': _.map(d.subRoot, (sub, subKey) => {
                     return {
-                        'label': subKey,
+                        'label': subKey + "," + sub,
                         'value': subKey
                     };
                 })
             }));
 
-        let subFilteredRecords = _.filter(filteredRecords, (d) => d.epa == selectedEPA.label);
+        let subFilteredRecords = _.filter(filteredRecords, (d) => d.epa == selectedEPA.value);
 
         // group all the records by their rotation tag
         let groupedRecords = _.groupBy(subFilteredRecords, (d) => d.rotationTag);
@@ -78,7 +78,16 @@ export default class MarketBrand extends Component {
                             <ReactSelect
                                 value={selectedEPA}
                                 options={groupedEPAList}
-                                styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
+                                styles={{
+                                    option: (styles) => ({
+                                        ...styles,
+                                        color: 'black',
+                                        textAlign: 'left',
+                                        overflow: 'hidden',
+                                        whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis'
+                                    })
+                                }}
                                 onChange={this.onSelectChange} />
                         </div>
                     </div>
