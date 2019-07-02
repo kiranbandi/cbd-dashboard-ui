@@ -77,7 +77,8 @@ export default class MarketBrand extends Component {
         }
 
         let lineOptions = {
-            scaleBeginAtZero: true
+            scaleBeginAtZero: true,
+            customTooltips: (tooltip) => { customToolTip(tooltip, 'chartjs-tooltip-rotation-specific') }
         };
 
         return (
@@ -103,12 +104,52 @@ export default class MarketBrand extends Component {
                             redraw={true} /> :
                             <h3 className='error-code text-left m-b'>No Records</h3>
                         }
-
+                        <div className='chart-tooltip' id="chartjs-tooltip-rotation-specific"></div>
                     </div>
                 </div>
             </div>)
 
 
     }
+}
+
+// This is a custom tool that uses bootstrap and works in hand with ChartJS standards
+// could be replace in future with custom tooltip
+function customToolTip(tooltip, elementId) {
+
+    // Tooltip Element
+    let tooltipEl = $('#' + elementId);
+    // Hide if no tooltip
+    if (!tooltip) {
+        tooltipEl.css({
+            opacity: 0
+        });
+        return;
+    }
+
+    let epaId = tooltip.text.split(":")[0],
+        epaRootId = epaId.split(".")[0];
+
+    // Set caret Position
+    tooltipEl.removeClass('above below');
+    tooltipEl.addClass(tooltip.yAlign);
+    // Set Text
+    tooltipEl.html(tooltip.text + ", " + templateEpaSourceMap[epaRootId].subRoot[epaId]);
+    // Find Y Location on page
+    var top;
+    if (tooltip.yAlign == 'above') {
+        top = tooltip.y - tooltip.caretHeight - tooltip.caretPadding;
+    } else {
+        top = tooltip.y + tooltip.caretHeight + tooltip.caretPadding;
+    }
+    // Display, position, and set styles for font
+    tooltipEl.css({
+        opacity: 1,
+        left: tooltip.chart.canvas.offsetLeft + tooltip.x + 'px',
+        top: tooltip.chart.canvas.offsetTop + top + 'px',
+        fontFamily: tooltip.fontFamily,
+        fontSize: tooltip.fontSize,
+        fontStyle: tooltip.fontStyle,
+    });
 
 }

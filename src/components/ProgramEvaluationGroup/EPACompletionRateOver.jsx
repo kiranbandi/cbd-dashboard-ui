@@ -26,7 +26,8 @@ export default class EPACompletionRate extends Component {
 
     render() {
 
-        const { allRecords, width, selected } = this.props;
+        const { allRecords, width } = this.props;
+
         // filter and remove non SA epas
         let subFilteredRecords = _.filter(allRecords, (d) => (EPAList.indexOf(d.epa) > -1));
         // group all the records by their rotation tag
@@ -34,6 +35,7 @@ export default class EPACompletionRate extends Component {
         //  group by EPA PHASE
         let phaseGroupedRecords = _.groupBy(subFilteredRecords, (d) => d.epa.split(".")[0]);
         // Count records for each group and normalize by epa MAX observation count for that group
+
         let dataList = _.map(groupedRecords, (group, groupKey) => {
 
             let epaMajorKey = groupKey.split(".")[0];
@@ -91,11 +93,12 @@ export default class EPACompletionRate extends Component {
             scaleBeginAtZero: true,
             scaleSteps: 21,
             scaleStepWidth: 10,
-            scaleStartValue: 0
-        };
+            scaleStartValue: 0,
+            customTooltips: (tooltip) => { customToolTip(tooltip, 'chartjs-tooltip-rate-over') }
+        }
 
         return (
-            <div className='col-sm-6 col-xs-12  epa-specific'>
+            <div className='col-sm-6 col-xs-12  epa-specific' >
                 <div className='m-a program-vis-box row'>
                     <h3 className='text-left m-b'>EPA Completion Distribution to Identify Over Performing EPAs</h3>
                     <p className='text-left text-warn' style={{ color: 'rgba(151,187,205)' }}>* under performing EPAs are set at 100 and this chart is phase independent</p>
@@ -108,8 +111,51 @@ export default class EPACompletionRate extends Component {
                                 redraw={true} /> :
                             <h3 className='error-code text-left m-b'>No Records</h3>
                         }
+                        <div className='chart-tooltip' id="chartjs-tooltip-rate-over"></div>
                     </div>
                 </div>
-            </div>)
+            </div >)
     }
+}
+
+
+// This is a custom tool that uses bootstrap and works in hand with ChartJS standards
+// could be replace in future with custom tooltip
+function customToolTip(tooltip, elementId) {
+
+    // Tooltip Element
+    let tooltipEl = $('#' + elementId);
+    // Hide if no tooltip
+    if (!tooltip) {
+        tooltipEl.css({
+            opacity: 0
+        });
+        return;
+    }
+
+    let epaId = tooltip.text.split(":")[0],
+        epaRootId = epaId.split(".")[0];
+
+    // Set caret Position
+    tooltipEl.removeClass('above below');
+    tooltipEl.addClass(tooltip.yAlign);
+    // Set Text
+    tooltipEl.html(tooltip.text + ", " + templateEpaSourceMap[epaRootId].subRoot[epaId]);
+    // Find Y Location on page
+    var top;
+    if (tooltip.yAlign == 'above') {
+        top = tooltip.y - tooltip.caretHeight - tooltip.caretPadding;
+    } else {
+        top = tooltip.y + tooltip.caretHeight + tooltip.caretPadding;
+    }
+    // Display, position, and set styles for font
+    tooltipEl.css({
+        opacity: 1,
+        left: tooltip.chart.canvas.offsetLeft + tooltip.x + 'px',
+        top: tooltip.chart.canvas.offsetTop + top + 'px',
+        fontFamily: tooltip.fontFamily,
+        fontSize: tooltip.fontSize,
+        fontStyle: tooltip.fontStyle,
+    });
+
 }
