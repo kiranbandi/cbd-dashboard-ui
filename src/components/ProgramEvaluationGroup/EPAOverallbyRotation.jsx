@@ -34,11 +34,13 @@ export default (props) => {
         <div className='col-sm-6 col-xs-12'>
             <div className='m-a program-vis-box row'>
                 <h3 className='text-left m-b'>EPA Count per Rotation</h3>
+                <p className='text-left text-warn' style={{ color: '#43b98e' }} >This chart is independent of resident phase</p>
                 <div className='col-xs-12'>
                     <Bar
                         options={lineOptions}
                         data={lineData}
-                        width={width} height={400}
+                        // 31.5 is the height plus margin of warning text
+                        width={width} height={400 - 31.5}
                         redraw={true} />
                 </div>
             </div>

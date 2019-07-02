@@ -43,6 +43,7 @@ export default class ProgramDashboard extends Component {
             .then((residentList) => {
                 // temporary stopgap solution 
                 var currentResidentList = _.filter(residentList, (d) => (moment(d.programStartDate).isBefore(moment('07/01/2019', 'MM/DD/YYYY'))))
+
                 // count each rotation
                 _.map(currentResidentList, (resident) => {
                     _.map(resident.rotationSchedule['2018'], (rotation) => {
@@ -93,7 +94,6 @@ export default class ProgramDashboard extends Component {
             filteredRecords = _.clone(phaseGroupedRecords[selected]);
         }
 
-
         return (
             <div className='m-a dashboard-root-program' >
                 {this.state.isLoaderVisible ?
@@ -119,30 +119,26 @@ export default class ProgramDashboard extends Component {
                                     })}
                                 </div>
                                 {/* List all vis boxes */}
-                                <EPAOverallbyRotation
-                                    width={width}
-                                    rotationCount={rotationCount}
-                                    filteredRecords={filteredRecords} />
-                                <EPAMonthlyRotation
-                                    width={width}
-                                    filteredRecords={filteredRecords} />
                                 <EPAspecificRotation
                                     width={width}
-                                    rotationCount={rotationCount}
                                     filteredRecords={filteredRecords} />
                                 <RotationSpecificEPA
                                     width={width}
+                                    filteredRecords={filteredRecords} />
+                                <EPAOverallbyRotation
+                                    width={width}
                                     rotationCount={rotationCount}
+                                    filteredRecords={allRecords} />
+                                <EPAMonthlyRotation
+                                    width={width}
                                     filteredRecords={filteredRecords} />
                                 <EPACompletionRateUnder
                                     width={width}
                                     selected={selected}
-                                    rotationCount={rotationCount}
                                     allRecords={allRecords} />
                                 <EPACompletionRateOver
                                     width={width}
                                     selected={selected}
-                                    rotationCount={rotationCount}
                                     allRecords={allRecords} />
                             </div> :
                             <h2 className='text-center text-danger'>No program information is available currently</h2>}
