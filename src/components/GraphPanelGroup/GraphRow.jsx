@@ -24,7 +24,7 @@ export default class GraphRow extends Component {
 
         let { epaSource, isTableVisible, innerKey,
             widthPartition, smallScreen, epaSourceMap,
-            residentData, onMouseOut, onMouseOver,
+            residentEPAData, expiredResidentEPAData, onMouseOut, onMouseOver,
             onTableExpandClick, onFilterExpandClick,
             isEMDepartment, isFilterVisible } = this.props;
 
@@ -43,21 +43,21 @@ export default class GraphRow extends Component {
         const maxObservation = +epaSourceMap[epaSource.split(".")[0]].maxObservation[epaSource];
 
         // Get recorded observation count
-        const recordedCount = residentData[epaSource].length;
+        const recordedCount = residentEPAData.length;
+        //  Get expired record count 
+        const expiredCount = expiredResidentEPAData.length;
         // Get high performance observations count, 4 or 5 
-        const achievedCount = residentData[epaSource].filter((record) => +record.Rating >= 4).length;
+        const achievedCount = residentEPAData.filter((record) => +record.Rating >= 4).length;
         // Get remaining count 
         const remainingCount = Math.max((maxObservation - recordedCount), 0)
 
         const firstMeasure = Math.min((recordedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
-        const secondMeasure = Math.min((achievedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
 
-        const xScale = scaleLinear().domain([0, residentData[epaSource].length - 1]).range([marginHorizontal, width - marginHorizontal])
+        const xScale = scaleLinear().domain([0, residentEPAData.length - 1]).range([marginHorizontal, width - marginHorizontal])
         const yScale = scaleLinear().domain([5, 1]).range([marginVertical, innerHeight - marginVertical])
 
-        const scoreData = residentData[epaSource].map((d, i) => {
+        const scoreData = residentEPAData.map((d, i) => {
 
-            let color = '#252830';
             let highlight = false;
 
             if (isFilterVisible) {
@@ -92,8 +92,6 @@ export default class GraphRow extends Component {
             }
         })
 
-        const overShotLineX = recordedCount > maxObservation ? xScale(maxObservation - 0.5) : 0;
-
         return (
             <div className='text-xs-center'>
                 {/* widthly reduced slightly by 10px to facilitate extra gap at the last */}
@@ -106,8 +104,7 @@ export default class GraphRow extends Component {
                     <BulletChart
                         widthPartition={widthPartition}
                         bulletInnerWidth={bulletInnerWidth}
-                        firstMeasure={firstMeasure}
-                        secondMeasure={secondMeasure} />
+                        firstMeasure={firstMeasure} />
 
                     <div className='card-container'>
                         <div className='graph-card first-card'>
@@ -118,13 +115,13 @@ export default class GraphRow extends Component {
                             <span className='card-text'>{recordedCount}</span>
                             <span className='card-title recorded-title'>OBSERVED</span>
                         </div>
-                        <div className='graph-card achieved-title'>
+                        <div className='graph-card'>
                             <span className='card-text'>{maxObservation}</span>
                             <span className='card-title required-title'>REQUIRED</span>
                         </div>
                         <div className='graph-card '>
-                            <span className='card-text'>{achievedCount}</span>
-                            <span className='card-title achieved-title'>ACHIEVED</span>
+                            <span className='card-text'>{expiredCount}</span>
+                            <span className='card-title expired-title'>EXPIRED</span>
                         </div>
                     </div>
 
@@ -132,7 +129,6 @@ export default class GraphRow extends Component {
                 <div style={{ width: smallScreen ? widthPartition : widthPartition * 2 }} className='inner-cell score-cell'>
                     <LineChart
                         trackTrailPositions={trackTrailPositions}
-                        overShotLineX={overShotLineX}
                         width={width}
                         data={scoreData}
                         epaSource={epaSource}
@@ -146,7 +142,7 @@ export default class GraphRow extends Component {
                 </div>
                 {!smallScreen && isTableVisible && isEMDepartment &&
                     <SlideInTable
-                        data={residentData[epaSource]}
+                        data={residentEPAData}
                         width={widthPartition} />}
                 {!smallScreen && isFilterVisible && isEMDepartment &&
                     <SlideInFilter
