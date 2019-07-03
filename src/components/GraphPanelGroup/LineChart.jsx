@@ -40,16 +40,6 @@ export default (props) => {
         <svg height={props.innerHeight} width={props.width} className='score-svg' >
             <path className='score-spark-line' d={d3Line(props.data)}></path>
             <TrackTrails trackTrailPositions={props.trackTrailPositions} />
-            <g>
-                {elementList}
-                {(props.overShotLineX != 0) &&
-                    <line className='over-shot-line'
-                        x1={props.overShotLineX} y1="0"
-                        x2={props.overShotLineX} y2="180"
-                        strokeWidth='3'
-                        strokeLinecap='round'
-                        stroke="#b44646"
-                        strokeDasharray="8" />}
-            </g>
+            <g>{elementList}</g>
         </svg>)
 }
