@@ -77,6 +77,7 @@ class GraphPanel extends Component {
     render() {
 
         let { residentData,
+            expiredResidentData,
             isTooltipVisible,
             isEMDepartment = false,
             tooltipData,
@@ -97,6 +98,8 @@ class GraphPanel extends Component {
                 epaSource.sort((a, b) => Number(a.split(".")[1]) - Number(b.split(".")[1]));
             });
         }
+
+        let expiredResidentDataGrouped = _.groupBy(expiredResidentData, (d) => d.EPA);
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let widthOfRootGraphPanel = document.body.getBoundingClientRect().width - 125;
@@ -156,7 +159,8 @@ class GraphPanel extends Component {
                                                     widthPartition={widthPartition}
                                                     epaSourceMap={epaSourceMap}
                                                     smallScreen={smallScreen}
-                                                    residentData={residentData}
+                                                    residentEPAData={residentData[epaSource] || []}
+                                                    expiredResidentEPAData={expiredResidentDataGrouped[epaSource] || []}
                                                     onMouseOver={this.onMouseOver}
                                                     onMouseOut={this.onMouseOut}
                                                     isEMDepartment={isEMDepartment}
@@ -178,6 +182,7 @@ class GraphPanel extends Component {
 function mapStateToProps(state) {
     return {
         residentData: state.oracle.residentData,
+        expiredResidentData: state.oracle.expiredResidentData,
         isTooltipVisible: state.oracle.isTooltipVisible,
         tooltipData: state.oracle.tooltipData,
         levelVisibilityOpenStatus: state.oracle.visibilityOpenStatus
