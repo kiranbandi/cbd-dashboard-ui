@@ -210,7 +210,7 @@ export default class CreateUser extends Component {
                             <div className="input-group m-a">
                                 <span className='inner-span text-info'>ACADEMIC YEAR</span>
                                 <select id='select-academic-year' name="academicYear" className='custom-select' value={academicYear} onChange={this.onChange}>
-                                    {_.map(possibleAcademicYears, (year => { return <option key={'year-' + year} value={year}>{year}</option> }))}
+                                    {_.map(possibleAcademicYears, (year => { return <option key={'year-' + year} value={year}>{year}-{+year + 1}</option> }))}
                                 </select>
                             </div>
                             <div className='academic-inner'>
