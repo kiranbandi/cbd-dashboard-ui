@@ -18,13 +18,13 @@ class InfoPanel extends Component {
 
         let { residentData, residentFilter, residentList } = this.props,
             residentInfo = false, scheduleMap = false,
-            longitudinalScheduleMap = false, citeExamScoreList = [];
+            longitudinalScheduleMap = false, citeScoreData = {};
 
         if (residentFilter && residentFilter.username) {
             residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
             scheduleMap = residentInfo && residentInfo.rotationSchedule && residentInfo.rotationSchedule['2018'];
             longitudinalScheduleMap = residentInfo && residentInfo.longitudinalSchedule && residentInfo.longitudinalSchedule['2018'] && residentInfo.longitudinalSchedule['2018'].split(",");
-            citeExamScoreList = residentInfo && residentInfo.citeExamScore && residentInfo.citeExamScore['2018'] && residentInfo.citeExamScore['2018'].split(",") || [];
+            citeScoreData = residentInfo && residentInfo.citeExamScore;
         }
 
         return (
@@ -38,7 +38,7 @@ class InfoPanel extends Component {
                         </div>
                         {!!scheduleMap && <RotationSchedule scheduleMap={scheduleMap} longitudinalScheduleMap={longitudinalScheduleMap} />}
                         {!!residentData && <EPASpeedInfo residentData={residentData} residentInfo={residentInfo} residentFilter={residentFilter} />}
-                        <CiteScoreGraph citeExamScoreList={citeExamScoreList} />
+                        <CiteScoreGraph citeScoreData={citeScoreData} />
                         <RecentEPATrend residentData={residentData} />
                     </div>
                 }
