@@ -16,7 +16,7 @@ class InfoPanel extends Component {
 
     render() {
 
-        let { residentData, residentFilter, residentList } = this.props,
+        let { residentData, residentFilter, residentList, expiredResidentData } = this.props,
             residentInfo = false, scheduleMap = false,
             longitudinalScheduleMap = false, citeScoreData = {};
 
@@ -36,8 +36,15 @@ class InfoPanel extends Component {
                             <span><b>PROGRAM START DATE -</b> {(new Date(residentInfo.programStartDate)).toDateString()}</span>
                             <span><b>LAST UPDATED ON -</b> {(new Date(residentInfo.uploadedData)).toDateString()}</span>
                         </div>
-                        {!!scheduleMap && <RotationSchedule scheduleMap={scheduleMap} longitudinalScheduleMap={longitudinalScheduleMap} />}
-                        {!!residentData && <EPASpeedInfo residentData={residentData} residentInfo={residentInfo} residentFilter={residentFilter} />}
+                        {!!scheduleMap &&
+                            <RotationSchedule
+                                scheduleMap={scheduleMap}
+                                longitudinalScheduleMap={longitudinalScheduleMap} />}
+                        {!!residentData &&
+                            <EPASpeedInfo
+                                residentData={residentData}
+                                expiredResidentData={expiredResidentData}
+                                residentFilter={residentFilter} />}
                         <CiteScoreGraph citeScoreData={citeScoreData} />
                         <RecentEPATrend residentData={residentData} />
                     </div>
@@ -50,6 +57,7 @@ class InfoPanel extends Component {
 function mapStateToProps(state) {
     return {
         residentData: state.oracle.residentData,
+        expiredResidentData: state.oracle.expiredResidentData,
         residentFilter: state.oracle.residentFilter,
         residentList: state.oracle.residentList
     };
