@@ -4,7 +4,7 @@ export default (props) => {
 
     const { title = '', type = 'primary', metric = '', delta = '', dual = false, secondMetric = '' } = props;
 
-    return <div className="col-sm-6 col-lg-3 m-b text-xs-center">
+    return <div className="statcard-root col-sm-6 col-lg-3 m-b text-xs-center">
         <div className={"statcard statcard-" + type}>
             <div className="p-a">
                 <span className="statcard-desc">{title}</span>
