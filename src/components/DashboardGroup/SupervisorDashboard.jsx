@@ -103,7 +103,7 @@ export default class SupervisorDashboard extends Component {
 
         const { isLoaderVisible, observerList, isfilterLoaderLoaderVisible, observerDataList = [] } = this.state;
 
-        let doveScale = 0, expiredRecords = 0, averageEPAScore = 0, properObserverDataList = [];
+        let wordsPerComment = 0, expiredRecords = 0, averageEPAScore = 0, properObserverDataList = [];
 
 
         if (observerDataList.length > 0) {
@@ -111,7 +111,7 @@ export default class SupervisorDashboard extends Component {
             properObserverDataList = observerDataList.filter((d) => !d.isExpired);
             expiredRecords = observerDataList.length - properObserverDataList.length;
             averageEPAScore = Math.round((_.meanBy(properObserverDataList, (d) => (+d.Rating || 0)) || 0) * 100) / 100;
-            doveScale = (Math.round(properObserverDataList.filter((d) => (+d.Rating) >= 4).length * 100 / properObserverDataList.length)) || 0;
+            wordsPerComment = Math.round((_.meanBy(properObserverDataList, (d) => (d.Feedback.split(" ").length)) || 0));
         }
 
         return (
@@ -142,7 +142,7 @@ export default class SupervisorDashboard extends Component {
                                         <StatCard title='EPAs observed' type='info' metric={properObserverDataList.length} />
                                         <StatCard title='EPAs Expired' type='success' metric={expiredRecords} />
                                         <StatCard title='Average EPA Score' type='primary' metric={averageEPAScore} />
-                                        <StatCard title='DOVE Factor' type='danger' metric={doveScale + "%"} />
+                                        <StatCard title='Average words per comment' type='danger' metric={wordsPerComment} />
 
                                         <div className='table-box'>
                                             <ReactTable

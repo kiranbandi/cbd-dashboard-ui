@@ -23,7 +23,7 @@ export default (props) => {
     // if there is a date range
     if (!residentFilter.isAllData) {
         recordsInPeriod = _.filter(residentDataList, (d) => d.mark);
-        recordsExpiredInPeriod = _.filter(recordsInPeriod, (d) => {
+        recordsExpiredInPeriod = _.filter(expiredResidentData, (d) => {
             return moment(d.Date, 'YYYY-MM-DD').isAfter(moment(residentFilter.startDate, 'MM/DD/YYYY')) && moment(d.Date, 'YYYY-MM-DD').isBefore(moment(residentFilter.endDate, 'MM/DD/YYYY'));
         }).length;
 
