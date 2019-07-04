@@ -23,8 +23,12 @@
             }
         }
         .epaSpeedBox {
-            .statcard {
-                min-height: 132px;
+            .statcard-root {
+                float: none;
+                display: inline-block;
+                .statcard {
+                    min-height: 132px;
+                }
             }
         }
         .hr-divider {
@@ -95,7 +99,8 @@
                 .cite-score-point {
                     fill: #1ca8dd;
                 }
-                .cite-score-text,.cite-year-label {
+                .cite-score-text,
+                .cite-year-label {
                     font-weight: bold;
                     font-family: sans-serif;
                 }

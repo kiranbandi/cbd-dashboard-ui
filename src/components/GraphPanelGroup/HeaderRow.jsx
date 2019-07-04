@@ -50,8 +50,11 @@ class HeaderRow extends Component {
             percentageComplete += '%';
         }
 
+        //  last minute addition - if a resident is through a phase then 
+        // make the badge look completed
         if (+innerKey < currentPhase) {
             statusLabel = 'Promoted';
+            iconLabel = 'icon-shield';
         }
 
         return (
