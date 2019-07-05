@@ -17,7 +17,7 @@ export default class MarketBrand extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedEPA: { 'label': '1.1,Recognizing the unstable/critically ill patien…and supervisor, and initiating basic life support', 'value': '1.1' }
+            selectedEPA: { 'label': '1.1 - Recognizing the unstable/critically ill patien…and supervisor, and initiating basic life support', 'value': '1.1' }
         };
         this.onSelectChange = this.onSelectChange.bind(this);
     }
@@ -34,7 +34,7 @@ export default class MarketBrand extends Component {
                 'label': d.topic,
                 'options': _.map(d.subRoot, (sub, subKey) => {
                     return {
-                        'label': subKey + "," + sub,
+                        'label': subKey + " - " + sub,
                         'value': subKey
                     };
                 })
@@ -68,7 +68,7 @@ export default class MarketBrand extends Component {
         };
 
         return (
-            <div className='col-sm-6 col-xs-12  epa-specific'>
+            <div className='col-sm-6 col-xs-12 epa-specific'>
                 <div className='m-a program-vis-box row'>
                     <h3 className='text-left m-b'>EPA Specific Rotation Distribution</h3>
                     <div className="epa-select m-a text-left">
@@ -81,10 +81,7 @@ export default class MarketBrand extends Component {
                                     option: (styles) => ({
                                         ...styles,
                                         color: 'black',
-                                        textAlign: 'left',
-                                        overflow: 'hidden',
-                                        whiteSpace: 'nowrap',
-                                        textOverflow: 'ellipsis'
+                                        textAlign: 'left'
                                     })
                                 }}
                                 onChange={this.onSelectChange} />
