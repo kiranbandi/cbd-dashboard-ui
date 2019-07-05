@@ -40,7 +40,7 @@ class HeaderRow extends Component {
             percentageComplete = '';
         }
         else if (completedEPACount == requiredEPACount) {
-            iconLabel = 'icon-shield';
+            iconLabel = 'icon-check';
             statusLabel = 'COMPLETE ';
             percentageComplete = '';
         }
@@ -54,7 +54,7 @@ class HeaderRow extends Component {
         // make the badge look completed
         if (+innerKey < currentPhase) {
             statusLabel = 'Promoted';
-            iconLabel = 'icon-shield';
+            iconLabel = 'icon-check';
         }
 
         return (
