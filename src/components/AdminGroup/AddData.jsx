@@ -227,10 +227,3 @@ export default class AddData extends Component {
     }
 }
 
-
-
-function getAcademicYear(timestamp) {
-
-
-
-}
