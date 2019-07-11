@@ -50,16 +50,14 @@
                 border-color: #1a1c22;
                 background: #2f323a;
             }
-            .custom-gannt-style-chart {
-                margin: 5px auto;
+            .schedule-box-rotation {
                 position: relative;
-                height: 75px;
+                height: 35px;
                 .chart-line {
                     background: #283a5d;
                     border-radius: 30px;
                     display: block;
                     position: absolute;
-                    top: 35px;
                     height: 28px;
                     margin: 10px 0px;
                     color: white;
@@ -81,6 +79,11 @@
                 color: white;
                 padding-top: 3px;
                 font-weight: 500;
+            }
+            .custom-gannt-style-chart {
+                margin: 5px auto;
+                position: relative;
+                height: 30px;
             }
         }
         .cite-exam-score-container {
