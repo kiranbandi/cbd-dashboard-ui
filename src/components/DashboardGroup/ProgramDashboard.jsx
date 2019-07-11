@@ -98,7 +98,7 @@ export default class ProgramDashboard extends Component {
             filteredRecords = _.clone(recordsInAcademicYear);
         }
         else {
-            filteredRecords = _.clone(phaseGroupedRecords[selected]);
+            filteredRecords = _.clone(phaseGroupedRecords[selected] || []);
         }
 
         return (
@@ -106,35 +106,37 @@ export default class ProgramDashboard extends Component {
                 {this.state.isLoaderVisible ?
                     <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
                     <div className='m-t text-center'>
+                        <div className='row'>
+                            <div className='year-selection-box'>
+                                <h2 className='header'>Academic Year: </h2>
+                                <div className='react-select-root'>
+                                    <ReactSelect
+                                        value={academicYear}
+                                        options={possibleAcademicYears}
+                                        styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
+                                        onChange={this.onSelectAcademicYear} />
+                                </div>
+                            </div>
+                            <div className='selection-box-container'>
+                                <h2 className='header'>Resident Phase : </h2>
+                                <div
+                                    className={'selection-box box-id-all' + " " + (selected == 'all' ? 'selected-button' : '')}
+                                    key={'select-all'}
+                                    onClick={this.selectionChange}>
+                                    All Phases
+                                    </div>
+                                {_.map(templateEpaSourceMap, (inner, i) => {
+                                    return <div
+                                        className={'selection-box box-id-' + (inner.ID) + " " + (selected == (inner.ID) ? 'selected-button' : '')}
+                                        key={'select-' + inner.ID}
+                                        onClick={this.selectionChange}>
+                                        {inner.topic}
+                                    </div>
+                                })}
+                            </div>
+                        </div>
                         {filteredRecords.length > 0 ?
                             <div className='row'>
-                                <div className='year-selection-box'>
-                                    <h2 className='header'>Academic Year: </h2>
-                                    <div className='react-select-root'>
-                                        <ReactSelect
-                                            value={academicYear}
-                                            options={possibleAcademicYears}
-                                            styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
-                                            onChange={this.onSelectAcademicYear} />
-                                    </div>
-                                </div>
-                                <div className='selection-box-container'>
-                                    <h2 className='header'>Resident Phase : </h2>
-                                    <div
-                                        className={'selection-box box-id-all' + " " + (selected == 'all' ? 'selected-button' : '')}
-                                        key={'select-all'}
-                                        onClick={this.selectionChange}>
-                                        All Phases
-                                    </div>
-                                    {_.map(templateEpaSourceMap, (inner, i) => {
-                                        return <div
-                                            className={'selection-box box-id-' + (inner.ID) + " " + (selected == (inner.ID) ? 'selected-button' : '')}
-                                            key={'select-' + inner.ID}
-                                            onClick={this.selectionChange}>
-                                            {inner.topic}
-                                        </div>
-                                    })}
-                                </div>
                                 {/* List all vis boxes */}
                                 <EPAspecificRotation
                                     width={width}
@@ -156,7 +158,7 @@ export default class ProgramDashboard extends Component {
                                     width={width}
                                     allRecords={recordsInAcademicYear} />
                             </div> :
-                            <h2 className='text-center text-danger'>No program information is available currently</h2>}
+                            <h2 className='text-center text-danger m-t-lg'>No program information is available currently</h2>}
                     </div>}
             </div >
         );

@@ -27,7 +27,7 @@ export default class EPACompletionRate extends Component {
     render() {
 
         const { allRecords, width } = this.props;
-        
+
         // filter and remove non SA epas
         let subFilteredRecords = _.filter(allRecords, (d) => (EPAList.indexOf(d.epa) > -1));
         // group all the records by their rotation tag
@@ -86,12 +86,16 @@ export default class EPACompletionRate extends Component {
             }]
         };
 
+        // Find the max of the dataset to set the scale of the chart
+        const maxValue = Math.ceil(_.maxBy(dataList, (d) => d.value).value / 10) * 10,
+            scaleSteps = maxValue / 10;
+
         let radarOptions = {
             angleLineWidth: 0.5,
             pointLabelFontSize: 15,
             scaleOverride: true,
             scaleBeginAtZero: true,
-            scaleSteps: 21,
+            scaleSteps,
             scaleStepWidth: 10,
             scaleStartValue: 0,
             customTooltips: (tooltip) => { customToolTip(tooltip, 'chartjs-tooltip-rate-over') }
