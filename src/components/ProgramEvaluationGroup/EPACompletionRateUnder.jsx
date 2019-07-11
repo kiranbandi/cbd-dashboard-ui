@@ -28,7 +28,7 @@ export default class EPACompletionRate extends Component {
 
     render() {
 
-        const { allRecords, width, selected } = this.props;
+        const { allRecords, width } = this.props;
 
         // filter and remove non SA epas
         let subFilteredRecords = _.filter(allRecords, (d) => (EPAList.indexOf(d.epa) > -1));
