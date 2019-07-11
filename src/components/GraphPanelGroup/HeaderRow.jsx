@@ -55,6 +55,7 @@ class HeaderRow extends Component {
         if (+innerKey < currentPhase) {
             statusLabel = 'Promoted';
             iconLabel = 'icon-check';
+            percentageComplete = '';
         }
 
         return (
