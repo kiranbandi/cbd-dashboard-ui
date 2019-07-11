@@ -27,7 +27,7 @@ export default class EPACompletionRate extends Component {
     render() {
 
         const { allRecords, width } = this.props;
-
+        
         // filter and remove non SA epas
         let subFilteredRecords = _.filter(allRecords, (d) => (EPAList.indexOf(d.epa) > -1));
         // group all the records by their rotation tag
