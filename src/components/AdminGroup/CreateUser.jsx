@@ -1,14 +1,13 @@
 /*global $*/
 import React, { Component } from 'react';
 import { registerUser } from '../../utils/requestServer';
+import { rotationList, phasesList } from '../../utils/programInfo';
 import Loading from 'react-loading';
 import moment from 'moment';
 import rotationScheduleMap from '../../utils/rotationScheduleMap';
 
 const possibleAcademicYears = _.keys(rotationScheduleMap);
 
-const possibleRotations = ["EM", "EM(REGINA)", "EM(PED)", "EM(RGNL)", "ANESTHESIA", "CARDIO", "ICU", "GIM", "GEN SURG", "NEURO", "OPTHO", "ORTHO", "PLASTICS", "SELECTIVE", "TOXICOLOGY", "TRAUMA", "OBS/GYN", "OTHER"];
-const possiblePhases = ['transition-to-discipline', 'foundations-of-discipline', 'core-of-discipline', 'transition-to-practice'];
 
 export default class CreateUser extends Component {
 
@@ -51,7 +50,7 @@ export default class CreateUser extends Component {
             rotationValue = event.target.value;
         // if there is no array then create an empty array and set all the values to the first possible rotation
         if (!rotationSchedule.hasOwnProperty(academicYear)) {
-            rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length - 1, () => possibleRotations[0]);
+            rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length - 1, () => rotationList[0]);
         }
         rotationSchedule[academicYear][rotationID] = rotationValue;
         this.setState({ rotationSchedule });
@@ -72,8 +71,8 @@ export default class CreateUser extends Component {
         // if he is in a phase > 1 then we need promoted dates for all previous phases
         let currentPhase = event.target.value, earlierPhaseCount = 0;
 
-        if (possiblePhases.indexOf(currentPhase) > 0) {
-            earlierPhaseCount = possiblePhases.indexOf(currentPhase);
+        if (phasesList.indexOf(currentPhase) > 0) {
+            earlierPhaseCount = phasesList.indexOf(currentPhase);
         }
         this.setState({ currentPhase, earlierPhaseCount });
     }
@@ -130,7 +129,7 @@ export default class CreateUser extends Component {
 
         // if there is no array then create an empty array and set all the values to the first possible rotation
         if (!rotationSchedule.hasOwnProperty(academicYear)) {
-            rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length - 1, () => possibleRotations[0]);
+            rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length - 1, () => rotationList[0]);
         }
 
 
@@ -193,7 +192,7 @@ export default class CreateUser extends Component {
                         <div className='promoted-container'>
                             {_.map(Array(earlierPhaseCount), (d, index) => {
                                 return <div className="input-group m-a" key={'date-promoted-' + index}>
-                                    <span className='inner-span'>PROMOTED DATE FROM {possiblePhases[index].split("-").join(" ")}</span>
+                                    <span className='inner-span'>PROMOTED DATE FROM {phasesList[index].split("-").join(" ")}</span>
                                     <div className="input-group">
                                         <span className="input-group-addon">
                                             <span className="icon icon-calendar"></span>
@@ -225,7 +224,7 @@ export default class CreateUser extends Component {
                                                     id={'rotation' + "-" + slotID}
                                                     name="rotationSelect" className='custom-select rotation-select'
                                                     value={rotationSchedule[academicYear][slotID]} onChange={this.onRotationalScheduleChange}>
-                                                    {_.map(possibleRotations, (rotation, rId) => { return <option key={'rot-' + rId} value={rotation}>{rotation}</option> })}
+                                                    {_.map(rotationList, (rotation, rId) => { return <option key={'rot-' + rId} value={rotation}>{rotation}</option> })}
                                                 </select>
                                             </span>
                                         })}
