@@ -25,7 +25,7 @@ class DashboardRoot extends Component {
 
     render() {
 
-        const { userType } = this.props,
+        const { userType, isModalOpen } = this.props,
             { activeBoard = 'resident' } = this.state,
             isAllowedMultiMode = (userType == 'admin' || userType == "director");
 
@@ -71,8 +71,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        userType: state.oracle.userDetails.accessType,
-
+        userType: state.oracle.userDetails.accessType
     };
 }
 

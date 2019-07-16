@@ -63,7 +63,7 @@ export default class ScheduleBlock extends Component {
                 // if we also need to show the corresponding count per block 
                 if (isEPAperBlockVisible) {
                     perBlockCountChart.push(<span
-                        className={'chart-count'}
+                        className={'chart-count '}
                         key={"count-" + index}
                         style={{ left: widthFromleft, width: internalWidth }}>
                         {epaPerBlockList[index] || 'N/A'}
