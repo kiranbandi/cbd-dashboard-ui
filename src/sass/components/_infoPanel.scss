@@ -40,8 +40,12 @@
                 color: #cfd2da;
             }
         }
+        .all-historical-schedule {
+            margin-bottom: 15px;
+        }
         .schedule-box {
             margin-bottom: 20px;
+            position: relative;
             span.yearBox {
                 display: inline-block;
                 text-align: center;
@@ -50,9 +54,24 @@
                 border-color: #1a1c22;
                 background: #2f323a;
             }
+            .view-history-button {
+                position: absolute;
+                left: 30px;
+                top: 39px;
+                font-weight: bold;
+                padding: 5px;
+                .icon {
+                    padding-right: 5px;
+                }
+            }
             .schedule-box-rotation {
                 position: relative;
-                height: 35px;
+                &.historical {
+                    background: #23252b;
+                    border-radius: 5px;
+                    height: 47px;
+                }
+                height: 50px;
                 .chart-line {
                     background: #283a5d;
                     border-radius: 30px;
