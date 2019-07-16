@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Line } from 'react-chartjs';
+import { Bar } from 'react-chartjs';
 import ReactSelect from 'react-select';
 import templateEpaSourceMapOriginal from '../../utils/epaSourceMap';
 let templateEpaSourceMap = _.cloneDeep(templateEpaSourceMapOriginal);
@@ -89,7 +89,7 @@ export default class MarketBrand extends Component {
                     </div>
 
                     <div className='col-xs-12'>
-                        {lineData.labels.length > 0 ? <Line
+                        {lineData.labels.length > 0 ? <Bar
                             options={lineOptions}
                             data={lineData}
                             width={width} height={350}
