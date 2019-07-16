@@ -55,17 +55,20 @@ class RecentEPATrend extends Component {
     getDataList() {
 
         const { residentData = {} } = this.props, { filterRange } = this.state;
+
+        let filteredRecords = [];
+
         // when the records are loaded up we flatten them 
-        // then we sort them by data 
+        // then we sort them by date
         let temp = _.reverse(_.sortBy(_.flatMap(residentData), (d) => d.Date));
 
         if (filterRange.indexOf('month') > -1) {
             //  Get the records that fall in that X month period from now
-            return temp.filter((d) =>
-                moment(d.Date, 'YYYY-MM-DD')
-                    .isAfter(moment().subtract(+filterRange.split('-')[0], 'month')))
+            return _.reverse(temp.filter((d) => moment(d.Date, 'YYYY-MM-DD')
+                .isAfter(moment().subtract(+filterRange.split('-')[0], 'month'))));
         }
-        return temp.slice(0, +filterRange);
+        return _.reverse(temp.slice(0, +filterRange));
+        // the records are returned reversed so they are sorted from oldest to newest 
     }
 
 
@@ -100,7 +103,7 @@ class RecentEPATrend extends Component {
             };
         });
 
-        const elementList = _.map(_.reverse(pointList), (d, i) => {
+        const elementList = _.map(pointList, (d, i) => {
             return <circle
                 id={'recentPoint-' + i}
                 r={widthOfRoot < 800 ? 3 : 6}
