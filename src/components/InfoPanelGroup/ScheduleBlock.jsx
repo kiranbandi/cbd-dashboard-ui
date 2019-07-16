@@ -11,7 +11,7 @@ export default class ScheduleBlock extends Component {
     render() {
 
         const { scheduleDateList = [], scheduleRotationList = [],
-            LongSchedule, widthAvailable, yearId,
+            LongSchedule, widthAvailable,
             isHistorical = false, isEPAperBlockVisible = false, residentData, academicYear } = this.props;
 
         // create an empty count map
@@ -83,11 +83,8 @@ export default class ScheduleBlock extends Component {
         }
 
 
-
-
-
-        return (<div style={{ width: widthAvailable, margin: '5px auto' }} key={yearId}>
-
+        return (<div style={{ width: widthAvailable, margin: '5px auto' }} key={academicYear}>
+            <span className='yearname-label'>{academicYear}</span>
             <div className={'schedule-box-rotation ' + (isHistorical ? 'historical ' : '') + (isEPAperBlockVisible ? 'dual-block' : '')}  >
                 {perBlockCountChart}
                 {scheduleChart}
