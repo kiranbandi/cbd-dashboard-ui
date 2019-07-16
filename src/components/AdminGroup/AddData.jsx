@@ -144,7 +144,14 @@ export default class AddData extends Component {
                             return Promise.resolve(false);
                         }
                         else {
-                            return setRecords(data, username, yearTag);
+                            if (data.length > 0) {
+                                return setRecords(data, username, yearTag);
+                            }
+                            else {
+                                toastr["warning"]("There were no valid EPA records in the file you have uploaded so skipping upload", "No Records");
+                                return Promise.resolve(false);
+                            }
+
                         }
                     }
                 })
