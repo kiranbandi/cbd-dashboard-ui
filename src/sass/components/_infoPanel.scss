@@ -29,6 +29,9 @@
                 .statcard {
                     min-height: 132px;
                 }
+                @media (max-width: 480px) {
+                    display: block;
+                }
             }
         }
         .hr-divider {
@@ -71,7 +74,7 @@
                     border-radius: 5px;
                     height: 47px;
                 }
-                height: 50px;
+                height: 35px;
                 .chart-line {
                     background: #283a5d;
                     border-radius: 30px;
