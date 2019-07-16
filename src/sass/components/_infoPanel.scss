@@ -75,6 +75,13 @@
                     box-shadow: none;
                 }
             }
+            span.yearname-label {
+                display: block;
+                position: absolute;
+                transform: rotate(-90deg) translate(-12px, -30px);
+                font-weight: bold;
+                color: #434857;
+            }
             .schedule-box-rotation {
                 position: relative;
                 &.historical {
