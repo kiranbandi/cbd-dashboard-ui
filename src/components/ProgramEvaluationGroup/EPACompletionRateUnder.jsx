@@ -104,7 +104,7 @@ export default class EPACompletionRate extends Component {
             <div className='col-sm-6 col-xs-12  epa-specific'>
                 <div className='m-a program-vis-box row'>
                     <h3 className='text-left m-b'>EPA Completion Distribution to Identify Under Performing EPAs</h3>
-                    <p className='text-left text-warn'>* over performing EPAs are capped at 100 and this chart is phase independent</p>
+                    <p className='text-left text-warn'>* over performing EPAs are capped at 100 and this chart is independent of Resident Phase</p>
                     <div className='col-xs-12'>
                         {lineData.labels.length > 0 ?
                             <Radar
