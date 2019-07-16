@@ -57,7 +57,7 @@
                 border-color: #1a1c22;
                 background: #2f323a;
             }
-            .view-history-button {
+            .view-back-button {
                 position: absolute;
                 left: 30px;
                 top: 39px;
@@ -65,6 +65,14 @@
                 padding: 5px;
                 .icon {
                     padding-right: 5px;
+                }
+                &.per-block-button {
+                    left: 150px;
+                }
+                &.selected {
+                    color: #ffffff;
+                    background-color: #1997c6;
+                    box-shadow: none;
                 }
             }
             .schedule-box-rotation {
@@ -89,6 +97,28 @@
                     white-space: nowrap;
                     &.between-lot {
                         background: #bf6c07;
+                    }
+                }
+                .chart-count {
+                    background: #283a5d;
+                    border-radius: 30px;
+                    display: block;
+                    position: absolute;
+                    height: 28px;
+                    margin: 10px 0px;
+                    color: white;
+                    padding-top: 3px;
+                    font-weight: 500;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                &.dual-block {
+                    height: 70px;
+                    .chart-line {
+                        margin: 45px 0px;
+                    }
+                    &.historical {
+                        height: 85px;
                     }
                 }
             }

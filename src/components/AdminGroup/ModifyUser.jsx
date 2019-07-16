@@ -147,7 +147,7 @@ export default class ModifyUser extends Component {
             rotationValue = event.target.value;
         // if there is no array then create an empty array and set all the values to the first possible rotation
         if (!rotationSchedule.hasOwnProperty(academicYear)) {
-            rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length-1, () => possibleRotations[0]);
+            rotationSchedule[academicYear] = (rotationScheduleMap[academicYear].length-1, () => possibleRotations[0]);
         }
         rotationSchedule[academicYear][rotationID] = rotationValue;
         this.setState({ rotationSchedule });
