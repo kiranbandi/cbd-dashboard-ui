@@ -12,7 +12,7 @@ _.map(templateEpaSourceMap, (epaSource, key) => {
     })
 });
 
-export default class MarketBrand extends Component {
+export default class EPASpecRotation extends Component {
 
     constructor(props) {
         super(props);

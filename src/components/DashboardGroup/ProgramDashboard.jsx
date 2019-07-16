@@ -10,8 +10,6 @@ import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation
 import EPAMonthlyRotation from '../ProgramEvaluationGroup/EPAMonthlyRotation';
 import EPAspecificRotation from '../ProgramEvaluationGroup/EPAspecificRotation';
 import RotationSpecificEPA from '../ProgramEvaluationGroup/RotationSpecificEPA';
-import EPACompletionRateUnder from '../ProgramEvaluationGroup/EPACompletionRateUnder';
-import EPACompletionRateOver from '../ProgramEvaluationGroup/EPACompletionRateOver';
 
 const possibleAcademicYears = _.map(_.keys(rotationScheduleMap), (d) => (
     {
@@ -151,12 +149,6 @@ export default class ProgramDashboard extends Component {
                                 <EPAMonthlyRotation
                                     width={width}
                                     filteredRecords={filteredRecords} />
-                                <EPACompletionRateUnder
-                                    width={width}
-                                    allRecords={recordsInAcademicYear} />
-                                <EPACompletionRateOver
-                                    width={width}
-                                    allRecords={recordsInAcademicYear} />
                             </div> :
                             <h2 className='text-center text-danger m-t-lg'>No program information is available currently</h2>}
                     </div>}
