@@ -33,7 +33,9 @@ class InfoPanel extends Component {
                             <span><b>PROGRAM START DATE -</b> {(new Date(residentInfo.programStartDate)).toDateString()}</span>
                             <span><b>LAST UPDATED ON -</b> {(new Date(residentInfo.uploadedData)).toDateString()}</span>
                         </div>
-                        <RotationSchedule residentInfo={residentInfo} />
+                        {!!residentData &&
+                            <RotationSchedule residentData={residentData} residentInfo={residentInfo} />
+                        }
                         {!!residentData &&
                             <EPASpeedInfo
                                 residentData={residentData}
