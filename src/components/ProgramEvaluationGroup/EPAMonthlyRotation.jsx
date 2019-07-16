@@ -2,7 +2,7 @@ import React from 'react';
 import { Line } from 'react-chartjs';
 import moment from 'moment';
 
-const monthList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const monthList = ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun"];
 
 export default (props) => {
 
