@@ -13,7 +13,6 @@ const possibleSlots = {
     '1': 'Jan 1st - Jun 30th',
     '2': 'Jul 1st - Dec 31st',
 }
-const possiblePhases = ['transition-to-discipline', 'foundations-of-discipline', 'core-of-discipline', 'transition-to-practice'];
 
 // Data is updated in two slots for each year
 // Jan 1 to Jun 30 - Slot 1
