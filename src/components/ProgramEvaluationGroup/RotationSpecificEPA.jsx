@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Bar } from 'react-chartjs';
 import ReactSelect from 'react-select';
 import templateEpaSourceMapOriginal from '../../utils/epaSourceMap';
+import { rotationList } from '../../utils/programInfo';
 let templateEpaSourceMap = _.cloneDeep(templateEpaSourceMapOriginal);
 let EPAList = [];
 
@@ -16,8 +17,6 @@ _.map(templateEpaSourceMap, (epaSource, key) => {
         }
     })
 });
-
-const possibleRotations = ["EM", "EM(REGINA)", "EM(PED)", "EM(RGNL)", "ANESTHESIA", "CARDIO", "ICU", "GIM", "GEN SURG", "NEURO", "OPTHO", "ORTHO", "PLASTICS", "SELECTIVE", "TOXICOLOGY", "TRAUMA", "OBS/GYN", "OTHER"];
 
 
 export default class MarketBrand extends Component {
@@ -39,7 +38,7 @@ export default class MarketBrand extends Component {
 
         const { filteredRecords, width } = this.props,
             { selectedRotation } = this.state,
-            rotationList = _.map(possibleRotations, (d) => ({ 'label': d, 'value': d }));
+            modifiedRotationList = _.map(rotationList, (d) => ({ 'label': d, 'value': d }));
 
         // filter by tag and also remove non SA epas
         let subFilteredRecords = _.filter(filteredRecords, (d) => ((d.rotationTag == selectedRotation.label) && (EPAList.indexOf(d.epa) > -1)));
@@ -90,7 +89,7 @@ export default class MarketBrand extends Component {
                         <div className='react-select-root'>
                             <ReactSelect
                                 value={selectedRotation}
-                                options={rotationList}
+                                options={modifiedRotationList}
                                 styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
                                 onChange={this.onSelectChange} />
                         </div>
