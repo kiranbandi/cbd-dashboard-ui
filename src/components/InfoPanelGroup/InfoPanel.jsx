@@ -17,13 +17,10 @@ class InfoPanel extends Component {
     render() {
 
         let { residentData, residentFilter, residentList, expiredResidentData } = this.props,
-            residentInfo = false, scheduleMap = false,
-            longitudinalScheduleMap = false, citeScoreData = {};
+            residentInfo = false, citeScoreData = {};
 
         if (residentFilter && residentFilter.username) {
             residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
-            scheduleMap = residentInfo && residentInfo.rotationSchedule;
-            longitudinalScheduleMap = residentInfo && residentInfo.longitudinalSchedule;
             citeScoreData = residentInfo && residentInfo.citeExamScore;
         }
 
@@ -36,10 +33,7 @@ class InfoPanel extends Component {
                             <span><b>PROGRAM START DATE -</b> {(new Date(residentInfo.programStartDate)).toDateString()}</span>
                             <span><b>LAST UPDATED ON -</b> {(new Date(residentInfo.uploadedData)).toDateString()}</span>
                         </div>
-                        {!!scheduleMap &&
-                            <RotationSchedule
-                                scheduleMap={scheduleMap}
-                                longitudinalScheduleMap={longitudinalScheduleMap} />}
+                        <RotationSchedule residentInfo={residentInfo} />
                         {!!residentData &&
                             <EPASpeedInfo
                                 residentData={residentData}
