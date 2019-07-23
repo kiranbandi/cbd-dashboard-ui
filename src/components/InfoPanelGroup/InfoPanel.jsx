@@ -39,6 +39,7 @@ class InfoPanel extends Component {
                         {!!residentData &&
                             <EPASpeedInfo
                                 residentData={residentData}
+                                residentInfo={residentInfo}
                                 expiredResidentData={expiredResidentData}
                                 residentFilter={residentFilter} />}
                         <CiteScoreGraph citeScoreData={citeScoreData} />
