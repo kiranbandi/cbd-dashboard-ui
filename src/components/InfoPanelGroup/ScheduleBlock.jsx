@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { rotationRequired } from '../../utils/programInfo';
 import moment from 'moment';
 
 export default class ScheduleBlock extends Component {
@@ -6,7 +7,6 @@ export default class ScheduleBlock extends Component {
     constructor(props) {
         super(props);
     }
-
 
     render() {
 
@@ -52,13 +52,32 @@ export default class ScheduleBlock extends Component {
                 if (widthAvailable < (internalWidth + widthFromleft)) {
                     internalWidth = widthAvailable - widthFromleft;
                 }
+
+                const rotationLabel = scheduleRotationList[index] || 'EM';
                 // append the individual box to the list
                 scheduleChart.push(<span
                     className={'chart-line ' + isTodayInPeriod}
                     key={"index-" + index}
                     style={{ left: widthFromleft, width: internalWidth }}>
-                    {scheduleRotationList[index] || 'EM'}
+                    {rotationLabel}
                 </span>)
+
+                let averageColorLabel = 'dark-green';
+
+                let averageRotationPercentage = 0;
+                if (epaPerBlockList[index] && rotationRequired[rotationLabel] != 0) {
+                    averageRotationPercentage = (Number(epaPerBlockList[index]) || 0) / rotationRequired[rotationLabel];
+                }
+
+                if (averageRotationPercentage <= 0.25) {
+                    averageColorLabel = 'dark-red';
+                }
+                else if (averageRotationPercentage <= 0.50) {
+                    averageColorLabel = 'red';
+                }
+                else if (averageRotationPercentage <= 0.75) {
+                    averageColorLabel = 'green';
+                }
 
                 // if we also need to show the corresponding count per block 
                 if (isEPAperBlockVisible) {
@@ -66,7 +85,11 @@ export default class ScheduleBlock extends Component {
                         className={'chart-count '}
                         key={"count-" + index}
                         style={{ left: widthFromleft, width: internalWidth }}>
-                        {epaPerBlockList[index] || 'N/A'}
+                        <span className='count-text'> {epaPerBlockList[index] || ' - '}</span>
+                        {(averageRotationPercentage != 0) &&
+                            <span className={'count-chart ' + averageColorLabel}>
+                                {Math.round(averageRotationPercentage * 100) + "%"}
+                            </span>}
                     </span>)
                 }
             }
@@ -79,6 +102,8 @@ export default class ScheduleBlock extends Component {
                     key={"index-long-" + longIndex}
                     style={{ width: widthAvailable }}>
                     {longEntry}</span>)
+
+
             })
         }
 
