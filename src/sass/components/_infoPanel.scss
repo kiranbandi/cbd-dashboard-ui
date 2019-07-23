@@ -107,7 +107,7 @@
                     }
                 }
                 .chart-count {
-                    background: #2c97c6;
+                    border: 1.5px solid #434857;
                     border-radius: 30px;
                     display: block;
                     position: absolute;
@@ -118,6 +118,28 @@
                     font-weight: 500;
                     text-overflow: ellipsis;
                     white-space: nowrap;
+                    text-align: left;
+                    padding-left: 1.5%;
+                    .count-chart {
+                        border-radius: 30px;
+                        position: absolute;
+                        right: 0px;
+                        height: 24px;
+                        top: 0.5px;
+                        padding: 3px 10px 3px 10px;
+                        &.red {
+                            background: #b9525e;
+                        }
+                        &.dark-red {
+                            background: #f2001b;
+                        }
+                        &.green {
+                            background: #66c3a3;
+                        }
+                        &.dark-green {
+                            background: #00b93a;
+                        }
+                    }
                 }
                 &.dual-block {
                     height: 70px;
