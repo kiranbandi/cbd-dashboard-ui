@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { getResidentList } from '../../utils/requestServer';
 import { setResidentList } from '../../redux/actions/actions';
 import Loading from 'react-loading';
-import { FilterPanel, GraphPanel, InfoPanel } from '../';
+import { FilterPanel, GraphPanel, InfoPanel, InfoCardsPanel } from '../';
 
 class ResidentDashboard extends Component {
 
@@ -34,7 +34,7 @@ class ResidentDashboard extends Component {
     componentWillUnmount() {
         this._isMounted = false;
     }
-    
+
 
     render() {
         let { residentList = [] } = this.props;
@@ -47,8 +47,9 @@ class ResidentDashboard extends Component {
                         {residentList.length > 0 ?
                             <div>
                                 <FilterPanel />
-                                <InfoPanel />
-                                <GraphPanel isEMDepartment={true} />
+                                {/* <InfoPanel />
+                                <GraphPanel isEMDepartment={true} /> */}
+                                <InfoCardsPanel />
                             </div> :
                             <h2 className='text-center text-danger'>No resident information is available currently</h2>}
                     </div>}

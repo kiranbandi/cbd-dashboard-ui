@@ -25,6 +25,10 @@ export default class InfoPanel extends Component {
         this.setState({ isEPAperBlockVisible: !this.state.isEPAperBlockVisible });
     }
 
+    showCardsModal(){
+        
+    }
+
     render() {
 
 
@@ -65,6 +69,11 @@ export default class InfoPanel extends Component {
                 <button onClick={this.showEPAsPerBlock} className={'view-back-button per-block-button btn btn-primary-outline' + (isEPAperBlockVisible ? ' selected' : '')}>
                     <span className="icon icon-book"></span>
                     <span>View EPAs/Block</span>
+                </button>
+
+                <button onClick={this.showCardsModal} className={'view-back-button ref-card-button btn btn-info-outline'}>
+                    <span className="icon icon-info-with-circle"></span>
+                    <span>View Reference Cards</span>
                 </button>
 
                 {isHistoryVisible && <div className='all-historical-schedule'>

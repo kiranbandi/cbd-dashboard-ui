@@ -69,6 +69,10 @@
                 &.per-block-button {
                     left: 150px;
                 }
+                &.ref-card-button {
+                    right: 30px;
+                    left: inherit;
+                }
                 &.selected {
                     color: #ffffff;
                     background-color: #1997c6;
