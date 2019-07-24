@@ -1,6 +1,7 @@
 .info-panel {
     background: #1a1c22;
     margin: 30px 30px 20px 30px;
+    margin-top: 0px !important;
     border-radius: 5px;
     @media (max-width: 768px) {
         margin-right: 10px;

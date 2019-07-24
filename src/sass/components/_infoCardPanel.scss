@@ -2,4 +2,34 @@
     background: #1a1c22;
     margin: 30px 30px 20px 30px;
     border-radius: 5px;
+    h4 {
+        margin-bottom: 0px;
+        color: #cfd2da;
+        text-transform: none;
+        width: 100%;
+        cursor: pointer;
+        background: #1a1c22;
+        border-radius: 5px 5px 0px 0px;
+        padding: 10px 3px;
+        font-size: 18px;
+        display: inline-block;
+        font-family: sans-serif;
+        margin: 0px;
+    }
+    .info-panel-inner {
+        padding-top: 20px;
+        .rotation-select {
+            padding: 1%;
+            .react-select-root {
+                display: inline-block;
+                margin-left: 10px;
+            }
+        }
+        .image-container {
+            text-align: center;
+            .info-card {
+                margin: 25px;
+            }
+        }
+    }
 }
