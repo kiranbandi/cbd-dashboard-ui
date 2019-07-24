@@ -47,8 +47,8 @@ class ResidentDashboard extends Component {
                         {residentList.length > 0 ?
                             <div>
                                 <FilterPanel />
-                                {/* <InfoPanel />
-                                <GraphPanel isEMDepartment={true} /> */}
+                                <InfoPanel />
+                                <GraphPanel isEMDepartment={true} />
                                 <InfoCardsPanel />
                             </div> :
                             <h2 className='text-center text-danger'>No resident information is available currently</h2>}

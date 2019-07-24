@@ -11,20 +11,40 @@ class InfoCardsPanel extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            selectedRotation: '',
+            isVisible: false
+        };
         this.onSelectRotation = this.onSelectRotation.bind(this);
+        this.toggleVisibility = this.toggleVisibility.bind(this);
     }
 
-    onSelectRotation(value) {
-
-        debugger;
-
+    onSelectRotation(selectedOption) {
+        this.setState({ selectedRotation: selectedOption.value });
     }
+
+    toggleVisibility(event) {
+        event.preventDefault();
+        this.setState({ isVisible: !this.state.isVisible });
+    }
+
+
 
     render() {
 
+
+        //125px to offset the 30px margin on both sides and vertical scroll bar width
+        let panelWidth = document.body.getBoundingClientRect().width - 125;
+
+        if (panelWidth > 350) {
+            panelWidth = 350;
+        }
+
         const { residentFilter, residentList } = this.props;
         let residentInfo = false, currentAcademicYear,
-            currentSchedule = [], currentScheduleDates = [];
+            currentSchedule = [], currentScheduleDates = [], currentRotation = '';
+
+        let { selectedRotation } = this.state;
 
         if (residentFilter && residentFilter.username) {
             residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
@@ -32,7 +52,7 @@ class InfoCardsPanel extends Component {
             // if the current month is before july then pick the last year  
             currentAcademicYear = moment().month() <= 5 ? moment().year() - 1 : moment().year();
             currentScheduleDates = rotationScheduleMap[currentAcademicYear];
-            currentSchedule = residentInfo.rotationSchedule && residentInfo.rotationSchedule[currentAcademicYear];
+            currentSchedule = residentInfo.rotationSchedule && residentInfo.rotationSchedule[currentAcademicYear] || [];
 
             // find the rotation which has todays date
             let currentRotationIndex = _.findIndex(currentScheduleDates, (period, index) => {
@@ -45,7 +65,9 @@ class InfoCardsPanel extends Component {
                 return false;
 
             })
-            let currentRotation = currentSchedule[currentRotationIndex];
+            currentRotation = currentSchedule[currentRotationIndex] || 'EM';
+            // split and replace back slashes "/" in the names
+            currentRotation = currentRotation.split("/").join("-");
         }
 
         // create a select option label list 
@@ -53,18 +75,55 @@ class InfoCardsPanel extends Component {
             return { label: card, value: card }
         })
 
+        // if there is no selected rotation then set it based on resident schedule
+        if (selectedRotation == '') {
+            selectedRotation = cardsList.indexOf(currentRotation) > -1 ? currentRotation : 'EM';
+        }
+
+        let imageName = selectedRotation, currentPhase = residentInfo.currentPhase || '';
+        if (imageName == 'EM') {
+
+            if (currentPhase == 'transition-to-discipline') {
+                imageName = ['EM-TTD']
+            }
+            else if (currentPhase == 'foundations-of-discipline') {
+                imageName = ['EM-F']
+            }
+            else if (currentPhase == 'core-of-discipline') {
+                imageName = ['EM-C-1', 'EM-C-2', 'EM-C-3']
+            }
+            else {
+                imageName = ['EM-TP-1', 'EM-TP-2']
+            }
+        }
 
         return (
-            <div className='info-card-panel-root'>
-                {residentInfo && <div className='rotation-select'>
-                    <span className='inner-span'>Rotation</span>
-                    <div className='react-select-root'>
-                        <ReactSelect
-                            value={''}
-                            options={rotationSelectList}
-                            styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
-                            onChange={this.onSelectRotation} />
-                    </div>
+            <div className='info-card-panel-root m-t'>
+                {residentInfo && <div>
+                    <h4 onClick={this.toggleVisibility} className="text-left">
+                        {this.state.isVisible ? <span className="icon icon-chevron-down"></span> : <span className="icon icon-chevron-right"></span>}
+                        View Infographic Cards
+                </h4>
+                    {this.state.isVisible &&
+                        <div className='info-panel-inner'>
+                            <div className='rotation-select text-center'>
+                                <div style={{ width: panelWidth }} className='react-select-root'>
+                                    <ReactSelect
+                                        placeholder='test'
+                                        value={_.find(rotationSelectList, (d) => d.value == selectedRotation)}
+                                        options={rotationSelectList}
+                                        styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
+                                        onChange={this.onSelectRotation} />
+                                </div>
+                            </div>
+                            <div className='image-container'>
+                                {selectedRotation == 'EM' ? <div>{_.map(imageName, (image) =>
+                                    <img style={{ width: panelWidth }} key={image} className='info-card' src={"assets/img/cards/" + image + ".png"} />
+                                )}</div> :
+                                    <img style={{ width: panelWidth }} className='info-card' src={"assets/img/cards/" + imageName + ".png"} />
+                                }
+                            </div>
+                        </div>}
                 </div>}
             </div>
         );
@@ -74,7 +133,7 @@ class InfoCardsPanel extends Component {
 function mapStateToProps(state) {
     return {
         residentFilter: state.oracle.residentFilter,
-        residentList: state.oracle.residentList
+        residentList: state.oracle.residentList,
     };
 }
 
@@ -85,3 +144,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(InfoCardsPanel);
+
+
+
+
+
+
