@@ -132,6 +132,8 @@
                         height: 24px;
                         top: 0.5px;
                         padding: 3px 10px 3px 10px;
+                        width: 55%;
+                        text-align: center;
                         &.red {
                             background: #b9525e;
                         }
@@ -143,6 +145,19 @@
                         }
                         &.dark-green {
                             background: #00b93a;
+                        }
+                    }
+                    .count-text {
+                        display: inline-block;
+                        position: absolute;
+                        left: 0px;
+                        height: 24px;
+                        top: 0.5px;
+                        padding: 3px 10px 3px 10px;
+                        width: 45%;
+                        text-align: center;
+                        &.use-entire-width {
+                            width: 100%;
                         }
                     }
                 }
