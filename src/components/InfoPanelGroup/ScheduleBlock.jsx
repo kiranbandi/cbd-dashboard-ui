@@ -85,7 +85,9 @@ export default class ScheduleBlock extends Component {
                         className={'chart-count '}
                         key={"count-" + index}
                         style={{ left: widthFromleft, width: internalWidth }}>
-                        <span className='count-text'> {epaPerBlockList[index] || ' - '}</span>
+                        <span className={'count-text' + ((averageRotationPercentage != 0) ? '' : ' use-entire-width')}>
+                            {epaPerBlockList[index] || ' - '}
+                        </span>
                         {(averageRotationPercentage != 0) &&
                             <span className={'count-chart ' + averageColorLabel}>
                                 {Math.round(averageRotationPercentage * 100) + "%"}
