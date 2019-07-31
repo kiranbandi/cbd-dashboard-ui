@@ -8,7 +8,8 @@ export default function(rawData) {
         try {
 
             var workbook = XLSX.read((new Uint8Array(rawData)), { type: 'array' });
-            var dataInRows = XLSX.utils.sheet_to_json(workbook.Sheets.Report);
+            var dataInRows = XLSX.utils.sheet_to_json(workbook.Sheets['EPA Observations']);
+            var narrativeInRows = XLSX.utils.sheet_to_json(workbook.Sheets['Narratives']);
             var dataStore = [];
             var residentName = '';
             var tempEPA = '';
@@ -184,7 +185,8 @@ export default function(rawData) {
             } catch (error) {
                 console.log(error);
             }
-            resolve({ 'data': dataStore, epaSourceMap });
+
+            resolve({ 'data': dataStore, 'narrativeData': processNarratives(narrativeInRows, residentName), epaSourceMap });
         } catch (e) {
             reject();
         };
@@ -223,4 +225,47 @@ function findAcademicYear(timeStamp) {
         return '2023';
     }
     return '2024';
+}
+
+
+function processNarratives(narrativeInRows, residentName) {
+
+    let iteratorIndex = 0,
+        maxLength = narrativeInRows.length,
+        narrativeStore = [];
+
+    // Loop through each row one by one
+    while (iteratorIndex < maxLength) {
+
+        let dataPoint = narrativeInRows[iteratorIndex];
+
+        try {
+            // consider only non empty rows , rows which have date of completion 
+            //  and also ignore the row with the names of the columns 
+            if (_.keys(dataPoint).indexOf('__EMPTY_5') > -1 && dataPoint['__EMPTY_5'] != 'Date of Completion') {
+
+                const isDateSlashFormat = dataPoint['__EMPTY_5'].indexOf('/') > -1;
+
+                narrativeStore.push({
+                    'Resident_Name': residentName,
+                    'Observer_Name': dataPoint['__EMPTY'],
+                    'Observer_Type': dataPoint['__EMPTY_1'],
+                    'Feedback': dataPoint['__EMPTY_2'],
+                    'Professionalism_Safety': dataPoint['__EMPTY_3'],
+                    'Observation_Date': moment(dataPoint.__EMPTY_4, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD'),
+                    'Completion_Date': moment(dataPoint.__EMPTY_5, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD'),
+                    'yearTag': findYearTag(moment(dataPoint.__EMPTY_4, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
+                    'academicYear': findAcademicYear(moment(dataPoint.__EMPTY_4, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
+                });
+            }
+
+        } catch (error) {
+            console.log('error processing naratives');
+            return [];
+        }
+        // increase the index count by one
+        iteratorIndex += 1;
+
+    }
+    return narrativeStore;
 }

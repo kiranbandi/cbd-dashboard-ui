@@ -17,11 +17,11 @@ const programInfo = {
         "PLASTICS": 6,
         "SELECTIVE": 8,
         "TRAUMA": 7,
-        "TOXICOLOGY": 0,
-        "OBS/GYN": 0,
-        "PICU": 0,
-        "PSYCH": 0,
-        "OTHER": 0
+        "TOXICOLOGY": 4,
+        "OBS/GYN": 4,
+        "PICU": 4,
+        "PSYCH": 4,
+        "OTHER": 4
     },
     phasesList: ['transition-to-discipline', 'foundations-of-discipline', 'core-of-discipline', 'transition-to-practice']
 };
