@@ -5,7 +5,7 @@ A react web application built on MERN Stack (MongoDB , Express , React and Node.
 This is the repository for the front-end code,the corresponding backend-code is available here:
 https://github.com/kiranbandi/cbd-dashboard-server
 
-**WARNING**: This is a work in progress in pre-alpha state. It is completely functional, so feel free to try it but expect changes that break your code in future versions.
+**WARNING**: This is a work in progress in its pre-alpha state. It is completely functional, so feel free to fork it and try it out but expect changes that break your code in future versions.
 
 ## WEB Demo
 
@@ -88,7 +88,7 @@ Install webpack and some plugins and loaders,
 ```bash
 $ npm install
 ```
-Webpack config is found in `build-config\webpack.config.js`.
+Webpack config can be found in `build-config\webpack.config.js`.
 Watch for changes and compile bundle if found,
 ```bash
 $ npm run start
