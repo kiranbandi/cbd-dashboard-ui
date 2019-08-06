@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ResidentDashboard, ProgramDashboard, SupervisorDashboard, DownloadDashboard } from '../components';
+import { ResidentDashboard, ProgramDashboard, SupervisorDashboard, NormativeDashboard, DownloadDashboard } from '../components';
 
 
 class DashboardRoot extends Component {
@@ -25,7 +25,7 @@ class DashboardRoot extends Component {
 
     render() {
 
-        const { userType, isModalOpen } = this.props,
+        const { userType } = this.props,
             { activeBoard = 'resident' } = this.state,
             isAllowedMultiMode = (userType == 'admin' || userType == "director");
 
@@ -37,6 +37,9 @@ class DashboardRoot extends Component {
                             <ul className="nav nav-pills hr-divider-content hr-divider-nav">
                                 <li className={activeBoard == 'resident' ? 'active' : ''}>
                                     <a id='resident-tab' onClick={this.onTabClick} >RESIDENT METRICS</a>
+                                </li>
+                                <li className={activeBoard == 'normative' ? 'active' : ''}>
+                                    <a id='normative-tab' onClick={this.onTabClick} >NORMATIVE EVALUATION</a>
                                 </li>
                                 <li className={activeBoard == 'supervisor' ? 'active' : ''}>
                                     <a id='supervisor-tab' onClick={this.onTabClick}>FACULTY DEVELOPMENT</a>
@@ -54,6 +57,7 @@ class DashboardRoot extends Component {
                             {(activeBoard == 'supervisor') && <SupervisorDashboard />}
                             {(activeBoard == 'program') && <ProgramDashboard />}
                             {(activeBoard == 'table') && <DownloadDashboard />}
+                            {(activeBoard == 'normative') && <NormativeDashboard />}
                         </div>
 
                     </div>

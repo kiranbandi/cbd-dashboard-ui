@@ -13,6 +13,7 @@ export { default as ResidentDashboard } from './DashboardGroup/ResidentDashboard
 export { default as ProgramDashboard } from './DashboardGroup/ProgramDashboard';
 export { default as SupervisorDashboard } from './DashboardGroup/SupervisorDashboard';
 export { default as DownloadDashboard } from './DashboardGroup/DownloadDashboard';
+export { default as NormativeDashboard } from './DashboardGroup/NormativeDashboard';
 
 
 

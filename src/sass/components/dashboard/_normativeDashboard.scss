@@ -1,0 +1,16 @@
+.normative-data-container {
+    .loading-spinner {
+        margin: 100px auto;
+    }
+    .normative-filter-box {
+        padding: 7px 0px 7px 20px;
+        @media (max-width: 768px) {
+            width: 100%;
+            padding: 10px;
+        }
+        width: 900px;
+    }
+    .uppercase-push {
+        text-transform: capitalize;
+    }
+}
