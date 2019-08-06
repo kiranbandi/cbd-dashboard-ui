@@ -17,7 +17,7 @@ const columns = [{
 }, {
     Header: 'Phase',
     accessor: 'phase',
-    className: 'text-center uppercase-push',
+    className: 'text-left uppercase-push',
     filterMethod: customFilter
 },
 {
