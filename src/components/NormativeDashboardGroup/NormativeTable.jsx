@@ -5,35 +5,97 @@ const columns = [{
     Header: 'Name',
     accessor: 'resident_name',
     className: 'text-left',
-    maxWidth: 150,
+    maxWidth: 150
 },
 {
     Header: 'EPAs',
     accessor: 'record_count',
     className: 'text-center',
-    maxWidth: 100,
+    maxWidth: 100
 },
 {
     Header: 'EPAs/week',
     accessor: 'epa_per_week',
     className: 'text-center',
-    maxWidth: 100,
+    maxWidth: 100
 },
 {
     Header: 'Expired',
     accessor: 'expired',
     className: 'text-center',
-    maxWidth: 100,
+    maxWidth: 100
+}];
+
+const multiColumns = [{
+    Header: 'Name',
+    columns: [{
+        Header: '',
+        accessor: 'resident_name',
+        maxWidth: 150,
+        className: 'text-left'
+    }]
+},
+{
+    Header: 'EPAs',
+    columns: [{
+        Header: 'Overall',
+        accessor: 'record_count',
+        className: 'text-center',
+        maxWidth: 75
+    },
+    {
+        Header: 'Period',
+        accessor: 'record_count_period',
+        className: 'text-center',
+        maxWidth: 75
+    }
+    ]
+},
+{
+    Header: 'EPAs/week',
+
+    columns: [{
+        Header: 'Overall',
+        className: 'text-center',
+        accessor: 'epa_per_week',
+        maxWidth: 75
+    },
+    {
+        Header: 'Period',
+        className: 'text-center',
+        accessor: 'epa_per_week_period',
+        maxWidth: 75
+    }
+    ]
+}, {
+    Header: 'Expired',
+
+    columns: [{
+        Header: 'Overall',
+        className: 'text-center',
+        accessor: 'expired',
+        maxWidth: 75
+    },
+    {
+        Header: 'Period',
+        className: 'text-center',
+        accessor: 'expired_period',
+        maxWidth: 75
+    }
+    ]
 }];
 
 
 export default (props) => {
 
+    const dateFilterActive = document.getElementById('filter-dateFilterActive') && document.getElementById('filter-dateFilterActive').checked;
+
+
     return (
         <div className='normative-table table-box' style={{ width: props.width }}>
             <ReactTable
                 data={props.records}
-                columns={columns}
+                columns={dateFilterActive ? multiColumns : columns}
                 defaultPageSize={10}
                 resizable={false}
                 className='-highlight'

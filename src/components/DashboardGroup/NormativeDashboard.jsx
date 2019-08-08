@@ -48,27 +48,20 @@ class NormativeDashboard extends Component {
 
 
     onSubmit() {
-
-        const startDate = document.getElementById('normative-filter-startDate') && document.getElementById('normative-filter-startDate').value;
-        const endDate = document.getElementById('normative-filter-endDate') && document.getElementById('normative-filter-endDate').value;
-        const dateFilterActive = document.getElementById('filter-dateFilterActive') && document.getElementById('filter-dateFilterActive').checked;
-
         event.preventDefault();
         // toggle loader before fetching data
-        this.setState({ filterLoaderState: true });
+        this.setState({ filterLoaderState: true, residentRecords: [] });
         // get data of all residents
+        // In future this will be replace with names of residents for whom we want 
+        // data , or in the resident list
         getAllData()
-            .then((data) => {
-                // filter the records by date if that filter is active
-                let residentRecords = !dateFilterActive ? data : _.filter(data, (d) => {
-                    return moment(d.observation_date, 'YYYY-MM-DD').isAfter(moment(startDate, 'MM/DD/YYYY')) && moment(d.observation_date, 'YYYY-MM-DD').isBefore(moment(endDate, 'MM/DD/YYYY'));
-                });
-                this.setState({ residentRecords });
+            .then((residentRecords) => {
+                this._isMounted && this.setState({ residentRecords, filterLoaderState: false });
             })
             // toggle loader again once the request completes
-            .catch(() => { console.log("error in fetching all records"); })
-            .finally(() => {
-                this._isMounted && this.setState({ filterLoaderState: false });
+            .catch(() => {
+                console.log("error in fetching all records");
+                this._isMounted && this.setState({ residentRecords, filterLoaderState: false });
             });
     }
 
@@ -78,23 +71,23 @@ class NormativeDashboard extends Component {
         const startDate = document.getElementById('normative-filter-startDate') && document.getElementById('normative-filter-startDate').value;
         const endDate = document.getElementById('normative-filter-endDate') && document.getElementById('normative-filter-endDate').value;
         const currentPhase = document.getElementById('filter-phaselist') && document.getElementById('filter-phaselist').value;
-        const dateFilterActive = document.getElementById('filter-dateFilterActive') && document.getElementById('filter-dateFilterActive').checked;
 
         const { residentRecords = [] } = this.state, { residentList = [] } = this.props;
+
+        // filter the records by dates
+        let filteredRecords = _.filter(residentRecords, (d) => {
+            return moment(d.observation_date, 'YYYY-MM-DD').isAfter(moment(startDate, 'MM/DD/YYYY')) && moment(d.observation_date, 'YYYY-MM-DD').isBefore(moment(endDate, 'MM/DD/YYYY'));
+        });
 
         const residentsInPhase = (currentPhase == 'all-phases') ? residentList : _.filter(residentList, (res) => res.currentPhase == currentPhase);
 
         // process only if records are available
         if (residentRecords.length > 0) {
 
-            const recordsGroupedByResident = _.groupBy(residentRecords, (d) => d.username);
+            const recordsGroupedByResident = _.groupBy(residentRecords, (d) => d.username),
+                filteredRecordsGroupedByResident = _.groupBy(filteredRecords, (d) => d.username);
 
             return _.map(residentsInPhase, (resident) => {
-
-                const recordsForSpecificResident = recordsGroupedByResident[resident.username] || [];
-
-                // split expired and non expired epas
-                let splitRecords = _.partition(recordsForSpecificResident, (d) => !d.isExpired);
 
                 let residentStartDate = moment("01-07-2018", "DD-MM-YYYY");
                 // All records we have are from 1st July 2018 , so if someone has 
@@ -108,18 +101,22 @@ class NormativeDashboard extends Component {
                 // Get the number of weeks in the date filter period
                 const weeksInPeriod = (moment(endDate, 'MM/DD/YYYY').diff(moment(startDate, 'MM/DD/YYYY'), "weeks"));
 
-                let averageEPAScoreWeek = Math.round((splitRecords[0].length / weeksPassed) * 100) / 100;;
+                // split expired and non expired epas for all records and filtered records
+                let residentAllRecords = _.partition(recordsGroupedByResident[resident.username] || [], (d) => !d.isExpired);
+                let residentFilteredRecords = _.partition(filteredRecordsGroupedByResident[resident.username] || [], (d) => !d.isExpired);
 
-                if (dateFilterActive) {
-                    averageEPAScoreWeek = weeksInPeriod != 0 ? Math.round((splitRecords[0].length / weeksInPeriod) * 100) / 100 : 0
-                }
+                let averageEPAsPerWeek = Math.round((residentAllRecords[0].length / weeksPassed) * 100) / 100;
+                let averageEPAsPerWeekPeriod = (weeksInPeriod != 0) ? Math.round((residentFilteredRecords[0].length / weeksInPeriod) * 100) / 100 : 0;
 
                 return {
                     'resident_name': resident.fullname,
                     'phase': resident.currentPhase.split("-").join(" "),
-                    'record_count': splitRecords[0].length,
-                    'epa_per_week': averageEPAScoreWeek,
-                    'expired': splitRecords[1].length
+                    'record_count': residentAllRecords[0].length,
+                    'epa_per_week': averageEPAsPerWeek,
+                    'expired': residentAllRecords[1].length,
+                    'record_count_period': residentFilteredRecords[0].length,
+                    'epa_per_week_period': averageEPAsPerWeekPeriod,
+                    'expired_period': residentFilteredRecords[1].length
                 };
 
             });
@@ -135,6 +132,8 @@ class NormativeDashboard extends Component {
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let tableWidth = document.body.getBoundingClientRect().width - 125;
 
+        const dateFilterActive = document.getElementById('filter-dateFilterActive') && document.getElementById('filter-dateFilterActive').checked;
+
         return (
             <div className='normative-data-container'>
 
@@ -147,10 +146,10 @@ class NormativeDashboard extends Component {
                         {processedRecords.length > 0 &&
                             <div className='normative-inner-root'>
                                 <NormativeGraph
-                                    width={tableWidth - 450}
+                                    width={tableWidth - (dateFilterActive ? 600 : 450)}
                                     records={processedRecords} />
                                 <NormativeTable
-                                    width={450}
+                                    width={dateFilterActive ? 600 : 450}
                                     records={processedRecords} />
                             </div>}
                     </div>
