@@ -31,7 +31,9 @@ export default class ExportDataTab extends Component {
             .then((data) => {
                 window.emCBD = {
                     'rcmData': _.map(data, (_r) => {
-                        return [_r.observation_date, _r.resident_name, _r.epa, _r.observer_name, _r.observer_type, _r.rating, _r.type, _r.situation_context, _r.feedback, _r.professionalism_safety, _r.isExpired || false];
+                        // example convert 3.10 to 310 and 3.1 to 301
+                        const moddedEPA = _r.epa.split(".")[0] + (+_r.epa.split(".")[1] < 10 ? '0' : '') + (_r.epa.split(".")[1]);
+                        return [_r.observation_date, _r.resident_name, moddedEPA, _r.observer_name, _r.observer_type, _r.rating, _r.type, _r.situation_context, _r.feedback, _r.professionalism_safety, _r.isExpired || false];
                     })
                 };
                 downloadCSV();
