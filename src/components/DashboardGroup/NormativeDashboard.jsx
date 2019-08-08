@@ -5,39 +5,10 @@ import _ from 'lodash';
 import { getAllData, getResidentList } from '../../utils/requestServer';
 import moment from 'moment';
 import { setResidentList } from '../../redux/actions/actions';
-import Loading from 'react-loading';
-import ReactTable from 'react-table';
-import { customFilter } from '../../utils/genericUtility';
+import NormativeTable from '../NormativeDashboardGroup/NormativeTable';
+import NormativeFilterPanel from '../NormativeDashboardGroup/NormativeFilterPanel';
+import NormativeGraph from '../NormativeDashboardGroup/NormativeGraph';
 
-const columns = [{
-    Header: 'Resident Name',
-    accessor: 'resident_name',
-    className: 'text-left',
-    filterMethod: customFilter
-}, {
-    Header: 'Phase',
-    accessor: 'phase',
-    className: 'text-left uppercase-push',
-    filterMethod: customFilter
-},
-{
-    Header: 'No of Records',
-    accessor: 'record_count',
-    className: 'text-center',
-    filterMethod: customFilter
-},
-{
-    Header: 'EPAs per week',
-    accessor: 'epa_per_week',
-    className: 'text-center',
-    filterMethod: customFilter
-},
-{
-    Header: 'Expired EPAs',
-    accessor: 'expired',
-    className: 'text-center',
-    filterMethod: customFilter
-}];
 
 class NormativeDashboard extends Component {
 
@@ -46,21 +17,17 @@ class NormativeDashboard extends Component {
         this.state = {
             isLoaderVisible: false,
             filterLoaderState: false,
-            residentRecords: [],
-            isAllData: true,
-            startDate: moment().format('MM/DD/YYYY'),
-            endDate: moment().format('MM/DD/YYYY')
+            residentRecords: []
         };
         this._isMounted = false;
         this.onSubmit = this.onSubmit.bind(this);
-        this.onChange = this.onChange.bind(this);
+        this.processRecordsToTabularFormat = this.processRecordsToTabularFormat.bind(this);
     }
 
     componentDidMount() {
         this._isMounted = true;
-
+        // if there are no resident names & details fetch them
         const { residentList = [] } = this.props;
-
         if (residentList.length == 0) {
             // turn loader on
             this.setState({ isLoaderVisible: true });
@@ -82,20 +49,20 @@ class NormativeDashboard extends Component {
 
     onSubmit() {
 
-        const { isAllData } = this.state;
-
-        const startDate = document.getElementById('normative-filter-startDate').value;
-        const endDate = document.getElementById('normative-filter-endDate').value;
+        const startDate = document.getElementById('normative-filter-startDate') && document.getElementById('normative-filter-startDate').value;
+        const endDate = document.getElementById('normative-filter-endDate') && document.getElementById('normative-filter-endDate').value;
+        const dateFilterActive = document.getElementById('filter-dateFilterActive') && document.getElementById('filter-dateFilterActive').checked;
 
         event.preventDefault();
         // toggle loader before fetching data
-        this.setState({ filterLoaderState: true, startDate, endDate });
+        this.setState({ filterLoaderState: true });
         // get data of all residents
         getAllData()
             .then((data) => {
-                const residentRecords = isAllData ? data : _.filter(data, (d) => {
+                // filter the records by date if that filter is active
+                let residentRecords = !dateFilterActive ? data : _.filter(data, (d) => {
                     return moment(d.observation_date, 'YYYY-MM-DD').isAfter(moment(startDate, 'MM/DD/YYYY')) && moment(d.observation_date, 'YYYY-MM-DD').isBefore(moment(endDate, 'MM/DD/YYYY'));
-                })
+                });
                 this.setState({ residentRecords });
             })
             // toggle loader again once the request completes
@@ -105,125 +72,86 @@ class NormativeDashboard extends Component {
             });
     }
 
-    onChange() {
-        this.setState({ isAllData: !this.state.isAllData });
-    }
 
-    processRecordsToTabularFormat(residentRecords, residentList, startDate, endDate, isAllData) {
-        // // split expired and non expired epas
-        // let splitRecords = _.partition(recordsInPeriod, (d) => !d.isExpired);
+    processRecordsToTabularFormat() {
 
+        const startDate = document.getElementById('normative-filter-startDate') && document.getElementById('normative-filter-startDate').value;
+        const endDate = document.getElementById('normative-filter-endDate') && document.getElementById('normative-filter-endDate').value;
+        const currentPhase = document.getElementById('filter-phaselist') && document.getElementById('filter-phaselist').value;
+        const dateFilterActive = document.getElementById('filter-dateFilterActive') && document.getElementById('filter-dateFilterActive').checked;
+
+        const { residentRecords = [] } = this.state, { residentList = [] } = this.props;
+
+        const residentsInPhase = (currentPhase == 'all-phases') ? residentList : _.filter(residentList, (res) => res.currentPhase == currentPhase);
+
+        // process only if records are available
         if (residentRecords.length > 0) {
 
             const recordsGroupedByResident = _.groupBy(residentRecords, (d) => d.username);
 
-            return _.map(residentList, (resident) => {
+            return _.map(residentsInPhase, (resident) => {
 
                 const recordsForSpecificResident = recordsGroupedByResident[resident.username] || [];
 
+                // split expired and non expired epas
+                let splitRecords = _.partition(recordsForSpecificResident, (d) => !d.isExpired);
 
-                let startDate = moment("01-07-2018", "DD-MM-YYYY");
-
+                let residentStartDate = moment("01-07-2018", "DD-MM-YYYY");
                 // All records we have are from 1st July 2018 , so if someone has 
                 //  a valid program start date and this date is after the July 2018 then we use it
                 // if not we assume he was from a batch earlier.
-                if (resident.programStartDate && moment(resident.programStartDate).isAfter(startDate)) {
-                    startDate = moment(resident.programStartDate);
+                if (resident.programStartDate && moment(resident.programStartDate).isAfter(residentStartDate)) {
+                    residentStartDate = moment(resident.programStartDate);
                 }
-
                 // Get the number of weeks that have passed since the start of the program
-                const weeksPassed = (moment().diff(startDate, "weeks"));
-
-                let averageEPAScoreWeek;
-
+                const weeksPassed = (moment().diff(residentStartDate, "weeks"));
+                // Get the number of weeks in the date filter period
                 const weeksInPeriod = (moment(endDate, 'MM/DD/YYYY').diff(moment(startDate, 'MM/DD/YYYY'), "weeks"));
 
-                if (isAllData) {
-                    averageEPAScoreWeek = Math.round((recordsForSpecificResident.length / weeksPassed) * 100) / 100;
-                }
-                else {
-                    averageEPAScoreWeek = weeksInPeriod != 0 ? Math.round((recordsForSpecificResident.length / weeksInPeriod) * 100) / 100 : 0
+                let averageEPAScoreWeek = Math.round((splitRecords[0].length / weeksPassed) * 100) / 100;;
+
+                if (dateFilterActive) {
+                    averageEPAScoreWeek = weeksInPeriod != 0 ? Math.round((splitRecords[0].length / weeksInPeriod) * 100) / 100 : 0
                 }
 
                 return {
                     'resident_name': resident.fullname,
                     'phase': resident.currentPhase.split("-").join(" "),
-                    'record_count': recordsForSpecificResident.length,
+                    'record_count': splitRecords[0].length,
                     'epa_per_week': averageEPAScoreWeek,
-                    'expired': _.filter(recordsForSpecificResident, (d) => d.isExpired).length
+                    'expired': splitRecords[1].length
                 };
 
             });
-
-
         }
-
         return [];
     }
 
 
     render() {
 
-        const { isAllData, startDate, endDate, filterLoaderState, residentRecords = [] } = this.state,
-            { residentList = [] } = this.props;
-
-        const processedRecords = this.processRecordsToTabularFormat(residentRecords, residentList, startDate, endDate, isAllData);
+        const { filterLoaderState } = this.state, processedRecords = this.processRecordsToTabularFormat();
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let tableWidth = document.body.getBoundingClientRect().width - 125;
 
         return (
-            <div className='m-a normative-data-container'>
+            <div className='normative-data-container'>
 
                 {this.state.isLoaderVisible ?
                     <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
                     <div>
-
-                        <div className='filter-panel'>
-                            <div className='text-xs-left advanced-filter-box normative-filter-box'>
-                                <div className="checkbox custom-control text-center custom-checkbox">
-                                    <label className='filter-label'>
-                                        {"All Records"}
-                                        <input id='filter-isAllData' type="checkbox" checked={isAllData} onChange={this.onChange} />
-                                        <span className="custom-control-indicator"></span>
-                                    </label>
-                                </div>
-                                <div className='date-box'>
-                                    <label className='filter-label'> Start Date</label>
-                                    <div className="input-group col-sm-2">
-                                        <span className="input-group-addon">
-                                            <span className="icon icon-calendar"></span>
-                                        </span>
-                                        <input type="text" id='normative-filter-startDate' defaultValue={startDate} disabled={isAllData} className="form-control" data-provide="datepicker" />
-                                    </div>
-                                </div>
-                                <div className='date-box'>
-                                    <label className='filter-label'> End Date</label>
-                                    <div className="input-group col-sm-2">
-                                        <span className="input-group-addon">
-                                            <span className="icon icon-calendar"></span>
-                                        </span>
-                                        <input type="text" id='normative-filter-endDate' disabled={isAllData} defaultValue={endDate} className="form-control" data-provide="datepicker" />
-                                    </div>
-                                </div>
-                                <div className='text-xs-left button-box'>
-                                    <button type="submit" className="filter-button btn btn-primary-outline" onClick={this.onSubmit}>
-                                        GET RECORDS
-                                        {filterLoaderState && <Loading className='filter-loader' type='spin' height='25px' width='25px' color='white' delay={-1} />}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <NormativeFilterPanel
+                            filterLoaderState={filterLoaderState}
+                            onSubmit={this.onSubmit} />
                         {processedRecords.length > 0 &&
-                            <div className='table-box' style={{ width: tableWidth - 25 }}>
-                                <ReactTable
-                                    data={processedRecords}
-                                    columns={columns}
-                                    defaultPageSize={10}
-                                    resizable={false}
-                                    filterable={true}
-                                    className='-highlight'
-                                    defaultSorted={[{ id: "resident_name", desc: true }]} />
+                            <div className='normative-inner-root'>
+                                <NormativeGraph
+                                    width={tableWidth - 450}
+                                    records={processedRecords} />
+                                <NormativeTable
+                                    width={450}
+                                    records={processedRecords} />
                             </div>}
                     </div>
                 }

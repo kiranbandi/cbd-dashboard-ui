@@ -2,6 +2,7 @@ export { default as NavBar } from './NavBar';
 export { default as Container } from './Container';
 export { default as FilterPanel } from './FilterPanel';
 export { default as InfoCardsPanel } from './InfoCardsPanel';
+export { default as RadioButton } from './RadioButton';
 export { default as GraphPanel } from './GraphPanelGroup/GraphPanel';
 export { default as FileUpload } from './FileUpload';
 export { default as InfoPanel } from './InfoPanelGroup/InfoPanel';
