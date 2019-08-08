@@ -39,7 +39,7 @@ class DashboardRoot extends Component {
                                     <a id='resident-tab' onClick={this.onTabClick} >RESIDENT METRICS</a>
                                 </li>
                                 <li className={activeBoard == 'normative' ? 'active' : ''}>
-                                    <a id='normative-tab' onClick={this.onTabClick} >NORMATIVE EVALUATION</a>
+                                    <a id='normative-tab' onClick={this.onTabClick} >NORMATIVE ASSESSMENT</a>
                                 </li>
                                 <li className={activeBoard == 'supervisor' ? 'active' : ''}>
                                     <a id='supervisor-tab' onClick={this.onTabClick}>FACULTY DEVELOPMENT</a>
