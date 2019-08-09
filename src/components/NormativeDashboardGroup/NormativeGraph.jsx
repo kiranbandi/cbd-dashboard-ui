@@ -7,7 +7,7 @@ export default class NormativeGraph extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            trackType: 'record_count',
+            trackType: 'epa_per_week',
             dualTracks: false
         };
         this.radioChange = this.radioChange.bind(this);
@@ -29,7 +29,7 @@ export default class NormativeGraph extends Component {
 
         const dateFilterActive = document.getElementById('filter-dateFilterActive') && document.getElementById('filter-dateFilterActive').checked;
 
-        let sortedRecords = _.reverse(_.sortBy(records, (d) => d[trackType]));
+        let sortedRecords = _.sortBy(records, (d) => d[trackType]);
 
         let datasets = [{
             label: "Overall",
@@ -83,14 +83,14 @@ export default class NormativeGraph extends Component {
             <div className='normative-graph'>
                 <div className='sub-filter'>
                     <div className='radio-button-container'>
-                        <RadioButton value={'record_count'} id={'track_record_count'} className='track-radio' name='track-select'
-                            label={"EPAs"}
-                            onChange={this.radioChange}
-                            checked={trackType == 'record_count'} />
                         <RadioButton value={'epa_per_week'} id={'track_epa_per_week'} className='track-radio' name='track-select'
                             label={"EPAs/week"}
                             onChange={this.radioChange}
                             checked={trackType == 'epa_per_week'} />
+                        <RadioButton value={'record_count'} id={'track_record_count'} className='track-radio' name='track-select'
+                            label={"EPAs"}
+                            onChange={this.radioChange}
+                            checked={trackType == 'record_count'} />
                         <RadioButton value={'expired'} id={'track_expired'} className='track-radio' name='track-select'
                             label={"Expired"}
                             onChange={this.radioChange}
