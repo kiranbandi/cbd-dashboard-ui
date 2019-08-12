@@ -12,6 +12,27 @@ https://github.com/kiranbandi/cbd-dashboard-server
 The current version of the CBD Dashboard is live at :  
 https://cbd.usask.ca
 
+### Issues,Bugs and Feature Requests
+If something doesnt work or you have noticed a bug please create an issue using the template provided
+alternatively you can also drop a mail to the developer contact address below.
+
+Since this project is supported by funding from the University of Saskatchewan we wont be
+able to support major Feature Requests unless they come through the official channels 
+but if there is something tiny that you might want the tool to have please drop a mail to
+the contact address below. 
+
+Also the current development history of the tool including new features that we are working on 
+can be seen here - https://trello.com/b/SuLCQr1u/cbd-design-board
+
+## Contact 
+This project is sponsored by the Emergency Department at University of Saskatchewan.
+
+For bugs, feature requests -
+Drop a mail to the developer at venkat.bandi@usask.ca or bvenkatkiran@gmail.com
+
+To get a demo of the tool - 
+Drop a mail to the project lead Dr.Brent Thoma - brent.thoma@usask.ca
+
 ## Architecture 
 
 Please read the design document and the site map provided below, to get an understanding of the base architecture of the project.
@@ -54,29 +75,6 @@ https://github.com/kiranbandi/cbd-dashboard-ui/blob/master/design_document.pdf
  - Axios
  - React-Router
  - [xlsx](https://www.npmjs.com/package/xlsx)
-
-
-### Issues,Bugs and Feature Requests
-If something doesnt work or you have noticed a bug please create an issue using the template provided
-alternatively you can also drop a mail to the developer contact address below.
-
-Since this project is supported by funding from the University of Saskatchewan we wont be
-able to support major Feature Requests unless they come through the official channels 
-but if there is something tiny that you might want the tool to have please drop a mail to
-the contact address below. 
-
-Also the current development history of the tool including new features that we are working on 
-can be seen here - https://trello.com/b/SuLCQr1u/cbd-design-board
-
-## Contact 
-This project is sponsored by the Emergency Department at University of Saskatchewan.
-
-For bugs, feature requests -
-Drop a mail to the developer at venkat.bandi@usask.ca or bvenkatkiran@gmail.com
-
-To get a demo of the tool - 
-Drop a mail to the project lead Dr.Brent Thoma - brent.thoma@usask.ca
-
 
 ## Development
 This project is a mix of both React and D3 with D3 handling creation of visual components 
