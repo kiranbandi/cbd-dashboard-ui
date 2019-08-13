@@ -109,6 +109,15 @@ class NormativeDashboard extends Component {
                 let averageEPAsPerWeek = Math.round((residentAllRecords[0].length / weeksPassed) * 100) / 100;
                 let averageEPAsPerWeekPeriod = (weeksInPeriod != 0) ? Math.round((residentFilteredRecords[0].length / weeksInPeriod) * 100) / 100 : 0;
 
+                // if values are NaN port them to zero
+                if (isNaN(averageEPAsPerWeek)) {
+                    averageEPAsPerWeek = 0;
+                }
+                if (isNaN(averageEPAsPerWeekPeriod)) {
+                    averageEPAsPerWeekPeriod = 0;
+                }
+
+
                 return {
                     'resident_name': resident.fullname,
                     'phase': resident.currentPhase.split("-").join(" "),

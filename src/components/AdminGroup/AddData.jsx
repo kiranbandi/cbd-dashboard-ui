@@ -5,7 +5,7 @@ import processRCMFile from '../../utils/processRCMFile';
 import toastr from '../../utils/toastr';
 import Loading from 'react-loading';
 import moment from 'moment';
-import { getResidentList, setRecords } from '../../utils/requestServer';
+import { getResidentList, setRecords, setNarratives } from '../../utils/requestServer';
 import rotationScheduleMap from '../../utils/rotationScheduleMap';
 
 const possibleYearTags = ['2018-1', '2018-2', '2019-1', '2019-2', '2020-1', '2020-2', 'all'];
@@ -62,8 +62,12 @@ export default class AddData extends Component {
     }
 
     onProcessFile(event) {
+
         event.preventDefault();
         const { username, fullname, warningGiven, yearTag, userData } = this.state;
+        // create an empty list for narratives that is populated when the file is processed
+        let narrativeDataList = [];
+
         if (username.length > 0 && yearTag.length > 0) {
             // turn on file processing loader
             this.setState({ processing: true });
@@ -71,14 +75,15 @@ export default class AddData extends Component {
             getFile('add-data-rcm-file')
                 .then((response) => { return processRCMFile(response) })
                 .then((processedOutput) => {
-                    let { data } = processedOutput,
-                        { rotationSchedule = {}, promotedDate = [], currentPhase } = userData;
+                    let { data, narrativeData = [] } = processedOutput,
+                        { rotationSchedule = {}, promotedDate = [] } = userData;
 
+                    // copy narrativeData over to local variable to be sent to server later
+                    narrativeDataList = _.clone(narrativeData);
 
                     //  append every record with two tags 
                     // first phase tag is to identify which phase resident was in when the epa was completed
                     // the second tag is the rotation tag to identify which rotation the resident was in
-
                     _.map(data, (record, recordID) => {
 
                         // get the rotation list for the academic year in which the record lies
@@ -130,7 +135,7 @@ export default class AddData extends Component {
                         else {
                             return yearTag != record.yearTag;
                         }
-                    })
+                    });
 
                     // Dont let user set records if the file has records outside the selected timeperiod
                     if (recordsOutsideTimeperiod.length > 0) {
@@ -160,7 +165,23 @@ export default class AddData extends Component {
                     // If there were no mismatched records or the warning was overidden
                     if (!!data) {
                         const { insertedCount } = data;
-                        toastr["success"](insertedCount + " records were added for user " + username, "SUCCESS");
+                        if (narrativeDataList.length > 0) {
+                            return setNarratives(narrativeDataList, username, yearTag);
+                        }
+                        else {
+                            // reset form params
+                            this.setState({ selectedIndex: 0, username: '', fullname: '', userData: {} });
+                            toastr["success"](insertedCount + " records were added for user " + username, "SUCCESS");
+                            promises.resolve(false);
+                        }
+
+                    }
+                })
+                // once the narrative data is also set
+                .then((data) => {
+                    // If narrative data was available and set
+                    if (!!data) {
+                        toastr["success"]("records and narratives were updated for user " + username, "SUCCESS");
                         // reset form params
                         this.setState({ selectedIndex: 0, username: '', fullname: '', userData: {} });
                     }

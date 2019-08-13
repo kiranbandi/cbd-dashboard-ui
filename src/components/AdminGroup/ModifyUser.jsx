@@ -343,7 +343,7 @@ export default class ModifyUser extends Component {
 
                         {accessType == 'resident' &&
                             <div className="input-group m-a">
-                                <label htmlFor='isGraduated' className='inner-span'>RESIDENT GRADUATED/MOVED</label>
+                                <span className='inner-span'>GRADUATED/MOVED</span>
                                 <div className="checkbox custom-control text-center custom-checkbox">
                                     <label className='filter-label'>
                                         <input name='isGraduated' type="checkbox" checked={isGraduated} onChange={this.onChange} />

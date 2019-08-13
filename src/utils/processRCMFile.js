@@ -247,15 +247,14 @@ function processNarratives(narrativeInRows, residentName) {
                 const isDateSlashFormat = dataPoint['__EMPTY_5'].indexOf('/') > -1;
 
                 narrativeStore.push({
-                    'Resident_Name': residentName,
-                    'Observer_Name': dataPoint['__EMPTY'],
-                    'Observer_Type': dataPoint['__EMPTY_1'],
-                    'Feedback': dataPoint['__EMPTY_2'],
-                    'Professionalism_Safety': dataPoint['__EMPTY_3'],
-                    'Observation_Date': moment(dataPoint.__EMPTY_4, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD'),
-                    'Completion_Date': moment(dataPoint.__EMPTY_5, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD'),
-                    'yearTag': findYearTag(moment(dataPoint.__EMPTY_4, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
-                    'academicYear': findAcademicYear(moment(dataPoint.__EMPTY_4, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
+                    'resident_name': residentName,
+                    'observer_name': dataPoint['__EMPTY'],
+                    'observer_type': dataPoint['__EMPTY_1'],
+                    'feedback': dataPoint['__EMPTY_2'],
+                    'professionalism_safety': dataPoint['__EMPTY_3'],
+                    'observation_date': moment(dataPoint.__EMPTY_4, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD'),
+                    'completion_date': moment(dataPoint.__EMPTY_5, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD'),
+                    'year_tag': findYearTag(moment(dataPoint.__EMPTY_4, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD'))
                 });
             }
 
