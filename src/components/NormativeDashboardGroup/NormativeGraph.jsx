@@ -8,7 +8,7 @@ export default class NormativeGraph extends Component {
         super(props);
         this.state = {
             trackType: 'epa_per_week',
-            dualTracks: false
+            dualTracks: true
         };
         this.radioChange = this.radioChange.bind(this);
         this.onCheckboxChange = this.onCheckboxChange.bind(this);

@@ -8,6 +8,7 @@ import { setResidentList } from '../../redux/actions/actions';
 import NormativeTable from '../NormativeDashboardGroup/NormativeTable';
 import NormativeFilterPanel from '../NormativeDashboardGroup/NormativeFilterPanel';
 import NormativeGraph from '../NormativeDashboardGroup/NormativeGraph';
+import Loading from 'react-loading';
 
 
 class NormativeDashboard extends Component {
@@ -31,8 +32,8 @@ class NormativeDashboard extends Component {
         if (residentList.length == 0) {
             // turn loader on
             this.setState({ isLoaderVisible: true });
-            // get list of all residents
-            getResidentList()
+            // get list of all residents who have not graduated
+            getResidentList(true)
                 .then((residentList) => { this.props.actions.setResidentList(residentList) })
                 // toggle loader again once the request completes
                 .catch(() => { console.log("error in fetching resident list"); })
