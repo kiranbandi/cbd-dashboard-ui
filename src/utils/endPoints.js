@@ -8,14 +8,19 @@ endPointRoot = 'https://cbd.usask.ca/api/';
 
 var endPoints = {
 
-    setRecords: endPointRoot + "records/store",
+    // end points for users
     login: endPointRoot + "users/authenticate",
     register: endPointRoot + "users/register",
     allUsers: endPointRoot + "users/all",
     updateUser: endPointRoot + "users/update",
     residents: endPointRoot + "users/residents",
+    // end points for narratives
+    residentNarratives: endPointRoot + "narratives/all",
+    setNarratives: endPointRoot + "narratives/store",
+    // end points for records
     residentRecords: endPointRoot + "records/all",
     observerList: endPointRoot + "records/all-observers",
+    setRecords: endPointRoot + "records/store",
     recordsByObserver: endPointRoot + "records/observer",
     dataDump: endPointRoot + "records/data-dump",
     getUser: endPointRoot + "users"

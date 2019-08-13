@@ -225,6 +225,25 @@ requestServer.getAllData = function() {
     });
 }
 
+// APIs for narratives
+
+requestServer.setNarratives = function(narratives, username, yearTag) {
+
+    var narrativesList = narratives.map((narrative) => {
+        return {
+            username,
+            ...narrative
+        }
+    })
+
+    return new Promise((resolve, reject) => {
+        axios.post(endPoints.setNarratives, { username, narrativesList, yearTag }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            .then((response) => { resolve(response.data) })
+            .catch((err) => errorCallback(err, reject));
+    });
+}
+
+
 function errorCallback(error, reject) {
     if (error.response && error.response.data) {
         toastr["error"](error.response.data.message, "ERROR");
