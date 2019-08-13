@@ -172,7 +172,7 @@ export default class AddData extends Component {
                             // reset form params
                             this.setState({ selectedIndex: 0, username: '', fullname: '', userData: {} });
                             toastr["success"](insertedCount + " records were added for user " + username, "SUCCESS");
-                            promises.resolve(false);
+                            Promise.resolve(false);
                         }
 
                     }
