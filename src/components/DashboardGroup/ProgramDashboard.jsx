@@ -53,8 +53,8 @@ export default class ProgramDashboard extends Component {
         this._isMounted = true;
         // toggle loader before fetching data
         this.setState({ isLoaderVisible: true });
-        // get list of all residents to get rotation count from schedule
-        getResidentList()
+        // get list of all residents to get rotation count from schedule , no filtering of graduated residents
+        getResidentList(false)
             .then((response) => {
                 residentList = _.clone(response);
                 // now get all the records in DB

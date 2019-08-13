@@ -21,8 +21,8 @@ class ResidentDashboard extends Component {
         this._isMounted = true;
         // toggle loader before fetching data
         this.setState({ isLoaderVisible: true });
-        // get list of all residents
-        getResidentList()
+        // get list of all residents who have not graduated
+        getResidentList(true)
             .then((residentList) => { this.props.actions.setResidentList(residentList) })
             // toggle loader again once the request completes
             .catch(() => { console.log("error in fetching resident list"); })

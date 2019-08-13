@@ -39,7 +39,8 @@ export default class AddData extends Component {
     }
 
     componentDidMount() {
-        getResidentList()
+        // get list of non graduated residents
+        getResidentList(true)
             .then((users) => { this.setState({ userList: [...users] }) })
             .finally(() => { this.setState({ loaderState: false }) });
     }

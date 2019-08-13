@@ -30,7 +30,9 @@ export default class ModifyUser extends Component {
             academicYear: '2018',
             rotationSchedule: {},
             longitudinalSchedule: {},
-            citeExamScore: {}
+            citeExamScore: {},
+            oralExamScore: {},
+            isGraduated: false
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -72,7 +74,9 @@ export default class ModifyUser extends Component {
                         academicYear: '2018',
                         rotationSchedule: {},
                         longitudinalSchedule: {},
-                        citeExamScore: {}
+                        citeExamScore: {},
+                        oralExamScore: {},
+                        isGraduated: false
                     })
                 })
                 // toggle loader once request is completed
@@ -115,7 +119,9 @@ export default class ModifyUser extends Component {
                         rotationSchedule: userData.rotationSchedule || {},
                         longitudinalSchedule: userData.longitudinalSchedule || {},
                         citeExamScore: userData.citeExamScore || {},
-                        academicYear: '2018'
+                        oralExamScore: userData.oralExamScore || {},
+                        academicYear: '2018',
+                        isGraduated: userData.isGraduated || false
                     });
                 })
                 .finally(() => { this.setState({ loaderState: false }) });
@@ -133,10 +139,16 @@ export default class ModifyUser extends Component {
 
 
     onChange(event) {
-        this.setState({
-            [event.target.name]:
-                ['fullname', 'rotationSchedule', 'accessList', 'longitudinalSchedule', 'citeExamScore'].indexOf(event.target.name) > -1 ? event.target.value : event.target.value.trim()
-        });
+
+        if (event.target.name == 'isGraduated') {
+            this.setState({ isGraduated: event.target.checked });
+        }
+        else {
+            this.setState({
+                [event.target.name]:
+                    ['fullname', 'rotationSchedule', 'accessList', 'longitudinalSchedule'].indexOf(event.target.name) > -1 ? event.target.value : event.target.value.trim()
+            });
+        }
     }
 
     onRotationalScheduleChange(event) {
@@ -145,28 +157,32 @@ export default class ModifyUser extends Component {
             rotationValue = event.target.value;
         // if there is no array then create an empty array and set all the values to the first possible rotation
         if (!rotationSchedule.hasOwnProperty(academicYear)) {
-            rotationSchedule[academicYear] = (rotationScheduleMap[academicYear].length-1, () => rotationList[0]);
+            rotationSchedule[academicYear] = (rotationScheduleMap[academicYear].length - 1, () => rotationList[0]);
         }
         rotationSchedule[academicYear][rotationID] = rotationValue;
         this.setState({ rotationSchedule });
     }
 
     onYearlyInputChange(event) {
-        let { academicYear, longitudinalSchedule, citeExamScore } = this.state;
+        let { academicYear, longitudinalSchedule, citeExamScore, oralExamScore } = this.state;
         if (event.target.name == 'longitudinalSchedule') {
             longitudinalSchedule[academicYear] = event.target.value;
         }
-        else {
+        else if (event.target.name == 'citeExamScore') {
             citeExamScore[academicYear] = event.target.value;
         }
-        this.setState({ longitudinalSchedule, citeExamScore });
+        else {
+            oralExamScore[academicYear] = event.target.value;
+        }
+        this.setState({ longitudinalSchedule, citeExamScore, oralExamScore });
     }
 
     onSubmit(event) {
         event.preventDefault();
         let { username, email, fullname,
             accessType, accessList, currentPhase, earlierPhaseCount, promotedDate,
-            citeExamScore, rotationSchedule, longitudinalSchedule } = this.state,
+            citeExamScore, oralExamScore, rotationSchedule,
+            longitudinalSchedule, isGraduated = false } = this.state,
             programStartDate = document.getElementById('modify-programStartDate') ? document.getElementById('modify-programStartDate').value : '';
 
         // reset promotedDate array
@@ -178,7 +194,14 @@ export default class ModifyUser extends Component {
 
         // toggle loader on before request 
         this.setState({ innerLoaderState: true });
-        updateUser({ username, email, fullname, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule, programStartDate, citeExamScore, promotedDate })
+        // make a call to backend to update that particular user
+        updateUser({
+            username, email, fullname, accessType,
+            accessList, currentPhase, rotationSchedule,
+            longitudinalSchedule, programStartDate,
+            citeExamScore, oralExamScore,
+            promotedDate, isGraduated
+        })
             .then(() => {
                 // reset form values
                 this.setState({
@@ -194,7 +217,9 @@ export default class ModifyUser extends Component {
                     academicYear: '2018',
                     rotationSchedule: {},
                     longitudinalSchedule: {},
-                    citeExamScore: {}
+                    citeExamScore: {},
+                    oralExamScore: {},
+                    isGraduated: false
                 })
             })
             // toggle loader once request is completed
@@ -209,7 +234,8 @@ export default class ModifyUser extends Component {
             deleteLoaderState, username, fullname = '',
             email, accessType, accessList, academicYear,
             currentPhase, programStartDate, earlierPhaseCount, promotedDate,
-            rotationSchedule, longitudinalSchedule, citeExamScore } = this.state;
+            rotationSchedule, longitudinalSchedule, oralExamScore,
+            citeExamScore, isGraduated = false } = this.state;
 
 
         //  first convert the array into the format required by react-select 
@@ -231,7 +257,7 @@ export default class ModifyUser extends Component {
 
         // if there is no array then create an empty array and set all the values to the first possible rotation
         if (!rotationSchedule.hasOwnProperty(academicYear)) {
-            rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length-1, () => rotationList[0]);
+            rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length - 1, () => rotationList[0]);
         };
 
         const currentSelectedValue = _.find(modifiedUserList, (d) => d.value == username) || null;
@@ -316,6 +342,17 @@ export default class ModifyUser extends Component {
                             </div>}
 
                         {accessType == 'resident' &&
+                            <div className="input-group m-a">
+                                <label htmlFor='isGraduated' className='inner-span'>RESIDENT GRADUATED/MOVED</label>
+                                <div className="checkbox custom-control text-center custom-checkbox">
+                                    <label className='filter-label'>
+                                        <input name='isGraduated' type="checkbox" checked={isGraduated} onChange={this.onChange} />
+                                        <span className="custom-control-indicator"></span>
+                                    </label>
+                                </div>
+                            </div>}
+
+                        {accessType == 'resident' &&
                             <div className='academic-box'>
                                 <h3 className='text-info m-a banner'>Set the following information for each academic year individually </h3>
                                 <div className="input-group m-a">
@@ -349,6 +386,10 @@ export default class ModifyUser extends Component {
                                     <div className="input-group text-info">
                                         <span className='inner-span'>CITE SCORE</span>
                                         <input type="text" className="form-control extra-wide" name="citeExamScore" value={citeExamScore[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
+                                    </div>
+                                    <div className="input-group text-info">
+                                        <span className='inner-span'>ORAL EXAM SCORE</span>
+                                        <input type="text" className="form-control extra-wide" name="oralExamScore" value={oralExamScore[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
                                     </div>
                                 </div>
                             </div>}

@@ -27,7 +27,8 @@ export default class CreateUser extends Component {
             currentPhase: 'transition-to-discipline',
             rotationSchedule: {},
             longitudinalSchedule: {},
-            citeExamScore: {}
+            citeExamScore: {},
+            oralExamScore: {}
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -57,14 +58,17 @@ export default class CreateUser extends Component {
     }
 
     onYearlyInputChange(event) {
-        let { academicYear, longitudinalSchedule, citeExamScore } = this.state;
+        let { academicYear, longitudinalSchedule, citeExamScore, oralExamScore } = this.state;
         if (event.target.name == 'longitudinalSchedule') {
             longitudinalSchedule[academicYear] = event.target.value;
         }
-        else {
+        else if (event.target.name == 'citeExamScore') {
             citeExamScore[academicYear] = event.target.value;
         }
-        this.setState({ longitudinalSchedule, citeExamScore });
+        else {
+            oralExamScore[academicYear] = event.target.value;
+        }
+        this.setState({ longitudinalSchedule, citeExamScore, oralExamScore });
     }
 
     onPhaseChange(event) {
@@ -81,7 +85,8 @@ export default class CreateUser extends Component {
         event.preventDefault();
         const { username, fullname,
             email, accessType, accessList, currentPhase,
-            rotationSchedule, longitudinalSchedule, earlierPhaseCount, citeExamScore, promotedDate } = this.state,
+            rotationSchedule, longitudinalSchedule, earlierPhaseCount,
+            citeExamScore, oralExamScore, promotedDate } = this.state,
             programStartDate = document.getElementById('programStartDate') ? document.getElementById('programStartDate').value : '';
 
         // set the phase promoted dates one by one 
@@ -91,7 +96,12 @@ export default class CreateUser extends Component {
 
         // toggle loader on before request 
         this.setState({ loaderState: true });
-        registerUser({ username, fullname, email, accessType, accessList, currentPhase, rotationSchedule, longitudinalSchedule, citeExamScore, programStartDate, promotedDate })
+        registerUser({
+            username, fullname, email,
+            accessType, accessList, currentPhase,
+            rotationSchedule, longitudinalSchedule, citeExamScore,
+            oralExamScore, programStartDate, promotedDate
+        })
             .then(() => {
                 // reset form values
                 this.setState(
@@ -112,7 +122,8 @@ export default class CreateUser extends Component {
                         // JSON Object with arrays of schedules for each year
                         longitudinalSchedule: {},
                         // JSON Object with arrays of scores for each year
-                        citeExamScore: {}
+                        citeExamScore: {},
+                        oralExamScore:{}
                     })
             })
             // toggle loader once request is completed
@@ -122,7 +133,7 @@ export default class CreateUser extends Component {
     }
 
     render() {
-        let { loaderState, username, fullname, citeExamScore,
+        let { loaderState, username, fullname, citeExamScore,oralExamScore,
             email, accessType, accessList,
             currentPhase, promotedDate, earlierPhaseCount, academicYear,
             programStartDate, rotationSchedule, longitudinalSchedule } = this.state;
@@ -237,6 +248,10 @@ export default class CreateUser extends Component {
                                 <div className="input-group">
                                     <span className='inner-span text-info'>CITE SCORE</span>
                                     <input type="text" className="form-control extra-wide" name="citeExamScore" value={citeExamScore[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
+                                </div>
+                                <div className="input-group text-info">
+                                    <span className='inner-span'>ORAL EXAM SCORE</span>
+                                    <input type="text" className="form-control extra-wide" name="oralExamScore" value={oralExamScore[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
                                 </div>
                             </div>
                         </div>}
