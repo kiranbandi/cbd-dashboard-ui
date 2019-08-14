@@ -4,7 +4,9 @@ import _ from 'lodash';
 import RotationSchedule from './RotationSchedule';
 import EPASpeedInfo from './EPASpeedInfo';
 import CiteScoreGraph from './CiteScoreGraph';
+import OralScoreGraph from './OralScoreGraph';
 import RecentEPATrend from './RecentEPATrend';
+import NarrativeBlock from './NarrativeBlock';
 
 
 class InfoPanel extends Component {
@@ -16,13 +18,18 @@ class InfoPanel extends Component {
 
     render() {
 
-        let { residentData, residentFilter, residentList, expiredResidentData } = this.props,
-            residentInfo = false, citeScoreData = {};
+        let { residentData, residentFilter, residentList, expiredResidentData, narrativeData } = this.props,
+            residentInfo = false, citeScoreData = {}, oralScoreData = {};
 
         if (residentFilter && residentFilter.username) {
             residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
             citeScoreData = residentInfo && residentInfo.citeExamScore;
+            oralScoreData = residentInfo && residentInfo.oralExamScore;
         }
+
+        //160px to offset the 30px margin on both sides and vertical scroll bar width
+        const widthOfRoot = document.body.getBoundingClientRect().width - 160,
+            smallScreen = widthOfRoot < 800;
 
         return (
             <div className='info-panel'>
@@ -42,8 +49,12 @@ class InfoPanel extends Component {
                                 residentInfo={residentInfo}
                                 expiredResidentData={expiredResidentData}
                                 residentFilter={residentFilter} />}
-                        <CiteScoreGraph citeScoreData={citeScoreData} />
-                        <RecentEPATrend residentData={residentData} />
+
+                        {!smallScreen && <CiteScoreGraph width={widthOfRoot / 2} citeScoreData={citeScoreData} />}
+                        {!smallScreen && <OralScoreGraph width={widthOfRoot / 2} oralScoreData={oralScoreData} />}
+                        {!smallScreen && <RecentEPATrend width={widthOfRoot / 2} residentData={residentData} />}
+                        {!smallScreen && <NarrativeBlock width={widthOfRoot / 2} narrativeData={narrativeData} />}
+                        
                     </div>
                 }
             </div>
@@ -54,6 +65,7 @@ class InfoPanel extends Component {
 function mapStateToProps(state) {
     return {
         residentData: state.oracle.residentData,
+        narrativeData: state.oracle.narrativeData,
         expiredResidentData: state.oracle.expiredResidentData,
         residentFilter: state.oracle.residentFilter,
         residentList: state.oracle.residentList

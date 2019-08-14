@@ -3,16 +3,16 @@ import { line, curveCardinal, scaleLinear } from 'd3';
 
 export default (props) => {
 
-    const { citeScoreData = {}, width } = props, yearsList = _.keys(citeScoreData);
+    const { oralScoreData = {}, width } = props, yearsList = _.keys(oralScoreData);
 
-    let citeScoreList = [];
+    let oralScoreList = [];
     // For every year get all the datapoints and add them individually 
     // the data points are comma seperated or just a single string
     _.map(yearsList, (yearKey) => {
         // // remove non numbers so that they dont screw up the plot
-        let dataPointArray = citeScoreData[yearKey].split(",").filter((d) => !isNaN(d))
+        let dataPointArray = oralScoreData[yearKey].split(",").filter((d) => (!isNaN(d) && d.length > 0));
         _.map(dataPointArray, (dataPoint) => {
-            citeScoreList.push({ 'label': yearKey, 'value': +dataPoint })
+            oralScoreList.push({ 'label': yearKey, 'value': +dataPoint })
         })
     })
 
@@ -20,10 +20,10 @@ export default (props) => {
 
     const innerHeight = 200, margin = 50;
 
-    const xScale = scaleLinear().domain([0, citeScoreList.length - 1]).range([margin, width - margin])
+    const xScale = scaleLinear().domain([0, oralScoreList.length - 1]).range([margin, width - margin])
     const yScale = scaleLinear().domain([100, 0]).range([margin, innerHeight - margin])
 
-    const pointsList = citeScoreList.map((d, i) => {
+    const pointsList = oralScoreList.map((d, i) => {
         return {
             x: xScale(i),
             y: yScale(d.value),
@@ -62,9 +62,9 @@ export default (props) => {
 
 
     return (
-        <div className='cite-exam-score-container'>
+        <div className='cite-exam-score-container pullto-left'>
             <div className="hr-divider">
-                <h4 className="hr-divider-content">Written Exam Scores</h4>
+                <h4 className="hr-divider-content">Oral Exam Scores</h4>
             </div>
             <svg height={innerHeight} width={width} className='cite-svg' >
                 {dotList.length == 0 &&

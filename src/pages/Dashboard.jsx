@@ -25,13 +25,22 @@ class DashboardRoot extends Component {
 
     render() {
 
-        const { userType } = this.props,
-            { activeBoard = 'resident' } = this.state,
-            isAllowedMultiMode = (userType == 'admin' || userType == "director");
+        let { userType } = this.props,
+            { activeBoard = 'resident' } = this.state;
+
+        let boardsLevel = '0';
+
+        if (userType == 'admin' || userType == "director") {
+            boardsLevel = '1';
+        }
+        else if (userType == 'reviewer' || userType == "supervisor") {
+            boardsLevel = '2';
+        }
+
 
         return (
             <div className='dashboard-page-root' >
-                {isAllowedMultiMode ?
+                {boardsLevel == '1' &&
                     <div>
                         <div className="hr-divider nav-pill-container-dashboard">
                             <ul className="nav nav-pills hr-divider-content hr-divider-nav">
@@ -59,9 +68,25 @@ class DashboardRoot extends Component {
                             {(activeBoard == 'table') && <DownloadDashboard />}
                             {(activeBoard == 'normative') && <NormativeDashboard />}
                         </div>
-
-                    </div>
-                    : <ResidentDashboard />}
+                    </div>}
+                {boardsLevel == '2' &&
+                    <div>
+                        <div className="hr-divider nav-pill-container-dashboard">
+                            <ul className="nav nav-pills hr-divider-content hr-divider-nav">
+                                <li className={activeBoard == 'resident' ? 'active' : ''}>
+                                    <a id='resident-tab' onClick={this.onTabClick} >RESIDENT METRICS</a>
+                                </li>
+                                <li className={activeBoard == 'normative' ? 'active' : ''}>
+                                    <a id='normative-tab' onClick={this.onTabClick} >NORMATIVE ASSESSMENT</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className='control-inner-container'>
+                            {(activeBoard == 'resident') && <ResidentDashboard />}
+                            {(activeBoard == 'normative') && <NormativeDashboard />}
+                        </div>
+                    </div>}
+                {boardsLevel == '0' && <ResidentDashboard />}
             </div >
         );
     }

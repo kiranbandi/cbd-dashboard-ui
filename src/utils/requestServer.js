@@ -156,6 +156,28 @@ requestServer.getObserverData = function(observername) {
     });
 }
 
+requestServer.getNarratives = function(username) {
+    return new Promise((resolve, reject) => {
+        axios.get(endPoints.residentNarratives + "/" + username, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            .then((response) => {
+                var narrativeList = response.data.map((record) => {
+                    return {
+                        username,
+                        "resident_name": record.resident_name,
+                        "observer_name": record.observer_name,
+                        "observer_type": record.observer_type,
+                        "feedback": record.feedback,
+                        "professionalism_safety": record.professionalism_safety,
+                        "observation_date": record.observation_date,
+                        "completion_date": record.completion_date,
+                    }
+                })
+                resolve(narrativeList);
+            })
+            .catch((err) => errorCallback(err, reject));
+    });
+}
+
 
 requestServer.getResidentData = function(username) {
     return new Promise((resolve, reject) => {

@@ -74,15 +74,12 @@ class RecentEPATrend extends Component {
 
     render() {
 
-        const dataList = this.getDataList(), { filterRange } = this.state;
+        const dataList = this.getDataList(), { filterRange } = this.state, { width } = this.props;
 
         const d3Line = line().x((d) => d.x).y((d) => d.y),
-            //125px to offset the 30px margin on both sides and vertical scroll bar width
-            widthOfRoot = document.body.getBoundingClientRect().width - 155,
             innerHeight = 200,
             marginHorizontal = 25,
             marginVertical = 25,
-            width = (widthOfRoot < 800) ? widthOfRoot : widthOfRoot / 2,
             xScale = scaleLinear().domain([0, dataList.length - 1]).range([marginHorizontal, width - marginHorizontal]),
             yScale = scaleLinear().domain([5, 1]).range([marginVertical, innerHeight - marginVertical])
 
@@ -106,11 +103,10 @@ class RecentEPATrend extends Component {
         const elementList = _.map(pointList, (d, i) => {
             return <circle
                 id={'recentPoint-' + i}
-                r={widthOfRoot < 800 ? 3 : 6}
                 className='score-point'
                 key={'recent-point-' + i}
                 fill={'#252830'}
-                cx={d.x} cy={d.y}
+                cx={d.x} cy={d.y} r={6}
                 onMouseOver={this.onMouseOver}
                 onMouseOut={this.onMouseOut}>
             </circle>
