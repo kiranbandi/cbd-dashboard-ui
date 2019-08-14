@@ -101,7 +101,10 @@ export function setResidentData(residentData, residentInfo = false) {
         dispatch({ type: types.SET_EXPIRED_RESIDENT_DATA, expiredResidentData });
     };
 
+}
 
+export function setNarrativeData(narrativeData){
+    return { type: types.SET_NARRATIVE_DATA, narrativeData }; 
 }
 
 export function setTooltipData(tooltipData) {

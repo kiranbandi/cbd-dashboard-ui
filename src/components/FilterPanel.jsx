@@ -2,12 +2,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getResidentData } from '../utils/requestServer';
+import { getResidentData, getNarratives } from '../utils/requestServer';
 import moment from 'moment';
 import templateEpaSourceMap from '../utils/epaSourceMap';
 import _ from 'lodash';
 import Loading from 'react-loading';
-import { toggleFilterLoader, setResidentFilter, setResidentData } from '../redux/actions/actions';
+import { toggleFilterLoader, setResidentFilter, setResidentData, setNarrativeData } from '../redux/actions/actions';
 
 class FilterPanel extends Component {
 
@@ -90,10 +90,15 @@ class FilterPanel extends Component {
                         })
                     })
                 }
-
                 // store the info of visibility of phase into resident info
                 residentInfo.openOnlyCurrentPhase = openOnlyCurrentPhase;
                 actions.setResidentData(groupedResidentData, residentInfo);
+                // Finally get narratives for the resident
+                return getNarratives(residentFilter.username);
+
+            })
+            .then((narrativeData) => {
+                actions.setNarrativeData(narrativeData);
             })
             .finally(() => { actions.toggleFilterLoader(); });
     }
@@ -199,7 +204,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ toggleFilterLoader, setResidentFilter, setResidentData }, dispatch)
+        actions: bindActionCreators({
+            toggleFilterLoader,
+            setResidentFilter,
+            setResidentData,
+            setNarrativeData
+        }, dispatch)
     };
 }
 

@@ -4,6 +4,7 @@ export default {
     filterLoaderState: false,
     sessionStatus: !!sessionStorage.jwt,
     residentData: null,
+    narrativeData: [],
     dataDumpPresent: false,
     expiredResidentData: [],
     residentFilter: { isAllData: true },
