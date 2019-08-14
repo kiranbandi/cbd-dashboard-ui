@@ -15,6 +15,7 @@ const columns = [{
     Header: 'FEEDBACK',
     accessor: 'feedback',
     className: 'feedback-cell',
+    sortable: false
 }];
 
 
