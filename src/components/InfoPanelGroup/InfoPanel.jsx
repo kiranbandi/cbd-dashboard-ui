@@ -53,8 +53,12 @@ class InfoPanel extends Component {
                         {!smallScreen && <CiteScoreGraph width={widthOfRoot / 2} citeScoreData={citeScoreData} />}
                         {!smallScreen && <OralScoreGraph width={widthOfRoot / 2} oralScoreData={oralScoreData} />}
                         {!smallScreen && <RecentEPATrend width={widthOfRoot / 2} residentData={residentData} />}
-                        {!smallScreen && <NarrativeBlock width={widthOfRoot / 2} narrativeData={narrativeData} />}
-                        
+                        {!smallScreen &&
+                            <NarrativeBlock
+                                width={widthOfRoot / 2}
+                                narrativeData={narrativeData}
+                                residentFilter={residentFilter} />}
+
                     </div>
                 }
             </div>
