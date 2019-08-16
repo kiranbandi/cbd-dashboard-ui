@@ -21,16 +21,28 @@ const columns = [{
 
 export default (props) => {
 
+    const { residentFilter, width, narrativeData } = props;
+    let filteredNarratives;
+
+    //  the narratives already come premarked for the date range
+    //  we just check if the date filter is active and 
+    // based on that removed the marked narratives and show them
+    if (residentFilter && !residentFilter.isAllData) {
+        filteredNarratives = _.filter(narrativeData, (d) => d.mark);
+    }
+    else {
+        filteredNarratives = _.clone(narrativeData);
+    }
 
     return (
-        <div className='narrative-box' style={{ width: props.width }}>
+        <div className='narrative-box' style={{ width }}>
             <div className="hr-divider">
                 <h4 className="hr-divider-content"> NARRATIVES </h4>
             </div>
-            {props.narrativeData.length > 0 ?
+            {filteredNarratives.length > 0 ?
                 <div className='inner-table'>
                     <ReactTable
-                        data={props.narrativeData}
+                        data={filteredNarratives}
                         columns={columns}
                         showPagination={false}
                         className='-highlight'

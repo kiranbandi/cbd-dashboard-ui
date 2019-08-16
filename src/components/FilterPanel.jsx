@@ -98,7 +98,19 @@ class FilterPanel extends Component {
 
             })
             .then((narrativeData) => {
-                actions.setNarrativeData(narrativeData);
+
+                // mark records in the selected date range with a flag
+                var markedNarrativeData = _.map(narrativeData, (d) => {
+                    if (residentFilter.isAllData) {
+                        d.mark = false;
+                    }
+                    else {
+                        d.mark = moment(d.observation_date, 'YYYY-MM-DD').isAfter(moment(residentFilter.startDate, 'MM/DD/YYYY')) && moment(d.observation_date, 'YYYY-MM-DD').isBefore(moment(residentFilter.endDate, 'MM/DD/YYYY'));
+                    }
+                    return d;
+                })
+
+                actions.setNarrativeData(markedNarrativeData);
             })
             .finally(() => { actions.toggleFilterLoader(); });
     }
