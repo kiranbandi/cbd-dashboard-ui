@@ -30,7 +30,7 @@ class DashboardRoot extends Component {
 
         let boardsLevel = '0';
 
-        if (userType == 'admin' || userType == "director") {
+        if (userType == 'super-admin' || userType == 'admin' || userType == "director") {
             boardsLevel = '1';
         }
         else if (userType == 'reviewer' || userType == "supervisor") {

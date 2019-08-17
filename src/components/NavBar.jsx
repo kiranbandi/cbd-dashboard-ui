@@ -66,7 +66,7 @@ class NavBar extends Component {
                                     <span className="icon icon-line-graph"></span> Dashboard
                                 </Link>
                             </li>
-                            {accessType == 'admin' &&
+                            {(accessType == 'admin' || accessType == 'super-admin') &&
                                 <li>
                                     <Link to={'/Admin'}>
                                         <span className="icon icon-add-user"></span> Admin
@@ -81,7 +81,7 @@ class NavBar extends Component {
                         </ul>
                         <ul className='nav navbar-nav navbar-right'>
 
-                            {accessType == 'admin' &&
+                            {(accessType == 'super-admin') &&
                                 <li>
                                     <div className="input-group">
                                         <span className='inner-span'>Program</span>

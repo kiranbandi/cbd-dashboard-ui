@@ -1,13 +1,10 @@
-var endPointRoot;
-
-endPointRoot = 'https://cbd.usask.ca/api/';
-// When testing a local server uncomment below but for most
+var endPointRoot = 'https://cbd.usask.ca/api/';
+// When testing a local server uncomment the line below but for most
 // cases we will be working with the prod server , I know this is not the
 // the most efficient solution to do this !!!
-// endPointRoot = 'http://localhost:8081/api/'
+endPointRoot = 'http://localhost:8081/api/'
 
 var endPoints = {
-
     // end points for users
     login: endPointRoot + "users/authenticate",
     register: endPointRoot + "users/register",
