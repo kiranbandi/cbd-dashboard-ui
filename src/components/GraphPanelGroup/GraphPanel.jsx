@@ -1,13 +1,15 @@
 /*global $*/
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import templateEpaSourceMap from '../../utils/epaSourceMap';
 import Tooltip from './Tooltip';
 import { bindActionCreators } from 'redux';
 import { showTooltip, setLevelVisibilityStatus } from '../../redux/actions/actions';
 import GraphRow from './GraphRow';
 import HeaderRow from './HeaderRow';
 import { ExpiredRecordTable } from '../';
+import { PROGRAM_INFO } from '../../utils/programInfo';
+
+const templateEpaSourceMap = PROGRAM_INFO.EM.epaSourceMap;
 
 
 class GraphPanel extends Component {

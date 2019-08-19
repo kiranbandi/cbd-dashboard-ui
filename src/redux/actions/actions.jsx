@@ -7,6 +7,7 @@ export function loginSuccess(userDetails) {
     sessionStorage.setItem('jwt', userDetails.token);
     sessionStorage.setItem('username', userDetails.username);
     sessionStorage.setItem('accessType', userDetails.accessType);
+    sessionStorage.setItem('program', userDetails.program);
     let { state = { nextPathname: '/Dashboard' } } = hashHistory.getCurrentLocation();
     hashHistory.push(state.nextPathname);
     return { type: types.LOG_IN_SUCCESS };
@@ -16,6 +17,7 @@ export function logOutUser() {
     sessionStorage.removeItem('jwt');
     sessionStorage.removeItem('username');
     sessionStorage.removeItem('accessType');
+    sessionStorage.removeItem('program');
     hashHistory.push("/");
     return { type: types.LOG_OUT };
 }

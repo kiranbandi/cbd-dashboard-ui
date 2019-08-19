@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { getObserverList, getObserverData } from '../../utils/requestServer';
-import templateEpaSourceMap from '../../utils/epaSourceMap';
+import { PROGRAM_INFO } from '../../utils/programInfo';
 import Loading from 'react-loading';
 import StatCard from '../InfoPanelGroup/StatCard';
 import { customFilter } from '../../utils/genericUtility';
 import _ from 'lodash';
 import ReactTable from 'react-table';
+
+const templateEpaSourceMap = PROGRAM_INFO.EM.epaSourceMap;
 
 const columns = [{
     Header: 'Date',

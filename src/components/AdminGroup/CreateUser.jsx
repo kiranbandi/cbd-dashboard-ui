@@ -1,10 +1,13 @@
 /*global $*/
 import React, { Component } from 'react';
 import { registerUser } from '../../utils/requestServer';
-import { rotationList, phasesList } from '../../utils/programInfo';
+import { PROGRAM_INFO, PHASES_LIST } from '../../utils/programInfo';
 import Loading from 'react-loading';
 import moment from 'moment';
-import rotationScheduleMap from '../../utils/rotationScheduleMap';
+
+const rotationScheduleMap = PROGRAM_INFO.EM.rotationScheduleMap;
+const rotationList = PROGRAM_INFO.EM.rotationList;
+
 
 const possibleAcademicYears = _.keys(rotationScheduleMap);
 
@@ -75,8 +78,8 @@ export default class CreateUser extends Component {
         // if he is in a phase > 1 then we need promoted dates for all previous phases
         let currentPhase = event.target.value, earlierPhaseCount = 0;
 
-        if (phasesList.indexOf(currentPhase) > 0) {
-            earlierPhaseCount = phasesList.indexOf(currentPhase);
+        if (PHASES_LIST.indexOf(currentPhase) > 0) {
+            earlierPhaseCount = PHASES_LIST.indexOf(currentPhase);
         }
         this.setState({ currentPhase, earlierPhaseCount });
     }
@@ -203,7 +206,7 @@ export default class CreateUser extends Component {
                         <div className='promoted-container'>
                             {_.map(Array(earlierPhaseCount), (d, index) => {
                                 return <div className="input-group m-a" key={'date-promoted-' + index}>
-                                    <span className='inner-span'>PROMOTED DATE FROM {phasesList[index].split("-").join(" ")}</span>
+                                    <span className='inner-span'>PROMOTED DATE FROM {PHASES_LIST[index].split("-").join(" ")}</span>
                                     <div className="input-group">
                                         <span className="input-group-addon">
                                             <span className="icon icon-calendar"></span>

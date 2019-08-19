@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Loading from 'react-loading';
-import { phasesList } from '../../utils/programInfo';
+import { PHASES_LIST } from '../../utils/programInfo';
 import moment from 'moment';
 
 const defaultDateValue = moment().format('MM/DD/YYYY');
 // Add extra option all to the list
-phasesList.unshift('all-phases');
+PHASES_LIST.unshift('all-phases');
 
 export default class NormativeFilterPanel extends Component {
     constructor(props) {
@@ -33,7 +33,7 @@ export default class NormativeFilterPanel extends Component {
                     <div className='phase-box'>
                         <label className='filter-label'>Resident Phase  </label>
                         <select id='filter-phaselist' className="custom-select">
-                            {phasesList.map((val, index) => { return <option key={index} value={val}> {val.split('-').join(' ')}</option> })}
+                            {PHASES_LIST.map((val, index) => { return <option key={index} value={val}> {val.split('-').join(' ')}</option> })}
                         </select>
                     </div>
 

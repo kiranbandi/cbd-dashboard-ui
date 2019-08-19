@@ -1,5 +1,4 @@
 const programInfo = {
-    cardsList: ["EM", "ANESTHESIA", "CARDIO", "ICU", "GEN SURG", "GIM", "NEURO", "OPTHO", "ORTHO", "PLASTICS", "TOXICOLOGY", "TRAUMA", "OBS-GYN", "PICU", "PSYCH", "FAMILY-MEDICINE", "TRANSPORT-MEDICINE"],
     rotationList: ["EM", "EM(REGINA)", "EM(PED)", "EM(RGNL)", "ANESTHESIA", "CARDIO", "ICU", "GIM", "GEN SURG", "NEURO", "OPTHO", "ORTHO", "PLASTICS", "SELECTIVE", "TOXICOLOGY", "TRAUMA", "OBS/GYN", "PICU", "PSYCH", "OTHER"],
     rotationRequired: {
         "EM": 13,
@@ -23,7 +22,6 @@ const programInfo = {
         "PSYCH": 4,
         "OTHER": 4
     },
-    phasesList: ['transition-to-discipline', 'foundations-of-discipline', 'core-of-discipline', 'transition-to-practice'],
     epaSourceMap: {
         1: {
             'ID': 'TTD',

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs';
 import ReactSelect from 'react-select';
-import templateEpaSourceMapOriginal from '../../utils/epaSourceMap';
-import { rotationList } from '../../utils/programInfo';
+import { PROGRAM_INFO } from '../../utils/programInfo';
+
+const templateEpaSourceMapOriginal = PROGRAM_INFO.EM.rotationScheduleMap;
+const rotationList = PROGRAM_INFO.EM.rotationList;
+
 let templateEpaSourceMap = _.cloneDeep(templateEpaSourceMapOriginal);
 let EPAList = [];
 
