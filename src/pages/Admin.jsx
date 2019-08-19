@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { AddData, CreateUser, ModifyUser } from '../components';
 
 class Admin extends Component {
@@ -20,7 +19,7 @@ class Admin extends Component {
     }
 
     render() {
-        const { activeTab = 'create-tab' } = this.state;
+        const { activeTab = 'create-tab' } = this.state, { programInfo } = this.props;
 
         return (
             <div className='admin-root m-t container' >
@@ -38,28 +37,23 @@ class Admin extends Component {
                     </ul>
                 </div>
                 <div className='admin-inner-container'>
-                    {(activeTab == 'create-tab') && <CreateUser />}
-                    {(activeTab == 'modify-tab') && <ModifyUser />}
-                    {(activeTab == 'addData-tab') && <AddData />}
+                    {(activeTab == 'create-tab') && <CreateUser programInfo={programInfo} />}
+                    {(activeTab == 'modify-tab') && <ModifyUser programInfo={programInfo} />}
+                    {(activeTab == 'addData-tab') && <AddData programInfo={programInfo} />}
                 </div>
             </div >
         );
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators({}, dispatch)
-    };
-}
 
 function mapStateToProps(state) {
     return {
-
+        programInfo: state.oracle.programInfo
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Admin);
+export default connect(mapStateToProps, null)(Admin);
 
 
 

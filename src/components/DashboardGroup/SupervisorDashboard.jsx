@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { getObserverList, getObserverData } from '../../utils/requestServer';
-import { PROGRAM_INFO } from '../../utils/programInfo';
 import Loading from 'react-loading';
 import StatCard from '../InfoPanelGroup/StatCard';
 import { customFilter } from '../../utils/genericUtility';
 import _ from 'lodash';
 import ReactTable from 'react-table';
 
-const templateEpaSourceMap = PROGRAM_INFO.EM.epaSourceMap;
 
 const columns = [{
     Header: 'Date',
@@ -88,7 +86,7 @@ export default class SupervisorDashboard extends Component {
                     // modify EPA labels
                     observerDataList.map((d) => {
                         let tempEPA = d['EPA'].split(".");
-                        d['EPA'] += " - " + templateEpaSourceMap[tempEPA[0]].subRoot[d['EPA']];
+                        d['EPA'] += " - " + this.props.programInfo.epaSourceMap[tempEPA[0]].subRoot[d['EPA']];
                     });
                 }
                 catch (error) { console.log(error); }

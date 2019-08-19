@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { rotationRequired } from '../../utils/programInfo';
 import moment from 'moment';
 
 export default class ScheduleBlock extends Component {
@@ -11,7 +10,7 @@ export default class ScheduleBlock extends Component {
     render() {
 
         const { scheduleDateList = [], scheduleRotationList = [],
-            LongSchedule, widthAvailable,
+            LongSchedule, widthAvailable, rotationRequired,
             isHistorical = false, isEPAperBlockVisible = false, residentData, academicYear } = this.props;
 
         // create an empty count map

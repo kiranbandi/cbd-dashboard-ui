@@ -32,6 +32,8 @@ export default function oracleReducer(state = initialState.oracle, action) {
       return Object.assign({}, state, { dataDumpPresent: action.dataDumpPresent })
     case types.SET_VISIBILITY_OPEN_STATUS:
       return Object.assign({}, state, { visibilityOpenStatus: action.visibilityOpenStatus })
+    case types.SET_PROGRAM_INFO:
+      return Object.assign({}, state, { programInfo: action.programInfo })
     default:
       return state;
   }

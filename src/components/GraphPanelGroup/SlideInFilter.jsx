@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import {PROGRAM_INFO} from '../../utils/programInfo';
 import _ from 'lodash';
 import Select from 'react-select';
 
-const templateEpaSourceMap = PROGRAM_INFO.EM.epaSourceMap;
 
 export default class SlideInFilter extends Component {
 
@@ -90,8 +88,8 @@ export default class SlideInFilter extends Component {
 
     render() {
 
-        const { innerKey, epaSource, width, clinicalFilter, patientDemographicFilter, onHighlightChange } = this.props,
-            { clinicalPresentation, patientDemographic } = templateEpaSourceMap[innerKey];
+        const { innerKey, epaSource, width, clinicalFilter, patientDemographicFilter, onHighlightChange, epaSourceMap } = this.props,
+            { clinicalPresentation, patientDemographic } = epaSourceMap[innerKey];
 
         return (
             <div className='filter-box' style={{ width: (width * 4) - 75 }}>

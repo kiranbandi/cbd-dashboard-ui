@@ -1,28 +1,8 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs';
 import ReactSelect from 'react-select';
-import { PROGRAM_INFO } from '../../utils/programInfo';
 
-const templateEpaSourceMapOriginal = PROGRAM_INFO.EM.rotationScheduleMap;
-const rotationList = PROGRAM_INFO.EM.rotationList;
-
-let templateEpaSourceMap = _.cloneDeep(templateEpaSourceMapOriginal);
-let EPAList = [];
-
-_.map(templateEpaSourceMap, (epaSource, key) => {
-    _.map(epaSource.subRoot, (epa, epaKey) => {
-        if (epa.indexOf('(SA)') > -1) {
-            delete templateEpaSourceMap[key].subRoot[epaKey];
-            delete templateEpaSourceMap[key].maxObservation[epaKey];
-        }
-        else {
-            EPAList.push(epaKey);
-        }
-    })
-});
-
-
-export default class MarketBrand extends Component {
+export default class RotationSpecificEPA extends Component {
 
     constructor(props) {
         super(props);
@@ -39,9 +19,26 @@ export default class MarketBrand extends Component {
 
     render() {
 
-        const { filteredRecords, width } = this.props,
+        const { filteredRecords, width, rotationList, epaSourceMap } = this.props,
             { selectedRotation } = this.state,
             modifiedRotationList = _.map(rotationList, (d) => ({ 'label': d, 'value': d }));
+
+        let templateEpaSourceMap = _.cloneDeep(epaSourceMap);
+        let EPAList = [];
+
+        // remove special assessment EPAs if any
+        _.map(templateEpaSourceMap, (epaSource, key) => {
+            _.map(epaSource.subRoot, (epa, epaKey) => {
+                if (epa.indexOf('(SA)') > -1) {
+                    delete templateEpaSourceMap[key].subRoot[epaKey];
+                    delete templateEpaSourceMap[key].maxObservation[epaKey];
+                }
+                else {
+                    EPAList.push(epaKey);
+                }
+            })
+        });
+
 
         // filter by tag and also remove non SA epas
         let subFilteredRecords = _.filter(filteredRecords, (d) => ((d.rotationTag == selectedRotation.label) && (EPAList.indexOf(d.epa) > -1)));
@@ -80,7 +77,7 @@ export default class MarketBrand extends Component {
 
         let lineOptions = {
             scaleBeginAtZero: true,
-            customTooltips: (tooltip) => { customToolTip(tooltip, 'chartjs-tooltip-rotation-specific') }
+            customTooltips: (tooltip) => { customToolTip(tooltip, 'chartjs-tooltip-rotation-specific', templateEpaSourceMap) }
         };
 
         return (
@@ -117,7 +114,7 @@ export default class MarketBrand extends Component {
 
 // This is a custom tool that uses bootstrap and works in hand with ChartJS standards
 // could be replace in future with custom tooltip
-function customToolTip(tooltip, elementId) {
+function customToolTip(tooltip, elementId, templateEpaSourceMap) {
 
     // Tooltip Element
     let tooltipEl = $('#' + elementId);

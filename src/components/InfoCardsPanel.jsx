@@ -3,11 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import { PROGRAM_INFO } from '../utils/programInfo';
-import { CARDS_LIST } from '../utils/programInfo';
+import { CARDS_LIST, ROTATION_SCHEDULE_MAP } from '../utils/programInfo';
 import ReactSelect from 'react-select';
 
-const rotationScheduleMap = PROGRAM_INFO.EM.rotationScheduleMap;
 
 class InfoCardsPanel extends Component {
 
@@ -53,7 +51,7 @@ class InfoCardsPanel extends Component {
 
             // if the current month is before july then pick the last year  
             currentAcademicYear = moment().month() <= 5 ? moment().year() - 1 : moment().year();
-            currentScheduleDates = rotationScheduleMap[currentAcademicYear];
+            currentScheduleDates = ROTATION_SCHEDULE_MAP[currentAcademicYear];
             currentSchedule = residentInfo.rotationSchedule && residentInfo.rotationSchedule[currentAcademicYear] || [];
 
             // find the rotation which has todays date

@@ -1,23 +1,16 @@
 import * as types from './actionTypes';
 import _ from 'lodash';
 import { hashHistory } from 'react-router';
+import { PROGRAM_INFO } from '../../utils/programInfo';
 
 
-export function loginSuccess(userDetails) {
-    sessionStorage.setItem('jwt', userDetails.token);
-    sessionStorage.setItem('username', userDetails.username);
-    sessionStorage.setItem('accessType', userDetails.accessType);
-    sessionStorage.setItem('program', userDetails.program);
+export function loginSuccess() {
     let { state = { nextPathname: '/Dashboard' } } = hashHistory.getCurrentLocation();
     hashHistory.push(state.nextPathname);
     return { type: types.LOG_IN_SUCCESS };
 }
 
 export function logOutUser() {
-    sessionStorage.removeItem('jwt');
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('accessType');
-    sessionStorage.removeItem('program');
     hashHistory.push("/");
     return { type: types.LOG_OUT };
 }
@@ -105,8 +98,8 @@ export function setResidentData(residentData, residentInfo = false) {
 
 }
 
-export function setNarrativeData(narrativeData){
-    return { type: types.SET_NARRATIVE_DATA, narrativeData }; 
+export function setNarrativeData(narrativeData) {
+    return { type: types.SET_NARRATIVE_DATA, narrativeData };
 }
 
 export function setTooltipData(tooltipData) {
@@ -117,14 +110,26 @@ export function setUserDetails(userDetails) {
     return { type: types.SET_USER_DATA, userDetails };
 }
 
+export function setProgramInfo(programInfo) {
+    return { type: types.SET_PROGRAM_INFO, programInfo };
+}
+
 export function setLoginData(userDetails) {
+    const { program = 'EM' } = userDetails, programInfo = PROGRAM_INFO[program];
+    // store data that needs to be persisted in session storage
+    storeDataInSessionStorage(userDetails, programInfo);
+    // dispatch actions to store all user and program related data in redux store
     return dispatch => {
         dispatch(setUserDetails(userDetails));
-        dispatch(loginSuccess(userDetails));
+        // dispatch source map  to action 
+        dispatch(setProgramInfo(programInfo));
+        dispatch(loginSuccess());
     };
 }
 
 export function setLogoutData() {
+    // clear data that persists in session storage
+    clearSessionStorage();
     return dispatch => {
         dispatch(setUserDetails({}));
         dispatch(logOutUser());
@@ -140,7 +145,21 @@ export function showTooltip(isTooltipVisible, tooltipData) {
     };
 }
 
+function storeDataInSessionStorage(userDetails, programInfo) {
+    sessionStorage.setItem('jwt', userDetails.token);
+    sessionStorage.setItem('username', userDetails.username);
+    sessionStorage.setItem('accessType', userDetails.accessType);
+    sessionStorage.setItem('program', userDetails.program);
+    sessionStorage.setItem('programInfo', JSON.stringify(programInfo));
+}
 
+function clearSessionStorage() {
+    sessionStorage.removeItem('jwt');
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('accessType');
+    sessionStorage.removeItem('program');
+    sessionStorage.removeItem('programInfo');
+}
 
 
 

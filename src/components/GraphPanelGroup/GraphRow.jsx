@@ -150,6 +150,7 @@ export default class GraphRow extends Component {
                         width={widthPartition}
                         innerKey={innerKey}
                         epaSource={epaSource}
+                        epaSourceMap={epaSourceMap}
                         onHighlightChange={this.onHighlightChange}
                         clinicalFilter={clinicalFilter}
                         patientDemographicFilter={patientDemographicFilter}

@@ -3,15 +3,12 @@ import { getAllData } from '../../utils/requestServer';
 import Loading from 'react-loading';
 import { getResidentList } from '../../utils/requestServer';
 import ReactSelect from 'react-select';
-import { PROGRAM_INFO, ROTATION_SCHEDULE_MAP } from '../../utils/programInfo';
+import { ROTATION_SCHEDULE_MAP } from '../../utils/programInfo';
 import moment from 'moment';
 import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation';
 import EPAMonthlyRotation from '../ProgramEvaluationGroup/EPAMonthlyRotation';
 import EPAspecificRotation from '../ProgramEvaluationGroup/EPAspecificRotation';
 import RotationSpecificEPA from '../ProgramEvaluationGroup/RotationSpecificEPA';
-
-const templateEpaSourceMap = PROGRAM_INFO.EM.epaSourceMap;
-
 
 const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP), (d) => (
     {
@@ -85,6 +82,7 @@ export default class ProgramDashboard extends Component {
     render() {
 
         const { allRecords, academicYear, selected, rotationCount } = this.state,
+            { epaSourceMap, rotationList } = this.props.programInfo,
             // Filter out records which fall in a given academic year 
             recordsInAcademicYear = _.filter(allRecords, (d) => matchAcademicYear(d.observation_date, academicYear.value));
 
@@ -125,7 +123,7 @@ export default class ProgramDashboard extends Component {
                                     onClick={this.selectionChange}>
                                     All Phases
                                     </div>
-                                {_.map(templateEpaSourceMap, (inner, i) => {
+                                {_.map(epaSourceMap, (inner, i) => {
                                     return <div
                                         className={'selection-box box-id-' + (inner.ID) + " " + (selected == (inner.ID) ? 'selected-button' : '')}
                                         key={'select-' + inner.ID}
@@ -140,9 +138,12 @@ export default class ProgramDashboard extends Component {
                                 {/* List all vis boxes */}
                                 <EPAspecificRotation
                                     width={width}
+                                    epaSourceMap={epaSourceMap}
                                     filteredRecords={filteredRecords} />
                                 <RotationSpecificEPA
                                     width={width}
+                                    epaSourceMap={epaSourceMap}
+                                    rotationList={rotationList}
                                     filteredRecords={filteredRecords} />
                                 <EPAOverallbyRotation
                                     width={width}
@@ -165,7 +166,7 @@ function matchAcademicYear(recordDate, academicYear) {
     return (timeObj.isBetween(moment('07/01/' + Number(academicYear), 'MM/DD/YYYY'), moment('06/30/' + (Number(academicYear) + 1), 'MM/DD/YYYY'), 'days', '[]'))
 }
 
-function calculateRotationCount(residentList, academicYear, phase) {
+function calculateRotationCount(residentList, academicYear) {
 
     let rotationCount = {};
 

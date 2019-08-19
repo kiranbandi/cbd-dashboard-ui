@@ -14,7 +14,8 @@ authorization.checkloginStatus = function(nextState, replace) {
 }
 
 authorization.checkAdminStatus = function(nextState, replace) {
-    if (sessionStorage.accessType != 'admin' || sessionStorage.accessType != 'super-admin') {
+
+    if (sessionStorage.accessType !== 'admin' && sessionStorage.accessType !== 'super-admin') {
         toastr["error"]("You do not have access to view this page", "Authorization Error");
         replace({
             pathname: '/',

@@ -31,7 +31,7 @@ export default class InfoPanel extends Component {
             //200px to offset the 30px margin on both sides and vertical scroll bar width
             widthAvailable = document.body.getBoundingClientRect().width - 200,
             widthForEachMonth = widthAvailable / 12,
-            { residentInfo, residentData } = this.props,
+            { residentInfo, residentData, rotationRequired } = this.props,
             { isHistoryVisible, isEPAperBlockVisible } = this.state,
             { rotationSchedule = {}, longitudinalSchedule = {}, programStartDate } = residentInfo;
 
@@ -72,6 +72,7 @@ export default class InfoPanel extends Component {
                             key={'yearblock-' + year}
                             residentData={residentData}
                             isEPAperBlockVisible={isEPAperBlockVisible}
+                            rotationRequired={rotationRequired}
                             academicYear={year}
                             scheduleDateList={ROTATION_SCHEDULE_MAP[year]}
                             scheduleRotationList={rotationSchedule[year]}
@@ -88,6 +89,7 @@ export default class InfoPanel extends Component {
                 <ScheduleBlock
                     isEPAperBlockVisible={isEPAperBlockVisible}
                     residentData={residentData}
+                    rotationRequired={rotationRequired}
                     academicYear={currentAcademicYear}
                     scheduleDateList={currentScheduleDates}
                     scheduleRotationList={currentSchedule}
