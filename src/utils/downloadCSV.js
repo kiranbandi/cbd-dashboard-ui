@@ -16,6 +16,9 @@ export default function() {
             } else return '"' + value + '"';
         }).join(',');
     });
+
+    debugger;
+
     // Add file headers to top of the file
     convertedData.unshift(['Date', 'Resident Name', 'EPA', 'Observer Name', 'Observer Type', 'Rating', 'Type', 'Situation Context', 'Feedback', 'Professionalism Safety', 'EPA Expired']);
     var csvContent = "data:text/csv;charset=utf-8," + convertedData.join("\n"),
