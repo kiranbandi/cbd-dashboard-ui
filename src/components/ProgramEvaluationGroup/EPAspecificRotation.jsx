@@ -1,19 +1,6 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs';
 import ReactSelect from 'react-select';
-import { PROGRAM_INFO } from '../../utils/programInfo';
-
-const templateEpaSourceMapOriginal = PROGRAM_INFO.EM.rotationScheduleMap;
-
-let templateEpaSourceMap = _.cloneDeep(templateEpaSourceMapOriginal);
-_.map(templateEpaSourceMap, (epaSource, key) => {
-    _.map(epaSource.subRoot, (epa, epaKey) => {
-        if (epa.indexOf('(SA)') > -1) {
-            delete templateEpaSourceMap[key].subRoot[epaKey];
-            delete templateEpaSourceMap[key].maxObservation[epaKey];
-        }
-    })
-});
 
 export default class EPASpecRotation extends Component {
 
@@ -31,17 +18,30 @@ export default class EPASpecRotation extends Component {
 
     render() {
 
-        const { filteredRecords, width } = this.props,
-            { selectedEPA } = this.state,
-            groupedEPAList = _.map(templateEpaSourceMap, (d) => ({
-                'label': d.topic,
-                'options': _.map(d.subRoot, (sub, subKey) => {
-                    return {
-                        'label': subKey + " - " + sub,
-                        'value': subKey
-                    };
-                })
-            }));
+        const { filteredRecords, width, epaSourceMap } = this.props,
+            { selectedEPA } = this.state;
+
+        let templateEpaSourceMap = _.cloneDeep(epaSourceMap);
+        // remove references to special assessments if any
+        _.map(templateEpaSourceMap, (epaSource, key) => {
+            _.map(epaSource.subRoot, (epa, epaKey) => {
+                if (epa.indexOf('(SA)') > -1) {
+                    delete templateEpaSourceMap[key].subRoot[epaKey];
+                    delete templateEpaSourceMap[key].maxObservation[epaKey];
+                }
+            })
+        });
+
+
+        const groupedEPAList = _.map(templateEpaSourceMap, (d) => ({
+            'label': d.topic,
+            'options': _.map(d.subRoot, (sub, subKey) => {
+                return {
+                    'label': subKey + " - " + sub,
+                    'value': subKey
+                };
+            })
+        }));
 
         let subFilteredRecords = _.filter(filteredRecords, (d) => d.epa == selectedEPA.value);
 

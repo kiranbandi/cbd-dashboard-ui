@@ -3,14 +3,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getResidentData, getNarratives } from '../utils/requestServer';
-
-import { PROGRAM_INFO } from '../utils/programInfo';
 import moment from 'moment';
 import _ from 'lodash';
 import Loading from 'react-loading';
 import { toggleFilterLoader, setResidentFilter, setResidentData, setNarrativeData } from '../redux/actions/actions';
-
-const templateEpaSourceMap = PROGRAM_INFO.EM.rotationScheduleMap;
 
 class FilterPanel extends Component {
 
@@ -48,7 +44,7 @@ class FilterPanel extends Component {
     }
 
     onSubmit(event) {
-        let { residentFilter = {}, actions, residentList } = this.props,
+        let { residentFilter = {}, actions, residentList, programInfo } = this.props,
             { showUncommencedEPA, openOnlyCurrentPhase } = this.state;
 
         residentFilter.startDate = document.getElementById('filter-startDate').value;
@@ -85,7 +81,7 @@ class FilterPanel extends Component {
 
                 // if uncommenced EPAs are needed to be seen then sub in empty records
                 if (showUncommencedEPA) {
-                    _.map(templateEpaSourceMap, (source) => {
+                    _.map(programInfo.epaSourceMap, (source) => {
                         _.map(source.subRoot, (epa, innerKey) => {
                             if (!groupedResidentData.hasOwnProperty(innerKey)) {
                                 groupedResidentData[innerKey] = [];
@@ -213,7 +209,8 @@ function mapStateToProps(state) {
     return {
         residentFilter: state.oracle.residentFilter,
         residentList: state.oracle.residentList,
-        filterLoaderState: state.oracle.filterLoaderState
+        filterLoaderState: state.oracle.filterLoaderState,
+        programInfo: state.oracle.programInfo
     };
 }
 

@@ -21,6 +21,6 @@ export default {
       accessType: sessionStorage.accessType,
       program: sessionStorage.program
     },
-    epaSourceMap: null
+    programInfo: JSON.parse(sessionStorage.programInfo || null)
   }
 };

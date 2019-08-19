@@ -6,9 +6,7 @@ import moment from 'moment';
 import { line, scaleLinear } from 'd3';
 import TrackTrails from '../GraphPanelGroup/TrackTrails';
 import { showTooltip } from '../../redux/actions/actions';
-import {PROGRAM_INFO} from '../../utils/programInfo';
 
-const templateEpaSourceMap = PROGRAM_INFO.EM.epaSourceMap;
 
 class RecentEPATrend extends Component {
 
@@ -29,12 +27,12 @@ class RecentEPATrend extends Component {
     }
 
     onMouseOver(event) {
-        const { actions } = this.props;
+        const { actions, programInfo } = this.props;
 
         let pointId = event.target.id.split("-")[1],
             data = this.getDataList()[pointId],
             tempEPA = data['EPA'].split("."),
-            epaText = data['EPA'] + " - " + templateEpaSourceMap[tempEPA[0]].subRoot[data['EPA']];
+            epaText = data['EPA'] + " - " + programInfo.epaSourceMap[tempEPA[0]].subRoot[data['EPA']];
 
 
         var pageWidth = document.body.getBoundingClientRect().width;

@@ -1,15 +1,12 @@
 /*global $*/
 import React, { Component } from 'react';
 import { registerUser } from '../../utils/requestServer';
-import { PROGRAM_INFO, PHASES_LIST } from '../../utils/programInfo';
+import { ROTATION_SCHEDULE_MAP, PHASES_LIST } from '../../utils/programInfo';
 import Loading from 'react-loading';
 import moment from 'moment';
 
-const rotationScheduleMap = PROGRAM_INFO.EM.rotationScheduleMap;
-const rotationList = PROGRAM_INFO.EM.rotationList;
 
-
-const possibleAcademicYears = _.keys(rotationScheduleMap);
+const possibleAcademicYears = _.keys(ROTATION_SCHEDULE_MAP);
 
 
 export default class CreateUser extends Component {
@@ -50,11 +47,12 @@ export default class CreateUser extends Component {
 
     onRotationalScheduleChange(event) {
         const { academicYear, rotationSchedule } = this.state,
+            { rotationList } = this.props.programInfo,
             rotationID = event.target.id.split("-")[1],
             rotationValue = event.target.value;
         // if there is no array then create an empty array and set all the values to the first possible rotation
         if (!rotationSchedule.hasOwnProperty(academicYear)) {
-            rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length - 1, () => rotationList[0]);
+            rotationSchedule[academicYear] = _.times(ROTATION_SCHEDULE_MAP[academicYear].length - 1, () => rotationList[0]);
         }
         rotationSchedule[academicYear][rotationID] = rotationValue;
         this.setState({ rotationSchedule });
@@ -126,7 +124,7 @@ export default class CreateUser extends Component {
                         longitudinalSchedule: {},
                         // JSON Object with arrays of scores for each year
                         citeExamScore: {},
-                        oralExamScore:{}
+                        oralExamScore: {}
                     })
             })
             // toggle loader once request is completed
@@ -136,14 +134,15 @@ export default class CreateUser extends Component {
     }
 
     render() {
-        let { loaderState, username, fullname, citeExamScore,oralExamScore,
+        let { loaderState, username, fullname, citeExamScore, oralExamScore,
             email, accessType, accessList,
             currentPhase, promotedDate, earlierPhaseCount, academicYear,
-            programStartDate, rotationSchedule, longitudinalSchedule } = this.state;
+            programStartDate, rotationSchedule, longitudinalSchedule } = this.state,
+            { rotationList } = this.props.programInfo;
 
         // if there is no array then create an empty array and set all the values to the first possible rotation
         if (!rotationSchedule.hasOwnProperty(academicYear)) {
-            rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length - 1, () => rotationList[0]);
+            rotationSchedule[academicYear] = _.times(ROTATION_SCHEDULE_MAP[academicYear].length - 1, () => rotationList[0]);
         }
 
 
@@ -231,7 +230,7 @@ export default class CreateUser extends Component {
                                     <span className='inner-span rotation-span text-info'>ROTATION SCHEDULE</span>
                                     <div className='rotation-root'>
                                         {/* ignore the last slot as its a placeholder for end time slot */}
-                                        {_.map(rotationScheduleMap[academicYear].slice(0, rotationScheduleMap[academicYear].length - 1), (slot, slotID) => {
+                                        {_.map(ROTATION_SCHEDULE_MAP[academicYear].slice(0, ROTATION_SCHEDULE_MAP[academicYear].length - 1), (slot, slotID) => {
                                             return <span className='slot-set' key={'rotation-' + "-" + slotID}>
                                                 <span className='slot-label'>{slot}</span>
                                                 <select

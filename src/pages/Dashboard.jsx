@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { ResidentDashboard, ProgramDashboard, SupervisorDashboard, NormativeDashboard, DownloadDashboard } from '../components';
-
 
 class DashboardRoot extends Component {
 
@@ -25,7 +23,7 @@ class DashboardRoot extends Component {
 
     render() {
 
-        let { userType } = this.props,
+        let { userType, programInfo } = this.props,
             { activeBoard = 'resident' } = this.state;
 
         let boardsLevel = '0';
@@ -63,8 +61,8 @@ class DashboardRoot extends Component {
                         </div>
                         <div className='control-inner-container'>
                             {(activeBoard == 'resident') && <ResidentDashboard />}
-                            {(activeBoard == 'supervisor') && <SupervisorDashboard />}
-                            {(activeBoard == 'program') && <ProgramDashboard />}
+                            {(activeBoard == 'supervisor') && <SupervisorDashboard programInfo={programInfo}/>}
+                            {(activeBoard == 'program') && <ProgramDashboard programInfo={programInfo} />}
                             {(activeBoard == 'table') && <DownloadDashboard />}
                             {(activeBoard == 'normative') && <NormativeDashboard />}
                         </div>
@@ -86,25 +84,21 @@ class DashboardRoot extends Component {
                             {(activeBoard == 'normative') && <NormativeDashboard />}
                         </div>
                     </div>}
-                {boardsLevel == '0' && <ResidentDashboard />}
+                {boardsLevel == '0' && <ResidentDashboard programInfo={programInfo} />}
             </div >
         );
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators({}, dispatch)
-    };
-}
 
 function mapStateToProps(state) {
     return {
-        userType: state.oracle.userDetails.accessType
+        userType: state.oracle.userDetails.accessType,
+        programInfo: state.oracle.programInfo
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardRoot);
+export default connect(mapStateToProps, null)(DashboardRoot);
 
 
 

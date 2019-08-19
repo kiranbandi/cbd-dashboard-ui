@@ -18,7 +18,9 @@ class InfoPanel extends Component {
 
     render() {
 
-        let { residentData, residentFilter, residentList, expiredResidentData, narrativeData } = this.props,
+        let { residentData, residentFilter,
+            residentList, expiredResidentData,
+            programInfo, narrativeData } = this.props,
             residentInfo = false, citeScoreData = {}, oralScoreData = {};
 
         if (residentFilter && residentFilter.username) {
@@ -41,7 +43,7 @@ class InfoPanel extends Component {
                             <span><b>LAST UPDATED ON -</b> {(new Date(residentInfo.uploadedData)).toDateString()}</span>
                         </div>
                         {!!residentData &&
-                            <RotationSchedule residentData={residentData} residentInfo={residentInfo} />
+                            <RotationSchedule residentData={residentData} residentInfo={residentInfo} rotationRequired={programInfo.rotationRequired} />
                         }
                         {!!residentData &&
                             <EPASpeedInfo
@@ -52,7 +54,7 @@ class InfoPanel extends Component {
 
                         {!smallScreen && <CiteScoreGraph width={widthOfRoot / 2} citeScoreData={citeScoreData} />}
                         {!smallScreen && <OralScoreGraph width={widthOfRoot / 2} oralScoreData={oralScoreData} />}
-                        {!smallScreen && <RecentEPATrend width={widthOfRoot / 2} residentData={residentData} />}
+                        {!smallScreen && <RecentEPATrend width={widthOfRoot / 2} residentData={residentData} programInfo={programInfo} />}
                         {!smallScreen &&
                             <NarrativeBlock
                                 width={widthOfRoot / 2}
@@ -72,7 +74,8 @@ function mapStateToProps(state) {
         narrativeData: state.oracle.narrativeData,
         expiredResidentData: state.oracle.expiredResidentData,
         residentFilter: state.oracle.residentFilter,
-        residentList: state.oracle.residentList
+        residentList: state.oracle.residentList,
+        programInfo: state.oracle.programInfo
     };
 }
 

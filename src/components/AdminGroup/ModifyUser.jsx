@@ -1,12 +1,10 @@
 /*global $*/
 import React, { Component } from 'react';
 import { getAllUsers, getUser, updateUser, deleteUser } from '../../utils/requestServer';
-import { PROGRAM_INFO, PHASES_LIST, ROTATION_SCHEDULE_MAP } from '../../utils/programInfo';
+import { PHASES_LIST, ROTATION_SCHEDULE_MAP } from '../../utils/programInfo';
 import Loading from 'react-loading';
 import moment from 'moment';
 import ReactSelect from 'react-select';
-
-const rotationList = PROGRAM_INFO.EM.rotationList;
 
 const possibleAcademicYears = _.keys(ROTATION_SCHEDULE_MAP);
 
@@ -154,6 +152,7 @@ export default class ModifyUser extends Component {
 
     onRotationalScheduleChange(event) {
         const { academicYear, rotationSchedule } = this.state,
+            { rotationList } = this.props.programInfo,
             rotationID = event.target.id.split("-")[1],
             rotationValue = event.target.value;
         // if there is no array then create an empty array and set all the values to the first possible rotation
@@ -236,7 +235,8 @@ export default class ModifyUser extends Component {
             email, accessType, accessList, academicYear,
             currentPhase, programStartDate, earlierPhaseCount, promotedDate,
             rotationSchedule, longitudinalSchedule, oralExamScore,
-            citeExamScore, isGraduated = false } = this.state;
+            citeExamScore, isGraduated = false } = this.state,
+            { rotationList } = this.props.programInfo;
 
 
         //  first convert the array into the format required by react-select 

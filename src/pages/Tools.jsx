@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FileUpload, GraphPanel, ExpiredRecordTable } from '../components';
+import { FileUpload, GraphPanel } from '../components';
 import getFile from '../utils/getFile';
 import processRCMFile from '../utils/processRCMFile';
 import downloadCSV from '../utils/downloadCSV';

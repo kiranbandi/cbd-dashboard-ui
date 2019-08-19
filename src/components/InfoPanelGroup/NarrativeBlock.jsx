@@ -49,7 +49,7 @@ export default (props) => {
                         noDataText='No Narratives Available'
                         defaultSorted={[{ id: "Date", desc: true }]} />
                 </div> :
-                <h2 className='inner-header'>No Records Available</h2>}
+                <h2 className='inner-header'>No Narratives Available</h2>}
 
         </div>)
 }

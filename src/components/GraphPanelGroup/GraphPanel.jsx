@@ -7,10 +7,6 @@ import { showTooltip, setLevelVisibilityStatus } from '../../redux/actions/actio
 import GraphRow from './GraphRow';
 import HeaderRow from './HeaderRow';
 import { ExpiredRecordTable } from '../';
-import { PROGRAM_INFO } from '../../utils/programInfo';
-
-const templateEpaSourceMap = PROGRAM_INFO.EM.epaSourceMap;
-
 
 class GraphPanel extends Component {
 
@@ -84,12 +80,12 @@ class GraphPanel extends Component {
             isEMDepartment = false,
             tooltipData,
             epaSourceMap,
-            levelVisibilityOpenStatus } = this.props;
+            levelVisibilityOpenStatus, programInfo } = this.props;
 
         const { openTableID, openFilterID } = this.state;
 
         // if there is no source map provided then use the Emergency medicine Template Map
-        epaSourceMap = !!epaSourceMap ? epaSourceMap : templateEpaSourceMap;
+        epaSourceMap = !!epaSourceMap ? epaSourceMap : programInfo.epaSourceMap;
 
         // if no data then set flag to false if not group data by root key
         let epaSourcesThatExist = false;
@@ -187,7 +183,8 @@ function mapStateToProps(state) {
         expiredResidentData: state.oracle.expiredResidentData,
         isTooltipVisible: state.oracle.isTooltipVisible,
         tooltipData: state.oracle.tooltipData,
-        levelVisibilityOpenStatus: state.oracle.visibilityOpenStatus
+        levelVisibilityOpenStatus: state.oracle.visibilityOpenStatus,
+        programInfo: state.oracle.programInfo
     };
 }
 
