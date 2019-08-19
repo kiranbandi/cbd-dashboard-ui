@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 import moment from 'moment';
-import templateEpaSourceMap from '../../utils/epaSourceMap';
 import { line, scaleLinear } from 'd3';
 import TrackTrails from '../GraphPanelGroup/TrackTrails';
 import { showTooltip } from '../../redux/actions/actions';
+import {PROGRAM_INFO} from '../../utils/programInfo';
+
+const templateEpaSourceMap = PROGRAM_INFO.EM.epaSourceMap;
 
 class RecentEPATrend extends Component {
 

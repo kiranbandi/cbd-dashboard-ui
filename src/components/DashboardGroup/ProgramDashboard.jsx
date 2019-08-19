@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import { getAllData } from '../../utils/requestServer';
 import Loading from 'react-loading';
 import { getResidentList } from '../../utils/requestServer';
-import templateEpaSourceMap from '../../utils/epaSourceMap';
 import ReactSelect from 'react-select';
-import rotationScheduleMap from '../../utils/rotationScheduleMap';
+import { PROGRAM_INFO, ROTATION_SCHEDULE_MAP } from '../../utils/programInfo';
 import moment from 'moment';
 import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation';
 import EPAMonthlyRotation from '../ProgramEvaluationGroup/EPAMonthlyRotation';
 import EPAspecificRotation from '../ProgramEvaluationGroup/EPAspecificRotation';
 import RotationSpecificEPA from '../ProgramEvaluationGroup/RotationSpecificEPA';
 
-const possibleAcademicYears = _.map(_.keys(rotationScheduleMap), (d) => (
+const templateEpaSourceMap = PROGRAM_INFO.EM.epaSourceMap;
+
+
+const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP), (d) => (
     {
         'label': d + "-" + (Number(d) + 1),
         'value': d

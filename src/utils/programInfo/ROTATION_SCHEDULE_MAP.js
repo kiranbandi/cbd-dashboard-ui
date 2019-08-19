@@ -2,7 +2,7 @@
 //  basic assumptions are that the schedule for 
 // every year should start on 1 July of the year 
 // and end on the 30th Jun of the next year
-const rotationScheduleMap = {
+const ROTATION_SCHEDULE_MAP = {
     "2016": ["01-Jul-2016", "30-Jul-2016", "27-Aug-2016", "24-Sep-2016",
         "22-Oct-2016", "19-Nov-2016", "17-Dec-2016", "14-Jan-2017",
         "11-Feb-2017", "11-Mar-2017", "08-Apr-2017", "06-May-2017",
@@ -35,4 +35,4 @@ const rotationScheduleMap = {
     ]
 };
 
-module.exports = rotationScheduleMap;
+module.exports = ROTATION_SCHEDULE_MAP;

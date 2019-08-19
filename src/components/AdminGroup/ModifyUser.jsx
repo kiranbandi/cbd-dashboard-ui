@@ -1,13 +1,14 @@
 /*global $*/
 import React, { Component } from 'react';
 import { getAllUsers, getUser, updateUser, deleteUser } from '../../utils/requestServer';
-import { rotationList, phasesList } from '../../utils/programInfo';
+import { PROGRAM_INFO, PHASES_LIST, ROTATION_SCHEDULE_MAP } from '../../utils/programInfo';
 import Loading from 'react-loading';
 import moment from 'moment';
 import ReactSelect from 'react-select';
-import rotationScheduleMap from '../../utils/rotationScheduleMap';
 
-const possibleAcademicYears = _.keys(rotationScheduleMap);
+const rotationList = PROGRAM_INFO.EM.rotationList;
+
+const possibleAcademicYears = _.keys(ROTATION_SCHEDULE_MAP);
 
 export default class ModifyUser extends Component {
 
@@ -114,7 +115,7 @@ export default class ModifyUser extends Component {
                         accessList: userData.accessList || '',
                         programStartDate: moment(userData.programStartDate).format('MM/DD/YYYY') || moment().format('MM/DD/YYYY'),
                         currentPhase: userData.currentPhase || 'transition-to-discipline',
-                        earlierPhaseCount: phasesList.indexOf(userData.currentPhase || 'transition-to-discipline'),
+                        earlierPhaseCount: PHASES_LIST.indexOf(userData.currentPhase || 'transition-to-discipline'),
                         promotedDate: userData.promotedDate || [],
                         rotationSchedule: userData.rotationSchedule || {},
                         longitudinalSchedule: userData.longitudinalSchedule || {},
@@ -131,8 +132,8 @@ export default class ModifyUser extends Component {
     onPhaseChange(event) {
         // if he is in a phase > 1 then we need promoted dates for all previous phases
         let currentPhase = event.target.value, earlierPhaseCount = 0;
-        if (phasesList.indexOf(currentPhase) > 0) {
-            earlierPhaseCount = phasesList.indexOf(currentPhase);
+        if (PHASES_LIST.indexOf(currentPhase) > 0) {
+            earlierPhaseCount = PHASES_LIST.indexOf(currentPhase);
         }
         this.setState({ currentPhase, earlierPhaseCount });
     }
@@ -157,7 +158,7 @@ export default class ModifyUser extends Component {
             rotationValue = event.target.value;
         // if there is no array then create an empty array and set all the values to the first possible rotation
         if (!rotationSchedule.hasOwnProperty(academicYear)) {
-            rotationSchedule[academicYear] = (rotationScheduleMap[academicYear].length - 1, () => rotationList[0]);
+            rotationSchedule[academicYear] = (ROTATION_SCHEDULE_MAP[academicYear].length - 1, () => rotationList[0]);
         }
         rotationSchedule[academicYear][rotationID] = rotationValue;
         this.setState({ rotationSchedule });
@@ -257,7 +258,7 @@ export default class ModifyUser extends Component {
 
         // if there is no array then create an empty array and set all the values to the first possible rotation
         if (!rotationSchedule.hasOwnProperty(academicYear)) {
-            rotationSchedule[academicYear] = _.times(rotationScheduleMap[academicYear].length - 1, () => rotationList[0]);
+            rotationSchedule[academicYear] = _.times(ROTATION_SCHEDULE_MAP[academicYear].length - 1, () => rotationList[0]);
         };
 
         const currentSelectedValue = _.find(modifiedUserList, (d) => d.value == username) || null;
@@ -330,7 +331,7 @@ export default class ModifyUser extends Component {
                             <div className='promoted-container'>
                                 {_.map(Array(earlierPhaseCount), (d, index) => {
                                     return <div className="input-group m-a" key={'date-promoted-' + index}>
-                                        <span className='inner-span'>PROMOTED DATE - {phasesList[index].split("-").join(" ")}</span>
+                                        <span className='inner-span'>PROMOTED DATE - {PHASES_LIST[index].split("-").join(" ")}</span>
                                         <div className="input-group">
                                             <span className="input-group-addon">
                                                 <span className="icon icon-calendar"></span>
@@ -366,7 +367,7 @@ export default class ModifyUser extends Component {
                                         <span className='inner-span rotation-span text-info'>ROTATION SCHEDULE</span>
                                         <div className='rotation-root'>
                                             {/* ignore the last slot as its a placeholder for end time slot */}
-                                            {_.map(rotationScheduleMap[academicYear].slice(0, rotationScheduleMap[academicYear].length - 1), (slot, slotID) => {
+                                            {_.map(ROTATION_SCHEDULE_MAP[academicYear].slice(0, ROTATION_SCHEDULE_MAP[academicYear].length - 1), (slot, slotID) => {
                                                 return <span className='slot-set' key={'rotation-' + "-" + slotID}>
                                                     <span className='slot-label'>{slot}</span>
                                                     <select

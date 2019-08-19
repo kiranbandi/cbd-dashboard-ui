@@ -23,7 +23,11 @@ class Container extends Component {
         if (pawsTicket) {
             this.setState({ showPawsLoginLoader: true });
             requestLogin(pawsTicket)
-                .then((user) => { this.props.actions.setLoginData(user) })
+                .then((user) => { 
+                    
+                    debugger;
+                    
+                    this.props.actions.setLoginData(user) })
                 .catch((err) => { console.log(err) })
                 .finally(() => {
                     this.setState({ showPawsLoginLoader: false });

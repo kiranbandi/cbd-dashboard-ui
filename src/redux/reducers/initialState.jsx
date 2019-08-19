@@ -18,7 +18,9 @@ export default {
     },
     userDetails: {
       username: sessionStorage.username,
-      accessType: sessionStorage.accessType
-    }
+      accessType: sessionStorage.accessType,
+      program: sessionStorage.program
+    },
+    epaSourceMap: null
   }
 };

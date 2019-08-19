@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import rotationScheduleMap from '../../utils/rotationScheduleMap';
 import ScheduleBlock from './ScheduleBlock';
-
+import { ROTATION_SCHEDULE_MAP } from '../../utils/programInfo';
 
 export default class InfoPanel extends Component {
 
@@ -38,7 +37,7 @@ export default class InfoPanel extends Component {
 
         // if the current month is before july then pick the last year  
         const currentAcademicYear = moment().month() <= 5 ? moment().year() - 1 : moment().year();
-        const currentScheduleDates = rotationScheduleMap[currentAcademicYear];
+        const currentScheduleDates = ROTATION_SCHEDULE_MAP[currentAcademicYear];
         const currentSchedule = rotationSchedule[currentAcademicYear];
         const currentLongSchedule = longitudinalSchedule[currentAcademicYear];
 
@@ -74,7 +73,7 @@ export default class InfoPanel extends Component {
                             residentData={residentData}
                             isEPAperBlockVisible={isEPAperBlockVisible}
                             academicYear={year}
-                            scheduleDateList={rotationScheduleMap[year]}
+                            scheduleDateList={ROTATION_SCHEDULE_MAP[year]}
                             scheduleRotationList={rotationSchedule[year]}
                             LongSchedule={''}
                             widthAvailable={widthAvailable}

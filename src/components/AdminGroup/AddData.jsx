@@ -6,7 +6,7 @@ import toastr from '../../utils/toastr';
 import Loading from 'react-loading';
 import moment from 'moment';
 import { getResidentList, setRecords, setNarratives } from '../../utils/requestServer';
-import rotationScheduleMap from '../../utils/rotationScheduleMap';
+import { ROTATION_SCHEDULE_MAP } from '../../utils/programInfo';
 
 const possibleYearTags = ['2018-1', '2018-2', '2019-1', '2019-2', '2020-1', '2020-2', 'all'];
 const possibleSlots = {
@@ -87,7 +87,7 @@ export default class AddData extends Component {
                     _.map(data, (record, recordID) => {
 
                         // get the rotation list for the academic year in which the record lies
-                        let rotationScheduleList = rotationScheduleMap[record.academicYear];
+                        let rotationScheduleList = ROTATION_SCHEDULE_MAP[record.academicYear];
 
                         //  find the rotation slot in which the record lies
                         let rotationIndex = _.findIndex(rotationScheduleList, (slotStart, slotIndex) => {

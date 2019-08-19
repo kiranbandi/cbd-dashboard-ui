@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import rotationScheduleMap from '../utils/rotationScheduleMap';
-import { cardsList } from '../utils/programInfo';
+import { PROGRAM_INFO } from '../utils/programInfo';
+import { CARDS_LIST } from '../utils/programInfo';
 import ReactSelect from 'react-select';
+
+const rotationScheduleMap = PROGRAM_INFO.EM.rotationScheduleMap;
 
 class InfoCardsPanel extends Component {
 
@@ -71,13 +73,13 @@ class InfoCardsPanel extends Component {
         }
 
         // create a select option label list 
-        let rotationSelectList = _.map(cardsList, (card) => {
+        let rotationSelectList = _.map(CARDS_LIST, (card) => {
             return { label: card, value: card }
         })
 
         // if there is no selected rotation then set it based on resident schedule
         if (selectedRotation == '') {
-            selectedRotation = cardsList.indexOf(currentRotation) > -1 ? currentRotation : 'EM';
+            selectedRotation = CARDS_LIST.indexOf(currentRotation) > -1 ? currentRotation : 'EM';
         }
 
         let imageName = selectedRotation, currentPhase = residentInfo.currentPhase || '';

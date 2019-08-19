@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs';
 import ReactSelect from 'react-select';
-import templateEpaSourceMapOriginal from '../../utils/epaSourceMap';
+import { PROGRAM_INFO } from '../../utils/programInfo';
+
+const templateEpaSourceMapOriginal = PROGRAM_INFO.EM.rotationScheduleMap;
+
 let templateEpaSourceMap = _.cloneDeep(templateEpaSourceMapOriginal);
 _.map(templateEpaSourceMap, (epaSource, key) => {
     _.map(epaSource.subRoot, (epa, epaKey) => {

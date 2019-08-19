@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import templateEpaSourceMap from '../../utils/epaSourceMap';
+import {PROGRAM_INFO} from '../../utils/programInfo';
 import _ from 'lodash';
 import Select from 'react-select';
+
+const templateEpaSourceMap = PROGRAM_INFO.EM.epaSourceMap;
 
 export default class SlideInFilter extends Component {
 

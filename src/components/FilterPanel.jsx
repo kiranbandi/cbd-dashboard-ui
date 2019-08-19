@@ -3,11 +3,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getResidentData, getNarratives } from '../utils/requestServer';
+
+import { PROGRAM_INFO } from '../utils/programInfo';
 import moment from 'moment';
-import templateEpaSourceMap from '../utils/epaSourceMap';
 import _ from 'lodash';
 import Loading from 'react-loading';
 import { toggleFilterLoader, setResidentFilter, setResidentData, setNarrativeData } from '../redux/actions/actions';
+
+const templateEpaSourceMap = PROGRAM_INFO.EM.rotationScheduleMap;
 
 class FilterPanel extends Component {
 
