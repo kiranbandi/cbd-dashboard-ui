@@ -44,7 +44,8 @@ export default class ModifyUser extends Component {
 
     componentDidMount() {
         getAllUsers()
-            .then((users) => { this.setState({ userList: [...users] }) })
+            .then((users) => { 
+                this.setState({ userList: [...users] }) })
             .finally(() => { this.setState({ loaderState: false }) });
     }
 
