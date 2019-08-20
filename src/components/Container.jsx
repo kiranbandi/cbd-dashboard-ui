@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavBar } from './';
 import Loading from 'react-loading';
-import { requestLogin } from '../utils/requestServer';
+import { requestLogin, reIssueToken } from '../utils/requestServer';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setLoginData } from '../redux/actions/actions';
@@ -14,6 +14,7 @@ class Container extends Component {
         this.state = {
             showPawsLoginLoader: false
         }
+        this.onProgramChange = this.onProgramChange.bind(this);
     }
 
     componentDidMount() {
@@ -23,15 +24,28 @@ class Container extends Component {
         if (pawsTicket) {
             this.setState({ showPawsLoginLoader: true });
             requestLogin(pawsTicket)
-                .then((user) => { 
-                    this.props.actions.setLoginData(user) })
+                .then((user) => {
+                    this.props.actions.setLoginData(user)
+                })
                 .catch((err) => { console.log(err) })
                 .finally(() => {
                     this.setState({ showPawsLoginLoader: false });
                 })
         }
-
     }
+
+    onProgramChange(program) {
+        this.setState({ showPawsLoginLoader: true });
+        reIssueToken(program.value)
+            .then((user) => {
+                this.props.actions.setLoginData(user)
+            })
+            .catch((err) => { console.log(err) })
+            .finally(() => {
+                this.setState({ showPawsLoginLoader: false });
+            })
+    }
+
 
     render() {
 
@@ -40,7 +54,7 @@ class Container extends Component {
         return (
             <div id='app-container'>
                 {/* navbar content , common for entire application */}
-                <NavBar />
+                <NavBar onProgramChange={this.onProgramChange} />
                 {showPawsLoginLoader ?
                     <Loading type='spin' className='paws-loader' height='100px' width='100px' color='#d6e5ff' delay={-1} />
                     : <div id='container-body'>{this.props.children} </div>

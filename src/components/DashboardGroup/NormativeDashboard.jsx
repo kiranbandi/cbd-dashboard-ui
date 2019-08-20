@@ -4,21 +4,21 @@ import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 import { getAllData, getResidentList } from '../../utils/requestServer';
 import moment from 'moment';
-import { setResidentList } from '../../redux/actions/actions';
 import NormativeTable from '../NormativeDashboardGroup/NormativeTable';
 import NormativeFilterPanel from '../NormativeDashboardGroup/NormativeFilterPanel';
 import NormativeGraph from '../NormativeDashboardGroup/NormativeGraph';
 import Loading from 'react-loading';
 
 
-class NormativeDashboard extends Component {
+export default class NormativeDashboard extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             isLoaderVisible: false,
             filterLoaderState: false,
-            residentRecords: []
+            residentRecords: [],
+            residentList: []
         };
         this._isMounted = false;
         this.onSubmit = this.onSubmit.bind(this);
@@ -27,20 +27,16 @@ class NormativeDashboard extends Component {
 
     componentDidMount() {
         this._isMounted = true;
-        // if there are no resident names & details fetch them
-        const { residentList = [] } = this.props;
-        if (residentList.length == 0) {
-            // turn loader on
-            this.setState({ isLoaderVisible: true });
-            // get list of all residents who have not graduated
-            getResidentList(true)
-                .then((residentList) => { this.props.actions.setResidentList(residentList) })
-                // toggle loader again once the request completes
-                .catch(() => { console.log("error in fetching resident list"); })
-                .finally(() => {
-                    this._isMounted && this.setState({ isLoaderVisible: false });
-                });
-        }
+        // turn loader on
+        this.setState({ isLoaderVisible: true });
+        // get list of all residents who have not graduated
+        getResidentList(true)
+            .then((residentList) => { this.setState({ residentList }) })
+            // toggle loader again once the request completes
+            .catch(() => { console.log("error in fetching resident list"); })
+            .finally(() => {
+                this._isMounted && this.setState({ isLoaderVisible: false });
+            });
     }
 
     componentWillUnmount() {
@@ -73,7 +69,7 @@ class NormativeDashboard extends Component {
         const endDate = document.getElementById('normative-filter-endDate') && document.getElementById('normative-filter-endDate').value;
         const currentPhase = document.getElementById('filter-phaselist') && document.getElementById('filter-phaselist').value;
 
-        const { residentRecords = [] } = this.state, { residentList = [] } = this.props;
+        const { residentRecords = [], residentList = [] } = this.state;
 
         // filter the records by dates
         let filteredRecords = _.filter(residentRecords, (d) => {
@@ -169,17 +165,3 @@ class NormativeDashboard extends Component {
     }
 }
 
-
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators({ setResidentList }, dispatch)
-    };
-}
-
-function mapStateToProps(state) {
-    return {
-        residentList: state.oracle.residentList
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NormativeDashboard);

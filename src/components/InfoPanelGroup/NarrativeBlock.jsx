@@ -50,6 +50,5 @@ export default (props) => {
                         defaultSorted={[{ id: "Date", desc: true }]} />
                 </div> :
                 <h2 className='inner-header'>No Narratives Available</h2>}
-
         </div>)
 }
