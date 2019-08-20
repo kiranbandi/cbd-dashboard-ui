@@ -120,6 +120,12 @@ export function setLoginData(userDetails) {
     storeDataInSessionStorage(userDetails, programInfo);
     // dispatch actions to store all user and program related data in redux store
     return dispatch => {
+        // this can also be called when token is being reissued 
+        // so in that case reset resident data and filter if any
+        dispatch({ type: types.SET_RESIDENT_DATA, residentData: null });
+        dispatch({ type: types.SET_EXPIRED_RESIDENT_DATA, expiredResidentData: [] });
+        dispatch(setResidentFilter({ isAllData: true }))
+        // then set user details and program information
         dispatch(setUserDetails(userDetails));
         // dispatch source map  to action 
         dispatch(setProgramInfo(programInfo));

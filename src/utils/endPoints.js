@@ -7,6 +7,7 @@ endPointRoot = 'http://localhost:8081/api/'
 var endPoints = {
     // end points for users
     login: endPointRoot + "users/authenticate",
+    reIssueToken: endPointRoot + "users/reissuetoken",
     register: endPointRoot + "users/register",
     allUsers: endPointRoot + "users/all",
     updateUser: endPointRoot + "users/update",

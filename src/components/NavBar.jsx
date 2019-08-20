@@ -3,20 +3,18 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import ReactSelect from 'react-select';
 import { setLogoutData } from '../redux/actions/actions';
 
 //  Image url handling is convoluted in scss , much easier to set inline and get images from root
 let logoIconStyle = { background: 'url(assets/img/pawslogo.png)', backgroundSize: '100%' };
+const programsList = [{ value: 'EM', label: 'Emergency Medicine' }, { value: 'ANESTHESIA', label: 'Anesthesia' }, { value: 'OBGYN', label: 'Obstetrics and Gynecology' }];
 
 class NavBar extends Component {
 
     constructor(props) {
         super(props);
         this.logOut = this.logOut.bind(this);
-        this.state = {
-            program: 'EM'
-        };
-        this.onSelectProgram = this.onSelectProgram.bind(this);
     }
 
     componentDidMount() {
@@ -35,13 +33,11 @@ class NavBar extends Component {
         this.props.setLogoutData();
     }
 
-    onSelectProgram() {
-        const program = event.target.value;
-        this.setState({ program });
-    }
 
+    // program change is bubbled up to the container level and handled there
     render() {
-        const { program } = this.state, { accessType = '' } = this.props.userDetails,
+        const { userDetails, onProgramChange } = this.props,
+            { accessType = '', program } = userDetails,
             loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent((process.env.NODE_ENV == 'development') ? 'https://localhost:8888/' : 'https://cbd.usask.ca/');
 
         return (
@@ -83,12 +79,14 @@ class NavBar extends Component {
 
                             {(accessType == 'super-admin') &&
                                 <li>
-                                    <div className="input-group">
+                                    <div className="input-group program-select">
                                         <span className='inner-span'>Program</span>
-                                        <select name="program" className='custom-select' value={program} onChange={this.onSelectProgram}>
-                                            <option key={'pg-1'} value={'EM'} >{'Emergency Medicine'}</option>
-                                            <option key={'pg-2'} value={'AN'} >{'Anesthesia '}</option>
-                                        </select>
+                                        <ReactSelect
+                                            className='test'
+                                            value={_.find(programsList, (entry) => entry.value == program)}
+                                            options={programsList}
+                                            styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
+                                            onChange={onProgramChange} />
                                     </div>
                                 </li>
                             }
