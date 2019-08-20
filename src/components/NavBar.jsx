@@ -82,7 +82,7 @@ class NavBar extends Component {
                                     <div className="input-group program-select">
                                         <span className='inner-span'>Program</span>
                                         <ReactSelect
-                                            className='test'
+                                            className='select-box'
                                             value={_.find(programsList, (entry) => entry.value == program)}
                                             options={programsList}
                                             styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
