@@ -31,17 +31,16 @@ const programInfo = {
             'ID': 'TTD',
             'topic': 'Transition to Discipline (D)',
             subRoot: {
-                '1.1': 'Recognizing the unstable/critically ill patient, mobilizing the healthcare team and supervisor, and initiating basic life support',
-                '1.2': 'Performing and documenting focused histories and physical exams, and providing preliminary management of cardinal emergency department presentations',
-                '1.3': 'Facilitating communication of information between a patient in the emergency department, caregivers and members of the healthcare team to organize care and disposition of the patient',
-                '1.4': '(SA) Using clinical informatics to facilitate efficient, safe, patient care'
+                "1.1": "Establishing skills in microscopy",
+                "1.2": "Participating in basic specimen handling",
+                "1.3": "Summarizing and presenting relevant clinical information for clinicopathologic correlation",
+                "1.4": "Creating a personal teaching and learning plan"
             },
             maxObservation: {
-                '1.1': 10,
-                '1.2': 20,
-                '1.3': 10,
-                '1.4': 2
-
+                "1.1": 13,
+                "1.2": 15,
+                "1.3": 2,
+                "1.4": 1
             },
             clinicalPresentation: {
                 '1.1': ["cardiorespiratory arrest", "unstable dysrhythmia", "shock", "respiratory distress", "altered neurological status", "other"],
@@ -62,18 +61,20 @@ const programInfo = {
             'ID': 'F',
             'topic': 'Foundations of Discipline (F)',
             subRoot: {
-                '2.1': 'Initiating and assisting in resuscitation of critically ill patients',
-                '2.2': 'Assessing and managing uncomplicated urgent and non-urgent emergency department presentations',
-                '2.3': 'Contributing to the shared work of the emergency department health care team to achieve high quality, efficient and safe patient care',
-                '2.4': 'Performing basic procedures',
-                '2.5': '(SA) Appraising and integrating new evidence into clinical practice'
+                "2.1": "Assessing patients and integrating clinical and laboratory information in the evaluation of disease processes",
+                "2.2": "Performing basic tasks in autopsy pathology",
+                "2.3": "Performing gross dissection of simple surgical specimens from accessioning to submission of blocks",
+                "2.4": "Selecting specimens for ancillary testing",
+                "2.5": "Generating diagnostically accurate and complete pathology reports for simple surgical pathology cases",
+                "2.6": "Performing clinical diagnostic procedures"
             },
             maxObservation: {
-                '2.1': 15,
-                '2.2': 30,
-                '2.3': 10,
-                '2.4': 25,
-                '2.5': 1
+                "2.1": 10,
+                "2.2": 2,
+                "2.3": 10,
+                "2.4": 6,
+                "2.5": 10,
+                "2.6": 2
             },
             clinicalPresentation: {
                 '2.1': ["cardiorespiratory arrest", "unstable dysrhythmia", "shock", "respiratory distress", "altered neurological status", "other"],
@@ -95,48 +96,52 @@ const programInfo = {
             'ID': 'CORE',
             'topic': 'Core of Discipline (C)',
             subRoot: {
-                '3.1': 'Resuscitating and coordinating care for critically ill patients',
-                '3.2': 'Resuscitating and coordinating care for critically injured trauma patients',
-                '3.3': 'Providing airway management and ventilation',
-                '3.4': 'Providing emergency sedation and systemic analgesia for diagnostic and therapeutic procedures',
-                '3.5': 'Identifying and managing patients with emergent medical or surgical conditions',
-                '3.6': 'Diagnosing and managing complicated urgent and non-urgent patient presentations',
-                '3.7': 'Managing the urgent and emergent presentations for pregnant and post-partum patients',
-                '3.8': 'Managing patients with acute toxic ingestion or exposure',
-                '3.9': 'Managing a patient with an emergency mental health condition or behavioural emergency',
-                '3.10': 'Managing and supporting patients in situational crisis to access health care and community resources',
-                '3.11': 'Recognizing and managing patients who are at risk of exposure to, or who have experienced violence and/or neglect',
-                '3.12': 'Liaising with prehospital emergency medical services ',
-                '3.13': 'Performing advanced procedures',
-                '3.14': 'Performing and interpreting point-of-care ultrasound to guide patient management',
-                '3.15': 'Providing end-of-life care for a patient',
-                '3.16': '(SA) Describing the indications and performance of rare critical procedures',
-                '3.17': '(SA) Clinical teaching in the emergency department',
-                '3.18': '(SA) Teaching an interactive large group session',
-                '3.19': '(SA) Participating in a disaster medicine exercise',
-                '3.20': '(SA) Advancing emergency medicine through a scholarly project'
+                "3.1": "Performing medical autopsies and generating complete and diagnostically accurate reports",
+                "3.2": "Performing routine pediatric and perinatal autopsies",
+                "3.3": "Performing routine forensic autopsies and generating complete and diagnostically accurate reports",
+                "3.4": "Performing gross dissection of surgical specimens",
+                "3.5": "Diagnosing routine surgical pathology cases",
+                "3.6": "Diagnosing complex surgical pathology cases",
+                "3.7": "Providing intraoperative consultations",
+                "3.8": "Presenting in multidisciplinary rounds",
+                "3.9": "Managing microbiological testing relevant to a community setting",
+                "3.10": "Triaging, interpreting, and reporting peripheral blood smears, bone marrows, lymph nodes and other solid tissue specimens for hematologic disease",
+                "3.11": "Selecting, interpreting and reporting tests for common hemoglobinopathies, enzymopathies, and membranopathies",
+                "3.12": "Diagnosing and reporting common coagulopathies",
+                "3.13": "Diagnosing and managing routine clinical and laboratory problems in transfusion medicine",
+                "3.14": "Selecting, correlating and interpreting common genomic/molecular pathology test results",
+                "3.15": "Managing, interpreting and reporting of gynecologic and non-gynecologic cytology specimens",
+                "3.16": "Identifying, investigating and resolving pre-analytical, analytical and post-analytical issues in laboratory medicine",
+                "3.17": "Participating in the selection and validation of new instrumentation, and evaluation of new tests",
+                "3.18": "Ensuring appropriate use of lab resources and test utilization",
+                "3.19": "Providing routine biochemistry clinical consultations",
+                "3.20": "Interpreting, and reporting biochemistry testing",
+                "3.21": "Providing formal and informal teaching",
+                "3.22": "Conducting scholarly work"
             },
             maxObservation: {
-                '3.1': 40,
-                '3.2': 25,
-                '3.3': 20,
-                '3.4': 20,
-                '3.5': 40,
-                '3.6': 40,
-                '3.7': 15,
-                '3.8': 15,
-                '3.9': 15,
-                '3.10': 5,
-                '3.11': 5,
-                '3.12': 5,
-                '3.13': 25,
-                '3.14': 50,
-                '3.15': 5,
-                '3.16': 1,
-                '3.17': 2,
-                '3.18': 1,
-                '3.19': 1,
-                '3.20': 1
+                "3.1": 6,
+                "3.2": 3,
+                "3.3": 6,
+                "3.4": 50,
+                "3.5": 70,
+                "3.6": 70,
+                "3.7": 10,
+                "3.8": 5,
+                "3.9": 2,
+                "3.10": 12,
+                "3.11": 5,
+                "3.12": 10,
+                "3.13": 5,
+                "3.14": 25,
+                "3.15": 5,
+                "3.16": 10,
+                "3.17": 1,
+                "3.18": 5,
+                "3.19": 3,
+                "3.20": 10,
+                "3.21": 10,
+                "3.22": 1
             },
             clinicalPresentation: {
                 '3.1':  ["shock", "cardiorespiratory arrest", "respiratory failure", "severe sepsis", "other"],
@@ -188,24 +193,16 @@ const programInfo = {
             'ID': 'TP',
             'topic': 'Transition to Practice (P)',
             subRoot: {
-                '4.1': 'Managing the emergency department to optimize patient care and department flow',
-                '4.2': 'Teaching and supervising the learning of trainees and other health professionals',
-                '4.3': 'Managing complex interpersonal interactions that arise during the course of patient care',
-                '4.4': 'Providing expert EM consultation to physicians or other healthcare providers',
-                '4.5': 'Coordinating and collaborating with healthcare professional colleagues to safely transition the care of a patient including handover, consultations, and facilitating inter-institution transport',
-                '4.6': 'Dealing with uncertainty when managing patients with ambiguous presentations',
-                '4.7': '(SA) Developing personal learning plans',
-                '4.8': '(SA) Participating in quality improvement intitiatives to enhance patient care'
+                "4.1": "Leading and managing the daily operations of the laboratory, including a full workload of cases representing the breadth of practice",
+                "4.2": "Functioning independently on call",
+                "4.3": "Leading, implementing and advocating for quality assurance practices",
+                "4.4": "Developing and implementing a plan for continuing professional development"
             },
             maxObservation: {
-                '4.1': 25,
-                '4.2': 15,
-                '4.3': 5,
-                '4.4': 5,
-                '4.5': 10,
-                '4.6': 5,
-                '4.7': 1,
-                '4.8': 1
+                "4.1": 12,
+                "4.2": 4,
+                "4.3": 4,
+                "4.4": 1
             },
             clinicalPresentation: {
                 '4.1': ["resuscitation", "acute care", "ambulatory", "other"],
@@ -228,7 +225,7 @@ const programInfo = {
                 '4.8': []
             },
             filterTitles: {}
-        },
+        }
     }
 };
 
