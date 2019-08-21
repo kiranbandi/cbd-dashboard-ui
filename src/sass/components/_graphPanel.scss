@@ -79,6 +79,7 @@
             overflow: hidden;
             &.show-row {
                 height: auto;
+                overflow: visible;
             }
             &.hide-row {
                 height: 0px;

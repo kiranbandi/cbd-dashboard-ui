@@ -50,7 +50,8 @@ const programInfo = {
                 '1.2': ["infant", "child", "youth", "adult", "senior"],
                 '1.3': ["infant", "child", "youth", "adult", "senior"],
                 '1.4': []
-            }
+            },
+            filterTitles: {}
 
         },
         2: {
@@ -83,7 +84,8 @@ const programInfo = {
                 '2.3': ["infant", "child", "youth", "adult", "senior"],
                 '2.4': ["infant", "child", "youth", "adult", "senior"],
                 '2.5': []
-            }
+            },
+            filterTitles: {}
         },
         3: {
             'ID': 'CORE',
@@ -175,7 +177,8 @@ const programInfo = {
                 '3.18': [],
                 '3.19': [],
                 '3.20': []
-            }
+            },
+            filterTitles: {}
         },
         4: {
             'ID': 'TP',
@@ -219,7 +222,8 @@ const programInfo = {
                 '4.6': ["infant", "child", "youth", "adult", "senior"],
                 '4.7': [],
                 '4.8': []
-            }
+            },
+            filterTitles: {}
         },
     }
 };
