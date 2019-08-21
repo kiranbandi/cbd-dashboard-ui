@@ -1,9 +1,10 @@
 import { default as EM } from './EM';
 import { default as ANESTHESIA } from './ANESTHESIA';
 import { default as OBGYN } from './OBGYN';
+import { default as PATH } from './PATH';
 
 // populate program info with multiple department information and export its
-const PROGRAM_INFO = { EM, ANESTHESIA, OBGYN };
+const PROGRAM_INFO = { EM, ANESTHESIA, OBGYN, PATH };
 
 export { PROGRAM_INFO };
 export { default as ROTATION_SCHEDULE_MAP }

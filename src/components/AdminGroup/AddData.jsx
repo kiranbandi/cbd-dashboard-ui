@@ -18,6 +18,16 @@ const possibleSlots = {
 // Jan 1 to Jun 30 - Slot 1
 // Jul 1 to Dec 31 - Slot 2
 
+//  This page has a year tag selection which can be used to 
+// selectively upload data for a particular year slot 
+// this was created because E Portfolio used to be laggy when a larger time frame
+//  was selected for exporting epa files , but now that they have fixed this
+// the year tag isnt necessary and entire dataset can be updated instead of a smaller year slot
+// but this feature isnt being removed but just hidden so it can 
+// be ressurected in need when E Portfolio ends up being slow or crappy in exporting
+// large time slots in future.
+
+
 export default class AddData extends Component {
 
     constructor(props) {
@@ -27,7 +37,7 @@ export default class AddData extends Component {
             processing: false,
             userList: [],
             username: '',
-            yearTag: '',
+            yearTag: 'all',
             fullname: '',
             userData: {},
             selectedIndex: 0,
@@ -50,7 +60,7 @@ export default class AddData extends Component {
             let { userList } = this.state,
                 selectedIndex = event.target.value.split("-")[1],
                 user = userList[selectedIndex - 1];
-            this.setState({ selectedIndex, yearTag: '', username: user.username, fullname: user.fullname, userData: { ...user }, warningGiven: false });
+            this.setState({ selectedIndex, username: user.username, fullname: user.fullname, userData: { ...user }, warningGiven: false });
         }
     }
 
@@ -193,7 +203,7 @@ export default class AddData extends Component {
                 .finally(() => { this.setState({ processing: false }) });
         }
         else {
-            toastr["error"]("Select an NSID and a Timeperiod before you upload the data ", "ERROR");
+            toastr["error"]("Select an NSID before you upload the data ", "ERROR");
         }
 
     }
@@ -220,7 +230,7 @@ export default class AddData extends Component {
                                 </select>
                             </div>
 
-                            <div className="input-group m-a">
+                            {/* <div className="input-group m-a">
                                 <span className='inner-span'>TIME PERIOD (Dates inclusive)</span>
                                 <select name="yearTag" className='custom-select' value={yearTag} onChange={this.onSelectYearTag}>
                                     <option key={'yeartag-default'} value={'default-tag'} >{'Select Timeperiod'}</option>
@@ -229,7 +239,7 @@ export default class AddData extends Component {
                                             return <option
                                                 key={'yeartag-all'}
                                                 value={yearSlot} >
-                                                {'update all records / No Timeperiod'}
+                                                {'Update All Records'}
                                             </option>
                                         }
                                         else {
@@ -241,7 +251,7 @@ export default class AddData extends Component {
                                         }
                                     })}
                                 </select>
-                            </div>
+                            </div> */}
 
                             <FileUpload className={'m-a'} id='add-data-rcm-file' label='Royal College Data Export File' />
                             <button className={"btn btn-success create-btn m-a m-t-md "} type="submit" onClick={this.onProcessFile}>

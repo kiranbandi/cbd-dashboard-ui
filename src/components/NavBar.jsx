@@ -8,7 +8,7 @@ import { setLogoutData } from '../redux/actions/actions';
 
 //  Image url handling is convoluted in scss , much easier to set inline and get images from root
 let logoIconStyle = { background: 'url(assets/img/pawslogo.png)', backgroundSize: '100%' };
-const programsList = [{ value: 'EM', label: 'Emergency Medicine' }, { value: 'ANESTHESIA', label: 'Anesthesia' }, { value: 'OBGYN', label: 'Obstetrics and Gynecology' }];
+const programsList = [{ value: 'EM', label: 'Emergency Medicine' }, { value: 'PATH', label: 'Pathology & Lab Medicine' }, { value: 'OBGYN', label: 'Obstetrics and Gynecology' }, { value: 'ANESTHESIA', label: 'Anesthesia' }];
 
 class NavBar extends Component {
 

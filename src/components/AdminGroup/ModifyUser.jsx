@@ -26,7 +26,7 @@ export default class ModifyUser extends Component {
             currentPhase: 'transition-to-discipline',
             earlierPhaseCount: 0,
             promotedDate: [],
-            academicYear: '2018',
+            academicYear: '2019',
             rotationSchedule: {},
             longitudinalSchedule: {},
             citeExamScore: {},
@@ -72,7 +72,7 @@ export default class ModifyUser extends Component {
                         currentPhase: 'transition-to-discipline',
                         earlierPhaseCount: 0,
                         promotedDate: [],
-                        academicYear: '2018',
+                        academicYear: '2019',
                         rotationSchedule: {},
                         longitudinalSchedule: {},
                         citeExamScore: {},
@@ -121,7 +121,7 @@ export default class ModifyUser extends Component {
                         longitudinalSchedule: userData.longitudinalSchedule || {},
                         citeExamScore: userData.citeExamScore || {},
                         oralExamScore: userData.oralExamScore || {},
-                        academicYear: '2018',
+                        academicYear: '2019',
                         isGraduated: userData.isGraduated || false
                     });
                 })
@@ -216,7 +216,7 @@ export default class ModifyUser extends Component {
                     currentPhase: 'transition-to-discipline',
                     earlierPhaseCount: 0,
                     promotedDate: [],
-                    academicYear: '2018',
+                    academicYear: '2019',
                     rotationSchedule: {},
                     longitudinalSchedule: {},
                     citeExamScore: {},
@@ -391,7 +391,7 @@ export default class ModifyUser extends Component {
                                         <input type="text" className="form-control extra-wide" name="longitudinalSchedule" value={longitudinalSchedule[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
                                     </div>
                                     <div className="input-group text-info">
-                                        <span className='inner-span'>CITE SCORE</span>
+                                        <span className='inner-span'>WRITTEN EXAM SCORE</span>
                                         <input type="text" className="form-control extra-wide" name="citeExamScore" value={citeExamScore[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
                                     </div>
                                     <div className="input-group text-info">
