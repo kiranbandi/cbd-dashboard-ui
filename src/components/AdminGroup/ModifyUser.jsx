@@ -44,8 +44,9 @@ export default class ModifyUser extends Component {
 
     componentDidMount() {
         getAllUsers()
-            .then((users) => { 
-                this.setState({ userList: [...users] }) })
+            .then((users) => {
+                this.setState({ userList: [...users] })
+            })
             .finally(() => { this.setState({ loaderState: false }) });
     }
 
@@ -344,15 +345,19 @@ export default class ModifyUser extends Component {
                             </div>}
 
                         {accessType == 'resident' &&
-                            <div className="input-group m-a">
-                                <span className='inner-span'>GRADUATED/MOVED</span>
-                                <div className="checkbox custom-control text-center custom-checkbox">
-                                    <label className='filter-label'>
-                                        <input name='isGraduated' type="checkbox" checked={isGraduated} onChange={this.onChange} />
-                                        <span className="custom-control-indicator"></span>
-                                    </label>
+                            <div className='graduated-box'>
+                                <h3 className='text-warning banner'>Check this box if a resident has graduated or moved out of the program </h3>
+                                <div className="input-group m-a">
+                                    <span className='inner-span'>GRADUATED/MOVED</span>
+                                    <div className="checkbox custom-control text-center custom-checkbox">
+                                        <label className='filter-label'>
+                                            <input name='isGraduated' type="checkbox" checked={isGraduated} onChange={this.onChange} />
+                                            <span className="custom-control-indicator"></span>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>}
+                            </div>
+                        }
 
                         {accessType == 'resident' &&
                             <div className='academic-box'>
