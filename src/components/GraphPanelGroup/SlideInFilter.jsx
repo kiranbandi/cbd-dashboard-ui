@@ -59,7 +59,10 @@ export default class SlideInFilter extends Component {
             }
         });
 
+
         if (modifiedOptionArray.length > 0) {
+
+            const selectStyles = { base: styles => ({ ...styles, zIndex: 999 }), option: (styles) => ({ ...styles, color: 'black' }) };
 
             return (
                 <div className='demographic-box inner-filter-box'>
@@ -72,7 +75,7 @@ export default class SlideInFilter extends Component {
                             //  need to find a more elegant solution in future
                             value={(modifiedOptionArray.find(option => option.value === defaultValue)) || ''}
                             options={modifiedOptionArray}
-                            styles={{ option: (styles) => ({ ...styles, color: 'black' }) }}
+                            styles={selectStyles}
                             onChange={this.onSelectChange} />
                     </div>
                 </div>)
@@ -89,12 +92,14 @@ export default class SlideInFilter extends Component {
     render() {
 
         const { innerKey, epaSource, width, clinicalFilter, patientDemographicFilter, onHighlightChange, epaSourceMap } = this.props,
-            { clinicalPresentation, patientDemographic } = epaSourceMap[innerKey];
+            { clinicalPresentation, patientDemographic, filterTitles = {} } = epaSourceMap[innerKey];
+
+        const innerTitles = filterTitles[epaSource] || ["Clinical Presentation", "Demographic"];
 
         return (
             <div className='filter-box' style={{ width: (width * 4) - 75 }}>
-                {this.createSelect('Clinical Presentation', clinicalPresentation[epaSource], 'cp', clinicalFilter)}
-                {this.createSelect('Demographic', patientDemographic[epaSource], 'dm', patientDemographicFilter)}
+                {this.createSelect(innerTitles[0], clinicalPresentation[epaSource], 'cp', clinicalFilter)}
+                {this.createSelect(innerTitles[1], patientDemographic[epaSource], 'dm', patientDemographicFilter)}
                 <div className='inner-button-box'>
                     <button type="submit"
                         className="btn btn-primary-outline icon-container"

@@ -68,10 +68,10 @@ export default class GraphRow extends Component {
                     highlight = (context.indexOf(clinicalFilter) > 0 && context.indexOf(patientDemographicFilter) > -1) ? true : false;
                 }
                 else if (clinicalFilter.length > 0) {
-                    highlight = context.indexOf(clinicalFilter) > 0 ? true : false;
+                    highlight = (context.indexOf(clinicalFilter) > -1);
                 }
                 else if (patientDemographicFilter.length > 0) {
-                    highlight = (context.indexOf(patientDemographicFilter) > -1) ? true : false;
+                    highlight = (context.indexOf(patientDemographicFilter) > -1);
                 }
             }
 
