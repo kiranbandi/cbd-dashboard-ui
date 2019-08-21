@@ -1,7 +1,7 @@
-import { default as EM } from './EM';
-import { default as ANESTHESIA } from './ANESTHESIA';
-import { default as OBGYN } from './OBGYN';
-import { default as PATH } from './PATH';
+import { default as EM } from './programs/EM';
+import { default as ANESTHESIA } from './programs/ANESTHESIA';
+import { default as OBGYN } from './programs/OBGYN';
+import { default as PATH } from './programs/PATH';
 
 // populate program info with multiple department information and export its
 const PROGRAM_INFO = { EM, ANESTHESIA, OBGYN, PATH };

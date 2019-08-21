@@ -253,7 +253,7 @@ export default class AddData extends Component {
                                 </select>
                             </div> */}
 
-                            <FileUpload className={'m-a'} id='add-data-rcm-file' label='Royal College Data Export File' />
+                            <FileUpload className={'m-a'} id='add-data-rcm-file' label='Royal College Export File' />
                             <button className={"btn btn-success create-btn m-a m-t-md "} type="submit" onClick={this.onProcessFile}>
                                 <span className='create-span'>{"UPLOAD"} </span>
                                 {processing && <Loading type='spin' height='25px' width='25px' color='#d6e5ff' delay={-1} />}
