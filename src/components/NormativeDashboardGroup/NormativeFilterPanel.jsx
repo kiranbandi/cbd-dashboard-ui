@@ -4,8 +4,9 @@ import { PHASES_LIST } from '../../utils/programInfo';
 import moment from 'moment';
 
 const defaultDateValue = moment().format('MM/DD/YYYY');
-// Add extra option all to the list
-PHASES_LIST.unshift('all-phases');
+// create a clone and then Add extra option all to the list
+let PHASES_LIST_COPY = _.clone(PHASES_LIST);
+PHASES_LIST_COPY.unshift('all-phases');
 
 export default class NormativeFilterPanel extends Component {
     constructor(props) {
@@ -33,7 +34,7 @@ export default class NormativeFilterPanel extends Component {
                     <div className='phase-box'>
                         <label className='filter-label'>Resident Phase  </label>
                         <select id='filter-phaselist' className="custom-select">
-                            {PHASES_LIST.map((val, index) => { return <option key={index} value={val}> {val.split('-').join(' ')}</option> })}
+                            {PHASES_LIST_COPY.map((val, index) => { return <option key={index} value={val}> {val.split('-').join(' ')}</option> })}
                         </select>
                     </div>
 

@@ -37,7 +37,8 @@ class ResidentDashboard extends Component {
 
 
     render() {
-        let { residentList = [] } = this.props;
+        const { residentList = [], programInfo } = this.props,
+            { infoCardsVisible = false } = programInfo;
 
         return (
             <div className='dashboard-root-resident m-t' >
@@ -49,7 +50,7 @@ class ResidentDashboard extends Component {
                                 <FilterPanel />
                                 <InfoPanel />
                                 <GraphPanel isEMDepartment={true} />
-                                <InfoCardsPanel />
+                                {infoCardsVisible && <InfoCardsPanel />}
                             </div> :
                             <h2 className='text-center text-danger'>No resident information is available currently</h2>}
                     </div>}
@@ -66,7 +67,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        residentList: state.oracle.residentList
+        residentList: state.oracle.residentList,
+        programInfo: state.oracle.programInfo
     };
 }
 

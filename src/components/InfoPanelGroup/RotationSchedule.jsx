@@ -17,6 +17,8 @@ export default class InfoPanel extends Component {
     }
 
     showHistorySchedule() {
+
+
         this.setState({ isHistoryVisible: !this.state.isHistoryVisible });
     }
 
@@ -44,7 +46,7 @@ export default class InfoPanel extends Component {
         let historicalYears = _.filter(_.keys(rotationSchedule), (year) => {
             // if the resident started before july of a year say 2017 then we add the schedule of the year 
             // before too if not we just get that year alone 
-            return year != currentAcademicYear && year >= (moment(programStartDate).year() - (moment(programStartDate).month() <= 5 ? 1 : 0))
+            return year < currentAcademicYear && year >= (moment(programStartDate).year() - (moment(programStartDate).month() <= 5 ? 1 : 0))
         });
         // if there are more than 5 historical years then cut it to the recent 5
         if (historicalYears.length > 5) {
@@ -67,19 +69,21 @@ export default class InfoPanel extends Component {
                 </button>
 
                 {isHistoryVisible && <div className='all-historical-schedule'>
-                    {_.map(historicalYears, (year) => {
-                        return <ScheduleBlock
-                            key={'yearblock-' + year}
-                            residentData={residentData}
-                            isEPAperBlockVisible={isEPAperBlockVisible}
-                            rotationRequired={rotationRequired}
-                            academicYear={year}
-                            scheduleDateList={ROTATION_SCHEDULE_MAP[year]}
-                            scheduleRotationList={rotationSchedule[year]}
-                            LongSchedule={''}
-                            widthAvailable={widthAvailable}
-                            isHistorical={true} />
-                    })}
+                    {historicalYears.length > 0 ?
+                        _.map(historicalYears, (year) => {
+                            return <ScheduleBlock
+                                key={'yearblock-' + year}
+                                residentData={residentData}
+                                isEPAperBlockVisible={isEPAperBlockVisible}
+                                rotationRequired={rotationRequired}
+                                academicYear={year}
+                                scheduleDateList={ROTATION_SCHEDULE_MAP[year]}
+                                scheduleRotationList={rotationSchedule[year]}
+                                LongSchedule={''}
+                                widthAvailable={widthAvailable}
+                                isHistorical={true} />
+                        }) :
+                        <h3 className='no-history-label'>No Historical Data available</h3>}
                 </div>}
                 <div style={{ width: widthAvailable }} className='custom-gannt-style-chart'>
                     {dateBoxes.map((year, index) => {

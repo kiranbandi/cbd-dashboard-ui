@@ -1,5 +1,9 @@
 const programInfo = {
-    rotationList: ["ANESTHESIA", "C&C", "COMMUNITY", "ELECTIVE", "GEN SURG", "GYN", "GYN-ONC", "ICU", "MED", "MFM", "OBS", "PATH", "REI", "RESEARCH", "SELECTIVE", "TRAUMA", "ULTRA", "URO", "URO-GYN", "OTHER"],
+    infoCardsVisible: false,
+    writtenScoresVisible: true,
+    oralScoresVisible: true,
+    narrativesVisible: true,
+    rotationList: ["ANESTHESIA", "C&C", "COMMUNITY", "ELECTIVE", "GEN SURG", "GYN", "GYN-ONC", "ICU", "GIM", "MFM", "OBS", "PATH", "REI", "RESEARCH", "SELECTIVE", "TRAUMA", "ULTRA", "URO", "URO-GYN", "OTHER"],
     rotationRequired: {
         "ANESTHESIA": 9,
         "C&C": 5,
@@ -9,7 +13,7 @@ const programInfo = {
         "GYN": 5,
         "GYN-ONC": 5,
         "ICU": 6,
-        "MED": 8,
+        "GIM": 8,
         "MFM": 5,
         "OBS": 5,
         "PATH": 5,

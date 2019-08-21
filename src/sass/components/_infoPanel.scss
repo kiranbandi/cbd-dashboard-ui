@@ -46,6 +46,10 @@
         }
         .all-historical-schedule {
             margin-bottom: 15px;
+            .no-history-label {
+                font-size: 14px;
+                margin: -5px;
+            }
         }
         .schedule-box {
             margin-bottom: 20px;

@@ -23,7 +23,7 @@ export default class CreateUser extends Component {
             programStartDate: moment().format('MM/DD/YYYY'),
             earlierPhaseCount: 0,
             promotedDate: [],
-            academicYear: '2018',
+            academicYear: '2019',
             currentPhase: 'transition-to-discipline',
             rotationSchedule: {},
             longitudinalSchedule: {},
@@ -114,7 +114,7 @@ export default class CreateUser extends Component {
                         accessList: '',
                         programStartDate: moment().format('MM/DD/YYYY'),
                         earlierPhaseCount: 0,
-                        academicYear: '2018',
+                        academicYear: '2019',
                         // array of dates
                         promotedDate: [],
                         currentPhase: 'transition-to-discipline',
@@ -248,7 +248,7 @@ export default class CreateUser extends Component {
                                     <input type="text" className="form-control extra-wide" name="longitudinalSchedule" value={longitudinalSchedule[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
                                 </div>
                                 <div className="input-group">
-                                    <span className='inner-span text-info'>CITE SCORE</span>
+                                    <span className='inner-span text-info'>WRITTEN EXAM SCORE</span>
                                     <input type="text" className="form-control extra-wide" name="citeExamScore" value={citeExamScore[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
                                 </div>
                                 <div className="input-group text-info">
