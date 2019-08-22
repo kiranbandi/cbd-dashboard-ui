@@ -3,32 +3,27 @@ const programInfo = {
     writtenScoresVisible: true,
     oralScoresVisible: true,
     narrativesVisible: true,
-    rotationList: ["AP", "AP BREAST", "AP CYTO", "AP FOUNDATIONS", "AP GEN REGINA", "AP INTRO", "AP NEURO", "BIO CHEM", "BOOT CAMP", "FORENSICS", "GEN PATH", "HEMATO PATH", "GASTRO", "HEMATO", "INFECT", "MED ONC", "MICRO BIO", "MOLECULAR PATH", "PED ONC", "RESEARCH", "SURG GEN", "SURG ONC", "TRANSF COA", "UROLOGY"],
+    rotationList: ["ANAT PATH", "AP BREAST", "AP CYTO", "AP FOUND", "AP GEN (REGINA)", "AP INTRO", "AP NEURO", "BIOCHEMISTRY", "BOOT CAMP", "ELECTIVE", "FORENSICS", "GEN PATH", "HEMATO", "MICRO", "MOLECULAR", "OTHER", "OFF SERVICE", "RESEARCH", "TRANS / COAG"],
     rotationRequired: {
-        "AP": 5,
+        "ANAT PATH": 5,
         "AP BREAST": 5,
         "AP CYTO": 5,
-        "AP FOUNDATIONS": 5,
-        "AP GEN REGINA": 5,
+        "AP FOUND": 5,
+        "AP GEN (REGINA)": 5,
         "AP INTRO": 5,
         "AP NEURO": 5,
-        "BIO CHEM": 5,
+        "BIOCHEMISTRY": 5,
         "BOOT CAMP": 5,
+        "ELECTIVE": 5,
         "FORENSICS": 5,
         "GEN PATH": 5,
-        "HEMATO PATH": 5,
-        "GASTRO": 5,
         "HEMATO": 5,
-        "INFECT": 5,
-        "MED ONC": 5,
-        "MICRO BIO": 5,
-        "MOLECULAR PATH": 5,
-        "PED ONC": 5,
+        "MICRO": 5,
+        "MOLECULAR": 5,
+        "OTHER": 5,
+        "OFF SERVICE": 5,
         "RESEARCH": 5,
-        "SURG GEN": 5,
-        "SURG ONC": 5,
-        "TRANSF COA": 5,
-        "UROLOGY": 5
+        "TRANS / COAG": 5
     },
     epaSourceMap: {
         1: {
@@ -47,18 +42,23 @@ const programInfo = {
                 "1.4": 1
             },
             clinicalPresentation: {
-                "1.1": [],
-                "1.2": [],
-                "1.3": [],
+                "1.1": ["breast", "bone & soft tissue", "gynecology", "gastrointestinal", "genitourinary", "head & neck", "endocrine", "skin", "cardiovascular", "thoracic", "neuropathology", "blood, bone marrow, lymph nodes & spleen", "placenta"],
+                "1.2": ["tissue", "blood", "microbiological", "appendix", "gallbladder", "simple hysterectomy for fibroids or prolapse", "colon for diverticulosis", "ischemic small bowel", "other"],
+                "1.3": ["surgical pathology", "cytopathology", "autopsy pathology", "hematopathology"],
                 "1.4": []
             },
             patientDemographic: {
-                "1.1": [],
-                "1.2": [],
+                "1.1": ["direct", "indirect"],
+                "1.2": ["fresh", "formalin", "alcohol"],
                 "1.3": [],
                 "1.4": []
             },
-            filterTitles: {}
+            filterTitles: {
+                "1.1": ["ORGAN SYSTEM or TISSUE", "ASSESSMENT TYPE"],
+                "1.2": ["Specimen type", "Fixative"],
+                "1.3": ["Lab Discipline", ""],
+                "1.4": []
+            }
 
         },
         2: {
