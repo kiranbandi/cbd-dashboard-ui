@@ -8,7 +8,7 @@ export default class RotationSpecificEPA extends Component {
         super(props);
 
         this.state = {
-            selectedRotation: { 'label': 'EM', 'option': 'EM' }
+            selectedRotation: { 'label': '', 'option': '' }
         };
         this.onSelectChange = this.onSelectChange.bind(this);
     }

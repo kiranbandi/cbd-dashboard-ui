@@ -75,6 +75,7 @@ export default class AddData extends Component {
 
         event.preventDefault();
         const { username, fullname, warningGiven, yearTag, userData } = this.state;
+        const { rotationList } = this.props.programInfo;
         // create an empty list for narratives that is populated when the file is processed
         let narrativeDataList = [];
 
@@ -109,7 +110,7 @@ export default class AddData extends Component {
                         // find the rotation in which the resident was during that slot
                         let rotationTag = rotationSchedule[record.academicYear] ?
                             (rotationSchedule[record.academicYear][rotationIndex] ?
-                                rotationSchedule[record.academicYear][rotationIndex] : 'EM') : 'EM';
+                                rotationSchedule[record.academicYear][rotationIndex] : rotationList[0]) : rotationList[0];
 
 
                         let phaseList = ['TTD', 'F', 'CORE', 'TP'], phaseIndex = 0;
