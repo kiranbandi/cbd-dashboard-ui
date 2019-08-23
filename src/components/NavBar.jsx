@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactSelect from 'react-select';
 import { setLogoutData } from '../redux/actions/actions';
+import { PROGRAM_LIST } from '../utils/programInfo';
 
 //  Image url handling is convoluted in scss , much easier to set inline and get images from root
 let logoIconStyle = { background: 'url(assets/img/pawslogo.png)', backgroundSize: '100%' };
-const programsList = [{ value: 'EM', label: 'Emergency Medicine' }, { value: 'PATH', label: 'Pathology & Lab Medicine' }, { value: 'OBGYN', label: 'Obstetrics and Gynecology' }, { value: 'ANESTHESIA', label: 'Anesthesia' }];
 
 class NavBar extends Component {
 
@@ -83,8 +83,8 @@ class NavBar extends Component {
                                         <span className='inner-span'>Program</span>
                                         <ReactSelect
                                             className='select-box'
-                                            value={_.find(programsList, (entry) => entry.value == program)}
-                                            options={programsList}
+                                            value={_.find(PROGRAM_LIST, (entry) => entry.value == program)}
+                                            options={PROGRAM_LIST}
                                             styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
                                             onChange={onProgramChange} />
                                     </div>
