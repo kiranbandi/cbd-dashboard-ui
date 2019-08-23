@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactTable from 'react-table';
-import { customFilter } from '../../utils/genericUtility';
+import { customFilter } from '../../../utils/genericUtility';
 
 const columns = [{
     Header: 'Date',

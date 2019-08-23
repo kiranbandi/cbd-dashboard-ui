@@ -1,18 +1,18 @@
 .expired-box {
-    border-radius: 5px;
     background: #1a1c22;
+    margin: -10px 30px 0px 30px;
+    border-radius: 5px;
     .icon {
-        font-size: 22px;
+        font-size: 18px;
         vertical-align: middle;
     }
     h4 {
-        margin-top: 30px;
+        margin-top: 0px;
         margin-bottom: 0px;
         color: #cfd2da;
         text-transform: none;
         width: 100%;
         cursor: pointer;
-        background: #2d2530;
         border-radius: 5px 5px 0px 0px;
         padding: 10px 3px;
         font-size: 18px;
@@ -23,7 +23,7 @@
         margin: 0px auto 10px auto;
         padding: 10px;
         display: block;
-        background: #2d2530;
+        border-top: 2px white;
         border-radius: 0px 0px 5px 5px;
         .ReactTable .rt-tbody .rt-td {
             text-align: center;

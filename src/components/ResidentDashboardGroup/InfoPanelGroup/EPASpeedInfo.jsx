@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import StatCard from './StatCard';
+import { StatCard } from '../../';
 
 export default (props) => {
 

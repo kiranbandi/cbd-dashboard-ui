@@ -3,9 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import { CARDS_LIST, ROTATION_SCHEDULE_MAP } from '../utils/programInfo';
 import ReactSelect from 'react-select';
-
+import { CARDS_LIST, ROTATION_SCHEDULE_MAP } from '../../utils/programInfo';
 
 class InfoCardsPanel extends Component {
 
@@ -98,7 +97,7 @@ class InfoCardsPanel extends Component {
         }
 
         return (
-            <div className='info-card-panel-root m-t'>
+            <div className='info-card-panel-root'>
                 {residentInfo && <div>
                     <h4 onClick={this.toggleVisibility} className="text-left">
                         {this.state.isVisible ? <span className="icon icon-chevron-down"></span> : <span className="icon icon-chevron-right"></span>}

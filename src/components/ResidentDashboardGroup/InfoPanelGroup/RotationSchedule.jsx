@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import ScheduleBlock from './ScheduleBlock';
-import { ROTATION_SCHEDULE_MAP } from '../../utils/programInfo';
+import { ROTATION_SCHEDULE_MAP } from '../../../utils/programInfo';
 
 export default class InfoPanel extends Component {
 

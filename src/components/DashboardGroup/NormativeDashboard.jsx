@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 import { getAllData, getResidentList } from '../../utils/requestServer';
 import moment from 'moment';
-import NormativeTable from '../NormativeDashboardGroup/NormativeTable';
-import NormativeFilterPanel from '../NormativeDashboardGroup/NormativeFilterPanel';
-import NormativeGraph from '../NormativeDashboardGroup/NormativeGraph';
+import { NormativeTable, NormativeFilterPanel, NormativeGraph } from '../';
 import Loading from 'react-loading';
 
-
 export default class NormativeDashboard extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
