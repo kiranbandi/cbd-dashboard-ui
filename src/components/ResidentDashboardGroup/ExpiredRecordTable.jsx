@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
-import { customFilter } from '../utils/genericUtility';
+import { customFilter } from '../../utils/genericUtility';
 
 const columns = [{
     Header: 'Expired Date',
@@ -44,7 +44,7 @@ class ExpiredResidentData extends Component {
                     <div>
                         <h4 onClick={this.toggleVisibility} className="text-left">
                             {this.state.isVisible ? <span className="icon icon-chevron-down"></span> : <span className="icon icon-chevron-right"></span>}
-                            Expired EPAs: {expiredResidentData.length} (Last on {expiredResidentData[0].Date})
+                            Expired EPAs: {expiredResidentData.length} (Last Expired Record on {expiredResidentData[0].Date})
                         </h4>
                         <div className={'table-box ' + (this.state.isVisible ? '' : 'hidden-table-box')}>
                             <ReactTable

@@ -5,7 +5,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import { line, scaleLinear } from 'd3';
 import TrackTrails from '../GraphPanelGroup/TrackTrails';
-import { showTooltip } from '../../redux/actions/actions';
+import { showTooltip } from '../../../redux/actions/actions';
 
 
 class RecentEPATrend extends Component {

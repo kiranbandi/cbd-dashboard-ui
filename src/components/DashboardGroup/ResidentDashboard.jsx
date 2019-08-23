@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { getResidentList } from '../../utils/requestServer';
 import { setResidentList } from '../../redux/actions/actions';
 import Loading from 'react-loading';
-import { FilterPanel, GraphPanel, InfoPanel, InfoCardsPanel } from '../';
+import { FilterPanel, GraphPanel, InfoPanel, InfoCardsPanel, ExpiredRecordTable } from '../';
+
 
 class ResidentDashboard extends Component {
 
@@ -50,7 +51,9 @@ class ResidentDashboard extends Component {
                                 <FilterPanel />
                                 <InfoPanel />
                                 <GraphPanel isEMDepartment={true} />
+                                <ExpiredRecordTable smallScreen={false} />
                                 {infoCardsVisible && <InfoCardsPanel />}
+                                
                             </div> :
                             <h2 className='text-center text-danger'>No resident information is available currently</h2>}
                     </div>}
@@ -68,7 +71,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         residentList: state.oracle.residentList,
-        programInfo: state.oracle.programInfo
+        //  can be null occasionally so better to check and set it
+        programInfo: state.oracle.programInfo ? state.oracle.programInfo : {}
     };
 }
 

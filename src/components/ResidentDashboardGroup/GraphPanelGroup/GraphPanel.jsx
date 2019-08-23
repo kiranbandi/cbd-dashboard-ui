@@ -1,12 +1,12 @@
 /*global $*/
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Tooltip from './Tooltip';
 import { bindActionCreators } from 'redux';
-import { showTooltip, setLevelVisibilityStatus } from '../../redux/actions/actions';
+import { showTooltip, setLevelVisibilityStatus } from '../../../redux/actions/actions';
 import GraphRow from './GraphRow';
 import HeaderRow from './HeaderRow';
-import { ExpiredRecordTable } from '../';
+import Tooltip from './Tooltip';
+
 
 class GraphPanel extends Component {
 
@@ -169,7 +169,6 @@ class GraphPanel extends Component {
 
                                 </div>)
                         })}
-                        <ExpiredRecordTable smallScreen={smallScreen} />
                     </div>
                 </div>}
             </div>

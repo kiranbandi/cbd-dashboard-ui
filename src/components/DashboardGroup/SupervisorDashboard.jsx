@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { getObserverList, getObserverData } from '../../utils/requestServer';
 import Loading from 'react-loading';
-import StatCard from '../InfoPanelGroup/StatCard';
+import { StatCard } from '../';
 import { customFilter } from '../../utils/genericUtility';
 import _ from 'lodash';
 import ReactTable from 'react-table';
