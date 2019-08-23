@@ -56,8 +56,6 @@ class RecentEPATrend extends Component {
 
         const { residentData = {} } = this.props, { filterRange } = this.state;
 
-        let filteredRecords = [];
-
         // when the records are loaded up we flatten them 
         // then we sort them by date
         let temp = _.reverse(_.sortBy(_.flatMap(residentData), (d) => d.Date));
@@ -100,7 +98,24 @@ class RecentEPATrend extends Component {
             };
         });
 
+        // if a record has been marked by the filterpanel it means it lies in
+        // a date range selected by the user
+        // so make it a diamond instead of a circle
         const elementList = _.map(pointList, (d, i) => {
+
+            if (d.pureData.mark) {
+                return <polygon
+                    id={'recentPoint-' + i}
+                    className='score-point'
+                    key={'recent-point-' + i}
+                    fill={'white'}
+                    stroke={'#252830'}
+                    strokeWidth={3}
+                    points={(d.x - 6) + "," + d.y + " " + d.x + "," + (d.y + 6) + " " + (d.x + 6) + "," + d.y + " " + (d.x) + "," + (d.y - 6) + " " + (d.x - 6) + "," + (d.y)}
+                    onMouseOver={this.onMouseOver}
+                    onMouseOut={this.onMouseOut} />
+            }
+
             return <circle
                 id={'recentPoint-' + i}
                 className='score-point'
