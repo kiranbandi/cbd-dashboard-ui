@@ -1,7 +1,6 @@
 const programInfo = {
     infoCardsVisible: false,
-    writtenScoresVisible: true,
-    oralScoresVisible: true,
+    examScoresVisible: false,
     narrativesVisible: true,
     rotationList: ["ANAT PATH", "AP BREAST", "AP CYTO", "AP FOUND", "AP GEN (REGINA)", "AP INTRO", "AP NEURO", "BIOCHEMISTRY", "BOOT CAMP", "ELECTIVE", "FORENSICS", "GEN PATH", "HEMATO", "MICRO", "MOLECULAR", "OTHER", "OFF SERVICE", "RESEARCH", "TRANS / COAG"],
     rotationRequired: {

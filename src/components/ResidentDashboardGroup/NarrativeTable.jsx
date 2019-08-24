@@ -5,14 +5,14 @@ import { customFilter } from '../../utils/genericUtility';
 
 const columns = [{
     Header: 'DATE',
-    accessor: 'observation_date text-center',
+    accessor: 'observation_date',
     maxWidth: 100,
     filterMethod: customFilter
 }, {
     Header: 'OBSERVER',
     accessor: 'observer_name',
     className: 'text-left',
-    maxWidth: 150,
+    maxWidth: 200,
     filterMethod: customFilter
 },
 {
@@ -57,23 +57,22 @@ class NarrativeTable extends Component {
 
         return (
             <div className='narrative-box' >
-                {filteredNarratives.length > 0 &&
-                    <div>
-                        <h4 onClick={this.toggleVisibility} className="text-left">
-                            {this.state.isVisible ? <span className="icon icon-chevron-down"></span> : <span className="icon icon-chevron-right"></span>}
-                            NARRATIVES
+                {filteredNarratives.length > 0 && <div>
+                    <h4 onClick={this.toggleVisibility} className="text-left">
+                        {this.state.isVisible ? <span className="icon icon-chevron-down"></span> : <span className="icon icon-chevron-right"></span>}
+                        View Narratives
                         </h4>
-                        <div className={'table-box ' + (this.state.isVisible ? '' : 'hidden-table-box')}>
-                            <ReactTable
-                                data={filteredNarratives}
-                                columns={columns}
-                                showPagination={false}
-                                className='-highlight'
-                                noDataText='No Narratives Available'
-                                defaultSorted={[{ id: "Date", desc: true }]} />
-                        </div>
+                    <div className={'table-box ' + (this.state.isVisible ? '' : 'hidden-table-box')}>
+                        <ReactTable
+                            data={filteredNarratives}
+                            columns={columns}
+                            defaultPageSize={5}
+                            filterable={true}
+                            className='-highlight'
+                            noDataText='No Narratives Available'
+                            defaultSorted={[{ id: "Date", desc: true }]} />
                     </div>
-                }
+                </div>}
             </div>)
     }
 }

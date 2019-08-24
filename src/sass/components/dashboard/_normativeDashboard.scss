@@ -8,6 +8,7 @@
             padding: 0px 20px 0px 20px;
             display: inline-block;
             border-radius: 5px;
+            width: auto;
             @media (max-width: 768px) {
                 width: 100%;
                 padding: 10px;
@@ -24,6 +25,9 @@
             }
             .checkbox {
                 margin-right: 0px;
+            }
+            .date-box {
+                width: 225px;
             }
         }
     }
