@@ -4,7 +4,11 @@ import { bindActionCreators } from 'redux';
 import { getResidentList } from '../../utils/requestServer';
 import { setResidentList } from '../../redux/actions/actions';
 import Loading from 'react-loading';
-import { FilterPanel, GraphPanel, InfoPanel, InfoCardsPanel, ExpiredRecordTable } from '../';
+import {
+    FilterPanel, GraphPanel, InfoPanel,
+    InfoCardsPanel, ExpiredRecordTable,
+    NarrativeTable
+} from '../';
 
 
 class ResidentDashboard extends Component {
@@ -39,7 +43,7 @@ class ResidentDashboard extends Component {
 
     render() {
         const { residentList = [], programInfo } = this.props,
-            { infoCardsVisible = false } = programInfo;
+            { infoCardsVisible = false, narrativesVisible = false } = programInfo;
 
         return (
             <div className='dashboard-root-resident m-t' >
@@ -48,12 +52,13 @@ class ResidentDashboard extends Component {
                     <div className='m-t-md'>
                         {residentList.length > 0 ?
                             <div>
-                                <FilterPanel />
+                                <FilterPanel programInfo={programInfo} />
                                 <InfoPanel />
                                 <GraphPanel isEMDepartment={true} />
                                 <ExpiredRecordTable smallScreen={false} />
+                                {narrativesVisible && <NarrativeTable />}
                                 {infoCardsVisible && <InfoCardsPanel />}
-                                
+
                             </div> :
                             <h2 className='text-center text-danger'>No resident information is available currently</h2>}
                     </div>}

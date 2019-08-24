@@ -17,6 +17,7 @@ class FilterPanel extends Component {
         this.onEPAToggle = this.onEPAToggle.bind(this);
         this.onVisbilityToggle = this.onVisbilityToggle.bind(this);
         this.onFilterToggleClick = this.onFilterToggleClick.bind(this);
+        this.onExamScoreToggle = this.onExamScoreToggle.bind(this);
         this.state = {
             showUncommencedEPA: true,
             openOnlyCurrentPhase: true,
@@ -26,13 +27,16 @@ class FilterPanel extends Component {
 
     onChange(event) {
         let { residentFilter = {}, actions } = this.props;
-        residentFilter.isAllData = event.target.checked;
+        residentFilter.isAllData = !residentFilter.isAllData;
         actions.setResidentFilter({ ...residentFilter });
     }
 
     onFilterToggleClick(event) {
-        const { isFilterOpen } = this.state;
-        this.setState({ 'isFilterOpen': !isFilterOpen });
+        this.setState({ isFilterOpen: !this.state.isFilterOpen });
+    }
+
+    onExamScoreToggle(event) {
+        this.setState({ examScoreVisible: !this.state.examScoreVisible });
     }
 
     onEPAToggle(event) {
@@ -116,7 +120,9 @@ class FilterPanel extends Component {
 
     render() {
 
-        const { filterLoaderState, residentList = [], residentFilter = {} } = this.props,
+        const { filterLoaderState, residentList = []
+            , residentFilter = {}, programInfo } = this.props,
+            { examScoreVisible } = programInfo,
             {
                 isAllData = false,
                 residentName = '',
@@ -155,31 +161,17 @@ class FilterPanel extends Component {
                 {/* let the elements be hidden by css style instead of react , to prevent dead elements value problem when submitting */}
 
                 <div className={'text-xs-left advanced-filter-box ' + (isFilterOpen ? 'show-filter' : 'hide-filter')}>
-                    <div className="checkbox custom-control text-center custom-checkbox">
-                        <label className='filter-label'>
-                            {"Show EPAs with No Data"}
-                            <input id='filter-hide-epa' type="checkbox" checked={this.state.showUncommencedEPA} onChange={this.onEPAToggle} />
-                            <span className="custom-control-indicator"></span>
-                        </label>
-                    </div>
-                    <div className="checkbox custom-control text-center custom-checkbox">
-                        <label className='filter-label'>
-                            {"Open Current Phase Only"}
-                            <input id='filter-hide-phases' type="checkbox" checked={this.state.openOnlyCurrentPhase} onChange={this.onVisbilityToggle} />
-                            <span className="custom-control-indicator"></span>
-                        </label>
-                    </div>
 
                     <div>
                         <div className="checkbox custom-control text-center custom-checkbox">
                             <label className='filter-label'>
-                                {"Disable Date Filter"}
-                                <input id='filter-isAllData' type="checkbox" checked={isAllData} onChange={this.onChange} />
+                                {"Filter Records by Date"}
+                                <input id='filter-isAllData' type="checkbox" checked={!isAllData} onChange={this.onChange} />
                                 <span className="custom-control-indicator"></span>
                             </label>
                         </div>
                         <div className='date-box'>
-                            <label className='filter-label'> Start Date</label>
+                            <label className='filter-label'>Period</label>
                             <div className="input-group col-sm-2">
                                 <span className="input-group-addon">
                                     <span className="icon icon-calendar"></span>
@@ -187,14 +179,37 @@ class FilterPanel extends Component {
                                 <input type="text" id='filter-startDate' defaultValue={startDate} disabled={isAllData} className="form-control" data-provide="datepicker" />
                             </div>
                         </div>
-                        <div className='date-box'>
-                            <label className='filter-label'> End Date</label>
+                        <span className='inner-splice'>-</span>
+                        <div className='date-box trailing'>
                             <div className="input-group col-sm-2">
                                 <span className="input-group-addon">
                                     <span className="icon icon-calendar"></span>
                                 </span>
                                 <input type="text" id='filter-endDate' disabled={isAllData} defaultValue={endDate} className="form-control" data-provide="datepicker" />
                             </div>
+                        </div>
+                    </div>
+                    <div className='filter-row-2'>
+                        <div className="checkbox custom-control text-center custom-checkbox">
+                            <label className='filter-label'>
+                                {"Show Exam Scores"}
+                                <input id='filter-hide-epa' type="checkbox" checked={examScoreVisible} onChange={this.onExamScoreToggle} />
+                                <span className="custom-control-indicator"></span>
+                            </label>
+                        </div>
+                        <div className="checkbox custom-control text-center custom-checkbox">
+                            <label className='filter-label'>
+                                {"Hide Uncommenced EPAs"}
+                                <input id='filter-hide-epa' type="checkbox" checked={!this.state.showUncommencedEPA} onChange={this.onEPAToggle} />
+                                <span className="custom-control-indicator"></span>
+                            </label>
+                        </div>
+                        <div className="checkbox custom-control text-center custom-checkbox">
+                            <label className='filter-label'>
+                                {"Open All Phases"}
+                                <input id='filter-hide-phases' type="checkbox" checked={!this.state.openOnlyCurrentPhase} onChange={this.onVisbilityToggle} />
+                                <span className="custom-control-indicator"></span>
+                            </label>
                         </div>
                     </div>
 
@@ -209,8 +224,7 @@ function mapStateToProps(state) {
     return {
         residentFilter: state.oracle.residentFilter,
         residentList: state.oracle.residentList,
-        filterLoaderState: state.oracle.filterLoaderState,
-        programInfo: state.oracle.programInfo
+        filterLoaderState: state.oracle.filterLoaderState
     };
 }
 

@@ -7,7 +7,7 @@
             width: 100%;
             padding: 10px;
         }
-        width: 575px;
+        width: 580px;
     }
     .button-box {
         display: inline-block;
@@ -36,8 +36,14 @@
     }
     .advanced-filter-box {
         background: #1a1c22;
-        padding: 20px 20px 20px 20px;
+        padding: 10px 0px 10px 15px;
         margin-top: 5px;
+        border-radius: 0px 0px 5px 5px;
+        width: 580px;
+        @media (max-width: 768px) {
+            width: 100%;
+            padding: 10px;
+        }
         &.hide-filter {
             display: none;
         }
@@ -58,16 +64,30 @@
     }
     .date-box {
         display: inline-block;
-        width: 270px;
+        width: 195px;
+        &.trailing {
+            width: 140px;
+        }
+        @media (max-width: 768px) {
+            margin-bottom: 3px;
+        }
+    }
+    .inner-splice {
+        width: 12px;
+        display: inline-block;
+        text-align: center;
+        @media (max-width: 768px) {
+            display: none;
+        }
     }
     .filter-label {
         margin-right: 10px;
-        font-size: 16px;
+        font-size: 15.5px;
         font-weight: normal;
     }
     .checkbox {
         display: inline-block;
-        margin-right: 20px;
+        margin-right: 10px;
         text-align: left;
         .custom-control-indicator {
             top: 3px;
@@ -77,7 +97,7 @@
         display: inline-table;
         vertical-align: middle;
         input {
-            width: 120px;
+            width: 100px;
         }
     }
     .filter-button {

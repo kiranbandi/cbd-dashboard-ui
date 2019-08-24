@@ -22,13 +22,12 @@
     .table-box {
         margin: 0px auto 10px auto;
         padding: 10px;
-        display: block;
-        border-top: 2px white;
+        border-top: 2px solid #666e83;
         border-radius: 0px 0px 5px 5px;
+        display: block;
         .ReactTable .rt-tbody .rt-td {
             text-align: center;
         }
-        display: block;
         &.hidden-table-box {
             display: none;
         }

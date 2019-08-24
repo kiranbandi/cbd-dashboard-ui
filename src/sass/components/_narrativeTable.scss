@@ -1,0 +1,80 @@
+.narrative-box {
+    background: #1a1c22;
+    margin: 10px 30px 0px 30px;
+    border-radius: 5px;
+    .icon {
+        font-size: 18px;
+        vertical-align: middle;
+    }
+    h4 {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        color: #cfd2da;
+        text-transform: none;
+        width: 100%;
+        cursor: pointer;
+        border-radius: 5px 5px 0px 0px;
+        padding: 10px 3px;
+        font-size: 18px;
+        display: inline-block;
+        font-family: sans-serif;
+    }
+    .table-box {
+        margin: 0px auto 10px auto;
+        padding: 10px;
+        display: block;
+        border-top: 2px solid #666e83;
+        border-radius: 0px 0px 5px 5px;
+        display: block;
+        &.hidden-table-box {
+            display: none;
+        }
+    }
+    .inner-table {
+        background: #25272d;
+        .rt-tbody {
+            height: 200px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            &::-webkit-scrollbar {
+                height: 0.7em;
+                width: 6px;
+                margin-top: 2px;
+            }
+            &::-webkit-scrollbar-track {
+                box-shadow: inset 0 0 5px grey;
+                border-radius: 10px;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: darkgrey;
+                border-radius: 10px;
+            }
+            &::-webkit-scrollbar-thumb:hover {
+                background: rgb(94, 94, 94);
+            }
+        }
+        .ReactTable .rt-thead .rt-th.-sort-asc,
+        .ReactTable .rt-thead .rt-td.-sort-asc {
+            box-shadow: inset 0 3px 0 0 rgb(70, 130, 180);
+        }
+        .ReactTable .rt-thead .rt-th.-sort-desc,
+        .ReactTable .rt-thead .rt-td.-sort-desc {
+            box-shadow: inset 0 -3px 0 0 rgb(70, 130, 180);
+        }
+    }
+    .feedback-cell {
+        white-space: normal;
+        text-overflow: inherit;
+        text-align: left;
+    }
+    .inner-header {
+        color: #1ca8dd;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 25px;
+        background: white;
+        height: 200px;
+        padding-top: 80px;
+    }
+}
