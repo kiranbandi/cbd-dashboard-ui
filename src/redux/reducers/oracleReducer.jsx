@@ -34,6 +34,8 @@ export default function oracleReducer(state = initialState.oracle, action) {
       return Object.assign({}, state, { visibilityOpenStatus: action.visibilityOpenStatus })
     case types.SET_PROGRAM_INFO:
       return Object.assign({}, state, { programInfo: action.programInfo })
+    case types.TOGGLE_EXAM_SCORE:
+      return Object.assign({}, state, { programInfo: { ...state.programInfo, examScoresVisible: !state.programInfo.examScoresVisible } })
     default:
       return state;
   }

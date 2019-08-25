@@ -6,6 +6,7 @@ import EPASpeedInfo from './EPASpeedInfo';
 import CiteScoreGraph from './CiteScoreGraph';
 import OralScoreGraph from './OralScoreGraph';
 import RecentEPATrend from './RecentEPATrend';
+import FeedbackBlock from './FeedbackBlock';
 
 class InfoPanel extends Component {
 
@@ -17,7 +18,8 @@ class InfoPanel extends Component {
     render() {
 
         let { residentData, residentFilter,
-            residentList, expiredResidentData, programInfo } = this.props,
+            residentList, expiredResidentData,
+            programInfo, width, smallScreen } = this.props,
             residentInfo = false, citeScoreData = {}, oralScoreData = {};
 
         if (residentFilter && residentFilter.username) {
@@ -25,10 +27,6 @@ class InfoPanel extends Component {
             citeScoreData = residentInfo && residentInfo.citeExamScore;
             oralScoreData = residentInfo && residentInfo.oralExamScore;
         }
-
-        //160px to offset the 30px margin on both sides and vertical scroll bar width
-        const widthOfRoot = document.body.getBoundingClientRect().width - 160,
-            smallScreen = widthOfRoot < 800;
 
         return (
             <div className='info-panel'>
@@ -49,10 +47,10 @@ class InfoPanel extends Component {
                                 expiredResidentData={expiredResidentData}
                                 residentFilter={residentFilter} />}
 
-                        {!smallScreen && <CiteScoreGraph width={widthOfRoot / 2} citeScoreData={citeScoreData} />}
-                        {!smallScreen && <OralScoreGraph width={widthOfRoot / 2} oralScoreData={oralScoreData} />}
-                        {!smallScreen && <RecentEPATrend width={widthOfRoot / 2} residentData={residentData} programInfo={programInfo} />}
-
+                        {!smallScreen && programInfo.examScoresVisible && <CiteScoreGraph width={width / 2} citeScoreData={citeScoreData} />}
+                        {!smallScreen && programInfo.examScoresVisible && < OralScoreGraph width={width / 2} oralScoreData={oralScoreData} />}
+                        {!smallScreen && <RecentEPATrend width={width / 2} residentData={residentData} programInfo={programInfo} />}
+                        {!smallScreen && <FeedbackBlock width={width / 2} programInfo={programInfo} />}
                     </div>
                 }
             </div>

@@ -45,20 +45,31 @@ class ResidentDashboard extends Component {
         const { residentList = [], programInfo } = this.props,
             { infoCardsVisible = false, narrativesVisible = false } = programInfo;
 
+        //125px to offset the 30px margin on both sides and vertical scroll bar width
+        let width = document.body.getBoundingClientRect().width - 125;
+        let smallScreen = width < 800;
+
         return (
             <div className='dashboard-root-resident m-t' >
                 {this.state.isLoaderVisible ?
                     <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
                     <div className='m-t-md'>
-                        {residentList.length > 0 ?
+                        {(residentList.length > 0) ?
                             <div>
-                                <FilterPanel programInfo={programInfo} />
-                                <InfoPanel />
-                                <GraphPanel isEMDepartment={true} />
-                                <ExpiredRecordTable smallScreen={false} />
+                                <FilterPanel
+                                    programInfo={programInfo} />
+                                <InfoPanel
+                                    smallScreen={smallScreen}
+                                    // add some empty space around the sides
+                                    width={width - 35} />
+                                <GraphPanel
+                                    isEMDepartment={true}
+                                    width={width}
+                                    smallScreen={smallScreen} />
                                 {narrativesVisible && <NarrativeTable />}
-                                {infoCardsVisible && <InfoCardsPanel />}
-
+                                <ExpiredRecordTable
+                                    smallScreen={smallScreen} />
+                                {infoCardsVisible && <InfoCardsPanel width={width} />}
                             </div> :
                             <h2 className='text-center text-danger'>No resident information is available currently</h2>}
                     </div>}

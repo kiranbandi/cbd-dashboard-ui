@@ -79,7 +79,7 @@ class GraphPanel extends Component {
             isTooltipVisible,
             isEMDepartment = false,
             tooltipData,
-            epaSourceMap,
+            epaSourceMap, smallScreen, width,
             levelVisibilityOpenStatus, programInfo } = this.props;
 
         const { openTableID, openFilterID } = this.state;
@@ -99,18 +99,9 @@ class GraphPanel extends Component {
 
         let expiredResidentDataGrouped = _.groupBy(expiredResidentData, (d) => d.EPA);
 
-        //125px to offset the 30px margin on both sides and vertical scroll bar width
-        let widthOfRootGraphPanel = document.body.getBoundingClientRect().width - 125;
-        let widthPartition = widthOfRootGraphPanel / 4;
-
-        let smallScreen = false;
-
-        if (widthPartition < 200) {
-            widthOfRootGraphPanel += 50;
-            widthPartition = widthOfRootGraphPanel - 20;
-            smallScreen = true;
-        }
-
+        
+        let widthOfRootGraphPanel = smallScreen ? (width + 50) : width;
+        let widthPartition = smallScreen ? (width - 20) : (width / 4);
 
         return (
             <div>
