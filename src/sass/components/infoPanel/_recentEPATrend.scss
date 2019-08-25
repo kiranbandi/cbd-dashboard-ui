@@ -1,0 +1,39 @@
+.recent-epa-container {
+    display: inline-block;
+    position: relative;
+    .recent-range-selection {
+        position: absolute;
+        right: 0px;
+        top: 36px;
+        @media (max-width: 768px) {
+            position: static;
+            margin-bottom: 15px;
+            margin-top: -15px;
+        }
+        .filter-label,
+        #recent-resident-data {
+            margin-right: 10px;
+        }
+        .btn {
+            padding: 3px 7px;
+            margin-right: 5px;
+        }
+    }
+    .recent-svg {
+        margin: 0px auto;
+        background: white;
+        .score-spark-line {
+            fill: none;
+            stroke: #1997c6;
+            stroke-width: 2px;
+        }
+        .score-point {
+            cursor: pointer;
+        }
+    }
+    .no-data-banner {
+        fill: #1ca8dd;
+        font-size: 20px;
+        font-weight: bold;
+    }
+}

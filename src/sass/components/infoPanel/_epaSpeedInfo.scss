@@ -1,0 +1,12 @@
+.epaSpeedBox {
+    .statcard-root {
+        float: none;
+        display: inline-block;
+        .statcard {
+            min-height: 132px;
+        }
+        @media (max-width: 480px) {
+            display: block;
+        }
+    }
+}

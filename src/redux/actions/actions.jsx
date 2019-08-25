@@ -114,6 +114,10 @@ export function setProgramInfo(programInfo) {
     return { type: types.SET_PROGRAM_INFO, programInfo };
 }
 
+export function toggleExamScore() {
+    return { type: types.TOGGLE_EXAM_SCORE };
+}
+
 export function setLoginData(userDetails) {
     const { program = 'EM' } = userDetails, programInfo = PROGRAM_INFO[program];
     // store data that needs to be persisted in session storage
@@ -124,6 +128,7 @@ export function setLoginData(userDetails) {
         // so in that case reset resident data and filter if any
         dispatch({ type: types.SET_RESIDENT_DATA, residentData: null });
         dispatch({ type: types.SET_EXPIRED_RESIDENT_DATA, expiredResidentData: [] });
+        dispatch({ type: types.SET_NARRATIVE_DATA, narrativeData: [] });
         dispatch(setResidentFilter({ isAllData: true }))
         // then set user details and program information
         dispatch(setUserDetails(userDetails));

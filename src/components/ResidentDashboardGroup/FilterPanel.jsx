@@ -6,7 +6,10 @@ import moment from 'moment';
 import _ from 'lodash';
 import Loading from 'react-loading';
 import { getResidentData, getNarratives } from '../../utils/requestServer';
-import { toggleFilterLoader, setResidentFilter, setResidentData, setNarrativeData } from '../../redux/actions/actions';
+import {
+    toggleFilterLoader, setResidentFilter, toggleExamScore,
+    setResidentData, setNarrativeData
+} from '../../redux/actions/actions';
 
 class FilterPanel extends Component {
 
@@ -36,7 +39,7 @@ class FilterPanel extends Component {
     }
 
     onExamScoreToggle(event) {
-        this.setState({ examScoreVisible: !this.state.examScoreVisible });
+        this.props.actions.toggleExamScore();
     }
 
     onEPAToggle(event) {
@@ -122,7 +125,7 @@ class FilterPanel extends Component {
 
         const { filterLoaderState, residentList = []
             , residentFilter = {}, programInfo } = this.props,
-            { examScoreVisible } = programInfo,
+            { examScoresVisible } = programInfo,
             {
                 isAllData = false,
                 residentName = '',
@@ -130,7 +133,6 @@ class FilterPanel extends Component {
                 endDate = moment().format('MM/DD/YYYY')
             } = residentFilter,
             { isFilterOpen } = this.state;
-
 
         // Sort the residents alphabetically so that they are easier to look up
         residentList.sort((previous, current) => previous.fullname.localeCompare(current.fullname));
@@ -193,7 +195,7 @@ class FilterPanel extends Component {
                         <div className="checkbox custom-control text-center custom-checkbox">
                             <label className='filter-label'>
                                 {"Show Exam Scores"}
-                                <input id='filter-hide-epa' type="checkbox" checked={examScoreVisible} onChange={this.onExamScoreToggle} />
+                                <input id='filter-hide-epa' type="checkbox" checked={examScoresVisible} onChange={this.onExamScoreToggle} />
                                 <span className="custom-control-indicator"></span>
                             </label>
                         </div>
@@ -234,7 +236,8 @@ function mapDispatchToProps(dispatch) {
             toggleFilterLoader,
             setResidentFilter,
             setResidentData,
-            setNarrativeData
+            setNarrativeData,
+            toggleExamScore
         }, dispatch)
     };
 }

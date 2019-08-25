@@ -1,0 +1,28 @@
+.cite-exam-score-container {
+    display: inline-block;
+    .hr-divider {
+        margin-bottom: 5px !important;
+    }
+    .cite-svg {
+        margin: 0px auto;
+        background: white;
+        .score-spark-line {
+            fill: none;
+            stroke: #4682b4;
+            stroke-width: 3;
+        }
+        .cite-score-point {
+            fill: #1ca8dd;
+        }
+        .cite-score-text,
+        .cite-year-label {
+            font-weight: bold;
+            font-family: sans-serif;
+        }
+        .no-data-banner {
+            fill: #1ca8dd;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+}

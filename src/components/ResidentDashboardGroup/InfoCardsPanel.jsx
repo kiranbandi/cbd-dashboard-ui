@@ -33,7 +33,7 @@ class InfoCardsPanel extends Component {
 
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
-        let panelWidth = document.body.getBoundingClientRect().width - 125;
+        let panelWidth = this.props.width;
 
         if (panelWidth > 350) {
             panelWidth = 350;
