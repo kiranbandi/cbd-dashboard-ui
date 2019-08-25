@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ResidentDashboard, ProgramDashboard, SupervisorDashboard, NormativeDashboard, DownloadDashboard } from '../components';
+import {
+    ResidentDashboard, ProgramDashboard,
+    CCFeedbackModal, SupervisorDashboard,
+    NormativeDashboard, DownloadDashboard
+} from '../components';
 
 class DashboardRoot extends Component {
 
@@ -23,7 +27,7 @@ class DashboardRoot extends Component {
 
     render() {
 
-        let { userType, programInfo } = this.props,
+        let { userType, programInfo, ccModalVisible } = this.props,
             { activeBoard = 'resident' } = this.state;
 
         let boardsLevel = '0';
@@ -38,6 +42,7 @@ class DashboardRoot extends Component {
 
         return (
             <div className='dashboard-page-root' >
+                {ccModalVisible && <CCFeedbackModal />}
                 {boardsLevel == '1' &&
                     <div>
                         <div className="hr-divider nav-pill-container-dashboard">
@@ -61,7 +66,7 @@ class DashboardRoot extends Component {
                         </div>
                         <div className='control-inner-container'>
                             {(activeBoard == 'resident') && <ResidentDashboard />}
-                            {(activeBoard == 'supervisor') && <SupervisorDashboard programInfo={programInfo}/>}
+                            {(activeBoard == 'supervisor') && <SupervisorDashboard programInfo={programInfo} />}
                             {(activeBoard == 'program') && <ProgramDashboard programInfo={programInfo} />}
                             {(activeBoard == 'table') && <DownloadDashboard />}
                             {(activeBoard == 'normative') && <NormativeDashboard />}
@@ -94,7 +99,8 @@ class DashboardRoot extends Component {
 function mapStateToProps(state) {
     return {
         userType: state.oracle.userDetails.accessType,
-        programInfo: state.oracle.programInfo
+        programInfo: state.oracle.programInfo,
+        ccModalVisible: state.oracle.ccModalVisible
     };
 }
 

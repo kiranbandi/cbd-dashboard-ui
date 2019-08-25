@@ -26,6 +26,8 @@ export default function oracleReducer(state = initialState.oracle, action) {
       return Object.assign({}, state, { isTooltipVisible: action.isTooltipVisible })
     case types.SET_TOOLTIP_DATA:
       return Object.assign({}, state, { tooltipData: action.tooltipData })
+    case types.TOGGLE_CC_MODAL:
+      return Object.assign({}, state, { ccModalVisible: !state.ccModalVisible })
     case types.SET_USER_DATA:
       return Object.assign({}, state, { userDetails: action.userDetails })
     case types.SET_DATA_DUMP:

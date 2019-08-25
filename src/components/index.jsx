@@ -19,6 +19,7 @@ export { default as ExpiredRecordTable } from './ResidentDashboardGroup/ExpiredR
 export { default as FilterPanel } from './ResidentDashboardGroup/FilterPanel';
 export { default as InfoCardsPanel } from './ResidentDashboardGroup/InfoCardsPanel';
 export { default as NarrativeTable } from './ResidentDashboardGroup/NarrativeTable';
+export { default as CCFeedbackModal } from './ResidentDashboardGroup/CCFeedbackModal';
 // Reusable components 
 export { default as FileUpload } from './ReusableComponents/FileUpload';
 export { default as RadioButton } from './ReusableComponents/RadioButton';
