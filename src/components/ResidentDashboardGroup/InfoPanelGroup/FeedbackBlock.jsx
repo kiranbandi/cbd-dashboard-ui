@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'lodash';
-import moment from 'moment';
 import { line, scaleLinear } from 'd3';
 import TrackTrails from '../GraphPanelGroup/TrackTrails';
-import { modifyCCFeedback } from '../../../redux/actions/actions';
+import { modifyCCFeedback, showTooltip, toggleCCEditModal } from '../../../redux/actions/actions';
 
 
 class FeedbackBlock extends Component {
@@ -14,75 +13,42 @@ class FeedbackBlock extends Component {
         super(props);
         this.onMouseOver = this.onMouseOver.bind(this);
         this.onMouseOut = this.onMouseOut.bind(this);
+        this.triggerCCEditModal = this.triggerCCEditModal.bind(this);
     }
 
 
+    triggerCCEditModal(event) {
+        this.props.actions.toggleCCEditModal();
+    }
+
     onMouseOver(event) {
-        // const { actions, programInfo } = this.props;
+        const { actions, ccFeedback } = this.props;
 
-        // let pointId = event.target.id.split("-")[1],
-        //     data = this.getDataList()[pointId],
-        //     tempEPA = data['EPA'].split("."),
-        //     epaText = data['EPA'] + " - " + programInfo.epaSourceMap[tempEPA[0]].subRoot[data['EPA']];
+        const dataPointIDs = event.target.id.split("-");
+        // curate the original ID to get the points key
+        const dataPoint = ccFeedback[dataPointIDs[1]][dataPointIDs[2]];
 
-
-        // var pageWidth = document.body.getBoundingClientRect().width;
-        // actions.showTooltip(true, {
-        //     'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,
-        //     'y': event.pageY - 50,
-        //     'epa': epaText,
-        //     'feedback': data['Feedback'],
-        //     'name': data['Observer_Name'],
-        //     'date': data['Date'],
-        //     'context': data['Situation_Context']
-        // });
+        var pageWidth = document.body.getBoundingClientRect().width;
+        actions.showTooltip(true, {
+            'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,
+            'y': event.pageY - 50,
+            'epa': '',
+            'feedback': dataPoint.feedback,
+            'name': '',
+            'date': '323/12/11',
+            'context': ''
+        });
 
     }
 
     onMouseOut(event) {
-        // this.props.actions.showTooltip(false);
+        this.props.actions.showTooltip(false);
     }
 
 
     render() {
 
-        let dataList = [], { width } = this.props;
-
-        const dataSample = {
-            '1': {
-                '1': { 'feedback': 'sadsdada', 'rating': 1 },
-                '2': { 'feedback': 'sadsdada', 'rating': 2 },
-                '3': { 'feedback': 'sadsdada', 'rating': 5 },
-                '4': { 'feedback': 'sadsdada', 'rating': 4 }
-            },
-            '2': {
-                '1': { 'feedback': 'sadsdada', 'rating': 1 },
-                '2': { 'feedback': 'sadsdada', 'rating': 1 },
-                '3': { 'feedback': 'sadsdada', 'rating': 1 },
-                '4': { 'feedback': 'sadsdada', 'rating': 1 }
-            },
-            '3': {
-                '1': { 'feedback': 'sadsdada', 'rating': 1 },
-                '2': { 'feedback': 'sadsdada', 'rating': 1 },
-                '3': { 'feedback': 'sadsdada', 'rating': 1 },
-                '4': { 'feedback': 'sadsdada', 'rating': 1 }
-            },
-            '4': {
-                '1': { 'feedback': 'sadsdada', 'rating': 4 },
-                '2': { 'feedback': 'sadsdada', 'rating': 4 },
-                '3': { 'feedback': 'sadsdada', 'rating': 5 },
-                '4': { 'feedback': 'sadsdada', 'rating': 4 }
-            },
-            '5': {
-                '1': { 'feedback': 'sadsdada', 'rating': 4 },
-                '2': { 'feedback': 'sadsdada', 'rating': 0 },
-                '3': { 'feedback': 'sadsdada', 'rating': 0 },
-                '4': { 'feedback': 'sadsdada', 'rating': 0 }
-            },
-            'promoted': { '1.3': 'TTD', '3.2': 'CORE', '4.2': 'FOUNDATION' }
-        };
-
-
+        let dataList = [], { width, ccFeedback, accessType } = this.props;
 
         const d3Line = line().x((d) => d.x).y((d) => d.y),
             innerHeight = 200,
@@ -130,8 +96,13 @@ class FeedbackBlock extends Component {
 
         dataList = [];
 
+        // This complicated fuckery is simply to evade the random chance of 
+        // someone setting the data at a particular meeting point to unavailable 
+        // So the whole graph doesnt get shifted but instead that point alone is
+        // subbed in with a zero
+
         [1, 2, 3, 4, 5].map(function (d, i) {
-            const yearlyData = dataSample[d];
+            const yearlyData = ccFeedback[d];
             // if there are records , then
             if (yearlyData) {
                 [1, 2, 3, 4].map((inner_d) => {
@@ -145,18 +116,19 @@ class FeedbackBlock extends Component {
         const pointList = [];
 
         //  push only points that actually have data
-        _.map(dataList, (d, i) => {
+        _.map(dataList, (d, index) => {
             if (d != 0) {
                 pointList.push({
-                    x: xScale(i),
-                    y: yScale(d)
+                    x: xScale(index),
+                    y: yScale(d),
+                    originalId: (Math.floor(+index / 4) + 1) + "-" + (((+index) % 4) + 1)
                 });
             }
         });
 
         const elementList = _.map(pointList, (d, i) => {
             return <circle
-                id={'feedback-point-' + i}
+                id={'feedback-' + d.originalId}
                 className='feedback-point'
                 key={'feedback-point-' + i}
                 fill={'#252830'}
@@ -168,12 +140,12 @@ class FeedbackBlock extends Component {
 
         let promotedDataList = [];
 
-        _.map(Object.keys(dataSample.promoted), (d) => {
+        _.map(Object.keys(ccFeedback.promoted), (d) => {
             if (d) {
                 const innerMap = d.split('.').map((d) => Number(d));
                 promotedDataList.push({
                     'x': xScale(((innerMap[0] - 1) * 4) + innerMap[1] - 1),
-                    'label': dataSample.promoted[d]
+                    'label': ccFeedback.promoted[d]
                 })
             }
         });
@@ -204,9 +176,12 @@ class FeedbackBlock extends Component {
                 <div className="hr-divider">
                     <h4 className="hr-divider-content"> Competence Committee Feedback </h4>
                 </div>
-                <button className='edit-feedback-button btn btn-primary-outline'>
-                    Edit <span className='icon icon-new-message'></span>
-                </button>
+                {(['admin', 'super-admin', 'director', 'reviewer'].indexOf(accessType) > -1) &&
+                    <button
+                        onClick={this.triggerCCEditModal}
+                        className='edit-feedback-button btn btn-primary-outline'>
+                        Edit <span className='icon icon-new-message'></span>
+                    </button>}
                 <svg height={innerHeight} width={width} className='recent-svg' >
                     {false ?
                         <text x={(width - 190) / 2} y={innerHeight / 2} className="no-data-banner">No Records Available</text> :
@@ -225,11 +200,16 @@ class FeedbackBlock extends Component {
     }
 }
 
-
-function mapDispatchToProps(dispatch) {
+function mapStateToProps(state) {
     return {
-        actions: bindActionCreators({ modifyCCFeedback }, dispatch)
+        accessType: state.oracle.userDetails.accessType
     };
 }
 
-export default connect(null, mapDispatchToProps)(FeedbackBlock);
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators({ modifyCCFeedback, showTooltip, toggleCCEditModal }, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FeedbackBlock);

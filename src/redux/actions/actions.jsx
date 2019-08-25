@@ -27,6 +27,11 @@ export function toggleFilterLoader() {
     return { type: types.TOGGLE_FILTER_LOADER };
 }
 
+
+export function toggleCCEditModal() {
+    return { type: types.TOGGLE_CC_MODAL };
+}
+
 export function setResidentList(residentList) {
     return { type: types.SET_RESIDENT_LIST, residentList };
 }

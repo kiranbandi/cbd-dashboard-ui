@@ -20,12 +20,45 @@ class InfoPanel extends Component {
         let { residentData, residentFilter,
             residentList, expiredResidentData,
             programInfo, width, smallScreen } = this.props,
-            residentInfo = false, citeScoreData = {}, oralScoreData = {};
+            residentInfo = false, citeScoreData = {}, oralScoreData = {}, ccFeedback = {};
 
         if (residentFilter && residentFilter.username) {
             residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
             citeScoreData = residentInfo && residentInfo.citeExamScore;
             oralScoreData = residentInfo && residentInfo.oralExamScore;
+            ccFeedback = {
+                '1': {
+                    '1': { 'feedback': '1.1', 'rating': 1 },
+                    '2': { 'feedback': '1.2', 'rating': 2 },
+                    '3': { 'feedback': '1.3', 'rating': 5 },
+                    '4': { 'feedback': '1.4', 'rating': 4 }
+                },
+                '2': {
+                    '1': { 'feedback': 'sadsdada', 'rating': 1 },
+                    '2': { 'feedback': 'sadsdada', 'rating': 1 },
+                    '3': { 'feedback': 'sadsdada', 'rating': 1 },
+                    '4': { 'feedback': 'sadsdada', 'rating': 1 }
+                },
+                '3': {
+                    '1': { 'feedback': '3.1', 'rating': 1 },
+                    '2': { 'feedback': '3.2', 'rating': 1 },
+                    '3': { 'feedback': 'sadsdada', 'rating': 1 },
+                    '4': { 'feedback': '3.4', 'rating': 1 }
+                },
+                '4': {
+                    '1': { 'feedback': 'sadsdada', 'rating': 4 },
+                    '2': { 'feedback': 'sadsdada', 'rating': 4 },
+                    '3': { 'feedback': 'sadsdada', 'rating': 5 },
+                    '4': { 'feedback': '4.4', 'rating': 4 }
+                },
+                '5': {
+                    '1': { 'feedback': 'sadsdada', 'rating': 4 },
+                    '2': { 'feedback': 'sadsdada', 'rating': 0 },
+                    '3': { 'feedback': 'sadsdada', 'rating': 0 },
+                    '4': { 'feedback': '5.4', 'rating': 0 }
+                },
+                'promoted': { '1.3': 'TTD', '3.2': 'CORE', '4.2': 'FOUNDATION' }
+            };
         }
 
         return (
@@ -50,7 +83,7 @@ class InfoPanel extends Component {
                         {!smallScreen && programInfo.examScoresVisible && <CiteScoreGraph width={width / 2} citeScoreData={citeScoreData} />}
                         {!smallScreen && programInfo.examScoresVisible && < OralScoreGraph width={width / 2} oralScoreData={oralScoreData} />}
                         {!smallScreen && <RecentEPATrend width={width / 2} residentData={residentData} programInfo={programInfo} />}
-                        {!smallScreen && <FeedbackBlock width={width / 2} programInfo={programInfo} />}
+                        {!smallScreen && <FeedbackBlock width={width / 2} programInfo={programInfo} ccFeedback={ccFeedback} />}
                     </div>
                 }
             </div>
