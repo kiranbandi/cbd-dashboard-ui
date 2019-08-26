@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 import { line, scaleLinear } from 'd3';
 import TrackTrails from '../GraphPanelGroup/TrackTrails';
-import { modifyCCFeedback, showTooltip, toggleCCEditModal } from '../../../redux/actions/actions';
+import { modifyCCFeedback, showTooltip } from '../../../redux/actions/actions';
 
 
 class FeedbackBlock extends Component {
@@ -13,13 +13,9 @@ class FeedbackBlock extends Component {
         super(props);
         this.onMouseOver = this.onMouseOver.bind(this);
         this.onMouseOut = this.onMouseOut.bind(this);
-        this.triggerCCEditModal = this.triggerCCEditModal.bind(this);
+
     }
 
-
-    triggerCCEditModal(event) {
-        this.props.actions.toggleCCEditModal();
-    }
 
     onMouseOver(event) {
         const { actions, ccFeedback } = this.props;
@@ -48,7 +44,7 @@ class FeedbackBlock extends Component {
 
     render() {
 
-        let dataList = [], { width, ccFeedback, accessType } = this.props;
+        let dataList = [], { width, ccFeedback } = this.props;
 
         const d3Line = line().x((d) => d.x).y((d) => d.y),
             innerHeight = 200,
@@ -66,7 +62,7 @@ class FeedbackBlock extends Component {
             }
         })
 
-        const yLabelList = _.map(['Inactive', 'No Progress', 'Not as Expected', 'Expected', 'Accelerated'], (d, i) => {
+        const yLabelList = _.map(['Inactive', 'Not Progressing', 'Not as Expected', 'As Expected', 'Accelerated'], (d, i) => {
             return <text
                 className='feedback-label-y'
                 key={'feedback-label-y-' + i}
@@ -174,22 +170,16 @@ class FeedbackBlock extends Component {
         return (
             <div className='feedback-block pullto-left' >
                 <div className="hr-divider">
-                    <h4 className="hr-divider-content"> Competence Committee Feedback </h4>
+                    <h4 className="hr-divider-content"> Competence Committee Feedback and Resident Progress </h4>
                 </div>
-                {(['admin', 'super-admin', 'director', 'reviewer'].indexOf(accessType) > -1) &&
-                    <button
-                        onClick={this.triggerCCEditModal}
-                        className='edit-feedback-button btn btn-primary-outline'>
-                        Edit <span className='icon icon-new-message'></span>
-                    </button>}
                 <svg height={innerHeight} width={width} className='recent-svg' >
                     {false ?
                         <text x={(width - 190) / 2} y={innerHeight / 2} className="no-data-banner">No Records Available</text> :
                         <g>
                             {yLabelList}
-                            {xLabelList}
-                            {promotedLabels}
-                            {promotedTracks}
+                            {/* {xLabelList} */}
+                            {/* {promotedLabels}
+                            {promotedTracks} */}
                             <TrackTrails trackTrailPositions={trackTrailPositions} />
                             <path className='score-spark-line' d={d3Line(pointList)}></path>
                             {elementList}
@@ -200,16 +190,11 @@ class FeedbackBlock extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        accessType: state.oracle.userDetails.accessType
-    };
-}
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ modifyCCFeedback, showTooltip, toggleCCEditModal }, dispatch)
+        actions: bindActionCreators({ modifyCCFeedback, showTooltip }, dispatch)
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FeedbackBlock);
+export default connect(null, mapDispatchToProps)(FeedbackBlock);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
     ResidentDashboard, ProgramDashboard,
-    CCFeedbackModal, SupervisorDashboard,
+    SupervisorDashboard,
     NormativeDashboard, DownloadDashboard
 } from '../components';
 
@@ -27,7 +27,7 @@ class DashboardRoot extends Component {
 
     render() {
 
-        let { userType, programInfo, ccModalVisible } = this.props,
+        let { userType, programInfo } = this.props,
             { activeBoard = 'resident' } = this.state;
 
         let boardsLevel = '0';
@@ -42,7 +42,6 @@ class DashboardRoot extends Component {
 
         return (
             <div className='dashboard-page-root' >
-                {ccModalVisible && <CCFeedbackModal />}
                 {boardsLevel == '1' &&
                     <div>
                         <div className="hr-divider nav-pill-container-dashboard">
@@ -99,8 +98,7 @@ class DashboardRoot extends Component {
 function mapStateToProps(state) {
     return {
         userType: state.oracle.userDetails.accessType,
-        programInfo: state.oracle.programInfo,
-        ccModalVisible: state.oracle.ccModalVisible
+        programInfo: state.oracle.programInfo
     };
 }
 
