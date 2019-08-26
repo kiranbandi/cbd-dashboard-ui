@@ -11,6 +11,7 @@ var endPoints = {
     register: endPointRoot + "users/register",
     allUsers: endPointRoot + "users/all",
     updateUser: endPointRoot + "users/update",
+    updateCCFeedbackList: endPointRoot + "users/update-cc-feedback",
     residents: endPointRoot + "users/residents",
     // end points for narratives
     residentNarratives: endPointRoot + "narratives/all",

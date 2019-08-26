@@ -2,6 +2,7 @@
 export { default as CreateUser } from './AdminGroup/CreateUser';
 export { default as ModifyUser } from './AdminGroup/ModifyUser';
 export { default as AddData } from './AdminGroup/AddData';
+export { default as AddCCFeedback } from './AdminGroup/AddCCFeedback';
 // Components for each of the five dashboards
 export { default as ResidentDashboard } from './DashboardGroup/ResidentDashboard';
 export { default as ProgramDashboard } from './DashboardGroup/ProgramDashboard';
@@ -19,7 +20,6 @@ export { default as ExpiredRecordTable } from './ResidentDashboardGroup/ExpiredR
 export { default as FilterPanel } from './ResidentDashboardGroup/FilterPanel';
 export { default as InfoCardsPanel } from './ResidentDashboardGroup/InfoCardsPanel';
 export { default as NarrativeTable } from './ResidentDashboardGroup/NarrativeTable';
-export { default as CCFeedbackModal } from './ResidentDashboardGroup/CCFeedbackModal';
 // Reusable components 
 export { default as FileUpload } from './ReusableComponents/FileUpload';
 export { default as RadioButton } from './ReusableComponents/RadioButton';

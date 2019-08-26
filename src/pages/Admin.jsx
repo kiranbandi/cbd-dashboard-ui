@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { AddData, CreateUser, ModifyUser } from '../components';
+import { AddData, CreateUser, ModifyUser, AddCCFeedback } from '../components';
 
 class Admin extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            activeTab: 'create-tab'
+            activeTab: 'addCCData-tab'
         };
         this.onTabClick = this.onTabClick.bind(this);
     }
@@ -31,6 +31,9 @@ class Admin extends Component {
                         <li className={activeTab == 'modify-tab' ? 'active' : ''}>
                             <a id='modify-tab' onClick={this.onTabClick}>Modify User</a>
                         </li>
+                        <li className={activeTab == 'addCCData-tab' ? 'active' : ''}>
+                            <a id='addCCData-tab' onClick={this.onTabClick}>Add CC Feedback</a>
+                        </li>
                         <li className={activeTab == 'addData-tab' ? 'active' : ''}>
                             <a id='addData-tab' onClick={this.onTabClick}>Upload Data</a>
                         </li>
@@ -39,6 +42,7 @@ class Admin extends Component {
                 <div className='admin-inner-container'>
                     {(activeTab == 'create-tab') && <CreateUser programInfo={programInfo} />}
                     {(activeTab == 'modify-tab') && <ModifyUser programInfo={programInfo} />}
+                    {(activeTab == 'addCCData-tab') && <AddCCFeedback programInfo={programInfo} />}
                     {(activeTab == 'addData-tab') && <AddData programInfo={programInfo} />}
                 </div>
             </div >

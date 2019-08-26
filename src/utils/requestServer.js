@@ -68,6 +68,19 @@ requestServer.updateUser = function(userData) {
 }
 
 
+requestServer.updateCCFeedbackList = function(username, ccFeedbackList) {
+
+    return new Promise((resolve, reject) => {
+        axios.post(endPoints.updateCCFeedbackList + "/" + username, { ccFeedbackList }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            .then((response) => {
+                toastr["success"]("CC Feedback for " + username + " updated successfully");
+                resolve(response.data.data.ccFeedbackList);
+            })
+            .catch((err) => errorCallback(err, reject));
+    });
+}
+
+
 requestServer.getAllUsers = function() {
     return new Promise((resolve, reject) => {
         axios.get(endPoints.allUsers, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
