@@ -215,8 +215,8 @@ export default class AddCCFeedback extends Component {
                                 <span className='inner-span'>MEETING</span>
                                 <select name="username" className='custom-select' value={meetingOption} onChange={this.onSelectMeeting}>
                                     <option key={'meeting-select'} value={'meeting-select'} >{'Select Meeting'}</option>
-                                    <option style={{ background: '#67bb67' }} key={'meeting-add'} value={'meeting-add'} >{'Add New'}</option>
                                     {ccFeedbackList.map((point, index) => <option key={'meeting-' + (index)} value={'meeting-' + (index)} >{point.meetingDate}</option>)}
+                                    <option style={{ background: '#67bb67' }} key={'meeting-add'} value={'meeting-add'} >{'Add New'}</option>
                                 </select>
                             </div>
 
