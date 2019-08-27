@@ -33,14 +33,15 @@
             cursor: pointer;
         }
         .promoted-track {
-            stroke: #e64759;
+            stroke: #1bc98e;
             stroke-dasharray: 9;
             stroke-width: 3px;
             stroke-dashoffset: 1;
         }
         .promoted-label {
             font-weight: bold;
-            fill: #e64759;
+            fill: #1bc98e;
+            font-size: 11px;
         }
     }
     .no-data-banner {

@@ -52,7 +52,11 @@ class InfoPanel extends Component {
                         {!smallScreen && programInfo.examScoresVisible && <CiteScoreGraph width={width / 2} citeScoreData={citeScoreData} />}
                         {!smallScreen && programInfo.examScoresVisible && < OralScoreGraph width={width / 2} oralScoreData={oralScoreData} />}
                         {!smallScreen && <RecentEPATrend width={width / 2} residentData={residentData} programInfo={programInfo} />}
-                        {!smallScreen && <FeedbackBlock width={width / 2} programInfo={programInfo} ccFeedbackList={ccFeedbackList} />}
+                        {!smallScreen && <FeedbackBlock
+                            width={width / 2}
+                            programInfo={programInfo}
+                            residentInfo={residentInfo}
+                            ccFeedbackList={ccFeedbackList} />}
                     </div>
                 }
             </div>
