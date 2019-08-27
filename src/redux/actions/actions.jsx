@@ -28,8 +28,8 @@ export function toggleFilterLoader() {
 }
 
 
-export function toggleCCEditModal() {
-    return { type: types.TOGGLE_CC_MODAL };
+export function toggleModalVisbility() {
+    return { type: types.TOGGLE_MODAL };
 }
 
 export function setResidentList(residentList) {

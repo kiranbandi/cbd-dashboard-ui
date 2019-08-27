@@ -2,7 +2,7 @@ export default {
   oracle: {
     loaderState: false,
     filterLoaderState: false,
-    ccModalVisible: true,
+    isModalVisible: false,
     sessionStatus: !!sessionStorage.jwt,
     residentData: null,
     narrativeData: [],

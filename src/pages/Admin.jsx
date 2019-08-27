@@ -7,7 +7,7 @@ class Admin extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeTab: 'addCCData-tab'
+            activeTab: 'create-tab'
         };
         this.onTabClick = this.onTabClick.bind(this);
     }

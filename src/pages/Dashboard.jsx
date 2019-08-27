@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
     ResidentDashboard, ProgramDashboard,
-    SupervisorDashboard,
+    SupervisorDashboard, Modal,
     NormativeDashboard, DownloadDashboard
 } from '../components';
 
