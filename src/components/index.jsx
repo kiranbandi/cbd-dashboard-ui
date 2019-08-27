@@ -24,6 +24,8 @@ export { default as NarrativeTable } from './ResidentDashboardGroup/NarrativeTab
 export { default as FileUpload } from './ReusableComponents/FileUpload';
 export { default as RadioButton } from './ReusableComponents/RadioButton';
 export { default as StatCard } from './ReusableComponents/StatCard';
+export { default as Modal } from './ReusableComponents/Modal';
+
 // Baselevel components that are wrappers
 export { default as NavBar } from './NavBar';
 export { default as Container } from './Container';
