@@ -15,7 +15,7 @@ module.exports = {
     devServer: {
         inline: true,
         contentBase: './build',
-        port: 8888,
+        port: 8887,
         https: true,
         watchOptions: {
             ignored: [

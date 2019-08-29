@@ -38,7 +38,7 @@ class NavBar extends Component {
     render() {
         const { userDetails, onProgramChange } = this.props,
             { accessType = '', program } = userDetails,
-            loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent((process.env.NODE_ENV == 'development') ? 'https://localhost:8888/' : 'https://cbd.usask.ca/');
+            loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent((process.env.NODE_ENV == 'development') ? 'https://localhost:8887/' : 'https://cbd.usask.ca/');
 
         return (
             <nav className="navbar navbar-inverse navbar-fixed-top">
