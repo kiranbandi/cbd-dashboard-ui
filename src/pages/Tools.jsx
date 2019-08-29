@@ -49,10 +49,6 @@ class Tools extends Component {
             .then((processedOutput) => {
                 var { data, epaSourceMap } = processedOutput;
 
-
-           
-
-                
                 window.emCBD = {
                     'rcmData': _.map(data, (_r) => {
                         // example convert 3.10 to 310 and 3.1 to 301
@@ -121,6 +117,11 @@ class Tools extends Component {
 
     render() {
         const { processing, processingSample, dataReady, showGraphPanel, epaSourceMap } = this.state;
+
+        //125px to offset the 30px margin on both sides and vertical scroll bar width
+        let width = document.body.getBoundingClientRect().width - 125;
+        let smallScreen = width < 800;
+
         return (
             <div className='tools-root m-t text-xs-center text-sm-left' >
                 <div className='container'>
@@ -153,7 +154,13 @@ class Tools extends Component {
                             <button className="btn btn-success-outline " onClick={this.visualizeRecords}>Visualize Records</button>
                         </div>
                         <div>
-                            {showGraphPanel && <div> <GraphPanel epaSourceMap={epaSourceMap} /> </div>}
+                            {showGraphPanel &&
+                                <div>
+                                    <GraphPanel
+                                        width={width}
+                                        smallScreen={smallScreen}
+                                        epaSourceMap={epaSourceMap} />
+                                </div>}
                         </div>
                     </div>}
             </div>
