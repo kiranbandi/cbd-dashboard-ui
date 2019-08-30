@@ -12,6 +12,7 @@ var endPoints = {
     allUsers: endPointRoot + "users/all",
     updateUser: endPointRoot + "users/update",
     updateCCFeedbackList: endPointRoot + "users/update-cc-feedback",
+    updateExamscore: endPointRoot + "users/update-exam-score",
     residents: endPointRoot + "users/residents",
     // end points for narratives
     residentNarratives: endPointRoot + "narratives/all",

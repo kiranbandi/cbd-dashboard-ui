@@ -73,8 +73,22 @@ requestServer.updateCCFeedbackList = function(username, ccFeedbackList) {
     return new Promise((resolve, reject) => {
         axios.post(endPoints.updateCCFeedbackList + "/" + username, { ccFeedbackList }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
             .then((response) => {
-                toastr["success"]("CC Feedback for " + username + " updated successfully");
+                toastr["success"]("CC Feedback for " + username + " was updated successfully");
                 resolve(response.data.data.ccFeedbackList);
+            })
+            .catch((err) => errorCallback(err, reject));
+    });
+}
+
+
+requestServer.updateExamscore = function(username, citeExamScore, oralExamScore) {
+
+    return new Promise((resolve, reject) => {
+        axios.post(endPoints.updateExamscore + "/" + username, { citeExamScore, oralExamScore }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            .then((response) => {
+                toastr["success"]("Exam scores for " + username + " was updated successfully");
+                const { data } = response.data;
+                resolve({ 'citeExamScore': data.citeExamScore, 'oralExamScore': data.oralExamScore });
             })
             .catch((err) => errorCallback(err, reject));
     });
