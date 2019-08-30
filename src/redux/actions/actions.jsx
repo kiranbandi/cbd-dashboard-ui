@@ -36,6 +36,15 @@ export function toggleModalVisbility() {
     return { type: types.TOGGLE_MODAL };
 }
 
+export function setInfoCard(infoCard) {
+    // set the card and show modal
+    return dispatch => {
+        dispatch({ type: types.SET_INFO_CARD, infoCard });
+        dispatch(toggleModalVisbility());
+    };
+
+}
+
 export function setResidentList(residentList) {
     return { type: types.SET_RESIDENT_LIST, residentList };
 }

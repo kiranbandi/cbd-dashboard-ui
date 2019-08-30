@@ -58,7 +58,9 @@ class ResidentDashboard extends Component {
                             <div>
                                 <FilterPanel
                                     programInfo={programInfo} />
+                                {infoCardsVisible && smallScreen && <InfoCardsPanel width={width} />}
                                 <InfoPanel
+                                    infoCardsVisible={infoCardsVisible}
                                     smallScreen={smallScreen}
                                     // add some empty space around the sides
                                     width={width - 35} />
@@ -69,7 +71,7 @@ class ResidentDashboard extends Component {
                                 {narrativesVisible && <NarrativeTable />}
                                 <ExpiredRecordTable
                                     smallScreen={smallScreen} />
-                                {infoCardsVisible && <InfoCardsPanel width={width} />}
+
                             </div> :
                             <h2 className='text-center text-danger'>No resident information is available currently</h2>}
                     </div>}

@@ -11,7 +11,8 @@ export default class ScheduleBlock extends Component {
 
         const { scheduleDateList = [], scheduleRotationList = [],
             LongSchedule, widthAvailable, rotationRequired,
-            isHistorical = false, isEPAperBlockVisible = false, residentData, academicYear } = this.props;
+            isHistorical = false, isEPAperBlockVisible = false,
+            residentData, academicYear, infoCardsVisible, onRotationBlockClick } = this.props;
 
         // create an empty count map
         let epaPerBlockList = _.times(scheduleDateList.length, () => 0);
@@ -55,8 +56,10 @@ export default class ScheduleBlock extends Component {
                 const rotationLabel = scheduleRotationList[index] || 'EM';
                 // append the individual box to the list
                 scheduleChart.push(<span
-                    className={'chart-line ' + isTodayInPeriod}
+                    className={'chart-line ' + isTodayInPeriod + (infoCardsVisible ? ' are-clickable' : '')}
                     key={"index-" + index}
+                    id={index + "-" + rotationLabel}
+                    onClick={infoCardsVisible ? onRotationBlockClick : null}
                     style={{ left: widthFromleft, width: internalWidth }}>
                     {rotationLabel}
                 </span>)

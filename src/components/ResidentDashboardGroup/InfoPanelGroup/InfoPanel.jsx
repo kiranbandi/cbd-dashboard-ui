@@ -18,7 +18,7 @@ class InfoPanel extends Component {
     render() {
 
         let { residentData, residentFilter,
-            residentList, expiredResidentData,
+            residentList, expiredResidentData, infoCardsVisible,
             programInfo, width, smallScreen } = this.props,
             residentInfo = false, citeScoreData = {}, oralScoreData = {}, ccFeedbackList = [];
 
@@ -40,7 +40,13 @@ class InfoPanel extends Component {
                             <span><b>LAST UPDATED ON -</b> {(new Date(residentInfo.uploadedData)).toDateString()}</span>
                         </div>
                         {!!residentData &&
-                            <RotationSchedule residentData={residentData} residentInfo={residentInfo} rotationRequired={programInfo.rotationRequired} />
+                            <RotationSchedule
+                                // info cards will be shown in a modal when rotations are clicked
+                                // in desktop
+                                infoCardsVisible={infoCardsVisible && !smallScreen}
+                                residentData={residentData}
+                                residentInfo={residentInfo}
+                                rotationRequired={programInfo.rotationRequired} />
                         }
                         {!!residentData &&
                             <EPASpeedInfo
