@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { AddData, CreateUser, ModifyUser, AddCCFeedback } from '../components';
+import {
+    AddData, CreateUser, AddExamscore,
+    ModifyUser, AddCCFeedback
+} from '../components';
 
 class Admin extends Component {
 
@@ -31,8 +34,11 @@ class Admin extends Component {
                         <li className={activeTab == 'modify-tab' ? 'active' : ''}>
                             <a id='modify-tab' onClick={this.onTabClick}>Modify User</a>
                         </li>
-                        <li className={activeTab == 'addCCData-tab' ? 'active' : ''}>
-                            <a id='addCCData-tab' onClick={this.onTabClick}>Add CC Feedback</a>
+                        <li className={activeTab == 'add-cc-tab' ? 'active' : ''}>
+                            <a id='add-cc-tab' onClick={this.onTabClick}>Add CC Feedback</a>
+                        </li>
+                        <li className={activeTab == 'add-exam-tab' ? 'active' : ''}>
+                            <a id='add-exam-tab' onClick={this.onTabClick}>Add Exam Scores</a>
                         </li>
                         <li className={activeTab == 'addData-tab' ? 'active' : ''}>
                             <a id='addData-tab' onClick={this.onTabClick}>Upload Data</a>
@@ -42,7 +48,8 @@ class Admin extends Component {
                 <div className='admin-inner-container'>
                     {(activeTab == 'create-tab') && <CreateUser programInfo={programInfo} />}
                     {(activeTab == 'modify-tab') && <ModifyUser programInfo={programInfo} />}
-                    {(activeTab == 'addCCData-tab') && <AddCCFeedback programInfo={programInfo} />}
+                    {(activeTab == 'add-exam-tab') && <AddExamscore programInfo={programInfo} />}
+                    {(activeTab == 'add-cc-tab') && <AddCCFeedback programInfo={programInfo} />}
                     {(activeTab == 'addData-tab') && <AddData programInfo={programInfo} />}
                 </div>
             </div >
