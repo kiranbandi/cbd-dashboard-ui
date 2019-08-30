@@ -71,30 +71,68 @@ class FeedbackBlock extends Component {
 
         const d3Line = line().x((d) => d.x).y((d) => d.y),
             innerHeight = 200,
-            marginHorizontal = 25,
+            marginHorizontalStart = 150,
+            marginHorizontalEnd = 25,
             marginVertical = 25,
-            xScale = scaleTime().domain([start_date.toDate(), end_date.toDate()]).range([marginHorizontal + 130, width - marginHorizontal]),
+            xScale = scaleTime().domain([start_date.toDate(), end_date.toDate()]).range([marginHorizontalStart, width - marginHorizontalEnd]),
             yScale = scaleLinear().domain([1, 5]).range([marginVertical + 10, innerHeight - marginVertical - 25])
 
 
         const trackTrailPositions = _.map([...Array(5)], (d, i) => {
             return {
-                x: 130,
-                dx: width - (2 * marginHorizontal) - 105,
+                x: xScale(start_date.toDate()),
+                dx: xScale(end_date.toDate()) - xScale(start_date.toDate()),
                 y: yScale(i + 1)
             }
         })
 
+
+
+        // from the 4 phases find the number at the which the resident is currently in
         const maxPromotedIndex = _.findIndex(PHASES_LIST, (d) => d == residentInfo.currentPhase);
 
-        const promotedDataList = _.map(residentInfo.promotedDate.slice(0, maxPromotedIndex), (d, i) => {
-            return {
-                x: xScale(new Date(d)),
-                label: i == 0 ? 'FOUNDATION' : i == 1 ? 'CORE' : 'TP'
+        // now use that to add the promotion dates for all the phases he was in before that
+        // so if he is in phase 4 add the promotion dates for phase 2 and 3
+        const promotedDataList = _.map(residentInfo.promotedDate.slice(0, maxPromotedIndex),
+            (d, i) => {
+                return {
+                    'date': d,
+                    label: i == 0 ? 'F' : i == 1 ? 'C' : 'TTP'
+                }
+            });
+
+        // finally for some residents in EM who have moved into the program directly in say core
+        // or foundation we ignore the previous promotion dates, we do this by setting all the dates
+        // to the same date
+        // if there are multiple promotions on the same date simply pick the other that is further along
+        // and ignore the others , for such cases also dont add the TTD start point
+        let uniquePromotedList = [], copyExists = false;
+        _.map(promotedDataList, (point) => {
+            const existingIndex = _.findIndex(uniquePromotedList, (d) => d.date == point.date);
+            if (existingIndex > -1) {
+                copyExists = true;
+                uniquePromotedList[existingIndex] = point;
             }
-        });
+            else {
+                uniquePromotedList.push(point);
+            }
+
+            // also if any of the dates equal to the resident start date then skip adding the TTD label
+            if (moment(new Date(point.date)).isSame(start_date)) {
+                copyExists = true;
+            }
+        })
+
+        // if duplicates exist skip adding TTD 
+        if (!copyExists) {
+            uniquePromotedList.unshift({ 'date': residentInfo.programStartDate, 'label': 'TTD' });
+        }
 
 
+        // map promoted list  dates to x values 
+        const updatedPromotedDataList = _.map(uniquePromotedList, (d) => {
+            return { 'x': xScale(new Date(d.date)), label: d.label }
+        })
 
 
         const yLabelList = _.map(optionsList, (d, i) => {
@@ -128,7 +166,7 @@ class FeedbackBlock extends Component {
         });
 
 
-        const promotedTracks = _.map(promotedDataList, (d, index) => {
+        const promotedTracks = _.map(updatedPromotedDataList, (d, index) => {
             return <line
                 x1={d.x} y1={yScale.range()[0]}
                 x2={d.x} y2={yScale.range()[1]}
@@ -139,7 +177,7 @@ class FeedbackBlock extends Component {
             </line>
         })
 
-        const promotedLabels = _.map(promotedDataList, (d, index) => {
+        const promotedLabels = _.map(updatedPromotedDataList, (d, index) => {
             return <text
                 className='promoted-label'
                 key={'promoted-label-' + index}
