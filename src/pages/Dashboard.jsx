@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { setActiveDashboard } from '../redux/actions/actions';
 import {
     ResidentDashboard, ProgramDashboard,
     SupervisorDashboard, Modal,
@@ -10,25 +12,19 @@ class DashboardRoot extends Component {
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            activeBoard: 'resident'
-        };
         this.onTabClick = this.onTabClick.bind(this);
     }
 
-
     onTabClick(event) {
         event.preventDefault();
-        const id = event.target.id.split("-")[0];
-        this.setState({ activeBoard: id });
+        const boardId = event.target.id.split("-")[0];
+        this.props.actions.setActiveDashboard(boardId);
     }
 
 
     render() {
 
-        let { userType, programInfo } = this.props,
-            { activeBoard = 'resident' } = this.state;
+        let { userType, programInfo, activeDashboard = 'resident' } = this.props;
 
         let boardsLevel = '0';
 
@@ -46,46 +42,46 @@ class DashboardRoot extends Component {
                     <div>
                         <div className="hr-divider nav-pill-container-dashboard">
                             <ul className="nav nav-pills hr-divider-content hr-divider-nav">
-                                <li className={activeBoard == 'resident' ? 'active' : ''}>
+                                <li className={activeDashboard == 'resident' ? 'active' : ''}>
                                     <a id='resident-tab' onClick={this.onTabClick} >RESIDENT METRICS</a>
                                 </li>
-                                <li className={activeBoard == 'normative' ? 'active' : ''}>
+                                <li className={activeDashboard == 'normative' ? 'active' : ''}>
                                     <a id='normative-tab' onClick={this.onTabClick} >NORMATIVE ASSESSMENT</a>
                                 </li>
-                                <li className={activeBoard == 'supervisor' ? 'active' : ''}>
+                                <li className={activeDashboard == 'supervisor' ? 'active' : ''}>
                                     <a id='supervisor-tab' onClick={this.onTabClick}>FACULTY DEVELOPMENT</a>
                                 </li>
-                                <li className={activeBoard == 'program' ? 'active' : ''}>
+                                <li className={activeDashboard == 'program' ? 'active' : ''}>
                                     <a id='program-tab' onClick={this.onTabClick}>PROGRAM EVALUATION</a>
                                 </li>
-                                <li className={activeBoard == 'table' ? 'active' : ''}>
+                                <li className={activeDashboard == 'table' ? 'active' : ''}>
                                     <a id='table-tab' onClick={this.onTabClick}>EXPORT DATA</a>
                                 </li>
                             </ul>
                         </div>
                         <div className='control-inner-container'>
-                            {(activeBoard == 'resident') && <ResidentDashboard />}
-                            {(activeBoard == 'supervisor') && <SupervisorDashboard programInfo={programInfo} />}
-                            {(activeBoard == 'program') && <ProgramDashboard programInfo={programInfo} />}
-                            {(activeBoard == 'table') && <DownloadDashboard />}
-                            {(activeBoard == 'normative') && <NormativeDashboard />}
+                            {(activeDashboard == 'resident') && <ResidentDashboard />}
+                            {(activeDashboard == 'supervisor') && <SupervisorDashboard programInfo={programInfo} />}
+                            {(activeDashboard == 'program') && <ProgramDashboard programInfo={programInfo} />}
+                            {(activeDashboard == 'table') && <DownloadDashboard />}
+                            {(activeDashboard == 'normative') && <NormativeDashboard />}
                         </div>
                     </div>}
                 {boardsLevel == '2' &&
                     <div>
                         <div className="hr-divider nav-pill-container-dashboard">
                             <ul className="nav nav-pills hr-divider-content hr-divider-nav">
-                                <li className={activeBoard == 'resident' ? 'active' : ''}>
+                                <li className={activeDashboard == 'resident' ? 'active' : ''}>
                                     <a id='resident-tab' onClick={this.onTabClick} >RESIDENT METRICS</a>
                                 </li>
-                                <li className={activeBoard == 'normative' ? 'active' : ''}>
+                                <li className={activeDashboard == 'normative' ? 'active' : ''}>
                                     <a id='normative-tab' onClick={this.onTabClick} >NORMATIVE ASSESSMENT</a>
                                 </li>
                             </ul>
                         </div>
                         <div className='control-inner-container'>
-                            {(activeBoard == 'resident') && <ResidentDashboard />}
-                            {(activeBoard == 'normative') && <NormativeDashboard />}
+                            {(activeDashboard == 'resident') && <ResidentDashboard />}
+                            {(activeDashboard == 'normative') && <NormativeDashboard />}
                         </div>
                     </div>}
                 {boardsLevel == '0' && <ResidentDashboard programInfo={programInfo} />}
@@ -98,11 +94,18 @@ class DashboardRoot extends Component {
 function mapStateToProps(state) {
     return {
         userType: state.oracle.userDetails.accessType,
-        programInfo: state.oracle.programInfo
+        programInfo: state.oracle.programInfo,
+        activeDashboard: state.oracle.activeDashboard
     };
 }
 
-export default connect(mapStateToProps, null)(DashboardRoot);
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators({ setActiveDashboard }, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardRoot);
 
 
 
