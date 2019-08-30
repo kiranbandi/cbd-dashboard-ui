@@ -68,6 +68,9 @@
             &.between-lot {
                 background: #bf6c07;
             }
+            &.are-clickable {
+                cursor: pointer;
+            }
         }
         .chart-count {
             border: 1.5px solid #434857;

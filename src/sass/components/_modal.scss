@@ -9,12 +9,12 @@
     .modal-main {
         position: fixed;
         background: #252830;
-        width: 40%;
+        width: auto;
         height: auto;
-        top: 40%;
+        top: 45%;
         left: 50%;
         transform: translate(-50%, -50%);
-        padding: 12px 10px 20px 10px;
+        padding: 12px 20px 12px 20px;
         border-radius: 5px;
         .close {
             color: black;

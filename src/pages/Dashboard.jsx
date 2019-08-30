@@ -24,7 +24,8 @@ class DashboardRoot extends Component {
 
     render() {
 
-        let { userType, programInfo, activeDashboard = 'resident' } = this.props;
+        let { userType, isModalVisible, infoCard,
+            programInfo, activeDashboard = 'resident' } = this.props;
 
         let boardsLevel = '0';
 
@@ -38,6 +39,7 @@ class DashboardRoot extends Component {
 
         return (
             <div className='dashboard-page-root' >
+                {isModalVisible && <Modal infoCard={infoCard} />}
                 {boardsLevel == '1' &&
                     <div>
                         <div className="hr-divider nav-pill-container-dashboard">
@@ -95,7 +97,9 @@ function mapStateToProps(state) {
     return {
         userType: state.oracle.userDetails.accessType,
         programInfo: state.oracle.programInfo,
-        activeDashboard: state.oracle.activeDashboard
+        activeDashboard: state.oracle.activeDashboard,
+        isModalVisible: state.oracle.isModalVisible,
+        infoCard: state.oracle.infoCard
     };
 }
 

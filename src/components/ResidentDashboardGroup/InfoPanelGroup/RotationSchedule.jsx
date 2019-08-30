@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import ScheduleBlock from './ScheduleBlock';
-import { ROTATION_SCHEDULE_MAP } from '../../../utils/programInfo';
+import { ROTATION_SCHEDULE_MAP, CARDS_LIST } from '../../../utils/programInfo';
+import { setInfoCard } from '../../../redux/actions/actions';
 
-export default class InfoPanel extends Component {
+class RotatioSchedule extends Component {
 
     constructor(props) {
         super(props);
         this.showHistorySchedule = this.showHistorySchedule.bind(this);
         this.showEPAsPerBlock = this.showEPAsPerBlock.bind(this);
+        this.onRotationBlockClick = this.onRotationBlockClick.bind(this);
 
         this.state = {
             isHistoryVisible: false,
@@ -17,14 +21,39 @@ export default class InfoPanel extends Component {
     }
 
     showHistorySchedule() {
-
-
         this.setState({ isHistoryVisible: !this.state.isHistoryVisible });
     }
 
     showEPAsPerBlock() {
         this.setState({ isEPAperBlockVisible: !this.state.isEPAperBlockVisible });
     }
+
+    onRotationBlockClick(event) {
+
+        const { residentInfo, actions } = this.props,
+            // split and replace back slashes "/" in the names
+            rotation = event.target.id.split("-")[1].split('/').join('-'),
+            rotationName = CARDS_LIST.indexOf(rotation) > -1 ? rotation : 'EM';
+
+        let imageName = rotationName, currentPhase = residentInfo.currentPhase || '';
+        if (imageName == 'EM') {
+            if (currentPhase == 'transition-to-discipline') {
+                imageName = ['EM-TTD']
+            }
+            else if (currentPhase == 'foundations-of-discipline') {
+                imageName = ['EM-F']
+            }
+            else if (currentPhase == 'core-of-discipline') {
+                imageName = ['EM-C-1', 'EM-C-2', 'EM-C-3']
+            }
+            else {
+                imageName = ['EM-TP-1', 'EM-TP-2']
+            }
+        }
+        // trigger the modal and set the image list
+        actions.setInfoCard(imageName);
+    }
+
 
     render() {
 
@@ -33,7 +62,8 @@ export default class InfoPanel extends Component {
             //200px to offset the 30px margin on both sides and vertical scroll bar width
             widthAvailable = document.body.getBoundingClientRect().width - 200,
             widthForEachMonth = widthAvailable / 12,
-            { residentInfo, residentData, rotationRequired } = this.props,
+            { residentInfo, residentData, rotationRequired,
+                infoCardsVisible } = this.props,
             { isHistoryVisible, isEPAperBlockVisible } = this.state,
             { rotationSchedule = {}, longitudinalSchedule = {}, programStartDate } = residentInfo;
 
@@ -91,6 +121,8 @@ export default class InfoPanel extends Component {
                     })}
                 </div>
                 <ScheduleBlock
+                    onRotationBlockClick={this.onRotationBlockClick}
+                    infoCardsVisible={infoCardsVisible}
                     isEPAperBlockVisible={isEPAperBlockVisible}
                     residentData={residentData}
                     rotationRequired={rotationRequired}
@@ -103,5 +135,16 @@ export default class InfoPanel extends Component {
         )
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators({ setInfoCard }, dispatch)
+    };
+}
+
+
+export default connect(null, mapDispatchToProps)(RotatioSchedule);
+
+
 
 

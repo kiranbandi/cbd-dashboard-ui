@@ -12,7 +12,7 @@ class InfoCardsPanel extends Component {
         super(props);
         this.state = {
             selectedRotation: '',
-            isVisible: false
+            isVisible: true
         };
         this.onSelectRotation = this.onSelectRotation.bind(this);
         this.toggleVisibility = this.toggleVisibility.bind(this);
@@ -108,7 +108,8 @@ class InfoCardsPanel extends Component {
                             <div className='rotation-select text-center'>
                                 <div style={{ width: panelWidth }} className='react-select-root'>
                                     <ReactSelect
-                                        placeholder='test'
+                                        placeholder='Select Rotation...'
+                                        isSearchable={false}
                                         value={_.find(rotationSelectList, (d) => d.value == selectedRotation)}
                                         options={rotationSelectList}
                                         styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
@@ -116,6 +117,7 @@ class InfoCardsPanel extends Component {
                                 </div>
                             </div>
                             <div className='image-container'>
+                                {/* loop only for EM because it has more than 1 card */}
                                 {selectedRotation == 'EM' ? <div>{_.map(imageName, (image) =>
                                     <img style={{ width: panelWidth }} key={image} className='info-card' src={"assets/img/cards/" + image + ".png"} />
                                 )}</div> :
