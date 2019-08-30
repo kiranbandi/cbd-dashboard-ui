@@ -2,6 +2,7 @@ export default {
   oracle: {
     loaderState: false,
     filterLoaderState: false,
+    activeDashboard: 'resident',
     isModalVisible: false,
     sessionStatus: !!sessionStorage.jwt,
     residentData: null,

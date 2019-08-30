@@ -23,6 +23,10 @@ export function toggleLoader() {
     return { type: types.TOGGLE_LOADER };
 }
 
+export function setActiveDashboard(activeDashboard) {
+    return { type: types.SET_ACTIVE_DASHBOARD, activeDashboard };
+}
+
 export function toggleFilterLoader() {
     return { type: types.TOGGLE_FILTER_LOADER };
 }

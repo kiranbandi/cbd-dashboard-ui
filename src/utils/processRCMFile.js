@@ -71,9 +71,11 @@ export default function(rawData) {
                             var requiredObservations = 0;
                             if (dataInRows[iteratorIndex + 1].__EMPTY.indexOf('Collect') > -1) {
                                 requiredObservations = +dataInRows[iteratorIndex + 1].__EMPTY.split('Collect ')[1].split(" ")[0];
-                            } else {
+                            } else if (dataInRows[iteratorIndex + 1].__EMPTY.indexOf('Collest') > -1) {
                                 // special scenario because of typo that occurs when files are created by the portal
                                 requiredObservations = +dataInRows[iteratorIndex + 1].__EMPTY.split('Collest ')[1].split(" ")[0];
+                            } else {
+                                requiredObservations = 1;
                             }
                             // if the value provided is textual instead of being a number 
                             // (again because of issues with the old portal) then simply store it as 10
