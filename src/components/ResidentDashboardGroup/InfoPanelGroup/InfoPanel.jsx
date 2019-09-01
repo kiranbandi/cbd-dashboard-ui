@@ -55,8 +55,8 @@ class InfoPanel extends Component {
                                 expiredResidentData={expiredResidentData}
                                 residentFilter={residentFilter} />}
 
-                        {!smallScreen && programInfo.examScoresVisible && <CiteScoreGraph width={width / 2} citeScoreData={citeScoreData} />}
-                        {!smallScreen && programInfo.examScoresVisible && < OralScoreGraph width={width / 2} oralScoreData={oralScoreData} />}
+                        {!smallScreen && programInfo.examScoresVisible && <CiteScoreGraph width={width / 2} citeScoreData={filterOutEmptyKeys(citeScoreData)} />}
+                        {!smallScreen && programInfo.examScoresVisible && < OralScoreGraph width={width / 2} oralScoreData={filterOutEmptyKeys(oralScoreData)} />}
                         {!smallScreen && <RecentEPATrend width={width / 2} residentData={residentData} programInfo={programInfo} />}
                         {!smallScreen && <FeedbackBlock
                             width={width / 2}
@@ -81,3 +81,14 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, null)(InfoPanel);
+
+
+// This santizes the exam scores so if that if a key is empty it is deleted
+function filterOutEmptyKeys(scores) {
+    _.map(Object.keys(scores), (key) => {
+        if (!scores[key] && scores[key] !== 0) {
+            delete scores[key];
+        }
+    })
+    return scores;
+}
