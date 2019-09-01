@@ -168,7 +168,7 @@ const programInfo = {
             },
             clinicalPresentation: {
                 '3.1': ["initial assessment", "diagnosis", "management"],
-                '3.2': ["asthma, anemia, arthritis, cancer, chronic fatigue, chronic kidney disease, chronic obstructive pulmonary disease, congestive heart failure, connective tissue disease, coronary artery disease, cirrhosis, dementia, diabetes mellitus, hypertension, other"],
+                '3.2': ["asthma", "anemia", "arthritis", "cancer", "chronic fatigue", "chronic kidney disease", "chronic obstructive pulmonary disease", "congestive heart failure", "connective tissue disease", "coronary artery disease", "cirrhosis", "dementia", "diabetes mellitus", "hypertension", "other"],
                 '3.3': ["perioperative", "obstetrical medicine", "other clinical service"],
                 '3.4': ["resuscitation", "initiating plan", "ongoing management"],
                 '3.5': ["airway management & endotracheal intubation", "arterial line catheter insertion", "central line placement", "thoracentesis", "paracentesis", "lumbar puncture", "joint arthrocentesis"],

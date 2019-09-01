@@ -26,9 +26,7 @@ export default class CreateUser extends Component {
             academicYear: '2019',
             currentPhase: 'transition-to-discipline',
             rotationSchedule: {},
-            longitudinalSchedule: {},
-            citeExamScore: {},
-            oralExamScore: {}
+            longitudinalSchedule: {}
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -59,17 +57,9 @@ export default class CreateUser extends Component {
     }
 
     onYearlyInputChange(event) {
-        let { academicYear, longitudinalSchedule, citeExamScore, oralExamScore } = this.state;
-        if (event.target.name == 'longitudinalSchedule') {
-            longitudinalSchedule[academicYear] = event.target.value;
-        }
-        else if (event.target.name == 'citeExamScore') {
-            citeExamScore[academicYear] = event.target.value;
-        }
-        else {
-            oralExamScore[academicYear] = event.target.value;
-        }
-        this.setState({ longitudinalSchedule, citeExamScore, oralExamScore });
+        let { academicYear, longitudinalSchedule } = this.state;
+        longitudinalSchedule[academicYear] = event.target.value;
+        this.setState({ longitudinalSchedule });
     }
 
     onPhaseChange(event) {
@@ -86,8 +76,8 @@ export default class CreateUser extends Component {
         event.preventDefault();
         const { username, fullname,
             email, accessType, accessList, currentPhase,
-            rotationSchedule, longitudinalSchedule, earlierPhaseCount,
-            citeExamScore, oralExamScore, promotedDate } = this.state,
+            rotationSchedule, longitudinalSchedule,
+            earlierPhaseCount, promotedDate } = this.state,
             programStartDate = document.getElementById('programStartDate') ? document.getElementById('programStartDate').value : '';
 
         // set the phase promoted dates one by one 
@@ -100,8 +90,8 @@ export default class CreateUser extends Component {
         registerUser({
             username, fullname, email,
             accessType, accessList, currentPhase,
-            rotationSchedule, longitudinalSchedule, citeExamScore,
-            oralExamScore, programStartDate, promotedDate
+            rotationSchedule, longitudinalSchedule,
+            programStartDate, promotedDate
         })
             .then(() => {
                 // reset form values
@@ -121,10 +111,7 @@ export default class CreateUser extends Component {
                         // JSON Object with arrays of schedules for each year
                         rotationSchedule: {},
                         // JSON Object with arrays of schedules for each year
-                        longitudinalSchedule: {},
-                        // JSON Object with arrays of scores for each year
-                        citeExamScore: {},
-                        oralExamScore: {}
+                        longitudinalSchedule: {}
                     })
             })
             // toggle loader once request is completed
@@ -134,7 +121,7 @@ export default class CreateUser extends Component {
     }
 
     render() {
-        let { loaderState, username, fullname, citeExamScore, oralExamScore,
+        let { loaderState, username, fullname,
             email, accessType, accessList,
             currentPhase, promotedDate, earlierPhaseCount, academicYear,
             programStartDate, rotationSchedule, longitudinalSchedule } = this.state,
@@ -246,14 +233,6 @@ export default class CreateUser extends Component {
                                 <div className="input-group">
                                     <span className='inner-span text-info'>LOGITUDINAL SCHEDULE</span>
                                     <input type="text" className="form-control extra-wide" name="longitudinalSchedule" value={longitudinalSchedule[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
-                                </div>
-                                <div className="input-group">
-                                    <span className='inner-span text-info'>WRITTEN EXAM SCORE</span>
-                                    <input type="text" className="form-control extra-wide" name="citeExamScore" value={citeExamScore[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
-                                </div>
-                                <div className="input-group text-info">
-                                    <span className='inner-span'>ORAL EXAM SCORE</span>
-                                    <input type="text" className="form-control extra-wide" name="oralExamScore" value={oralExamScore[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
                                 </div>
                             </div>
                         </div>}

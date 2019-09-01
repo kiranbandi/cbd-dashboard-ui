@@ -38,7 +38,7 @@ export default class SlideInFilter extends Component {
         }
 
         _.map(data, (record) => {
-            const context = record.pureData.Situation_Context.split(",").map((val_0) => val_0.trim());
+            const context = splitAndTrim(record.pureData.Situation_Context);
             context.map((contextType, contextIndex) => {
                 // if a particular value is in the array then find its position and 
                 //  increase the count in that position by 1
@@ -109,4 +109,12 @@ export default class SlideInFilter extends Component {
                 </div>
             </div>)
     }
+}
+
+//  This takes in values that are comma seperated and splits them into an array
+// and also trims any leading or trailing whitespaces, additionally it also ignores commas in brackets
+// because the comma in that case is part of the option itself and not a seperator.
+function splitAndTrim(string) {
+    var regex = /,(?![^(]*\)) /;
+    return string.split(regex).map((s) => s.trim());
 }
