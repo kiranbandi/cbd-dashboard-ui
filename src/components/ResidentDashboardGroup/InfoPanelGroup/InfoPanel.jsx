@@ -85,10 +85,14 @@ export default connect(mapStateToProps, null)(InfoPanel);
 
 // This santizes the exam scores so if that if a key is empty it is deleted
 function filterOutEmptyKeys(scores) {
-    _.map(Object.keys(scores), (key) => {
-        if (!scores[key] && scores[key] !== 0) {
-            delete scores[key];
-        }
-    })
+
+    if (scores) {
+        _.map(Object.keys(scores), (key) => {
+            if (!scores[key] && scores[key] !== 0) {
+                delete scores[key];
+            }
+        })
+    }
+
     return scores;
 }
