@@ -29,8 +29,6 @@ export default class ModifyUser extends Component {
             academicYear: '2019',
             rotationSchedule: {},
             longitudinalSchedule: {},
-            citeExamScore: {},
-            oralExamScore: {},
             isGraduated: false
         };
         this.onChange = this.onChange.bind(this);
@@ -75,8 +73,6 @@ export default class ModifyUser extends Component {
                         academicYear: '2019',
                         rotationSchedule: {},
                         longitudinalSchedule: {},
-                        citeExamScore: {},
-                        oralExamScore: {},
                         isGraduated: false
                     })
                 })
@@ -93,20 +89,6 @@ export default class ModifyUser extends Component {
             this.setState({ loaderState: true });
             getUser(username)
                 .then((userData) => {
-
-                    // code snippet to ensure old format doesnt break
-                    // and is migrated smoothly
-                    if (typeof (userData.rotationSchedule) == 'string') {
-                        userData.rotationSchedule = {}
-                    }
-                    if (typeof (userData.longitudinalSchedule) == 'string') {
-                        userData.longitudinalSchedule = {}
-                    }
-                    if (typeof (userData.citeExamScore) == 'string') {
-                        userData.citeExamScore = {}
-                    }
-
-
                     this.setState({
                         username,
                         email: userData.email,
@@ -119,8 +101,6 @@ export default class ModifyUser extends Component {
                         promotedDate: userData.promotedDate || [],
                         rotationSchedule: userData.rotationSchedule || {},
                         longitudinalSchedule: userData.longitudinalSchedule || {},
-                        citeExamScore: userData.citeExamScore || {},
-                        oralExamScore: userData.oralExamScore || {},
                         academicYear: '2019',
                         isGraduated: userData.isGraduated || false
                     });
@@ -166,24 +146,16 @@ export default class ModifyUser extends Component {
     }
 
     onYearlyInputChange(event) {
-        let { academicYear, longitudinalSchedule, citeExamScore, oralExamScore } = this.state;
-        if (event.target.name == 'longitudinalSchedule') {
-            longitudinalSchedule[academicYear] = event.target.value;
-        }
-        else if (event.target.name == 'citeExamScore') {
-            citeExamScore[academicYear] = event.target.value;
-        }
-        else {
-            oralExamScore[academicYear] = event.target.value;
-        }
-        this.setState({ longitudinalSchedule, citeExamScore, oralExamScore });
+        let { academicYear, longitudinalSchedule } = this.state;
+        longitudinalSchedule[academicYear] = event.target.value;
+        this.setState({ longitudinalSchedule });
     }
 
     onSubmit(event) {
         event.preventDefault();
         let { username, email, fullname,
-            accessType, accessList, currentPhase, earlierPhaseCount, promotedDate,
-            citeExamScore, oralExamScore, rotationSchedule,
+            accessType, accessList, currentPhase,
+            earlierPhaseCount, promotedDate, rotationSchedule,
             longitudinalSchedule, isGraduated = false } = this.state,
             programStartDate = document.getElementById('modify-programStartDate') ? document.getElementById('modify-programStartDate').value : '';
 
@@ -201,7 +173,6 @@ export default class ModifyUser extends Component {
             username, email, fullname, accessType,
             accessList, currentPhase, rotationSchedule,
             longitudinalSchedule, programStartDate,
-            citeExamScore, oralExamScore,
             promotedDate, isGraduated
         })
             .then(() => {
@@ -219,8 +190,6 @@ export default class ModifyUser extends Component {
                     academicYear: '2019',
                     rotationSchedule: {},
                     longitudinalSchedule: {},
-                    citeExamScore: {},
-                    oralExamScore: {},
                     isGraduated: false
                 })
             })
@@ -236,8 +205,7 @@ export default class ModifyUser extends Component {
             deleteLoaderState, username, fullname = '',
             email, accessType, accessList, academicYear,
             currentPhase, programStartDate, earlierPhaseCount, promotedDate,
-            rotationSchedule, longitudinalSchedule, oralExamScore,
-            citeExamScore, isGraduated = false } = this.state,
+            rotationSchedule, longitudinalSchedule, isGraduated = false } = this.state,
             { rotationList } = this.props.programInfo;
 
 
@@ -389,14 +357,6 @@ export default class ModifyUser extends Component {
                                     <div className="input-group">
                                         <span className='inner-span text-info'>LOGITUDINAL SCHEDULE</span>
                                         <input type="text" className="form-control extra-wide" name="longitudinalSchedule" value={longitudinalSchedule[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
-                                    </div>
-                                    <div className="input-group text-info">
-                                        <span className='inner-span'>WRITTEN EXAM SCORE</span>
-                                        <input type="text" className="form-control extra-wide" name="citeExamScore" value={citeExamScore[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
-                                    </div>
-                                    <div className="input-group text-info">
-                                        <span className='inner-span'>ORAL EXAM SCORE</span>
-                                        <input type="text" className="form-control extra-wide" name="oralExamScore" value={oralExamScore[academicYear] || ''} placeholder="COMMA SEPARATED VALUES" onChange={this.onYearlyInputChange} />
                                     </div>
                                 </div>
                             </div>}

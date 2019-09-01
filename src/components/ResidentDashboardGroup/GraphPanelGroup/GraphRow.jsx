@@ -62,7 +62,7 @@ export default class GraphRow extends Component {
 
             if (isFilterVisible) {
 
-                const context = d.Situation_Context.split(",").map((val_0) => val_0.trim());
+                const context = splitAndTrim(d.Situation_Context);
 
                 if (clinicalFilter.length > 0 && patientDemographicFilter.length > 0) {
                     highlight = (context.indexOf(clinicalFilter) > 0 && context.indexOf(patientDemographicFilter) > -1) ? true : false;
@@ -160,3 +160,10 @@ export default class GraphRow extends Component {
     }
 }
 
+//  This takes in values that are comma seperated and splits them into an array
+// and also trims any leading or trailing whitespaces, additionally it also ignores commas in brackets
+// because the comma in that case is part of the option itself and not a seperator.
+function splitAndTrim(string) {
+    var regex = /,(?![^(]*\)) /;
+    return string.split(regex).map((s) => s.trim());
+}

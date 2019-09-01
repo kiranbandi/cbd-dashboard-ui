@@ -25,7 +25,7 @@ class InfoPanel extends Component {
         if (residentFilter && residentFilter.username) {
             residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
             citeScoreData = residentInfo && residentInfo.citeExamScore;
-            oralScoreData = residentInfo && residentInfo.oralExamScore;
+            oralScoreData = residentInfo && {};
             // sort the feedback list by date from oldest to recent
             ccFeedbackList = residentInfo && residentInfo.ccFeedbackList.sort((a, b) => (new Date(a.meetingDate) - new Date(b.meetingDate)));
         }
