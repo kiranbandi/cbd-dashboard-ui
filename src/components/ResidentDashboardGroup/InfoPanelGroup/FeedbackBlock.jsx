@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { line, scaleLinear, scaleTime } from 'd3';
 import moment from 'moment';
 import TrackTrails from '../GraphPanelGroup/TrackTrails';
-import { modifyccFeedbackList, showTooltip } from '../../../redux/actions/actions';
+import { showTooltip } from '../../../redux/actions/actions';
 import { PHASES_LIST } from '../../../utils/programInfo';
 
 const optionsList = ['Accelerated', 'As Expected', 'Not as Expected', 'Not Progressing', 'Inactive'];
@@ -214,7 +214,7 @@ class FeedbackBlock extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ modifyccFeedbackList, showTooltip }, dispatch)
+        actions: bindActionCreators({ showTooltip }, dispatch)
     };
 }
 

@@ -25,7 +25,7 @@ class InfoPanel extends Component {
         if (residentFilter && residentFilter.username) {
             residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
             citeScoreData = residentInfo && residentInfo.citeExamScore;
-            oralScoreData = residentInfo && {};
+            oralScoreData = residentInfo && residentInfo.oralExamScore;
             // sort the feedback list by date from oldest to recent
             ccFeedbackList = residentInfo && residentInfo.ccFeedbackList.sort((a, b) => (new Date(a.meetingDate) - new Date(b.meetingDate)));
         }
@@ -89,6 +89,10 @@ function filterOutEmptyKeys(scores) {
     if (scores) {
         _.map(Object.keys(scores), (key) => {
             if (!scores[key] && scores[key] !== 0) {
+                delete scores[key];
+            }
+            // if its an empty array then also delete it
+            if (scores[key] && scores[key].length == 0) {
                 delete scores[key];
             }
         })
