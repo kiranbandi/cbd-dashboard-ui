@@ -34,6 +34,7 @@ class OralScoreGraph extends Component {
         const dataPoint = oralScoreData[dataPointIDs[1]][dataPointIDs[2]];
 
         var pageWidth = document.body.getBoundingClientRect().width;
+
         actions.showTooltip(true, {
             'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,
             'y': event.pageY - 50,
@@ -47,7 +48,7 @@ class OralScoreGraph extends Component {
     }
 
     removeTooltip(event) {
-        this.props.actions.showTooltip(false);
+        // this.props.actions.showTooltip(false);
     }
 
     render() {
