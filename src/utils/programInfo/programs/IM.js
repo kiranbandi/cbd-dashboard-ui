@@ -2,7 +2,7 @@ const programInfo = {
     infoCardsVisible: false,
     examScoresVisible: false,
     narrativesVisible: true,
-    rotationList: ["(S) CTU", "(S) FLOAT", "(S) CCU", "(S) ID", "(S) NEPHRO", "(S) RESP", "(S) HEME", "(S) NEURO", "(S) EMERG", "(S) GASTRO", "(S) ENDO", "(S) AMBU", "(S) GIM", "(S) ICU", "(S) ONC", "(S) RHEUM", "(S) RESEARCH", "(S) ALLERGY", "(S) CSU", "(S) DERM", "(S) PALL", "(R) CTU", "(R) FLOAT", "(R) CCU", "(R) ID", "(R) NEPHRO", "(R) RESP", "(R) HEME", "(R) NEURO", "(R) EMERG", "(R) GASTRO", "(R) ENDO", "(R) AMBU", "(R) GIM", "(R) ICU", "(R) ONC", "(R) RHEUM", "(R) RESEARCH", "(R) ALLERGY", "(R) CSU", "(R) DERM", "(R) PALL"],
+    rotationList: ["(S) CTU", "(S) FLOAT", "(S) CCU", "(S) ID", "(S) NEPHRO", "(S) RESP", "(S) HEME", "(S) NEURO", "(S) EMERG", "(S) GASTRO", "(S) ENDO", "(S) AMBU", "(S) GIM", "(S) ICU", "(S) ONC", "(S) RHEUM", "(S) RESEARCH", "(S) ALLERGY", "(S) CSU", "(S) DERM", "(S) PALL", "(S) OTHER", "(R) CTU", "(R) FLOAT", "(R) CCU", "(R) ID", "(R) NEPHRO", "(R) RESP", "(R) HEME", "(R) NEURO", "(R) EMERG", "(R) GASTRO", "(R) ENDO", "(R) AMBU", "(R) GIM", "(R) ICU", "(R) ONC", "(R) RHEUM", "(R) RESEARCH", "(R) ALLERGY", "(R) CSU", "(R) DERM", "(R) PALL", "(R) OTHER"],
     rotationRequired: {
         "(S) CTU": 10,
         "(S) FLOAT": 10,
@@ -25,6 +25,7 @@ const programInfo = {
         "(S) CSU": 10,
         "(S) DERM": 10,
         "(S) PALL": 10,
+        "(S) OTHER": 10,
         "(R) CTU": 10,
         "(R) FLOAT": 10,
         "(R) CCU": 10,
@@ -45,7 +46,8 @@ const programInfo = {
         "(R) ALLERGY": 10,
         "(R) CSU": 10,
         "(R) DERM": 10,
-        "(R) PALL": 10
+        "(R) PALL": 10,
+        "(R) OTHER": 10,
     },
     epaSourceMap: {
         1: {
