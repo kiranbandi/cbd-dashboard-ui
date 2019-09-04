@@ -48,7 +48,7 @@ class OralScoreGraph extends Component {
     }
 
     removeTooltip(event) {
-        // this.props.actions.showTooltip(false);
+        this.props.actions.showTooltip(false);
     }
 
     render() {
