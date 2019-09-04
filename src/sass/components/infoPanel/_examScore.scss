@@ -1,7 +1,26 @@
 .cite-exam-score-container {
     display: inline-block;
+    position: relative;
     .hr-divider {
-        margin-bottom: 5px !important;
+        margin-bottom: 20px !important;
+    }
+    .recent-range-selection {
+        position: absolute;
+        right: 0px;
+        top: 36px;
+        @media (max-width: 768px) {
+            position: static;
+            margin-bottom: 15px;
+            margin-top: -15px;
+        }
+        .filter-label,
+        #academic-year-dropdown {
+            margin-right: 10px;
+        }
+        .btn {
+            padding: 3px 7px;
+            margin-right: 5px;
+        }
     }
     .cite-svg {
         margin: 0px auto;
@@ -23,6 +42,13 @@
             fill: #1ca8dd;
             font-size: 20px;
             font-weight: bold;
+        }
+        .no-event-item {
+            pointer-events: none;
+        }
+        .oral-point,
+        .oral-text {
+            cursor: pointer;
         }
     }
 }

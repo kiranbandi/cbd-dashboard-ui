@@ -66,7 +66,19 @@ export default class AddExamscore extends Component {
     }
 
     onChange(event) {
-        this.setState({ [event.target.id.split('-')[1]]: event.target.value })
+        if (event.target.id == 'select-academicYear') {
+            this.setState({
+                [event.target.id.split('-')[1]]: event.target.value,
+                scoreValue: '',
+                narrative: '',
+                addModeOn: false,
+                scoreOption: ''
+            })
+        }
+        else {
+            this.setState({ [event.target.id.split('-')[1]]: event.target.value });
+        }
+
     }
 
     onWrittenScoreChange(event) {
@@ -212,7 +224,7 @@ export default class AddExamscore extends Component {
                     })
                 })
                 // toggle loader once request is completed
-                .finally(() => { this.setState({ innerLoaderState: false }) });
+                .finally(() => { this.setState({ deleteLoaderState: false }) });
         }
     }
 
