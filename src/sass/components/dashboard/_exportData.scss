@@ -1,13 +1,67 @@
 .export-data-container {
-    .bulk-export {
-        line-height: 30px;
-        .download-span {
-            vertical-align: top;
-            &+div {
-                margin-left: 10px;
-                vertical-align: top;
-                display: inline-block;
-            }
-        }
+  .bulk-export {
+    line-height: 30px;
+    .download-span {
+      vertical-align: top;
+      & + div {
+        margin-left: 10px;
+        vertical-align: top;
+        display: inline-block;
+      }
     }
+  }
+
+  .btn {
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .input-group {
+    display: inline-table;
+    vertical-align: middle;
+    input {
+      width: 100px;
+    }
+  }
+
+  .date-box {
+    display: inline-block;
+    width: 195px;
+    &.trailing {
+      width: 140px;
+    }
+    @media (max-width: 768px) {
+      margin-bottom: 3px;
+    }
+  }
+  
+  .inner-splice {
+    width: 12px;
+    display: inline-block;
+    text-align: center;
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .filter-label {
+    margin-right: 10px;
+    font-size: 15.5px;
+    font-weight: normal;
+  }
+
+  .ReactTable .-pagination .-btn {
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: #1a1c22;
+  }
+
+  .download-csv-button {
+    float: right;
+    .icon {
+      margin-right: 10px;
+    }
+  }
 }
