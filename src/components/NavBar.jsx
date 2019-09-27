@@ -31,6 +31,7 @@ class NavBar extends Component {
     logOut(event) {
         event.preventDefault();
         this.props.setLogoutData();
+        location.href = 'https://pawscas.usask.ca/cas-web/logout?url=' + window.location.href;
     }
 
 
