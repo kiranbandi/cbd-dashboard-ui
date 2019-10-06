@@ -49,14 +49,13 @@ export default class ExportDataTab extends Component {
         this.setState({ isLoaderVisible: true });
 
         // get list of all residents
-        this._data = await getAllData();
-        if (this._data) {
-            this.setState({ data: this._data });
-            console.log(this._data);
-        } else {
+        try {
+            this._data = await getAllData();
+        } catch (e) {
             console.log("error in fetching all records");
+        } finally {
+            this._isMounted && this.setState({ isLoaderVisible: false });
         }
-        this._isMounted && this.setState({ isLoaderVisible: false });
     }
 
     filterDates() {
@@ -96,7 +95,7 @@ export default class ExportDataTab extends Component {
 
         return (
             <div className='m-a export-data-container'>
-                <div class="row text-center m-b p-a">
+                <div className="row text-center m-b p-a">
                     <p className='info-text col-xs-12 col-sm-5 m-a-0'>This page is meant purely for research purposes and can let you download the entire record collection of all residents in the program in an easily accessible CSV file.</p>
                     <p className='text-warning info-text col-xs-12 col-sm-5 m-a-0'> <span className="icon icon-info-with-circle"></span> Because of the secure nature of data involved and the fact that this is a bulk export please make sure that this file is stored and handled responsibly.</p>
                     <button className="btn btn-primary-outline bulk-export col-xs-12 col-sm-2" onClick={this.fetchData}>
