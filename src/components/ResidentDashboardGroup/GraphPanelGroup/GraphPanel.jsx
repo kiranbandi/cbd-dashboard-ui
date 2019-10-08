@@ -77,7 +77,7 @@ class GraphPanel extends Component {
         let { residentData,
             expiredResidentData,
             isTooltipVisible,
-            isEMDepartment = false,
+            nonDemoMode = false,
             tooltipData,
             epaSourceMap, smallScreen, width,
             levelVisibilityOpenStatus, programInfo } = this.props;
@@ -99,7 +99,7 @@ class GraphPanel extends Component {
 
         let expiredResidentDataGrouped = _.groupBy(expiredResidentData, (d) => d.EPA);
 
-        
+
         let widthOfRootGraphPanel = smallScreen ? (width + 50) : width;
         let widthPartition = smallScreen ? (width - 20) : (width / 4);
 
@@ -131,7 +131,8 @@ class GraphPanel extends Component {
                                         onEPALabelClick={this.onEPALabelClick}
                                         innerKey={innerKey}
                                         smallScreen={smallScreen}
-                                        isEMDepartment={isEMDepartment}
+                                        nonDemoMode={nonDemoMode}
+                                        hidePercentages={programInfo.hidePercentages || false}
                                         isCurrentSubRootVisible={isCurrentSubRootVisible}
                                         epaSourceMap={epaSourceMap} />
 
@@ -148,11 +149,12 @@ class GraphPanel extends Component {
                                                     widthPartition={widthPartition}
                                                     epaSourceMap={epaSourceMap}
                                                     smallScreen={smallScreen}
+                                                    hideTogoNumbers={programInfo.hideTogoNumbers || false}
                                                     residentEPAData={residentData[epaSource] || []}
                                                     expiredResidentEPAData={expiredResidentDataGrouped[epaSource] || []}
                                                     onMouseOver={this.onMouseOver}
                                                     onMouseOut={this.onMouseOut}
-                                                    isEMDepartment={isEMDepartment}
+                                                    nonDemoMode={nonDemoMode}
                                                     onTableExpandClick={this.onTableExpandClick}
                                                     onFilterExpandClick={this.onFilterExpandClick} />)
                                         })}
