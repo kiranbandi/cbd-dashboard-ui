@@ -4,6 +4,30 @@ import downloadCSV from '../../utils/downloadCSV';
 import Loading from 'react-loading';
 import ReactTable from 'react-table';
 import moment from 'moment';
+import { customFilter } from '../../utils/genericUtility';
+
+const columns = [{
+    Header: 'Resident Name',
+    accessor: 'resident_name',
+    className: 'text-left',
+    filterMethod: customFilter
+}, {
+    Header: 'Observer Name',
+    accessor: 'observer_name',
+    className: 'text-left',
+    filterMethod: customFilter
+}, {
+    Header: 'Observation Date',
+    accessor: 'observation_date',
+    filterMethod: customFilter,
+    className: 'text-center'
+}, {
+    Header: 'EPA',
+    accessor: 'epa',
+    className: 'text-center',
+    filterMethod: customFilter
+}];
+
 
 export default class ExportDataTab extends Component {
 
@@ -71,32 +95,14 @@ export default class ExportDataTab extends Component {
     }
 
     render() {
-        const columns = [{
-            Header: 'Resident Name',
-            accessor: 'resident_name',
-            className: 'text-left'
-        }, {
-            Header: 'Observer Name',
-            accessor: 'observer_name',
-            className: 'text-left'
-        }, {
-            Header: 'Observation Date',
-            accessor: 'observation_date'
-            ,
-            className: 'text-center'
-        }, {
-            Header: 'EPA',
-            accessor: 'epa',
-            className: 'text-center'
-        }];
-
+       
         var startDate = moment().format('MM/DD/YYYY');
         var endDate = moment().format('MM/DD/YYYY');
 
 
         return (
             <div className='m-a export-data-container'>
-                <div class="row text-center m-b p-a">
+                <div className="row text-center m-b p-a">
                     <p className='info-text col-xs-12 col-sm-5 m-a-0'>This page is meant purely for research purposes and can let you download the entire record collection of all residents in the program in an easily accessible CSV file.</p>
                     <p className='text-warning info-text col-xs-12 col-sm-5 m-a-0'> <span className="icon icon-info-with-circle"></span> Because of the secure nature of data involved and the fact that this is a bulk export please make sure that this file is stored and handled responsibly.</p>
                     <button className="btn btn-primary-outline bulk-export col-xs-12 col-sm-2" onClick={this.fetchData}>
@@ -140,7 +146,7 @@ export default class ExportDataTab extends Component {
                             ref={r => this._reactTable = r}
                             data={this.state.data}
                             columns={columns}
-                            defaultPageSize={5}
+                            defaultPageSize={10}
                             resizable={false}
                             filterable={true}
                             className='-highlight' />

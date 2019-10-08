@@ -22,7 +22,8 @@ export default (props) => {
     // Get the required Metrics 
     const totalEPAs = residentDataList.length,
         averageEPAsPerWeek = Math.round((totalEPAs / weeksPassed) * 100) / 100,
-        totalExpiredEPAs = expiredResidentData.length;
+        totalExpiredEPAs = expiredResidentData.length,
+        expiryRate = Math.round((totalExpiredEPAs / (totalEPAs + totalExpiredEPAs)) * 100);
 
     let recordsInPeriod, recordsInPeriodCount, recordsExpiredInPeriod,
         weeksInPeriod, averageEPAsPerWeekInPeriod;
@@ -48,7 +49,7 @@ export default (props) => {
                 <div className='row text-center'>
                     <StatCard title='EPAs observed per week' type='success' metric={averageEPAsPerWeek} />
                     <StatCard title='Total EPAs Observed' type='primary' metric={totalEPAs} />
-                    <StatCard title='Total EPAs Expired' type='danger' metric={totalExpiredEPAs} />
+                    <StatCard title='EPA Expiry Rate' type='danger' metric={expiryRate + '%'} />
                 </div> :
                 <div className='row text-center'>
                     <StatCard dual={true} title='EPAs observed per week' type='success' metric={averageEPAsPerWeek} secondMetric={averageEPAsPerWeekInPeriod} />
