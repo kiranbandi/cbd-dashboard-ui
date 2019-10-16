@@ -11,7 +11,7 @@ export default class SupervisorGraph extends Component {
         console.log(this.props.currentObserverName);
 
         this.state = {
-            trackType: 'expired_epa_ratio'
+            trackType: 'expired_epa_percentage'
         };
         this.radioChange = this.radioChange.bind(this);
     }
@@ -23,7 +23,7 @@ export default class SupervisorGraph extends Component {
     render() {
         let data = this.props.observerDataList.filter(d => d.data.length > 10).map(d => {
             switch (this.state.trackType) {
-                case 'expired_epa_ratio':
+                case 'expired_epa_percentage':
                     return [d.name, Math.round(d.data.filter(dd => dd.isExpired).length / d.data.length * 10000) / 100];
                 case 'entrustment_score':
                     return [d.name, Math.round((d3.mean(d.data.filter(dd => !dd.isExpired).map(dd => +dd.rating || 0)) || 0) * 100) / 100];
@@ -48,7 +48,7 @@ export default class SupervisorGraph extends Component {
                 key={d[0]}
                 onClick={() => this.props.onSelectObserver(d[0].toLowerCase())}
             >
-                <title>{d[0] + ': ' + (this.state.trackType == 'expired_epa_ratio' ? d[1] + '%' : d[1])}</title>
+                <title>{d[0] + ': ' + (this.state.trackType == 'expired_epa_percentage' ? d[1] + '%' : d[1])}</title>
             </circle>
         });
 
@@ -56,10 +56,10 @@ export default class SupervisorGraph extends Component {
             <div className='supervisor-graph'>
                 <div className='sub-filter'>
                     <div className='radio-button-container'>
-                        <RadioButton value={'expired_epa_ratio'} id={'track_expired_epa_ratio'} className='track-radio' name='track-select'
-                            label={"Expired EPA Ratio"}
+                        <RadioButton value={'expired_epa_percentage'} id={'track_expired_epa_ratio'} className='track-radio' name='track-select'
+                            label={"Expired EPA Percentage"}
                             onChange={this.radioChange}
-                            checked={this.state.trackType == 'expired_epa_ratio'} />
+                            checked={this.state.trackType == 'expired_epa_percentage'} />
                         <RadioButton value={'entrustment_score'} id={'track_entrustment_score'} className='track-radio' name='track-select'
                             label={"Entrustment Score"}
                             onChange={this.radioChange}
