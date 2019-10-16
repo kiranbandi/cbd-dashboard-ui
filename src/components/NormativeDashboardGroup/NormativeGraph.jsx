@@ -92,7 +92,7 @@ export default class NormativeGraph extends Component {
                             onChange={this.radioChange}
                             checked={trackType == 'record_count'} />
                         <RadioButton value={'expiry_rate'} id={'track_expiry_rate'} className='track-radio' name='track-select'
-                            label={"Expiry Rate(%)"}
+                            label={"EPA Expiry Rate(%)"}
                             onChange={this.radioChange}
                             checked={trackType == 'expiry_rate'} />
                     </div>
