@@ -20,8 +20,8 @@ const columns = [{
     maxWidth: 100
 },
 {
-    Header: 'Expired',
-    accessor: 'expired',
+    Header: 'Expiry(%)',
+    accessor: 'expiry_rate',
     className: 'text-center',
     maxWidth: 100
 }];
@@ -68,18 +68,18 @@ const multiColumns = [{
     }
     ]
 }, {
-    Header: 'Expired',
+    Header: 'Expiry(%)',
 
     columns: [{
         Header: 'Overall',
         className: 'text-center',
-        accessor: 'expired',
+        accessor: 'expiry_rate',
         maxWidth: 75
     },
     {
         Header: 'Period',
         className: 'text-center',
-        accessor: 'expired_period',
+        accessor: 'expiry_rate_period',
         maxWidth: 75
     }
     ]
