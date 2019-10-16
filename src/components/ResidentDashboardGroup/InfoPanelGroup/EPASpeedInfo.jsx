@@ -20,12 +20,18 @@ export default (props) => {
     const weeksPassed = (moment().diff(startDate, "weeks"));
 
     // Get the required Metrics 
-    const totalEPAs = residentDataList.length,
+    let totalEPAs = residentDataList.length,
         averageEPAsPerWeek = Math.round((totalEPAs / weeksPassed) * 100) / 100,
-        totalExpiredEPAs = expiredResidentData.length;
+        totalExpiredEPAs = expiredResidentData.length,
+        expiryRate = Math.round((totalExpiredEPAs / (totalEPAs + totalExpiredEPAs)) * 100);
+
+
+    if (isNaN(expiryRate)) {
+        expiryRate = 0;
+    }
 
     let recordsInPeriod, recordsInPeriodCount, recordsExpiredInPeriod,
-        weeksInPeriod, averageEPAsPerWeekInPeriod;
+        weeksInPeriod, averageEPAsPerWeekInPeriod, expiryRateInPeriod;
     // if there is a date range
     if (!residentFilter.isAllData) {
         recordsInPeriod = _.filter(residentDataList, (d) => d.mark);
@@ -37,6 +43,13 @@ export default (props) => {
 
         weeksInPeriod = (moment(residentFilter.endDate, 'MM/DD/YYYY').diff(moment(residentFilter.startDate, 'MM/DD/YYYY'), "weeks"));
         averageEPAsPerWeekInPeriod = weeksInPeriod != 0 ? Math.round((recordsInPeriodCount / weeksInPeriod) * 100) / 100 : 0;
+
+        expiryRateInPeriod = Math.round((recordsExpiredInPeriod / (recordsInPeriodCount + recordsExpiredInPeriod)) * 100);
+
+        if (isNaN(expiryRateInPeriod)) {
+            expiryRateInPeriod = 0;
+        }
+
     }
 
     return (
@@ -48,12 +61,12 @@ export default (props) => {
                 <div className='row text-center'>
                     <StatCard title='EPAs observed per week' type='success' metric={averageEPAsPerWeek} />
                     <StatCard title='Total EPAs Observed' type='primary' metric={totalEPAs} />
-                    <StatCard title='Total EPAs Expired' type='danger' metric={totalExpiredEPAs} />
+                    <StatCard title='EPA Expiry Rate' type='danger' metric={expiryRate + '%'} />
                 </div> :
                 <div className='row text-center'>
                     <StatCard dual={true} title='EPAs observed per week' type='success' metric={averageEPAsPerWeek} secondMetric={averageEPAsPerWeekInPeriod} />
                     <StatCard dual={true} title='Total EPAs Observed' type='primary' metric={totalEPAs} secondMetric={recordsInPeriodCount} />
-                    <StatCard dual={true} title='Total EPAs Expired' type='danger' metric={totalExpiredEPAs} secondMetric={recordsExpiredInPeriod} />
+                    <StatCard dual={true} title='EPAs Expiry Rate' type='danger' metric={expiryRate + '%'} secondMetric={expiryRateInPeriod + '%'} />
                 </div>
             }
 

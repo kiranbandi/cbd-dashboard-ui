@@ -10,7 +10,9 @@ class HeaderRow extends Component {
     render() {
 
 
-        const { onEPALabelClick, innerKey, isCurrentSubRootVisible, epaSourceMap, residentData, residentList, residentFilter, isEMDepartment } = this.props;
+        const { onEPALabelClick, innerKey, isCurrentSubRootVisible,
+            epaSourceMap, residentData, residentList,
+            hidePercentages, residentFilter, nonDemoMode } = this.props;
         let requiredEPACount = 0, completedEPACount = 0, residentInfo, currentPhase;
 
         _.map(epaSourceMap[innerKey].maxObservation, (count, epaID) => {
@@ -57,12 +59,17 @@ class HeaderRow extends Component {
             iconLabel = 'icon-check';
             percentageComplete = '';
         }
+        
+        if (hidePercentages) {
+            percentageComplete = '';
+            iconLabel = iconLabel == 'icon-hour-glass' ? '' : iconLabel;
+        }
 
         return (
             <div className={'text-xs-center text-sm-left inner-epa-head' + (isCurrentSubRootVisible ? ' bottom-line ' : ' ') + 'label-index-' + innerKey} onClick={onEPALabelClick}>
                 {isCurrentSubRootVisible ? <span className="icon icon-chevron-down"></span> : <span className="icon icon-chevron-right"></span>}
                 <span className='epa-label' >{innerKey + " - " + epaSourceMap[innerKey].topic}</span>
-                {isEMDepartment && <span className='epa-label-status' >{statusLabel}<span className={"icon " + iconLabel}></span> {percentageComplete}</span>}
+                {nonDemoMode && <span className='epa-label-status' >{statusLabel}<span className={"icon " + iconLabel}></span> {percentageComplete}</span>}
             </div>
         );
     }
@@ -72,7 +79,8 @@ function mapStateToProps(state) {
     return {
         residentData: state.oracle.residentData,
         residentFilter: state.oracle.residentFilter,
-        residentList: state.oracle.residentList
+        residentList: state.oracle.residentList,
+
     };
 }
 

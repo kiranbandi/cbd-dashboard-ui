@@ -24,9 +24,10 @@ export default class GraphRow extends Component {
 
         let { epaSource, isTableVisible, innerKey,
             widthPartition, smallScreen, epaSourceMap,
-            residentEPAData, expiredResidentEPAData, onMouseOut, onMouseOver,
+            residentEPAData, expiredResidentEPAData,
+            onMouseOut, onMouseOver, hideTogoNumbers,
             onTableExpandClick, onFilterExpandClick,
-            isEMDepartment, isFilterVisible } = this.props;
+            nonDemoMode, isFilterVisible } = this.props;
 
         //  margin of 20px on either side reduces the available width by 40 
         // 15px bullet chart padding on either sides
@@ -107,10 +108,11 @@ export default class GraphRow extends Component {
                         firstMeasure={firstMeasure} />
 
                     <div className='card-container'>
-                        <div className='graph-card first-card'>
-                            <span className='card-text'>{remainingCount}</span>
-                            <span className='card-title remaining-title'>TO GO</span>
-                        </div>
+                        {!hideTogoNumbers &&
+                            <div className='graph-card first-card'>
+                                <span className='card-text'>{remainingCount}</span>
+                                <span className='card-title remaining-title'>TO GO</span>
+                            </div>}
                         <div className='graph-card'>
                             <span className='card-text'>{recordedCount}</span>
                             <span className='card-title recorded-title'>OBSERVED</span>
@@ -136,15 +138,15 @@ export default class GraphRow extends Component {
                         innerHeight={innerHeight}
                         onMouseOver={onMouseOver}
                         onMouseOut={onMouseOut} />
-                    {!smallScreen && isEMDepartment && <span className={"icon table-icon icon-open-book " + epaSource + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}></span>}
-                    {!smallScreen && isEMDepartment && <span className={"icon filter-icon icon-sound-mix " + epaSource + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick}></span>}
+                    {!smallScreen && nonDemoMode && <span className={"icon table-icon icon-open-book " + epaSource + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}></span>}
+                    {!smallScreen && nonDemoMode && <span className={"icon filter-icon icon-sound-mix " + epaSource + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick}></span>}
 
                 </div>
-                {!smallScreen && isTableVisible && isEMDepartment &&
+                {!smallScreen && isTableVisible && nonDemoMode &&
                     <SlideInTable
                         data={residentEPAData}
                         width={widthPartition} />}
-                {!smallScreen && isFilterVisible && isEMDepartment &&
+                {!smallScreen && isFilterVisible && nonDemoMode &&
                     <SlideInFilter
                         data={scoreData}
                         width={widthPartition}
