@@ -65,7 +65,7 @@ class ResidentDashboard extends Component {
                                     // add some empty space around the sides
                                     width={width - 35} />
                                 <GraphPanel
-                                    isEMDepartment={true}
+                                    nonDemoMode={true}
                                     width={width}
                                     smallScreen={smallScreen} />
                                 {narrativesVisible && <NarrativeTable />}

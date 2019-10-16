@@ -2,8 +2,9 @@ const programInfo = {
     infoCardsVisible: true,
     examScoresVisible: true,
     narrativesVisible: true,
-    rotationList: ["EM", "EM(REGINA)", "EM(PED)", "EM(RGNL)", "ANESTHESIA", "CARDIO", "ICU", "GIM", "GEN SURG", "NEURO", "OPTHO", "ORTHO", "PLASTICS", "SELECTIVE", "TOXICOLOGY", "TRAUMA", "OBS/GYN", "PICU", "PSYCH", "OTHER"],
+    rotationList: ["EM", "EM(REGINA)", "EM(PED)", "EM(RGNL)", "ACE", "ANESTHESIA", "CARDIO", "ICU", "GIM", "GEN SURG", "NEURO", "OBS/GYN", "OPTHO", "ORTHO", "OTHER", "PICU", "PLASTICS", "PSYCH", "SELECTIVE", "TOXICOLOGY", "TRAUMA", "TRANSPORT"],
     rotationRequired: {
+        "ACE": 6,
         "EM": 13,
         "EM(REGINA)": 20,
         "EM(PED)": 12,
@@ -20,6 +21,7 @@ const programInfo = {
         "SELECTIVE": 8,
         "TRAUMA": 7,
         "TOXICOLOGY": 4,
+        "TRANSPORT": 6,
         "OBS/GYN": 4,
         "PICU": 4,
         "PSYCH": 4,

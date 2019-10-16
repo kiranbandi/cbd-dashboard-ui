@@ -96,8 +96,15 @@ export default class NormativeDashboard extends Component {
                 let residentAllRecords = _.partition(recordsGroupedByResident[resident.username] || [], (d) => !d.isExpired);
                 let residentFilteredRecords = _.partition(filteredRecordsGroupedByResident[resident.username] || [], (d) => !d.isExpired);
 
+
                 let averageEPAsPerWeek = Math.round((residentAllRecords[0].length / weeksPassed) * 100) / 100;
                 let averageEPAsPerWeekPeriod = (weeksInPeriod != 0) ? Math.round((residentFilteredRecords[0].length / weeksInPeriod) * 100) / 100 : 0;
+
+
+                // get expiry rate percentages
+                let expiry_rate = Math.round((residentAllRecords[1].length / (residentAllRecords[0].length + residentAllRecords[1].length)) * 100);
+                let expiry_rate_period = Math.round((residentFilteredRecords[1].length / (residentFilteredRecords[0].length + residentFilteredRecords[1].length)) * 100);
+
 
                 // if values are NaN port them to zero
                 if (isNaN(averageEPAsPerWeek)) {
@@ -106,17 +113,22 @@ export default class NormativeDashboard extends Component {
                 if (isNaN(averageEPAsPerWeekPeriod)) {
                     averageEPAsPerWeekPeriod = 0;
                 }
-
+                if (isNaN(expiry_rate)) {
+                    expiry_rate = 0;
+                }
+                if (isNaN(expiry_rate_period)) {
+                    expiry_rate_period = 0;
+                }
 
                 return {
                     'resident_name': resident.fullname,
                     'phase': resident.currentPhase.split("-").join(" "),
                     'record_count': residentAllRecords[0].length,
                     'epa_per_week': averageEPAsPerWeek,
-                    'expired': residentAllRecords[1].length,
+                    'expiry_rate': expiry_rate,
                     'record_count_period': residentFilteredRecords[0].length,
                     'epa_per_week_period': averageEPAsPerWeekPeriod,
-                    'expired_period': residentFilteredRecords[1].length
+                    'expiry_rate_period': expiry_rate_period
                 };
 
             });
@@ -130,7 +142,7 @@ export default class NormativeDashboard extends Component {
         const { filterLoaderState } = this.state, processedRecords = this.processRecordsToTabularFormat();
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
-        let tableWidth = document.body.getBoundingClientRect().width - 125;
+        let overallWidth = document.body.getBoundingClientRect().width - 125;
 
         const dateFilterActive = document.getElementById('filter-dateFilterActive') && document.getElementById('filter-dateFilterActive').checked;
 
@@ -146,7 +158,7 @@ export default class NormativeDashboard extends Component {
                         {processedRecords.length > 0 &&
                             <div className='normative-inner-root'>
                                 <NormativeGraph
-                                    width={tableWidth - (dateFilterActive ? 600 : 450)}
+                                    width={overallWidth - (dateFilterActive ? 600 : 450)}
                                     records={processedRecords} />
                                 <NormativeTable
                                     width={dateFilterActive ? 600 : 450}

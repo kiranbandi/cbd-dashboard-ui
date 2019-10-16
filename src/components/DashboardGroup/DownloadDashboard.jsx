@@ -4,6 +4,30 @@ import downloadCSV from '../../utils/downloadCSV';
 import Loading from 'react-loading';
 import ReactTable from 'react-table';
 import moment from 'moment';
+import { customFilter } from '../../utils/genericUtility';
+
+const columns = [{
+    Header: 'Resident Name',
+    accessor: 'resident_name',
+    className: 'text-left',
+    filterMethod: customFilter
+}, {
+    Header: 'Observer Name',
+    accessor: 'observer_name',
+    className: 'text-left',
+    filterMethod: customFilter
+}, {
+    Header: 'Observation Date',
+    accessor: 'observation_date',
+    filterMethod: customFilter,
+    className: 'text-center'
+}, {
+    Header: 'EPA',
+    accessor: 'epa',
+    className: 'text-center',
+    filterMethod: customFilter
+}];
+
 
 export default class ExportDataTab extends Component {
 
@@ -70,25 +94,7 @@ export default class ExportDataTab extends Component {
     }
 
     render() {
-        const columns = [{
-            Header: 'Resident Name',
-            accessor: 'resident_name',
-            className: 'text-left'
-        }, {
-            Header: 'Observer Name',
-            accessor: 'observer_name',
-            className: 'text-left'
-        }, {
-            Header: 'Observation Date',
-            accessor: 'observation_date'
-            ,
-            className: 'text-center'
-        }, {
-            Header: 'EPA',
-            accessor: 'epa',
-            className: 'text-center'
-        }];
-
+       
         var startDate = moment().format('MM/DD/YYYY');
         var endDate = moment().format('MM/DD/YYYY');
 
@@ -139,7 +145,7 @@ export default class ExportDataTab extends Component {
                             ref={r => this._reactTable = r}
                             data={this.state.data}
                             columns={columns}
-                            defaultPageSize={5}
+                            defaultPageSize={10}
                             resizable={false}
                             filterable={true}
                             className='-highlight' />
