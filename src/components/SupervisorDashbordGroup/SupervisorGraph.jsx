@@ -21,7 +21,7 @@ export default class SupervisorGraph extends Component {
     }
 
     render() {
-        let data = this.props.observerDataList.filter(d => d.data.length > 10).map(d => {
+        let data = this.props.observerDataList.filter(d => d.data.length > 5).map(d => {
             switch (this.state.trackType) {
                 case 'expired_epa_percentage':
                     return [d.name, Math.round(d.data.filter(dd => dd.isExpired).length / d.data.length * 10000) / 100];
