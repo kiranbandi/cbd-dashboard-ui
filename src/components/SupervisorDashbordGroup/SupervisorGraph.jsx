@@ -35,7 +35,7 @@ export default class SupervisorGraph extends Component {
         const width = document.body.getBoundingClientRect().width - 40;
         const height = 300;
 
-        const scaleX = d3.scaleLinear().range([10, width - 10]).domain([0, data.length - 1]);
+        const scaleX = d3.scaleLinear().range([50, width - 10]).domain([0, data.length - 1]);
         const scaleY = d3.scaleLinear().range([height - 10, 10]).domain([0, d3.max(data.map(d => d[1]))]);
 
         const line = d3.line().x(d => scaleX(data.findIndex(dd => dd == d))).y(d => scaleY(d[1]))(data);
@@ -51,6 +51,31 @@ export default class SupervisorGraph extends Component {
                 <title>{d[0] + ': ' + (this.state.trackType == 'expired_epa_percentage' ? d[1] + '%' : d[1])}</title>
             </circle>
         });
+
+        const axisTickLines = [
+            d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, 0], [width - 10, 0]]),
+            d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, d3.max(data.map(d => d[1])) * .25], [width - 10, d3.max(data.map(d => d[1] * .25))]]),
+            d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, d3.max(data.map(d => d[1])) * .5], [width - 10, d3.max(data.map(d => d[1] * .5))]]),
+            d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, d3.max(data.map(d => d[1])) * .75], [width - 10, d3.max(data.map(d => d[1] * .75))]]),
+            d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, d3.max(data.map(d => d[1]))], [width - 10, d3.max(data.map(d => d[1]))]])
+        ];
+        const axisTickTextsFormat = d => {
+            switch (this.state.trackType) {
+                case 'expired_epa_percentage':
+                    return d.toFixed(2) + '%';
+                case 'entrustment_score':
+                    return d.toFixed(2);
+                case 'words_per_comment':
+                    return Math.round(d);
+            }
+        }
+        const axisTickTexts = [
+            <text x={0} y={scaleY(0) + 5} fill={'white'}>{axisTickTextsFormat(0)}</text>,
+            <text x={0} y={scaleY(d3.max(data.map(d => d[1])) * .25) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => d[1])) * .25))}</text>,
+            <text x={0} y={scaleY(d3.max(data.map(d => d[1])) * .5) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => d[1])) * .5))}</text>,
+            <text x={0} y={scaleY(d3.max(data.map(d => d[1])) * .75) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => d[1])) * .75))}</text>,
+            <text x={0} y={scaleY(d3.max(data.map(d => d[1]))) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => d[1]))))}</text>
+        ]
 
         return (
             <div className='supervisor-graph'>
@@ -71,8 +96,10 @@ export default class SupervisorGraph extends Component {
                     </div>
                 </div>
                 <svg className='supervisor-line-chart' width={width} height={height}>
+                    <path d={axisTickLines} fill="none" stroke="white" strokeWidth="1px"></path>
                     <path d={line} fill="none" stroke="#43b98e" strokeWidth="2px"></path>
                     <g>{circles}</g>
+                    <g>{axisTickTexts}</g>
                 </svg>
             </div >
         );
