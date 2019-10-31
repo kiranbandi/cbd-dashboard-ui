@@ -73,14 +73,13 @@ export default class ExportDataTab extends Component {
         this.setState({ isLoaderVisible: true });
 
         // get list of all residents
-        this._data = await getAllData();
-        if (this._data) {
-            this.setState({ data: this._data });
-            console.log(this._data);
-        } else {
+        try {
+            this._data = await getAllData();
+        } catch (e) {
             console.log("error in fetching all records");
+        } finally {
+            this._isMounted && this.setState({ isLoaderVisible: false });
         }
-        this._isMounted && this.setState({ isLoaderVisible: false });
     }
 
     filterDates() {

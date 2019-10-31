@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { getObserverList, getObserverData } from '../../utils/requestServer';
+import { getObserverList, getObserverData, getAllData } from '../../utils/requestServer';
 import Loading from 'react-loading';
 import { StatCard } from '../';
 import { customFilter } from '../../utils/genericUtility';
 import _ from 'lodash';
 import ReactTable from 'react-table';
+import SupervisorGraph from '../SupervisorDashbordGroup/SupervisorGraph';
 
 
 const columns = [{
@@ -50,35 +51,51 @@ export default class SupervisorDashboard extends Component {
             observerDataList: []
         };
         this._isMounted = false;
+        this.onSelectObserver = this.onSelectObserver.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this._isMounted = true;
         // toggle loader before fetching data
         this.setState({ isLoaderVisible: true });
         // get list of all residents
-        getObserverList()
-            .then((observerList) => {
-                this._isMounted && this.setState({ observerList: _.sortBy(observerList, (d) => d.name) });
-            })
-            // toggle loader again once the request completes
-            .catch(() => { console.log("error in fetching observer list"); })
-            .finally(() => {
-                this._isMounted && this.setState({ isLoaderVisible: false });
-            });
+        try {
+            let observerList = await getObserverList();
+            this._isMounted && this.setState({ observerList: _.sortBy(observerList, (d) => d.name) });
+
+            try {
+                let allObserverDataList = Object.entries(_.groupBy(await getAllData(), d => d.observer_name)).map(entry => ({
+                    name: entry[0],
+                    data: entry[1]
+                }));
+                this._isMounted && this.setState({ allObserverDataList });
+
+                console.log(this.props.programInfo);
+                console.log(allObserverDataList);
+            } catch (e) {
+                console.log(e);
+            }
+        } catch (e) {
+            console.log("error in fetching observer list");
+        } finally {
+            this._isMounted && this.setState({ isLoaderVisible: false });
+        }
     }
 
     componentWillUnmount() {
         this._isMounted = false;
     }
 
-    onSubmit(event) {
-        event.preventDefault();
+    onSelectObserver(observerName) {
         // toggle loader before fetching data
         this.setState({ isfilterLoaderLoaderVisible: true });
 
-        const observerName = document.getElementById('filter-observername').value;
+        if (document.getElementById('filter-observername').value != observerName) {
+            document.getElementById('filter-observername').value = observerName;
+        }
+
+        this.setState({ currentObserverName: observerName });
         getObserverData(observerName)
             .then((observerDataList) => {
 
@@ -96,6 +113,13 @@ export default class SupervisorDashboard extends Component {
             .finally(() => {
                 this._isMounted && this.setState({ isfilterLoaderLoaderVisible: false });
             });
+    }
+
+    onSubmit(event) {
+        event.preventDefault();
+
+        const observerName = document.getElementById('filter-observername').value;
+        this.onSelectObserver(observerName);
     }
 
 
@@ -121,6 +145,7 @@ export default class SupervisorDashboard extends Component {
                     <div className='m-t-md'>
                         {observerList.length > 0 ?
                             <div>
+                                <SupervisorGraph observerDataList={this.state.allObserverDataList} currentObserverName={this.state.currentObserverName} onSelectObserver={this.onSelectObserver} />
                                 <div className='filter-panel m-t center-align'>
                                     <div className='text-xs-center text-sm-left root-box'>
                                         <div className='name-box'>
