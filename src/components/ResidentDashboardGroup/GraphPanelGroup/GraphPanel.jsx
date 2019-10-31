@@ -80,7 +80,9 @@ class GraphPanel extends Component {
             nonDemoMode = false,
             tooltipData,
             epaSourceMap, smallScreen, width,
-            levelVisibilityOpenStatus, programInfo } = this.props;
+            levelVisibilityOpenStatus, programInfo = {} } = this.props;
+
+        const { hidePercentages = false, hideTogoNumbers } = programInfo;
 
         const { openTableID, openFilterID } = this.state;
 
@@ -132,7 +134,7 @@ class GraphPanel extends Component {
                                         innerKey={innerKey}
                                         smallScreen={smallScreen}
                                         nonDemoMode={nonDemoMode}
-                                        hidePercentages={programInfo.hidePercentages || false}
+                                        hidePercentages={hidePercentages}
                                         isCurrentSubRootVisible={isCurrentSubRootVisible}
                                         epaSourceMap={epaSourceMap} />
 
@@ -149,7 +151,7 @@ class GraphPanel extends Component {
                                                     widthPartition={widthPartition}
                                                     epaSourceMap={epaSourceMap}
                                                     smallScreen={smallScreen}
-                                                    hideTogoNumbers={programInfo.hideTogoNumbers || false}
+                                                    hideTogoNumbers={hideTogoNumbers}
                                                     residentEPAData={residentData[epaSource] || []}
                                                     expiredResidentEPAData={expiredResidentDataGrouped[epaSource] || []}
                                                     onMouseOver={this.onMouseOver}
@@ -176,7 +178,7 @@ function mapStateToProps(state) {
         isTooltipVisible: state.oracle.isTooltipVisible,
         tooltipData: state.oracle.tooltipData,
         levelVisibilityOpenStatus: state.oracle.visibilityOpenStatus,
-        programInfo: state.oracle.programInfo
+        programInfo: state.oracle.programInfo ? state.oracle.programInfo : {}
     };
 }
 
