@@ -127,13 +127,14 @@ export default class SupervisorDashboard extends Component {
 
         const { isLoaderVisible, observerList, isfilterLoaderLoaderVisible, observerDataList = [] } = this.state;
 
-        let wordsPerComment = 0, expiredRecords = 0, averageEPAScore = 0, properObserverDataList = [];
+        let wordsPerComment = 0, expiredRecords = 0, expiredRecordPrecentage = 0, averageEPAScore = 0, properObserverDataList = [];
 
 
         if (observerDataList.length > 0) {
             // Get the non expired records 
             properObserverDataList = observerDataList.filter((d) => !d.isExpired);
             expiredRecords = observerDataList.length - properObserverDataList.length;
+            expiredRecordPrecentage = Math.round(expiredRecords / observerDataList.length * 100);
             averageEPAScore = Math.round((_.meanBy(properObserverDataList, (d) => (+d.Rating || 0)) || 0) * 100) / 100;
             wordsPerComment = Math.round((_.meanBy(properObserverDataList, (d) => (d.Feedback.split(" ").length)) || 0));
         }
@@ -165,7 +166,7 @@ export default class SupervisorDashboard extends Component {
                                 {observerDataList.length > 0 &&
                                     <div>
                                         <StatCard title='EPAs observed' type='info' metric={properObserverDataList.length} />
-                                        <StatCard title='EPAs Expired' type='success' metric={expiredRecords} />
+                                        <StatCard title='Percentage of EPAs Expired' type='success' metric={expiredRecordPrecentage + '%'} />
                                         <StatCard title='Average EPA Score' type='primary' metric={averageEPAScore} />
                                         <StatCard title='Average words per comment' type='danger' metric={wordsPerComment} />
 
