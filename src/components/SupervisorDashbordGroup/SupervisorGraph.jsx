@@ -7,28 +7,6 @@ import { RadioButton } from '../';
 export default class SupervisorGraph extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            trackType: 'expired_epa_percentage',
-            startDate: null,
-            endDate: null
-        };
-        this.radioChange = this.radioChange.bind(this);
-        this.filterDate = this.filterDate.bind(this);
-        this.render = this.render.bind(this);
-    }
-
-    radioChange(event) {
-        this.setState({ trackType: event.target.value });
-    }
-
-    filterDate() {
-        const startDate = this._filterStartDateInput ? this._filterStartDateInput.value : null;
-        const endDate = this._filterEndDateInput ? this._filterEndDateInput.value : null;
-        this.setState({
-            startDate,
-            endDate
-        });
     }
 
     render() {
@@ -36,16 +14,16 @@ export default class SupervisorGraph extends Component {
 
         let data = filteredObserverDataList.map(d => {
             let dataInDateRange;
-            if (this.state.startDate && this.state.endDate) {
+            if (this.props.dateFilterActive && this.props.startDate && this.props.endDate) {
                 dataInDateRange = d.data.filter(dd =>
                     moment(dd.observation_date, 'YYYY-MM-DD').isBetween(
-                        moment(this._filterStartDateInput.value, 'MM/DD/YYYY'),
-                        moment(this._filterEndDateInput.value, 'MM/DD/YYYY')
+                        moment(this.props.startDate, 'MM/DD/YYYY'),
+                        moment(this.props.endDate, 'MM/DD/YYYY')
                     )
                 );
             }
 
-            switch (this.state.trackType) {
+            switch (this.props.trackType) {
                 case 'expired_epa_percentage':
                     return [
                         d.name,
@@ -90,14 +68,14 @@ export default class SupervisorGraph extends Component {
                 key={d[0]}
                 onClick={() => this.props.onSelectObserver(d[0].toLowerCase())}
             >
-                <title>{d[0] + '\nOverall: ' + (this.state.trackType == 'expired_epa_percentage' ? d[1] + '%' : d[1]) + '\nPeriod: ' + (this.state.trackType == 'expired_epa_percentage' ? d[2] + '%' : d[2])}</title>
+                <title>{d[0] + '\nOverall: ' + (this.props.trackType == 'expired_epa_percentage' ? d[1] + '%' : d[1]) + '\nPeriod: ' + (this.props.trackType == 'expired_epa_percentage' ? d[2] + '%' : d[2])}</title>
             </circle>
         });
 
         let lineInDateRange;
         let circlesInDateRange;
 
-        if (this.state.startDate && this.state.endDate) {
+        if (this.props.dateFilterActive && this.props.startDate && this.props.endDate) {
             lineInDateRange = d3.line().x(d => scaleX(data.findIndex(dd => dd == d))).y(d => scaleY(d[2]))(data);
             circlesInDateRange = data.map((d, i) => {
                 return <circle
@@ -110,7 +88,7 @@ export default class SupervisorGraph extends Component {
                     key={d[0]}
                     onClick={() => this.props.onSelectObserver(d[0].toLowerCase())}
                 >
-                    <title>{d[0] + '\nOverall: ' + (this.state.trackType == 'expired_epa_percentage' ? d[1] + '%' : d[1]) + '\nPeriod: ' + (this.state.trackType == 'expired_epa_percentage' ? d[2] + '%' : d[2])}</title>
+                    <title>{d[0] + '\nOverall: ' + (this.props.trackType == 'expired_epa_percentage' ? d[1] + '%' : d[1]) + '\nPeriod: ' + (this.props.trackType == 'expired_epa_percentage' ? d[2] + '%' : d[2])}</title>
                 </circle>
             });
         }
@@ -123,7 +101,7 @@ export default class SupervisorGraph extends Component {
             d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, d3.max(data.map(d => Math.max(d[1], d[2])))], [width - 10, d3.max(data.map(d => Math.max(d[1], d[2])))]])
         ];
         const axisTickTextsFormat = d => {
-            switch (this.state.trackType) {
+            switch (this.props.trackType) {
                 case 'expired_epa_percentage':
                     return d + '%';
                 case 'entrustment_score':
@@ -141,53 +119,14 @@ export default class SupervisorGraph extends Component {
         ]
 
         return (
-            <div className='supervisor-graph'>
-                <div className='date-box'>
-                    <label className='filter-label'>Period</label>
-                    <div className="input-group col-sm-2">
-                        <span className="input-group-addon">
-                            <span className="icon icon-calendar"></span>
-                        </span>
-                        <input type="text" id='filter-startDate' className="form-control" data-provide="datepicker" ref={r => this._filterStartDateInput = r} />
-                    </div>
-                </div>
-                <span className='inner-splice'>-</span>
-                <div className='date-box trailing'>
-                    <div className="input-group col-sm-2">
-                        <span className="input-group-addon">
-                            <span className="icon icon-calendar"></span>
-                        </span>
-                        <input type="text" id='filter-endDate' className="form-control" data-provide="datepicker" ref={r => this._filterEndDateInput = r} />
-                    </div>
-                </div>
-                <button className="btn btn-primary-outline m-t-0 m-a" type="submit" onClick={this.filterDate}>
-                    <span className='download-span'>{"Filter Dates"} </span>
-                </button>
-                <div className='sub-filter'>
-                    <div className='radio-button-container'>
-                        <RadioButton value={'expired_epa_percentage'} id={'track_expired_epa_ratio'} className='track-radio' name='track-select'
-                            label={"Expired EPA Percentage"}
-                            onChange={this.radioChange}
-                            checked={this.state.trackType == 'expired_epa_percentage'} />
-                        <RadioButton value={'entrustment_score'} id={'track_entrustment_score'} className='track-radio' name='track-select'
-                            label={"Entrustment Score"}
-                            onChange={this.radioChange}
-                            checked={this.state.trackType == 'entrustment_score'} />
-                        <RadioButton value={'words_per_comment'} id={'track_words_per_comment'} className='track-radio' name='track-select'
-                            label={"Words Per Comment"}
-                            onChange={this.radioChange}
-                            checked={this.state.trackType == 'words_per_comment'} />
-                    </div>
-                </div>
-                <svg className='supervisor-line-chart' width={width} height={height}>
-                    <path d={axisTickLines} fill="none" stroke="white" strokeWidth="1px"></path>
-                    <path d={line} fill="none" stroke="#43b98e" strokeWidth="2px"></path>
-                    <g>{circles}</g>
-                    <path d={lineInDateRange} fill="none" stroke="rgba(151,187,205,1)" strokeWidth="2px"></path>
-                    <g>{circlesInDateRange}</g>
-                    <g>{axisTickTexts}</g>
-                </svg>
-            </div >
+            <svg className='supervisor-line-chart' width={width} height={height}>
+                <path d={axisTickLines} fill="none" stroke="white" strokeWidth="1px"></path>
+                <path d={line} fill="none" stroke="#43b98e" strokeWidth="2px"></path>
+                <g>{circles}</g>
+                <path d={lineInDateRange} fill="none" stroke="rgba(151,187,205,1)" strokeWidth="2px"></path>
+                <g>{circlesInDateRange}</g>
+                <g>{axisTickTexts}</g>
+            </svg>
         );
     }
 }
