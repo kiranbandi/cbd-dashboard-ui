@@ -54,7 +54,10 @@ export default class SupervisorGraph extends Component {
         const height = 300;
 
         const scaleX = d3.scaleLinear().range([50, width - 10]).domain([0, data.length - 1]);
-        const scaleY = d3.scaleLinear().range([height - 10, 10]).domain([0, d3.max(data.map(d => Math.max(d[1], d[2])))]);
+        let scaleY = d3.scaleLinear().range([height - 10, 10]).domain([0, d3.max(data.map(d => Math.max(d[1], d[2])))]);
+        if (this.props.trackType == 'entrustment_score') {
+            scaleY = d3.scaleLinear().range([height - 10, 10]).domain([1, 5]);
+        }
 
         const line = d3.line().x(d => scaleX(data.findIndex(dd => dd == d))).y(d => scaleY(d[1]))(data);
         const circles = data.map((d, i) => {
@@ -93,19 +96,28 @@ export default class SupervisorGraph extends Component {
             });
         }
 
-        const axisTickLines = [
+        let axisTickLines = [
             d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, 0], [width - 10, 0]]),
             d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, d3.max(data.map(d => Math.max(d[1], d[2]))) * .25], [width - 10, d3.max(data.map(d => Math.max(d[1], d[2]) * .25))]]),
             d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, d3.max(data.map(d => Math.max(d[1], d[2]))) * .5], [width - 10, d3.max(data.map(d => Math.max(d[1], d[2]) * .5))]]),
             d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, d3.max(data.map(d => Math.max(d[1], d[2]))) * .75], [width - 10, d3.max(data.map(d => Math.max(d[1], d[2]) * .75))]]),
             d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, d3.max(data.map(d => Math.max(d[1], d[2])))], [width - 10, d3.max(data.map(d => Math.max(d[1], d[2])))]])
         ];
+        if (this.props.trackType == 'entrustment_score') {
+            axisTickLines = [
+                d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, 1], [width - 10, 1]]),
+                d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, 2], [width - 10, 2]]),
+                d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, 3], [width - 10, 3]]),
+                d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, 4], [width - 10, 4]]),
+                d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, 5], [width - 10, 5]])
+            ];
+        }
         const axisTickTextsFormat = d => {
             switch (this.props.trackType) {
                 case 'expired_epa_percentage':
                     return d + '%';
                 case 'entrustment_score':
-                    return d.toFixed(2);
+                    return d.toFixed(0);
                 case 'words_per_comment':
                     return Math.round(d);
             }
