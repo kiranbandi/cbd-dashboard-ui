@@ -28,22 +28,28 @@ export default class SupervisorGraph extends Component {
                     return [
                         d.name,
                         Math.round(d.data.filter(dd => dd.isExpired).length / d.data.length * 100),
-                        dataInDateRange ? Math.round(dataInDateRange.filter(dd => dd.isExpired).length / dataInDateRange.length * 100) : Number.NaN
+                        (dataInDateRange && dataInDateRange.length > 0) ?
+                            Math.round(dataInDateRange.filter(dd => dd.isExpired).length / dataInDateRange.length * 100) : Number.NaN
                     ];
                 case 'entrustment_score':
                     return [
                         d.name,
                         Math.round((d3.mean(d.data.filter(dd => !dd.isExpired).map(dd => +dd.rating || 0)) || 0) * 100) / 100,
-                        dataInDateRange ? Math.round((d3.mean(dataInDateRange.filter(dd => !dd.isExpired).map(dd => +dd.rating || 0)) || 0) * 100) / 100 : Number.NaN
+                        (dataInDateRange && dataInDateRange.length > 0) ?
+                            Math.round((d3.mean(dataInDateRange.filter(dd => !dd.isExpired).map(dd => +dd.rating || 0)) || 0) * 100) / 100 : Number.NaN
                     ];
                 case 'words_per_comment':
                     return [
                         d.name,
                         Math.round(d3.mean(d.data.filter(dd => !dd.isExpired).map(dd => dd.feedback.split(" ").length) || 0)),
-                        dataInDateRange ? Math.round(d3.mean(dataInDateRange.filter(dd => !dd.isExpired).map(dd => dd.feedback.split(" ").length) || 0)) : Number.NaN
+                        (dataInDateRange && dataInDateRange.length > 0) ?
+                            Math.round(d3.mean(dataInDateRange.filter(dd => !dd.isExpired).map(dd => dd.feedback.split(" ").length) || 0)) : Number.NaN
                     ];
             }
         }).sort((a, b) => a[1] - b[1]);
+        if ((this.props.dateFilterActive && this.props.startDate && this.props.endDate)) {
+            data = data.filter(d => d[2] && !Number.isNaN(d[2]));
+        } 
         data.forEach(d => {
             if (Number.isNaN(d[2])) {
                 d[2] = 0;
