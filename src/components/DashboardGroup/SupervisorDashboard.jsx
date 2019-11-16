@@ -70,9 +70,6 @@ export default class SupervisorDashboard extends Component {
                     data: entry[1]
                 }));
                 this._isMounted && this.setState({ allObserverDataList });
-
-                console.log(this.props.programInfo);
-                console.log(allObserverDataList);
             } catch (e) {
                 console.log(e);
             }

@@ -84,7 +84,8 @@ export default class SlideInFilter extends Component {
             return (
                 <div className='demographic-box inner-filter-box'>
                     <label className='filter-label'>{label}</label>
-                    <span className='no-option-text'>N/A</span>
+                    {/* if there isnt a label then no need to show even the N/A option */}
+                    {label && <span className='no-option-text'>N/A</span>}
                 </div>)
         }
     }
