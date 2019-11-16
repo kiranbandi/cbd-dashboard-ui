@@ -6,10 +6,6 @@ import { RadioButton } from '../';
 export default class SupervisorGraph extends Component {
     constructor(props) {
         super(props);
-
-        console.log(this.props.observerDataList);
-        console.log(this.props.currentObserverName);
-
         this.state = {
             trackType: 'expired_epa_percentage'
         };
