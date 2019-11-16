@@ -25,6 +25,40 @@
         vertical-align: top;
         margin-left: 20px;
         margin-right: 20px;
+        .custom-checkbox {
+            width: 150px;
+        }
+        .input-group {
+            display: inline-table;
+            vertical-align: middle;
+            input {
+                width: 100px;
+            }
+        }
+        .date-box {
+            display: inline-block;
+            width: 195px;
+            &.trailing {
+                width: 140px;
+            }
+            @media (max-width: 768px) {
+                margin-bottom: 3px;
+            }
+        }
+        .inner-splice {
+            width: 12px;
+            display: inline-block;
+            text-align: center;
+            @media (max-width: 768px) {
+                display: none;
+            }
+        }
+        
+        .filter-label {
+            margin-right: 10px;
+            font-size: 15.5px;
+            font-weight: normal;
+        }
         .sub-filter {
             background: #1a1c22;
             padding: 0px 5px 0px 5px;
