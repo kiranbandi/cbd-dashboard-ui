@@ -215,7 +215,7 @@ export default class SupervisorDashboard extends Component {
                                                     <input type="text" id='filter-endDate' className="form-control" defaultValue={dateFilterDefaultValue} data-provide="datepicker" ref={r => this._filterEndDateInput = r} />
                                                 </div>
                                             </div>
-                                            <button className="btn btn-primary-outline m-t-0 m-a" type="submit" onClick={this.filterDate}>
+                                            <button className="btn btn-primary-outline m-t-0" type="submit" onClick={this.filterDate}>
                                                 <span className='download-span'>{"Filter Dates"} </span>
                                             </button>
                                         </div>

@@ -47,7 +47,7 @@ export default class SupervisorGraph extends Component {
         }).sort((a, b) => a[1] - b[1]);
         if ((this.props.dateFilterActive && this.props.startDate && this.props.endDate)) {
             data = data.filter(d => d[2] && !Number.isNaN(d[2]));
-        } 
+        }
         data.forEach(d => {
             if (Number.isNaN(d[2])) {
                 d[2] = 0;
@@ -126,17 +126,17 @@ export default class SupervisorGraph extends Component {
                     return Math.round(d);
             }
         }
-        const axisTickTexts = [
-            <text x={0} y={scaleY(0) + 5} fill={'white'}>{axisTickTextsFormat(0)}</text>,
-            <text x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2]))) * .25) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2]))) * .25))}</text>,
-            <text x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2]))) * .5) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2]))) * .5))}</text>,
-            <text x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2]))) * .75) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2]))) * .75))}</text>,
-            <text x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2])))) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2])))))}</text>
-        ]
 
+        const axisTickTexts = _.map(axisTickLines, (d, index) => {
+            return <text key={'axis-tick' + index}
+                x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2]))) * (0.25 * index)) + 5} fontWeight='bold' fill='#a9a1a1'>
+                {axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2]))) * (0.25 * index)))}
+            </text>
+        })
+      
         return (
             <svg className='supervisor-line-chart' width={width} height={height}>
-                <path d={axisTickLines} fill="none" stroke="white" strokeWidth="1px"></path>
+                <path d={axisTickLines} fill="none" stroke="#564d4d4d" strokeWidth="2px"></path>
                 <path d={line} fill="none" stroke="#43b98e" strokeWidth="2px"></path>
                 <g>{circles}</g>
                 <path d={lineInDateRange} fill="none" stroke="rgba(151,187,205,1)" strokeWidth="2px"></path>
