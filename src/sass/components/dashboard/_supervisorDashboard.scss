@@ -27,6 +27,7 @@
         margin-right: 20px;
         .custom-checkbox {
             width: 150px;
+            display: inline-block;
         }
         .input-group {
             display: inline-table;
@@ -35,14 +36,23 @@
                 width: 100px;
             }
         }
-        .date-box {
+        .date-box-container {
             display: inline-block;
-            width: 195px;
-            &.trailing {
-                width: 140px;
+            margin-bottom: 10px;
+            .date-box {
+                display: inline-block;
+                width: 195px;
+                &.trailing {
+                    width: 140px;
+                }
+                @media (max-width: 768px) {
+                    margin-bottom: 3px;
+                }
             }
-            @media (max-width: 768px) {
-                margin-bottom: 3px;
+            .btn {
+                margin-left: 10px;
+                font-weight: bold;
+                text-transform: uppercase;
             }
         }
         .inner-splice {
@@ -53,7 +63,6 @@
                 display: none;
             }
         }
-        
         .filter-label {
             margin-right: 10px;
             font-size: 15.5px;
@@ -63,6 +72,7 @@
             background: #1a1c22;
             padding: 0px 5px 0px 5px;
             border-radius: 5px;
+            margin-bottom: 10px;
             .radio-button-container {
                 margin-left: 10px;
                 margin-right: 15px;
@@ -86,10 +96,9 @@
             }
         }
         .supervisor-line-chart {
-            g circle { 
-                cursor: pointer 
+            g circle {
+                cursor: pointer
             }
         }
     }
 }
-
