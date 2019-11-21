@@ -124,13 +124,22 @@ export default class SupervisorGraph extends Component {
                     return Math.round(d);
             }
         };
-        const axisTickTexts = [
+        let axisTickTexts = [
             <text x={0} y={scaleY(0) + 5} fill={'white'}>{axisTickTextsFormat(0)}</text>,
             <text x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2]))) * .25) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2]))) * .25))}</text>,
             <text x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2]))) * .5) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2]))) * .5))}</text>,
             <text x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2]))) * .75) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2]))) * .75))}</text>,
             <text x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2])))) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2])))))}</text>
         ];
+        if (this.props.trackType == 'entrustment_score') {
+            axisTickTexts = [
+                <text x={0} y={scaleY(1) + 5} fill={'white'}>{1}</text>,
+                <text x={0} y={scaleY(2) + 5} fill={'white'}>{2}</text>,
+                <text x={0} y={scaleY(3) + 5} fill={'white'}>{3}</text>,
+                <text x={0} y={scaleY(4) + 5} fill={'white'}>{4}</text>,
+                <text x={0} y={scaleY(5) + 5} fill={'white'}>{5}</text>
+            ];
+        }
 
         const hoverLines = data.map((d, i) => {
             return <rect
