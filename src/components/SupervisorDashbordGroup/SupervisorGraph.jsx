@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import * as d3 from 'd3';
 import moment from 'moment';
 
-import { RadioButton } from '../';
-
 export default class SupervisorGraph extends Component {
     constructor(props) {
         super(props);
@@ -96,9 +94,7 @@ export default class SupervisorGraph extends Component {
                     stroke={'transparent'}
                     key={d[0]}
                     onClick={() => this.props.onSelectObserver(d[0].toLowerCase())}
-                >
-                    <title>{d[0] + '\nOverall: ' + (this.props.trackType == 'expired_epa_percentage' ? d[1] + '%' : d[1]) + '\nPeriod: ' + (this.props.trackType == 'expired_epa_percentage' ? d[2] + '%' : d[2])}</title>
-                </circle>
+                ></circle>
             });
         }
 
@@ -127,14 +123,26 @@ export default class SupervisorGraph extends Component {
                 case 'words_per_comment':
                     return Math.round(d);
             }
-        }
+        };
         const axisTickTexts = [
             <text x={0} y={scaleY(0) + 5} fill={'white'}>{axisTickTextsFormat(0)}</text>,
             <text x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2]))) * .25) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2]))) * .25))}</text>,
             <text x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2]))) * .5) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2]))) * .5))}</text>,
             <text x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2]))) * .75) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2]))) * .75))}</text>,
             <text x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2])))) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2])))))}</text>
-        ]
+        ];
+
+        const hoverLines = data.map((d, i) => {
+            return <rect
+                x={scaleX(i)}
+                y={0}
+                height={height}
+                width={15}
+                opacity={0}
+            >
+                <title>{d[0] + '\nOverall: ' + (this.props.trackType == 'expired_epa_percentage' ? d[1] + '%' : d[1]) + '\nPeriod: ' + (this.props.trackType == 'expired_epa_percentage' ? d[2] + '%' : d[2])}</title>
+            </rect>
+        });
 
         return (
             <svg className='supervisor-line-chart' width={width} height={height}>
@@ -144,6 +152,7 @@ export default class SupervisorGraph extends Component {
                 <path d={lineInDateRange} fill="none" stroke="rgba(151,187,205,1)" strokeWidth="2px"></path>
                 <g>{circlesInDateRange}</g>
                 <g>{axisTickTexts}</g>
+                <g>{hoverLines}</g>
             </svg>
         );
     }
