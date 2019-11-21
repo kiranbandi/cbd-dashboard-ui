@@ -8,6 +8,7 @@ import ReactTable from 'react-table';
 import SupervisorGraph from '../SupervisorDashbordGroup/SupervisorGraph';
 import { RadioButton } from '../';
 import moment from 'moment';
+import SupervisorTable from '../SupervisorDashbordGroup/SupervisorTable';
 
 
 const columns = [{
@@ -182,6 +183,8 @@ export default class SupervisorDashboard extends Component {
 
         const dateFilterDefaultValue = moment().format('MM/DD/YYYY');
 
+        const overallWidth = document.body.getBoundingClientRect().width - 125;
+
         return (
             <div className='supervisor-dashboard-container center-align'>
                 {isLoaderVisible ?
@@ -247,6 +250,14 @@ export default class SupervisorDashboard extends Component {
                                         startDate={this.state.startDate}
                                         endDate={this.state.endDate}
                                         dateFilterActive={this.state.dateFilterActive}
+                                        width={overallWidth}
+                                    />
+                                    <SupervisorTable
+                                        records={this.state.allObserverDataList}
+                                        dateFilterActive={this.state.dateFilterActive}
+                                        startDate={this.state.startDate}
+                                        endDate={this.state.endDate}
+                                        width={overallWidth}
                                     />
                                 </div>
                                 <div className='filter-panel m-t center-align'>
@@ -276,11 +287,11 @@ export default class SupervisorDashboard extends Component {
                                                     <StatCard dual={true} title='Average words per comment' type='danger' metric={wordsPerComment} secondMetric={averageEPAScoreInDateRange} />
                                                 </div> :
                                                 <div>
-                                                <StatCard title='EPAs observed' type='info' metric={properObserverDataList.length} />
-                                                <StatCard title='Percentage of EPAs Expired' type='success' metric={expiredRecordPrecentage + '%'} />
-                                                <StatCard title='Average EPA Score' type='primary' metric={averageEPAScore} />
-                                                <StatCard title='Average words per comment' type='danger' metric={wordsPerComment} />
-                                            </div> 
+                                                    <StatCard title='EPAs observed' type='info' metric={properObserverDataList.length} />
+                                                    <StatCard title='Percentage of EPAs Expired' type='success' metric={expiredRecordPrecentage + '%'} />
+                                                    <StatCard title='Average EPA Score' type='primary' metric={averageEPAScore} />
+                                                    <StatCard title='Average words per comment' type='danger' metric={wordsPerComment} />
+                                                </div>
                                         }
 
                                         <div className='table-box'>
