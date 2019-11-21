@@ -55,12 +55,12 @@ export default class SupervisorGraph extends Component {
         });
 
         const width = this.props.width - 40;
-        const height = 450;
+        const height = 450, margin = 10, Xoffset = 50;
 
-        const scaleX = d3.scaleLinear().range([50, width - 10]).domain([0, data.length - 1]);
-        let scaleY = d3.scaleLinear().range([height - 10, 10]).domain([0, d3.max(data.map(d => Math.max(d[1], d[2])))]);
+        const scaleX = d3.scaleLinear().range([Xoffset, width - margin]).domain([0, data.length - 1]);
+        let scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, d3.max(data.map(d => Math.max(d[1], d[2])))]);
         if (this.props.trackType == 'entrustment_score') {
-            scaleY = d3.scaleLinear().range([height - 10, 10]).domain([1, 5]);
+            scaleY = d3.scaleLinear().range([height - margin, margin]).domain([1, 5]);
         }
 
         const line = d3.line().x(d => scaleX(data.findIndex(dd => dd == d))).y(d => scaleY(d[1]))(data);
@@ -100,22 +100,17 @@ export default class SupervisorGraph extends Component {
             });
         }
 
-        let axisTickLines = [
-            d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, 0], [width - 10, 0]]),
-            d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, d3.max(data.map(d => Math.max(d[1], d[2]))) * .25], [width - 10, d3.max(data.map(d => Math.max(d[1], d[2]) * .25))]]),
-            d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, d3.max(data.map(d => Math.max(d[1], d[2]))) * .5], [width - 10, d3.max(data.map(d => Math.max(d[1], d[2]) * .5))]]),
-            d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, d3.max(data.map(d => Math.max(d[1], d[2]))) * .75], [width - 10, d3.max(data.map(d => Math.max(d[1], d[2]) * .75))]]),
-            d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, d3.max(data.map(d => Math.max(d[1], d[2])))], [width - 10, d3.max(data.map(d => Math.max(d[1], d[2])))]])
-        ];
-        if (this.props.trackType == 'entrustment_score') {
-            axisTickLines = [
-                d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, 1], [width - 10, 1]]),
-                d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, 2], [width - 10, 2]]),
-                d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, 3], [width - 10, 3]]),
-                d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, 4], [width - 10, 4]]),
-                d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[50, 5], [width - 10, 5]])
-            ];
-        }
+
+        let dataMax = d3.max(data.map(d => Math.max(d[1], d[2])));
+
+        let axisTickLines = _.times(5, (index) => {
+
+            let verticalPosition = this.props.trackType == 'entrustment_score' ? (index + 1) : dataMax * (index / 4);
+
+            return d3.line().x(d => d[0]).y(d => scaleY(d[1]))
+                ([[Xoffset, verticalPosition], [width - margin, verticalPosition]])
+        })
+
         const axisTickTextsFormat = d => {
             switch (this.props.trackType) {
                 case 'expired_epa_percentage':
@@ -126,22 +121,13 @@ export default class SupervisorGraph extends Component {
                     return Math.round(d);
             }
         };
-        let axisTickTexts = [
-            <text x={0} y={scaleY(0) + 5} fill={'white'}>{axisTickTextsFormat(0)}</text>,
-            <text x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2]))) * .25) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2]))) * .25))}</text>,
-            <text x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2]))) * .5) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2]))) * .5))}</text>,
-            <text x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2]))) * .75) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2]))) * .75))}</text>,
-            <text x={0} y={scaleY(d3.max(data.map(d => Math.max(d[1], d[2])))) + 5} fill={'white'}>{axisTickTextsFormat((d3.max(data.map(d => Math.max(d[1], d[2])))))}</text>
-        ];
-        if (this.props.trackType == 'entrustment_score') {
-            axisTickTexts = [
-                <text x={0} y={scaleY(1) + 5} fill={'white'}>{1}</text>,
-                <text x={0} y={scaleY(2) + 5} fill={'white'}>{2}</text>,
-                <text x={0} y={scaleY(3) + 5} fill={'white'}>{3}</text>,
-                <text x={0} y={scaleY(4) + 5} fill={'white'}>{4}</text>,
-                <text x={0} y={scaleY(5) + 5} fill={'white'}>{5}</text>
-            ];
-        }
+
+        const axisTickTexts = _.map(axisTickLines, (unused, index) => {
+            return <text key={'axis-tick' + index}
+                x={5} y={height - (margin / 2) - (index * ((height - (2 * margin)) / 4))} fontWeight='bold' fill='#a9a1a1'>
+                {axisTickTextsFormat(this.props.trackType == 'entrustment_score' ? (index + 1) : dataMax * (index / 4))}
+            </text>
+        })
 
         const hoverLines = data.map((d, i) => {
             return <rect
@@ -155,9 +141,10 @@ export default class SupervisorGraph extends Component {
             </rect>
         });
 
+
         return (
-            <svg className='supervisor-line-chart' width={width} height={height}>
-                <path d={axisTickLines} fill="none" stroke="white" strokeWidth="1px"></path>
+            <svg className='supervisor-line-chart' width={width} height={height} >
+                <path d={axisTickLines} fill="none" stroke="#564d4d4d" strokeWidth="2px"></path>
                 <path d={line} fill="none" stroke="#43b98e" strokeWidth="2px"></path>
                 <g>{hoverLines}</g>
                 <g>{circles}</g>
