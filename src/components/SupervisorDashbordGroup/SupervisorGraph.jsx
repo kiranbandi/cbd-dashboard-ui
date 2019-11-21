@@ -49,15 +49,15 @@ export default class SupervisorGraph extends Component {
         }).sort((a, b) => a[1] - b[1]);
         if ((this.props.dateFilterActive && this.props.startDate && this.props.endDate)) {
             data = data.filter(d => d[2] && !Number.isNaN(d[2]));
-        } 
+        }
         data.forEach(d => {
             if (Number.isNaN(d[2])) {
                 d[2] = 0;
             }
         });
 
-        const width = document.body.getBoundingClientRect().width - 40;
-        const height = 300;
+        const width = this.props.width - 40;
+        const height = 450;
 
         const scaleX = d3.scaleLinear().range([50, width - 10]).domain([0, data.length - 1]);
         let scaleY = d3.scaleLinear().range([height - 10, 10]).domain([0, d3.max(data.map(d => Math.max(d[1], d[2])))]);
