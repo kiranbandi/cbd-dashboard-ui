@@ -46,7 +46,7 @@ export default class SupervisorGraph extends Component {
             }
         }).sort((a, b) => a[1] - b[1]);
         if ((this.props.dateFilterActive && this.props.startDate && this.props.endDate)) {
-            data = data.filter(d => d[2] && !Number.isNaN(d[2]));
+            data = data.filter(d => (d[2] || d[2] == 0) && !Number.isNaN(d[2]));
         }
         data.forEach(d => {
             if (Number.isNaN(d[2])) {
@@ -94,7 +94,9 @@ export default class SupervisorGraph extends Component {
                     stroke={'transparent'}
                     key={d[0]}
                     onClick={() => this.props.onSelectObserver(d[0].toLowerCase())}
-                ></circle>
+                >
+                    <title>{d[0] + '\nOverall: ' + (this.props.trackType == 'expired_epa_percentage' ? d[1] + '%' : d[1]) + '\nPeriod: ' + (this.props.trackType == 'expired_epa_percentage' ? d[2] + '%' : d[2])}</title>
+                </circle>
             });
         }
 
@@ -157,11 +159,11 @@ export default class SupervisorGraph extends Component {
             <svg className='supervisor-line-chart' width={width} height={height}>
                 <path d={axisTickLines} fill="none" stroke="white" strokeWidth="1px"></path>
                 <path d={line} fill="none" stroke="#43b98e" strokeWidth="2px"></path>
+                <g>{hoverLines}</g>
                 <g>{circles}</g>
                 <path d={lineInDateRange} fill="none" stroke="rgba(151,187,205,1)" strokeWidth="2px"></path>
                 <g>{circlesInDateRange}</g>
                 <g>{axisTickTexts}</g>
-                <g>{hoverLines}</g>
             </svg>
         );
     }

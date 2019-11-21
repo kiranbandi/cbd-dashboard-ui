@@ -284,7 +284,7 @@ export default class SupervisorDashboard extends Component {
                                                     <StatCard dual={true} title='EPAs observed' type='info' metric={properObserverDataList.length} secondMetric={properObserverDataListInDateRange.length} />
                                                     <StatCard dual={true} title='Percentage of EPAs Expired' type='success' metric={expiredRecordPrecentage + '%'} secondMetric={expiredRecordPrecentageInDateRange + '%'} />
                                                     <StatCard dual={true} title='Average EPA Score' type='primary' metric={averageEPAScore} secondMetric={averageEPAScoreInDateRange} />
-                                                    <StatCard dual={true} title='Average words per comment' type='danger' metric={wordsPerComment} secondMetric={averageEPAScoreInDateRange} />
+                                                    <StatCard dual={true} title='Average words per comment' type='danger' metric={wordsPerComment} secondMetric={wordsPerCommentInDateRange} />
                                                 </div> :
                                                 <div>
                                                     <StatCard title='EPAs observed' type='info' metric={properObserverDataList.length} />
