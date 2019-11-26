@@ -52,6 +52,7 @@ export default function(rawData) {
                     if (_.keys(row).indexOf('Observation Summary Report') > -1) {
                         var dataInColumnOne = row['Observation Summary Report'];
 
+
                         // if the row has the name of the resident store it and then move on
                         if (dataInColumnOne.indexOf('Learner') > -1) {
                             residentName = dataInColumnOne.split(" - ")[1];
@@ -90,95 +91,105 @@ export default function(rawData) {
                             // The second column has the count , parse it and  
                             // use it as the ending index for internal loop
                             var lastIndex = iteratorIndex + Number(row['__EMPTY_1'].split('(')[1].slice(0, -1));
-                            // push iterator by 2 to skip immediately following row which is empty
-                            iteratorIndex = iteratorIndex + 2;
-                            // intenal loop that repeats observation count times
-                            while (iteratorIndex < lastIndex + 2) {
+                            // if there are no rows to be read in the EPA 
+                            // then last index and iterator would be same in that case simply  skip over
+                            if (lastIndex != iteratorIndex) {
+                                // push iterator by 2 to skip immediately following row which is empty
+                                iteratorIndex = iteratorIndex + 2;
+                                // intenal loop that repeats observation count times
+                                while (iteratorIndex < lastIndex + 2) {
 
-                                let dataPoint = dataInRows[iteratorIndex],
-                                    epaRating,
-                                    isDateSlashFormat;
+                                    let dataPoint = dataInRows[iteratorIndex],
+                                        epaRating,
+                                        isDateSlashFormat;
 
-                                // Skip records that are in progress
-                                if (dataPoint.__EMPTY_2 == 'In Progress') {
+                                    // Skip records that are in progress
+                                    if (dataPoint.__EMPTY_2 == 'In Progress') {
+                                        // internal loop increase iteratorIndex
+                                        iteratorIndex += 1;
+                                        continue;
+                                    }
+
+                                    // Set the flag for records that have expired
+                                    if (dataPoint.__EMPTY_2.length == 0 && dataPoint.__EMPTY_8 && dataPoint.__EMPTY_8.length > 0) {
+                                        // store data of expired records differently , since they have values
+                                        // on different columns/keys compared to regular records.
+
+                                        isDateSlashFormat = dataPoint.__EMPTY_8.indexOf('/') > -1;
+
+                                        dataStore.push({
+                                            'Date': moment(dataPoint.__EMPTY_8, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD'),
+                                            'yearTag': findYearTag(moment(dataPoint.__EMPTY_8, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
+                                            'academicYear': findAcademicYear(moment(dataPoint.__EMPTY_8, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
+                                            'Resident_Name': residentName,
+                                            'EPA': tempEPA,
+                                            'Observer_Name': dataPoint.__EMPTY,
+                                            'Observer_Type': dataPoint.__EMPTY_1,
+                                            'Rating': '',
+                                            'Type': '',
+                                            'Situation_Context': '',
+                                            'Feedback': '',
+                                            'Professionalism_Safety': '',
+                                            'isExpired': true
+                                        });
+
+
+                                    } else {
+
+                                        switch (dataPoint.__EMPTY_2) {
+                                            case "I had to do":
+                                                epaRating = 1;
+                                                break;
+                                            case "I had to talk them through":
+                                                epaRating = 2;
+                                                break;
+                                            case "I needed to prompt":
+                                                epaRating = 3;
+                                                break;
+                                            case "I needed to be there just in case":
+                                                epaRating = 4;
+                                                break;
+                                            case "I didn't need to be there":
+                                                epaRating = 5;
+                                                break;
+                                            default:
+                                                epaRating = 1;
+                                        }
+
+                                        // Also if the rating is verbal like Achieved or Met then give a 5
+                                        if (dataPoint.__EMPTY_2.indexOf('Achieved') > -1 || dataPoint.__EMPTY_2.indexOf('Met') > -1) {
+                                            // internal loop increase iteratorIndex
+                                            epaRating = 5;
+                                        }
+
+                                        isDateSlashFormat = dataPoint.__EMPTY_7.indexOf('/') > -1;
+
+                                        dataStore.push({
+                                            'Date': moment(dataPoint.__EMPTY_7, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD'),
+                                            'yearTag': findYearTag(moment(dataPoint.__EMPTY_7, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
+                                            'academicYear': findAcademicYear(moment(dataPoint.__EMPTY_7, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
+                                            'Resident_Name': residentName,
+                                            'EPA': tempEPA,
+                                            'Observer_Name': dataPoint.__EMPTY,
+                                            'Observer_Type': dataPoint.__EMPTY_1,
+                                            'Rating': epaRating,
+                                            'Type': dataPoint.__EMPTY_3,
+                                            'Situation_Context': dataPoint.__EMPTY_4,
+                                            'Feedback': dataPoint.__EMPTY_5,
+                                            'Professionalism_Safety': dataPoint.__EMPTY_6,
+                                            'isExpired': false
+                                        });
+                                    }
+
                                     // internal loop increase iteratorIndex
                                     iteratorIndex += 1;
-                                    continue;
                                 }
-
-                                // Set the flag for records that have expired
-                                if (dataPoint.__EMPTY_2.length == 0 && dataPoint.__EMPTY_8 && dataPoint.__EMPTY_8.length > 0) {
-                                    // store data of expired records differently , since they have values
-                                    // on different columns/keys compared to regular records.
-
-                                    isDateSlashFormat = dataPoint.__EMPTY_8.indexOf('/') > -1;
-
-                                    dataStore.push({
-                                        'Date': moment(dataPoint.__EMPTY_8, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD'),
-                                        'yearTag': findYearTag(moment(dataPoint.__EMPTY_8, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
-                                        'academicYear': findAcademicYear(moment(dataPoint.__EMPTY_8, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
-                                        'Resident_Name': residentName,
-                                        'EPA': tempEPA,
-                                        'Observer_Name': dataPoint.__EMPTY,
-                                        'Observer_Type': dataPoint.__EMPTY_1,
-                                        'Rating': '',
-                                        'Type': '',
-                                        'Situation_Context': '',
-                                        'Feedback': '',
-                                        'Professionalism_Safety': '',
-                                        'isExpired': true
-                                    });
-
-
-                                } else {
-
-                                    switch (dataPoint.__EMPTY_2) {
-                                        case "I had to do":
-                                            epaRating = 1;
-                                            break;
-                                        case "I had to talk them through":
-                                            epaRating = 2;
-                                            break;
-                                        case "I needed to prompt":
-                                            epaRating = 3;
-                                            break;
-                                        case "I needed to be there just in case":
-                                            epaRating = 4;
-                                            break;
-                                        case "I didn't need to be there":
-                                            epaRating = 5;
-                                            break;
-                                        default:
-                                            epaRating = 1;
-                                    }
-
-                                    // Also if the rating is verbal like Achieved or Met then give a 5
-                                    if (dataPoint.__EMPTY_2.indexOf('Achieved') > -1 || dataPoint.__EMPTY_2.indexOf('Met') > -1) {
-                                        // internal loop increase iteratorIndex
-                                        epaRating = 5;
-                                    }
-
-                                    isDateSlashFormat = dataPoint.__EMPTY_7.indexOf('/') > -1;
-
-                                    dataStore.push({
-                                        'Date': moment(dataPoint.__EMPTY_7, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD'),
-                                        'yearTag': findYearTag(moment(dataPoint.__EMPTY_7, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
-                                        'academicYear': findAcademicYear(moment(dataPoint.__EMPTY_7, isDateSlashFormat ? 'MM/DD/YYYY' : 'MM-DD-YY').format('YYYY-MM-DD')),
-                                        'Resident_Name': residentName,
-                                        'EPA': tempEPA,
-                                        'Observer_Name': dataPoint.__EMPTY,
-                                        'Observer_Type': dataPoint.__EMPTY_1,
-                                        'Rating': epaRating,
-                                        'Type': dataPoint.__EMPTY_3,
-                                        'Situation_Context': dataPoint.__EMPTY_4,
-                                        'Feedback': dataPoint.__EMPTY_5,
-                                        'Professionalism_Safety': dataPoint.__EMPTY_6,
-                                        'isExpired': false
-                                    });
-                                }
-                                // internal loop increase iteratorIndex
-                                iteratorIndex += 1;
                             }
+                        }
+                        // if the row has the entry "Archived Observations" stop processing the file 
+                        // and break the loop by setting the iterator index to the maximum
+                        else if (dataInColumnOne.indexOf('Archived Observations') > -1) {
+                            iteratorIndex = maxLength;
                         }
                     }
                     // increase the index count by one
