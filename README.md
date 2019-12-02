@@ -10,7 +10,7 @@ https://github.com/kiranbandi/cbd-dashboard-server
 ## WEB Demo
 
 The current version of the CBD Dashboard is live at :  
-https://cbd.usask.ca
+https://cbme.usask.ca
 
 ### Issues,Bugs and Feature Requests
 If something doesnt work or you have noticed a bug please create an issue using the template provided

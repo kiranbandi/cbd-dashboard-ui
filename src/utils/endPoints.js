@@ -1,4 +1,4 @@
-var endPointRoot = 'https://cbd.usask.ca/api/';
+var endPointRoot = 'https://cbme.usask.ca/api/';
 // When testing a local server uncomment the line below but for most
 // cases we will be working with the prod server , I know this is not the
 // the most efficient solution to do this !!!
