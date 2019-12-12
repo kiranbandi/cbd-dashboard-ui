@@ -38,7 +38,6 @@ export default class ExportDataTab extends Component {
             data: null
         };
         this._isMounted = false;
-        this._data = null;
         this.downloadFile = this.downloadFile.bind(this);
         this.fetchData = this.fetchData.bind(this);
         this.filterDates = this.filterDates.bind(this);
@@ -74,7 +73,10 @@ export default class ExportDataTab extends Component {
 
         // get list of all residents
         try {
-            this._data = await getAllData();
+            let data = await getAllData();
+            if (data) {
+                this.setState({ data });
+            }
         } catch (e) {
             console.log("error in fetching all records");
         } finally {
@@ -84,7 +86,7 @@ export default class ExportDataTab extends Component {
 
     filterDates() {
         this.setState({
-            data: this._data.filter(d =>
+            data: this.state.data.filter(d =>
                 moment(d.observation_date, 'YYYY-MM-DD').isBetween(
                     moment(this._filterStartDateInput.value, 'MM/DD/YYYY'),
                     moment(this._filterEndDateInput.value, 'MM/DD/YYYY')
@@ -94,7 +96,7 @@ export default class ExportDataTab extends Component {
     }
 
     render() {
-       
+
         var startDate = moment().format('MM/DD/YYYY');
         var endDate = moment().format('MM/DD/YYYY');
 
