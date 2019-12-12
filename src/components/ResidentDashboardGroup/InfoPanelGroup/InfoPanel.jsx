@@ -50,6 +50,8 @@ class InfoPanel extends Component {
                         }
                         {!!residentData &&
                             <EPASpeedInfo
+                                width={width}
+                                smallScreen={smallScreen}
                                 residentData={residentData}
                                 residentInfo={residentInfo}
                                 expiredResidentData={expiredResidentData}

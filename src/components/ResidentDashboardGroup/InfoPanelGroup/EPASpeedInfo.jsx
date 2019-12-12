@@ -1,10 +1,12 @@
 import React from 'react';
 import moment from 'moment';
-import { StatCard } from '../../';
+import { MicroStatCard, StatCard } from '../../';
+import WeeklyEPAChart from './WeeklyEPAChart';
 
 export default (props) => {
 
-    const { residentData, residentFilter, residentInfo = {}, expiredResidentData = [] } = props,
+    const { residentData, smallScreen, residentFilter, width,
+        residentInfo = {}, expiredResidentData = [] } = props,
         residentDataList = _.flatMap(residentData);
 
     let startDate = moment("01-07-2018", "DD-MM-YYYY");
@@ -52,23 +54,37 @@ export default (props) => {
 
     }
 
+    // One mobile screens we use hide the weekly chart and show regular statcards
+    const CardComponent = smallScreen ? StatCard : MicroStatCard;
+
     return (
         <div className='epaSpeedBox'>
             <div className="hr-divider">
                 <h4 className="hr-divider-content"> EPA ACQUISITION METRICS </h4>
             </div>
-            {residentFilter.isAllData ?
-                <div className='row text-center'>
-                    <StatCard title='EPAs observed per week' type='success' metric={averageEPAsPerWeek} />
-                    <StatCard title='Total EPAs Observed' type='primary' metric={totalEPAs} />
-                    <StatCard title='EPA Expiry Rate' type='danger' metric={expiryRate + '%'} />
-                </div> :
-                <div className='row text-center'>
-                    <StatCard dual={true} title='EPAs observed per week' type='success' metric={averageEPAsPerWeek} secondMetric={averageEPAsPerWeekInPeriod} />
-                    <StatCard dual={true} title='Total EPAs Observed' type='primary' metric={totalEPAs} secondMetric={recordsInPeriodCount} />
-                    <StatCard dual={true} title='EPAs Expiry Rate' type='danger' metric={expiryRate + '%'} secondMetric={expiryRateInPeriod + '%'} />
-                </div>
-            }
+            <div className='card-wrapper'>
+                {residentFilter.isAllData ?
+                    <div className='row text-center m-t'>
+                        <CardComponent title='EPAs observed per week' type='success' metric={averageEPAsPerWeek} />
+                        <CardComponent title='Total EPAs Observed' type='primary' metric={totalEPAs} />
+                        <CardComponent title='EPA Expiry Rate' type='danger' metric={expiryRate + '%'} />
+                    </div> :
+                    <div className='row text-center'>
+                        <CardComponent dual={true} title='EPAs observed per week' type='success' metric={averageEPAsPerWeek} secondMetric={averageEPAsPerWeekInPeriod} />
+                        <CardComponent dual={true} title='Total EPAs Observed' type='primary' metric={totalEPAs} secondMetric={recordsInPeriodCount} />
+                        <CardComponent dual={true} title='EPAs Expiry Rate' type='danger' metric={expiryRate + '%'} secondMetric={expiryRateInPeriod + '%'} />
+                    </div>
+                }
+            </div>
+            {!smallScreen &&
+                < WeeklyEPAChart
+                    // the three cards in EPASpeedInfo each take 160 pixels 
+                    // so removing that and the extra margin
+                    width={width - 575}
+                    residentData={residentData}
+                    residentInfo={residentInfo}
+                    expiredResidentData={expiredResidentData}
+                    residentFilter={residentFilter} />}
 
         </div>)
 
