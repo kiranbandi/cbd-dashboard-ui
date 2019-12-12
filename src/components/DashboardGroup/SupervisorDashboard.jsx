@@ -72,6 +72,9 @@ export default class SupervisorDashboard extends Component {
         // get list of all residents
         try {
             let observerList = await getObserverList();
+
+            debugger;
+            
             this._isMounted && this.setState({ observerList: _.sortBy(observerList, (d) => d.name) });
 
             try {
