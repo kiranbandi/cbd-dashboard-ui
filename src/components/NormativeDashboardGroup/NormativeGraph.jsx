@@ -105,8 +105,6 @@ class NormativeGraph extends Component {
             scaleBeginAtZero: true
         };
 
-        Line
-
         return (
             <div className='normative-graph'>
                 <div className='sub-filter'>
