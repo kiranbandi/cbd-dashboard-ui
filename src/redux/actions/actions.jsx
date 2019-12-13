@@ -2,6 +2,7 @@ import * as types from './actionTypes';
 import _ from 'lodash';
 import { hashHistory } from 'react-router';
 import { PROGRAM_INFO } from '../../utils/programInfo';
+import { getResidentData, getNarratives } from '../../utils/requestServer';
 
 
 export function loginSuccess() {
@@ -191,6 +192,53 @@ function clearSessionStorage() {
 }
 
 
+// Not so elegant solution 
+//  but is needed when a user needs to be automatically switched between dashboards
+export function switchToResidentDashboard(residentInfo, residentFilter, programInfo) {
+
+    return dispatch => {
+        dispatch(setActiveDashboard('resident'));
+        // set all the parameters in the resident filter
+        dispatch(setResidentFilter({ ...residentFilter }))
+        // then clear any previously selected residents data
+        dispatch(setNarrativeData([]))
+        dispatch(setResidentData(null))
+        // then start the loading filter
+        dispatch(toggleFilterLoader());
+
+        // fetch data from server based on the filter params
+        // Dirty solution but eventually all filtering will happen on the server so no point 
+        //  in repeating this again.
+        getResidentData(residentFilter.username)
+            .then((residentData) => {
+                // mark records to so no record is set in a date period filter
+                var markedResidentData = _.map(residentData, (d) => ({ ...d, mark: false }));
+                // group data on the basis of EPA
+                var groupedResidentData = _.groupBy(markedResidentData, (d) => d.EPA);
+
+                // if uncommenced EPAs are needed to be seen then sub in empty records
+                _.map(programInfo.epaSourceMap, (source) => {
+                    _.map(source.subRoot, (epa, innerKey) => {
+                        if (!groupedResidentData.hasOwnProperty(innerKey)) {
+                            groupedResidentData[innerKey] = [];
+                        }
+                    })
+                })
+                // store the info of visibility of phase into resident info
+                residentInfo.openOnlyCurrentPhase = true;
+                dispatch(setResidentData(groupedResidentData, residentInfo));
+                // Finally get narratives for the resident
+                return getNarratives(residentFilter.username);
+
+            })
+            .then((narrativeData) => {
+                // mark records in the selected date range with a flag
+                var markedNarrativeData = _.map(narrativeData, (d) => ({ ...d, mark: false }));
+                dispatch(setNarrativeData(markedNarrativeData));
+            })
+            .finally(() => { dispatch(toggleFilterLoader()); });
+    };
+}
 
 
 

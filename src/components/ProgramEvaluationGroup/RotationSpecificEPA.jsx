@@ -112,7 +112,7 @@ export default class RotationSpecificEPA extends Component {
 }
 
 // This is a custom tool that uses bootstrap and works in hand with ChartJS standards
-// could be replace in future with custom tooltip
+// could be replaced in future with custom tooltip
 function customToolTip(tooltip, elementId, templateEpaSourceMap) {
 
     // Tooltip Element
