@@ -230,7 +230,7 @@ export default class ModifyUser extends Component {
         if (!rotationSchedule.hasOwnProperty(academicYear)) {
             rotationSchedule[academicYear] = _.times(ROTATION_SCHEDULE_MAP[academicYear].length - 1, () => rotationList[0]);
         };
-
+        // set the select value with the value in the resident filter 
         const currentSelectedValue = _.find(modifiedUserList, (d) => d.value == username) || null;
 
         return (

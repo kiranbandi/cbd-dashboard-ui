@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import _ from 'lodash';
 import Loading from 'react-loading';
+import ReactSelect from 'react-select';
 import { getResidentData, getNarratives } from '../../utils/requestServer';
 import {
     toggleFilterLoader, setResidentFilter, toggleExamScore,
@@ -15,12 +16,13 @@ class FilterPanel extends Component {
 
     constructor(props) {
         super(props);
-        this.onChange = this.onChange.bind(this);
+        this.onAllDataToggle = this.onAllDataToggle.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onEPAToggle = this.onEPAToggle.bind(this);
         this.onVisbilityToggle = this.onVisbilityToggle.bind(this);
         this.onFilterToggleClick = this.onFilterToggleClick.bind(this);
         this.onExamScoreToggle = this.onExamScoreToggle.bind(this);
+        this.onResidentNameChange = this.onResidentNameChange.bind(this);
         this.state = {
             showUncommencedEPA: true,
             openOnlyCurrentPhase: true,
@@ -28,7 +30,17 @@ class FilterPanel extends Component {
         };
     }
 
-    onChange(event) {
+
+    onResidentNameChange(option) {
+        let { residentFilter = {}, actions } = this.props;
+        residentFilter.username = option.value;
+        actions.setResidentFilter({ ...residentFilter });
+        // clear data if present for any other previously selected resident
+        actions.setNarrativeData([]);
+        actions.setResidentData(null);
+    }
+
+    onAllDataToggle(event) {
         let { residentFilter = {}, actions } = this.props;
         residentFilter.isAllData = !residentFilter.isAllData;
         actions.setResidentFilter({ ...residentFilter });
@@ -56,7 +68,6 @@ class FilterPanel extends Component {
 
         residentFilter.startDate = document.getElementById('filter-startDate').value;
         residentFilter.endDate = document.getElementById('filter-endDate').value;
-        residentFilter.username = document.getElementById('filter-residentName').value;
 
         // set all the parameters in the resident filter
         actions.setResidentFilter({ ...residentFilter });
@@ -128,24 +139,33 @@ class FilterPanel extends Component {
             { examScoresVisible } = programInfo,
             {
                 isAllData = false,
-                residentName = '',
+                username = '',
                 startDate = moment().format('MM/DD/YYYY'),
                 endDate = moment().format('MM/DD/YYYY')
             } = residentFilter,
             { isFilterOpen } = this.state;
 
-        // Sort the residents alphabetically so that they are easier to look up
-        residentList.sort((previous, current) => previous.fullname.localeCompare(current.fullname));
+        // Sort the residents alphabetically so that they are easier to look up and create a list
+        // matching the required format of the select dropdown
+        const selectOptions = _.map(residentList, (d) => ({ 'label': d.fullname, 'value': d.username }))
+            .sort((previous, current) => previous.label.localeCompare(current.label));
+
+        const currentSelectValue = _.find(selectOptions, (d) => d.value == username) || null;
 
         return (
             <div className='filter-panel m-t center-align'>
 
                 <div className='text-xs-center text-sm-left root-box'>
-                    <div className='name-box'>
-                        <label className='filter-label'>Resident Name  </label>
-                        <select id='filter-residentName' defaultValue={residentName} className="custom-select">
-                            {residentList.map((val, index) => { return <option key={index} value={val.username}> {val.fullname}</option> })}
-                        </select>
+
+                    <div className='react-select-root-filter'>
+                        <ReactSelect
+                            placeholder='Select Resident...'
+                            isSearchable={true}
+                            value={currentSelectValue}
+                            options={selectOptions}
+                            styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
+                            onChange={this.onResidentNameChange} />
+
                     </div>
 
                     <div className='filter-button-container'>
@@ -168,7 +188,7 @@ class FilterPanel extends Component {
                         <div className="checkbox custom-control text-center custom-checkbox">
                             <label className='filter-label'>
                                 {"Filter Records by Date"}
-                                <input id='filter-isAllData' type="checkbox" checked={!isAllData} onChange={this.onChange} />
+                                <input id='filter-isAllData' type="checkbox" checked={!isAllData} onChange={this.onAllDataToggle} />
                                 <span className="custom-control-indicator"></span>
                             </label>
                         </div>

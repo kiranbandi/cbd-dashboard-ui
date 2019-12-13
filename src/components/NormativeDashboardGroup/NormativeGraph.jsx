@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs';
 import { RadioButton } from '../';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { switchToResidentDashboard } from '../../redux/actions/actions';
 
-export default class NormativeGraph extends Component {
+class NormativeGraph extends Component {
 
     constructor(props) {
         super(props);
@@ -12,7 +15,10 @@ export default class NormativeGraph extends Component {
         };
         this.radioChange = this.radioChange.bind(this);
         this.onCheckboxChange = this.onCheckboxChange.bind(this);
+        this.handleChartClick = this.handleChartClick.bind(this);
+
     }
+
 
     onCheckboxChange() {
         this.setState({ dualTracks: !this.state.dualTracks });
@@ -21,6 +27,26 @@ export default class NormativeGraph extends Component {
 
     radioChange(event) {
         this.setState({ trackType: event.target.value });
+    }
+
+
+    handleChartClick(event) {
+
+        const { actions, residentFilter, programInfo } = this.props;
+
+        let datapoint = this.chartCtx && this.chartCtx.getPointsAtEvent(event);
+        // if a valid resident name has been clicked
+        if (datapoint && datapoint.length > 0) {
+            // first get the resident username from the list
+            // then check if the resident exists and then trigger a custom select resident action 
+            let resident = _.find(this.props.residentList, (d) => d.fullname == datapoint[0].label);
+            if (resident) {
+                // set the username on the filter
+                residentFilter.username = resident.username;
+                actions.switchToResidentDashboard(resident, residentFilter, programInfo);
+            }
+        }
+
     }
 
     render() {
@@ -79,6 +105,8 @@ export default class NormativeGraph extends Component {
             scaleBeginAtZero: true
         };
 
+        Line
+
         return (
             <div className='normative-graph'>
                 <div className='sub-filter'>
@@ -105,13 +133,38 @@ export default class NormativeGraph extends Component {
                             </label>
                         </div>}
                 </div>
-                <Line
-                    redraw={true}
-                    options={lineOptions}
-                    data={lineData}
-                    width={width} height={450} />
+                <div onClick={this.handleChartClick}>
+                    <Line
+                        ref={r => this.chartCtx = r && r.getChart()}
+                        redraw={true}
+                        options={lineOptions}
+                        data={lineData}
+                        width={width} height={450} />
+                </div>
+
             </div>)
     }
 
 }
+
+
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators({ switchToResidentDashboard }, dispatch)
+    };
+}
+
+function mapStateToProps(state) {
+    return {
+        residentList: state.oracle.residentList,
+        residentFilter: state.oracle.residentFilter,
+        //  can be null occasionally so better to check and set it
+        programInfo: state.oracle.programInfo ? state.oracle.programInfo : {}
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NormativeGraph);
+
+
 

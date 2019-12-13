@@ -42,6 +42,9 @@ export default class WeeklyEPAChart extends Component {
 
         }
 
+        // reverse the week list so its from oldest to current
+        weekList = _.reverse(weekList);
+
         let datasets = [{
             label: "EPA Count by Week",
             fillColor: "rgba(28,168,221,0.05)",
