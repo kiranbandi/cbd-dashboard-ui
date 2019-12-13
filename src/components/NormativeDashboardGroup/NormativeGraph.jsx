@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Line } from 'react-chartjs';
+import { Bar } from 'react-chartjs';
 import { RadioButton } from '../';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -34,7 +34,7 @@ class NormativeGraph extends Component {
 
         const { actions, residentFilter, programInfo } = this.props;
 
-        let datapoint = this.chartCtx && this.chartCtx.getPointsAtEvent(event);
+        let datapoint = this.chartCtx && this.chartCtx.getBarsAtEvent(event);
         // if a valid resident name has been clicked
         if (datapoint && datapoint.length > 0) {
             // first get the resident username from the list
@@ -95,13 +95,13 @@ class NormativeGraph extends Component {
             }
         }
 
-        // create line object for chart
-        const lineData = {
+        // create Bar object for chart
+        const BarData = {
             labels: _.map(sortedRecords, (d) => d.resident_name),
             datasets
         }
 
-        let lineOptions = {
+        let BarOptions = {
             scaleBeginAtZero: true
         };
 
@@ -132,11 +132,11 @@ class NormativeGraph extends Component {
                         </div>}
                 </div>
                 <div onClick={this.handleChartClick}>
-                    <Line
+                    <Bar
                         ref={r => this.chartCtx = r && r.getChart()}
                         redraw={true}
-                        options={lineOptions}
-                        data={lineData}
+                        options={BarOptions}
+                        data={BarData}
                         width={width} height={450} />
                 </div>
 
