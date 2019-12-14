@@ -69,67 +69,72 @@ class FilterPanel extends Component {
         residentFilter.startDate = document.getElementById('filter-startDate').value;
         residentFilter.endDate = document.getElementById('filter-endDate').value;
 
-        // set all the parameters in the resident filter
-        actions.setResidentFilter({ ...residentFilter });
-        // toggle loader
-        actions.toggleFilterLoader();
-
         // Fitler out resident info from the list 
         let residentInfo = _.find(residentList, (d) => d.username == residentFilter.username);
 
-        // fetch data from server based on the filter params
-        // Dirty solution but eventually all filtering will happen on the server so no point 
-        //  in repeating this again.
-        getResidentData(residentFilter.username)
-            .then((residentData) => {
+        // if the selected resident is valid and his info is available
+        if (residentInfo) {
 
-                // mark records in the selected date range with a flag
-                var markedResidentData = _.map(residentData, (d) => {
-                    if (residentFilter.isAllData) {
-                        d.mark = false;
-                    }
-                    else {
-                        d.mark = moment(d.Date, 'YYYY-MM-DD').isAfter(moment(residentFilter.startDate, 'MM/DD/YYYY')) && moment(d.Date, 'YYYY-MM-DD').isBefore(moment(residentFilter.endDate, 'MM/DD/YYYY'));
-                    }
-                    return d;
-                })
+            // set all the parameters in the resident filter
+            actions.setResidentFilter({ ...residentFilter });
+            // toggle loader
+            actions.toggleFilterLoader();
 
-                // group data on the basis of EPA
-                var groupedResidentData = _.groupBy(markedResidentData, (d) => d.EPA);
+            // fetch data from server based on the filter params
+            // Dirty solution but eventually all filtering will happen on the server so no point 
+            //  in repeating this again.
+            getResidentData(residentFilter.username)
+                .then((residentData) => {
 
-                // if uncommenced EPAs are needed to be seen then sub in empty records
-                if (showUncommencedEPA) {
-                    _.map(programInfo.epaSourceMap, (source) => {
-                        _.map(source.subRoot, (epa, innerKey) => {
-                            if (!groupedResidentData.hasOwnProperty(innerKey)) {
-                                groupedResidentData[innerKey] = [];
-                            }
-                        })
+                    // mark records in the selected date range with a flag
+                    var markedResidentData = _.map(residentData, (d) => {
+                        if (residentFilter.isAllData) {
+                            d.mark = false;
+                        }
+                        else {
+                            d.mark = moment(d.Date, 'YYYY-MM-DD').isAfter(moment(residentFilter.startDate, 'MM/DD/YYYY')) && moment(d.Date, 'YYYY-MM-DD').isBefore(moment(residentFilter.endDate, 'MM/DD/YYYY'));
+                        }
+                        return d;
                     })
-                }
-                // store the info of visibility of phase into resident info
-                residentInfo.openOnlyCurrentPhase = openOnlyCurrentPhase;
-                actions.setResidentData(groupedResidentData, residentInfo);
-                // Finally get narratives for the resident
-                return getNarratives(residentFilter.username);
 
-            })
-            .then((narrativeData) => {
+                    // group data on the basis of EPA
+                    var groupedResidentData = _.groupBy(markedResidentData, (d) => d.EPA);
 
-                // mark records in the selected date range with a flag
-                var markedNarrativeData = _.map(narrativeData, (d) => {
-                    if (residentFilter.isAllData) {
-                        d.mark = false;
+                    // if uncommenced EPAs are needed to be seen then sub in empty records
+                    if (showUncommencedEPA) {
+                        _.map(programInfo.epaSourceMap, (source) => {
+                            _.map(source.subRoot, (epa, innerKey) => {
+                                if (!groupedResidentData.hasOwnProperty(innerKey)) {
+                                    groupedResidentData[innerKey] = [];
+                                }
+                            })
+                        })
                     }
-                    else {
-                        d.mark = moment(d.observation_date, 'YYYY-MM-DD').isAfter(moment(residentFilter.startDate, 'MM/DD/YYYY')) && moment(d.observation_date, 'YYYY-MM-DD').isBefore(moment(residentFilter.endDate, 'MM/DD/YYYY'));
-                    }
-                    return d;
+                    // store the info of visibility of phase into resident info
+                    residentInfo.openOnlyCurrentPhase = openOnlyCurrentPhase;
+                    actions.setResidentData(groupedResidentData, residentInfo);
+                    // Finally get narratives for the resident
+                    return getNarratives(residentFilter.username);
+
                 })
+                .then((narrativeData) => {
 
-                actions.setNarrativeData(markedNarrativeData);
-            })
-            .finally(() => { actions.toggleFilterLoader(); });
+                    // mark records in the selected date range with a flag
+                    var markedNarrativeData = _.map(narrativeData, (d) => {
+                        if (residentFilter.isAllData) {
+                            d.mark = false;
+                        }
+                        else {
+                            d.mark = moment(d.observation_date, 'YYYY-MM-DD').isAfter(moment(residentFilter.startDate, 'MM/DD/YYYY')) && moment(d.observation_date, 'YYYY-MM-DD').isBefore(moment(residentFilter.endDate, 'MM/DD/YYYY'));
+                        }
+                        return d;
+                    })
+
+                    actions.setNarrativeData(markedNarrativeData);
+                })
+                .finally(() => { actions.toggleFilterLoader(); });
+        }
+
     }
 
     render() {

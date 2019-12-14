@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { setActiveDashboard } from '../redux/actions/actions';
 import {
     ResidentDashboard, ProgramDashboard,
-    SupervisorDashboard, Modal,
+    FacultyDashboard, Modal,
     NormativeDashboard, DownloadDashboard
 } from '../components';
 
@@ -63,7 +63,7 @@ class DashboardRoot extends Component {
                         </div>
                         <div className='control-inner-container'>
                             {(activeDashboard == 'resident') && <ResidentDashboard />}
-                            {(activeDashboard == 'supervisor') && <SupervisorDashboard programInfo={programInfo} />}
+                            {(activeDashboard == 'supervisor') && <FacultyDashboard programInfo={programInfo} />}
                             {(activeDashboard == 'program') && <ProgramDashboard programInfo={programInfo} />}
                             {(activeDashboard == 'table') && <DownloadDashboard />}
                             {(activeDashboard == 'normative') && <NormativeDashboard />}
