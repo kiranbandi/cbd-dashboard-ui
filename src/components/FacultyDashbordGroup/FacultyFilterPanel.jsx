@@ -1,42 +1,59 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import ReactSelect from 'react-select';
 
 const defaultDateValue = moment().format('MM/DD/YYYY');
 
 export default class FacultyFilterPanel extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            dateFilterActive: false
-        };
-        this.onCheckboxChange = this.onCheckboxChange.bind(this);
     }
-
-    onCheckboxChange() {
-        this.setState({ dateFilterActive: !this.state.dateFilterActive });
-    }
-
 
     render() {
 
-        const { onSubmit, rotationList } = this.props,
-            { dateFilterActive } = this.state;
+        const { rotationList, facultyList, currentRotation,
+            currentFaculty, onRotationSelect, onFacultySelect,
+            onSubmit, onCheckboxChange, dateFilterActive } = this.props;
+
+        // Process rotations so they match the react select format
+        const rotationOptions = _.map(rotationList, (d) => ({ 'label': d.label, 'value': d.label }));
+        const currentRotationValue = _.find(rotationOptions, (d) => d.label == currentRotation) || null;
+
+        // Process faculty names so they match the react select format
+        const facultyOptions = _.map(facultyList, (d) => ({ 'label': d.label, 'value': d.label }));
+        const currentFacultyValue = _.find(facultyOptions, (d) => d.label == currentFaculty) || null;
 
         return (
-            <div className='filter-panel'>
+            <div className='filter-panel faculty-filter'>
                 <div className='text-xs-left advanced-filter-box normative-filter-box'>
 
-                    <div className='phase-box'>
-                        <label className='filter-label'>Resident Rotation </label>
-                        <select id='filter-rotationList' className="custom-select">
-                            {rotationList.map((val, index) => { return <option key={index} value={val.label}> {val.label + " (" + val.count + ")"}</option> })}
-                        </select>
+                    <div className='react-select-root'>
+                        <label className='filter-label'>Select Rotation</label>
+                        <ReactSelect
+                            placeholder='Select Rotation...'
+                            isSearchable={true}
+                            value={currentRotationValue}
+                            options={rotationOptions}
+                            styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
+                            onChange={onRotationSelect} />
                     </div>
+
+                    <div className='react-select-root'>
+                        <label className='filter-label'>Select Faculty</label>
+                        <ReactSelect
+                            placeholder='Select Faculty...'
+                            isSearchable={true}
+                            value={currentFacultyValue}
+                            options={facultyOptions}
+                            styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
+                            onChange={onFacultySelect} />
+                    </div>
+
 
                     <div className="checkbox custom-control text-center custom-checkbox">
                         <label className='filter-label'>
                             {"Filter by Date"}
-                            <input id='filter-FCdateFilterActive' type="checkbox" checked={dateFilterActive} onChange={this.onCheckboxChange} />
+                            <input id='filter-FCdateFilterActive' type="checkbox" checked={dateFilterActive} onChange={onCheckboxChange} />
                             <span className="custom-control-indicator"></span>
                         </label>
                     </div>
