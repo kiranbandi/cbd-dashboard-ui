@@ -10,7 +10,6 @@ import { RadioButton } from '../';
 import moment from 'moment';
 import SupervisorTable from '../SupervisorDashbordGroup/SupervisorTable';
 
-
 const columns = [{
     Header: 'Date',
     accessor: 'Date',
@@ -42,7 +41,7 @@ const columns = [{
     accessor: 'Feedback',
     className: 'feedback-cell',
     filterMethod: customFilter
-}]
+}];
 
 export default class SupervisorDashboard extends Component {
     constructor(props) {
@@ -72,8 +71,6 @@ export default class SupervisorDashboard extends Component {
         // get list of all residents
         try {
             let observerList = await getObserverList();
-
-            debugger;
             
             this._isMounted && this.setState({ observerList: _.sortBy(observerList, (d) => d.name) });
 

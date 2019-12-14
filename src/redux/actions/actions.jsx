@@ -205,7 +205,6 @@ export function switchToResidentDashboard(residentInfo, residentFilter, programI
         dispatch(setResidentData(null))
         // then start the loading filter
         dispatch(toggleFilterLoader());
-
         // fetch data from server based on the filter params
         // Dirty solution but eventually all filtering will happen on the server so no point 
         //  in repeating this again.

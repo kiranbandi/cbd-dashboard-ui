@@ -7,13 +7,19 @@ export { default as AddCCFeedback } from './AdminGroup/AddCCFeedback';
 // Components for each of the five dashboards
 export { default as ResidentDashboard } from './DashboardGroup/ResidentDashboard';
 export { default as ProgramDashboard } from './DashboardGroup/ProgramDashboard';
-export { default as SupervisorDashboard } from './DashboardGroup/SupervisorDashboard';
+export { default as FacultyDashboard } from './DashboardGroup/FacultyDashboard';
 export { default as DownloadDashboard } from './DashboardGroup/DownloadDashboard';
 export { default as NormativeDashboard } from './DashboardGroup/NormativeDashboard';
 // Components for Normative Dashboard to compare residents
 export { default as NormativeTable } from './NormativeDashboardGroup/NormativeTable';
 export { default as NormativeFilterPanel } from './NormativeDashboardGroup/NormativeFilterPanel';
 export { default as NormativeGraph } from './NormativeDashboardGroup/NormativeGraph';
+
+// Components for Faculty Dashboard to compare residents
+export { default as FacultyFilterPanel } from './FacultyDashbordGroup/FacultyFilterPanel';
+// export { default as NormativeFilterPanel } from './FacultyDashbordGroup/NormativeFilterPanel';
+// export { default as NormativeGraph } from './FacultyDashbordGroup/NormativeGraph';
+
 // Components for Resident Dashboard to compare residents
 export { default as GraphPanel } from './ResidentDashboardGroup/GraphPanelGroup/GraphPanel';
 export { default as InfoPanel } from './ResidentDashboardGroup/InfoPanelGroup/InfoPanel';
