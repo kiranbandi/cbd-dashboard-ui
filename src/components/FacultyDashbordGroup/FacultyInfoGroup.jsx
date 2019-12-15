@@ -119,7 +119,7 @@ const multiColumns = [
 export default (props) => {
 
     const { currentRotation, currentFaculty, dateFilterActive,
-        width, processedRecords, currentFacultyRecords } = props;
+        width, processedRecords, currentFacultyRecords, printModeON } = props;
 
     return <div>
         <div className='m-r-lg m-l-md' style={{ 'display': 'inline-block', 'width': '725px' }}>
@@ -133,16 +133,18 @@ export default (props) => {
                 processedRecords={currentFaculty == 'ALL' ? [] : currentFacultyRecords}
                 dateFilterActive={dateFilterActive} />
         </div>
-        <div className={'normative-table table-box ' + (dateFilterActive ? 'm-t-md' : '')}
-            style={{ width: width - 750 }}>
-            <ReactTable
-                data={processedRecords}
-                columns={dateFilterActive ? multiColumns : columns}
-                defaultPageSize={10}
-                resizable={false}
-                className='-highlight -striped'
-                defaultSorted={[{ id: "faculty_name", desc: false }]} />
-        </div>
+        {!printModeON &&
+            <div className={'normative-table table-box ' + (dateFilterActive ? 'm-t-md' : '')}
+                style={{ width: width - 750 }}>
+                <ReactTable
+                    data={processedRecords}
+                    columns={dateFilterActive ? multiColumns : columns}
+                    defaultPageSize={10}
+                    resizable={false}
+                    className='-highlight -striped'
+                    defaultSorted={[{ id: "faculty_name", desc: false }]} />
+            </div>}
+
     </div>
 
 }
