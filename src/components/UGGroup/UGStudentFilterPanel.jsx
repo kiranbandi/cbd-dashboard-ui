@@ -58,12 +58,12 @@ export default class StudentFilterPanel extends Component {
                             </div>
                         </div>
                     </span>}
-
-                    <div className='text-xs-left button-box'>
+                    {dateFilterActive && <div className='text-xs-left button-box'>
                         <button type="submit" className="filter-button btn btn-primary-outline" onClick={onSubmit}>
-                            GET RECORDS
+                            FILTER DATES
                         </button>
-                    </div>
+                    </div>}
+
                 </div>
             </div>)
     }
