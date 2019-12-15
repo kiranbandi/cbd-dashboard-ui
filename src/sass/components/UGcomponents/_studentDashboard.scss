@@ -34,6 +34,9 @@
             }
             .inner-graph-row {
                 background: inherit !important;
+                .inner-cell {
+                    vertical-align: middle !important;
+                }
             }
         }
         .inner-offset-label {
@@ -55,5 +58,31 @@
         .icon.table-icon {
             top: 126px !important;
             left: 20px!important;
+        }
+        .filter-box-sub {
+            margin: 0px 4% 0px 20px;
+            vertical-align: top;
+            float: right;
+            .filter-box-sub-inner {
+                margin-bottom: 20px;
+                h4 {
+                    font-size: 16px;
+                    text-transform: uppercase;
+                    font-weight: bolder;
+                    color: #32a8dd;
+                }
+                .sub-group-filter {
+                    display: inline-block;
+                    margin: 0px 5px;
+                    padding: 5px 5px;
+                    border-radius: 5px;
+                    font-size: 15px;
+                    cursor: pointer;
+                    &.active,
+                    &:hover {
+                        background: #2c86af;
+                    }
+                }
+            }
         }
     }

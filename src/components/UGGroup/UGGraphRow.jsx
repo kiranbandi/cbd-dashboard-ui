@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { scaleLinear } from 'd3';
 import UGLineChart from './UGLineChart';
 import UGSlideInTable from './UGSlideInTable';
+import UGStudentSubFilter from './UGStudentSubFilter';
 import PieChart from '../ReusableComponents/PieChart';
 
 export default class GraphRow extends Component {
@@ -9,18 +10,48 @@ export default class GraphRow extends Component {
     constructor(props) {
         super(props);
         this.state = { admission_type: '', patient_type: '' };
+        this.onHighlightChange = this.onHighlightChange.bind(this);
     }
 
-    onHighlightChange = (admission_type, patient_type) => { this.setState({ admission_type, patient_type }) }
+    onHighlightChange(event) {
+        let { admission_type, patient_type } = this.state,
+            clickerID = event.target.id.split('-');
+
+        // if one of the patient type buttons is clicked
+        if (clickerID[0] == 'patient') {
+            // if the same button is clicked twice we disable it
+            if (clickerID[2] == patient_type) {
+                patient_type = '';
+            }
+            else {
+                patient_type = clickerID[2];
+            }
+        }
+        // if one of the admission type buttons is clicked
+        else {
+            // if the same button is clicked twice we disable it
+            if (clickerID[2] == admission_type) {
+                admission_type = '';
+            }
+            else {
+                admission_type = clickerID[2];
+            }
+        }
+
+        this.setState({ admission_type, patient_type });
+
+    }
 
     render() {
 
-        const { admission_type, patient_type } = this.state;
+        const { admission_type = '', patient_type = '' } = this.state;
+
+        console.log(admission_type, patient_type);
 
         let { epaSource, isTableVisible,
             widthPartition, smallScreen = false, epaSourceMap,
             studentEPAData, onMouseOut, onMouseOver,
-            onTableExpandClick, onFilterExpandClick, isFilterVisible } = this.props;
+            onTableExpandClick } = this.props;
 
 
         // margin of 10px on either side reduces the available width by 20
@@ -63,25 +94,31 @@ export default class GraphRow extends Component {
 
         const scoreData = studentEPAData.map((d, i) => {
 
+
+            d.admission_type = d.admission_type == 'in patient' ? 'in' : d.admission_type == 'out patient' ? 'out' : 'na';
+            d.patient_type = d.patient_type == 'adult' ? 'adult' : d.patient_type == 'pediatrics' ? 'child' : 'na';
+
             let highlight = false;
 
-            if (isFilterVisible) {
-                if (admission_type.length > 0 && patient_type.length > 0) {
-                    highlight = ((d.admission_type == admission_type) && (d.patient_type == patient_type)) ? true : false;
-                }
-                else if (admission_type.length > 0) {
-                    highlight = (d.admission_type == admission_type);
-                }
-                else if (patient_type.length > 0) {
-                    highlight = (d.patient_type == patient_type);
-                }
+
+            if (admission_type.length > 0 && patient_type.length > 0) {
+                highlight = ((d.admission_type == admission_type) && (d.patient_type == patient_type)) ? true : false;
             }
+            else if (admission_type.length > 0) {
+                highlight = (d.admission_type == admission_type);
+            }
+            else if (patient_type.length > 0) {
+                highlight = (d.patient_type == patient_type);
+            }
+
 
             return {
                 x: xScale(i),
                 y: yScale(d.rating),
                 highlight,
-                pureData: d
+                patient_type: d.admission_type,
+                patient_type: d.patient_type,
+                mark: d.mark
             };
 
         });
@@ -97,12 +134,12 @@ export default class GraphRow extends Component {
         return (
             <div className='text-xs-center'>
                 {/* widthly reduced slightly by 10px to facilitate extra gap at the last */}
-                <div style={{ width: widthPartition - 10 }} className='inner-cell epa-title-cell text-left' >
+                <div style={{ width: (smallScreen ? widthPartition : widthPartition * 0.6) - 10 }} className='inner-cell epa-title-cell text-left' >
                     <span className='inner-offset-label text-left'>
                         <b>{"EPA " + epaSource + ": "}</b>{epaSourceMap.subRoot[epaSource]}
                     </span>
                 </div>
-                <div style={{ width: widthPartition }} className='inner-cell observation-cell'>
+                <div style={{ width: smallScreen ? widthPartition : widthPartition * 1.4 }} className='inner-cell observation-cell'>
                     <div className='card-container'>
 
                         <div className='chart-wrapper'>
@@ -115,7 +152,11 @@ export default class GraphRow extends Component {
                                 <span className='card-title remaining-title'>TO GO</span>
                             </div>
                         </div>
-
+                        <UGStudentSubFilter
+                            patient_type={patient_type}
+                            admission_type={admission_type}
+                            onHighlightChange={this.onHighlightChange}
+                            scoreData={scoreData} />
                     </div>
 
                 </div>
