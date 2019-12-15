@@ -5,8 +5,8 @@ import { PROGRAM_INFO } from '../../utils/programInfo';
 import { getResidentData, getNarratives } from '../../utils/requestServer';
 
 
-export function loginSuccess() {
-    let { state = { nextPathname: '/Dashboard' } } = hashHistory.getCurrentLocation();
+export function loginSuccess(isUG = false) {
+    let { state = { nextPathname: isUG ? '/UGME/Dashboard' : '/PGME/Dashboard' } } = hashHistory.getCurrentLocation();
     hashHistory.push(state.nextPathname);
     return { type: types.LOG_IN_SUCCESS };
 }
@@ -141,20 +141,33 @@ export function setLoginData(userDetails) {
     const { program = 'EM' } = userDetails, programInfo = PROGRAM_INFO[program];
     // store data that needs to be persisted in session storage
     storeDataInSessionStorage(userDetails, programInfo);
-    // dispatch actions to store all user and program related data in redux store
+
     return dispatch => {
-        // this can also be called when token is being reissued 
-        // so in that case reset resident data and filter if any
-        dispatch({ type: types.SET_RESIDENT_DATA, residentData: null });
-        dispatch({ type: types.SET_EXPIRED_RESIDENT_DATA, expiredResidentData: [] });
-        dispatch({ type: types.SET_NARRATIVE_DATA, narrativeData: [] });
-        dispatch(setResidentFilter({ isAllData: true }))
-        // then set user details and program information
-        dispatch(setUserDetails(userDetails));
-        // dispatch source map  to action 
-        dispatch(setProgramInfo(programInfo));
-        dispatch(loginSuccess());
+        if (program == 'UNDERGRADUATE') {
+            // then set user details and program information
+            dispatch(setUserDetails(userDetails));
+            // dispatch source map  to action 
+            dispatch(setProgramInfo(programInfo));
+            dispatch(loginSuccess(true));
+        }
+        else {
+            // dispatch actions to store all user and program related data in redux store
+            // this can also be called when token is being reissued 
+            // so in that case reset resident data and filter if any
+            dispatch({ type: types.SET_RESIDENT_DATA, residentData: null });
+            dispatch({ type: types.SET_EXPIRED_RESIDENT_DATA, expiredResidentData: [] });
+            dispatch({ type: types.SET_NARRATIVE_DATA, narrativeData: [] });
+            dispatch(setResidentFilter({ isAllData: true }))
+            // then set user details and program information
+            dispatch(setUserDetails(userDetails));
+            // dispatch source map  to action 
+            dispatch(setProgramInfo(programInfo));
+            dispatch(loginSuccess());
+        }
+
     };
+
+
 }
 
 export function setLogoutData() {

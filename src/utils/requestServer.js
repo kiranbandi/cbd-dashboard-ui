@@ -294,6 +294,16 @@ requestServer.setNarratives = function(narratives, username, yearTag) {
 }
 
 
+requestServer.getUGData = function() {
+    return new Promise((resolve, reject) => {
+        axios.get(endPoints.UGdataDump, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            .then((response) => { resolve(response.data.file) })
+            .catch((err) => errorCallback(err, reject));
+    });
+}
+
+
+
 function errorCallback(error, reject) {
     if (error.response && error.response.data) {
         toastr["error"](error.response.data.message, "ERROR");

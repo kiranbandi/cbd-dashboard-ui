@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
-import { NotFound, Home, Dashboard, Tools, Admin } from './pages';
+import { NotFound, Home, Dashboard, Tools, Admin, UGDashboard, UGAdmin } from './pages';
 import { Container } from './components';
 import configureStore from './redux/store/configureStore';
 import { Provider } from 'react-redux';
@@ -25,9 +25,11 @@ class App extends Component {
         <Router history={hashHistory}>
           <Route path='/' component={Container} pawsTicket={pawsTicket}>
             <IndexRoute component={Home} />
-            <Route path='Dashboard' component={Dashboard} onEnter={checkloginStatus} />
+            <Route path='PGME/Dashboard' component={Dashboard} onEnter={checkloginStatus} />
+            <Route path='PGME/Admin' component={Admin} onEnter={checkAdminStatus} />
+            <Route path='UGME/Dashboard' component={UGDashboard} onEnter={checkloginStatus} />
+            <Route path='UGME/Admin' component={UGAdmin} onEnter={checkAdminStatus} />
             <Route path='Tools' component={Tools} />
-            <Route path='Admin' component={Admin} onEnter={checkAdminStatus} />
             <Route path='*' component={NotFound} />
           </Route>
         </Router>
