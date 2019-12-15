@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { showTooltip, setLevelVisibilityStatus } from '../../redux/actions/actions';
 import Tooltip from '../ResidentDashboardGroup/GraphPanelGroup/Tooltip';
+import UGGraphRow from './UGGraphRow';
 
 
 class GraphPanel extends Component {
@@ -13,48 +14,35 @@ class GraphPanel extends Component {
         this.onMouseOver = this.onMouseOver.bind(this);
         this.onMouseOut = this.onMouseOut.bind(this);
         this.onTableExpandClick = this.onTableExpandClick.bind(this);
-        this.onFilterExpandClick = this.onFilterExpandClick.bind(this);
         this.state = {
-            openTableID: '',
-            openFilterID: ''
+            openTableID: ''
         };
     }
-
-
 
     onTableExpandClick(event) {
         const openTableID = event.target.className.split(" ")[3];
         // if already open close it , if not open it !
         if (event.target.className.indexOf('open-table') > -1) {
-            this.setState({ openTableID: '', openFilterID: '' });
+            this.setState({ openTableID: '' });
         }
         else {
-            this.setState({ openTableID, openFilterID: '' });
-        }
-    }
-    onFilterExpandClick(event) {
-        const openFilterID = event.target.className.split(" ")[3];
-        // if already open close it , if not open it !
-        if (event.target.className.indexOf('open-filter') > -1) {
-            this.setState({ openFilterID: '', openTableID: '' });
-        }
-        else {
-            this.setState({ openFilterID, openTableID: '' });
+            this.setState({ openTableID });
         }
     }
 
+
     onMouseOver(event) {
-        let { residentData, actions } = this.props;
+        let { studentRecords, actions } = this.props;
         let pointId = event.target.id.split("-");
-        let data = residentData[pointId[2]][pointId[4]];
+        let data = _.groupBy(studentRecords, (d) => d.epa)[pointId[2]][pointId[4]];
         var pageWidth = document.body.getBoundingClientRect().width;
         actions.showTooltip(true, {
             'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,
             'y': event.pageY - 50,
-            'feedback': data['Feedback'],
-            'name': data['Observer_Name'],
-            'date': data['Date'],
-            'context': data['Situation_Context']
+            'feedback': data['feedback'],
+            'name': data['observer_name'],
+            'date': data['date'],
+            'context': data['patient_type'] + " " + data['admission_type']
         });
 
     }
@@ -68,12 +56,12 @@ class GraphPanel extends Component {
         let { studentRecords, isTooltipVisible, tooltipData,
             smallScreen = false, width, programInfo = {} } = this.props;
 
-        const { openTableID, openFilterID } = this.state, { epaSourceMap } = programInfo;
+        const { openTableID } = this.state, { epaSourceMap } = programInfo;
 
         let widthOfRootGraphPanel = smallScreen ? (width + 50) : width;
         let widthPartition = smallScreen ? (width - 20) : (width / 4);
 
-            
+        const studentData = _.groupBy(studentRecords, (d) => d.epa);
 
         return (
             <div className='graph-panel-root'>
@@ -93,7 +81,16 @@ class GraphPanel extends Component {
                         {/* Actual Row data containing labels and bullet and line charts */}
                         <div className={'inner-graph-row '}>
                             {_.map(epaSourceMap.subRoot, (epaSource, sourceKey) => {
-                                return (<div></div>)
+                                return (<UGGraphRow
+                                    key={'inner-row-' + sourceKey}
+                                    epaSource={sourceKey}
+                                    isTableVisible={sourceKey == openTableID}
+                                    widthPartition={widthPartition}
+                                    epaSourceMap={epaSourceMap}
+                                    studentEPAData={studentData[sourceKey] || []}
+                                    onMouseOver={this.onMouseOver}
+                                    onMouseOut={this.onMouseOut}
+                                    onTableExpandClick={this.onTableExpandClick} />)
                             })}
                         </div>
                     </div>

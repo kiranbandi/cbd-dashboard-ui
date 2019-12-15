@@ -112,13 +112,16 @@ function processStudentData(records) {
     // remove spaces and convert to lowercase for uniformity
     const studentRecords = _.filter(records.slice(1), (d) => d[3].indexOf('@mail.usask.ca') > -1)
         .map((row) => {
+
+            const rating = row[7].toLowerCase().trim();
+
             return {
                 'epa': Number(row[0].slice(3)),
                 'name': (row[1] + " " + row[2]).toLowerCase().trim(),
                 'nsid': row[3].slice(0, 6).toLowerCase().trim(),
                 'observer_name': row[4].toLowerCase().trim(),
                 'date': row[6].slice(0, 10),
-                'rating': row[7].toLowerCase().trim(),
+                'rating': rating == 'low' ? 1 : rating == 'high' ? 3 : 2,
                 'rotation': row[8].toLowerCase().trim(),
                 'feedback': row[9].toLowerCase().trim(),
                 'patient_type': row[10].toLowerCase().trim(),
