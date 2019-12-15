@@ -36,6 +36,7 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
 
         return {
             faculty_name,
+            records,
             epa_count: records.length,
             epa_count_period: recordsInPeriod.length,
             expired_epa_percentage: Math.round(records.filter(dd => dd.isExpired).length / records.length * 100),

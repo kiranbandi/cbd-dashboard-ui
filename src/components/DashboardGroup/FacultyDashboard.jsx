@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { getAllData } from '../../utils/requestServer';
-import { FacultyFilterPanel, FacultyInfoGroup } from '../';
+import { FacultyFilterPanel, FacultyInfoGroup, FacultyRecordTable, FacultyGraphGroup } from '../';
 import Loading from 'react-loading';
 import processFacultyRecords from '../../utils/processFacultyRecords';
 
@@ -138,6 +138,19 @@ export default class FacultyDashboard extends Component {
                             dateFilterActive={dateFilterActive}
                             currentFaculty={currentFaculty}
                             currentRotation={currentRotation} />
+
+                        <FacultyGraphGroup
+                            width={overallWidth}
+                            processedRecords={processedRecords}
+                            dateFilterActive={dateFilterActive}
+                            startDate={startDate}
+                            endDate={endDate}
+                            currentFaculty={currentFaculty} />
+
+                        <FacultyRecordTable
+                            width={overallWidth}
+                            currentFaculty={currentFaculty}
+                            currentFacultyRecords={currentFacultyRecords} />
 
                     </div>}
             </div>);

@@ -18,8 +18,9 @@ export { default as NormativeGraph } from './NormativeDashboardGroup/NormativeGr
 // Components for Faculty Dashboard to compare residents
 export { default as FacultyFilterPanel } from './FacultyDashbordGroup/FacultyFilterPanel';
 export { default as FacultyInfoGroup } from './FacultyDashbordGroup/FacultyInfoGroup';
-// export { default as NormativeFilterPanel } from './FacultyDashbordGroup/NormativeFilterPanel';
-// export { default as NormativeGraph } from './FacultyDashbordGroup/NormativeGraph';
+export { default as FacultyGraphGroup } from './FacultyDashbordGroup/FacultyGraphGroup';
+export { default as FacultyRecordTable } from './FacultyDashbordGroup/FacultyRecordTable';
+
 
 // Components for Resident Dashboard to compare residents
 export { default as GraphPanel } from './ResidentDashboardGroup/GraphPanelGroup/GraphPanel';
