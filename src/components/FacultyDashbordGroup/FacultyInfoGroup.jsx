@@ -122,7 +122,7 @@ export default (props) => {
         width, processedRecords, currentFacultyRecords } = props;
 
     return <div>
-        <div className='m-r-lg' style={{ 'display': 'inline-block', 'width': '725px' }}>
+        <div className='m-r-lg m-l-md' style={{ 'display': 'inline-block', 'width': '725px' }}>
             <FacultyStatCardSet
                 title={"Acquistion Metrics for All Faculties in Rotation - " + currentRotation}
                 processedRecords={processedRecords}
@@ -141,7 +141,7 @@ export default (props) => {
                 defaultPageSize={10}
                 resizable={false}
                 className='-highlight -striped'
-                defaultSorted={[{ id: "faculty_name", desc: true }]} />
+                defaultSorted={[{ id: "faculty_name", desc: false }]} />
         </div>
     </div>
 
