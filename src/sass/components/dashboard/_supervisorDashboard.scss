@@ -57,14 +57,14 @@
     .faculty-graph-box {
         display: inline-block;
         margin: 20px auto;
+        background: #1a1c22;
+        padding: 10px 20px 20px 20px;
+        border-radius: 5px;
     }
     .supervisor-line-chart {
         margin-top: 25px;
         g circle {
             cursor: pointer;
         }
-    }
-    .faculty-graph-box {
-        display: inline-block;
     }
 }

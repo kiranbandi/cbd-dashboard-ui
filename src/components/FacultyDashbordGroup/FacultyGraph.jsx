@@ -22,12 +22,13 @@ export default class FacultyGraph extends Component {
 
         const height = 350, margin = 10, Xoffset = 50;
 
+
         // create the X and Y scales and modify them based on the track type
         const scaleX = d3.scaleLinear().range([Xoffset, width - margin]).domain([0, data.length - 1]);
         let scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, d3.max(data.map(d => Math.max(d[1], d[2])))]);
-        // epa score scale doesnt vary based on max values but it always between 1 and 5
+        // epa score scale doesnt vary based on max values but its always between 0 and 5
         if (trackType == 'entrustment_score') {
-            scaleY = d3.scaleLinear().range([height - margin, margin]).domain([1, 5]);
+            scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, 5]);
         }
 
         // create the line path
@@ -67,15 +68,12 @@ export default class FacultyGraph extends Component {
 
         let dataMax = d3.max(data.map(d => Math.max(d[1], d[2])));
 
-        // create the 5 vertical tick lines 
-        let axisTickLines = _.times(5, (index) => {
-            let verticalPosition = trackType == 'entrustment_score' ? (index + 1) : dataMax * (index / 4);
-            return d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[Xoffset, verticalPosition], [width - margin, verticalPosition]])
-        })
 
         // this fuctional automatically set the tick format based on the track type
         const axisTickTextsFormat = d => {
             switch (trackType) {
+                case 'epa_count':
+                    return Math.round(d);
                 case 'expired_epa_percentage':
                     return d + '%';
                 case 'entrustment_score':
@@ -85,13 +83,38 @@ export default class FacultyGraph extends Component {
             }
         };
 
+
+        // create the 5 vertical tick lines 
+        let axisTickLines = _.times(5, (index) => {
+            let verticalPosition = dataMax * (index / 4);
+            return d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[Xoffset, verticalPosition], [width - margin, verticalPosition]])
+        })
+
         // The numbers of the Y axis ticks are created and format
-        const axisTickTexts = _.map(axisTickLines, (unused, index) => {
-            return <text key={'axis-tick' + index}
-                x={5} y={height - (margin / 2) - (index * ((height - (2 * margin)) / 4))} fontWeight='bold' fill='#a9a1a1'>
-                {axisTickTextsFormat(this.props.trackType == 'entrustment_score' ? (index + 1) : dataMax * (index / 4))}
+        let axisTickTexts = _.map(axisTickLines, (unused, index) => {
+            return <text key={'axis-tick' + index} x={5}
+                y={height - (margin / 2) - (index * ((height - (2 * margin)) / 4))}
+                fontWeight='bold' fill='#a9a1a1'> {axisTickTextsFormat(dataMax * (index / 4))}
             </text>
         })
+
+
+        // for entrustment score we have 6 lines and special axis texts
+        if (trackType == 'entrustment_score') {
+
+            axisTickLines = _.times(6, (index) => {
+                let verticalPosition = index;
+                return d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[Xoffset, verticalPosition], [width - margin, verticalPosition]])
+            })
+
+            axisTickTexts = _.map(axisTickLines, (unused, index) => {
+                return <text key={'axis-tick' + index}
+                    x={5} y={height - (margin / 2) - (index * ((height - (2 * margin)) / 5))} fontWeight='bold' fill='#a9a1a1'>
+                    {axisTickTextsFormat((index))}
+                </text>
+            });
+        }
+
 
         const hoverLines = data.map((d, i) => {
             return <rect
@@ -100,8 +123,7 @@ export default class FacultyGraph extends Component {
                 y={0}
                 height={height}
                 width={15}
-                opacity={0}
-            >
+                opacity={0}>
                 <title>{d[0] + '\nOverall: ' + (this.props.trackType == 'expired_epa_percentage' ? d[1] + '%' : d[1]) + '\nPeriod: ' + (this.props.trackType == 'expired_epa_percentage' ? d[2] + '%' : d[2])}</title>
             </rect>
         });
