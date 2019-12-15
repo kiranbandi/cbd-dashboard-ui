@@ -139,7 +139,7 @@ export default class FacultyGraph extends Component {
             <g>{hoverLines}</g>
             {(currentFacultyIndex != -1) &&
                 <text className='faculty-highlight-label'
-                    x={scaleX(currentFacultyIndex) + 10} y={15} >
+                    x={scaleX(currentFacultyIndex) + (itemSize) + 2} y={17.5} >
                     {data[currentFacultyIndex][1] + (trackType == 'expired_epa_percentage' ? '%' : '')}
                 </text>}
         </svg >);

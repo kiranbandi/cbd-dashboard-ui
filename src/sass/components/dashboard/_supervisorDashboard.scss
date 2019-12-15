@@ -80,6 +80,22 @@
         text.faculty-highlight-label {
             fill: #1ca8dd;
             font-size: 1.35em;
+            opacity: 1;
         }
+    }
+}
+
+.print-button {
+    position: fixed;
+    bottom: 75px;
+    padding: 6px 12px;
+    background: #095c81;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 10;
+    right: 10px;
+    &:hover {
+        border: 2px solid white;
     }
 }

@@ -4,7 +4,7 @@ import { getAllData } from '../../utils/requestServer';
 import { FacultyFilterPanel, FacultyInfoGroup, FacultyRecordTable, FacultyGraphGroup } from '../';
 import Loading from 'react-loading';
 import processFacultyRecords from '../../utils/processFacultyRecords';
-
+import ReactToPrint from 'react-to-print';
 
 export default class FacultyDashboard extends Component {
     constructor(props) {
@@ -23,6 +23,7 @@ export default class FacultyDashboard extends Component {
             endDate: '',
             dateFilterActive: false,
             isLoaderVisible: false,
+            printModeON: false
         };
         this._isMounted = false;
 
@@ -106,7 +107,7 @@ export default class FacultyDashboard extends Component {
 
         const { rotationList = [], facultyList = [], allResidentRecords = [],
             startDate, endDate, dateFilterActive,
-            currentRotation, currentFaculty } = this.state;
+            printModeON, currentRotation, currentFaculty } = this.state;
 
         const processedRecords = processFacultyRecords(allResidentRecords, currentRotation, startDate, endDate, dateFilterActive),
             currentFacultyRecords = _.filter(processedRecords, (d) => d.faculty_name == currentFaculty);
@@ -131,26 +132,40 @@ export default class FacultyDashboard extends Component {
                             onFacultySelect={this.onFacultySelect}
                             onSubmit={this.onSubmit} />
 
-                        <FacultyInfoGroup
-                            width={overallWidth}
-                            processedRecords={processedRecords}
-                            currentFacultyRecords={currentFacultyRecords}
-                            dateFilterActive={dateFilterActive}
-                            currentFaculty={currentFaculty}
-                            currentRotation={currentRotation} />
+                        {/* The contents of this react component will be triggered to the print window */}
+                        <div className={printModeON ? 'printable-content m-a' : ''}
+                            ref={el => (this.printRef = el)}>
+                            <FacultyInfoGroup
+                                printModeON={printModeON}
+                                width={overallWidth}
+                                processedRecords={processedRecords}
+                                currentFacultyRecords={currentFacultyRecords}
+                                dateFilterActive={dateFilterActive}
+                                currentFaculty={currentFaculty}
+                                currentRotation={currentRotation} />
 
-                        <FacultyGraphGroup
-                            width={overallWidth}
-                            processedRecords={processedRecords}
-                            dateFilterActive={dateFilterActive}
-                            startDate={startDate}
-                            endDate={endDate}
-                            currentFaculty={currentFaculty} />
+                            <FacultyGraphGroup
+                                width={overallWidth}
+                                processedRecords={processedRecords}
+                                dateFilterActive={dateFilterActive}
+                                startDate={startDate}
+                                endDate={endDate}
+                                currentFaculty={currentFaculty} />
+                        </div>
 
                         <FacultyRecordTable
                             width={overallWidth}
                             currentFaculty={currentFaculty}
                             currentFacultyRecords={currentFacultyRecords} />
+
+                        <div className='text-xs-left button-box'>
+                            <ReactToPrint
+                                onBeforeGetContent={() => { this.setState({ 'printModeON': true }) }}
+                                onAfterPrint={() => { this.setState({ 'printModeON': false }) }}
+                                trigger={() => <div className="print-button"><span className="icon icon-download"></span></div>}
+                                content={() => this.printRef}
+                            />
+                        </div>
 
                     </div>}
             </div>);
