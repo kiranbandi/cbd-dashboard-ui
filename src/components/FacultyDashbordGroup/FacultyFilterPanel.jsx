@@ -28,7 +28,7 @@ export default class FacultyFilterPanel extends Component {
                 <div className='text-xs-left advanced-filter-box normative-filter-box'>
 
                     <div className='react-select-root'>
-                        <label className='filter-label'>Select Rotation</label>
+                        <label className='filter-label'>Rotation</label>
                         <ReactSelect
                             placeholder='Select Rotation...'
                             isSearchable={true}
@@ -39,7 +39,7 @@ export default class FacultyFilterPanel extends Component {
                     </div>
 
                     <div className='react-select-root'>
-                        <label className='filter-label'>Select Faculty</label>
+                        <label className='filter-label'>Faculty</label>
                         <ReactSelect
                             placeholder='Select Faculty...'
                             isSearchable={true}
