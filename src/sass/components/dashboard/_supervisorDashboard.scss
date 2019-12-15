@@ -5,7 +5,7 @@
     // filter panel related styling
     .faculty-filter {
         .react-select-root {
-            width: 375px;
+            width: 330px;
             display: inline-block;
             .filter-label {
                 &+div {
@@ -65,6 +65,21 @@
         margin-top: 25px;
         g circle {
             cursor: pointer;
+        }
+        rect.hoverable-rectangle {
+            cursor: pointer;
+            &:hover {
+                fill: #1ca8dd;
+                opacity: 0.25;
+            }
+            &.faculty-rectangle {
+                opacity: 0.85;
+                fill: #1ca8dd;
+            }
+        }
+        text.faculty-highlight-label {
+            fill: #1ca8dd;
+            font-size: 1.35em;
         }
     }
 }
