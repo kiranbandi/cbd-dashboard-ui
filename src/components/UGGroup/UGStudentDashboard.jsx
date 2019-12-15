@@ -4,6 +4,7 @@ import { getUGData } from '../../utils/requestServer';
 import Loading from 'react-loading';
 import UGStudentFilterPanel from './UGStudentFilterPanel';
 import UGGraphGroup from './UGGraphGroup';
+import moment from 'moment';
 
 class UGStudentDashboard extends Component {
 
@@ -31,8 +32,8 @@ class UGStudentDashboard extends Component {
     }
 
     onSubmit() {
-        const startDate = document.getElementById('faculty-filter-startDate') && document.getElementById('faculty-filter-startDate').value;
-        const endDate = document.getElementById('faculty-filter-endDate') && document.getElementById('faculty-filter-endDate').value;
+        const startDate = document.getElementById('student-filter-startDate') && document.getElementById('student-filter-startDate').value;
+        const endDate = document.getElementById('student-filter-endDate') && document.getElementById('student-filter-endDate').value;
         this.setState({ startDate, endDate });
     }
 
@@ -65,15 +66,21 @@ class UGStudentDashboard extends Component {
 
 
     render() {
-        const { studentList, currentStudent, dateFilterActive, studentRecords } = this.state;
+        const { studentList, currentStudent, dateFilterActive,
+            startDate, endDate, studentRecords } = this.state;
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let width = document.body.getBoundingClientRect().width - 125;
 
-        let currentStudentRecords = _.filter(studentRecords, (d) => d.name == currentStudent);
+        let currentStudentRecords = _.filter(studentRecords, (d) => d.name == currentStudent)
+            .map((d) => {
+                if (!dateFilterActive) { d.mark = false; }
+                else { d.mark = moment(d.date, 'YYYY-MM-DD').isAfter(moment(startDate, 'MM/DD/YYYY')) && moment(d.date, 'YYYY-MM-DD').isBefore(moment(endDate, 'MM/DD/YYYY')) }
+                return d;
+            });
 
         return (
-            <div className='dashboard-root-resident m-t' >
+            <div className='dashboard-root-resident m-t ug-student-dashboard' >
                 {this.state.isLoaderVisible ?
                     <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
                     <div className='m-t-md'>

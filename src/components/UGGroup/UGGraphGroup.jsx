@@ -6,7 +6,6 @@ import { showTooltip, setLevelVisibilityStatus } from '../../redux/actions/actio
 import Tooltip from '../ResidentDashboardGroup/GraphPanelGroup/Tooltip';
 import UGGraphRow from './UGGraphRow';
 
-
 class GraphPanel extends Component {
 
     constructor(props) {
@@ -69,7 +68,7 @@ class GraphPanel extends Component {
                 {isTooltipVisible && <Tooltip {...tooltipData} />}
 
                 {/* code chunk for displaying titles above the table */}
-                <div className='title-root text-xs-center'>
+                <div className='title-root text-xs-left'>
                     <h4 style={{ width: widthPartition }} className='title-bar'>EPA(Entrustable Professional Activity)</h4>
                     <h4 style={{ width: widthPartition }} className='title-bar'>Observation Count</h4>
                     <h4 style={{ width: smallScreen ? widthPartition : widthPartition * 2 }} className='title-bar'>Score History</h4>
