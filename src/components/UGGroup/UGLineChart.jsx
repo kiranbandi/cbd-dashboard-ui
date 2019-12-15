@@ -9,7 +9,7 @@ export default (props) => {
         elementSize = props.smallScreen ? 3 : 6,
         elementList = _.map(props.data, (d, i) => {
 
-            if (!d.pureData.mark) {
+            if (!d.mark) {
                 return <circle
                     id={'point-inner-' + props.epaSource + '-outer-' + i}
                     onMouseOver={props.onMouseOver}
