@@ -3,6 +3,9 @@
         .react-select-root {
             width: 375px;
             display: inline-block;
+            &>div {
+                text-transform: capitalize;
+            }
             .filter-label {
                 &+div {
                     display: inline-block !important;
@@ -19,5 +22,38 @@
             display: inline-block;
             width: inherit;
             padding: 10px 10px 10px 15px;
+        }
+    }
+    
+    .ug-student-dashboard {
+        .graph-panel-root {
+            .title-root {
+                background: #25282f;
+                padding: 7.5px 7.5px;
+                margin-bottom: 20px;
+            }
+            .inner-graph-row {
+                background: inherit !important;
+            }
+        }
+        .inner-offset-label {
+            font-size: 17.5px !important;
+        }
+        .card-container {
+            .chart-wrapper {
+                position: relative;
+                width: 150px;
+                display: inline-block;
+                .graph-card {
+                    position: absolute;
+                    top: 36px;
+                    left: 20px;
+                    width: 100px;
+                }
+            }
+        }
+        .icon.table-icon {
+            top: 126px !important;
+            left: 20px!important;
         }
     }
