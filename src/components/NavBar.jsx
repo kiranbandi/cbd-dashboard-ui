@@ -39,6 +39,7 @@ class NavBar extends Component {
     render() {
         const { userDetails, onProgramChange } = this.props,
             { accessType = '', program } = userDetails,
+            isUG = (program == 'UNDERGRADUATE'),
             loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent((process.env.NODE_ENV == 'development') ? 'https://localhost:8887/' : 'https://cbme.usask.ca/');
 
         return (
@@ -59,13 +60,13 @@ class NavBar extends Component {
 
                         <ul className='nav navbar-nav'>
                             <li>
-                                <Link to={'/Dashboard'}>
+                                <Link to={isUG ? '/UGME/Dashboard' : '/PGME/Dashboard'}>
                                     <span className="icon icon-line-graph"></span> Dashboard
                                 </Link>
                             </li>
                             {(accessType == 'admin' || accessType == 'super-admin') &&
                                 <li>
-                                    <Link to={'/Admin'}>
+                                    <Link to={isUG ? '/UGME/Admin' : '/PGME/Admin'}>
                                         <span className="icon icon-add-user"></span> Admin
                                 </Link>
                                 </li>

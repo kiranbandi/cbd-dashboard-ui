@@ -23,6 +23,7 @@ var endPoints = {
     setRecords: endPointRoot + "records/store",
     recordsByObserver: endPointRoot + "records/observer",
     dataDump: endPointRoot + "records/data-dump",
+    UGdataDump: endPointRoot + "records/data-dump-ug",
     getUser: endPointRoot + "users"
         // same end point for two use cases with the difference being the API method , get vs delete
         // should I change the name (O_O) ?  

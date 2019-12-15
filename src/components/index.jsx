@@ -40,6 +40,9 @@ export { default as Modal } from './ReusableComponents/Modal';
 export { default as NavBar } from './NavBar';
 export { default as Container } from './Container';
 
+// Components for the Undergraduate Dashboard
+export { default as UGStudentDashboard } from './UGGroup/UGStudentDashboard';
+export { default as UGStub } from './UGGroup/UGStub';
 
 
 
