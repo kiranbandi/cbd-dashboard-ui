@@ -21,8 +21,8 @@ export default class FacultyGraphGroup extends Component {
         // words_per_comment data
         const data_words_per_comment = _.map(processedRecords, (d) => [d.faculty_name, d.words_per_comment, d.words_per_comment_period]);
 
-        return (
-            <div className='text-center'>
+        return (<div>
+            {processedRecords.length > 0 && <div className='text-center'>
                 <div className='faculty-graph-box m-r m-b'>
                     <h3 className="text-left m-b">Total EPAs Observed</h3>
                     <FacultyGraph
@@ -67,7 +67,9 @@ export default class FacultyGraphGroup extends Component {
                         data={data_words_per_comment}
                         width={(width / 2) - 50} />
                 </div>
-            </div>
+            </div>}
+        </div>
+
         );
 
 
