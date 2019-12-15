@@ -16,6 +16,7 @@ export default class FacultyGraphGroup extends Component {
         // expired_epa_percentage data
         const data_expired_epa_percentage = _.map(processedRecords, (d) => [d.faculty_name, d.expired_epa_percentage, d.expired_epa_percentage_period]);
         // entrustment_score data
+        // for entrustment scores since we cannot show EPA scores that havent been graded we remove the expired ones
         const data_entrustment_score = _.map(processedRecords, (d) => [d.faculty_name, d.entrustment_score, d.entrustment_score_period]);
         // words_per_comment data
         const data_words_per_comment = _.map(processedRecords, (d) => [d.faculty_name, d.words_per_comment, d.words_per_comment_period]);
@@ -23,9 +24,7 @@ export default class FacultyGraphGroup extends Component {
         return (
             <div className='text-center'>
                 <div className='faculty-graph-box m-r m-b'>
-                    <div className="hr-divider">
-                        <h4 className="hr-divider-content"> Total EPAs Observed Trend </h4>
-                    </div>
+                    <h3 className="text-left m-b">Total EPAs Observed</h3>
                     <FacultyGraph
                         dateFilterActive={dateFilterActive}
                         startDate={startDate}
@@ -36,9 +35,7 @@ export default class FacultyGraphGroup extends Component {
                         width={(width / 2) - 50} />
                 </div>
                 <div className='faculty-graph-box m-b'>
-                    <div className="hr-divider">
-                        <h4 className="hr-divider-content">EPA Expiry Trend  </h4>
-                    </div>
+                    <h3 className="text-left m-b">EPA Expiry Rate</h3>
                     <FacultyGraph
                         dateFilterActive={dateFilterActive}
                         startDate={startDate}
@@ -49,9 +46,7 @@ export default class FacultyGraphGroup extends Component {
                         width={(width / 2) - 50} />
                 </div>
                 <div className='faculty-graph-box m-r m-b'>
-                    <div className="hr-divider">
-                        <h4 className="hr-divider-content"> Average Entrustment Score Trend </h4>
-                    </div>
+                    <h3 className="text-left m-b">Average Entrustment Score</h3>
                     <FacultyGraph
                         dateFilterActive={dateFilterActive}
                         startDate={startDate}
@@ -62,9 +57,7 @@ export default class FacultyGraphGroup extends Component {
                         width={(width / 2) - 50} />
                 </div>
                 <div className='faculty-graph-box m-b'>
-                    <div className="hr-divider">
-                        <h4 className="hr-divider-content"> Average Words Per Comment Trend </h4>
-                    </div>
+                    <h3 className="text-left m-b">Average Words Per Comment</h3>
                     <FacultyGraph
                         dateFilterActive={dateFilterActive}
                         startDate={startDate}
