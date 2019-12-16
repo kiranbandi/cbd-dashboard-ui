@@ -9,7 +9,8 @@ export default class StudentFilterPanel extends Component {
     render() {
 
         const { studentList, currentStudent, onStudentSelect,
-            onSubmit, onCheckboxChange, dateFilterActive } = this.props;
+            showUncommencedEPA, showUncommencedEPAToggle, onSubmit,
+            onCheckboxChange, dateFilterActive } = this.props;
 
         // Process student names so they match the react select format
         const studentOptions = _.map(studentList, (d) => ({ 'label': d.name, 'value': d.name }));
@@ -29,6 +30,15 @@ export default class StudentFilterPanel extends Component {
                             styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left', 'textTransform': 'capitalize' }) }}
                             onChange={onStudentSelect} />
                     </div>
+
+                    <div className="checkbox custom-control text-center custom-checkbox">
+                        <label className='filter-label'>
+                            {"Show Uncommenced EPAs"}
+                            <input id='filter-toggleUC' type="checkbox" checked={showUncommencedEPA} onChange={showUncommencedEPAToggle} />
+                            <span className="custom-control-indicator"></span>
+                        </label>
+                    </div>
+
 
                     <div className="checkbox custom-control text-center custom-checkbox">
                         <label className='filter-label'>

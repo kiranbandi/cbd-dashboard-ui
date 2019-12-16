@@ -46,8 +46,6 @@ export default class GraphRow extends Component {
 
         const { admission_type = '', patient_type = '' } = this.state;
 
-        console.log(admission_type, patient_type);
-
         let { epaSource, isTableVisible,
             widthPartition, smallScreen = false, epaSourceMap,
             studentEPAData, onMouseOut, onMouseOver,

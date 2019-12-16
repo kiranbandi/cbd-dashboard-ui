@@ -17,12 +17,14 @@ class UGStudentDashboard extends Component {
             startDate: '',
             endDate: '',
             dateFilterActive: false,
+            showUncommencedEPA: false,
             currentStudent: ''
         }
         this._isMounted = false;
 
         this.onSubmit = this.onSubmit.bind(this);
         this.onDateFilterToggle = this.onDateFilterToggle.bind(this);
+        this.showUncommencedEPAToggle = this.showUncommencedEPAToggle.bind(this);
         this.onStudentSelect = this.onStudentSelect.bind(this);
 
     }
@@ -30,6 +32,12 @@ class UGStudentDashboard extends Component {
     onDateFilterToggle() {
         this.setState({ dateFilterActive: !this.state.dateFilterActive });
     }
+
+    showUncommencedEPAToggle() {
+        this.setState({ showUncommencedEPA: !this.state.showUncommencedEPA });
+    }
+
+
 
     onSubmit() {
         const startDate = document.getElementById('student-filter-startDate') && document.getElementById('student-filter-startDate').value;
@@ -67,7 +75,7 @@ class UGStudentDashboard extends Component {
 
     render() {
         const { studentList, currentStudent, dateFilterActive,
-            startDate, endDate, studentRecords } = this.state;
+            showUncommencedEPA, startDate, endDate, studentRecords } = this.state;
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let width = document.body.getBoundingClientRect().width - 125;
@@ -88,11 +96,14 @@ class UGStudentDashboard extends Component {
                             studentList={studentList}
                             currentStudent={currentStudent}
                             dateFilterActive={dateFilterActive}
+                            showUncommencedEPA={showUncommencedEPA}
                             onCheckboxChange={this.onDateFilterToggle}
+                            showUncommencedEPAToggle={this.showUncommencedEPAToggle}
                             onStudentSelect={this.onStudentSelect}
                             onSubmit={this.onSubmit} />
                         {currentStudent != '' &&
                             <UGGraphGroup
+                                showUncommencedEPA={showUncommencedEPA}
                                 width={width}
                                 studentRecords={currentStudentRecords} />}
                     </div>}
@@ -109,7 +120,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, null)(UGStudentDashboard);
-
 
 
 function processStudentData(records) {
@@ -144,3 +154,12 @@ function processStudentData(records) {
     return { studentRecords, studentList };
 
 }
+
+
+
+
+
+
+
+
+
