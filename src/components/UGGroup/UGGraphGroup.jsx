@@ -53,7 +53,8 @@ class GraphPanel extends Component {
     render() {
 
         let { studentRecords, isTooltipVisible, tooltipData,
-            smallScreen = false, width, programInfo = {} } = this.props;
+            smallScreen = false, showUncommencedEPA,
+            width, programInfo = {} } = this.props;
 
         const { openTableID } = this.state, { epaSourceMap } = programInfo;
 
@@ -61,6 +62,15 @@ class GraphPanel extends Component {
         let widthPartition = smallScreen ? (width - 20) : (width / 4);
 
         const studentData = _.groupBy(studentRecords, (d) => d.epa);
+
+
+        let EPAlist = _.map(epaSourceMap.subRoot, (d, index) => {
+            return { 'label': d, 'epaID': index }
+        });
+        // by default filter out EPAs that dont have any entires
+        if (!showUncommencedEPA) {
+            EPAlist = _.filter(EPAlist, (d) => studentData.hasOwnProperty(d.epaID));
+        }
 
         return (
             <div className='graph-panel-root'>
@@ -79,14 +89,14 @@ class GraphPanel extends Component {
                     <div className="inner-sub-root">
                         {/* Actual Row data containing labels and bullet and line charts */}
                         <div className={'inner-graph-row '}>
-                            {_.map(epaSourceMap.subRoot, (epaSource, sourceKey) => {
+                            {_.map(EPAlist, (d) => {
                                 return (<UGGraphRow
-                                    key={'inner-row-' + sourceKey}
-                                    epaSource={sourceKey}
-                                    isTableVisible={sourceKey == openTableID}
+                                    key={'inner-row-' + d.epaID}
+                                    epaSource={d.epaID}
+                                    isTableVisible={d.epaID == openTableID}
                                     widthPartition={widthPartition}
                                     epaSourceMap={epaSourceMap}
-                                    studentEPAData={studentData[sourceKey] || []}
+                                    studentEPAData={studentData[d.epaID] || []}
                                     onMouseOver={this.onMouseOver}
                                     onMouseOut={this.onMouseOut}
                                     onTableExpandClick={this.onTableExpandClick} />)
