@@ -75,7 +75,13 @@ export default class ExportDataTab extends Component {
         try {
             let data = await getAllData();
             if (data) {
-                this.setState({ data });
+                this.setState({
+                    data: _.map(data, (d) => {
+                        // example convert 3.10 to 310 and 3.1 to 301
+                        d.epa = d.epa.split(".")[0] + (+d.epa.split(".")[1] < 10 ? '0' : '') + (d.epa.split(".")[1]);
+                        return d;
+                    })
+                });
             }
         } catch (e) {
             console.log("error in fetching all records");
