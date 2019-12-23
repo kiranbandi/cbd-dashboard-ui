@@ -151,12 +151,13 @@ export default class FacultyDashboard extends Component {
                                 startDate={startDate}
                                 endDate={endDate}
                                 currentFaculty={currentFaculty} />
-                        </div>
 
-                        <FacultyRecordTable
-                            width={overallWidth}
-                            currentFaculty={currentFaculty}
-                            currentFacultyRecords={currentFacultyRecords} />
+                            <FacultyRecordTable
+                                printModeON={printModeON}
+                                width={overallWidth}
+                                currentFaculty={currentFaculty}
+                                currentFacultyRecords={currentFacultyRecords} />
+                        </div>
 
                         <div className='text-xs-left button-box'>
                             <ReactToPrint
