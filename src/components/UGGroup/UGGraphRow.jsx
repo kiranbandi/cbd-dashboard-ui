@@ -46,7 +46,7 @@ export default class GraphRow extends Component {
 
         const { admission_type = '', patient_type = '' } = this.state;
 
-        let { epaSource, isTableVisible,
+        let { epaSource, isTableVisible, currentRotation,
             widthPartition, smallScreen = false, epaSourceMap,
             studentEPAData, onMouseOut, onMouseOver,
             onTableExpandClick } = this.props;
@@ -116,7 +116,8 @@ export default class GraphRow extends Component {
                 highlight,
                 patient_type: d.admission_type,
                 patient_type: d.patient_type,
-                mark: d.mark
+                mark: d.mark,
+                rotationMark: d.rotationMark
             };
 
         });
@@ -160,6 +161,7 @@ export default class GraphRow extends Component {
                 </div>
                 <div style={{ width: smallScreen ? widthPartition : widthPartition * 2 }} className='inner-cell score-cell'>
                     <UGLineChart
+                        currentRotation={currentRotation}
                         trackTrailPositions={trackTrailPositions}
                         width={width}
                         data={scoreData}

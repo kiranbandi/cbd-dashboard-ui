@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { UGStudentDashboard, UGStub,UGDownloadDashboard } from '../components';
+import {
+    UGStudentDashboard, UGStub,
+    UGDownloadDashboard, UGProgramDashboard
+} from '../../components';
 
 class DashboardRoot extends Component {
 
@@ -29,10 +32,6 @@ class DashboardRoot extends Component {
         if (userType == 'super-admin' || userType == 'admin' || userType == "director") {
             boardsLevel = '1';
         }
-        else if (userType == 'reviewer' || userType == "supervisor") {
-            boardsLevel = '2';
-        }
-
 
         return (
             <div className='dashboard-page-root' >
@@ -42,9 +41,6 @@ class DashboardRoot extends Component {
                             <ul className="nav nav-pills hr-divider-content hr-divider-nav">
                                 <li className={activeDashboard == 'student' ? 'active' : ''}>
                                     <a id='student-tab' onClick={this.onTabClick} >STUDENT METRICS</a>
-                                </li>
-                                <li className={activeDashboard == 'normative' ? 'active' : ''}>
-                                    <a id='normative-tab' onClick={this.onTabClick} >NORMATIVE ASSESSMENT</a>
                                 </li>
                                 <li className={activeDashboard == 'supervisor' ? 'active' : ''}>
                                     <a id='supervisor-tab' onClick={this.onTabClick}>FACULTY DEVELOPMENT</a>
@@ -60,25 +56,8 @@ class DashboardRoot extends Component {
                         <div className='control-inner-container'>
                             {(activeDashboard == 'student') && <UGStudentDashboard />}
                             {(activeDashboard == 'supervisor') && <UGStub programInfo={programInfo} />}
-                            {(activeDashboard == 'program') && <UGStub programInfo={programInfo} />}
+                            {(activeDashboard == 'program') && <UGProgramDashboard programInfo={programInfo} />}
                             {(activeDashboard == 'table') && <UGDownloadDashboard />}
-                            {(activeDashboard == 'normative') && <UGStub />}
-                        </div>
-                    </div>}
-                {boardsLevel == '2' &&
-                    <div>
-                        <div className="hr-divider nav-pill-container-dashboard">
-                            <ul className="nav nav-pills hr-divider-content hr-divider-nav">
-                                <li className={activeDashboard == 'student' ? 'active' : ''}>
-                                    <a id='student-tab' onClick={this.onTabClick} >STUDENT METRICS</a>
-                                </li>
-                                <li className={activeDashboard == 'normative' ? 'active' : ''}>
-                                    <a id='normative-tab' onClick={this.onTabClick} >NORMATIVE ASSESSMENT</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className='control-inner-container'>
-                            {(activeDashboard == 'student') && <UGStudentDashboard />}
                             {(activeDashboard == 'normative') && <UGStub />}
                         </div>
                     </div>}

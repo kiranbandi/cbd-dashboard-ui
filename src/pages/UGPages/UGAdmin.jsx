@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { UGCreateUser, UGModifyUser, UGAddData } from '../components';
+import { UGCreateUser, UGModifyUser, UGAddData } from '../../components';
 
 class Admin extends Component {
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getUGData } from '../../../utils/requestServer';
+import { getResidentList, getAllData } from '../../../utils/requestServer';
 import Loading from 'react-loading';
 import UGStudentFilterPanel from '../UGStudentFilterPanel';
 import UGGraphGroup from '../UGGraphGroup';
@@ -18,7 +18,8 @@ class UGStudentDashboard extends Component {
             endDate: '',
             dateFilterActive: false,
             showUncommencedEPA: false,
-            currentStudent: ''
+            currentStudent: '',
+            currentRotation: '',
         }
         this._isMounted = false;
 
@@ -26,7 +27,11 @@ class UGStudentDashboard extends Component {
         this.onDateFilterToggle = this.onDateFilterToggle.bind(this);
         this.showUncommencedEPAToggle = this.showUncommencedEPAToggle.bind(this);
         this.onStudentSelect = this.onStudentSelect.bind(this);
+        this.onRotationSelect = this.onRotationSelect.bind(this);
+    }
 
+    onRotationSelect(option) {
+        this.setState({ currentRotation: option.value });
     }
 
     onDateFilterToggle() {
@@ -52,17 +57,42 @@ class UGStudentDashboard extends Component {
 
     componentDidMount() {
 
+        let { username, accessType } = this.props;
+
         this._isMounted = true;
         // toggle loader before fetching data
         this.setState({ isLoaderVisible: true });
-        // get data for all students
-        getUGData()
+        getAllData()
             .then((data) => {
-                const { studentRecords, studentList } = processStudentData(data);
-                this.setState({ studentList, studentRecords });
+                let studentRecords = _.map(data, (d) => ({
+                    'epa': d.epa,
+                    'name': d.resident_name,
+                    'nsid': d.username,
+                    'observer_name': d.observer_name,
+                    'date': d.observation_date,
+                    'rating': d.rating,
+                    'rotation': d.rotationTag,
+                    'feedback': d.feedback,
+                    'patient_type': d.situation_context,
+                    'admission_type': d.professionalism_safety
+                }));
+
+                if (accessType == 'resident') {
+                    studentRecords = _.filter(studentRecords, (d) => d.nsid == username);
+                }
+
+                const studentList = _.map(_.groupBy(studentRecords, (d) => d.name), (records, name) => {
+                    return { name, records };
+                }).sort((a, b) => a.name.localeCompare(b.name));
+
+                // filter out records that dont have rotation and phase tag on them or are expired
+                this._isMounted && this.setState({
+                    studentList,
+                    studentRecords
+                });
             })
             // toggle loader again once the request completes
-            .catch(() => { console.log("error in fetching UG data"); })
+            .catch(() => { console.log("error in fetching records"); })
             .finally(() => {
                 this._isMounted && this.setState({ isLoaderVisible: false });
             });
@@ -74,8 +104,10 @@ class UGStudentDashboard extends Component {
 
 
     render() {
-        const { studentList, currentStudent, dateFilterActive,
+        const { studentList, currentStudent, dateFilterActive, currentRotation,
             showUncommencedEPA, startDate, endDate, studentRecords } = this.state;
+
+        const { rotationList } = this.props.programInfo;
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let width = document.body.getBoundingClientRect().width - 125;
@@ -87,6 +119,12 @@ class UGStudentDashboard extends Component {
                 return d;
             });
 
+        currentStudentRecords = _.map(currentStudentRecords, (d) => {
+            d.rotationMark = (d.rotation == currentRotation);
+            return d;
+        })
+
+
         return (
             <div className='dashboard-root-resident m-t ug-student-dashboard' >
                 {this.state.isLoaderVisible ?
@@ -95,14 +133,18 @@ class UGStudentDashboard extends Component {
                         <UGStudentFilterPanel
                             studentList={studentList}
                             currentStudent={currentStudent}
+                            rotationList={rotationList}
+                            currentRotation={currentRotation}
                             dateFilterActive={dateFilterActive}
                             showUncommencedEPA={showUncommencedEPA}
                             onCheckboxChange={this.onDateFilterToggle}
                             showUncommencedEPAToggle={this.showUncommencedEPAToggle}
                             onStudentSelect={this.onStudentSelect}
+                            onRotationSelect={this.onRotationSelect}
                             onSubmit={this.onSubmit} />
                         {currentStudent != '' &&
                             <UGGraphGroup
+                                currentRotation={currentRotation}
                                 showUncommencedEPA={showUncommencedEPA}
                                 width={width}
                                 studentRecords={currentStudentRecords} />}
@@ -115,42 +157,14 @@ class UGStudentDashboard extends Component {
 function mapStateToProps(state) {
     return {
         //  can be null occasionally so better to check and set it
-        programInfo: state.oracle.programInfo ? state.oracle.programInfo : {}
+        programInfo: state.oracle.programInfo ? state.oracle.programInfo : {},
+        userType: state.oracle.userDetails.accessType,
+        username: state.oracle.userDetails.username
     };
 }
 
 export default connect(mapStateToProps, null)(UGStudentDashboard);
 
-
-function processStudentData(records) {
-
-    // remove the 1t head row ,as it contains column names, 
-    // from the records list and then start processing it
-    // remove spaces and convert to lowercase for uniformity
-    const studentRecords = _.filter(records.slice(1), (d) => d[3].indexOf('@mail.usask.ca') > -1)
-        .map((row) => {
-
-            const rating = row[7].toLowerCase().trim();
-
-            return {
-                'epa': Number(row[0].slice(3)),
-                'name': (row[1] + " " + row[2]).toLowerCase().trim(),
-                'nsid': row[3].slice(0, 6).toLowerCase().trim(),
-                'observer_name': row[4].toLowerCase().trim(),
-                'date': row[6].slice(0, 10),
-                'rating': rating == 'low' ? 1 : rating == 'high' ? 3 : 2,
-                'rotation': row[8].toLowerCase().trim(),
-                'feedback': row[9].toLowerCase().trim(),
-                'patient_type': row[10].toLowerCase().trim(),
-                'admission_type': row[11].toLowerCase().trim()
-            };
-        });
-
-    const studentList = _.map(_.groupBy(studentRecords, (d) => d.name), (records, name) => {
-        return { name, records };
-    }).sort((a, b) => a.name.localeCompare(b.name));
-    return { studentRecords, studentList };
-}
 
 
 
