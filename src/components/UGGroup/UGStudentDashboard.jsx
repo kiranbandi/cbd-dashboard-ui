@@ -149,10 +149,7 @@ function processStudentData(records) {
     const studentList = _.map(_.groupBy(studentRecords, (d) => d.name), (records, name) => {
         return { name, records };
     }).sort((a, b) => a.name.localeCompare(b.name));
-
-
     return { studentRecords, studentList };
-
 }
 
 
