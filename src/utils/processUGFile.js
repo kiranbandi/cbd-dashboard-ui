@@ -25,7 +25,7 @@ export default function(rawData) {
                         'observation_date': row[6].slice(0, 10),
                         'observer_type': '',
                         'rating': rating == 'low' ? 1 : rating == 'high' ? 3 : 2,
-                        'rotationTag': row[8].toLowerCase().trim(),
+                        'rotationTag': setRotation(row[8].toLowerCase().trim()),
                         'feedback': row[9].toLowerCase().trim(),
                         // patient type is rewritten under situation_context
                         'situation_context': row[10].toLowerCase().trim(),
@@ -49,7 +49,49 @@ export default function(rawData) {
 
 
 
+function setRotation(rotation) {
 
+    let tag = '';
+
+    switch (rotation) {
+        case "family medicine":
+            tag = 'FAMILY';
+            break;
+        case "electives":
+            tag = 'ELECTIVE';
+            break;
+        case "obstetrics and gynecology":
+            tag = 'OBS/GYN';
+            break;
+        case "selectives":
+            tag = "SELECTIVE";
+            break;
+        case "psychiatry":
+            tag = 'PSYCH';
+            break;
+        case "pediatrics":
+            tag = 'PED';
+            break;
+        case "surgery":
+            tag = 'GSX';
+            break;
+        case "internal medicine":
+            tag = 'IM/SURG';
+            break;
+        case "emergency medicine":
+            tag = 'EM/ANES';
+            break;
+        case "anaesthesia":
+            tag = 'EM/ANES';
+            break;
+        default:
+            tag = 'EM/ANES';
+    }
+
+    return tag;
+
+
+}
 
 
 

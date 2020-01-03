@@ -5,16 +5,29 @@ import TrackTrails from '../ResidentDashboardGroup/GraphPanelGroup/TrackTrails';
 export default (props) => {
 
     // get d3 line function that returns path
-    const d3Line = line().x((d) => d.x).y((d) => d.y),
-        elementSize = props.smallScreen ? 3 : 6,
+    const d3Line = line().x((d) => d.x).y((d) => d.y);
+
+    let elementSize = props.smallScreen ? 3 : 6,
+        currentRotation = props.currentRotation,
         elementList = _.map(props.data, (d, i) => {
+
+            let currentElementSize = elementSize;
+            if (currentRotation != 'all' && currentRotation != '') {
+                if (d.rotationMark) {
+                    currentElementSize += elementSize * .40;
+                }
+                else {
+                    currentElementSize -= elementSize * .50;
+                }
+            }
+
 
             if (!d.mark) {
                 return <circle
                     id={'point-inner-' + props.epaSource + '-outer-' + i}
                     onMouseOver={props.onMouseOver}
                     onMouseOut={props.onMouseOut}
-                    r={elementSize}
+                    r={currentElementSize}
                     className='score-point'
                     key={'score-point-' + i}
                     fill={d.highlight ? '#ff6a6a' : '#252830'}
@@ -24,13 +37,13 @@ export default (props) => {
 
             return <polygon
                 id={'point-inner-' + props.epaSource + '-outer-' + i}
-                points={(d.x - elementSize) + "," + d.y + " " + d.x + "," + (d.y + elementSize) + " " + (d.x + elementSize) + "," + d.y + " " + (d.x) + "," + (d.y - elementSize) + " " + (d.x - elementSize) + "," + (d.y)}
+                points={(d.x - currentElementSize) + "," + d.y + " " + d.x + "," + (d.y + currentElementSize) + " " + (d.x + currentElementSize) + "," + d.y + " " + (d.x) + "," + (d.y - currentElementSize) + " " + (d.x - currentElementSize) + "," + (d.y)}
                 className='score-point'
                 onMouseOver={props.onMouseOver}
                 onMouseOut={props.onMouseOut}
                 stroke={d.highlight ? '#ff6a6a' : '#252830'}
                 fill={'white'}
-                strokeWidth={elementSize / 2}
+                strokeWidth={currentElementSize / 2}
                 key={'score-point-' + i} />
 
         });

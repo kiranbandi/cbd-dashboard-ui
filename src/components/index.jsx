@@ -43,7 +43,11 @@ export { default as Container } from './Container';
 // Components for the Undergraduate Dashboard
 export { default as UGStudentDashboard } from './UGGroup/DashboardGroup/UGStudentDashboard';
 export { default as UGDownloadDashboard } from './UGGroup/DashboardGroup/UGDownloadDashboard';
+export { default as UGProgramDashboard } from './UGGroup/DashboardGroup/UGProgramDashboard';
+
 export { default as UGStub } from './UGGroup/UGStub';
+
+// Components for the Undergraduate Admin Pages
 export { default as UGCreateUser } from './UGGroup/UGAdminGroup/UGCreateUser';
 export { default as UGModifyUser } from './UGGroup/UGAdminGroup/UGModifyUser';
 export { default as UGAddData } from './UGGroup/UGAdminGroup/UGAddData';

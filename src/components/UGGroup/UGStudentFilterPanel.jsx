@@ -9,6 +9,7 @@ export default class StudentFilterPanel extends Component {
     render() {
 
         const { studentList, currentStudent, onStudentSelect,
+            rotationList, currentRotation, onRotationSelect,
             showUncommencedEPA, showUncommencedEPAToggle, onSubmit,
             onCheckboxChange, dateFilterActive } = this.props;
 
@@ -16,12 +17,19 @@ export default class StudentFilterPanel extends Component {
         const studentOptions = _.map(studentList, (d) => ({ 'label': d.name, 'value': d.name }));
         const currentStudentValue = _.find(studentOptions, (d) => d.label == currentStudent) || null;
 
+        // Process rotation names so they match the react select format
+        let rotationOptions = _.map(rotationList, (d) => ({ 'label': d, 'value': d }));
+        rotationOptions.unshift({ 'label': 'All', 'value': 'all' });
+        const currenRotationValue = _.find(rotationOptions, (d) => d.label == currentRotation) || null;
+
+
+
+
         return (
             <div className='filter-panel faculty-filter'>
                 <div className='text-xs-left advanced-filter-box normative-filter-box'>
 
-                    <div className='react-select-root'>
-                        <label className='filter-label'>Student Name</label>
+                    <div style={{ width: 200, 'display': 'inline-block', 'marginRight': '10px' }}>
                         <ReactSelect
                             placeholder='Select Student...'
                             isSearchable={true}
@@ -29,6 +37,16 @@ export default class StudentFilterPanel extends Component {
                             options={studentOptions}
                             styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left', 'textTransform': 'capitalize' }) }}
                             onChange={onStudentSelect} />
+                    </div>
+
+                    <div style={{ width: 200, 'display': 'inline-block', 'marginRight': '10px' }}>
+                        <ReactSelect
+                            placeholder='Select Rotation...'
+                            isSearchable={true}
+                            value={currenRotationValue}
+                            options={rotationOptions}
+                            styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left', 'textTransform': 'capitalize' }) }}
+                            onChange={onRotationSelect} />
                     </div>
 
                     <div className="checkbox custom-control text-center custom-checkbox">

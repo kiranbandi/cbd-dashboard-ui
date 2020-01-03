@@ -52,7 +52,7 @@ class GraphPanel extends Component {
 
     render() {
 
-        let { studentRecords, isTooltipVisible, tooltipData,
+        let { studentRecords, isTooltipVisible, tooltipData, currentRotation,
             smallScreen = false, showUncommencedEPA,
             width, programInfo = {} } = this.props;
 
@@ -91,8 +91,9 @@ class GraphPanel extends Component {
                         <div className={'inner-graph-row '}>
                             {_.map(EPAlist, (d) => {
                                 return (<UGGraphRow
-                                    key={'inner-row-' + d.epaID}
+                                    key={'inner-row-' + currentRotation + "-" + d.epaID}
                                     epaSource={d.epaID}
+                                    currentRotation={currentRotation}
                                     isTableVisible={d.epaID == openTableID}
                                     widthPartition={widthPartition}
                                     epaSourceMap={epaSourceMap}
