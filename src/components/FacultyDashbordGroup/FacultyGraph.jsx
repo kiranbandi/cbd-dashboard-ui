@@ -41,7 +41,7 @@ export default class FacultyGraph extends Component {
                 x={scaleX(i)}
                 y={scaleY(d[1])}
                 height={height - margin - scaleY(d[1])}
-                fill={'#43b98e'}
+                fill={d[0] == currentFaculty ? 'red' : '#43b98e'}
                 width={itemSize - (0.25 * itemSize)}
                 stroke={'transparent'}
                 key={d[0]}
@@ -57,7 +57,7 @@ export default class FacultyGraph extends Component {
                     x={scaleX(i)}
                     y={scaleY(d[2])}
                     height={height - margin - scaleY(d[2])}
-                    fill={'rgba(151,187,205,1)'}
+                    fill={d[0] == currentFaculty ? 'blue' : 'rgba(151,187,205,1)'}
                     width={itemSize - (0.25 * itemSize)}
                     stroke={'transparent'}
                     key={d[0]}
@@ -115,7 +115,7 @@ export default class FacultyGraph extends Component {
 
         const hoverLines = data.map((d, i) => {
             return <rect
-                className={'hoverable-rectangle ' + (d[0] == currentFaculty ? 'faculty-rectangle' : '')}
+                className={'hoverable-rectangle '}
                 x={scaleX(i)}
                 y={margin - (d[0] == currentFaculty ? 10 : 0)}
                 height={height - (2 * margin) + (d[0] == currentFaculty ? 10 : 0)}
