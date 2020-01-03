@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { UGStudentDashboard, UGStub } from '../components';
+import { UGStudentDashboard, UGStub,UGDownloadDashboard } from '../components';
 
 class DashboardRoot extends Component {
 
@@ -61,7 +61,7 @@ class DashboardRoot extends Component {
                             {(activeDashboard == 'student') && <UGStudentDashboard />}
                             {(activeDashboard == 'supervisor') && <UGStub programInfo={programInfo} />}
                             {(activeDashboard == 'program') && <UGStub programInfo={programInfo} />}
-                            {(activeDashboard == 'table') && <UGStub />}
+                            {(activeDashboard == 'table') && <UGDownloadDashboard />}
                             {(activeDashboard == 'normative') && <UGStub />}
                         </div>
                     </div>}

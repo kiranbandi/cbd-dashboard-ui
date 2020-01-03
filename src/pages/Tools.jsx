@@ -108,7 +108,7 @@ class Tools extends Component {
     downloadFile(event) {
         // process the file and download it as a csv
         event.preventDefault();
-        downloadCSV();
+        downloadCSV(['Date', 'Resident Name', 'EPA', 'Observer Name', 'Observer Type', 'Rating', 'Type', 'Situation Context', 'Feedback', 'Professionalism Safety', 'EPA Expired']);
     }
 
     visualizeRecords(event) {

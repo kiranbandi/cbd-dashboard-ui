@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { getAllData } from '../../utils/requestServer';
-import downloadCSV from '../../utils/downloadCSV';
+import { getAllData } from '../../../utils/requestServer';
+import downloadCSV from '../../../utils/downloadCSV';
 import Loading from 'react-loading';
 import ReactTable from 'react-table';
 import moment from 'moment';
-import { customFilter } from '../../utils/genericUtility';
+import { customFilter } from '../../../utils/genericUtility';
 
 const columns = [{
     Header: 'Resident Name',
@@ -58,12 +58,10 @@ export default class ExportDataTab extends Component {
 
         window.emCBD = {
             'rcmData': _.map(data, (_r) => {
-                // example convert 3.10 to 310 and 3.1 to 301
-                const moddedEPA = _r.epa.split(".")[0] + (+_r.epa.split(".")[1] < 10 ? '0' : '') + (_r.epa.split(".")[1]);
-                return [_r.observation_date, _r.resident_name, moddedEPA, _r.observer_name, _r.observer_type, _r.rating, _r.type, _r.situation_context, _r.feedback, _r.professionalism_safety, _r.isExpired || false];
+                return [_r.observation_date, _r.resident_name, _r.epa, _r.observer_name, _r.rating, _r.situation_context, _r.feedback, _r.professionalism_safety];
             })
         };
-        downloadCSV(['Date', 'Resident Name', 'EPA', 'Observer Name', 'Observer Type', 'Rating', 'Type', 'Situation Context', 'Feedback', 'Professionalism Safety', 'EPA Expired']);
+        downloadCSV(['Date', 'Resident Name', 'EPA', 'Observer Name', 'Rating', 'Patient Type', 'Feedback', 'Admission Type']);
     }
 
     async fetchData(event) {
@@ -74,15 +72,7 @@ export default class ExportDataTab extends Component {
         // get list of all residents
         try {
             let data = await getAllData();
-            if (data) {
-                this.setState({
-                    data: _.map(data, (d) => {
-                        // example convert 3.10 to 310 and 3.1 to 301
-                        d.epa = d.epa.split(".")[0] + (+d.epa.split(".")[1] < 10 ? '0' : '') + (d.epa.split(".")[1]);
-                        return d;
-                    })
-                });
-            }
+            if (data) { this.setState({ data }) }
         } catch (e) {
             console.log("error in fetching all records");
         } finally {
