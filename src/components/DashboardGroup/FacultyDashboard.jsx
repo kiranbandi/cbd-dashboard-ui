@@ -133,7 +133,7 @@ export default class FacultyDashboard extends Component {
                             onSubmit={this.onSubmit} />
 
                         {/* The contents of this react component will be triggered to the print window */}
-                        <div className={printModeON ? 'printable-content m-a' : ''}
+                        <div className={printModeON ? 'printable-content m-a' : ''} style={printModeON ? { width: '500px' } : undefined}
                             ref={el => (this.printRef = el)}>
                             <FacultyInfoGroup
                                 printModeON={printModeON}
@@ -154,7 +154,7 @@ export default class FacultyDashboard extends Component {
 
                             <FacultyRecordTable
                                 printModeON={printModeON}
-                                width={overallWidth}
+                                width={printModeON ? 900 : overallWidth}
                                 currentFaculty={currentFaculty}
                                 currentFacultyRecords={currentFacultyRecords} />
                         </div>
