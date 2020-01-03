@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export default function() {
+export default function(columnNames = ['Date', 'Resident Name', 'EPA', 'Observer Name', 'Observer Type', 'Rating', 'Type', 'Situation Context', 'Feedback', 'Professionalism Safety', 'EPA Expired']) {
     var { rcmData = [] } = window.emCBD;
     // Escaping strings in quotes to evade fuckery because of
     // commas within the strings that can cause the csv file 
@@ -18,7 +18,7 @@ export default function() {
     });
 
     // Add file headers to top of the file
-    convertedData.unshift(['Date', 'Resident Name', 'EPA', 'Observer Name', 'Observer Type', 'Rating', 'Type', 'Situation Context', 'Feedback', 'Professionalism Safety', 'EPA Expired']);
+    convertedData.unshift(columnNames);
     var csvContent = "data:text/csv;charset=utf-8," + convertedData.join("\n"),
         encodedUri = encodeURI(csvContent),
         link = document.createElement("a"),

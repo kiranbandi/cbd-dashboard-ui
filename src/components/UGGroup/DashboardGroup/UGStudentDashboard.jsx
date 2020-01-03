@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getUGData } from '../../utils/requestServer';
+import { getUGData } from '../../../utils/requestServer';
 import Loading from 'react-loading';
-import UGStudentFilterPanel from './UGStudentFilterPanel';
-import UGGraphGroup from './UGGraphGroup';
+import UGStudentFilterPanel from '../UGStudentFilterPanel';
+import UGGraphGroup from '../UGGraphGroup';
 import moment from 'moment';
 
 class UGStudentDashboard extends Component {
