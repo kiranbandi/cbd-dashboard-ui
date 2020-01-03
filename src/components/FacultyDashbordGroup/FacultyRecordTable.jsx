@@ -51,12 +51,23 @@ export default (props) => {
         innerRecords = currentFacultyRecords[0].records || [];
     }
 
+    const getPageSizeOptions = () => {
+        if (innerRecords.length < 5) {
+            return [innerRecords.length];
+        } else {
+            const optionList = [5];
+            for (let i = 5; i < innerRecords.length; optionList.push(i = (i * 2 > innerRecords.length ? innerRecords.length : i * 2)));
+            return optionList;
+        }
+    }
+
     return <div className='table-box' style={{ width: width }}>
         {currentFacultyRecords.length > 0 &&
             <ReactTable
                 data={innerRecords}
                 columns={columns}
                 defaultPageSize={10}
+                pageSizeOptions={getPageSizeOptions()}
                 resizable={false}
                 filterable={true}
                 className='-highlight -striped'
