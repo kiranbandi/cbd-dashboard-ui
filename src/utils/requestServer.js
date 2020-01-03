@@ -217,6 +217,27 @@ requestServer.getResidentData = function(username) {
     });
 }
 
+
+requestServer.setUGRecords = function(records, username, yearTag) {
+
+    var recordsList = records.map((record) => {
+        return {
+            ...record,
+            year_tag: '',
+            type: '',
+            isExpired: false,
+            phaseTag: ''
+        }
+    })
+
+    return new Promise((resolve, reject) => {
+        axios.post(endPoints.setRecords, { username: 'all', recordsList, yearTag: '' }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            .then((response) => { resolve(response.data) })
+            .catch((err) => errorCallback(err, reject));
+    });
+}
+
+
 requestServer.setRecords = function(records, username, yearTag) {
 
     var recordsList = records.map((record) => {

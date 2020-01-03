@@ -1,5 +1,5 @@
 /*global $ */
-export default (fileID) => {
+export default (fileID, nonArrayType = false) => {
 
     const file = document.getElementById(fileID).files[0];
 
@@ -12,7 +12,12 @@ export default (fileID) => {
             reject();
         }
         if (file) {
-            reader.readAsArrayBuffer(file);
+            if (nonArrayType) {
+                reader.readAsText(file);
+            } else {
+                reader.readAsArrayBuffer(file);
+            }
+
         } else {
             reject();
         }

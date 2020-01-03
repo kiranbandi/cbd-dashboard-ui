@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { UGCreateUser, UGModifyUser } from '../components';
+import { UGCreateUser, UGModifyUser, UGAddData } from '../components';
 
 class Admin extends Component {
 
@@ -31,11 +31,15 @@ class Admin extends Component {
                         <li className={activeTab == 'modify-tab' ? 'active' : ''}>
                             <a id='modify-tab' onClick={this.onTabClick}>Modify User</a>
                         </li>
+                        <li className={activeTab == 'addData-tab' ? 'active' : ''}>
+                            <a id='addData-tab' onClick={this.onTabClick}>Upload Data</a>
+                        </li>
                     </ul>
                 </div>
                 <div className='admin-inner-container'>
                     {(activeTab == 'create-tab') && <UGCreateUser programInfo={programInfo} />}
                     {(activeTab == 'modify-tab') && <UGModifyUser programInfo={programInfo} />}
+                    {(activeTab == 'addData-tab') && <UGAddData programInfo={programInfo} />}
                 </div>
             </div >
         );
