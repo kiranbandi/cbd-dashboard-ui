@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import ReactSelect from 'react-select';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 const defaultDateValue = moment().format('MM/DD/YYYY');
 
@@ -13,6 +15,7 @@ export default class FacultyFilterPanel extends Component {
 
         const { rotationList, facultyList, currentRotation,
             currentFaculty, onRotationSelect, onFacultySelect,
+            sliderValue = 5, onSliderChange,
             onSubmit, onCheckboxChange, dateFilterActive, printRef } = this.props;
 
         // Process rotations so they match the react select format
@@ -84,7 +87,15 @@ export default class FacultyFilterPanel extends Component {
                             GET RECORDS
                         </button>
                     </div>
+
+                    <div className='slider-container'>
+                        <label className='filter-label'>Filter Faculties with Atleast</label>
+                        <h2>{sliderValue}</h2>
+                        <label className='filter-label'>Records</label>
+                        <Slider min={0} max={25} step={1} value={sliderValue} onChange={onSliderChange} />
+                    </div>
                 </div>
+
             </div>)
     }
 

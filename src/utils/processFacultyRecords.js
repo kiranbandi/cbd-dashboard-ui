@@ -1,7 +1,7 @@
 import moment from 'moment';
 import * as d3 from 'd3';
 
-export default function(allResidentRecords = [], currentRotation, startDate, endDate, dateFilterActive) {
+export default function(allResidentRecords = [], currentRotation, startDate, endDate, dateFilterActive, minimumRequired) {
 
     // if the current rotation is ALL or not selected then use all resident records as in,
     // if not filter out all records that were marked in that rotation
@@ -18,6 +18,19 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
 
     // now group the records by the faculty name
     let recordsGroupedByFaculty = _.groupBy(allResidentRecords, (d) => d.observer_name);
+
+    // remove faculties that dont meet the required minimum
+    _.map(recordsGroupedByFaculty, (records, key) => {
+
+        if (records.length < minimumRequired) {
+            delete recordsGroupedByFaculty[key];
+        }
+
+    });
+
+
+
+
     // similary group the records in the date period by faculty name
     let recordsGroupedByFacultyInPeriod = _.groupBy(allResidentRecordsInPeriod, (d) => d.observer_name);
 
