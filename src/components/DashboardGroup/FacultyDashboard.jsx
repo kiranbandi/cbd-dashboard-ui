@@ -13,6 +13,7 @@ export default class FacultyDashboard extends Component {
             // selected values of the two dropdowns in the filterpanel
             currentRotation: 'ALL',
             currentFaculty: 'ALL',
+            sliderValue: 5,
             // lists containing the values in the dropdown
             rotationList: [],
             facultyList: [],
@@ -26,11 +27,15 @@ export default class FacultyDashboard extends Component {
             printModeON: false
         };
         this._isMounted = false;
-
+        this.onSliderChange = this.onSliderChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onDateFilterToggle = this.onDateFilterToggle.bind(this);
         this.onRotationSelect = this.onRotationSelect.bind(this);
         this.onFacultySelect = this.onFacultySelect.bind(this);
+    }
+
+    onSliderChange(sliderValue) {
+        this.setState({ sliderValue });
     }
 
     onDateFilterToggle() {
@@ -106,10 +111,10 @@ export default class FacultyDashboard extends Component {
     render() {
 
         const { rotationList = [], facultyList = [], allResidentRecords = [],
-            startDate, endDate, dateFilterActive,
+            startDate, endDate, dateFilterActive, sliderValue,
             printModeON, currentRotation, currentFaculty } = this.state;
 
-        const processedRecords = processFacultyRecords(allResidentRecords, currentRotation, startDate, endDate, dateFilterActive),
+        const processedRecords = processFacultyRecords(allResidentRecords, currentRotation, startDate, endDate, dateFilterActive, sliderValue),
             currentFacultyRecords = _.filter(processedRecords, (d) => d.faculty_name == currentFaculty);
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let overallWidth = document.body.getBoundingClientRect().width - 125;
@@ -117,6 +122,7 @@ export default class FacultyDashboard extends Component {
 
         return (
             <div className='supervisor-dashboard-container'>
+
 
                 {this.state.isLoaderVisible ?
                     <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
@@ -127,9 +133,11 @@ export default class FacultyDashboard extends Component {
                             currentRotation={currentRotation}
                             currentFaculty={currentFaculty}
                             dateFilterActive={dateFilterActive}
+                            sliderValue={sliderValue}
                             onCheckboxChange={this.onDateFilterToggle}
                             onRotationSelect={this.onRotationSelect}
                             onFacultySelect={this.onFacultySelect}
+                            onSliderChange={this.onSliderChange}
                             onSubmit={this.onSubmit} />
 
                         {/* The contents of this react component will be triggered to the print window */}

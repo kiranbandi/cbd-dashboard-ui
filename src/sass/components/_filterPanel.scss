@@ -118,3 +118,16 @@
         }
     }
 }
+
+.slider-container {
+    margin: 10px;
+    .filter-label {
+        font-size: 18px;
+    }
+    h2 {
+        display: inline-block;
+        font-size: 17px;
+        font-weight: bold;
+        margin: 0px 5px 5px -5px;
+    }
+}
