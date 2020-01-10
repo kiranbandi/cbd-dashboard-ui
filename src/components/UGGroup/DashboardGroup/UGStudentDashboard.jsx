@@ -4,6 +4,7 @@ import { getResidentList, getAllData } from '../../../utils/requestServer';
 import Loading from 'react-loading';
 import UGStudentFilterPanel from '../UGStudentFilterPanel';
 import UGGraphGroup from '../UGGraphGroup';
+import UGNormativePanel from './UGNormativePanel';
 import moment from 'moment';
 
 class UGStudentDashboard extends Component {
@@ -13,6 +14,7 @@ class UGStudentDashboard extends Component {
         this.state = {
             isLoaderVisible: false,
             studentRecords: [],
+            rawDump: [],
             studentList: [],
             startDate: '',
             endDate: '',
@@ -77,6 +79,9 @@ class UGStudentDashboard extends Component {
                     'admission_type': d.professionalism_safety
                 }));
 
+                // store raw dump before filtering for normative dashboard
+                let rawDump = _.clone(studentRecords);
+
                 if (accessType == 'resident') {
                     studentRecords = _.filter(studentRecords, (d) => d.nsid == username);
                 }
@@ -88,7 +93,8 @@ class UGStudentDashboard extends Component {
                 // filter out records that dont have rotation and phase tag on them or are expired
                 this._isMounted && this.setState({
                     studentList,
-                    studentRecords
+                    studentRecords,
+                    rawDump
                 });
             })
             // toggle loader again once the request completes
@@ -105,9 +111,10 @@ class UGStudentDashboard extends Component {
 
     render() {
         const { studentList, currentStudent, dateFilterActive, currentRotation,
-            showUncommencedEPA, startDate, endDate, studentRecords } = this.state;
+            showUncommencedEPA, startDate, endDate, studentRecords, rawDump } = this.state;
 
-        const { rotationList } = this.props.programInfo;
+        const { accessType = 'resident', programInfo } = this.props,
+            { rotationList } = programInfo;
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let width = document.body.getBoundingClientRect().width - 125;
@@ -124,12 +131,12 @@ class UGStudentDashboard extends Component {
             return d;
         })
 
-
         return (
             <div className='dashboard-root-resident m-t ug-student-dashboard' >
                 {this.state.isLoaderVisible ?
                     <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
                     <div className='m-t-md'>
+
                         <UGStudentFilterPanel
                             studentList={studentList}
                             currentStudent={currentStudent}
@@ -142,6 +149,11 @@ class UGStudentDashboard extends Component {
                             onStudentSelect={this.onStudentSelect}
                             onRotationSelect={this.onRotationSelect}
                             onSubmit={this.onSubmit} />
+                        {accessType != 'resident' &&
+                            <UGNormativePanel
+                                currentStudent={currentStudent}
+                                width={width}
+                                rawDump={rawDump} />}
                         {currentStudent != '' &&
                             <UGGraphGroup
                                 currentRotation={currentRotation}
@@ -158,7 +170,7 @@ function mapStateToProps(state) {
     return {
         //  can be null occasionally so better to check and set it
         programInfo: state.oracle.programInfo ? state.oracle.programInfo : {},
-        userType: state.oracle.userDetails.accessType,
+        accessType: state.oracle.userDetails.accessType,
         username: state.oracle.userDetails.username
     };
 }
