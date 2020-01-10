@@ -128,20 +128,12 @@ export default class FacultyGraph extends Component {
             </rect>
         });
 
-
-        const currentFacultyIndex = _.findIndex(data, (d) => d[0] == currentFaculty);
-
         return (<svg className='supervisor-line-chart' width={width} height={height} >
             <path d={axisTickLines} fill="none" stroke="#564d4d4d" strokeWidth="2px"></path>
             <g>{bars}</g>
             <g>{barsInDateRange}</g>
             <g>{axisTickTexts}</g>
             <g>{hoverLines}</g>
-            {(currentFacultyIndex != -1) &&
-                <text className='faculty-highlight-label'
-                    x={scaleX(currentFacultyIndex) + (itemSize) + 2} y={17.5} >
-                    {data[currentFacultyIndex][1] + (trackType == 'expired_epa_percentage' ? '%' : '')}
-                </text>}
         </svg >);
     }
 }

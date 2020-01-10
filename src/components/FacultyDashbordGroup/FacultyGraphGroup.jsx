@@ -25,10 +25,14 @@ export default class FacultyGraphGroup extends Component {
         // words_per_comment data
         const data_words_per_comment = _.map(processedRecords, (d) => [d.faculty_name, d.words_per_comment, d.words_per_comment_period]);
 
+
+        const currentFacultyData = _.find(processedRecords, (d) => d.faculty_name == currentFaculty) || false;
+
+
         return (<div>
             {processedRecords.length > 0 && <div className='text-center'>
                 <div className='faculty-graph-box m-r m-b'>
-                    <h3 className="text-left m-b">Total EPAs Observed</h3>
+                    <h3 className="text-left m-b">Total EPAs Observed <b className='title-append'>{!!currentFacultyData ? currentFacultyData.epa_count : ''}</b></h3>
                     <FacultyGraph
                         dateFilterActive={dateFilterActive}
                         startDate={startDate}
@@ -39,7 +43,7 @@ export default class FacultyGraphGroup extends Component {
                         width={(width / 2) - 50} />
                 </div>
                 <div className='faculty-graph-box m-b'>
-                    <h3 className="text-left m-b">EPA Expiry Rate</h3>
+                    <h3 className="text-left m-b">EPA Expiry Rate <b className='title-append'>{!!currentFacultyData ? currentFacultyData.expired_epa_percentage : ''}</b></h3>
                     <FacultyGraph
                         dateFilterActive={dateFilterActive}
                         startDate={startDate}
@@ -50,7 +54,7 @@ export default class FacultyGraphGroup extends Component {
                         width={(width / 2) - 50} />
                 </div>
                 <div className='faculty-graph-box m-r m-b'>
-                    <h3 className="text-left m-b">Average Entrustment Score</h3>
+                    <h3 className="text-left m-b">Average Entrustment Score <b className='title-append'>{!!currentFacultyData ? currentFacultyData.entrustment_score : ''}</b></h3>
                     <FacultyGraph
                         dateFilterActive={dateFilterActive}
                         startDate={startDate}
@@ -61,7 +65,7 @@ export default class FacultyGraphGroup extends Component {
                         width={(width / 2) - 50} />
                 </div>
                 <div className='faculty-graph-box m-b'>
-                    <h3 className="text-left m-b">Average Words Per Comment</h3>
+                    <h3 className="text-left m-b">Average Words Per Comment <b className='title-append'>{!!currentFacultyData ? currentFacultyData.words_per_comment : ''}</b></h3>
                     <FacultyGraph
                         dateFilterActive={dateFilterActive}
                         startDate={startDate}
