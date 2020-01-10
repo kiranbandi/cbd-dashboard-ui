@@ -89,9 +89,9 @@ export default class FacultyFilterPanel extends Component {
                     </div>
 
                     <div className='slider-container'>
-                        <label className='filter-label'>Filter Faculties with Atleast</label>
+                        <label className='filter-label'>Filter out Faculty with &lt; </label>
                         <h2>{sliderValue}</h2>
-                        <label className='filter-label'>Records</label>
+                        <label className='filter-label'>records</label>
                         <Slider min={0} max={25} step={1} value={sliderValue} onChange={onSliderChange} />
                     </div>
                 </div>
