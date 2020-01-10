@@ -9,8 +9,8 @@ export default (props) => {
         EPACountPeriod = !showNA ? _.sumBy(processedRecords, (d) => d.epa_count_period) : 'N/A',
         averageEPApercentage = !showNA ? Math.round(_.meanBy(processedRecords, (d) => d.expired_epa_percentage) || 0) : 'N/A',
         averageEPApercentagePeriod = !showNA ? Math.round(_.meanBy(processedRecords, (d) => d.expired_epa_percentage_period) || 0) : 'N/A',
-        averageEPAScore = !showNA ? Math.round(_.meanBy(processedRecords, (d) => d.entrustment_score) || 0) : 'N/A',
-        averageEPAScorePeriod = !showNA ? Math.round(_.meanBy(processedRecords, (d) => d.entrustment_score_period) || 0) : 'N/A',
+        averageEPAScore = !showNA ? Math.round((_.meanBy(processedRecords, (d) => d.entrustment_score) || 0) * 100) / 100 : 'N/A',
+        averageEPAScorePeriod = !showNA ? Math.round((_.meanBy(processedRecords, (d) => d.entrustment_score_period) || 0) * 100) / 100 : 'N/A',
         averageWords = !showNA ? Math.round(_.meanBy(processedRecords, (d) => d.words_per_comment) || 0) : 'N/A',
         averageWordsPeriod = !showNA ? Math.round(_.meanBy(processedRecords, (d) => d.words_per_comment_period) || 0) : 'N/A';
 
