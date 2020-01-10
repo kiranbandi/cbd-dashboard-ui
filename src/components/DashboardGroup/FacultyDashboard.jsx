@@ -120,6 +120,20 @@ export default class FacultyDashboard extends Component {
         let overallWidth = document.body.getBoundingClientRect().width - 125;
 
 
+        // quick fix to legacy code 
+        // if a faculty name doesnt appear in the processed records remove it also 
+        // from the original faculty list
+        let facultiesWithEnoughRecords = _.map(processedRecords, (d) => d.faculty_name);
+        let filteredFacultyList = _.filter(facultyList, (d) => {
+            if (d.label == 'ALL') {
+                return true;
+            }
+            else {
+                return facultiesWithEnoughRecords.indexOf(d.label) > -1;
+            }
+        });
+
+
         return (
             <div className='supervisor-dashboard-container'>
 
@@ -129,7 +143,7 @@ export default class FacultyDashboard extends Component {
                     <div>
                         <FacultyFilterPanel
                             rotationList={rotationList}
-                            facultyList={facultyList}
+                            facultyList={filteredFacultyList}
                             currentRotation={currentRotation}
                             currentFaculty={currentFaculty}
                             dateFilterActive={dateFilterActive}
