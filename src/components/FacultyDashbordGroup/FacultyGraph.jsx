@@ -41,7 +41,7 @@ export default class FacultyGraph extends Component {
                 x={scaleX(i)}
                 y={scaleY(d[1])}
                 height={height - margin - scaleY(d[1])}
-                fill={d[0] == currentFaculty ? 'red' : '#43b98e'}
+                fill={d[0] == currentFaculty ? '#e64759' : '#43b98e'}
                 width={itemSize - (0.25 * itemSize)}
                 stroke={'transparent'}
                 key={d[0]}
@@ -117,8 +117,8 @@ export default class FacultyGraph extends Component {
             return <rect
                 className={'hoverable-rectangle '}
                 x={scaleX(i)}
-                y={margin - (d[0] == currentFaculty ? 10 : 0)}
-                height={height - (2 * margin) + (d[0] == currentFaculty ? 10 : 0)}
+                y={margin}
+                height={height - (2 * margin)}
                 fill={'black'}
                 width={itemSize - (0.25 * itemSize)}
                 stroke={'transparent'}
