@@ -8,11 +8,7 @@ export default class FacultyGraphGroup extends Component {
 
     render() {
 
-        let { width, processedRecords, dateFilterActive, startDate, endDate, currentFaculty } = this.props;
-
-        if (dateFilterActive && startDate && endDate) {
-            processedRecords = processedRecords.filter(d => d.epa_count_period >= 5);
-        }
+        const { width, processedRecords, dateFilterActive, startDate, endDate, currentFaculty } = this.props;
 
         // format the data into the required format for a graph component
         // epa_count data
