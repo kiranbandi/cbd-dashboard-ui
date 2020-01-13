@@ -57,11 +57,7 @@ export default class ExportDataTab extends Component {
         var data = this._reactTable.getResolvedState().sortedData.map(d => d._original);
 
         window.emCBD = {
-            'rcmData': _.map(data, (_r) => {
-                // example convert 3.10 to 310 and 3.1 to 301
-                const moddedEPA = _r.epa.split(".")[0] + (+_r.epa.split(".")[1] < 10 ? '0' : '') + (_r.epa.split(".")[1]);
-                return [_r.observation_date, _r.resident_name, moddedEPA, _r.observer_name, _r.observer_type, _r.rating, _r.type, _r.situation_context, _r.feedback, _r.professionalism_safety, _r.isExpired || false];
-            })
+            'rcmData': _.map(data, (_r) => [_r.observation_date, _r.resident_name, _r.epa, _r.observer_name, _r.observer_type, _r.rating, _r.type, _r.situation_context, _r.feedback, _r.professionalism_safety, _r.isExpired || false])
         };
         downloadCSV(['Date', 'Resident Name', 'EPA', 'Observer Name', 'Observer Type', 'Rating', 'Type', 'Situation Context', 'Feedback', 'Professionalism Safety', 'EPA Expired']);
     }
