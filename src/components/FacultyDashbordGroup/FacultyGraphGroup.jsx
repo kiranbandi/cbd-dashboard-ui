@@ -39,7 +39,7 @@ export default class FacultyGraphGroup extends Component {
                         width={(width / 2) - 50} />
                 </div>
                 <div className='faculty-graph-box m-b'>
-                    <h3 className="text-left m-b">EPA Expiry Rate <b className='title-append'>{!!currentFacultyData ? currentFacultyData.expired_epa_percentage : ''}</b></h3>
+                    <h3 className="text-left m-b">EPA Expiry Rate <b className='title-append'>{!!currentFacultyData ? currentFacultyData.expired_epa_percentage + '%': ''}</b> </h3>
                     <FacultyGraph
                         dateFilterActive={dateFilterActive}
                         startDate={startDate}
