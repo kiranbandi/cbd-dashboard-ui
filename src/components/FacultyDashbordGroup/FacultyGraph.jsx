@@ -27,7 +27,7 @@ export default class FacultyGraph extends Component {
 
 
         // create the X and Y scales and modify them based on the track type
-        const scaleX = d3.scaleLinear().range([Xoffset, width - margin - Xoffset]).domain([0, data.length - 1]);
+        const scaleX = d3.scaleLinear().range([Xoffset, width - margin]).domain([0, data.length - 1]);
         let scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, d3.max(data.map(d => Math.max(d[1], d[2])))]);
         // epa score scale doesnt vary based on max values but its always between 0 and 5
         if (trackType == 'entrustment_score') {
@@ -57,7 +57,7 @@ export default class FacultyGraph extends Component {
                     x={scaleX(i)}
                     y={scaleY(d[2])}
                     height={height - margin - scaleY(d[2])}
-                    fill={d[0] == currentFaculty ? 'blue' : 'rgba(151,187,205,1)'}
+                    fill={d[0] == currentFaculty ? '#b75bb8b5' : 'rgba(151,187,205,1)'}
                     width={itemSize - (0.25 * itemSize)}
                     stroke={'transparent'}
                     key={d[0]}
