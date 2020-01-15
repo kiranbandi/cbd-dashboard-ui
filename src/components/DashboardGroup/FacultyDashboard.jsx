@@ -5,6 +5,7 @@ import { FacultyFilterPanel, FacultyInfoGroup, FacultyRecordTable, FacultyGraphG
 import Loading from 'react-loading';
 import processFacultyRecords from '../../utils/processFacultyRecords';
 import ReactToPrint from 'react-to-print';
+import jsPDF from 'jspdf';
 
 export default class FacultyDashboard extends Component {
     constructor(props) {
@@ -167,6 +168,7 @@ export default class FacultyDashboard extends Component {
                                 currentRotation={currentRotation} />
 
                             <FacultyGraphGroup
+                                printModeON={printModeON}
                                 width={overallWidth}
                                 processedRecords={processedRecords}
                                 dateFilterActive={dateFilterActive}
@@ -188,6 +190,16 @@ export default class FacultyDashboard extends Component {
                                 trigger={() => <div className="print-button"><span className="icon icon-download"></span></div>}
                                 content={() => this.printRef}
                             />
+                            <button onClick={() => {
+                                this.setState({ 'printModeON': true })
+                                setTimeout(() => {
+                                    var doc = new jsPDF();
+                                    doc.fromHTML(this.printRef, 5, 0, {}, () => doc.save());
+                                    setTimeout(() => {
+                                        this.setState({ 'printModeON': false })
+                                    }, 0);
+                                }, 0);
+                            }}>print</button>
                         </div>
 
                     </div>}
