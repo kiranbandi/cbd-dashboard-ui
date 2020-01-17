@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
+import canvg from 'canvg';
+import ReactDOMServer from 'react-dom/server';
 
 export default class FacultyGraph extends Component {
     constructor(props) {
@@ -15,7 +17,7 @@ export default class FacultyGraph extends Component {
         // 3) entrustment_score 
         // 4) words_per_comment
 
-        let { data, width, trackType, currentFaculty,
+        let { printModeON, data, width, trackType, currentFaculty,
             dateFilterActive, startDate, endDate } = this.props;
 
         // sort the data list based on the overall value
@@ -128,12 +130,20 @@ export default class FacultyGraph extends Component {
             </rect>
         });
 
-        return (<svg className='supervisor-line-chart' width={width} height={height} >
+        const svg = (<svg className='supervisor-line-chart' width={width} height={height} >
             <path d={axisTickLines} fill="none" stroke="#564d4d4d" strokeWidth="2px"></path>
             <g>{bars}</g>
             <g>{barsInDateRange}</g>
             <g>{axisTickTexts}</g>
             <g>{hoverLines}</g>
         </svg >);
+
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        var v = canvg.fromString(ctx, ReactDOMServer.renderToStaticMarkup(svg));
+        v.start();
+        const src = canvas.toDataURL('image/png');
+
+        return printModeON ? (<img style={{ width: 200 }} src={src}></img>) : svg;
     }
 }
