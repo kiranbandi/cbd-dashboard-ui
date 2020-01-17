@@ -8,8 +8,7 @@ export default function(rawData) {
 
             // parse the csv file and remove empty entries
             let records = _.filter(CSVToArray(rawData, ','), (d) => d.length == '12');
-
-            // remove the 1t head row ,as it contains column names, 
+            // remove the 1st head row ,as it contains column names, 
             // from the records list and then start processing it
             // remove spaces and convert to lowercase for uniformity
             const studentRecords = _.filter(records.slice(1), (d) => d[3].indexOf('@mail.usask.ca') > -1)
@@ -34,9 +33,9 @@ export default function(rawData) {
                     };
                 });
 
-            const studentList = _.map(_.groupBy(studentRecords, (d) => d.resident_name), (records, name) => {
-                return { name, records };
-            }).sort((a, b) => a.name.localeCompare(b.name));
+            const studentList = _.map(_.groupBy(studentRecords, (d) => d.username), (records, username) => {
+                return { username, name: records[0].resident_name, records };
+            }).sort((a, b) => a.username.localeCompare(b.username));
 
             resolve({ studentRecords, studentList });
 
