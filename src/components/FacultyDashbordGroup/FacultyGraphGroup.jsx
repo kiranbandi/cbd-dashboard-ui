@@ -8,7 +8,7 @@ export default class FacultyGraphGroup extends Component {
 
     render() {
 
-        const { width, processedRecords, dateFilterActive, startDate, endDate, currentFaculty } = this.props;
+        const { printModeON, width, processedRecords, dateFilterActive, startDate, endDate, currentFaculty } = this.props;
 
         // format the data into the required format for a graph component
         // epa_count data
@@ -28,8 +28,9 @@ export default class FacultyGraphGroup extends Component {
         return (<div>
             {processedRecords.length > 0 && <div className='text-center'>
                 <div className='faculty-graph-box m-r m-b'>
-                    <h3 className="text-left m-b">Total EPAs Observed <b className='title-append'>{!!currentFacultyData ? currentFacultyData.epa_count : ''}</b></h3>
+                    <h3 style={{ color: printModeON ? 'black' : '' }} className="text-left m-b">Total EPAs Observed <b className='title-append'>{!!currentFacultyData ? currentFacultyData.epa_count : ''}</b></h3>
                     <FacultyGraph
+                        printModeON={printModeON}
                         dateFilterActive={dateFilterActive}
                         startDate={startDate}
                         endDate={endDate}
@@ -41,6 +42,7 @@ export default class FacultyGraphGroup extends Component {
                 <div className='faculty-graph-box m-b'>
                     <h3 className="text-left m-b">EPA Expiry Rate <b className='title-append'>{!!currentFacultyData ? currentFacultyData.expired_epa_percentage + '%': ''}</b> </h3>
                     <FacultyGraph
+                        printModeON={printModeON}
                         dateFilterActive={dateFilterActive}
                         startDate={startDate}
                         endDate={endDate}
@@ -50,8 +52,9 @@ export default class FacultyGraphGroup extends Component {
                         width={(width / 2) - 50} />
                 </div>
                 <div className='faculty-graph-box m-r m-b'>
-                    <h3 className="text-left m-b">Average Entrustment Score <b className='title-append'>{!!currentFacultyData ? currentFacultyData.entrustment_score : ''}</b></h3>
+                    <h3 style={{ color: printModeON ? 'black' : '' }} className="text-left m-b">Average Entrustment Score <b className='title-append'>{!!currentFacultyData ? currentFacultyData.entrustment_score : ''}</b></h3>
                     <FacultyGraph
+                        printModeON={printModeON}
                         dateFilterActive={dateFilterActive}
                         startDate={startDate}
                         endDate={endDate}
@@ -61,8 +64,9 @@ export default class FacultyGraphGroup extends Component {
                         width={(width / 2) - 50} />
                 </div>
                 <div className='faculty-graph-box m-b'>
-                    <h3 className="text-left m-b">Average Words Per Comment <b className='title-append'>{!!currentFacultyData ? currentFacultyData.words_per_comment : ''}</b></h3>
+                    <h3 style={{ color: printModeON ? 'black' : '' }} className="text-left m-b">Average Words Per Comment <b className='title-append'>{!!currentFacultyData ? currentFacultyData.words_per_comment : ''}</b></h3>
                     <FacultyGraph
+                        printModeON={printModeON}
                         dateFilterActive={dateFilterActive}
                         startDate={startDate}
                         endDate={endDate}
