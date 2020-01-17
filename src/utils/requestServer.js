@@ -218,12 +218,12 @@ requestServer.getResidentData = function(username) {
 }
 
 
-requestServer.setUGRecords = function(records, username, yearTag) {
+requestServer.setUGRecords = function(records, yearTag = '') {
 
     var recordsList = records.map((record) => {
         return {
             ...record,
-            year_tag: '',
+            year_tag: yearTag,
             type: '',
             isExpired: false,
             phaseTag: ''
@@ -231,7 +231,7 @@ requestServer.setUGRecords = function(records, username, yearTag) {
     })
 
     return new Promise((resolve, reject) => {
-        axios.post(endPoints.setRecords, { username: 'all', recordsList, yearTag: '' }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+        axios.post(endPoints.setRecords, { username: 'all', recordsList, yearTag }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
             .then((response) => { resolve(response.data) })
             .catch((err) => errorCallback(err, reject));
     });
