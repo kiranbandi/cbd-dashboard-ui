@@ -155,7 +155,7 @@ export default class FacultyDashboard extends Component {
                             onSubmit={this.onSubmit} />
 
                         {/* The contents of this react component will be triggered to the print window */}
-                        <div className={printModeON ? 'printable-content m-a' : ''} style={printModeON ? { width: '500px' } : undefined}
+                        <div className={printModeON ? 'printable-content m-a' : ''}
                             ref={el => (this.printRef = el)}>
                             <FacultyInfoGroup
                                 printModeON={printModeON}
@@ -176,7 +176,7 @@ export default class FacultyDashboard extends Component {
 
                             <FacultyRecordTable
                                 printModeON={printModeON}
-                                width={printModeON ? 900 : overallWidth}
+                                width={printModeON ? 750 : overallWidth}
                                 currentFaculty={currentFaculty}
                                 currentFacultyRecords={currentFacultyRecords} />
                         </div>
@@ -184,7 +184,7 @@ export default class FacultyDashboard extends Component {
                         <div className='text-xs-left button-box'>
                             <ReactToPrint
                                 onBeforeGetContent={() => { this.setState({ 'printModeON': true }) }}
-                                onAfterPrint={() => { this.setState({ 'printModeON': false }) }}
+                                onAfterPrint={() => { setTimeout(() => this.setState({ 'printModeON': false }), 0) }}
                                 trigger={() => <div className="print-button"><span className="icon icon-download"></span></div>}
                                 content={() => this.printRef}
                             />
