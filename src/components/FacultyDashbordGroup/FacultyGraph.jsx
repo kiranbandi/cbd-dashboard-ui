@@ -17,7 +17,8 @@ export default class FacultyGraph extends Component {
         // 3) entrustment_score 
         // 4) words_per_comment
 
-        let { printModeON, data, width, trackType, currentFaculty,
+        let { printModeON, data, width, trackType,
+            currentFaculty, title, titleValue,
             dateFilterActive, startDate, endDate } = this.props;
 
         // sort the data list based on the overall value
@@ -130,20 +131,16 @@ export default class FacultyGraph extends Component {
             </rect>
         });
 
-        const svg = (<svg className='supervisor-line-chart' width={width} height={height} >
-            <path d={axisTickLines} fill="none" stroke="#564d4d4d" strokeWidth="2px"></path>
-            <g>{bars}</g>
-            <g>{barsInDateRange}</g>
-            <g>{axisTickTexts}</g>
-            <g>{hoverLines}</g>
-        </svg >);
+        return (<div className='faculty-graph-box m-r m-b'>
+            <h3 className="text-left m-b">{title}<b className='title-append'>{titleValue}</b></h3>
+            <svg className='supervisor-line-chart' width={width} height={height} >
+                <path d={axisTickLines} fill="none" stroke="#564d4d4d" strokeWidth="2px"></path>
+                <g>{bars}</g>
+                <g>{barsInDateRange}</g>
+                <g>{axisTickTexts}</g>
+                <g>{hoverLines}</g>
+            </svg >
+        </div>);
 
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        var v = canvg.fromString(ctx, ReactDOMServer.renderToStaticMarkup(svg));
-        v.start();
-        const src = canvas.toDataURL('image/png');
-
-        return printModeON ? (<img style={{ width: 200 }} src={src}></img>) : svg;
     }
 }

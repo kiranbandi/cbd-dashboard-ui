@@ -27,54 +27,50 @@ export default class FacultyGraphGroup extends Component {
 
         return (<div>
             {processedRecords.length > 0 && <div className='text-center'>
-                <div className='faculty-graph-box m-r m-b'>
-                    <h3 style={{ color: printModeON ? 'black' : '' }} className="text-left m-b">Total EPAs Observed <b className='title-append'>{!!currentFacultyData ? currentFacultyData.epa_count : ''}</b></h3>
-                    <FacultyGraph
-                        printModeON={printModeON}
-                        dateFilterActive={dateFilterActive}
-                        startDate={startDate}
-                        endDate={endDate}
-                        currentFaculty={currentFaculty}
-                        trackType={'epa_count'}
-                        data={data_epa_count}
-                        width={(width / 2) - 50} />
-                </div>
-                <div className='faculty-graph-box m-b'>
-                    <h3 className="text-left m-b">EPA Expiry Rate <b className='title-append'>{!!currentFacultyData ? currentFacultyData.expired_epa_percentage + '%': ''}</b> </h3>
-                    <FacultyGraph
-                        printModeON={printModeON}
-                        dateFilterActive={dateFilterActive}
-                        startDate={startDate}
-                        endDate={endDate}
-                        currentFaculty={currentFaculty}
-                        trackType={'expired_epa_percentage'}
-                        data={data_expired_epa_percentage}
-                        width={(width / 2) - 50} />
-                </div>
-                <div className='faculty-graph-box m-r m-b'>
-                    <h3 style={{ color: printModeON ? 'black' : '' }} className="text-left m-b">Average Entrustment Score <b className='title-append'>{!!currentFacultyData ? currentFacultyData.entrustment_score : ''}</b></h3>
-                    <FacultyGraph
-                        printModeON={printModeON}
-                        dateFilterActive={dateFilterActive}
-                        startDate={startDate}
-                        endDate={endDate}
-                        currentFaculty={currentFaculty}
-                        trackType={'entrustment_score'}
-                        data={data_entrustment_score}
-                        width={(width / 2) - 50} />
-                </div>
-                <div className='faculty-graph-box m-b'>
-                    <h3 style={{ color: printModeON ? 'black' : '' }} className="text-left m-b">Average Words Per Comment <b className='title-append'>{!!currentFacultyData ? currentFacultyData.words_per_comment : ''}</b></h3>
-                    <FacultyGraph
-                        printModeON={printModeON}
-                        dateFilterActive={dateFilterActive}
-                        startDate={startDate}
-                        endDate={endDate}
-                        currentFaculty={currentFaculty}
-                        trackType={'words_per_comment'}
-                        data={data_words_per_comment}
-                        width={(width / 2) - 50} />
-                </div>
+                <FacultyGraph
+                    title={'Total EPAs Observed '}
+                    titleValue={!!currentFacultyData ? currentFacultyData.epa_count : ''}
+                    printModeON={printModeON}
+                    dateFilterActive={dateFilterActive}
+                    startDate={startDate}
+                    endDate={endDate}
+                    currentFaculty={currentFaculty}
+                    trackType={'epa_count'}
+                    data={data_epa_count}
+                    width={(width / 2) - 50} />
+                <FacultyGraph
+                    title={'EPA Expiry Rate '}
+                    titleValue={!!currentFacultyData ? currentFacultyData.expired_epa_percentage + '%' : ''}
+                    printModeON={printModeON}
+                    dateFilterActive={dateFilterActive}
+                    startDate={startDate}
+                    endDate={endDate}
+                    currentFaculty={currentFaculty}
+                    trackType={'expired_epa_percentage'}
+                    data={data_expired_epa_percentage}
+                    width={(width / 2) - 50} />
+                <FacultyGraph
+                    title={'Average Entrustment Score '}
+                    titleValue={!!currentFacultyData ? currentFacultyData.entrustment_score : ''}
+                    printModeON={printModeON}
+                    dateFilterActive={dateFilterActive}
+                    startDate={startDate}
+                    endDate={endDate}
+                    currentFaculty={currentFaculty}
+                    trackType={'entrustment_score'}
+                    data={data_entrustment_score}
+                    width={(width / 2) - 50} />
+                <FacultyGraph
+                    title={'Average Words Per Comment '}
+                    titleValue={!!currentFacultyData ? currentFacultyData.words_per_comment : ''}
+                    printModeON={printModeON}
+                    dateFilterActive={dateFilterActive}
+                    startDate={startDate}
+                    endDate={endDate}
+                    currentFaculty={currentFaculty}
+                    trackType={'words_per_comment'}
+                    data={data_words_per_comment}
+                    width={(width / 2) - 50} />
             </div>}
         </div>
 

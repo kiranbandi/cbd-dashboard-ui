@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { getAllData } from '../../utils/requestServer';
+import savePagePDF from '../../utils/savePagePDF';
 import { FacultyFilterPanel, FacultyInfoGroup, FacultyRecordTable, FacultyGraphGroup } from '../';
 import Loading from 'react-loading';
 import processFacultyRecords from '../../utils/processFacultyRecords';
-import ReactToPrint from 'react-to-print';
-import jsPDF from 'jspdf';
 
 export default class FacultyDashboard extends Component {
     constructor(props) {
@@ -33,6 +32,20 @@ export default class FacultyDashboard extends Component {
         this.onDateFilterToggle = this.onDateFilterToggle.bind(this);
         this.onRotationSelect = this.onRotationSelect.bind(this);
         this.onFacultySelect = this.onFacultySelect.bind(this);
+        this.onPrintClick = this.onPrintClick.bind(this);
+    }
+
+    onPrintClick() {
+
+        this.setState({ printModeON: true });
+        // give a gap of 2 seconds to ensure everything has changed
+        // quick hack fix
+        setTimeout(() => {
+            // once printing is complete reset back to original state
+            savePagePDF().finally(() => {
+                this._isMounted && this.setState({ printModeON: false });
+            });
+        }, 2000)
     }
 
     onSliderChange(sliderValue) {
@@ -120,7 +133,6 @@ export default class FacultyDashboard extends Component {
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let overallWidth = document.body.getBoundingClientRect().width - 125;
 
-
         // quick fix to legacy code 
         // if a faculty name doesnt appear in the processed records remove it also 
         // from the original faculty list
@@ -133,7 +145,6 @@ export default class FacultyDashboard extends Component {
                 return facultiesWithEnoughRecords.indexOf(d.label) > -1;
             }
         });
-
 
         return (
             <div className='supervisor-dashboard-container'>
@@ -156,7 +167,7 @@ export default class FacultyDashboard extends Component {
                             onSubmit={this.onSubmit} />
 
                         {/* The contents of this react component will be triggered to the print window */}
-                        <div className={printModeON ? 'printable-content m-a' : ''}
+                        <div className={printModeON ? 'printable-content m-a' : 'printable-content'}
                             ref={el => (this.printRef = el)}>
                             <FacultyInfoGroup
                                 printModeON={printModeON}
@@ -178,30 +189,16 @@ export default class FacultyDashboard extends Component {
 
                             <FacultyRecordTable
                                 printModeON={printModeON}
-                                width={printModeON ? 750 : overallWidth}
                                 currentFaculty={currentFaculty}
+
+                                width={overallWidth}
                                 currentFacultyRecords={currentFacultyRecords} />
                         </div>
-
                         <div className='text-xs-left button-box'>
-                            <ReactToPrint
-                                onBeforeGetContent={() => { this.setState({ 'printModeON': true }) }}
-                                onAfterPrint={() => { setTimeout(() => this.setState({ 'printModeON': false }), 0) }}
-                                trigger={() => <div className="print-button"><span className="icon icon-download"></span></div>}
-                                content={() => this.printRef}
-                            />
-                            <button onClick={() => {
-                                this.setState({ 'printModeON': true })
-                                setTimeout(() => {
-                                    var doc = new jsPDF();
-                                    doc.fromHTML(this.printRef, 5, 0, {}, () => doc.save());
-                                    setTimeout(() => {
-                                        this.setState({ 'printModeON': false })
-                                    }, 0);
-                                }, 0);
-                            }}>print</button>
+                            <button className="btn btn-primary print-button" onClick={this.onPrintClick}>
+                                <span className="icon icon-download"></span>
+                            </button>
                         </div>
-
                     </div>}
             </div>);
     }
