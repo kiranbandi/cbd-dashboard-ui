@@ -46,6 +46,8 @@ export default function() {
                 pdf.addImage(canvas, 'PNG', 0, 0, width, height);
                 pdf.save("download.pdf");
 
+                resolve();
+
             });
 
         } catch (e) {
