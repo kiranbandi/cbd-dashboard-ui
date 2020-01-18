@@ -16,7 +16,7 @@ export default class FacultyFilterPanel extends Component {
         const { rotationList, facultyList, currentRotation,
             currentFaculty, onRotationSelect, onFacultySelect,
             sliderValue = 5, onSliderChange,
-            onSubmit, onCheckboxChange, dateFilterActive, printRef } = this.props;
+            onSubmit, onCheckboxChange, dateFilterActive } = this.props;
 
         // Process rotations so they match the react select format
         const rotationOptions = _.map(rotationList, (d) => ({ 'label': d.label, 'value': d.label }));

@@ -2,7 +2,7 @@ export default {
   oracle: {
     loaderState: false,
     filterLoaderState: false,
-    activeDashboard: 'resident',
+    activeDashboard: 'supervisor',
     isModalVisible: false,
     infoCard: ['EM-TTD'],
     sessionStatus: !!sessionStorage.jwt,
