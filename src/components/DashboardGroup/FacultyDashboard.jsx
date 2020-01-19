@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import moment from 'moment';
 import { getAllData } from '../../utils/requestServer';
 import savePagePDF from '../../utils/savePagePDF';
 import { FacultyFilterPanel, FacultyInfoGroup, FacultyRecordTable, FacultyGraphGroup } from '../';
@@ -37,15 +38,21 @@ export default class FacultyDashboard extends Component {
 
     onPrintClick() {
 
+        const { currentFaculty } = this.state;
+
         this.setState({ printModeON: true });
         // give a gap of 2 seconds to ensure everything has changed
         // quick hack fix
         setTimeout(() => {
+            // move to the top of the page
+            window.scrollTo(0, 0);
+            let filename = currentFaculty.split(' ').join('_') + '_' + moment().format('DD_MMM') + '_Export.pdf';
             // once printing is complete reset back to original state
-            savePagePDF().finally(() => {
+            savePagePDF(filename).finally(() => {
                 this._isMounted && this.setState({ printModeON: false });
             });
-        }, 10)
+            // wait a couple of seconds quick hack
+        }, 500)
     }
 
     onSliderChange(sliderValue) {
@@ -159,6 +166,12 @@ export default class FacultyDashboard extends Component {
                 {this.state.isLoaderVisible ?
                     <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
                     <div>
+                        {/* when the content is printing some of on screen elements are rearranged so we hide it by a screen loading banner */}
+                        {printModeON &&
+                            <div className='on-screen-cover-banner'>
+                                <h2 className='text-center m-t-lg text-primary'>Generating PDF Export for {currentFaculty}, Please Wait...</h2>
+                            </div>}
+
                         <FacultyFilterPanel
                             rotationList={rotationList}
                             facultyList={filteredFacultyList}
@@ -195,7 +208,7 @@ export default class FacultyDashboard extends Component {
 
                             <FacultyRecordTable
                                 currentFaculty={currentFaculty}
-                                width={printModeON ? '725' : overallWidth}
+                                width={printModeON ? 725 : overallWidth}
                                 currentFacultyRecords={currentFacultyRecords} />
                         </div>
                         {currentFaculty != 'ALL' &&

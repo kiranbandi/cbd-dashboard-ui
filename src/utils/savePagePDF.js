@@ -17,10 +17,7 @@ export default function(fileName = 'download.pdf') {
             // then we add each of the graphs (.faculty-graph-box) there are four of them
             // finally we add in the record table at the bottom
 
-            // For the first page we hardcode the page size 
-            let pdfInstance = new jsPDF('l', 'px', [725, 470]);
-
-            getElementAsCanvas('.print-info', pdfInstance, 1)
+            getElementAsCanvas('.print-info', {}, 1)
                 .then((pdf) => getElementAsCanvas('.printable-graph-1', pdf, 2))
                 .then((pdf) => getElementAsCanvas('.printable-graph-2', pdf, 3))
                 .then((pdf) => getElementAsCanvas('.printable-graph-3', pdf, 4))
@@ -40,6 +37,8 @@ export default function(fileName = 'download.pdf') {
 
 function getElementAsCanvas(selector, pdfInstance, pageCount) {
 
+    let pdfLocalCopy = _.clone(pdfInstance);
+
     return new Promise(async(resolve, reject) => {
 
         // get the element
@@ -48,6 +47,7 @@ function getElementAsCanvas(selector, pdfInstance, pageCount) {
         // apply the computed inline styling to the cloned dom
         const options = {
             backgroundColor: '#252830',
+            scale: 1.5,
             scrollX: 0,
             scrollY: -window.scrollY,
             onclone: (clonedDoc) => {
@@ -69,16 +69,20 @@ function getElementAsCanvas(selector, pdfInstance, pageCount) {
             let height = canvas.height;
             // for the first content use pdf as is and for every other content
             // add a new page based on the content dimensions
-            if (pageCount !== 1) {
-                pdfInstance.addPage([width, height]);
+            if (pageCount == 1) {
+                pdfLocalCopy = new jsPDF('l', 'px', [width, height]);
+
+            } else {
+                // For the first page we hardcode the page size 
+                pdfLocalCopy.addPage([width, height]);
             }
             //then we get the dimensions from the 'pdf' file itself
-            width = pdfInstance.internal.pageSize.getWidth();
-            height = pdfInstance.internal.pageSize.getHeight();
+            width = pdfLocalCopy.internal.pageSize.getWidth();
+            height = pdfLocalCopy.internal.pageSize.getHeight();
             // add the canvas as an image onto the pdf
-            pdfInstance.addImage(canvas, 'PNG', 0, 0, width, height);
+            pdfLocalCopy.addImage(canvas, 'PNG', 0, 0, width, height);
             // resolve the promise with pdf instance
-            resolve(pdfInstance);
+            resolve(pdfLocalCopy);
         });
 
     });
