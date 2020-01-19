@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import moment from 'moment';
 import { getAllData } from '../../utils/requestServer';
+import toastr from '../../utils/toastr';
 import savePagePDF from '../../utils/savePagePDF';
 import { FacultyFilterPanel, FacultyInfoGroup, FacultyRecordTable, FacultyGraphGroup } from '../';
 import Loading from 'react-loading';
@@ -40,19 +41,28 @@ export default class FacultyDashboard extends Component {
 
         const { currentFaculty } = this.state;
 
-        this.setState({ printModeON: true });
-        // give a gap of 2 seconds to ensure everything has changed
-        // quick hack fix
-        setTimeout(() => {
-            // move to the top of the page
-            window.scrollTo(0, 0);
-            let filename = currentFaculty.split(' ').join('_') + '_' + moment().format('DD_MMM') + '_Export.pdf';
-            // once printing is complete reset back to original state
-            savePagePDF(filename).finally(() => {
-                this._isMounted && this.setState({ printModeON: false });
-            });
-            // wait a couple of seconds quick hack
-        }, 500)
+
+        if (currentFaculty != 'ALL') {
+            this.setState({ printModeON: true });
+            // give a gap of 2 seconds to ensure everything has changed
+            // quick hack fix
+            setTimeout(() => {
+                // move to the top of the page
+                window.scrollTo(0, 0);
+                let filename = currentFaculty.split(' ').join('_') + '_' + moment().format('DD_MMM') + '_Export.pdf';
+                // once printing is complete reset back to original state
+                savePagePDF(filename).finally(() => {
+                    this._isMounted && this.setState({ printModeON: false });
+                });
+                // wait a couple of seconds quick hack
+            }, 500)
+        }
+
+        else {
+            toastr["error"]("Please Select a faculty first to export their report", "EXPORT ERROR");
+        }
+
+
     }
 
     onSliderChange(sliderValue) {
@@ -211,12 +221,12 @@ export default class FacultyDashboard extends Component {
                                 width={printModeON ? 725 : overallWidth}
                                 currentFacultyRecords={currentFacultyRecords} />
                         </div>
-                        {currentFaculty != 'ALL' &&
-                            <div className='text-xs-left button-box'>
-                                <button className="btn btn-primary print-button" onClick={this.onPrintClick}>
-                                    <span className="icon icon-download"></span>
-                                </button>
-                            </div>}
+
+                        <div className='text-xs-left button-box'>
+                            <button className="btn btn-primary print-button" onClick={this.onPrintClick}>
+                                <span className="icon icon-download"></span>
+                            </button>
+                        </div>
                     </div>}
             </div>);
     }
