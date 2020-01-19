@@ -17,7 +17,7 @@ export default class FacultyGraph extends Component {
         // 3) entrustment_score 
         // 4) words_per_comment
 
-        let { printModeON, data, width, trackType,
+        let { className, data, width, trackType,
             currentFaculty, title, titleValue,
             dateFilterActive, startDate, endDate } = this.props;
 
@@ -131,7 +131,7 @@ export default class FacultyGraph extends Component {
             </rect>
         });
 
-        return (<div className='faculty-graph-box m-r m-b'>
+        return (<div className={'faculty-graph-box m-r m-b ' + className}>
             <h3 className="text-left m-b">{title}<b className='title-append'>{titleValue}</b></h3>
             <svg className='supervisor-line-chart' width={width} height={height} >
                 <path d={axisTickLines} fill="none" stroke="#564d4d4d" strokeWidth="2px"></path>

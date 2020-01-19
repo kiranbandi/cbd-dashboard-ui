@@ -45,7 +45,7 @@ export default class FacultyDashboard extends Component {
             savePagePDF().finally(() => {
                 this._isMounted && this.setState({ printModeON: false });
             });
-        }, 2000)
+        }, 10)
     }
 
     onSliderChange(sliderValue) {
@@ -146,6 +146,12 @@ export default class FacultyDashboard extends Component {
             }
         });
 
+        // if print mode is on we reset the width to a standard width of 1000px
+        if (printModeON) {
+            overallWidth = 1450;
+        }
+
+
         return (
             <div className='supervisor-dashboard-container'>
 
@@ -188,17 +194,16 @@ export default class FacultyDashboard extends Component {
                                 currentFaculty={currentFaculty} />
 
                             <FacultyRecordTable
-                                printModeON={printModeON}
                                 currentFaculty={currentFaculty}
-
-                                width={overallWidth}
+                                width={printModeON ? '725' : overallWidth}
                                 currentFacultyRecords={currentFacultyRecords} />
                         </div>
-                        <div className='text-xs-left button-box'>
-                            <button className="btn btn-primary print-button" onClick={this.onPrintClick}>
-                                <span className="icon icon-download"></span>
-                            </button>
-                        </div>
+                        {currentFaculty != 'ALL' &&
+                            <div className='text-xs-left button-box'>
+                                <button className="btn btn-primary print-button" onClick={this.onPrintClick}>
+                                    <span className="icon icon-download"></span>
+                                </button>
+                            </div>}
                     </div>}
             </div>);
     }

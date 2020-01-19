@@ -29,6 +29,7 @@ export default class FacultyGraphGroup extends Component {
             {processedRecords.length > 0 && <div className='text-center'>
                 <FacultyGraph
                     title={'Total EPAs Observed '}
+                    className={'printable-graph-1'}
                     titleValue={!!currentFacultyData ? currentFacultyData.epa_count : ''}
                     printModeON={printModeON}
                     dateFilterActive={dateFilterActive}
@@ -40,6 +41,7 @@ export default class FacultyGraphGroup extends Component {
                     width={(width / 2) - 50} />
                 <FacultyGraph
                     title={'EPA Expiry Rate '}
+                    className={'printable-graph-2'}
                     titleValue={!!currentFacultyData ? currentFacultyData.expired_epa_percentage + '%' : ''}
                     printModeON={printModeON}
                     dateFilterActive={dateFilterActive}
@@ -51,6 +53,7 @@ export default class FacultyGraphGroup extends Component {
                     width={(width / 2) - 50} />
                 <FacultyGraph
                     title={'Average Entrustment Score '}
+                    className={'printable-graph-3'}
                     titleValue={!!currentFacultyData ? currentFacultyData.entrustment_score : ''}
                     printModeON={printModeON}
                     dateFilterActive={dateFilterActive}
@@ -62,6 +65,7 @@ export default class FacultyGraphGroup extends Component {
                     width={(width / 2) - 50} />
                 <FacultyGraph
                     title={'Average Words Per Comment '}
+                    className={'printable-graph-4'}
                     titleValue={!!currentFacultyData ? currentFacultyData.words_per_comment : ''}
                     printModeON={printModeON}
                     dateFilterActive={dateFilterActive}

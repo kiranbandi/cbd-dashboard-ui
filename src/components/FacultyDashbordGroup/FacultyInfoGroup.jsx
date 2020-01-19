@@ -122,7 +122,7 @@ export default (props) => {
         width, processedRecords, currentFacultyRecords } = props;
 
     return <div>
-        <div className='m-r-lg m-l-md' style={{ 'display': 'inline-block', 'width': '725px' }}>
+        <div className='m-r-lg m-l-md print-info' style={{ 'display': 'inline-block', 'width': '725px' }}>
             <FacultyStatCardSet
                 title={"Acquistion Metrics for All Faculties in Rotation - " + currentRotation}
                 processedRecords={processedRecords}
