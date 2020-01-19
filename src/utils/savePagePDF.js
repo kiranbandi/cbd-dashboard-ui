@@ -3,55 +3,84 @@ import html2canvas from 'html2canvas';
 import computedStyleToInlineStyle from "computed-style-to-inline-style";
 import jsPDF from 'jspdf';
 
-export default function() {
+export default function(fileName = 'download.pdf') {
 
     return new Promise(async(resolve, reject) => {
         try {
 
-            const element = document.querySelector('.faculty-graph-box');
+            // The content needs to fit the pdf 
+            // so we set the pdf page size based on the its content everytime 
+            // we add a new page
+            // first we get the info box content and add it to the page (.print-info)
+            // this has a constant width of 725px and a height of 425bx
+            // because I like those numbers :-)
+            // then we add each of the graphs (.faculty-graph-box) there are four of them
+            // finally we add in the record table at the bottom
 
-            const options = {
-                backgroundColor: '#252830',
-                scrollX: 0,
-                scrollY: -window.scrollY,
-                width: 900,
-                height: 500,
-                onclone: (clonedDoc) => {
-                    // After we clone the document, inline svg fill
-                    const container = clonedDoc.body.querySelector('.faculty-graph-box');
-                    computedStyleToInlineStyle(container, {
-                        recursive: true,
-                        properties: ["fill"],
-                    });
-                },
-            }
+            // For the first page we hardcode the page size 
+            let pdfInstance = new jsPDF('l', 'px', [725, 470]);
 
-            // For testing
-            html2canvas(element, options).then(canvas => {
-
-                let width = canvas.width;
-                let height = canvas.height;
-
-                let pdf;
-
-                //set the orientation
-                if (width > height) {
-                    pdf = new jsPDF('l', 'px', [width, height]);
-                } else {
-                    pdf = new jsPDF('p', 'px', [height, width]);
-                }
-                //then we get the dimensions from the 'pdf' file itself
-                width = pdf.internal.pageSize.getWidth();
-                height = pdf.internal.pageSize.getHeight();
-                pdf.addImage(canvas, 'PNG', 0, 0, width, height);
-                pdf.save("download.pdf");
-
-                resolve();
-
-            });
+            getElementAsCanvas('.print-info', pdfInstance, 1)
+                .then((pdf) => getElementAsCanvas('.printable-graph-1', pdf, 2))
+                .then((pdf) => getElementAsCanvas('.printable-graph-2', pdf, 3))
+                .then((pdf) => getElementAsCanvas('.printable-graph-3', pdf, 4))
+                .then((pdf) => getElementAsCanvas('.printable-graph-4', pdf, 5))
+                .then((pdf) => getElementAsCanvas('.table-box', pdf, 6))
+                .then((pdf) => {
+                    pdf.save(fileName);
+                    resolve();
+                })
 
         } catch (e) {
-            reject();
+            reject(e);
         };
     })
+}
+
+
+function getElementAsCanvas(selector, pdfInstance, pageCount) {
+
+    return new Promise(async(resolve, reject) => {
+
+        // get the element
+        const element = document.querySelector(selector);
+        // set the options to generate the canvas
+        // apply the computed inline styling to the cloned dom
+        const options = {
+            backgroundColor: '#252830',
+            scrollX: 0,
+            scrollY: -window.scrollY,
+            onclone: (clonedDoc) => {
+                // After we clone the document, inline svg fill
+                const container = clonedDoc.body.querySelector(selector);
+                computedStyleToInlineStyle(container, {
+                    recursive: true,
+                    properties: ["fill"],
+                });
+            },
+        }
+
+        // call the canvas generating function
+        html2canvas(element, options).then(canvas => {
+            // every page size is different in the pdf generated to ensure we dont
+            // have weird aspect ratio stretching in the generated file
+            // so set the page height based on the generated canvas
+            let width = canvas.width;
+            let height = canvas.height;
+            // for the first content use pdf as is and for every other content
+            // add a new page based on the content dimensions
+            if (pageCount !== 1) {
+                pdfInstance.addPage([width, height]);
+            }
+            //then we get the dimensions from the 'pdf' file itself
+            width = pdfInstance.internal.pageSize.getWidth();
+            height = pdfInstance.internal.pageSize.getHeight();
+            // add the canvas as an image onto the pdf
+            pdfInstance.addImage(canvas, 'PNG', 0, 0, width, height);
+            // resolve the promise with pdf instance
+            resolve(pdfInstance);
+        });
+
+    });
+
 }
