@@ -6,7 +6,7 @@ import Loading from 'react-loading';
 import moment from 'moment';
 
 const possibleAcademicYears = _.keys(UG_ROTATION_MAP);
-const PHASES_LIST = ['YEAR 1', 'YEAR 2', 'YEAR 3', 'YEAR 4'];
+const possibleCohorts = ["2020", "2021", "2022", "2023", "2024", "2025"];
 
 export default class UGCreateUser extends Component {
 
@@ -19,9 +19,7 @@ export default class UGCreateUser extends Component {
             email: '',
             accessType: 'resident',
             accessList: '',
-            programStartDate: moment().format('MM/DD/YYYY'),
-            earlierPhaseCount: 0,
-            currentPhase: 'Year 1',
+            currentPhase: '2020',
             academicYear: '2019',
             // array of dates
             promotedDate: [],
@@ -67,23 +65,14 @@ export default class UGCreateUser extends Component {
     }
 
     onPhaseChange(event) {
-        // if he is in a phase > 1 then we need promoted dates for all previous phases
-        let currentPhase = event.target.value, earlierPhaseCount = 0;
-
-        if (PHASES_LIST.indexOf(currentPhase) > 0) {
-            earlierPhaseCount = PHASES_LIST.indexOf(currentPhase);
-        }
-        this.setState({ currentPhase, earlierPhaseCount });
+        this.setState({ currentPhase: event.target.value });
     }
-
-
 
     onSubmit(event) {
         event.preventDefault();
         const { username, fullname,
             email, accessType, accessList, currentPhase,
-            rotationSchedule, longitudinalSchedule, promotedDate } = this.state,
-            programStartDate = document.getElementById('programStartDate') ? document.getElementById('programStartDate').value : '';
+            rotationSchedule, longitudinalSchedule, promotedDate } = this.state;
 
         // toggle loader on before request 
         this.setState({ loaderState: true });
@@ -91,7 +80,7 @@ export default class UGCreateUser extends Component {
             username, fullname, email, accessType,
             accessList, currentPhase,
             rotationSchedule, longitudinalSchedule,
-            programStartDate, promotedDate: ''
+            programStartDate: '', promotedDate: ''
         })
             .then(() => {
                 // reset form values
@@ -102,12 +91,10 @@ export default class UGCreateUser extends Component {
                         email: '',
                         accessType: 'resident',
                         accessList: '',
-                        programStartDate: moment().format('MM/DD/YYYY'),
-                        earlierPhaseCount: 0,
                         academicYear: '2019',
                         // array of dates
                         promotedDate: [],
-                        currentPhase: 'YEAR 1',
+                        currentPhase: '2020',
                         // JSON Object with arrays of schedules for each year
                         rotationSchedule: {},
                         // JSON Object with arrays of schedules for each year
@@ -124,8 +111,7 @@ export default class UGCreateUser extends Component {
 
         let { loaderState, username, fullname,
             email, accessType, accessList,
-            currentPhase, academicYear,
-            programStartDate, rotationSchedule } = this.state,
+            currentPhase, academicYear, rotationSchedule } = this.state,
             { rotationList } = this.props.programInfo;
 
         // if there is no array then create an empty array and set all the values to the first possible rotation
@@ -166,26 +152,15 @@ export default class UGCreateUser extends Component {
                             <input type="text" className="form-control" name="accessList" value={accessList} placeholder="COMMA SEPARATED NSIDs" onChange={this.onChange} />
                         </div>}
 
-                    {accessType == 'resident' &&
-                        <div className="input-group m-a">
-                            <span className='inner-span'>PROGRAM START DATE</span>
-                            <div className="input-group">
-                                <span className="input-group-addon">
-                                    <span className="icon icon-calendar"></span>
-                                </span>
-                                <input type="text" id='programStartDate' defaultValue={programStartDate} className="form-control" data-provide="datepicker" />
-                            </div>
-                        </div>}
-
 
                     {accessType == 'resident' &&
                         <div className="input-group m-a">
-                            <span className='inner-span'>CURRENT YEAR</span>
+                            <span className='inner-span'>COHORT</span>
                             <select id='select-current-phase' name="currentPhase" className='custom-select' value={currentPhase} onChange={this.onPhaseChange}>
-                                <option value='YEAR 1' >YEAR 1</option>
-                                <option value='YEAR 2' >YEAR 2</option>
-                                <option value='YEAR 3' >YEAR 3</option>
-                                <option value='YEAR 4' >YEAR 4</option>
+                                {possibleCohorts.map((cohort, index) =>
+                                    <option key={'cohort-' + (index + 1)} value={cohort}>
+                                        {cohort}
+                                    </option>)}
                             </select>
                         </div>}
 

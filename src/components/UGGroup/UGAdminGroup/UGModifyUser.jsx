@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import { getAllUsers, getUser, updateUser, deleteUser } from '../../../utils/requestServer';
 import { UG_ROTATION_MAP } from '../../../utils/programInfo';
 import Loading from 'react-loading';
-import moment from 'moment';
 import ReactSelect from 'react-select';
 
 const possibleAcademicYears = _.keys(UG_ROTATION_MAP);
-const PHASES_LIST = ['YEAR 1', 'YEAR 2', 'YEAR 3', 'YEAR 4'];
+const possibleCohorts = ["2020", "2021", "2022", "2023", "2024", "2025"];
+
 
 export default class UGModifyUser extends Component {
 
@@ -23,10 +23,7 @@ export default class UGModifyUser extends Component {
             accessType: 'resident',
             accessList: '',
             userList: [],
-            programStartDate: moment().format('MM/DD/YYYY'),
-            currentPhase: 'YEAR 1',
-            earlierPhaseCount: 0,
-            promotedDate: [],
+            currentPhase: '2020',
             academicYear: '2019',
             rotationSchedule: {},
             longitudinalSchedule: {},
@@ -67,10 +64,7 @@ export default class UGModifyUser extends Component {
                         email: '',
                         accessType: 'resident',
                         accessList: '',
-                        programStartDate: moment().format('MM/DD/YYYY'),
-                        currentPhase: 'YEAR 1',
-                        earlierPhaseCount: 0,
-                        promotedDate: [],
+                        currentPhase: '2020',
                         academicYear: '2019',
                         rotationSchedule: {},
                         longitudinalSchedule: {},
@@ -96,10 +90,7 @@ export default class UGModifyUser extends Component {
                         fullname: userData.fullname || '',
                         accessType: userData.accessType,
                         accessList: userData.accessList || '',
-                        programStartDate: moment(userData.programStartDate).format('MM/DD/YYYY') || moment().format('MM/DD/YYYY'),
-                        currentPhase: userData.currentPhase || 'YEAR 1',
-                        earlierPhaseCount: PHASES_LIST.indexOf(userData.currentPhase || 'YEAR 1'),
-                        promotedDate: userData.promotedDate || [],
+                        currentPhase: userData.currentPhase || '2020',
                         rotationSchedule: userData.rotationSchedule || {},
                         longitudinalSchedule: userData.longitudinalSchedule || {},
                         academicYear: '2019',
@@ -111,12 +102,7 @@ export default class UGModifyUser extends Component {
     }
 
     onPhaseChange(event) {
-        // if he is in a phase > 1 then we need promoted dates for all previous phases
-        let currentPhase = event.target.value, earlierPhaseCount = 0;
-        if (PHASES_LIST.indexOf(currentPhase) > 0) {
-            earlierPhaseCount = PHASES_LIST.indexOf(currentPhase);
-        }
-        this.setState({ currentPhase, earlierPhaseCount });
+        this.setState({ currentPhase: event.target.value });
     }
 
     onChange(event) {
@@ -156,8 +142,7 @@ export default class UGModifyUser extends Component {
         event.preventDefault();
         let { username, email, fullname,
             accessType, accessList, currentPhase,
-            earlierPhaseCount, promotedDate, rotationSchedule, isGraduated = false } = this.state,
-            programStartDate = document.getElementById('modify-programStartDate') ? document.getElementById('modify-programStartDate').value : '';
+            rotationSchedule, isGraduated = false } = this.state;
 
 
         // toggle loader on before request 
@@ -167,7 +152,7 @@ export default class UGModifyUser extends Component {
             username, email, fullname, accessType,
             accessList, currentPhase,
             rotationSchedule, longitudinalSchedule: {},
-            programStartDate, promotedDate: '', isGraduated: false
+            programStartDate: '', promotedDate: '', isGraduated: false
         })
             .then(() => {
                 // reset form values
@@ -177,10 +162,7 @@ export default class UGModifyUser extends Component {
                     email: '',
                     accessType: 'resident',
                     accessList: '',
-                    programStartDate: moment().format('MM/DD/YYYY'),
-                    currentPhase: 'YEAR 1',
-                    earlierPhaseCount: 0,
-                    promotedDate: [],
+                    currentPhase: '2020',
                     academicYear: '2019',
                     rotationSchedule: {},
                     longitudinalSchedule: {},
@@ -197,8 +179,7 @@ export default class UGModifyUser extends Component {
         const { userList, loaderState, innerLoaderState,
             deleteLoaderState, username, fullname = '',
             email, accessType, accessList, academicYear,
-            currentPhase, programStartDate, earlierPhaseCount, promotedDate,
-            rotationSchedule, longitudinalSchedule, isGraduated = false } = this.state,
+            currentPhase, rotationSchedule, isGraduated = false } = this.state,
             { rotationList } = this.props.programInfo;
 
 
@@ -268,26 +249,14 @@ export default class UGModifyUser extends Component {
                                 <input type="text" className="form-control" name="accessList" value={accessList} placeholder="COMMA SEPARATED NSIDs" onChange={this.onChange} />
                             </div>}
 
-
                         {accessType == 'resident' &&
                             <div className="input-group m-a">
-                                <span className='inner-span'>PROGRAM START DATE</span>
-                                <div className="input-group">
-                                    <span className="input-group-addon">
-                                        <span className="icon icon-calendar"></span>
-                                    </span>
-                                    <input type="text" id='modify-programStartDate' defaultValue={programStartDate} className="form-control" data-provide="datepicker" />
-                                </div>
-                            </div>}
-
-                        {accessType == 'resident' &&
-                            <div className="input-group m-a">
-                                <span className='inner-span'>CURRENT YEAR</span>
+                                <span className='inner-span'>COHORT</span>
                                 <select id='select-current-phase' name="currentPhase" className='custom-select' value={currentPhase} onChange={this.onPhaseChange}>
-                                    <option value='YEAR 1' >YEAR 1</option>
-                                    <option value='YEAR 2' >YEAR 2</option>
-                                    <option value='YEAR 3' >YEAR 3</option>
-                                    <option value='YEAR 4' >YEAR 4</option>
+                                    {possibleCohorts.map((cohort, index) =>
+                                        <option key={'cohort-' + (index + 1)} value={cohort}>
+                                            {cohort}
+                                        </option>)}
                                 </select>
                             </div>}
 
