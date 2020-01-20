@@ -149,7 +149,7 @@ class UGStudentDashboard extends Component {
                             onStudentSelect={this.onStudentSelect}
                             onRotationSelect={this.onRotationSelect}
                             onSubmit={this.onSubmit} />
-                        {accessType != 'resident' &&
+                        {accessType != 'resident' && rawDump.length > 0 &&
                             <UGNormativePanel
                                 currentStudent={currentStudent}
                                 width={width}

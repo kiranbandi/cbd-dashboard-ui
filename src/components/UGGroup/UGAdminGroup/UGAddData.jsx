@@ -7,7 +7,7 @@ import Loading from 'react-loading';
 import { setUGRecords, getResidentList, registerUser } from '../../../utils/requestServer';
 
 const possibleYearTags = [{ label: 'Mobile App Export', value: 'app' }, { label: '145 System Export', value: '145' }, { label: 'Paper Files', value: 'paper' }];
-
+const possibleCohorts = ["2020", "2021", "2022", "2023", "2024", "2025"];
 export default class AddData extends Component {
 
     constructor(props) {
@@ -15,11 +15,13 @@ export default class AddData extends Component {
         this.state = {
             processing: false,
             yearTag: 'app',
+            cohort: '2020',
             residentList: [],
             loaderState: true
         }
         this.onProcessFile = this.onProcessFile.bind(this);
         this.onSelectYearTag = this.onSelectYearTag.bind(this);
+        this.onSelectCohort = this.onSelectCohort.bind(this);
     }
 
     componentDidMount() {
@@ -34,11 +36,16 @@ export default class AddData extends Component {
         this.setState({ yearTag: event.target.value });
     }
 
+    onSelectCohort(event) {
+        this.setState({ cohort: event.target.value });
+    }
+
+
     onProcessFile(event) {
 
         event.preventDefault();
 
-        const { residentList, yearTag = 'app' } = this.state,
+        const { residentList, yearTag = 'app', cohort = '2020' } = this.state,
             residentNSIDlist = _.map(residentList, (d) => d.username);
 
         // turn on file processing loader
@@ -58,10 +65,10 @@ export default class AddData extends Component {
                         toastr["warning"]("The following students dont have a corresponding user profile or a record with a wrong entry so their data will be ignored, Please create a profile for them and try again", "New Students Found on File");
                         const nonMappedNSIDList = _.map(nonMappedStudents, (d) => d.username);
                         studentRecords = _.filter(studentRecords, (d) => nonMappedNSIDList.indexOf(d.username) > -1);
-                        return setUGRecords(studentRecords, yearTag);
+                        return setUGRecords(studentRecords, yearTag + '_' + cohort);
                     }
                     else {
-                        return setUGRecords(studentRecords, yearTag);
+                        return setUGRecords(studentRecords, yearTag + '_' + cohort);
                     }
 
                 }
@@ -85,7 +92,7 @@ export default class AddData extends Component {
     }
 
     render() {
-        let { processing, loaderState, yearTag } = this.state;
+        let { processing, loaderState, yearTag, cohort } = this.state;
 
         return (
             <div className='add-data-root m-t' >
@@ -101,6 +108,16 @@ export default class AddData extends Component {
                                 {possibleYearTags.map((yearSlot, index) =>
                                     <option key={'tag-' + (index + 1)} value={yearSlot.value}>
                                         {yearSlot.label}
+                                    </option>)}
+                            </select>
+                        </div>
+
+                        <div className="input-group m-a">
+                            <span className='inner-span' style={{ width: '165px' }}>COHORT</span>
+                            <select name="yearTag" className='custom-select' value={cohort} onChange={this.onSelectCohort}>
+                                {possibleCohorts.map((cohort, index) =>
+                                    <option key={'cohort-' + (index + 1)} value={cohort}>
+                                        {cohort}
                                     </option>)}
                             </select>
                         </div>
