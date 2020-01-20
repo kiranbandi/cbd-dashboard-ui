@@ -2,6 +2,110 @@ import React from 'react';
 import FacultyStatCardSet from './FacultyStatCardSet';
 import ReactTable from 'react-table';
 
+
+const UGcolumns = [{
+    Header: 'Name',
+    accessor: 'faculty_name',
+    className: 'text-left'
+},
+{
+    Header: 'EPAs',
+    accessor: 'epa_count',
+    className: 'text-center',
+    maxWidth: 100
+},
+{
+    Header: 'AVG. EPA SCORE',
+    accessor: 'entrustment_score',
+    className: 'text-center',
+    maxWidth: 125
+},
+{
+    Header: 'Avg. Words',
+    accessor: 'words_per_comment',
+    className: 'text-center',
+    maxWidth: 100
+}];
+
+const UGMultiColumns = [{
+    Header: 'Name',
+    columns: [
+        {
+            Header: '',
+            accessor: 'faculty_name',
+            className: 'text-left'
+        }
+    ]
+},
+{
+    Header: 'EPAs',
+    columns: [
+        {
+            Header: 'Overall',
+            accessor: 'epa_count',
+            className: 'text-center',
+            maxWidth: 75
+        },
+        {
+            Header: 'Period',
+            accessor: 'epa_count_period',
+            className: 'text-center',
+            maxWidth: 75
+        }
+    ]
+},
+{
+    Header: 'Expiry(%)',
+    columns: [
+        {
+            Header: 'Overall',
+            accessor: 'expired_epa_percentage',
+            className: 'text-center',
+            maxWidth: 75
+        },
+        {
+            Header: 'Period',
+            accessor: 'expired_epa_percentage_period',
+            className: 'text-center',
+            maxWidth: 75
+        }
+    ]
+},
+{
+    Header: 'AVG. EPA SCORE',
+    columns: [
+        {
+            Header: 'Overall',
+            className: 'text-center',
+            accessor: 'entrustment_score',
+            maxWidth: 75
+        },
+        {
+            Header: 'Period',
+            className: 'text-center',
+            accessor: 'entrustment_score_period',
+            maxWidth: 75
+        }
+    ]
+},
+{
+    Header: 'Avg. Words',
+    columns: [
+        {
+            Header: 'Overall',
+            className: 'text-center',
+            accessor: 'words_per_comment',
+            maxWidth: 75
+        },
+        {
+            Header: 'Period',
+            className: 'text-center',
+            accessor: 'words_per_comment_period',
+            maxWidth: 75
+        }
+    ]
+}];
+
 const columns = [
     {
         Header: 'Name',
@@ -118,8 +222,10 @@ const multiColumns = [
 
 export default (props) => {
 
-    const { printModeON, currentRotation, currentFaculty, dateFilterActive,
+    const { printModeON, isUG = false, currentRotation, currentFaculty, dateFilterActive,
         width, processedRecords, currentFacultyRecords } = props;
+
+    const columnStore = isUG ? [UGcolumns, UGMultiColumns] : [columns, multiColumns];
 
     return <div>
         <div className='m-r-lg m-l-md print-info' style={{ 'display': 'inline-block', 'width': '725px' }}>
@@ -137,7 +243,7 @@ export default (props) => {
             style={{ width: width - 750 }}>
             <ReactTable
                 data={processedRecords}
-                columns={dateFilterActive ? multiColumns : columns}
+                columns={dateFilterActive ? columnStore[1] : columnStore[0]}
                 defaultPageSize={10}
                 resizable={false}
                 className='-highlight -striped'

@@ -44,6 +44,7 @@ export { default as Container } from './Container';
 export { default as UGStudentDashboard } from './UGGroup/DashboardGroup/UGStudentDashboard';
 export { default as UGDownloadDashboard } from './UGGroup/DashboardGroup/UGDownloadDashboard';
 export { default as UGProgramDashboard } from './UGGroup/DashboardGroup/UGProgramDashboard';
+export { default as UGFacultyDashboard } from './UGGroup/DashboardGroup/UGFacultyDashboard';
 
 export { default as UGStub } from './UGGroup/UGStub';
 

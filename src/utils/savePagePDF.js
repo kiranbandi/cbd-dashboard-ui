@@ -3,7 +3,7 @@ import html2canvas from 'html2canvas';
 import computedStyleToInlineStyle from "computed-style-to-inline-style";
 import jsPDF from 'jspdf';
 
-export default function(fileName = 'download.pdf') {
+export default function(fileName = 'download.pdf', isUG = false) {
 
     return new Promise(async(resolve, reject) => {
         try {
@@ -17,16 +17,30 @@ export default function(fileName = 'download.pdf') {
             // then we add each of the graphs (.faculty-graph-box) there are four of them
             // finally we add in the record table at the bottom
 
-            getElementAsCanvas('.print-info', {}, 1)
-                .then((pdf) => getElementAsCanvas('.printable-graph-1', pdf, 2))
-                .then((pdf) => getElementAsCanvas('.printable-graph-2', pdf, 3))
-                .then((pdf) => getElementAsCanvas('.printable-graph-3', pdf, 4))
-                .then((pdf) => getElementAsCanvas('.printable-graph-4', pdf, 5))
-                .then((pdf) => getElementAsCanvas('.table-box', pdf, 6))
-                .then((pdf) => {
-                    pdf.save(fileName);
-                    resolve();
-                })
+
+            // For undergraduate faculty dashboard we skip the expiry rate graph
+            if (isUG) {
+                getElementAsCanvas('.print-info', {}, 1)
+                    .then((pdf) => getElementAsCanvas('.printable-graph-1', pdf, 2))
+                    .then((pdf) => getElementAsCanvas('.printable-graph-3', pdf, 3))
+                    .then((pdf) => getElementAsCanvas('.printable-graph-4', pdf, 4))
+                    .then((pdf) => getElementAsCanvas('.table-box', pdf, 5))
+                    .then((pdf) => {
+                        pdf.save(fileName);
+                        resolve();
+                    })
+            } else {
+                getElementAsCanvas('.print-info', {}, 1)
+                    .then((pdf) => getElementAsCanvas('.printable-graph-1', pdf, 2))
+                    .then((pdf) => getElementAsCanvas('.printable-graph-2', pdf, 3))
+                    .then((pdf) => getElementAsCanvas('.printable-graph-3', pdf, 4))
+                    .then((pdf) => getElementAsCanvas('.printable-graph-4', pdf, 5))
+                    .then((pdf) => getElementAsCanvas('.table-box', pdf, 6))
+                    .then((pdf) => {
+                        pdf.save(fileName);
+                        resolve();
+                    })
+            }
 
         } catch (e) {
             reject(e);

@@ -27,8 +27,17 @@
     
     .ug-student-dashboard {
         .supervisor-line-chart {
-            margin: 50px auto;
+            margin: 5px auto;
             display: block;
+            background: #1a1c22;
+            border-radius: 5px;
+            .hoverable-rectangle {
+                cursor: pointer;
+                &:hover {
+                    fill: #1ca8dd;
+                    opacity: 0.25;
+                }
+            }
         }
         .graph-panel-root {
             .title-root {
@@ -87,6 +96,20 @@
                         background: #2c86af;
                     }
                 }
+            }
+        }
+        .ug-normative-container {
+            .custom-checkbox {
+                width: 225px;
+                margin: -5px 30px 0px 30px;
+                background: #1a1c22;
+                padding: 10px;
+                font-size: 15px;
+                border-radius: 10px;
+            }
+            .custom-control-indicator {
+                top: 11px;
+                left: 15px;
             }
         }
     }

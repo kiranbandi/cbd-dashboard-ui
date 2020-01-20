@@ -8,7 +8,9 @@ export default class FacultyGraphGroup extends Component {
 
     render() {
 
-        const { printModeON, width, processedRecords, dateFilterActive, startDate, endDate, currentFaculty } = this.props;
+        const { printModeON, width, processedRecords,
+            dateFilterActive, startDate, endDate,
+            currentFaculty, isUG = false } = this.props;
 
         // format the data into the required format for a graph component
         // epa_count data
@@ -38,8 +40,8 @@ export default class FacultyGraphGroup extends Component {
                     currentFaculty={currentFaculty}
                     trackType={'epa_count'}
                     data={data_epa_count}
-                    width={(width / 2) - 50} />
-                <FacultyGraph
+                    width={((isUG ? 2 * width : width) / 2) - 50} />
+                {!isUG && <FacultyGraph
                     title={'EPA Expiry Rate '}
                     className={'printable-graph-2'}
                     titleValue={!!currentFacultyData ? currentFacultyData.expired_epa_percentage + '%' : ''}
@@ -50,10 +52,11 @@ export default class FacultyGraphGroup extends Component {
                     currentFaculty={currentFaculty}
                     trackType={'expired_epa_percentage'}
                     data={data_expired_epa_percentage}
-                    width={(width / 2) - 50} />
+                    width={(width / 2) - 50} />}
                 <FacultyGraph
                     title={'Average Entrustment Score '}
                     className={'printable-graph-3'}
+                    isUG={isUG}
                     titleValue={!!currentFacultyData ? currentFacultyData.entrustment_score : ''}
                     printModeON={printModeON}
                     dateFilterActive={dateFilterActive}

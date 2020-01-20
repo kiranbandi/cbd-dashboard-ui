@@ -5,10 +5,10 @@ import { getResidentList } from '../../../utils/requestServer';
 import ReactSelect from 'react-select';
 import { UG_ROTATION_MAP } from '../../../utils/programInfo';
 import moment from 'moment';
-import EPAOverallbyRotation from '../../ProgramEvaluationGroup/EPAOverallbyRotation';
 import EPAMonthlyRotation from '../../ProgramEvaluationGroup/EPAMonthlyRotation';
 import UGEPAspecificRotation from '../../ProgramEvaluationGroup/UGEPAspecificRotation';
 import UGRotationSpecificEPA from '../../ProgramEvaluationGroup/UGRotationSpecificEPA';
+import EPAOverallCount from '../../ProgramEvaluationGroup/EPAOverallCount';
 
 const possibleAcademicYears = _.map(_.keys(UG_ROTATION_MAP), (d) => (
     {
@@ -17,6 +17,11 @@ const possibleAcademicYears = _.map(_.keys(UG_ROTATION_MAP), (d) => (
     }
 ));
 
+const possibleCohorts = _.map(["2020", "2021", "2022", "2023", "2024", "2025"], (d) => (
+    { 'label': d, 'value': d }
+));
+
+
 export default class ProgramDashboard extends Component {
 
     constructor(props) {
@@ -24,6 +29,7 @@ export default class ProgramDashboard extends Component {
         this.state = {
             isLoaderVisible: false,
             academicYear: { 'label': '2019-2020', 'value': '2019' },
+            cohort: { 'label': '2020', 'value': '2020' },
             allRecords: [],
             residentList: [],
             selected: 'all',
@@ -31,16 +37,22 @@ export default class ProgramDashboard extends Component {
         };
         this._isMounted = false;
         this.onSelectAcademicYear = this.onSelectAcademicYear.bind(this);
+        this.onSelectCohort = this.onSelectCohort.bind(this);
     }
 
     onSelectAcademicYear(academicYear) {
-        let { residentList } = this.state;
-        this.setState({ rotationCount: calculateRotationCount(residentList, academicYear.value), academicYear });
+        let { residentList, cohort } = this.state;
+        this.setState({ rotationCount: calculateRotationCount(residentList, academicYear.value, cohort.value), academicYear });
+    }
+
+    onSelectCohort(cohort) {
+        let { residentList, academicYear } = this.state;
+        this.setState({ rotationCount: calculateRotationCount(residentList, academicYear.value, cohort.value), cohort });
     }
 
     componentDidMount() {
         // initialize empty map
-        let { academicYear, residentList = [] } = this.state;
+        let { academicYear, cohort, residentList = [] } = this.state;
 
         this._isMounted = true;
         // toggle loader before fetching data
@@ -57,7 +69,7 @@ export default class ProgramDashboard extends Component {
                 // filter out records that dont have rotation and phase tag on them or are expired
                 this._isMounted && this.setState({
                     residentList,
-                    rotationCount: calculateRotationCount(residentList, academicYear.value),
+                    rotationCount: calculateRotationCount(residentList, academicYear.value, cohort.value),
                     allRecords: _.clone(data)
                 });
             })
@@ -75,7 +87,7 @@ export default class ProgramDashboard extends Component {
 
     render() {
 
-        const { allRecords, academicYear, rotationCount } = this.state,
+        const { allRecords, academicYear, rotationCount, cohort } = this.state,
             { epaSourceMap, rotationList } = this.props.programInfo,
             // Filter out records which fall in a given academic year 
             recordsInAcademicYear = _.filter(allRecords, (d) => matchAcademicYear(d.observation_date, academicYear.value));
@@ -84,7 +96,8 @@ export default class ProgramDashboard extends Component {
         // for small screens use all available width
         width = width < 800 ? width : width / 2;
 
-        filteredRecords = _.clone(recordsInAcademicYear);
+        // then Filter out records which belong to the selected cohort
+        filteredRecords = _.filter(recordsInAcademicYear, (d) => d.year_tag.split('_')[1] == cohort.value);
 
         return (
             <div className='m-a dashboard-root-program' >
@@ -93,13 +106,23 @@ export default class ProgramDashboard extends Component {
                     <div className='m-t text-center'>
                         <div className='row'>
                             <div className='year-selection-box'>
-                                <h2 className='header'>Academic Year: </h2>
+                                <h2 className='header'>ACADEMIC YEAR: </h2>
                                 <div className='react-select-root'>
                                     <ReactSelect
                                         value={academicYear}
                                         options={possibleAcademicYears}
                                         styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
                                         onChange={this.onSelectAcademicYear} />
+                                </div>
+                            </div>
+                            <div className='year-selection-box'>
+                                <h2 className='header'> COHORT: </h2>
+                                <div className='react-select-root'>
+                                    <ReactSelect
+                                        value={cohort}
+                                        options={possibleCohorts}
+                                        styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
+                                        onChange={this.onSelectCohort} />
                                 </div>
                             </div>
                         </div>
@@ -115,15 +138,15 @@ export default class ProgramDashboard extends Component {
                                     epaSourceMap={epaSourceMap}
                                     rotationList={rotationList}
                                     filteredRecords={filteredRecords} />
-                                <EPAOverallbyRotation
+                                <EPAOverallCount
                                     width={width}
                                     rotationCount={rotationCount}
-                                    filteredRecords={recordsInAcademicYear} />
+                                    filteredRecords={filteredRecords} />
                                 <EPAMonthlyRotation
                                     width={width}
                                     filteredRecords={filteredRecords} />
                             </div> :
-                            <h2 className='text-center text-danger m-t-lg'>No program information is available currently</h2>}
+                            <h2 className='text-center text-danger m-t-lg'>No program information available for selected year and cohort</h2>}
                     </div>}
             </div >
         );
@@ -133,22 +156,16 @@ export default class ProgramDashboard extends Component {
 
 function matchAcademicYear(recordDate, academicYear) {
     var timeObj = moment(recordDate, 'YYYY-MM-DD');
-    return (timeObj.isBetween(moment('07/01/' + Number(academicYear), 'MM/DD/YYYY'), moment('06/30/' + (Number(academicYear) + 1), 'MM/DD/YYYY'), 'days', '[]'))
+    return (timeObj.isBetween(moment('08/12/' + Number(academicYear), 'MM/DD/YYYY'), moment('08/11/' + (Number(academicYear) + 1), 'MM/DD/YYYY'), 'days', '[]'))
 }
 
-function calculateRotationCount(residentList, academicYear) {
+function calculateRotationCount(residentList, academicYear, cohort) {
 
     let rotationCount = {};
 
-    // we filter out residents who were active in that current year and only
-    // get their rotations ,
-    // so if we are looking at the year 2018-2019 then the academic year is 2018
-    // so we only take residents who started before July 2019 , 
-    //  ideally we will delete records of residents who leave the program or archive them so we dont
-    // need to filter out those that fall before the starting year becase we started in 2018
-    // and the list only goes up in size as more reisidents join the program.
-    // If future we will also use GraduatedDate to remove residents who werent active in a given year
-    var activeResidentList = _.filter(residentList, (d) => (moment(d.programStartDate).isBefore(moment('07/01/' + (Number(academicYear) + 1), 'MM/DD/YYYY'))))
+    // we filter out residents who were active in that current year and cohort and only
+    // get their rotations
+    var activeResidentList = _.filter(residentList, (d) => d.currentPhase == cohort);
 
     // count each rotation
     _.map(activeResidentList, (resident) => {
@@ -160,7 +177,7 @@ function calculateRotationCount(residentList, academicYear) {
                 rotationCount[rotation] = 1;
             }
         });
-    })
+    });
 
     return rotationCount;
 }
