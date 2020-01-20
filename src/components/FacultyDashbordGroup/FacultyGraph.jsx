@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
-import canvg from 'canvg';
-import ReactDOMServer from 'react-dom/server';
 
 export default class FacultyGraph extends Component {
     constructor(props) {
@@ -17,7 +15,7 @@ export default class FacultyGraph extends Component {
         // 3) entrustment_score 
         // 4) words_per_comment
 
-        let { className, data, width, trackType,
+        let { className, data, width, trackType, isUG = false,
             currentFaculty, title, titleValue,
             dateFilterActive, startDate, endDate } = this.props;
 
@@ -34,7 +32,13 @@ export default class FacultyGraph extends Component {
         let scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, d3.max(data.map(d => Math.max(d[1], d[2])))]);
         // epa score scale doesnt vary based on max values but its always between 0 and 5
         if (trackType == 'entrustment_score') {
-            scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, 5]);
+            if (isUG) {
+                scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, 3]);
+            }
+            else {
+                scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, 5]);
+            }
+
         }
 
 
@@ -104,13 +108,13 @@ export default class FacultyGraph extends Component {
 
         // for entrustment score we have 6 lines and special axis texts
         if (trackType == 'entrustment_score') {
-            axisTickLines = _.times(6, (index) => {
+            axisTickLines = _.times(isUG ? 4 : 6, (index) => {
                 let verticalPosition = index;
                 return d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[Xoffset, verticalPosition], [width - margin, verticalPosition]])
             })
             axisTickTexts = _.map(axisTickLines, (unused, index) => {
                 return <text key={'axis-tick' + index}
-                    x={5} y={height - (margin / 2) - (index * ((height - (2 * margin)) / 5))} fontWeight='bold' fill='#a9a1a1'>
+                    x={5} y={height - (margin / 2) - (index * ((height - (2 * margin)) / (isUG ? 3 : 5)))} fontWeight='bold' fill='#a9a1a1'>
                     {axisTickTextsFormat((index))}
                 </text>
             });

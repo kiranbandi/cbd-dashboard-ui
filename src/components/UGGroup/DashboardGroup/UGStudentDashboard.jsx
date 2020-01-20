@@ -86,8 +86,8 @@ class UGStudentDashboard extends Component {
                     studentRecords = _.filter(studentRecords, (d) => d.nsid == username);
                 }
 
-                const studentList = _.map(_.groupBy(studentRecords, (d) => d.name), (records, name) => {
-                    return { name, records };
+                const studentList = _.map(_.groupBy(studentRecords, (d) => d.nsid), (records, nsid) => {
+                    return { name: records[0].name, records };
                 }).sort((a, b) => a.name.localeCompare(b.name));
 
                 // filter out records that dont have rotation and phase tag on them or are expired
@@ -151,8 +151,10 @@ class UGStudentDashboard extends Component {
                             onSubmit={this.onSubmit} />
                         {accessType != 'resident' && rawDump.length > 0 &&
                             <UGNormativePanel
+                                onStudentSelect={this.onStudentSelect}
                                 currentStudent={currentStudent}
-                                width={width}
+                                // normalise extra width
+                                width={width + 65}
                                 rawDump={rawDump} />}
                         {currentStudent != '' &&
                             <UGGraphGroup

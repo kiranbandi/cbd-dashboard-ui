@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-    UGStudentDashboard, UGStub,
+    UGStudentDashboard, UGStub,UGFacultyDashboard,
     UGDownloadDashboard, UGProgramDashboard
 } from '../../components';
 
@@ -55,7 +55,7 @@ class DashboardRoot extends Component {
                         </div>
                         <div className='control-inner-container'>
                             {(activeDashboard == 'student') && <UGStudentDashboard />}
-                            {(activeDashboard == 'supervisor') && <UGStub programInfo={programInfo} />}
+                            {(activeDashboard == 'supervisor') && <UGFacultyDashboard programInfo={programInfo} />}
                             {(activeDashboard == 'program') && <UGProgramDashboard programInfo={programInfo} />}
                             {(activeDashboard == 'table') && <UGDownloadDashboard />}
                             {(activeDashboard == 'normative') && <UGStub />}
