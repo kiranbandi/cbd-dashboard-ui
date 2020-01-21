@@ -15,8 +15,9 @@ export default class FacultyGraph extends Component {
         // 3) entrustment_score 
         // 4) words_per_comment
 
-        let { className, data, width, trackType, isUG = false,
-            currentFaculty, title, titleValue,
+        let { className, data, width, trackType,
+            isUG = false, printModeON = false,
+            currentFaculty, title, titleValue, secondTitleValue,
             dateFilterActive, startDate, endDate } = this.props;
 
         // sort the data list based on the overall value
@@ -53,7 +54,7 @@ export default class FacultyGraph extends Component {
                 width={itemSize - (0.25 * itemSize)}
                 stroke={'transparent'}
                 key={d[0]}
-                opacity={'0.50'}>
+                opacity={printModeON ? '1' : '0.50'}>
             </rect>
         });
 
@@ -137,7 +138,7 @@ export default class FacultyGraph extends Component {
         });
 
         return (<div className={'faculty-graph-box m-r m-b ' + className}>
-            <h3 className="text-left m-b">{title}<b className='title-append'>{titleValue}</b></h3>
+            <h3 className="text-left m-b">{title}<b className='title-append'>{titleValue}{(dateFilterActive) ? ' Overall - ' + secondTitleValue + ' Period' : ''}</b></h3>
             <svg className='supervisor-line-chart' width={width} height={height} >
                 <path d={axisTickLines} fill="none" stroke="#564d4d4d" strokeWidth="2px"></path>
                 <g>{bars}</g>

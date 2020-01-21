@@ -60,7 +60,7 @@ function getElementAsCanvas(selector, pdfInstance, pageCount) {
         // set the options to generate the canvas
         // apply the computed inline styling to the cloned dom
         const options = {
-            backgroundColor: '#252830',
+            backgroundColor: '#ffffff',
             scale: 1.5,
             scrollX: 0,
             scrollY: -window.scrollY,
