@@ -34,9 +34,9 @@ export default class UGNormativePanel extends Component {
             data = _.map(residentGroupedRecords, (d, key) => ([key, d.length, 0, d[0].name]));
 
         const height = 500, margin = 50,
-            itemSize = data.length > 0 ? ((width - margin - margin) / data.length) : 2,
+            itemSize = data.length > 0 ? ((width - margin) / data.length) : 2,
             // create the X and Y scales
-            scaleX = d3.scaleLinear().range([margin, width - margin]).domain([0, data.length - 1]),
+            scaleX = d3.scaleLinear().range([margin, width - margin - 0.75 * itemSize]).domain([0, data.length - 1]),
             scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, d3.max(data.map(d => Math.max(d[1], d[2])))]);
 
         // sort the data list based on the overall value
