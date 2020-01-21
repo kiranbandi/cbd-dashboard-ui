@@ -230,10 +230,12 @@ export default (props) => {
     return <div>
         <div className='m-r-lg m-l-md print-info' style={{ 'display': 'inline-block', 'width': '725px' }}>
             <FacultyStatCardSet
+                isUG={isUG}
                 title={"Acquistion Metrics for All Faculties in Rotation - " + currentRotation}
                 processedRecords={processedRecords}
                 dateFilterActive={dateFilterActive} />
             <FacultyStatCardSet
+                isUG={isUG}
                 title={"Acquistion Metrics for Faculty - " + currentFaculty}
                 showNA={currentFaculty == 'ALL'}
                 processedRecords={currentFaculty == 'ALL' ? [] : currentFacultyRecords}
