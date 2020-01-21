@@ -163,16 +163,8 @@ export default class FacultyDashboard extends Component {
             }
         });
 
-        // if print mode is on we reset the width to a standard width of 1000px
-        if (printModeON) {
-            overallWidth = 1450;
-        }
-
-
         return (
             <div className='supervisor-dashboard-container'>
-
-
                 {this.state.isLoaderVisible ?
                     <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
                     <div>
@@ -196,12 +188,12 @@ export default class FacultyDashboard extends Component {
                             onSubmit={this.onSubmit} />
 
                         {/* The contents of this react component will be triggered to the print window */}
-                        <div className={printModeON ? 'printable-content m-a' : 'printable-content'}
+                        <div className={printModeON ? 'printable-content m-a' : ''}
                             ref={el => (this.printRef = el)}>
                             <FacultyInfoGroup
                                 isUG={true}
                                 printModeON={printModeON}
-                                width={overallWidth}
+                                width={printModeON ? 1450 : overallWidth}
                                 processedRecords={processedRecords}
                                 currentFacultyRecords={currentFacultyRecords}
                                 dateFilterActive={dateFilterActive}
@@ -211,7 +203,7 @@ export default class FacultyDashboard extends Component {
                             <FacultyGraphGroup
                                 isUG={true}
                                 printModeON={printModeON}
-                                width={overallWidth}
+                                width={printModeON ? 1450 : overallWidth}
                                 processedRecords={processedRecords}
                                 dateFilterActive={dateFilterActive}
                                 startDate={startDate}
@@ -220,7 +212,7 @@ export default class FacultyDashboard extends Component {
 
                             <FacultyRecordTable
                                 currentFaculty={currentFaculty}
-                                width={printModeON ? 725 : overallWidth}
+                                width={printModeON ? 1100 : overallWidth}
                                 currentFacultyRecords={currentFacultyRecords} />
                         </div>
 

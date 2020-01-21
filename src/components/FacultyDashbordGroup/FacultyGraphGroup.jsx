@@ -25,14 +25,14 @@ export default class FacultyGraphGroup extends Component {
 
 
         const currentFacultyData = _.find(processedRecords, (d) => d.faculty_name == currentFaculty) || false;
-
-
+        
         return (<div>
             {processedRecords.length > 0 && <div className='text-center'>
                 <FacultyGraph
                     title={'Total EPAs Observed '}
                     className={'printable-graph-1'}
                     titleValue={!!currentFacultyData ? currentFacultyData.epa_count : ''}
+                    secondTitleValue={!!currentFacultyData ? currentFacultyData.epa_count_period : ''}
                     printModeON={printModeON}
                     dateFilterActive={dateFilterActive}
                     startDate={startDate}
@@ -40,11 +40,12 @@ export default class FacultyGraphGroup extends Component {
                     currentFaculty={currentFaculty}
                     trackType={'epa_count'}
                     data={data_epa_count}
-                    width={((isUG ? 2 * width : width) / 2) - 50} />
+                    width={((isUG ? printModeON ? width : 2 * width : width) / 2) - 50} />
                 {!isUG && <FacultyGraph
                     title={'EPA Expiry Rate '}
                     className={'printable-graph-2'}
                     titleValue={!!currentFacultyData ? currentFacultyData.expired_epa_percentage + '%' : ''}
+                    secondTitleValue={!!currentFacultyData ? currentFacultyData.expired_epa_percentage_period + '%' : ''}
                     printModeON={printModeON}
                     dateFilterActive={dateFilterActive}
                     startDate={startDate}
@@ -58,6 +59,7 @@ export default class FacultyGraphGroup extends Component {
                     className={'printable-graph-3'}
                     isUG={isUG}
                     titleValue={!!currentFacultyData ? currentFacultyData.entrustment_score : ''}
+                    secondTitleValue={!!currentFacultyData ? currentFacultyData.entrustment_score_period : ''}
                     printModeON={printModeON}
                     dateFilterActive={dateFilterActive}
                     startDate={startDate}
@@ -70,6 +72,7 @@ export default class FacultyGraphGroup extends Component {
                     title={'Average Words Per Comment '}
                     className={'printable-graph-4'}
                     titleValue={!!currentFacultyData ? currentFacultyData.words_per_comment : ''}
+                    secondTitleValue={!!currentFacultyData ? currentFacultyData.words_per_comment_period : ''}
                     printModeON={printModeON}
                     dateFilterActive={dateFilterActive}
                     startDate={startDate}

@@ -5,19 +5,19 @@ import { customFilter } from '../../utils/genericUtility';
 const columns = [{
     Header: 'Date',
     accessor: 'observation_date',
-    maxWidth: 150,
+    maxWidth: 100,
     className: 'text-center',
     filterMethod: customFilter
 }, {
     Header: 'Resident Name',
     accessor: 'resident_name',
-    maxWidth: 200,
+    maxWidth: 125,
     filterMethod: customFilter
 },
 {
     Header: 'EPA',
     accessor: 'epa',
-    maxWidth: 150,
+    maxWidth: 50,
     className: 'epa-cell',
     filterMethod: customFilter
 },
