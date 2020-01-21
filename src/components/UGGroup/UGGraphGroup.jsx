@@ -33,7 +33,8 @@ class GraphPanel extends Component {
     onMouseOver(event) {
         let { studentRecords, actions } = this.props;
         let pointId = event.target.id.split("-");
-        let data = _.groupBy(studentRecords, (d) => d.epa)[pointId[2]][pointId[4]];
+        // get the records corresponding to the epa then sort them by date and then use
+        let data = _.sortBy(_.groupBy(studentRecords, (d) => d.epa)[pointId[2]], (d) => d.date)[pointId[4]]
         var pageWidth = document.body.getBoundingClientRect().width;
         actions.showTooltip(true, {
             'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,

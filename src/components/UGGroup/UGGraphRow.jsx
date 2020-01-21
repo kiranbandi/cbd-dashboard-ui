@@ -17,6 +17,8 @@ export default class GraphRow extends Component {
         let { admission_type, patient_type } = this.state,
             clickerID = event.target.id.split('-');
 
+
+
         // if one of the patient type buttons is clicked
         if (clickerID[0] == 'patient') {
             // if the same button is clicked twice we disable it
@@ -50,6 +52,9 @@ export default class GraphRow extends Component {
             widthPartition, smallScreen = false, epaSourceMap,
             studentEPAData, onMouseOut, onMouseOver,
             onTableExpandClick } = this.props;
+
+
+
 
 
         // margin of 10px on either side reduces the available width by 20
@@ -90,37 +95,37 @@ export default class GraphRow extends Component {
         const xScale = scaleLinear().domain([0, studentEPAData.length - 1]).range([marginHorizontal, width - marginHorizontal])
         const yScale = scaleLinear().domain([3, 1]).range([marginVertical, innerHeight - marginVertical])
 
-        const scoreData = studentEPAData.map((d, i) => {
 
+        let sortedData = _.sortBy(_.clone(studentEPAData), (d) => d.date);
 
-            d.admission_type = d.admission_type == 'in patient' ? 'in' : d.admission_type == 'out patient' ? 'out' : 'na';
-            d.patient_type = d.patient_type == 'adult' ? 'adult' : d.patient_type == 'pediatrics' ? 'child' : 'na';
+        let scoreData = _.map(sortedData, (d, i) => {
+
+            const record_admission_type = d.admission_type == 'in patient' ? 'in' : d.admission_type == 'out patient' ? 'out' : 'na';
+            const record_patient_type = d.patient_type == 'adult' ? 'adult' : d.patient_type == 'pediatrics' ? 'child' : 'na';
 
             let highlight = false;
-
-
             if (admission_type.length > 0 && patient_type.length > 0) {
-                highlight = ((d.admission_type == admission_type) && (d.patient_type == patient_type)) ? true : false;
+                highlight = ((record_admission_type == admission_type) && (record_patient_type == patient_type)) ? true : false;
             }
             else if (admission_type.length > 0) {
-                highlight = (d.admission_type == admission_type);
+                highlight = (record_admission_type == admission_type);
             }
             else if (patient_type.length > 0) {
-                highlight = (d.patient_type == patient_type);
+                highlight = (record_patient_type == patient_type);
             }
-
 
             return {
                 x: xScale(i),
                 y: yScale(d.rating),
                 highlight,
-                patient_type: d.admission_type,
-                patient_type: d.patient_type,
+                admission_type: record_admission_type,
+                patient_type: record_patient_type,
                 mark: d.mark,
                 rotationMark: d.rotationMark
             };
 
         });
+
 
         const trackTrailPositions = _.map([...Array(3)], (d, i) => {
             return {
