@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
-import { geoBounds } from 'd3';
 
 export default class UGNormativePanel extends Component {
 
@@ -8,7 +7,7 @@ export default class UGNormativePanel extends Component {
         super(props);
 
         this.state = {
-            stackByScore: false
+            stackByScore: true
         };
 
         this.onClick = this.onClick.bind(this);
@@ -46,17 +45,11 @@ export default class UGNormativePanel extends Component {
         // create bars
         const bars = data.map((d, i) => {
 
-            debugger;
-
             const records = _.groupBy(residentGroupedRecords[d[0]], (d) => d.rating);
 
             const scoreShare = _.map([1, 2, 3], (d) => {
                 return (records[d] ? records[d].length : 0);
             })
-
-            // 1st score 3
-            // 2nd score 2
-            // 3rd score 1
 
             if (stackByScore) {
                 return [<rect
