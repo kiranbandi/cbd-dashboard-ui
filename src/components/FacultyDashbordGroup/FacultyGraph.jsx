@@ -24,11 +24,13 @@ export default class FacultyGraph extends Component {
 
         const height = 350, margin = 10, Xoffset = 50;
 
-        const itemSize = data.length > 0 ? ((width - margin - Xoffset) / data.length) : 2;
-
+        // The size of the bar is 0.75% of the item size and rest is left as a gap
+        const itemSize = data.length > 0 ? ((width - margin) / data.length) : 2;
+        // The last bar would go beyond the available width by 75%
+        //  so that width is removed from the scale 
 
         // create the X and Y scales and modify them based on the track type
-        const scaleX = d3.scaleLinear().range([Xoffset, width - margin]).domain([0, data.length - 1]);
+        const scaleX = d3.scaleLinear().range([Xoffset, width - margin - 0.75 * itemSize]).domain([0, data.length - 1]);
         let scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, d3.max(data.map(d => Math.max(d[1], d[2])))]);
         // epa score scale doesnt vary based on max values but its always between 0 and 5
         if (trackType == 'entrustment_score') {
@@ -40,7 +42,6 @@ export default class FacultyGraph extends Component {
             }
 
         }
-
 
         // create bars
         const bars = data.map((d, i) => {
