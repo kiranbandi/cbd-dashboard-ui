@@ -28,6 +28,7 @@
         "lodash": "^4.17.10",
         "moment": "^2.23.0",
         "npm": "^6.9.0",
+        "random-name": "^0.1.2",
         "rc-slider": "^8.7.1",
         "react": "^16.4.1",
         "react-chartjs": "^1.2.0",
