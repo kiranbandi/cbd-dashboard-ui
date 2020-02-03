@@ -162,7 +162,9 @@ export default class ProgramDashboard extends Component {
                                     filteredRecords={recordsInAcademicYear} />
                                 <EPAMonthlyRotation
                                     width={width}
-                                    filteredRecords={filteredRecords} />
+                                    filteredRecords={allRecords}
+                                    defaultAcademicYear={academicYear}
+                                    possibleAcademicYears={possibleAcademicYears} />
                             </div> :
                             <h2 className='text-center text-danger m-t-lg'>No program information is available currently</h2>}
                     </div>}
