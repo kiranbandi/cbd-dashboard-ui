@@ -9,6 +9,8 @@ import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation
 import EPAMonthlyRotation from '../ProgramEvaluationGroup/EPAMonthlyRotation';
 import EPAspecificRotation from '../ProgramEvaluationGroup/EPAspecificRotation';
 import RotationSpecificEPA from '../ProgramEvaluationGroup/RotationSpecificEPA';
+import ProgramStatCardSet from '../ProgramEvaluationGroup/ProgramStatCardSet';
+import processFacultyRecords from '../../utils/processFacultyRecords';
 
 const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP), (d) => (
     {
@@ -99,6 +101,8 @@ export default class ProgramDashboard extends Component {
             filteredRecords = _.clone(phaseGroupedRecords[selected] || []);
         }
 
+        const processedRecords = processFacultyRecords(filteredRecords, 'ALL', undefined, undefined, undefined, 0);
+
         return (
             <div className='m-a dashboard-root-program' >
                 {this.state.isLoaderVisible ?
@@ -132,6 +136,13 @@ export default class ProgramDashboard extends Component {
                                     </div>
                                 })}
                             </div>
+                        </div>
+                        <div>
+                            <ProgramStatCardSet
+                                isUG={false}
+                                title={"Acquistion Metrics for All Faculties"}
+                                processedRecords={processedRecords}
+                                dateFilterActive={false} />
                         </div>
                         {filteredRecords.length > 0 ?
                             <div className='row'>
