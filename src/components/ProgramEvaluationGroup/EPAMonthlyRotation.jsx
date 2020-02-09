@@ -45,7 +45,9 @@ export default class EPAMonthlyRotation extends Component {
             // Create empty map for all months
             let monthCount = {};
             // Count records for each month
-            const records = filteredRecords.filter(d => moment(d.observation_date, 'YYYY-MM-DD').isBetween(moment('07/01/' + Number(academicYear.value), 'MM/DD/YYYY'), moment('06/30/' + (Number(academicYear.value) + 1), 'MM/DD/YYYY'), 'days', '[]'));
+            const records = academicYear ?
+                filteredRecords.filter(d => moment(d.observation_date, 'YYYY-MM-DD').isBetween(moment('07/01/' + Number(academicYear.value), 'MM/DD/YYYY'), moment('06/30/' + (Number(academicYear.value) + 1), 'MM/DD/YYYY'), 'days', '[]')) :
+                filteredRecords;
             _.map(records, (d) => {
                 let monthKey = moment(d.observation_date, 'YYYY-MM-DD').format('MMM');
                 if (monthCount.hasOwnProperty(monthKey)) {
