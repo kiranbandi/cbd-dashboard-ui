@@ -66,7 +66,8 @@ export default class ProgramDashboard extends Component {
                 this._isMounted && this.setState({
                     residentList,
                     rotationCount: calculateRotationCount(residentList, academicYear.value),
-                    allRecords: _.filter(data, (d) => !d.isExpired && (!!d.rotationTag && !!d.phaseTag))
+                    allRecords: _.filter(data, (d) => !d.isExpired && (!!d.rotationTag && !!d.phaseTag)),
+                    allRecordsWithExpired: data
                 });
             })
             // toggle loader again once the request completes
@@ -83,25 +84,29 @@ export default class ProgramDashboard extends Component {
 
     render() {
 
-        const { allRecords, academicYear, selected, rotationCount } = this.state,
+        const { allRecords, allRecordsWithExpired, academicYear, selected, rotationCount } = this.state,
             { epaSourceMap, rotationList } = this.props.programInfo,
             // Filter out records which fall in a given academic year 
-            recordsInAcademicYear = _.filter(allRecords, (d) => matchAcademicYear(d.observation_date, academicYear.value));
+            recordsInAcademicYear = _.filter(allRecords, (d) => matchAcademicYear(d.observation_date, academicYear.value)),
+            recordsInAcademicYearWithExpired = _.filter(allRecordsWithExpired, (d) => matchAcademicYear(d.observation_date, academicYear.value));
 
-        let width = document.body.getBoundingClientRect().width - 250, filteredRecords = [];
+        let width = document.body.getBoundingClientRect().width - 250, filteredRecords = [], filteredRecordsWithExpired = [];
         // for small screens use all available width
         width = width < 800 ? width : width / 2;
         // group records based on the phase the resident was in 
         const phaseGroupedRecords = _.groupBy(recordsInAcademicYear, (d) => d.phaseTag);
+        const phaseGroupedRecordsWithExpired = _.groupBy(recordsInAcademicYearWithExpired, (d) => d.phaseTag);
 
         if (selected == 'all') {
             filteredRecords = _.clone(recordsInAcademicYear);
+            filteredRecordsWithExpired = _.clone(recordsInAcademicYearWithExpired);
         }
         else {
             filteredRecords = _.clone(phaseGroupedRecords[selected] || []);
+            filteredRecordsWithExpired = _.clone(phaseGroupedRecordsWithExpired[selected] || []);
         }
 
-        const processedRecords = processFacultyRecords(filteredRecords, 'ALL', undefined, undefined, undefined, 0);
+        const processedRecords = processFacultyRecords(filteredRecordsWithExpired, 'ALL', undefined, undefined, undefined, 0);
 
         return (
             <div className='m-a dashboard-root-program' >
