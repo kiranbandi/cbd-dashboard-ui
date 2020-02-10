@@ -9,7 +9,7 @@ export default (props) => {
     let groupedRecords = _.groupBy(filteredRecords, (d) => d.rotationTag);
     // Count records for each group and normalize by rotation count for that group
     _.map(groupedRecords, (group, groupKey) => {
-        groupedRecords[groupKey] = Math.ceil(group.length);
+        groupedRecords[groupKey] = Math.ceil(group.length / rotationCount[groupKey]);
     });
 
     let lineData = {
