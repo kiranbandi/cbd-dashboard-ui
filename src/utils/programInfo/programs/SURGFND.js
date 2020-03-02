@@ -1,75 +1,62 @@
 const programInfo = {
-    infoCardsVisible: false,
-    examScoresVisible: false,
+    infoCardsVisible: true,
+    examScoresVisible: true,
     narrativesVisible: true,
-    rotationList: ["CHR PAIN", "CV ANE", "ELECTIVE ", "EMERGENCY", "GIM", "GSX", "ICU", "IM SELECTIVE", "NICU", "OBS ANE", "OBSTETRICS", "OTHER", "PACU", "PALLIATIVE", "PEDIATRICS", "PEDS ANE", "PICU", "RADIOLOGY", "REG ANE", "REG CARDIO", "REG CV ANE", "RESEARCH", "RUH ANE", "SCH ANE", "SPEC", "SPH ANES", "STOON CARDIO", "SURG SELECTIVE", "TEE", "TRAUMA"],
+    rotationList: ["EM", "EM(REGINA)", "EM(PED)", "EM(RGNL)", "ACE", "ANESTHESIA", "CARDIO", "ICU", "GIM", "GEN SURG", "NEURO", "OBS/GYN", "OPTHO", "ORTHO", "OTHER", "PICU", "PLASTICS", "PSYCH", "SELECTIVE", "TOXICOLOGY", "TRAUMA", "TRANSPORT"],
     rotationRequired: {
-        "SCH ANE": 5,
-        "CV ANE": 5,
-        "RUH ANE": 5,
-        "OBS ANE": 5,
-        "PACU": 5,
-        "PEDS ANE": 5,
-        "SPEC": 5,
-        "SPH ANES": 5,
-        "STOON CARDIO": 5,
-        "REG CARDIO": 5,
-        "IM SELECTIVE": 5,
-        "GIM": 5,
-        "CHR PAIN": 5,
-        "TRAUMA": 5,
-        "GSX": 5,
-        "SURG SELECTIVE": 5,
-        "OBSTETRICS": 5,
-        "EMERGENCY": 5,
-        "ICU": 5,
-        "NICU": 5,
-        "RADIOLOGY": 5,
-        "PALLIATIVE": 5,
-        "PICU": 5,
-        "PEDIATRICS": 5,
-        "REG ANE": 5,
-        "REG CV ANE": 5,
-        "RESEARCH": 5,
-        "ELECTIVE ": 5,
-        "TEE": 5,
-        "OTHER": 5
+        "ACE": 6,
+        "EM": 13,
+        "EM(REGINA)": 20,
+        "EM(PED)": 12,
+        "EM(RGNL)": 6,
+        "ANESTHESIA": 9,
+        "CARDIO": 8,
+        "ICU": 6,
+        "GIM": 8,
+        "GEN SURG": 7,
+        "NEURO": 4,
+        "OPTHO": 8,
+        "ORTHO": 4,
+        "PLASTICS": 6,
+        "SELECTIVE": 8,
+        "TRAUMA": 7,
+        "TOXICOLOGY": 4,
+        "TRANSPORT": 6,
+        "OBS/GYN": 4,
+        "PICU": 4,
+        "PSYCH": 4,
+        "OTHER": 4
     },
     epaSourceMap: {
         1: {
             'ID': 'TTD',
             'topic': 'Transition to Discipline (D)',
             subRoot: {
-                '1.1': "Performing preoperative assessments for healthy adult patients who will be undergoing a non-complex scheduled surgical procedure",
-                '1.2': "Monitoring adult patients undergoing non-complex surgical procedures, under general or regional anesthesia",
-                '1.3': "Monitoring ASA 1 or 2 adult patients undergoing minor scheduled surgical procedures, under general or regional anesthesia",
-                '1.4': "Performing the postoperative transfer of care of ASA 1 or 2 adult patients following minor surgical procedures, including postoperative orders"
+                '1.1': 'Recognizing the unstable/critically ill patient, mobilizing the healthcare team and supervisor, and initiating basic life support',
+                '1.2': 'Performing and documenting focused histories and physical exams, and providing preliminary management of cardinal emergency department presentations',
+                '1.3': 'Facilitating communication of information between a patient in the emergency department, caregivers and members of the healthcare team to organize care and disposition of the patient',
+                '1.4': '(SA) Using clinical informatics to facilitate efficient, safe, patient care'
             },
             maxObservation: {
-                '1.1': 5,
-                '1.2': 1,
-                '1.3': 2,
-                '1.4': 3
+                '1.1': 10,
+                '1.2': 20,
+                '1.3': 10,
+                '1.4': 2
 
             },
             clinicalPresentation: {
-                '1.1': ["general surgery", "gynecology", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "urology", "other"],
-                '1.2': ["general surgery", "gynecology", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "urology", "other"],
+                '1.1': ["cardiorespiratory arrest", "unstable dysrhythmia", "shock", "respiratory distress", "altered neurological status", "other"],
+                '1.2': ["chest pain", "shortness of breath", "abdominal pain", "minor trauma", "other"],
                 '1.3': [],
                 '1.4': []
             },
             patientDemographic: {
-                '1.1': ["direct", "chart/case review"],
-                '1.2': ["general", "regional"],
+                '1.1': ["infant", "child", "youth", "adult", "senior"],
+                '1.2': ["infant", "child", "youth", "adult", "senior"],
                 '1.3': ["infant", "child", "youth", "adult", "senior"],
                 '1.4': []
             },
-            filterTitles: {
-                '1.1': ["Procedure Type", "Observation Type"],
-                '1.2': ["Procedure Type", "Anesthesia Type"],
-                '1.3': ["infant", "child", "youth", "adult", "senior"],
-                '1.4': []
-            }
+            filterTitles: {}
 
         },
         2: {
