@@ -54,37 +54,37 @@ function setRotation(rotation) {
 
     switch (rotation) {
         case "family medicine":
-            tag = 'FAMILY';
+            tag = 'Family';
             break;
         case "electives":
-            tag = 'ELECTIVE';
+            tag = 'Elective';
             break;
         case "obstetrics and gynecology":
             tag = 'OBS/GYN';
             break;
         case "selectives":
-            tag = "SELECTIVE";
+            tag = "Selective";
             break;
         case "psychiatry":
-            tag = 'PSYCH';
+            tag = 'Psych';
             break;
         case "pediatrics":
             tag = 'PED';
             break;
         case "surgery":
-            tag = 'GSX';
+            tag = 'Surgery';
             break;
         case "internal medicine":
-            tag = 'IM/SURG';
+            tag = 'Medicine';
             break;
         case "emergency medicine":
-            tag = 'EM/ANES';
+            tag = 'EM';
             break;
         case "anaesthesia":
-            tag = 'EM/ANES';
+            tag = 'Anesthesia';
             break;
         default:
-            tag = 'EM/ANES';
+            tag = 'Medicine';
     }
 
     return tag;

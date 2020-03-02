@@ -2,18 +2,19 @@ const programInfo = {
     infoCardsVisible: false,
     examScoresVisible: false,
     narrativesVisible: false,
-    rotationList: ["EM/ANES", "FAMILY", "GSX", "IM/SURG", "OBS/GYN", "PED", "PSYCH", "ELECTIVE", "SELECTIVE", "OTHER"],
+    rotationList: ["Anesthesia", "EM", "Elective", "Family", "Medicine", "OBS/GYN", "Other", "PED", "Psych", "Selective", "Surgery"],
     rotationRequired: {
-        "EM/ANES": 6,
-        "FAMILY": 6,
-        "GSX": 6,
-        "IM/SURG": 6,
+        "EM": 6,
+        "Anesthesia": 6,
+        "Family": 6,
+        "Surgery": 6,
+        "Medicine": 6,
         "OBS/GYN": 6,
         "PED": 6,
-        "PSYCH": 6,
-        "ELECTIVE": 6,
-        "SELECTIVE": 6,
-        "OTHER": 6
+        "Psych": 6,
+        "Elective": 6,
+        "Selective": 6,
+        "Other": 6
     },
     epaSourceMap: {
         subRoot: {
