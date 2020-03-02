@@ -2,7 +2,9 @@ export default [{ value: 'EM', label: 'Emergency Medicine' },
     { value: 'PATH', label: 'Pathology & Lab Medicine' },
     { value: 'OBGYN', label: 'Obstetrics and Gynecology' },
     { value: 'IM', label: 'Internal Medicine' },
+    { value: 'GIM', label: 'General Internal Medicine' },
     { value: 'NEURO', label: 'Neurosurgery' },
-    { value: 'UNDERGRADUATE', label: 'Undergraduate' },
-    { value: 'ANESTHESIA', label: 'Anesthesia (In Progress)' }
+    { value: 'ANESTHESIA', label: 'Anesthesia' },
+    { value: 'SURGFND', label: 'Surgical Foundation' },
+    { value: 'UNDERGRADUATE', label: 'Undergraduate' }
 ];
