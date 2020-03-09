@@ -11,6 +11,7 @@ import EPAspecificRotation from '../ProgramEvaluationGroup/EPAspecificRotation';
 import RotationSpecificEPA from '../ProgramEvaluationGroup/RotationSpecificEPA';
 import ProgramStatCardSet from '../ProgramEvaluationGroup/ProgramStatCardSet';
 import processFacultyRecords from '../../utils/processFacultyRecords';
+import EPACompletionDistribution from '../ProgramEvaluationGroup/EPACompletionDistribution';
 
 const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP), (d) => (
     {
@@ -90,9 +91,9 @@ export default class ProgramDashboard extends Component {
             recordsInAcademicYear = _.filter(allRecords, (d) => matchAcademicYear(d.observation_date, academicYear.value)),
             recordsInAcademicYearWithExpired = _.filter(allRecordsWithExpired, (d) => matchAcademicYear(d.observation_date, academicYear.value));
 
-        let width = document.body.getBoundingClientRect().width - 250, filteredRecords = [], filteredRecordsWithExpired = [];
+        let fullWidth = document.body.getBoundingClientRect().width - 250, filteredRecords = [], filteredRecordsWithExpired = [];
         // for small screens use all available width
-        width = width < 800 ? width : width / 2;
+        let width = fullWidth < 800 ? width : width / 2;
         // group records based on the phase the resident was in 
         const phaseGroupedRecords = _.groupBy(recordsInAcademicYear, (d) => d.phaseTag);
         const phaseGroupedRecordsWithExpired = _.groupBy(recordsInAcademicYearWithExpired, (d) => d.phaseTag);
@@ -170,6 +171,10 @@ export default class ProgramDashboard extends Component {
                                     filteredRecords={allRecords}
                                     defaultAcademicYear={academicYear}
                                     possibleAcademicYears={possibleAcademicYears} />
+                                <EPACompletionDistribution
+                                    width={fullWidth}
+                                    programInfo={this.props.programInfo}
+                                    records={this.state.allRecordsWithExpired} />
                             </div> :
                             <h2 className='text-center text-danger m-t-lg'>No program information is available currently</h2>}
                     </div>}
