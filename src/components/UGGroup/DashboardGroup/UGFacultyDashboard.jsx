@@ -35,6 +35,12 @@ export default class FacultyDashboard extends Component {
         this.onRotationSelect = this.onRotationSelect.bind(this);
         this.onFacultySelect = this.onFacultySelect.bind(this);
         this.onPrintClick = this.onPrintClick.bind(this);
+        this.selectFaculty = this.selectFaculty.bind(this);
+    }
+
+    selectFaculty(event) {
+        const currentFaculty = event.target.id.slice(12).split('--').join(' ');
+        this.setState({ currentFaculty });
     }
 
     onPrintClick() {
@@ -208,6 +214,7 @@ export default class FacultyDashboard extends Component {
                                 dateFilterActive={dateFilterActive}
                                 startDate={startDate}
                                 endDate={endDate}
+                                selectFaculty={this.selectFaculty}
                                 currentFaculty={currentFaculty} />
 
                             <FacultyRecordTable

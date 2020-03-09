@@ -9,7 +9,7 @@ export default class FacultyGraphGroup extends Component {
     render() {
 
         const { printModeON, width, processedRecords,
-            dateFilterActive, startDate, endDate,
+            dateFilterActive, startDate, endDate, selectFaculty,
             currentFaculty, isUG = false } = this.props;
 
         // format the data into the required format for a graph component
@@ -25,7 +25,7 @@ export default class FacultyGraphGroup extends Component {
 
 
         const currentFacultyData = _.find(processedRecords, (d) => d.faculty_name == currentFaculty) || false;
-        
+
         return (<div>
             {processedRecords.length > 0 && <div className='text-center'>
                 <FacultyGraph
@@ -40,6 +40,7 @@ export default class FacultyGraphGroup extends Component {
                     currentFaculty={currentFaculty}
                     trackType={'epa_count'}
                     data={data_epa_count}
+                    selectFaculty={selectFaculty}
                     width={((isUG ? printModeON ? width : 2 * width : width) / 2) - 50} />
                 {!isUG && <FacultyGraph
                     title={'EPA Expiry Rate '}
@@ -53,6 +54,7 @@ export default class FacultyGraphGroup extends Component {
                     currentFaculty={currentFaculty}
                     trackType={'expired_epa_percentage'}
                     data={data_expired_epa_percentage}
+                    selectFaculty={selectFaculty}
                     width={(width / 2) - 50} />}
                 <FacultyGraph
                     title={'Average Entrustment Score '}
@@ -67,6 +69,7 @@ export default class FacultyGraphGroup extends Component {
                     currentFaculty={currentFaculty}
                     trackType={'entrustment_score'}
                     data={data_entrustment_score}
+                    selectFaculty={selectFaculty}
                     width={(width / 2) - 50} />
                 <FacultyGraph
                     title={'Average Words Per Comment '}
@@ -80,6 +83,7 @@ export default class FacultyGraphGroup extends Component {
                     currentFaculty={currentFaculty}
                     trackType={'words_per_comment'}
                     data={data_words_per_comment}
+                    selectFaculty={selectFaculty}
                     width={(width / 2) - 50} />
             </div>}
         </div>
