@@ -80,7 +80,7 @@ const programInfo = {
                 '2.1': ["cardiorespiratory arrest", "unstable dysrhythmia", "shock", "respiratory distress", "altered neurological status", "other"],
                 '2.2': ["cough or wheeze", "musculoskeletal injury or pain", "eye complaint", "ENT complaint", "headache", "other"],
                 '2.3': [],
-                '2.4': ["simple wound repair including anesthesia", "abscess drainage", "casting or splinting", "anterior nasal packing", "arthrocentesis", "intraocular pressure measurement", "intraosseous access"],
+                '2.4': ["simple wound repair including anesthesia", "abscess drainage", "casting or splinting", "anterior nasal packing", "arthrocentesis", "intraocular pressure measurement", "intraosseous acces"],
                 '2.5': []
             },
             patientDemographic: {

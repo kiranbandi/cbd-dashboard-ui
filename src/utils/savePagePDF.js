@@ -12,7 +12,7 @@ export default function(fileName = 'download.pdf', isUG = false) {
             // so we set the pdf page size based on the its content everytime 
             // we add a new page
             // first we get the info box content and add it to the page (.print-info)
-            // this has a constant width of 725px and a height of 425bx
+            // this has a constant width of 905px and a height of 425bx
             // because I like those numbers :-)
             // then we add each of the graphs (.faculty-graph-box) there are four of them
             // finally we add in the record table at the bottom

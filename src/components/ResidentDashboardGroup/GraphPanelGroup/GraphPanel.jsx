@@ -82,7 +82,7 @@ class GraphPanel extends Component {
             epaSourceMap, smallScreen, width,
             levelVisibilityOpenStatus, programInfo = {} } = this.props;
 
-        const { hidePercentages = false, hideTogoNumbers } = programInfo;
+        const { hidePercentages = false, hideTogoNumbers} = programInfo;
 
         const { openTableID, openFilterID } = this.state;
 
@@ -97,10 +97,13 @@ class GraphPanel extends Component {
             _.map(epaSourcesThatExist, (epaSource) => {
                 epaSource.sort((a, b) => Number(a.split(".")[1]) - Number(b.split(".")[1]));
             });
+            // remove values that dont exist in the original source map 
+            _.map(epaSourcesThatExist, (epaSource, epaRootKey) => {
+                epaSourcesThatExist[epaRootKey] = epaSource.filter((d) => epaSourceMap[epaRootKey].subRoot.hasOwnProperty(d));
+            });
         }
 
         let expiredResidentDataGrouped = _.groupBy(expiredResidentData, (d) => d.EPA);
-
 
         let widthOfRootGraphPanel = smallScreen ? (width + 50) : width;
         let widthPartition = smallScreen ? (width - 20) : (width / 4);

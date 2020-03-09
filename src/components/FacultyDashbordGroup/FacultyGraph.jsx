@@ -16,7 +16,7 @@ export default class FacultyGraph extends Component {
         // 4) words_per_comment
 
         let { className, data, width, trackType,
-            isUG = false, printModeON = false,
+            isUG = false, printModeON = false, selectFaculty,
             currentFaculty, title, titleValue, secondTitleValue,
             dateFilterActive, startDate, endDate } = this.props;
 
@@ -131,8 +131,10 @@ export default class FacultyGraph extends Component {
                 fill={'black'}
                 width={itemSize - (0.25 * itemSize)}
                 stroke={'transparent'}
+                id={'faculty-bar-' + d[0].split(' ').join('--')}
                 key={d[0]}
-                opacity={0}>
+                opacity={0}
+                onClick={selectFaculty}>
                 <title>{d[0] + '\nOverall: ' + (this.props.trackType == 'expired_epa_percentage' ? d[1] + '%' : d[1]) + '\nPeriod: ' + (this.props.trackType == 'expired_epa_percentage' ? d[2] + '%' : d[2])}</title>
             </rect>
         });
