@@ -71,13 +71,13 @@ export default class ScheduleBlock extends Component {
                     averageRotationPercentage = (Number(epaPerBlockList[index]) || 0) / rotationRequired[rotationLabel];
                 }
 
-                if (averageRotationPercentage <= 0.25) {
+                if (averageRotationPercentage > 0 && averageRotationPercentage <= 0.25) {
                     averageColorLabel = 'dark-red';
                 }
-                else if (averageRotationPercentage <= 0.50) {
+                else if (averageRotationPercentage > 0 && averageRotationPercentage <= 0.50) {
                     averageColorLabel = 'red';
                 }
-                else if (averageRotationPercentage <= 0.75) {
+                else if (averageRotationPercentage > 0 && averageRotationPercentage <= 0.75) {
                     averageColorLabel = 'green';
                 }
 
