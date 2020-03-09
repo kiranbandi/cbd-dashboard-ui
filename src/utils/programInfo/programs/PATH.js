@@ -32,7 +32,7 @@ const programInfo = {
                 "1.1": "Establishing skills in microscopy",
                 "1.2": "Participating in basic specimen handling",
                 "1.3": "Summarizing and presenting relevant clinical information for clinicopathologic correlation",
-                "1.4": "Creating a personal teaching and learning plan"
+                "1.4": "(SA) Creating a personal teaching and learning plan"
             },
             maxObservation: {
                 "1.1": 13,
@@ -69,7 +69,7 @@ const programInfo = {
                 "2.3": "Performing gross dissection of simple surgical specimens from accessioning to submission of blocks",
                 "2.4": "Selecting specimens for ancillary testing",
                 "2.5": "Generating diagnostically accurate and complete pathology reports for simple surgical pathology cases",
-                "2.6": "Performing clinical diagnostic procedures"
+                "2.6": "(SA) Performing clinical diagnostic procedures"
             },
             maxObservation: {
                 "2.1": 10,
@@ -129,7 +129,7 @@ const programInfo = {
                 "3.19": "Providing routine biochemistry clinical consultations",
                 "3.20": "Interpreting, and reporting biochemistry testing",
                 "3.21": "Providing formal and informal teaching",
-                "3.22": "Conducting scholarly work"
+                "3.22": "(SA) Conducting scholarly work"
             },
             maxObservation: {
                 "3.1": 13,
@@ -230,7 +230,7 @@ const programInfo = {
                 "4.1": "Leading and managing the daily operations of the laboratory, including a full workload of cases representing the breadth of practice",
                 "4.2": "Functioning independently on call",
                 "4.3": "Leading, implementing and advocating for quality assurance practices",
-                "4.4": "Developing and implementing a plan for continuing professional development"
+                "4.4": "(SA) Developing and implementing a plan for continuing professional development"
             },
             maxObservation: {
                 "4.1": 12,

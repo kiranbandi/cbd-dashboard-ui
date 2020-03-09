@@ -206,9 +206,9 @@ const programInfo = {
                 "4.3": "Assessing and managing patients in whom there is uncertainty in diagnosis and/or treatment",
                 "4.4": "Providing consultation to off-site health care providers",
                 "4.5": "Initiating and facilitating transfers of care through the health care system",
-                "4.6": "EPA: Working with other physicians and healthcare providers to develop collaborative patient care plans",
-                "4.7": "Identifying learning needs in clinical practice, and addressing them with a personal learning plan",
-                "4.8": "Identifying and analyzing system-level safety, quality, or resource stewardship concerns in healthcare delivery"
+                "4.6": "(SA) EPA: Working with other physicians and healthcare providers to develop collaborative patient care plans",
+                "4.7": "(SA) Identifying learning needs in clinical practice, and addressing them with a personal learning plan",
+                "4.8": "(SA) Identifying and analyzing system-level safety, quality, or resource stewardship concerns in healthcare delivery"
             },
             maxObservation: {
                 "4.1": 10,
