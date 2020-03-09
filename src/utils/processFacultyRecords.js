@@ -28,9 +28,6 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
 
     });
 
-
-
-
     // similary group the records in the date period by faculty name
     let recordsGroupedByFacultyInPeriod = _.groupBy(allResidentRecordsInPeriod, (d) => d.observer_name);
 
@@ -47,9 +44,13 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
         const nonExpiredRecords = records.filter(dd => !dd.isExpired),
             nonExpiredRecordsInPeriod = recordsInPeriod.filter(dd => !dd.isExpired);
 
+        // group records by rating
+        const ratingGroup = _.groupBy(dateFilterActive ? nonExpiredRecordsInPeriod : nonExpiredRecords, (d) => d.rating);
+        const ratingGroupTotal = dateFilterActive ? nonExpiredRecordsInPeriod.length : nonExpiredRecords.length;
         return {
             faculty_name,
             records,
+            rating_group: _.map([1, 2, 3, 4, 5], (d) => (ratingGroup[d] ? ratingGroup[d].length : 0)),
             epa_count: records.length,
             epa_count_period: recordsInPeriod.length,
             expired_epa_percentage: Math.round(records.filter(dd => dd.isExpired).length / records.length * 100),
