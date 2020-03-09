@@ -6,5 +6,5 @@ export default [{ value: 'EM', label: 'Emergency Medicine' },
     { value: 'NEURO', label: 'Neurosurgery' },
     { value: 'ANESTHESIA', label: 'Anesthesia' },
     { value: 'SURGFND', label: 'Surgical Foundation' },
-    { value: 'UNDERGRADUATE', label: 'Undergraduate' }
+    { value: 'UNDERGRADUATE', label: 'Undergraduate (UG)' }
 ];
