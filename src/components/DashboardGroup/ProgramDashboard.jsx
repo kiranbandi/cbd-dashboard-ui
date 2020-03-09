@@ -93,7 +93,7 @@ export default class ProgramDashboard extends Component {
 
         let fullWidth = document.body.getBoundingClientRect().width - 250, filteredRecords = [], filteredRecordsWithExpired = [];
         // for small screens use all available width
-        let width = fullWidth < 800 ? width : width / 2;
+        let width = fullWidth < 800 ? fullWidth : fullWidth / 2;
         // group records based on the phase the resident was in 
         const phaseGroupedRecords = _.groupBy(recordsInAcademicYear, (d) => d.phaseTag);
         const phaseGroupedRecordsWithExpired = _.groupBy(recordsInAcademicYearWithExpired, (d) => d.phaseTag);
