@@ -3,7 +3,7 @@ import * as d3 from "d3";
 
 const fivePointColorScale = ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f"];
 
-const innerRadius = 30, outerRadius = 60;
+const innerRadius = 28, outerRadius = 48;
 
 const Arc = ({ data, index, createArc, colors, format }) => (
     <g key={index} className="arc">
@@ -25,20 +25,34 @@ const Pie = props => {
     const data = createPie(props.data);
 
     return (
-        <svg width={150} height={150}>
-            <g transform={`translate(${outerRadius} ${outerRadius})`}>
-                {data.map((d, i) => (
-                    <Arc
-                        key={i}
-                        data={d}
-                        index={i}
-                        createArc={createArc}
-                        colors={colors}
-                        format={format}
-                    />
-                ))}
-            </g>
-        </svg>
+        <div className={'faculty-pie-wrapper ' + (data.length > 0 ? '' : 'p-a')}>
+            <span className="pie-title">EPA RATING</span>
+            {data.length > 0 ?
+                <svg width={150} height={100}>
+                    <g transform={`translate(${outerRadius + 8} ${outerRadius + 2})`}>
+                        {data.map((d, i) => (
+                            <Arc
+                                key={i}
+                                data={d}
+                                index={i}
+                                createArc={createArc}
+                                colors={colors}
+                                format={format}
+                            />
+                        ))}
+                    </g>
+                    <g transform={'translate(28 -1)'}>
+                        {_.map(fivePointColorScale, (c, i) => {
+                            return [<circle fill={c} r={10} cx={100} cy={20 * i + 11}></circle>,
+                            <text style={{ 'fontWeight': 'bold' }} x={96} y={20 * i + 15}>{i + 1}</text>];
+                        })}
+                    </g>
+                </svg> :
+                <h2 className="statcard-number m-a"> N/A</h2>
+            }
+
+        </div>
+
     );
 };
 
