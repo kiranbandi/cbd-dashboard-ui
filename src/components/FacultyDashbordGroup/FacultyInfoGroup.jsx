@@ -116,25 +116,25 @@ const columns = [
         Header: 'EPAs',
         accessor: 'epa_count',
         className: 'text-center',
-        maxWidth: 100
+        maxWidth: 50
     },
     {
         Header: 'Expiry(%)',
         accessor: 'expired_epa_percentage',
         className: 'text-center',
-        maxWidth: 100
+        maxWidth: 75
     },
     {
         Header: 'AVG. EPA SCORE',
         accessor: 'entrustment_score',
         className: 'text-center',
-        maxWidth: 125
+        maxWidth: 120
     },
     {
         Header: 'Avg. Words',
         accessor: 'words_per_comment',
         className: 'text-center',
-        maxWidth: 100
+        maxWidth: 90
     }
 ];
 
