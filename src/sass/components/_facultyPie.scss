@@ -6,8 +6,14 @@
     overflow: hidden;
     vertical-align: top;
     background: #1a1c22;
-    padding: 10px;
+    padding: 7.5px 10px;
     border-radius: 5px;
+    &.big-box {
+        height: 178px;
+        svg {
+            transform: translate(0px, 8px);
+        }
+    }
     .pie-title {
         font-size: 85%;
         letter-spacing: .15em;
