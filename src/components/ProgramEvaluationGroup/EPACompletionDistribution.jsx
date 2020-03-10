@@ -26,10 +26,6 @@ export default (props) => {
             epaObservationMap[d.epa].total++;
         });
 
-
-console.log(epaObservationMap);
-
-
     const epaGroupObservationMap = Object.entries(epaObservationMap)
         .reduce((map, currentEntry) => {
             const epaGroup = currentEntry[0].split('.')[0];
@@ -48,6 +44,11 @@ console.log(epaObservationMap);
             percentageTotal: d[1].total / epaGroupObservationMap[d[0].split('.')[0]].total,
         };
         result.percentageOffset = result.percentageTotal / result.percentageMax;
+
+        // sometimes some EPAs might not even have started and so their percentage remains at 0
+        if (isNaN(result.percentageOffset)) {
+            result.percentageOffset = 0;
+        }
         return result;
     });
 
@@ -56,11 +57,11 @@ console.log(epaObservationMap);
         datasets: [
             {
                 label: "Default",
-                fillColor: "rgba(26,73,56,.9)",
-                strokeColor: "rgba(26,73,56,.9)",
+                fillColor: "rgba(28,168,221,.03)",
+                strokeColor: "#43b98e",
                 highlightFill: "rgba(220,220,220,.9)",
                 highlightStroke: "rgba(220,220,220,.9)",
-                data: epaPercentageList.map(d => d.percentageOffset.toFixed(2))
+                data: epaPercentageList.map(d => Math.round(d.percentageOffset * 100))
             }
         ]
     };
@@ -71,6 +72,8 @@ console.log(epaObservationMap);
         scaleShowVerticalLines: false,
         scaleGridLineColor: "rgba(86, 77, 77, 0.3)",
         scaleGridLineWidth: 2,
+        scaleBeginAtZero: true,
+        customTooltips: (tooltip) => { customToolTip(tooltip, 'chartjs-tooltip-completion-distribution') }
     }
 
     return (
@@ -85,8 +88,46 @@ console.log(epaObservationMap);
                         redraw={true} /> :
                         <h3 className='error-code text-left m-b'>No Records</h3>
                     }
+                    <div className='chart-tooltip' id="chartjs-tooltip-completion-distribution"></div>
                 </div>
             </div>
         </div>
     );
+}
+
+// This is a custom tool that uses bootstrap and works in hand with ChartJS standards
+// could be replaced in future with custom tooltip
+function customToolTip(tooltip, elementId) {
+
+    // Tooltip Element
+    let tooltipEl = $('#' + elementId);
+    // Hide if no tooltip
+    if (!tooltip) {
+        tooltipEl.css({
+            opacity: 0
+        });
+        return;
+    }
+    // Set caret Position
+    tooltipEl.removeClass('above below');
+    tooltipEl.addClass(tooltip.yAlign);
+    // Set Text
+    tooltipEl.html(tooltip.text + "%");
+    // Find Y Location on page
+    var top;
+    if (tooltip.yAlign == 'above') {
+        top = tooltip.y - tooltip.caretHeight - tooltip.caretPadding;
+    } else {
+        top = tooltip.y + tooltip.caretHeight + tooltip.caretPadding;
+    }
+    // Display, position, and set styles for font
+    tooltipEl.css({
+        opacity: 1,
+        left: tooltip.chart.canvas.offsetLeft + tooltip.x + 'px',
+        top: tooltip.chart.canvas.offsetTop + top + 'px',
+        fontFamily: tooltip.fontFamily,
+        fontSize: tooltip.fontSize,
+        fontStyle: tooltip.fontStyle,
+    });
+
 }
