@@ -4,17 +4,32 @@ import { Bar } from 'react-chartjs';
 export default (props) => {
 
     const { programInfo: { epaSourceMap }, records, width } = props;
+
     const epaObservationMap = {};
-    Object.values(epaSourceMap)
+
+    // process base source map
+    const nonSAEPAs = Object.values(epaSourceMap)
         .map(d => Object.entries(d.maxObservation).map(dd => ({ epa: dd[0], maxObservation: dd[1] })))
         .flat()
-        .filter(d => epaSourceMap[d.epa.split('.')[0]].subRoot[d.epa].substring(0, 4) !== '(SA)')
+        .filter(d => epaSourceMap[d.epa.split('.')[0]].subRoot[d.epa].substring(0, 4) !== '(SA)');
+
+    nonSAEPAs
         .forEach(d => epaObservationMap[d.epa] = { max: d.maxObservation, total: 0 });
+
+    // process records 
+    // for some programs such as anesthesia there are records with EPA numbers 
+    // which dont exist in the original source map
+    // these are selectively checked and filtered out by using the original source map in program info
     records
-        .filter(d => epaSourceMap[d.epa.split('.')[0]].subRoot[d.epa].substring(0, 4) !== '(SA)')
+        .filter(d => (_.findIndex(nonSAEPAs, (inner_d) => inner_d.epa == d.epa) > -1))
         .forEach(d => {
             epaObservationMap[d.epa].total++;
         });
+
+
+console.log(epaObservationMap);
+
+
     const epaGroupObservationMap = Object.entries(epaObservationMap)
         .reduce((map, currentEntry) => {
             const epaGroup = currentEntry[0].split('.')[0];
@@ -25,6 +40,7 @@ export default (props) => {
             map[epaGroup].total += currentEntry[1].total;
             return map;
         }, {});
+
     const epaPercentageList = Object.entries(epaObservationMap).map(d => {
         const result = {
             epa: d[0],
@@ -50,11 +66,11 @@ export default (props) => {
     };
 
     const options = {
-        scaleShowGridLines : true,
+        scaleShowGridLines: true,
         scaleShowHorizontalLines: true,
         scaleShowVerticalLines: false,
-        scaleGridLineColor : "rgb(255,0,0)",
-        scaleGridLineWidth : 1,
+        scaleGridLineColor: "rgba(86, 77, 77, 0.3)",
+        scaleGridLineWidth: 2,
     }
 
     return (
