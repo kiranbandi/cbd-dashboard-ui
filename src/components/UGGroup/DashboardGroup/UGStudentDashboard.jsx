@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getResidentList, getAllData } from '../../../utils/requestServer';
+import { getAllData, getUser } from '../../../utils/requestServer';
 import Loading from 'react-loading';
 import UGStudentFilterPanel from '../UGStudentFilterPanel';
 import UGGraphGroup from '../UGGraphGroup';
 import UGNormativePanel from './UGNormativePanel';
+import UGInfoPanel from './UGInfoPanel';
 import moment from 'moment';
 
 class UGStudentDashboard extends Component {
@@ -22,6 +23,8 @@ class UGStudentDashboard extends Component {
             showUncommencedEPA: false,
             currentStudent: '',
             currentRotation: '',
+            isStudentInfoLoaderVisible: false,
+            studentInfo: null
         }
         this._isMounted = false;
 
@@ -53,7 +56,34 @@ class UGStudentDashboard extends Component {
     }
 
     onStudentSelect(option) {
+        const { studentList } = this.state, currentStudent = option.value;
+        // set currentStudent name 
         this.setState({ currentStudent: option.value });
+        // then check if its valid, then turn on loader fetch the students details
+        if (currentStudent != '') {
+            this.setState({ isStudentInfoLoaderVisible: true });
+            // Get nsid of the student from his records
+            const username = _.find(studentList, (d) => d.name == option.value).records[0].nsid;
+            // get users rotation schedule and other related information
+            getUser(username)
+                .then((studentData) => {
+                    const { currentPhase = '', programStartDate,
+                        rotationSchedule = {}, longitudinalSchedule = {} } = studentData;
+                    // set information of the selected student onto the state
+                    this.setState({
+                        'isStudentInfoLoaderVisible': false,
+                        'studentInfo': {
+                            currentPhase,
+                            rotationSchedule,
+                            longitudinalSchedule,
+                            programStartDate
+                        }
+                    })
+                })
+                .catch(() => {
+                    this.setState({ isStudentInfoLoaderVisible: false, studentInfo: null })
+                });
+        };
     }
 
 
@@ -110,8 +140,9 @@ class UGStudentDashboard extends Component {
 
 
     render() {
-        const { studentList, currentStudent, dateFilterActive, currentRotation,
-            showUncommencedEPA, startDate, endDate, studentRecords, rawDump } = this.state;
+        const { studentList, currentStudent, dateFilterActive,
+            currentRotation, isStudentInfoLoaderVisible, showUncommencedEPA,
+            startDate, endDate, studentRecords, rawDump, studentInfo = false } = this.state;
 
         const { accessType = 'resident', programInfo } = this.props,
             { rotationList } = programInfo;
@@ -136,7 +167,6 @@ class UGStudentDashboard extends Component {
                 {this.state.isLoaderVisible ?
                     <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
                     <div className='m-t-md'>
-
                         <UGStudentFilterPanel
                             studentList={studentList}
                             currentStudent={currentStudent}
@@ -156,14 +186,25 @@ class UGStudentDashboard extends Component {
                                 // normalise extra width
                                 width={width + 65}
                                 rawDump={rawDump} />}
-                        {currentStudent != '' &&
-                            <UGGraphGroup
-                                currentRotation={currentRotation}
-                                showUncommencedEPA={showUncommencedEPA}
-                                width={width}
-                                studentRecords={currentStudentRecords} />}
+
+                        {isStudentInfoLoaderVisible ?
+                            <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
+                            <div>
+                                {currentStudent != '' && !!studentInfo &&
+                                    <UGInfoPanel
+                                        width={width}
+                                        studentInfo={studentInfo}
+                                        programInfo={programInfo}
+                                        studentRecords={currentStudentRecords} />}
+                                {currentStudent != '' &&
+                                    <UGGraphGroup
+                                        currentRotation={currentRotation}
+                                        showUncommencedEPA={showUncommencedEPA}
+                                        width={width}
+                                        studentRecords={currentStudentRecords} />}
+                            </div>}
                     </div>}
-            </div >
+            </div>
         );
     }
 }
