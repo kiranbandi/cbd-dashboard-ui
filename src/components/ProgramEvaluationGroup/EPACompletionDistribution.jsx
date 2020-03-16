@@ -58,7 +58,20 @@ export default (props) => {
             {
                 label: "Default",
                 fillColor: "rgba(28,168,221,.03)",
-                strokeColor: "#43b98e",
+                strokeColor: epaPercentageList.map(d => {
+                    switch (+d.epa.split('.')[0]) {
+                        case 1:
+                            return '#7FFFD4';
+                        case 2:
+                            return '#FFE4C4';
+                        case 3:
+                            return '#008B8B';
+                        case 4:
+                            return '#8FBC8F';
+                        default:
+                            return '#DC143C';
+                    }
+                }),
                 highlightFill: "rgba(220,220,220,.9)",
                 highlightStroke: "rgba(220,220,220,.9)",
                 data: epaPercentageList.map(d => Math.round(d.percentageOffset * 100))
