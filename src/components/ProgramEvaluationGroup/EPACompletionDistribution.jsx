@@ -1,5 +1,6 @@
 import React from 'react';
 import { Bar } from 'react-chartjs';
+import * as d3 from 'd3';
 
 export default (props) => {
 
@@ -52,53 +53,93 @@ export default (props) => {
         return result;
     });
 
-    const data = {
-        labels: epaPercentageList.map(d => d.epa),
-        datasets: [
-            {
-                label: "Default",
-                fillColor: "rgba(28,168,221,.03)",
-                strokeColor: epaPercentageList.map(d => {
-                    switch (+d.epa.split('.')[0]) {
-                        case 1:
-                            return '#7FFFD4';
-                        case 2:
-                            return '#FFE4C4';
-                        case 3:
-                            return '#008B8B';
-                        case 4:
-                            return '#8FBC8F';
-                        default:
-                            return '#DC143C';
-                    }
-                }),
-                highlightFill: "rgba(220,220,220,.9)",
-                highlightStroke: "rgba(220,220,220,.9)",
-                data: epaPercentageList.map(d => Math.round(d.percentageOffset * 100))
-            }
-        ]
-    };
+    const height = 350, margin = 10, Xoffset = 50, Yoffset = 30;
 
-    const options = {
-        scaleShowGridLines: true,
-        scaleShowHorizontalLines: true,
-        scaleShowVerticalLines: false,
-        scaleGridLineColor: "rgba(86, 77, 77, 0.3)",
-        scaleGridLineWidth: 2,
-        scaleBeginAtZero: true,
-        customTooltips: (tooltip) => { customToolTip(tooltip, 'chartjs-tooltip-completion-distribution') }
+    // The size of the bar is 0.75% of the item size and rest is left as a gap
+    const itemSize = epaPercentageList.length > 0 ? ((width - margin) / epaPercentageList.length) : 2;
+    // The last bar would go beyond the available width by 75%
+    //  so that width is removed from the scale 
+
+    let minPercentageOffset = d3.min(epaPercentageList.map(d => +d.percentageOffset));
+    minPercentageOffset = Math.floor(minPercentageOffset * 10 / 5) / 10 * 5;
+    let maxPercentageOffset = d3.max(epaPercentageList.map(d => +d.percentageOffset));
+    maxPercentageOffset = Math.ceil(maxPercentageOffset * 10 / 5) / 10 * 5;
+    if (maxPercentageOffset > 10) {
+        maxPercentageOffset = 10;
     }
+
+    // create the X and Y scales and modify them based on the track type
+    const scaleX = d3.scaleLinear().range([Xoffset, width - margin - 0.75 * itemSize]).domain([0, epaPercentageList.length - 1]);
+    let scaleY = d3.scaleLinear().range([height - margin - Yoffset, margin]).domain([minPercentageOffset, maxPercentageOffset]).clamp(true);
+
+    const xOne = scaleY(1);
+    // create bars
+    const bars = epaPercentageList.map((d, i) => (
+        <rect
+            x={scaleX(i)}
+            y={scaleY(d.percentageOffset) <= xOne ? scaleY(d.percentageOffset) : xOne}
+            height={scaleY(d.percentageOffset) <= xOne ? xOne - scaleY(d.percentageOffset) : scaleY(d.percentageOffset) - xOne}
+            fill={(() => {
+                switch (+d.epa.split('.')[0]) {
+                    case 1:
+                        return '#7FFFD4';
+                    case 2:
+                        return '#FFE4C4';
+                    case 3:
+                        return '#008B8B';
+                    case 4:
+                        return '#8FBC8F';
+                    default:
+                        return '#DC143C';
+                }
+            })()}
+            width={itemSize - (0.25 * itemSize)}
+            stroke={d.percentageOffset > maxPercentageOffset ? 'white' : 'transparent'}
+            key={d.epa}>
+            <title>{(d.percentageOffset * 100).toFixed() + '%'}</title>
+        </rect>
+    ));
+
+    // create the vertical tick lines 
+    const axisTickLines = _.range(minPercentageOffset, maxPercentageOffset + .5, .5).map(d => <line
+        x1={Xoffset}
+        y1={scaleY(d)}
+        x2={width - margin}
+        y2={scaleY(d)}
+        stroke={d === 1 ? 'white' : '#a9a1a1'}
+        opacity={d === 1 ? 1 : .5}
+        key={d}
+    ></line>);
+
+    const axisTexts = _.range(minPercentageOffset, maxPercentageOffset + .5, .5).map(d => <text
+        x={5}
+        y={scaleY(d) + 5}
+        fontWeight='bold'
+        fill={d === 1 ? 'white' : '#a9a1a1'}
+        key={d}
+    >{(d * 100).toFixed() + '%'}</text>);
+
+    const epaTexts = epaPercentageList.map((d, i) => <text
+        x={scaleX(i)}
+        y={height - margin - Yoffset / 2}
+        fontWeight='bold'
+        fill='#a9a1a1'
+        key={d.epa}
+    >{d.epa}</text>);
 
     return (
         <div className='col-xs-12 reel-in-left epa-specific'>
             <div className='m-a program-vis-box row'>
                 <h3 className='text-left m-b'>EPA Completion Distribution</h3>
                 <div className='col-xs-12'>
-                    {data.labels.length > 0 ? <Bar
-                        options={options}
-                        data={data}
-                        width={width} height={350}
-                        redraw={true} /> :
+                    {epaPercentageList.length > 0 ?
+                        <svg width={width} height={350}>
+                            <g>{axisTickLines}</g>
+                            <g>{axisTexts}</g>
+                            <g>{epaTexts}</g>
+                            <g>{bars}</g>
+                        </svg>
+                        :
                         <h3 className='error-code text-left m-b'>No Records</h3>
                     }
                     <div className='chart-tooltip' id="chartjs-tooltip-completion-distribution"></div>
