@@ -1,0 +1,20 @@
+.program-compare-root {
+    .year-selection-box {
+        display: inline-block;
+        .react-select-root {
+            width: 200px;
+            display: inline-block;
+        }
+        margin-right: 30px;
+    }
+    .header {
+        display: inline-block;
+        font-size: 18px;
+        margin: 10px auto;
+        margin-right: 15px;
+        font-weight: bold;
+    }
+    .loading-spinner {
+        margin: 100px auto;
+    }
+}

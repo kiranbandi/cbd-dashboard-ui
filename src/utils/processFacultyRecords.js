@@ -46,7 +46,6 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
 
         // group records by rating
         const ratingGroup = _.groupBy(dateFilterActive ? nonExpiredRecordsInPeriod : nonExpiredRecords, (d) => d.rating);
-        const ratingGroupTotal = dateFilterActive ? nonExpiredRecordsInPeriod.length : nonExpiredRecords.length;
         return {
             faculty_name,
             records,

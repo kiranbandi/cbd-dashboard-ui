@@ -2,7 +2,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
-import { NotFound, Home, Dashboard, Tools, Admin, UGDashboard, UGAdmin } from './pages';
+import {
+  NotFound, Home, Dashboard,
+  Tools, Admin, UGDashboard,
+  ProgramsCompare, UGAdmin
+} from './pages';
 import { Container } from './components';
 import configureStore from './redux/store/configureStore';
 import { Provider } from 'react-redux';
@@ -29,6 +33,7 @@ class App extends Component {
             <Route path='PGME/Admin' component={Admin} onEnter={checkAdminStatus} />
             <Route path='UGME/Dashboard' component={UGDashboard} onEnter={checkloginStatus} />
             <Route path='UGME/Admin' component={UGAdmin} onEnter={checkAdminStatus} />
+            <Route path='Program-Compare' component={ProgramsCompare} onEnter={checkAdminStatus} />
             <Route path='Tools' component={Tools} />
             <Route path='*' component={NotFound} />
           </Route>
