@@ -124,7 +124,7 @@ const programInfo = {
                 "3.14": "Selecting, correlating and interpreting common genomic/molecular pathology test results",
                 "3.15": "Managing, interpreting and reporting of gynecologic and non-gynecologic cytology specimens",
                 "3.16": "Identifying, investigating and resolving pre-analytical, analytical and post-analytical issues in laboratory medicine",
-                "3.17": "Participating in the selection and validation of new instrumentation, and evaluation of new tests",
+                "3.17": "(SA) Participating in the selection and validation of new instrumentation, and evaluation of new tests",
                 "3.18": "Ensuring appropriate use of lab resources and test utilization",
                 "3.19": "Providing routine biochemistry clinical consultations",
                 "3.20": "Interpreting, and reporting biochemistry testing",

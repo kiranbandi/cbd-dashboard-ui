@@ -75,7 +75,7 @@ const programInfo = {
                 '2.4': "Identifying patients presenting with an anticipated difficult airway and preparing for management options",
                 '2.5': "Managing and coordinating patient positioning during anesthesia care and preventing and recognizing related complications",
                 '2.6': "Anticipating, preventing and managing common or expected intraoperative events and physiologic changes during non-complex cases",
-                '2.7': "Assessing the indications for transfusion of blood products and managing side effects and complications",
+                '2.7': "(SA) Assessing the indications for transfusion of blood products and managing side effects and complications",
                 '2.8': "Diagnosing and managing common issues in the post-anesthesia care unit (PACU), or the surgical ward",
                 '2.9': "Initiating resuscitation and diagnosis of patients with life-threatening conditions in a time-appropriate manner",
                 '2.10': "Assessing, diagnosing and managing patients with common medical or surgical presentations in acute care settings, and advancing their care plans.",
@@ -146,7 +146,7 @@ const programInfo = {
                 '3.5': "Initiating and leading resuscitation for unstable patients in the perioperative period",
                 '3.6': "Demonstrating required skills in POCUS (point of care ultrasound) to answer a clinical question.",
                 '3.7': "Providing peripartum anesthetic management for high-risk parturients",
-                '3.8': "Initiating resuscitation and providing anesthetic management for unstable parturients",
+                '3.8': "(SA) Initiating resuscitation and providing anesthetic management for unstable parturients",
                 '3.9': "Assessing, investigating, optimizing and formulating anesthetic plans for more complex pediatric cases",
                 '3.10': "Providing perioperative anesthetic management for pediatric patients with more complex cases",
                 '3.11': "Providing perioperative anesthetic management incorporating a peripheral nerve block technique",
@@ -162,8 +162,8 @@ const programInfo = {
                 '3.21': "Providing comprehensive ongoing management of critically ill patients in an intensive care setting",
                 '3.22': "Initiating and leading resuscitation for unstable patients, outside of the operating room or PACU",
                 '3.23': "Managing goals of care discussions with patients and families, including perioperative care plans",
-                '3.24': "Providing care for patients who have experienced a patient safety incident",
-                '3.25': "Recognizing and managing ethical dilemmas that arise in the course of patient care"
+                '3.24': "(SA) Providing care for patients who have experienced a patient safety incident",
+                '3.25': "(SA) Recognizing and managing ethical dilemmas that arise in the course of patient care"
             },
             maxObservation: {
                 '3.1': 10,
@@ -250,7 +250,7 @@ const programInfo = {
                 '4.2': "Managing all aspects of anesthesia care for a scheduled day list",
                 '4.3': "Providing anesthesia services for an on-call period",
                 '4.4': "Managing all aspects of care for obstetrical anesthesia services",
-                '4.5': "Developing an academic portfolio",
+                '4.5': "(SA) Developing an academic portfolio",
             },
             maxObservation: {
                 '4.1': 8,
