@@ -6,16 +6,25 @@ export default (props) => {
 
     const { dateFilterActive = false, isUG = false, processedRecords = [], title, showNA = false } = props;
 
-
     let EPACount = !showNA ? _.sumBy(processedRecords, (d) => d.epa_count) : 'N/A',
-        EPACountPeriod = !showNA ? _.sumBy(processedRecords, (d) => d.epa_count_period) : 'N/A',
-        averageEPApercentage = !showNA ? Math.round(_.meanBy(processedRecords, (d) => d.expired_epa_percentage) || 0) : 'N/A',
-        averageEPApercentagePeriod = !showNA ? Math.round(_.meanBy(processedRecords, (d) => d.expired_epa_percentage_period) || 0) : 'N/A',
-        averageEPAScore = !showNA ? Math.round((_.meanBy(processedRecords, (d) => d.entrustment_score) || 0) * 100) / 100 : 'N/A',
-        averageEPAScorePeriod = !showNA ? Math.round((_.meanBy(processedRecords, (d) => d.entrustment_score_period) || 0) * 100) / 100 : 'N/A',
-        averageWords = !showNA ? Math.round(_.meanBy(processedRecords, (d) => d.words_per_comment) || 0) : 'N/A',
-        averageWordsPeriod = !showNA ? Math.round(_.meanBy(processedRecords, (d) => d.words_per_comment_period) || 0) : 'N/A',
-        ratingGroupSet = !showNA ? _.reduce(processedRecords, (acc, d) => _.map(acc, (inner_d, i) => (inner_d + d.rating_group[i])), [0, 0, 0, 0, 0]) : [];
+        EPACountPeriod = !showNA ? _.sumBy(processedRecords, (d) => d.epa_count_period) : 'N/A';
+
+    let averageEPApercentage = !showNA ? Math.round(_.meanBy(processedRecords, (d) => d.expired_epa_percentage) || 0) : 'N/A',
+        averageEPApercentagePeriod = !showNA ? Math.round(_.meanBy(processedRecords, (d) => d.expired_epa_percentage_period) || 0) : 'N/A';
+
+
+    // for the following values if a faculty has all expired EPAs then these values might be biased 
+    // as these values are simply set to zero bringing the total mean down 
+    // so we selectively ignore them and them perform all caclulations as is
+
+    let refinedFacultyList = _.filter(processedRecords, (d) => !d.all_expired),
+        refinedFacultyListInPeriod = _.filter(processedRecords, (d) => !d.all_expired_period);
+
+    let averageEPAScore = !showNA ? Math.round((_.meanBy(refinedFacultyList, (d) => d.entrustment_score) || 0) * 100) / 100 : 'N/A',
+        averageEPAScorePeriod = !showNA ? Math.round((_.meanBy(refinedFacultyListInPeriod, (d) => d.entrustment_score_period) || 0) * 100) / 100 : 'N/A',
+        averageWords = !showNA ? Math.round(_.meanBy(refinedFacultyList, (d) => d.words_per_comment) || 0) : 'N/A',
+        averageWordsPeriod = !showNA ? Math.round(_.meanBy(refinedFacultyListInPeriod, (d) => d.words_per_comment_period) || 0) : 'N/A',
+        ratingGroupSet = !showNA ? _.reduce(refinedFacultyList, (acc, d) => _.map(acc, (inner_d, i) => (inner_d + d.rating_group[i])), [0, 0, 0, 0, 0]) : [];
 
     const percentageSymbol = !showNA ? '%' : '';
 
