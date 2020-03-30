@@ -49,6 +49,9 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
         return {
             faculty_name,
             records,
+            // for some faculties all there records are expired and so we can completely ignore
+            all_expired: nonExpiredRecords.length == 0,
+            all_expired_period: nonExpiredRecordsInPeriod.length == 0,
             rating_group: _.map([1, 2, 3, 4, 5], (d) => (ratingGroup[d] ? ratingGroup[d].length : 0)),
             epa_count: records.length,
             epa_count_period: recordsInPeriod.length,

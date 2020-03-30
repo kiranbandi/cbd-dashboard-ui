@@ -10,6 +10,8 @@ export { default as ProgramDashboard } from './DashboardGroup/ProgramDashboard';
 export { default as FacultyDashboard } from './DashboardGroup/FacultyDashboard';
 export { default as DownloadDashboard } from './DashboardGroup/DownloadDashboard';
 export { default as NormativeDashboard } from './DashboardGroup/NormativeDashboard';
+
+
 // Components for Normative Dashboard to compare residents
 export { default as NormativeTable } from './NormativeDashboardGroup/NormativeTable';
 export { default as NormativeFilterPanel } from './NormativeDashboardGroup/NormativeFilterPanel';
@@ -21,7 +23,6 @@ export { default as FacultyInfoGroup } from './FacultyDashbordGroup/FacultyInfoG
 export { default as FacultyGraphGroup } from './FacultyDashbordGroup/FacultyGraphGroup';
 export { default as FacultyRecordTable } from './FacultyDashbordGroup/FacultyRecordTable';
 
-
 // Components for Resident Dashboard to compare residents
 export { default as GraphPanel } from './ResidentDashboardGroup/GraphPanelGroup/GraphPanel';
 export { default as InfoPanel } from './ResidentDashboardGroup/InfoPanelGroup/InfoPanel';
@@ -29,6 +30,13 @@ export { default as ExpiredRecordTable } from './ResidentDashboardGroup/ExpiredR
 export { default as FilterPanel } from './ResidentDashboardGroup/FilterPanel';
 export { default as InfoCardsPanel } from './ResidentDashboardGroup/InfoCardsPanel';
 export { default as NarrativeTable } from './ResidentDashboardGroup/NarrativeTable';
+
+// Components for Program Compare Dashboard to compare programs
+export { default as ProgramSummary } from './ProgramCompareGroup/ProgramSummary';
+export { default as ProgramCountPlot } from './ProgramCompareGroup/ProgramCountPlot';
+export { default as ProgramScoreDistribution } from './ProgramCompareGroup/ProgramScoreDistribution';
+export { default as ProgramWordCount } from './ProgramCompareGroup/ProgramWordCount';
+
 // Reusable components 
 export { default as FileUpload } from './ReusableComponents/FileUpload';
 export { default as RadioButton } from './ReusableComponents/RadioButton';
