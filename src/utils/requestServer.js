@@ -82,7 +82,6 @@ requestServer.updateCCFeedbackList = function(username, ccFeedbackList) {
 
 
 requestServer.updateExamscore = function(username, citeExamScore, oralExamScore) {
-
     return new Promise((resolve, reject) => {
         axios.post(endPoints.updateExamscore + "/" + username, { citeExamScore, oralExamScore }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
             .then((response) => {
@@ -323,6 +322,14 @@ requestServer.getUGData = function() {
     });
 }
 
+
+requestServer.gerRecordsByYear = function(academicYear = '', programSpecific = true) {
+    return new Promise((resolve, reject) => {
+        axios.post(endPoints.getRecordsByYear, { academicYear, programSpecific }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            .then((response) => { resolve(response.data) })
+            .catch((err) => errorCallback(err, reject));
+    });
+}
 
 
 function errorCallback(error, reject) {
