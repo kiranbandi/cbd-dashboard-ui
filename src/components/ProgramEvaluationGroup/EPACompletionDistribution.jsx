@@ -96,7 +96,12 @@ export default (props) => {
             width={itemSize - (0.25 * itemSize)}
             stroke={d.percentageOffset > maxPercentageOffset ? 'white' : 'transparent'}
             key={d.epa}>
-            <title>{(d.percentageOffset * 100).toFixed() + '%'}</title>
+            <title>{
+                (d.percentageOffset * 100).toFixed() + '%' +
+                ' - ' + d.epa +
+                ' - ' + epaSourceMap[d.epa.split('.')[0]].topic +
+                ' - ' + epaSourceMap[d.epa.split('.')[0]].subRoot[d.epa]
+            }</title>
         </rect>
     ));
 
@@ -120,11 +125,14 @@ export default (props) => {
     >{(d * 100).toFixed() + '%'}</text>);
 
     const epaTexts = epaPercentageList.map((d, i) => <text
-        x={scaleX(i)}
+        x={scaleX(i) + (itemSize - (0.25 * itemSize)) / 2}
         y={height - margin - Yoffset / 2}
         fontWeight='bold'
         fill='#a9a1a1'
         key={d.epa}
+        style={{
+            textAnchor: 'middle'
+        }}
     >{d.epa}</text>);
 
     return (
