@@ -71,6 +71,13 @@ class NavBar extends Component {
                                 </Link>
                                 </li>
                             }
+                            {(accessType == 'super-admin') &&
+                                <li>
+                                    <Link to={'Program-Compare'}>
+                                        <span className="icon icon-layers"></span> Compare Programs
+                           </Link>
+                                </li>
+                            }
                             <li>
                                 <Link to={'/Tools'}>
                                     <span className="icon icon-tools"></span> Tools

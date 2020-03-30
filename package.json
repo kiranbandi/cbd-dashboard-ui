@@ -40,6 +40,7 @@
         "react-select": "^2.4.4",
         "react-table": "^6.9.2",
         "react-to-print": "^2.5.0",
+        "react-vis": "^1.11.7",
         "react-youtube": "^7.9.0",
         "redux": "^4.0.0",
         "redux-thunk": "^2.3.0",
