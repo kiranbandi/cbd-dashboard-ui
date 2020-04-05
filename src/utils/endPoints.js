@@ -23,7 +23,6 @@ var endPoints = {
     setRecords: endPointRoot + "records/store",
     recordsByObserver: endPointRoot + "records/observer",
     dataDump: endPointRoot + "records/data-dump",
-    UGdataDump: endPointRoot + "records/data-dump-ug",
     getUser: endPointRoot + "users"
 }
 

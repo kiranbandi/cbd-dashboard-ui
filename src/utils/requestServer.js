@@ -313,16 +313,6 @@ requestServer.setNarratives = function(narratives, username, yearTag) {
     });
 }
 
-
-requestServer.getUGData = function() {
-    return new Promise((resolve, reject) => {
-        axios.get(endPoints.UGdataDump, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
-            .then((response) => { resolve(response.data.file) })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
-
-
 requestServer.gerRecordsByYear = function(academicYear = '', programSpecific = true) {
     return new Promise((resolve, reject) => {
         axios.post(endPoints.getRecordsByYear, { academicYear, programSpecific }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
