@@ -194,6 +194,7 @@ function storeDataInSessionStorage(userDetails, programInfo) {
     sessionStorage.setItem('accessType', userDetails.accessType);
     sessionStorage.setItem('program', userDetails.program);
     sessionStorage.setItem('programInfo', JSON.stringify(programInfo));
+    sessionStorage.setItem('programList', JSON.stringify(userDetails.programList || []));
 }
 
 function clearSessionStorage() {
@@ -202,6 +203,7 @@ function clearSessionStorage() {
     sessionStorage.removeItem('accessType');
     sessionStorage.removeItem('program');
     sessionStorage.removeItem('programInfo');
+    sessionStorage.removeItem('programList');
 }
 
 

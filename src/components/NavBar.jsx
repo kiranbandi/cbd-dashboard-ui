@@ -38,9 +38,13 @@ class NavBar extends Component {
     // program change is bubbled up to the container level and handled there
     render() {
         const { userDetails, onProgramChange } = this.props,
-            { accessType = '', program } = userDetails,
+            { accessType = '', program, programList = [] } = userDetails,
             isUG = (program == 'UNDERGRADUATE'),
             loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent((process.env.NODE_ENV == 'development') ? 'https://localhost:8887/' : 'https://cbme.usask.ca/');
+
+        // pass in the program list that the user has access to so that he can switch between
+        // them and ask for a different token
+        const editedProgramList = accessType == 'super-admin' ? _.clone(PROGRAM_LIST) : _.filter(PROGRAM_LIST, (d) => programList.indexOf(d.value) > -1);
 
         return (
             <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -86,14 +90,14 @@ class NavBar extends Component {
                         </ul>
                         <ul className='nav navbar-nav navbar-right'>
 
-                            {(accessType == 'super-admin') &&
+                            {(editedProgramList.length > 0) &&
                                 <li>
                                     <div className="input-group program-select">
                                         <span className='inner-span'>Program</span>
                                         <ReactSelect
                                             className='select-box'
-                                            value={_.find(PROGRAM_LIST, (entry) => entry.value == program)}
-                                            options={PROGRAM_LIST}
+                                            value={_.find(editedProgramList, (entry) => entry.value == program)}
+                                            options={editedProgramList}
                                             styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
                                             onChange={onProgramChange} />
                                     </div>
