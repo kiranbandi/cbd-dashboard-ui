@@ -78,7 +78,7 @@ class Tools extends Component {
             .then((response) => { return processRCMFile(response) })
             .then((processedOutput) => {
                 var { data, epaSourceMap } = processedOutput;
-                
+
                 if (data.length > 0) {
                     // quick hack so the data can be easily pulled in non group format
                     window.emCBD = {
@@ -128,7 +128,7 @@ class Tools extends Component {
                     <h2 className='text-center text-primary'>Royal College of Medicine Export File Processor</h2>
                     <p className='tools-text m-t m-b'>
                         The files exported from the royal college of medicine website can be quite difficult to analyze.This tool lets you process those files into a more manageble format.
-                         You also have an option to visualize the records on the file for a quick overview if you want.The processing is done completely on your machine inside your browser so your data is safe.
+                        You also have an option to visualize the records on the file for a quick overview if you want.The processing is done completely on your machine inside your browser so your data is safe.
                  </p>
                     <FileUpload id='rcm-file' label='File Exported from Royal College Portal' />
                     <button className="btn btn-primary-outline m-t process-btn" onClick={this.onProcessFile}>
