@@ -27,8 +27,8 @@ export default (props) => {
         </div>
         <div className='text-center'>
             <MicroStatCard style={{ display: 'inline' }} title='Total Programs' type='primary' metric={programData.length} />
-            <MicroStatCard style={{ display: 'inline' }} title='Total EPAs observed' type='info' metric={EPACount} />
-            <MicroStatCard style={{ display: 'inline' }} title='Percentage of EPAs Expired' type='success' metric={averageEPApercentage + percentageSymbol} />
+            <MicroStatCard style={{ display: 'inline' }} title='Total EPAs observed' type='success' metric={EPACount} />
+            <MicroStatCard style={{ display: 'inline' }} title='Percentage of EPAs Expired' type='info' metric={averageEPApercentage + percentageSymbol} />
             <MicroStatCard style={{ display: 'inline' }} title='Average EPA Score' type='primary' metric={averageEPAScore} />
             <MicroStatCard style={{ display: 'inline' }} title='Average words per comment' type='danger' metric={averageWords} />
             <FacultyScorePie dateFilterActive={false} data={ratingGroupSet} />

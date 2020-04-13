@@ -29,11 +29,22 @@
             height: 50px;
             margin-bottom: 5px;
             padding-top: 15px;
-            font-weight: bolder;
             margin: 0px;
             background: #25282f;
-            font-size: 20px;
+            font-size: 18px;
             text-align: center;
+        }
+        .switch-container {
+            margin-left: 5%;
+            background: #1a1c22;
+            padding: 5px 10px;
+            border-radius: 10px;
+            .switch-inner {
+                display: inline-block;
+                vertical-align: middle;
+                height: 24px;
+                margin-right: 5px;
+            }
         }
     }
     .program-name-container {

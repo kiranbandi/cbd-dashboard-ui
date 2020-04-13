@@ -39,8 +39,7 @@ export default (props) => {
                     <Bar
                         options={lineOptions}
                         data={lineData}
-                        // 31.5 is the height plus margin of warning text
-                        width={width} height={400 - 31.5}
+                        width={width} height={400}
                         redraw={true} />
                 </div>
             </div>

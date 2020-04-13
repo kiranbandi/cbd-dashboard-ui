@@ -9,8 +9,8 @@ import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation
 import EPAMonthlyRotation from '../ProgramEvaluationGroup/EPAMonthlyRotation';
 import EPAspecificRotation from '../ProgramEvaluationGroup/EPAspecificRotation';
 import RotationSpecificEPA from '../ProgramEvaluationGroup/RotationSpecificEPA';
-import StatCardSet from '../FacultyDashbordGroup/FacultyStatCardSet';
-import processFacultyRecords from '../../utils/processFacultyRecords';
+import Summary from '../ProgramEvaluationGroup/Summary';
+import processSingleProgramRecords from '../../utils/processSingleProgramRecords';
 import EPACompletionDistribution from '../ProgramEvaluationGroup/EPACompletionDistribution';
 
 const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP), (d) => (
@@ -107,7 +107,7 @@ export default class ProgramDashboard extends Component {
             filteredRecordsWithExpired = _.clone(phaseGroupedRecordsWithExpired[selected] || []);
         }
 
-        const processedRecords = processFacultyRecords(filteredRecordsWithExpired, 'ALL', undefined, undefined, false, 0);
+        const processedRecords = processSingleProgramRecords(filteredRecordsWithExpired);
 
         return (
             <div className='m-a dashboard-root-program' >
@@ -144,10 +144,8 @@ export default class ProgramDashboard extends Component {
                             </div>
                         </div>
                         <div className='container'>
-                            <StatCardSet
-                                isUG={false}
-                                title={"Acquistion Metrics for Program"}
-                                processedRecords={processedRecords}
+                            <Summary
+                                data={processedRecords}
                                 dateFilterActive={false} />
                         </div>
                         {filteredRecords.length > 0 ?

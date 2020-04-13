@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { gerRecordsByYear } from '../utils/requestServer';
-import processProgramRecords from '../utils/processProgramRecords';
+import processProgramRecords from '../utils/processMultiProgramRecords';
 import Loading from 'react-loading';
 import ReactSelect from 'react-select';
 import { ROTATION_SCHEDULE_MAP, PROGRAM_LIST } from '../utils/programInfo';

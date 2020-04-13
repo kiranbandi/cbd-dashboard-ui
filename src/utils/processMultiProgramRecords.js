@@ -16,17 +16,17 @@ export default function(allRecords = [], programList) {
 
         const program = programEntry.value,
             programName = programEntry.label,
-            records = recordsGroupedByProgram[program] || [];
-
-        // for some calculations we can ignore the expired records as for them the metrics dont
-        // exist so we filter them out from the list
-        const nonExpiredRecords = records.filter(dd => !dd.isExpired);
-
-        // group records by rating
-        const ratingGroup = _.groupBy(nonExpiredRecords, (d) => d.rating);
+            records = recordsGroupedByProgram[program] || [],
+            // for some calculations we can ignore the expired records as for them the metrics dont
+            // exist so we filter them out from the list
+            nonExpiredRecords = records.filter(dd => !dd.isExpired),
+            // group records by rating
+            ratingGroup = _.groupBy(nonExpiredRecords, (d) => d.rating),
+            resident_count = Object.keys(_.groupBy(records, (d) => d.username)).length;
 
         return {
             programName,
+            resident_count,
             rating_group: _.map([1, 2, 3, 4, 5], (d) => (ratingGroup[d] ? ratingGroup[d].length : 0)),
             epa_count: records.length,
             expired_count: records.length - nonExpiredRecords.length,

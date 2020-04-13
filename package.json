@@ -38,6 +38,7 @@
         "react-redux": "^5.0.7",
         "react-router": "^3.0.5",
         "react-select": "^2.4.4",
+        "react-switch": "^5.0.1",
         "react-table": "^6.9.2",
         "react-to-print": "^2.5.0",
         "react-vis": "^1.11.7",
