@@ -19,11 +19,22 @@ export default class ProgramCountPlot extends Component {
 
 
     render() {
-        const { programData, width } = this.props,
-            epa_count_data = _.map(programData, (d, i) => ({ 'x': d.epa_count, 'y': i + 1 })),
-            epa_expired_data = _.map(programData, (d, i) => ({ 'x': d.expired_count, 'y': i + 1 }));
+        const { programData, width } = this.props, { normalizeByResident } = this.state;
 
-        const { normalizeByResident } = this.state;
+
+        const epa_count_data = _.map(programData, (d, i) => {
+            // if normalize is true , normalise by resident count but first check if residents are not zero
+            return {
+                'x': d.epa_count / (normalizeByResident ? d.resident_count != 0 ? d.resident_count : 1 : 1),
+                'y': i + 1
+            };
+        }),
+            epa_expired_data = _.map(programData, (d, i) => {
+                return {
+                    'x': d.expired_count / (normalizeByResident ? d.resident_count != 0 ? d.resident_count : 1 : 1),
+                    'y': i + 1
+                };
+            });
 
         return (
             <div className='program-part-container'>
@@ -53,8 +64,7 @@ export default class ProgramCountPlot extends Component {
                                         height={15}
                                         width={35}
                                         className="react-switch"
-                                        id="material-switch"
-                                    />
+                                        id="material-switch" />
                                 </label>
                             </div>
                             <span>Normalize</span>
