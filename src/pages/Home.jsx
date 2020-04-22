@@ -38,9 +38,9 @@ class Home extends Component {
 
         <div className="container home-body">
           <h1> What is this ?</h1>
-          <p>These dashboards have been developed as part of a research project to determine the essential elements for presenting Competency-Based Medical Education dashboards. They display data from Competency By Design<a href="http://www.royalcollege.ca/rcsite/cbd/competence-by-design-cbd-e">(CBD)</a> assessment systems in intuitive ways that support the needs of learners, teachers, and program administrators.</p>
+          <p>These dashboards have been developed as part of a research project to determine the essential elements for presenting Competency-Based Medical Education dashboards. They display data from Competency By Design <a href="http://www.royalcollege.ca/rcsite/cbd/competence-by-design-cbd-e">(CBD)</a> assessment systems in intuitive ways that support the needs of learners, teachers, and program administrators.</p>
           <h1> Where is the data coming from ?</h1>
-          <p>The data displayed on the dashboard has been compiled from assessment forms filled by physician observers based upon observations of EPAs(Entrustable Professional Activities) that are characteristic of each learners stage of training and discipline.</p>
+          <p>The data displayed on the dashboard has been compiled from assessment forms filled by physician observers based upon observations of EPAs (Entrustable Professional Activities) that are characteristic of each learners stage of training and discipline.</p>
 
           <h1> Resident Dashboard Demonstration</h1>
           <YouTube
