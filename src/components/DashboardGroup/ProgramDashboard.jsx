@@ -163,6 +163,7 @@ export default class ProgramDashboard extends Component {
                                 <EPAOverallbyRotation
                                     width={width}
                                     rotationCount={rotationCount}
+                                    rotationList={rotationList}
                                     filteredRecords={recordsInAcademicYear} />
                                 <EPAMonthlyRotation
                                     width={width}
@@ -200,8 +201,7 @@ function calculateRotationCount(residentList, academicYear) {
     // and the list only goes up in size as more reisidents join the program.
     var activeResidentList = _.filter(residentList, (d) => {
         return (moment(d.programStartDate).isBefore(moment('07/01/' + (Number(academicYear) + 1), 'MM/DD/YYYY')))
-    })
-
+    });
 
     // If the academic year is still on going we only take the rotations that have been completed,
     // if not we count all rotations in that year,
@@ -209,46 +209,30 @@ function calculateRotationCount(residentList, academicYear) {
 
     // if today is in the selected academic year period
     if (moment().isBetween(moment('07/01/' + Number(academicYear), 'MM/DD/YYYY'), moment('06/30/' + (Number(academicYear) + 1), 'MM/DD/YYYY'), 'days', '[]')) {
+        // remove rotations that will start after todays and get count of those before
+        const rotationStopCount = _.filter(ROTATION_SCHEDULE_MAP[academicYear],
+            (rotationDate) => moment().isAfter(moment(rotationDate, 'DD-MMM-YYYY'))).length;
 
-        try {
-            // remove rotations that will start after todays and get count of those before
-            const rotationStopCount = _.filter(ROTATION_SCHEDULE_MAP[academicYear],
-                (rotationDate) => moment().isAfter(moment(rotationDate, 'DD-MMM-YYYY'))).length;
-
-            // if not count each rotation for the whole year
-            _.map(activeResidentList, (resident) => {
-                _.map(resident.rotationSchedule[academicYear],
-                    (rotation, rindex) => {
-                        if (rotationCount.hasOwnProperty(rotation)) {
-                            rotationCount[rotation] += 1;
-                        }
-                        else {
-                            rotationCount[rotation] = 1;
-                        }
-                    });
-            })
-        }
-        catch (e) {
-            debugger;
-        }
-
-
+        // if not count each rotation for the whole year
+        _.map(activeResidentList, (resident) => {
+            // if a resident has a list then only get the rotations that have been done
+            const rotationList = resident.rotationSchedule[academicYear] ?
+                resident.rotationSchedule[academicYear].slice(0, rotationStopCount) : [];
+            _.map(rotationList, (rotation, rindex) => {
+                if (rotationCount.hasOwnProperty(rotation)) { rotationCount[rotation] += 1; }
+                else { rotationCount[rotation] = 1; }
+            });
+        })
     }
 
     else {
         // if not count each rotation for the whole year
         _.map(activeResidentList, (resident) => {
-            _.map(resident.rotationSchedule[academicYear],
-                (rotation) => {
-                    if (rotationCount.hasOwnProperty(rotation)) {
-                        rotationCount[rotation] += 1;
-                    }
-                    else {
-                        rotationCount[rotation] = 1;
-                    }
-                });
+            _.map(resident.rotationSchedule[academicYear], (rotation) => {
+                if (rotationCount.hasOwnProperty(rotation)) { rotationCount[rotation] += 1; }
+                else { rotationCount[rotation] = 1; }
+            });
         })
     }
-
     return rotationCount;
 }
