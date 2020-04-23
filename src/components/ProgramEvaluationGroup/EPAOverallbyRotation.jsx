@@ -3,7 +3,7 @@ import { Bar } from 'react-chartjs';
 
 export default (props) => {
 
-    const { rotationCount, filteredRecords, normalizeByCount = true, rotationList, width } = props;
+    const { rotationCount, filteredRecords, normalizeByCount = true, width } = props;
 
     // group all the records by their rotation tag
     let groupedRecords = _.groupBy(filteredRecords, (d) => d.rotationTag);

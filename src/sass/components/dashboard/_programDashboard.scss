@@ -1,4 +1,15 @@
 .dashboard-root-program {
+    .program-base-panel {
+        background: #1a1c22;
+        padding: 25px 20px 20px 20px;
+        border-radius: 10px;
+        .program-vis-box {
+            background: #25282f;
+        }
+        .hr-divider-content {
+            background: #1a1c22;
+        }
+    }
     .faculty-MicroStatCard-group {
         margin-bottom: 20px;
         .hr-divider {

@@ -136,8 +136,8 @@ export default (props) => {
     >{d.epa}</text>);
 
     return (
-        <div className='col-xs-12 reel-in-left epa-specific'>
-            <div className='m-a program-vis-box row'>
+        <div className='container-fluid text-center'>
+            <div className='m-t m-b program-vis-box row'>
                 <h3 className='text-left m-b'>EPA Completion Distribution</h3>
                 <div className='col-xs-12'>
                     {epaPercentageList.length > 0 ?
