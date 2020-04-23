@@ -39,7 +39,7 @@ export default class ProgramDashboard extends Component {
 
     componentDidMount() {
         // initialize empty map
-        let { academicYear, cohort, residentList = [] } = this.state;
+        let { residentList = [] } = this.state;
 
         this._isMounted = true;
         // toggle loader before fetching data
@@ -48,11 +48,10 @@ export default class ProgramDashboard extends Component {
         getResidentList(false)
             .then((response) => {
                 residentList = _.clone(response);
-                // now get all the records in DB
+                // now get all the records in DB for the given program
                 return getAllData();
             })
             .then((data) => {
-
                 // filter out records that dont have rotation and phase tag on them or are expired
                 this._isMounted && this.setState({
                     residentList,
