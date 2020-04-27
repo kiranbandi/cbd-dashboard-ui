@@ -5,7 +5,7 @@ import Loading from 'react-loading';
 import ReactSelect from 'react-select';
 import { ROTATION_SCHEDULE_MAP, PROGRAM_LIST } from '../utils/programInfo';
 import {
-    ProgramSummary, ProgramCountPlot,
+    ProgramSummary, ProgramCountPlot, ProgramMonthlyPlot,
     ProgramScoreDistribution, ProgramWordCount
 } from '../components';
 
@@ -89,18 +89,16 @@ export default class ProgramsCompare extends Component {
                             <div>
                                 <ProgramSummary programData={programData} />
                                 <div className='summary-chart-container '>
-
                                     <div className='program-name-container'>
                                         {_.reverse(_.map(programData, (d, idx) => {
                                             return <p key={'pg-' + idx}>{d.programName}</p>
                                         }))}
                                     </div>
-
                                     <ProgramCountPlot width={partWidth} programData={programData} />
                                     <ProgramScoreDistribution width={partWidth} programData={programData} />
                                     <ProgramWordCount width={partWidth} programData={programData} />
                                 </div>
-
+                                <ProgramMonthlyPlot width={overallWidth} programData={_.reverse([...programData])} />
                             </div>}
                     </div>
                 }

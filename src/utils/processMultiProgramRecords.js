@@ -1,4 +1,3 @@
-import * as d3 from 'd3';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -30,7 +29,7 @@ export default function(allRecords = [], programList) {
             rating_group: _.map([1, 2, 3, 4, 5], (d) => (ratingGroup[d] ? ratingGroup[d].length : 0)),
             epa_count: records.length,
             expired_count: records.length - nonExpiredRecords.length,
-            monthlyCount: _.groupBy(nonExpiredRecords, (d) => moment(d.observation_date, 'YYYY-MM-DD').month()),
+            monthly_count: _.groupBy(nonExpiredRecords, (d) => moment(d.observation_date, 'YYYY-MM-DD').format('MMM')),
             expired_epa_percentage: records.length == 0 ? 0 : Math.round(records.filter(dd => dd.isExpired).length / records.length * 100),
             entrustment_score: Math.round((_.meanBy(nonExpiredRecords, (dd) => +dd.rating || 0) || 0) * 100) / 100,
             words_per_comment: Math.round(_.meanBy(nonExpiredRecords, (dd) => dd.feedback.split(" ").length) || 0)
