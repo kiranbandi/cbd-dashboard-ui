@@ -31,14 +31,16 @@
             padding-top: 15px;
             margin: 0px;
             background: #25282f;
-            font-size: 18px;
+            font-size: 16px;
             text-align: center;
         }
         .switch-container {
-            margin-left: 5%;
+            float: right;
             background: #1a1c22;
-            padding: 5px 10px;
+            padding: 5px 5px;
+            margin-left: 5px;
             border-radius: 10px;
+            margin-top: -7px;
             .switch-inner {
                 display: inline-block;
                 vertical-align: middle;
@@ -59,6 +61,23 @@
             padding-top: 15px;
             font-weight: bold;
             text-transform: uppercase;
+        }
+    }
+    .compare-monthly-container {
+        background: #1a1c22;
+        padding: 5px 0px 25px 0px;
+        margin: 10px 4%;
+        border-radius: 5px;
+        h3 {
+            margin: 10px 10px 15px 10px;
+        }
+        .overall-wrapper {
+            background: white;
+            .compare-monthly-box {
+                padding: 20px 0px 5px 25px;
+                width: 400px;
+                display: inline-block;
+            }
         }
     }
 }

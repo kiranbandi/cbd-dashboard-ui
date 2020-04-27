@@ -67,7 +67,7 @@ export default class ProgramCountPlot extends Component {
                                         id="material-switch" />
                                 </label>
                             </div>
-                            <span>Normalize</span>
+                            <span style={{ 'fontSize': '14px', 'fontWeight': 'bold' }}>Normalize by No. of Residents</span>
                         </span>
                     </h2>
                 </div>
