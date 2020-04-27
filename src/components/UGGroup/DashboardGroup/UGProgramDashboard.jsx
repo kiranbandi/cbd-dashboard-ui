@@ -5,17 +5,13 @@ import { getResidentList } from '../../../utils/requestServer';
 import ReactSelect from 'react-select';
 import { UG_ROTATION_MAP } from '../../../utils/programInfo';
 import moment from 'moment';
-import EPAMonthlyRotation from '../../ProgramEvaluationGroup/EPAMonthlyRotation';
+import EPAMonthlyRotation from '../../ProgramEvaluationGroup/UGEPAMonthlyRotation';
 import UGEPAspecificRotation from '../../ProgramEvaluationGroup/UGEPAspecificRotation';
 import UGRotationSpecificEPA from '../../ProgramEvaluationGroup/UGRotationSpecificEPA';
-import EPAOverallbyRotation from '../../ProgramEvaluationGroup/EPAOverallbyRotation';
+import EPAOverallbyRotation from '../../ProgramEvaluationGroup/UGEPAOverallbyRotation';
 
-const possibleAcademicYears = _.map(_.keys(UG_ROTATION_MAP), (d) => (
-    {
-        'label': d + "-" + (Number(d) + 1),
-        'value': d
-    }
-));
+const possibleAcademicYears = _.map(_.keys(UG_ROTATION_MAP),
+    (d) => ({ 'label': d + "-" + (Number(d) + 1), 'value': d }));
 
 const possibleCohorts = _.map(["2020", "2021", "2022", "2023", "2024", "2025"], (d) => (
     { 'label': d, 'value': d }

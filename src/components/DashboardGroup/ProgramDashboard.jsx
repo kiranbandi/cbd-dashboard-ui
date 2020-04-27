@@ -4,6 +4,8 @@ import Loading from 'react-loading';
 import { ROTATION_SCHEDULE_MAP } from '../../utils/programInfo';
 import ProgramBasePanel from '../ProgramEvaluationGroup/ProgramBasePanel';
 import EPACompletionDistribution from '../ProgramEvaluationGroup/EPACompletionDistribution';
+import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation';
+import EPAMonthlyRotation from '../ProgramEvaluationGroup/EPAMonthlyRotation';
 
 const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP),
     (d) => ({ 'label': d + "-" + (Number(d) + 1), 'value': d }));
@@ -53,7 +55,7 @@ export default class ProgramDashboard extends Component {
     render() {
 
         const { allRecords = [], residentList } = this.state, { programInfo } = this.props,
-            fullWidth = document.body.getBoundingClientRect().width - 250;
+            fullWidth = document.body.getBoundingClientRect().width - 300;
 
         return (
             <div className='m-a dashboard-root-program m-b-lg' >
@@ -65,15 +67,31 @@ export default class ProgramDashboard extends Component {
                         {allRecords.length > 0 ?
                             <div className='row'>
                                 <ProgramBasePanel
-                                    width={fullWidth}
+                                    width={fullWidth - 50}
                                     allRecords={allRecords}
                                     programInfo={programInfo}
                                     residentList={residentList}
                                     possibleAcademicYears={possibleAcademicYears} />
                                 <EPACompletionDistribution
                                     width={fullWidth}
+                                    possibleAcademicYears={possibleAcademicYears}
                                     programInfo={programInfo}
                                     records={allRecords} />
+                                <div className='container-fluid'>
+                                    <div className='row'>
+                                        <EPAOverallbyRotation
+                                            width={fullWidth / 2}
+                                            programInfo={programInfo}
+                                            allRecords={allRecords}
+                                            residentList={residentList}
+                                            possibleAcademicYears={possibleAcademicYears} />
+                                        <EPAMonthlyRotation
+                                            width={fullWidth / 2}
+                                            possibleAcademicYears={possibleAcademicYears}
+                                            allRecords={allRecords} />
+                                    </div>
+
+                                </div>
                             </div>
                             : <h2 className='text-center text-danger m-t-lg'>No program data available currently</h2>}
                     </div>}

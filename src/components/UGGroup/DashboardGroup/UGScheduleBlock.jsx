@@ -23,8 +23,6 @@ export default class ScheduleBlock extends Component {
 
             // slot the records so they fall into respective periods
             _.map(recordsInAcademicYear, (record) => {
-
-                console.log(record.date);
                 let iterator = 0, slotted = false, recordStamp = moment(record.date, 'YYYY-MM-DD');
                 while (!slotted && (iterator < scheduleDateList.length - 1)) {
                     if (recordStamp.isBetween(moment(scheduleDateList[iterator], 'DD/MMM/YYYY'), moment(scheduleDateList[iterator + 1], 'DD/MMM/YYYY'), 'days', '[)')) {
