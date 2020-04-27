@@ -90,7 +90,7 @@ class NavBar extends Component {
                         </ul>
                         <ul className='nav navbar-nav navbar-right'>
 
-                            {(editedProgramList.length > 0) &&
+                            {(editedProgramList.length > 1) &&
                                 <li>
                                     <div className="input-group program-select">
                                         <span className='inner-span'>Program</span>

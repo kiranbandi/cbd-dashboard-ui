@@ -37,7 +37,7 @@ export default class ProgramBasePanel extends Component {
         const { recordsInYearAndPhase, summaryData } = processSingleProgramRecords(allRecords, academicYear, selected, residentList);
 
         return (
-            <div className='program-base-panel text-center'>
+            <div className='program-base-panel text-center m-l-md m-r-md'>
                 <div className='row'>
                     <div className='year-selection-box'>
                         <h2 className='header'>Academic Year: </h2>
