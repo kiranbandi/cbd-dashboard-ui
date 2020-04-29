@@ -1,4 +1,17 @@
 .program-compare-root {
+    .filter-switch-container {
+        display: inline-block;
+        vertical-align: bottom;
+        .switch-label {
+            font-size: 18px;
+            font-weight: bold;
+            vertical-align: text-bottom;
+        }
+        .switch-inner {
+            display: inline-block;
+            margin-left: 10px;
+        }
+    }
     .year-selection-box {
         display: inline-block;
         .react-select-root {
@@ -57,7 +70,7 @@
         margin-top: 20px;
         p {
             height: 50px;
-            margin-bottom: 5px;
+            margin-bottom: 0px;
             padding-top: 15px;
             font-weight: bold;
             text-transform: uppercase;

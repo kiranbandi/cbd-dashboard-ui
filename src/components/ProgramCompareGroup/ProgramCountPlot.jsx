@@ -8,7 +8,7 @@ export default class ProgramCountPlot extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            normalizeByResident: false,
+            normalizeByResident: true,
         };
         this.normalizeResidentToggle = this.normalizeResidentToggle.bind(this);
     }
@@ -17,10 +17,8 @@ export default class ProgramCountPlot extends Component {
         this.setState({ normalizeByResident: !this.state.normalizeByResident });
     }
 
-
     render() {
         const { programData, width } = this.props, { normalizeByResident } = this.state;
-
 
         const epa_count_data = _.map(programData, (d, i) => {
             // if normalize is true , normalise by resident count but first check if residents are not zero
@@ -50,7 +48,7 @@ export default class ProgramCountPlot extends Component {
                         <span>EPAs Acquired and Expired</span>
                         <span className='switch-container'>
                             <div className='switch-inner'>
-                                <label htmlFor="material-switch">
+                                <label htmlFor="material-switch-norm">
                                     <Switch
                                         checked={normalizeByResident}
                                         onChange={this.normalizeResidentToggle}
@@ -64,7 +62,7 @@ export default class ProgramCountPlot extends Component {
                                         height={15}
                                         width={35}
                                         className="react-switch"
-                                        id="material-switch" />
+                                        id="material-switch-norm" />
                                 </label>
                             </div>
                             <span style={{ 'fontSize': '14px', 'fontWeight': 'bold' }}>Normalize by No. of Residents</span>
