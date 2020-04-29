@@ -5,6 +5,9 @@ import { bindActionCreators } from 'redux';
 import ScheduleBlock from './ScheduleBlock';
 import { ROTATION_SCHEDULE_MAP, CARDS_LIST } from '../../../utils/programInfo';
 import { setInfoCard } from '../../../redux/actions/actions';
+import { Range } from 'rc-slider';
+import 'rc-slider/assets/index.css';
+
 
 class RotatioSchedule extends Component {
 
@@ -13,11 +16,24 @@ class RotatioSchedule extends Component {
         this.showHistorySchedule = this.showHistorySchedule.bind(this);
         this.showEPAsPerBlock = this.showEPAsPerBlock.bind(this);
         this.onRotationBlockClick = this.onRotationBlockClick.bind(this);
+        this.onRangeChange = this.onRangeChange.bind(this);
 
         this.state = {
             isHistoryVisible: false,
-            isEPAperBlockVisible: false
+            isEPAperBlockVisible: false,
+            sliderValue: [0, 0]
         };
+    }
+
+    onRangeChange(sliderValue) {
+        // preventing crossing and ensure atleast one step is present
+        if ((sliderValue[1] > sliderValue[0]) && (sliderValue[1] - sliderValue[0] >= 1)) {
+            this.setState({ sliderValue });
+        }
+        // zero step is only allowed if both are being set to zero
+        else if (sliderValue[1] == 0 && sliderValue[0] == 0) {
+            this.setState({ sliderValue });
+        }
     }
 
     showHistorySchedule() {
@@ -64,7 +80,7 @@ class RotatioSchedule extends Component {
             widthForEachMonth = widthAvailable / 12,
             { residentInfo, residentData, rotationRequired,
                 infoCardsVisible } = this.props,
-            { isHistoryVisible, isEPAperBlockVisible } = this.state,
+            { isHistoryVisible, isEPAperBlockVisible, sliderValue } = this.state,
             { rotationSchedule = {}, longitudinalSchedule = {}, programStartDate } = residentInfo;
 
         // if the current month is before july then pick the last year  
@@ -83,6 +99,8 @@ class RotatioSchedule extends Component {
             historicalYears = historicalYears.slice(historicalYears.length - 5);
         }
 
+        const sliderDatesLabel = sliderValue[1] - sliderValue[0] >= 1 ?
+            currentScheduleDates[sliderValue[0]] + ' - ' + currentScheduleDates[sliderValue[1]] : '(Drag slider points to set range)';
 
         return (
             <div className='schedule-box text-center hidden-xs'>
@@ -131,6 +149,16 @@ class RotatioSchedule extends Component {
                     scheduleRotationList={currentSchedule}
                     LongSchedule={currentLongSchedule}
                     widthAvailable={widthAvailable} />
+
+
+                <div style={{ 'width': widthAvailable + 'px' }}
+                    className='slider-container-resident'>
+                    <label className='filter-label'>Filter EPAs by Rotation Schedule </label>
+                    <h2>{sliderDatesLabel}</h2>
+                    <Range dots min={0} max={currentSchedule.length} step={1} value={sliderValue} allowCross={false} onChange={this.onRangeChange} />
+                </div>
+
+
             </div>
         )
     }
