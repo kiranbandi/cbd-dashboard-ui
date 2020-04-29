@@ -58,6 +58,10 @@ export function setDataDumpState(dataDumpPresent) {
     return { type: types.SET_DATA_DUMP, dataDumpPresent };
 }
 
+export function updateResidentData(residentData) {
+    return { type: types.SET_RESIDENT_DATA, residentData };
+}
+
 export function setResidentData(residentData, residentInfo = false) {
 
     let expiredResidentData = [];

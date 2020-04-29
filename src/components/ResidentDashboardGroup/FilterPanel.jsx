@@ -66,8 +66,8 @@ class FilterPanel extends Component {
         let { residentFilter = {}, actions, residentList, programInfo } = this.props,
             { showUncommencedEPA, openOnlyCurrentPhase } = this.state;
 
-        residentFilter.startDate = document.getElementById('filter-startDate').value;
-        residentFilter.endDate = document.getElementById('filter-endDate').value;
+        residentFilter.startDate = document.getElementById('filter-startDate-resident').value;
+        residentFilter.endDate = document.getElementById('filter-endDate-resident').value;
 
         // Fitler out resident info from the list 
         let residentInfo = _.find(residentList, (d) => d.username == residentFilter.username);
@@ -92,7 +92,7 @@ class FilterPanel extends Component {
                             d.mark = false;
                         }
                         else {
-                            d.mark = moment(d.Date, 'YYYY-MM-DD').isAfter(moment(residentFilter.startDate, 'MM/DD/YYYY')) && moment(d.Date, 'YYYY-MM-DD').isBefore(moment(residentFilter.endDate, 'MM/DD/YYYY'));
+                            d.mark = moment(d.Date, 'YYYY-MM-DD').isBetween(moment(residentFilter.startDate, 'MM/DD/YYYY'), moment(residentFilter.endDate, 'MM/DD/YYYY'), 'days', '[]')
                         }
                         return d;
                     })
@@ -125,7 +125,7 @@ class FilterPanel extends Component {
                             d.mark = false;
                         }
                         else {
-                            d.mark = moment(d.observation_date, 'YYYY-MM-DD').isAfter(moment(residentFilter.startDate, 'MM/DD/YYYY')) && moment(d.observation_date, 'YYYY-MM-DD').isBefore(moment(residentFilter.endDate, 'MM/DD/YYYY'));
+                            d.mark = moment(d.observation_date, 'YYYY-MM-DD').isBetween(moment(residentFilter.startDate, 'MM/DD/YYYY'), moment(residentFilter.endDate, 'MM/DD/YYYY'), 'days', '[]');
                         }
                         return d;
                     })
@@ -203,7 +203,7 @@ class FilterPanel extends Component {
                                 <span className="input-group-addon">
                                     <span className="icon icon-calendar"></span>
                                 </span>
-                                <input type="text" id='filter-startDate' defaultValue={startDate} disabled={isAllData} className="form-control" data-provide="datepicker" />
+                                <input type="text" id='filter-startDate-resident' defaultValue={startDate} disabled={isAllData} className="form-control" data-provide="datepicker" />
                             </div>
                         </div>
                         <span className='inner-splice'>-</span>
@@ -212,7 +212,7 @@ class FilterPanel extends Component {
                                 <span className="input-group-addon">
                                     <span className="icon icon-calendar"></span>
                                 </span>
-                                <input type="text" id='filter-endDate' disabled={isAllData} defaultValue={endDate} className="form-control" data-provide="datepicker" />
+                                <input type="text" id='filter-endDate-resident' disabled={isAllData} defaultValue={endDate} className="form-control" data-provide="datepicker" />
                             </div>
                         </div>
                     </div>

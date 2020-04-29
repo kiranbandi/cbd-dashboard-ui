@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ScheduleBlock from './ScheduleBlock';
 import { ROTATION_SCHEDULE_MAP, CARDS_LIST } from '../../../utils/programInfo';
-import { setInfoCard } from '../../../redux/actions/actions';
+import { setInfoCard, updateResidentData, setResidentFilter } from '../../../redux/actions/actions';
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
@@ -26,14 +26,45 @@ class RotatioSchedule extends Component {
     }
 
     onRangeChange(sliderValue) {
-        // preventing crossing and ensure atleast one step is present
-        if ((sliderValue[1] > sliderValue[0]) && (sliderValue[1] - sliderValue[0] >= 1)) {
+
+        let { residentData, actions, residentFilter } = this.props,
+            currentAcademicYear = moment().month() <= 5 ? moment().year() - 1 : moment().year(),
+            currentScheduleDates = ROTATION_SCHEDULE_MAP[currentAcademicYear];
+
+        // preventing crossing and ensure atleast one step is present,
+        // this checking can be skipped when range is reset to zero
+        if ((sliderValue[1] == 0 && sliderValue[0] == 0) || ((sliderValue[1] > sliderValue[0]) && (sliderValue[1] - sliderValue[0] >= 1))) {
+
             this.setState({ sliderValue });
-        }
-        // zero step is only allowed if both are being set to zero
-        else if (sliderValue[1] == 0 && sliderValue[0] == 0) {
-            this.setState({ sliderValue });
-        }
+
+            let startDate = currentScheduleDates[sliderValue[0]],
+                endDate = currentScheduleDates[sliderValue[1]],
+                // if dates are same dont mark the records
+                dontMark = startDate == endDate;
+
+            // loop through the data and modify it on the fly
+            _.map(residentData, (groupedData, groupKey) => {
+                _.map(groupedData, (d, innerKey) => {
+                    residentData[groupKey][innerKey].mark = dontMark ? false :
+                        moment(d.Date, 'YYYY-MM-DD').isBetween(moment(startDate, 'DD-MMM-YYYY'), moment(endDate, 'DD-MMM-YYYY'), 'days', '[]');
+                })
+            });
+            // do a shallow update on the data and the resident date filter in redux
+            actions.updateResidentData(residentData);
+            residentFilter = {
+                ...residentFilter,
+                'startDate': moment(startDate, 'DD-MMM-YYYY').format('MM/DD/YYYY'),
+                'endDate': moment(endDate, 'DD-MMM-YYYY').format('MM/DD/YYYY'), 'isAllData': dontMark
+            };
+
+            // set the datefilter values , they are weirdly managed by jquery so this is quick fix
+            // at some point in future the date filter should be replaced by a 
+            //  pure react comp so this wouldnt be necessary
+            $('#filter-startDate-resident').val(residentFilter.startDate);
+            $('#filter-endDate-resident').val(residentFilter.endDate);
+
+            actions.setResidentFilter(residentFilter);
+        };
     }
 
     showHistorySchedule() {
@@ -79,7 +110,7 @@ class RotatioSchedule extends Component {
             widthAvailable = document.body.getBoundingClientRect().width - 200,
             widthForEachMonth = widthAvailable / 12,
             { residentInfo, residentData, rotationRequired,
-                infoCardsVisible } = this.props,
+                infoCardsVisible, enableFilter } = this.props,
             { isHistoryVisible, isEPAperBlockVisible, sliderValue } = this.state,
             { rotationSchedule = {}, longitudinalSchedule = {}, programStartDate } = residentInfo;
 
@@ -100,7 +131,7 @@ class RotatioSchedule extends Component {
         }
 
         const sliderDatesLabel = sliderValue[1] - sliderValue[0] >= 1 ?
-            currentScheduleDates[sliderValue[0]] + ' - ' + currentScheduleDates[sliderValue[1]] : '(Drag slider points to set range)';
+            currentScheduleDates[sliderValue[0]] + ' to ' + currentScheduleDates[sliderValue[1]] : '(Drag slider or click points to set range)';
 
         return (
             <div className='schedule-box text-center hidden-xs'>
@@ -150,14 +181,12 @@ class RotatioSchedule extends Component {
                     LongSchedule={currentLongSchedule}
                     widthAvailable={widthAvailable} />
 
-
                 <div style={{ 'width': widthAvailable + 'px' }}
                     className='slider-container-resident'>
                     <label className='filter-label'>Filter EPAs by Rotation Schedule </label>
                     <h2>{sliderDatesLabel}</h2>
-                    <Range dots min={0} max={currentSchedule.length} step={1} value={sliderValue} allowCross={false} onChange={this.onRangeChange} />
+                    <Range dots min={0} max={currentSchedule.length} step={1} defaultValue={[0, 0]} allowCross={false} onAfterChange={this.onRangeChange} />
                 </div>
-
 
             </div>
         )
@@ -166,12 +195,23 @@ class RotatioSchedule extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ setInfoCard }, dispatch)
+        actions: bindActionCreators({
+            setInfoCard,
+            updateResidentData,
+            setResidentFilter
+        }, dispatch)
+    };
+}
+
+function mapStateToProps(state) {
+    return {
+        residentFilter: state.oracle.residentFilter
     };
 }
 
 
-export default connect(null, mapDispatchToProps)(RotatioSchedule);
+
+export default connect(mapStateToProps, mapDispatchToProps)(RotatioSchedule);
 
 
 

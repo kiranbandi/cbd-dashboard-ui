@@ -78,8 +78,6 @@ export default class WeeklyEPAChart extends Component {
                     return periodWeekIDcollection.indexOf(d.weekID) > -1 ? d.count : 0;
                 })
             });
-
-
         }
         // create line object for chart
         const lineData = {
@@ -88,7 +86,8 @@ export default class WeeklyEPAChart extends Component {
         }
 
         let lineOptions = {
-            scaleBeginAtZero: true
+            scaleBeginAtZero: true,
+            animation: false
         };
 
         return (

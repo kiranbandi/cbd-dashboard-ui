@@ -23,7 +23,7 @@ export default function oracleReducer(state = initialState.oracle, action) {
     case types.SET_RESIDENT_FILTER:
       return Object.assign({}, state, { residentFilter: action.residentFilter })
     case types.SET_RESIDENT_DATA:
-      return Object.assign({}, state, { residentData: action.residentData })
+      return Object.assign({}, state, { residentData: { ...action.residentData } })
     case types.SET_EXPIRED_RESIDENT_DATA:
       return Object.assign({}, state, { expiredResidentData: action.expiredResidentData })
     case types.SET_NARRATIVE_DATA:
