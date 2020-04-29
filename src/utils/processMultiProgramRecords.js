@@ -9,6 +9,10 @@ export default function(allRecords = [], programList) {
     // temporarily remove UG from program list
     let filteredProgramList = _.filter(programList, (d) => d.value != 'UNDERGRADUATE');
 
+    // add an 'All' program to the grouped list and recordsgroup collection
+    filteredProgramList.push({ value: "all", label: "All Programs" });
+    recordsGroupedByProgram['all'] = _.clone(allRecords);
+
     // convert the grouped records into list such that every group has 
     // a program name and then a list of the all required parameters
     return _.map(filteredProgramList, (programEntry) => {

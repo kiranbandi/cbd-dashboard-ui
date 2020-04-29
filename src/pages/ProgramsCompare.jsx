@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { gerRecordsByYear } from '../utils/requestServer';
 import processProgramRecords from '../utils/processMultiProgramRecords';
 import Loading from 'react-loading';
+import Switch from 'react-switch';
 import ReactSelect from 'react-select';
 import { ROTATION_SCHEDULE_MAP, PROGRAM_LIST } from '../utils/programInfo';
 import {
@@ -13,6 +14,8 @@ const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP), (d) => (
     { 'label': d + "-" + (Number(d) + 1), 'value': d }
 ));
 
+const anonymizeCharList = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
+
 export default class ProgramsCompare extends Component {
 
     constructor(props) {
@@ -20,7 +23,8 @@ export default class ProgramsCompare extends Component {
         this.state = {
             academicYear: { 'label': '2019-2020', 'value': '2019' },
             loaderState: false,
-            programData: []
+            programData: [],
+            anonymize: false
         };
         this.onSelectAcademicYear = this.onSelectAcademicYear.bind(this);
     }
@@ -61,11 +65,21 @@ export default class ProgramsCompare extends Component {
 
     render() {
 
-        const { loaderState, programData, academicYear } = this.state;
+        const { loaderState, programData, academicYear, anonymize } = this.state;
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let overallWidth = document.body.getBoundingClientRect().width - 350,
             partWidth = overallWidth / 3;
+
+        const moddedProgramData = _.map(programData, (d, i) => {
+            // if anonymize is true then replace program name for all programs
+            // except for 'all programs' entry with P-Index.
+            return {
+                ...d,
+                'programName': d.programName != 'All Programs' ?
+                    anonymize ? ('Program - ' + anonymizeCharList[i]) : d.programName : d.programName,
+            }
+        });
 
         return (
             <div className='m-a program-compare-root container-fluid' >
@@ -80,25 +94,47 @@ export default class ProgramsCompare extends Component {
                                 onChange={this.onSelectAcademicYear} />
                         </div>
                     </div>
+                    <span className='filter-switch-container'>
+                        <span className='switch-label'>Anonymize Programs</span>
+                        <div className='switch-inner'>
+                            <label htmlFor="material-switch-compare">
+                                <Switch
+                                    checked={anonymize}
+                                    onChange={() => { this.setState({ 'anonymize': !anonymize }) }}
+                                    onColor="#86d3ff"
+                                    onHandleColor="#2693e6"
+                                    handleDiameter={20}
+                                    uncheckedIcon={false}
+                                    checkedIcon={false}
+                                    boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                                    activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                                    height={15}
+                                    width={35}
+                                    className="react-switch"
+                                    id="material-switch-compare" />
+                            </label>
+                        </div>
+                    </span>
                 </div>
 
                 {loaderState ?
                     <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
                     <div className='m-t'>
-                        {programData.length > 0 &&
+                        {moddedProgramData.length > 0 &&
                             <div>
-                                <ProgramSummary programData={programData} />
+                                {/* dont include all program entry in the summary calculation */}
+                                <ProgramSummary programData={_.filter(moddedProgramData, (d) => d.programName != 'All Programs')} />
                                 <div className='summary-chart-container '>
                                     <div className='program-name-container'>
-                                        {_.reverse(_.map(programData, (d, idx) => {
+                                        {_.reverse(_.map(moddedProgramData, (d, idx) => {
                                             return <p key={'pg-' + idx}>{d.programName}</p>
                                         }))}
                                     </div>
-                                    <ProgramCountPlot width={partWidth} programData={programData} />
-                                    <ProgramScoreDistribution width={partWidth} programData={programData} />
-                                    <ProgramWordCount width={partWidth} programData={programData} />
+                                    <ProgramCountPlot width={partWidth} programData={moddedProgramData} />
+                                    <ProgramScoreDistribution width={partWidth} programData={moddedProgramData} />
+                                    <ProgramWordCount width={partWidth} programData={moddedProgramData} />
                                 </div>
-                                <ProgramMonthlyPlot width={overallWidth} programData={_.reverse([...programData])} />
+                                <ProgramMonthlyPlot width={overallWidth} programData={_.reverse([...moddedProgramData])} />
                             </div>}
                     </div>
                 }
