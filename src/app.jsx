@@ -25,7 +25,7 @@ var pawsTicket = processQueryParams().ticket || false;
 class App extends Component {
   render() {
     return (
-    <Provider store={store}>
+      <Provider store={store}>
         <Router history={hashHistory}>
           <Route path='/' component={Container} pawsTicket={pawsTicket}>
             <IndexRoute component={Home} />
@@ -38,7 +38,8 @@ class App extends Component {
             <Route path='*' component={NotFound} />
           </Route>
         </Router>
-      </Provider>)}
+      </Provider>)
+  }
 }
 
 ReactDOM.render(<App />, document.getElementById('root'))

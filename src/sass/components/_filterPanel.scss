@@ -131,3 +131,20 @@
         margin: 0px 5px 5px -5px;
     }
 }
+
+.slider-container-resident {
+    margin: 20px auto;
+    .rc-slider-track {
+        background: #32a8dd !important;
+    }
+    .filter-label {
+        font-size: 18px;
+        font-weight: normal;
+    }
+    h2 {
+        display: inline-block;
+        font-size: 17px;
+        font-weight: bold;
+        margin: 0px 5px 5px 15px;
+    }
+}
