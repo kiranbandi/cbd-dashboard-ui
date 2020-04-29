@@ -134,12 +134,18 @@
 .print-button {
     position: fixed;
     bottom: 35px;
-    padding: 6px 12px;
+    padding: 5px 10px;
     border-radius: 15px;
-    font-size: 20px;
+    font-size: 16px;
     z-index: 10;
     right: 10px;
+    .icon-download {
+        margin-right: 10px;
+    }
     &:hover {
         border: 2px solid white;
+    }
+    &.partaway {
+        right: 200px;
     }
 }

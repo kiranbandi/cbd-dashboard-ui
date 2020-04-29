@@ -43,10 +43,10 @@ export default class FacultyDashboard extends Component {
         this.setState({ currentFaculty });
     }
 
-    onPrintClick() {
+    onPrintClick(event) {
 
-        const { currentFaculty } = this.state;
-
+        const { currentFaculty } = this.state,
+            isCondensed = event.currentTarget.id.indexOf('condensed') > -1;
 
         if (currentFaculty != 'ALL') {
             this.setState({ printModeON: true });
@@ -55,9 +55,9 @@ export default class FacultyDashboard extends Component {
             setTimeout(() => {
                 // move to the top of the page
                 window.scrollTo(0, 0);
-                let filename = currentFaculty.split(' ').join('_') + '_' + moment().format('DD_MMM') + '_Export.pdf';
+                let filename = currentFaculty.split(' ').join('_') + '_' + moment().format('DD_MMM') + (isCondensed ? '_Condensed' : '') + '_Export.pdf'
                 // once printing is complete reset back to original state
-                savePagePDF(filename, true).finally(() => {
+                savePagePDF(filename, isCondensed, true).finally(() => {
                     this._isMounted && this.setState({ printModeON: false });
                 });
                 // wait a couple of seconds quick hack
@@ -223,11 +223,15 @@ export default class FacultyDashboard extends Component {
                                 currentFacultyRecords={currentFacultyRecords} />
                         </div>
 
-                        <div className='text-xs-left button-box'>
-                            <button className="btn btn-primary print-button" onClick={this.onPrintClick}>
-                                <span className="icon icon-download"></span>
-                            </button>
-                        </div>
+                        <button id='ug-print-report' className="btn btn-primary print-button partaway" onClick={this.onPrintClick}>
+                            <span className="icon icon-download"></span>
+                            <span className="icon-label">Report</span>
+                        </button>
+                        <button id='ug-print-report-condensed' className="btn btn-primary print-button" onClick={this.onPrintClick}>
+                            <span className="icon icon-download"></span>
+                            <span className="icon-label">Condensed Report</span>
+                        </button>
+
                     </div>}
             </div>);
     }

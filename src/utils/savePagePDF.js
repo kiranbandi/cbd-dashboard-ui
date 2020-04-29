@@ -3,7 +3,7 @@ import html2canvas from 'html2canvas';
 import computedStyleToInlineStyle from "computed-style-to-inline-style";
 import jsPDF from 'jspdf';
 
-export default function(fileName = 'download.pdf', isUG = false) {
+export default function(fileName = 'download.pdf', isCondensed = false, isUG = false) {
 
     return new Promise(async(resolve, reject) => {
         try {
@@ -19,15 +19,26 @@ export default function(fileName = 'download.pdf', isUG = false) {
 
 
             // For undergraduate faculty dashboard we skip the expiry rate graph
+            //  for condensed exports we skip the table-box 
+            // to make it easy to understand lets just skip brevity here !!!
             if (isUG) {
                 getElementAsCanvas('.print-info', {}, 1)
                     .then((pdf) => getElementAsCanvas('.printable-graph-1', pdf, 2))
                     .then((pdf) => getElementAsCanvas('.printable-graph-3', pdf, 3))
                     .then((pdf) => getElementAsCanvas('.printable-graph-4', pdf, 4))
-                    .then((pdf) => getElementAsCanvas('.table-box', pdf, 5))
                     .then((pdf) => {
-                        pdf.save(fileName);
-                        resolve();
+                        if (isCondensed) {
+                            pdf.save(fileName);
+                            resolve();
+                        } else {
+                            return getElementAsCanvas('.table-box', pdf, 5);
+                        }
+                    })
+                    .then((pdf) => {
+                        if (pdf) {
+                            pdf.save(fileName);
+                            resolve();
+                        }
                     })
             } else {
                 getElementAsCanvas('.print-info', {}, 1)
@@ -35,10 +46,19 @@ export default function(fileName = 'download.pdf', isUG = false) {
                     .then((pdf) => getElementAsCanvas('.printable-graph-2', pdf, 3))
                     .then((pdf) => getElementAsCanvas('.printable-graph-3', pdf, 4))
                     .then((pdf) => getElementAsCanvas('.printable-graph-4', pdf, 5))
-                    .then((pdf) => getElementAsCanvas('.table-box', pdf, 6))
                     .then((pdf) => {
-                        pdf.save(fileName);
-                        resolve();
+                        if (isCondensed) {
+                            pdf.save(fileName);
+                            resolve();
+                        } else {
+                            return getElementAsCanvas('.table-box', pdf, 6);
+                        }
+                    })
+                    .then((pdf) => {
+                        if (pdf) {
+                            pdf.save(fileName);
+                            resolve();
+                        }
                     })
             }
 
