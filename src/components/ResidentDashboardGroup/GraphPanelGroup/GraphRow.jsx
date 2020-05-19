@@ -9,18 +9,18 @@ export default class GraphRow extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { clinicalFilter: '', patientDemographicFilter: '' };
+        this.state = { clinicalFilter: '', patientDemographicFilter: '', typeFilter: '' };
         this.onHighlightChange = this.onHighlightChange.bind(this);
 
     }
 
-    onHighlightChange(clinicalFilter, patientDemographicFilter) {
-        this.setState({ clinicalFilter, patientDemographicFilter });
+    onHighlightChange(clinicalFilter, patientDemographicFilter, typeFilter) {
+        this.setState({ clinicalFilter, patientDemographicFilter, typeFilter });
     }
 
     render() {
 
-        const { clinicalFilter, patientDemographicFilter } = this.state;
+        const { clinicalFilter, patientDemographicFilter, typeFilter } = this.state;
 
         let { epaSource, isTableVisible, innerKey,
             widthPartition, smallScreen, epaSourceMap,
@@ -65,7 +65,7 @@ export default class GraphRow extends Component {
 
                 const context = splitAndTrim(d.Situation_Context);
 
-                if (clinicalFilter.length > 0 && patientDemographicFilter.length > 0) {
+                if (clinicalFilter.length > 0 && patientDemographicFilter.length > 0 && typeFilter.length > 0) {
                     highlight = (context.indexOf(clinicalFilter) > 0 && context.indexOf(patientDemographicFilter) > -1) ? true : false;
                 }
                 else if (clinicalFilter.length > 0) {
@@ -73,6 +73,9 @@ export default class GraphRow extends Component {
                 }
                 else if (patientDemographicFilter.length > 0) {
                     highlight = (context.indexOf(patientDemographicFilter) > -1);
+                }
+                else if (typeFilter.length > 0) {
+                    highlight = (context.indexOf(typeFilter) > -1);
                 }
             }
 
@@ -156,6 +159,7 @@ export default class GraphRow extends Component {
                         onHighlightChange={this.onHighlightChange}
                         clinicalFilter={clinicalFilter}
                         patientDemographicFilter={patientDemographicFilter}
+                        typeFilter={typeFilter}
                     />}
             </div>
         );
