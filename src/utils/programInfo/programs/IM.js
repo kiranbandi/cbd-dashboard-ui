@@ -75,10 +75,15 @@ const programInfo = {
                 '1.2': ['clinical', 'simulation'],
                 '1.3': ['clinical', 'simulation']
             },
+            type: {
+                '1.1': ['Part A'],
+                '1.2': ['Part A'],
+                '1.3': ['Part A']
+            },
             filterTitles: {
-                '1.1': ['Type of Patient Visit', ''],
-                '1.2': ['Presentation', 'Setting'],
-                '1.3': ['Procedure', 'Setting']
+                '1.1': ['Type of Patient Visit', '', 'Type'],
+                '1.2': ['Presentation', 'Setting', 'Type'],
+                '1.3': ['Procedure', 'Setting', 'Type']
             }
 
         },
@@ -104,11 +109,13 @@ const programInfo = {
                 "2.7": 12
             },
             filterTitles: {
-                '2.1': ['Patient Visit', 'Case Mix'],
-                '2.3': ["Role of Observer", 'Setting'],
-                '2.4': ["Complex Hospital Stay", ''],
-                '2.5': ["Presentation", "Setting"],
-                '2.6': ["Category", "Setting"]
+                '2.1': ['Patient Visit', 'Case Mix', 'Type'],
+                '2.2': ['', '', 'Type'],
+                '2.3': ["Role of Observer", 'Setting', 'Type'],
+                '2.4': ["Complex Hospital Stay", '', 'Type'],
+                '2.5': ["Presentation", "Setting", 'Type'],
+                '2.6': ["Category", "Setting", 'Type'],
+                '2.7': ['', '', 'Type']
             },
             clinicalPresentation: {
                 '2.1': ["emergency department", "ward"],
@@ -118,6 +125,15 @@ const programInfo = {
                 '2.5': ["acute respiratory distress", "hemodynamic instability", "altered level of consciousness"],
                 '2.6': ["stable acute condition", "unstable acute condition", "progressive chronic condition"],
                 '2.7': []
+            },
+            type: {
+                '2.1': ["Part A"],
+                '2.2': ["Part A", "Part B", "Part C"],
+                '2.3': ["Part A"],
+                '2.4': ["Part A", "Part B"],
+                '2.5': ["Part A"],
+                '2.6': ["Part A"],
+                '2.7': ["Part A"]
             },
             patientDemographic: {
                 '2.1': ["chest pain", "shortness of breath", "altered level of consciousness", "fever", "hemodynamic instability", "other"],
@@ -159,16 +175,17 @@ const programInfo = {
                 "3.11": 6
             },
             filterTitles: {
-                '3.1': ["Focus of Care", "Setting"],
-                '3.2': ["Condition", "Setting"],
-                '3.3': ["Case Mix", "Setting"],
-                '3.4': ["Focus of Care", "Presentation"],
-                '3.5': ["Procedure", "Site"],
-                '3.6': ["Category", "Type of Observation"],
-                '3.7': ["Complexity", "Issue"],
-                '3.8': ["Type of Event", "Setting"],
-                '3.9': ["Scenario", ''],
-                '3.10': ["Condition", '']
+                '3.1': ["Focus of Care", "Setting", 'Type'],
+                '3.2': ["Condition", "Setting", 'Type'],
+                '3.3': ["Case Mix", "Setting", 'Type'],
+                '3.4': ["Focus of Care", "Presentation", 'Type'],
+                '3.5': ["Procedure", "Site", 'Type'],
+                '3.6': ["Category", "Type of Observation", 'Type'],
+                '3.7': ["Complexity", "Issue", 'Type'],
+                '3.8': ["Type of Event", "Setting", 'Type'],
+                '3.9': ["Scenario", '', 'Type'],
+                '3.10': ["Condition", '', 'Type'],
+                '3.11': ['', '', 'Type']
             },
             clinicalPresentation: {
                 '3.1': ["initial assessment", "diagnosis", "management"],
@@ -182,6 +199,19 @@ const programInfo = {
                 '3.9': ["cancer", "organ failure", "neurodegenerative diseases"],
                 '3.10': ["asthma/COPD", "cancer screening in at risk populations", "diabetes", "falls/frailty", "immunocompromised patient", "medication reviews", "vaccinations", "vascular risk reduction", "other"],
                 '3.11': []
+            },
+            type: {
+                '3.1': ["Part A"],
+                '3.2': ["Part A", "Part B"],
+                '3.3': ["Part A", "Part B", "Part C"],
+                '3.4': ["Part A", "Part B"],
+                '3.5': ["Part A", "Part B"],
+                '3.6': ["Part A"],
+                '3.7': ["Part A"],
+                '3.8': ["Part A"],
+                '3.9': ["Part A", "Part B"],
+                '3.10': ["Part A"],
+                '3.11': ["Part A", "Part B"]
             },
             patientDemographic: {
                 '3.1': ["ambulatory care", "inpatient"],
@@ -221,9 +251,14 @@ const programInfo = {
                 "4.8": 1
             },
             filterTitles: {
-                "4.1": ["Category", ''],
-                "4.2": ["Clinic Type"],
-                "4.3": ["Condition", "Type of undifferentiated issue"]
+                "4.1": ["Category", '', 'Type'],
+                "4.2": ["Clinic Type", '', 'Type'],
+                "4.3": ["Condition", "Type of undifferentiated issue", 'Type'],
+                "4.4": ['', '', 'Type'],
+                "4.5": ['', '', 'Type'],
+                "4.6": ['', '', 'Type'],
+                "4.7": ['', '', 'Type'],
+                "4.8": ['', '', 'Type']
             },
             clinicalPresentation: {
                 "4.1": ["acute", "chronic", "both acute and chronic"],
@@ -244,7 +279,17 @@ const programInfo = {
                 "4.6": [],
                 "4.7": [],
                 "4.8": []
-            }
+            },
+            type: {
+                "4.1": ["Part A", "Part B"],
+                "4.2": ["Part A", "Part B"],
+                "4.3": ["Part A"],
+                "4.4": ["Part A"],
+                "4.5": ["Part A"],
+                "4.6": ["Part A"],
+                "4.7": ["Part A"],
+                "4.8": ["Part A"]
+            },
         },
     }
 };
