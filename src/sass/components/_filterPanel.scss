@@ -133,7 +133,11 @@
 }
 
 .slider-container-resident {
-    margin: 20px auto;
+    margin: 25px auto;
+    .rc-slider {
+        margin-left: 0.25em;
+        margin-top: 15px;
+    }
     .rc-slider-track {
         background: #32a8dd !important;
     }

@@ -1,7 +1,7 @@
 import React from "react";
 import * as d3 from "d3";
 
-const fivePointColorScale = ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f"];
+const fivePointColorScale = ["#e15759", "#f28e2c", "#76b7b2", "#4e79a7", "#59a14f"];
 
 const innerRadius = 25, outerRadius = 50;
 

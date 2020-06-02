@@ -20,7 +20,7 @@ export default class GraphRow extends Component {
 
     render() {
 
-        const { clinicalFilter, patientDemographicFilter, typeFilter } = this.state;
+        const { clinicalFilter, patientDemographicFilter, typeFilter = '' } = this.state;
 
         let { epaSource, isTableVisible, innerKey,
             widthPartition, smallScreen, epaSourceMap,

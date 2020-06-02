@@ -9,6 +9,9 @@ export default class ProgramCountPlot extends Component {
         super(props);
         this.state = {
             normalizeByResident: true,
+            hoverValue: '',
+            HoverX: 0,
+            HoverY: 0
         };
         this.normalizeResidentToggle = this.normalizeResidentToggle.bind(this);
     }
@@ -18,19 +21,22 @@ export default class ProgramCountPlot extends Component {
     }
 
     render() {
-        const { programData, width } = this.props, { normalizeByResident } = this.state;
+        const { programData, width } = this.props,
+            { normalizeByResident, hoverValue, HoverX, HoverY } = this.state;
 
         const epa_count_data = _.map(programData, (d, i) => {
             // if normalize is true , normalise by resident count but first check if residents are not zero
             return {
                 'x': d.epa_count / (normalizeByResident ? d.resident_count != 0 ? d.resident_count : 1 : 1),
-                'y': i + 1
+                'y': i + 1,
+                'yLabel': d.programName + ', ' + d.epa_count + ' EPAs' + ', ' + d.resident_count + ' Residents'
             };
         }),
             epa_expired_data = _.map(programData, (d, i) => {
                 return {
                     'x': d.expired_count / (normalizeByResident ? d.resident_count != 0 ? d.resident_count : 1 : 1),
-                    'y': i + 1
+                    'y': i + 1,
+                    'yLabel': d.programName + ', ' + d.expired_count + "/" + d.epa_count + ' Expired EPAs' + ', ' + d.resident_count + ' Residents'
                 };
             });
 
@@ -41,9 +47,29 @@ export default class ProgramCountPlot extends Component {
                         width={width} height={500}
                         margin={{ left: 20, right: 20, top: 10, bottom: 40 }}>
                         <XAxis />
-                        <HorizontalBarSeries data={epa_count_data} />
-                        <HorizontalBarSeries data={epa_expired_data} />
+                        <HorizontalBarSeries onValueMouseOut={() => { this.setState({ 'hoverValue': null }) }}
+                            onValueMouseOver={(datapoint, { event }) => {
+                                this.setState({
+                                    'hoverValue': datapoint.yLabel,
+                                    'HoverX': event.pageX - 10,
+                                    'HoverY': event.pageY - 50
+                                });
+                            }}
+                            data={epa_count_data} />
+                        <HorizontalBarSeries onValueMouseOut={() => { this.setState({ 'hoverValue': null }) }}
+                            onValueMouseOver={(datapoint, { event }) => {
+                                this.setState({
+                                    'hoverValue': datapoint.yLabel,
+                                    'HoverX': event.pageX - 10,
+                                    'HoverY': event.pageY - 50
+                                });
+                            }}
+                            data={epa_expired_data} />
                     </XYPlot>
+                    {hoverValue &&
+                        <div className='graph-tooltip' style={{ 'left': HoverX, 'top': HoverY }}>
+                            <span>{hoverValue}</span>
+                        </div>}
                     <h2 className='chart-title'>
                         <span>EPAs Acquired and Expired</span>
                         <span className='switch-container'>

@@ -94,3 +94,17 @@
         }
     }
 }
+
+.graph-tooltip {
+    position: absolute;
+    background: #040404c2;
+    padding: 7px 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    z-index: 100;
+    color: white;
+    font-weight: bolder;
+    span {
+        white-space: pre-wrap;
+    }
+}

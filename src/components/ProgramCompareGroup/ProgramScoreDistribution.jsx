@@ -1,24 +1,29 @@
 import React, { Component } from 'react';
-import { XYPlot, XAxis, HorizontalBarSeries, LabelSeries } from 'react-vis';
+import { XYPlot, HorizontalBarSeries } from 'react-vis';
 
-const fivePointColorScale = ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f"];
+const fivePointColorScale = ["#e15759", "#f28e2c", "#76b7b2", "#4e79a7", "#59a14f"];
 
 export default class ProgramCountPlot extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            value: false
+            hoverValue: '',
+            HoverX: 0,
+            HoverY: 0
         }
     }
 
 
     render() {
-        const { programData, width } = this.props;
+        const { programData, width } = this.props, { hoverValue, HoverX, HoverY } = this.state;
 
         const processedDataList = _.map(programData, (d) => {
             const total = _.sum(d.rating_group);
-            return _.map(d.rating_group, (d) => total == 0 ? 0 : ((d / total) * 100));
+            return {
+                'yLabel': d.programName,
+                'data': _.map(d.rating_group, (d) => total == 0 ? 0 : ((d / total) * 100))
+            }
         });
 
         return (
@@ -31,10 +36,26 @@ export default class ProgramCountPlot extends Component {
                             return <HorizontalBarSeries
                                 key={'bar-graph-' + idx}
                                 color={colorShade}
-                                data={_.map(processedDataList, (d, i) => ({ 'x': d[idx], y: i + 1 }))} />
+                                onValueMouseOut={(datapoint) => { this.setState({ 'hoverValue': null }) }}
+                                onValueMouseOver={(datapoint, { event }) => {
+                                    this.setState({
+                                        'hoverValue': datapoint.yLabel,
+                                        'HoverX': event.pageX - 10,
+                                        'HoverY': event.pageY - 50
+                                    });
+                                }}
+                                data={_.map(processedDataList, (d, i) => ({
+                                    'x': d.data[idx],
+                                    y: i + 1,
+                                    'yLabel': d.yLabel + ', Rating - ' + (idx + 1) + ', ' + Math.round(d.data[idx]) + '%'
+                                }))} />
                         })}
                     </XYPlot>
                     <h2 className='chart-title'>EPA Rating Distribution</h2>
+                    {hoverValue &&
+                        <div className='graph-tooltip' style={{ 'left': HoverX, 'top': HoverY }}>
+                            <span>{hoverValue}</span>
+                        </div>}
                 </div>
             </div >
         );
