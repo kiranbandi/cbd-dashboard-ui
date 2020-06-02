@@ -81,9 +81,9 @@ const programInfo = {
                 '1.3': ['Part A']
             },
             filterTitles: {
-                '1.1': ['Type of Patient Visit', '', 'Type'],
-                '1.2': ['Presentation', 'Setting', 'Type'],
-                '1.3': ['Procedure', 'Setting', 'Type']
+                '1.1': ['Type of Patient Visit', '', ''],
+                '1.2': ['Presentation', 'Setting', ''],
+                '1.3': ['Procedure', 'Setting', '']
             }
 
         },
@@ -109,13 +109,13 @@ const programInfo = {
                 "2.7": 12
             },
             filterTitles: {
-                '2.1': ['Patient Visit', 'Case Mix', 'Type'],
+                '2.1': ['Patient Visit', 'Case Mix', ''],
                 '2.2': ['', '', 'Type'],
-                '2.3': ["Role of Observer", 'Setting', 'Type'],
+                '2.3': ["Role of Observer", 'Setting', ''],
                 '2.4': ["Complex Hospital Stay", '', 'Type'],
-                '2.5': ["Presentation", "Setting", 'Type'],
-                '2.6': ["Category", "Setting", 'Type'],
-                '2.7': ['', '', 'Type']
+                '2.5': ["Presentation", "Setting", ''],
+                '2.6': ["Category", "Setting", ''],
+                '2.7': ['', '', '']
             },
             clinicalPresentation: {
                 '2.1': ["emergency department", "ward"],
@@ -175,16 +175,16 @@ const programInfo = {
                 "3.11": 6
             },
             filterTitles: {
-                '3.1': ["Focus of Care", "Setting", 'Type'],
+                '3.1': ["Focus of Care", "Setting", ''],
                 '3.2': ["Condition", "Setting", 'Type'],
                 '3.3': ["Case Mix", "Setting", 'Type'],
                 '3.4': ["Focus of Care", "Presentation", 'Type'],
                 '3.5': ["Procedure", "Site", 'Type'],
-                '3.6': ["Category", "Type of Observation", 'Type'],
-                '3.7': ["Complexity", "Issue", 'Type'],
-                '3.8': ["Type of Event", "Setting", 'Type'],
+                '3.6': ["Category", "Type of Observation", ''],
+                '3.7': ["Complexity", "Issue", ''],
+                '3.8': ["Type of Event", "Setting", ''],
                 '3.9': ["Scenario", '', 'Type'],
-                '3.10': ["Condition", '', 'Type'],
+                '3.10': ["Condition", '', ''],
                 '3.11': ['', '', 'Type']
             },
             clinicalPresentation: {
@@ -253,12 +253,12 @@ const programInfo = {
             filterTitles: {
                 "4.1": ["Category", '', 'Type'],
                 "4.2": ["Clinic Type", '', 'Type'],
-                "4.3": ["Condition", "Type of undifferentiated issue", 'Type'],
-                "4.4": ['', '', 'Type'],
-                "4.5": ['', '', 'Type'],
-                "4.6": ['', '', 'Type'],
-                "4.7": ['', '', 'Type'],
-                "4.8": ['', '', 'Type']
+                "4.3": ["Condition", "Type of undifferentiated issue", ''],
+                "4.4": ['', '', ''],
+                "4.5": ['', '', ''],
+                "4.6": ['', '', ''],
+                "4.7": ['', '', ''],
+                "4.8": ['', '', '']
             },
             clinicalPresentation: {
                 "4.1": ["acute", "chronic", "both acute and chronic"],
