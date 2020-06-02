@@ -24,7 +24,7 @@ export default class ProgramsCompare extends Component {
             academicYear: { 'label': '2019-2020', 'value': '2019' },
             loaderState: false,
             programData: [],
-            anonymize: false
+            anonymize: true
         };
         this.onSelectAcademicYear = this.onSelectAcademicYear.bind(this);
     }
