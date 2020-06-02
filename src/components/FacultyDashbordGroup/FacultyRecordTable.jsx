@@ -74,7 +74,7 @@ export default (props) => {
                 resizable={false}
                 filterable={true}
                 className='-highlight -striped'
-                defaultSorted={[{ id: "Date", desc: true }]} />}
+                defaultSorted={[{ id: "observation_date", desc: true }]} />}
     </div>
 
 }
