@@ -82,7 +82,7 @@ class GraphPanel extends Component {
             epaSourceMap, smallScreen, width,
             levelVisibilityOpenStatus, programInfo = {} } = this.props;
 
-        const { hidePercentages = false, hideTogoNumbers} = programInfo;
+        const { hidePercentages = false, hideTogoNumbers } = programInfo;
 
         const { openTableID, openFilterID } = this.state;
 

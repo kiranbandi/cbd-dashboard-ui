@@ -100,16 +100,20 @@ class FilterPanel extends Component {
                     // group data on the basis of EPA
                     var groupedResidentData = _.groupBy(markedResidentData, (d) => d.EPA);
 
-                    // if uncommenced EPAs are needed to be seen then sub in empty records
-                    if (showUncommencedEPA) {
-                        _.map(programInfo.epaSourceMap, (source) => {
-                            _.map(source.subRoot, (epa, innerKey) => {
-                                if (!groupedResidentData.hasOwnProperty(innerKey)) {
-                                    groupedResidentData[innerKey] = [];
-                                }
-                            })
+                    // force sort data by Date in each EPA type
+                    // also if uncommenced EPAs are needed to be seen then sub in empty records
+                    _.map(programInfo.epaSourceMap, (source) => {
+                        _.map(source.subRoot, (epa, innerKey) => {
+                            if (showUncommencedEPA && !groupedResidentData.hasOwnProperty(innerKey)) {
+                                groupedResidentData[innerKey] = [];
+                            }
+                            if (groupedResidentData[innerKey]) {
+                                groupedResidentData[innerKey] = _.sortBy(groupedResidentData[innerKey], (d) => d.Date);
+                            }
+
                         })
-                    }
+                    })
+
                     // store the info of visibility of phase into resident info
                     residentInfo.openOnlyCurrentPhase = openOnlyCurrentPhase;
                     actions.setResidentData(groupedResidentData, residentInfo);

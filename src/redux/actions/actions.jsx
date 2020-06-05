@@ -234,14 +234,15 @@ export function switchToResidentDashboard(residentInfo, residentFilter, programI
                 // group data on the basis of EPA
                 var groupedResidentData = _.groupBy(markedResidentData, (d) => d.EPA);
 
-                // if uncommenced EPAs are needed to be seen then sub in empty records
+                // if uncommenced EPAs are needed to be seen then sub in empty records and 
+                // sort records by Date --force
                 _.map(programInfo.epaSourceMap, (source) => {
                     _.map(source.subRoot, (epa, innerKey) => {
-                        if (!groupedResidentData.hasOwnProperty(innerKey)) {
-                            groupedResidentData[innerKey] = [];
-                        }
+                        groupedResidentData[innerKey] = _.sortBy(groupedResidentData[innerKey] || [], (d) => d.Date);
                     })
                 })
+
+
                 // store the info of visibility of phase into resident info
                 residentInfo.openOnlyCurrentPhase = true;
                 dispatch(setResidentData(groupedResidentData, residentInfo));
