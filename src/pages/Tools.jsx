@@ -48,7 +48,6 @@ class Tools extends Component {
             .then((response) => { return processRCMFile(response.data) })
             .then((processedOutput) => {
                 var { data, epaSourceMap } = processedOutput;
-
                 window.emCBD = {
                     'rcmData': _.map(data, (_r) => {
                         // example convert 3.10 to 310 and 3.1 to 301
@@ -78,7 +77,7 @@ class Tools extends Component {
             .then((response) => { return processRCMFile(response) })
             .then((processedOutput) => {
                 var { data, epaSourceMap } = processedOutput;
-
+                
                 if (data.length > 0) {
                     // quick hack so the data can be easily pulled in non group format
                     window.emCBD = {
