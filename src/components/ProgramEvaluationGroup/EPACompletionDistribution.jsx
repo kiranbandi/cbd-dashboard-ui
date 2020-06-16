@@ -152,7 +152,7 @@ export default class ProgramDashboard extends Component {
         >{d.epa}</text>);
 
         return (
-            <div className='container-fluid text-center m-t m-l-md m-r-md'>
+            <div className='container-fluid text-center m-t m-l-md m-r-md printable-content'>
                 <div className='program-vis-box row p-a-md'>
                     <div>
                         <h3 className='text-left m-a-0 pull-left'>EPA Completion Distribution</h3>
