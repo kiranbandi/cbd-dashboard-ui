@@ -20,7 +20,6 @@ export default class SlideInFilter extends Component {
             this.props.onHighlightChange(clinicalFilter, selectRef.action == 'clear' ? '' : option.value, typeFilter);
         }
         else if (selectRef.name == 'tp') {
-            debugger
             this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, selectRef.action == 'clear' ? '' : option.value.substring(0, 6));
         }
     }

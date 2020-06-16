@@ -24,8 +24,8 @@ export default class ProgramMonthyPlot extends Component {
                             strokeColor: 'rgba(18,147,154)',
                             pointColor: 'rgba(18,147,154)',
                             pointStrokeColor: 'rgba(18,147,154,.03)',
-                            pointHighlightFill: "rgba(0,0,0,.5)",
-                            pointHighlightStroke: "black",
+                            pointHighlightFill: "#e6475980",
+                            pointHighlightStroke: "#e64759",
                             data: _.map(monthList, (month) => {
                                 return d.monthly_count[month] ? d.monthly_count[month].length : 0;
                             })
@@ -36,8 +36,8 @@ export default class ProgramMonthyPlot extends Component {
                             strokeColor: 'rgb(121, 199, 227)',
                             pointColor: 'rgb(121, 199, 227)',
                             pointStrokeColor: 'rgba(121, 199, 227,.03)',
-                            pointHighlightFill: "rgba(0, 0, 0,.5)",
-                            pointHighlightStroke: "black",
+                            pointHighlightFill: "#e6475980",
+                            pointHighlightStroke: "#e64759",
                             data: _.map(monthList, (month) => {
                                 return d.monthly_count_expired[month] ? d.monthly_count_expired[month].length : 0;
                             })
@@ -55,7 +55,7 @@ export default class ProgramMonthyPlot extends Component {
                             <Line
                                 options={{ 'scaleBeginAtZero': true }}
                                 data={d.monthlyCount}
-                                width={350} height={350}
+                                width={400} height={350}
                                 redraw={true} />
                             <h3 className='text-center text-primary'>{d.title}</h3>
                         </div>

@@ -35,7 +35,7 @@ export default class ProgramCountPlot extends Component {
                         margin={{ left: 20, right: 20, top: 10, bottom: 40 }}>
                         {_.map(fivePointColorScale, (colorShade, idx) => {
 
-                            const phaseName = PHASES_LIST[+idx].split('-').map((d) => d.toLocaleUpperCase()).join(' ');
+                            const phaseName = capitalize(PHASES_LIST[+idx].split('-').join(' '));
 
                             return <HorizontalBarSeries
                                 key={'bar-graph-' + idx}
@@ -51,7 +51,7 @@ export default class ProgramCountPlot extends Component {
                                 data={_.map(processedDataList, (d, i) => ({
                                     'x': d.data[idx],
                                     y: i + 1,
-                                    'yLabel': d.yLabel + ', Phase - ' + phaseName + ', ' + Math.round(d.data[idx]) + '%'
+                                    'yLabel': d.yLabel + ', ' + phaseName + ', ' + Math.round(d.data[idx]) + '%'
                                 }))} />
                         })}
                     </XYPlot>
@@ -66,4 +66,4 @@ export default class ProgramCountPlot extends Component {
     }
 }
 
-
+const capitalize = (str, lower = false) => (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, match => match.toUpperCase());

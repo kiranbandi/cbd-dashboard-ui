@@ -14,7 +14,12 @@ const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP), (d) => (
     { 'label': d + "-" + (Number(d) + 1), 'value': d }
 ));
 
-const anonymizeCharList = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
+const alphabetList = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'],
+    // we get the number of alphabets required based on the number of available programs
+    // then we flip the list so the character ordering is easy to read and chart is 
+    // rendered from bottom to top
+    anonymizeCharList = _.reverse(alphabetList.slice(0, PROGRAM_LIST.length - 1));
+
 
 export default class ProgramsCompare extends Component {
 
@@ -140,7 +145,8 @@ export default class ProgramsCompare extends Component {
                                         }))}
                                     </div>
                                     <ProgramCountPlot width={partWidth} programData={moddedProgramData} />
-                                    <ProgramScoreDistribution width={partWidth} programData={moddedProgramData} />
+                                    <ProgramPhaseDistribution width={partWidth} programData={moddedProgramData} />
+
                                 </div>
 
                                 <div className='summary-chart-container '>
@@ -149,7 +155,7 @@ export default class ProgramsCompare extends Component {
                                             return <p className='text-truncate' key={'pg-' + idx}>{d.programName}</p>
                                         }))}
                                     </div>
-                                    <ProgramPhaseDistribution width={partWidth} programData={moddedProgramData} />
+                                    <ProgramScoreDistribution width={partWidth} programData={moddedProgramData} />
                                     <ProgramWordCount width={partWidth} programData={moddedProgramData} />
                                 </div>
                                 <ProgramMonthlyPlot width={overallWidth} programData={_.reverse([...moddedProgramData])} />
