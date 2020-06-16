@@ -50,13 +50,16 @@ export default (props) => {
         </text>
     })
 
+
+
     const yearLabelList = _.map(pointsList, (d, i) => {
+        const yearlyLabel = isNaN((+d.label) + 1) ? d.label : d.label + '-' + ((+d.label) + 1);
         return <text
             className='cite-year-label'
             key={'year-label-' + i}
             fill={'#1ca8dd'}
-            x={d.x - 15} y={d.y + 30}>
-            {d.label}
+            x={d.x - 30} y={d.y + 30}>
+            {yearlyLabel}
         </text>
     })
 

@@ -60,7 +60,7 @@ export default class ScheduleBlock extends Component {
                 // append the individual box to the list
                 // temporarily anesthesia and EM are combined
                 scheduleChart.push(<span
-                    className={'chart-line ' + isTodayInPeriod}
+                    className={'text-truncate chart-line ' + isTodayInPeriod}
                     key={"index-" + index}
                     id={index + "-" + rotationLabel}
                     style={{ left: widthFromleft, width: internalWidth }}>
