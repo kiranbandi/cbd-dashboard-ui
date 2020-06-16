@@ -9,7 +9,7 @@ export default (props) => {
         words_per_comment: 0, entrustment_score: 0
     } } = props;
 
-    return <div className='faculty-MicroStatCard-group  m-b container'>
+    return <div className='faculty-MicroStatCard-group  m-b container printable-content'>
         <div className="hr-divider">
             <h4 className="hr-divider-content"> Overall Acquisition Metrics </h4>
         </div>

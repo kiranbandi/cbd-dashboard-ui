@@ -33,7 +33,7 @@ export default class EPASpecRotation extends Component {
         }
 
         return (
-            <div className='col-sm-6'>
+            <div className='col-sm-6 printable-content'>
                 <div className='m-a program-vis-box row p-t-md'>
                     <div>
                         <h3 className='text-left m-a-0 pull-left'>{normalizeByCount ? 'EPA Count per Rotation' : 'EPA Overall Count'}</h3>

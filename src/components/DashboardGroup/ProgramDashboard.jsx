@@ -6,6 +6,7 @@ import ProgramBasePanel from '../ProgramEvaluationGroup/ProgramBasePanel';
 import EPACompletionDistribution from '../ProgramEvaluationGroup/EPACompletionDistribution';
 import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation';
 import EPAMonthlyRotation from '../ProgramEvaluationGroup/EPAMonthlyRotation';
+import savePagePDF from '../../utils/savePagePDF';
 
 const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP),
     (d) => ({ 'label': d + "-" + (Number(d) + 1), 'value': d }));
@@ -18,9 +19,32 @@ export default class ProgramDashboard extends Component {
             isLoaderVisible: false,
             academicYear: { 'label': '2019-2020', 'value': '2019' },
             allRecords: [],
-            residentList: []
+            residentList: [],
+            printModeON: false
         };
         this._isMounted = false;
+        this.onPrintClick = this.onPrintClick.bind(this);
+    }
+
+    onPrintClick(event) {
+
+        const { currentFaculty } = this.state;
+
+        this.setState({ printModeON: true });
+        // give a gap of 2 seconds to ensure everything has changed
+        // quick hack fix
+        setTimeout(() => {
+            // move to the top of the page
+            window.scrollTo(0, 0);
+            let filename = 'Export.pdf';
+            // once printing is complete reset back to original state
+            savePagePDF(filename, false, false, 'prog').finally(() => {
+                this._isMounted && this.setState({ printModeON: false });
+            });
+            // wait a couple of seconds quick hack
+        }, 500)
+
+
     }
 
     componentDidMount() {
@@ -54,7 +78,8 @@ export default class ProgramDashboard extends Component {
 
     render() {
 
-        const { allRecords = [], residentList } = this.state, { programInfo } = this.props,
+        const { allRecords = [], residentList, printModeON } = this.state,
+            { programInfo } = this.props,
             fullWidth = document.body.getBoundingClientRect().width - 300;
 
         return (
@@ -64,6 +89,10 @@ export default class ProgramDashboard extends Component {
                         height='100px' width='100px'
                         color='#d6e5ff' delay={- 1} /> :
                     <div className='container-fluid'>
+                        {printModeON &&
+                            <div className='on-screen-cover-banner'>
+                                <h2 className='text-center m-t-lg text-primary'>Generating PDF Export, Please Wait...</h2>
+                            </div>}
                         {allRecords.length > 0 ?
                             <div className='row'>
                                 <ProgramBasePanel
@@ -94,6 +123,10 @@ export default class ProgramDashboard extends Component {
                                 </div>
                             </div>
                             : <h2 className='text-center text-danger m-t-lg'>No program data available currently</h2>}
+                        <button id='print-report' className="btn btn-primary print-button partaway" onClick={this.onPrintClick}>
+                            <span className="icon icon-download"></span>
+                            <span className="icon-label">Report</span>
+                        </button>
                     </div>}
             </div >
         );

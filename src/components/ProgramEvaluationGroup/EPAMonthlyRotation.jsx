@@ -75,7 +75,7 @@ export default (props) => {
     };
 
     return (
-        <div className='col-sm-6 epa-specific'>
+        <div className='col-sm-6 epa-specific printable-content'>
             <div className='m-a program-vis-box row'>
                 <h3 className='text-left m-b'>EPA Monthly Distribution</h3>
 
