@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { gerRecordsByYear } from '../utils/requestServer';
+import { getRecordsByYear, getAllResidentsList } from '../utils/requestServer';
 import processProgramRecords from '../utils/processMultiProgramRecords';
 import Loading from 'react-loading';
 import Switch from 'react-switch';
@@ -7,7 +7,7 @@ import ReactSelect from 'react-select';
 import { ROTATION_SCHEDULE_MAP, PROGRAM_LIST } from '../utils/programInfo';
 import {
     ProgramSummary, ProgramCountPlot, ProgramMonthlyPlot,
-    ProgramScoreDistribution, ProgramWordCount
+    ProgramScoreDistribution, ProgramWordCount, ProgramPhaseDistribution
 } from '../components';
 
 const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP), (d) => (
@@ -24,6 +24,7 @@ export default class ProgramsCompare extends Component {
             academicYear: { 'label': '2019-2020', 'value': '2019' },
             loaderState: false,
             programData: [],
+            residentList: [],
             anonymize: true
         };
         this.onSelectAcademicYear = this.onSelectAcademicYear.bind(this);
@@ -37,10 +38,18 @@ export default class ProgramsCompare extends Component {
         this._isMounted = true;
         //  turn loader on
         this.setState({ loaderState: true });
-        // fetch data for default academic year
-        gerRecordsByYear(this.state.academicYear.value, false).then((records) => {
-            this.setState({ 'programData': processProgramRecords(records, PROGRAM_LIST) });
-        })
+
+        let residentList = [];
+        // first fetch all residents
+        // then fetch data for default academic year
+        getAllResidentsList()
+            .then((response) => {
+                residentList = [...response];
+                return getRecordsByYear(this.state.academicYear.value, false);
+            })
+            .then((records) => {
+                this.setState({ residentList, 'programData': processProgramRecords(records, residentList, PROGRAM_LIST) });
+            })
             // toggle loader again once the request completes
             .catch(() => { console.log("error in fetching records"); })
             .finally(() => {
@@ -52,8 +61,8 @@ export default class ProgramsCompare extends Component {
         // set the academic year and turn loader on
         this.setState({ academicYear, loaderState: true });
         // fetch data for that specific academic year
-        gerRecordsByYear(academicYear.value, false).then((records) => {
-            this.setState({ 'programData': processProgramRecords(records, PROGRAM_LIST) });
+        getRecordsByYear(academicYear.value, false).then((records) => {
+            this.setState({ 'programData': processProgramRecords(records, this.state.residentList, PROGRAM_LIST) });
         })
             // toggle loader again once the request completes
             .catch(() => { console.log("error in fetching records"); })
@@ -69,7 +78,7 @@ export default class ProgramsCompare extends Component {
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let overallWidth = document.body.getBoundingClientRect().width - 350,
-            partWidth = overallWidth / 3;
+            partWidth = overallWidth / 2;
 
         const moddedProgramData = _.map(programData, (d, i) => {
             // if anonymize is true then replace program name for all programs
@@ -127,11 +136,20 @@ export default class ProgramsCompare extends Component {
                                 <div className='summary-chart-container '>
                                     <div className='program-name-container'>
                                         {_.reverse(_.map(moddedProgramData, (d, idx) => {
-                                            return <p key={'pg-' + idx}>{d.programName}</p>
+                                            return <p className='text-truncate' key={'pg-' + idx}>{d.programName}</p>
                                         }))}
                                     </div>
                                     <ProgramCountPlot width={partWidth} programData={moddedProgramData} />
                                     <ProgramScoreDistribution width={partWidth} programData={moddedProgramData} />
+                                </div>
+
+                                <div className='summary-chart-container '>
+                                    <div className='program-name-container'>
+                                        {_.reverse(_.map(moddedProgramData, (d, idx) => {
+                                            return <p className='text-truncate' key={'pg-' + idx}>{d.programName}</p>
+                                        }))}
+                                    </div>
+                                    <ProgramPhaseDistribution width={partWidth} programData={moddedProgramData} />
                                     <ProgramWordCount width={partWidth} programData={moddedProgramData} />
                                 </div>
                                 <ProgramMonthlyPlot width={overallWidth} programData={_.reverse([...moddedProgramData])} />

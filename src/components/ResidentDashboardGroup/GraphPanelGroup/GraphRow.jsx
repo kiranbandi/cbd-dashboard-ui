@@ -47,8 +47,6 @@ export default class GraphRow extends Component {
         const recordedCount = residentEPAData.length;
         //  Get expired record count 
         const expiredCount = expiredResidentEPAData.length;
-        // Get high performance observations count, 4 or 5 
-        const achievedCount = residentEPAData.filter((record) => +record.Rating >= 4).length;
         // Get remaining count 
         const remainingCount = Math.max((maxObservation - recordedCount), 0)
 
@@ -94,7 +92,20 @@ export default class GraphRow extends Component {
                 dx: width - (2 * marginHorizontal),
                 y: yScale(i + 1)
             }
-        })
+        });
+
+
+
+        const { clinicalPresentation = {},
+            patientDemographic = {},
+            type = {} } = epaSourceMap[innerKey];
+
+
+        const isClinicalFilteringAvailable = (clinicalPresentation[epaSource] && clinicalPresentation[epaSource].length > 0),
+            isPatientDemoFilteringAvailable = (patientDemographic[epaSource] && patientDemographic[epaSource].length > 0),
+            isTypeFilteringAvailable = (type[epaSource] && type[epaSource].length > 0),
+            // turn filtering on if filtering in any one filter is available
+            isAnyFilterAvailable = !!isClinicalFilteringAvailable || !!isPatientDemoFilteringAvailable || !!isTypeFilteringAvailable;
 
         return (
             <div className='text-xs-center'>
@@ -142,7 +153,7 @@ export default class GraphRow extends Component {
                         onMouseOver={onMouseOver}
                         onMouseOut={onMouseOut} />
                     {!smallScreen && nonDemoMode && <span className={"icon table-icon icon-open-book " + epaSource + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}></span>}
-                    {!smallScreen && nonDemoMode && <span className={"icon filter-icon icon-sound-mix " + epaSource + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick}></span>}
+                    {!smallScreen && nonDemoMode && isAnyFilterAvailable && <span className={"icon filter-icon icon-sound-mix " + epaSource + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick}></span>}
 
                 </div>
                 {!smallScreen && isTableVisible && nonDemoMode &&

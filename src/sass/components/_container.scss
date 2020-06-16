@@ -35,4 +35,9 @@ body {
             padding: 1px 7px;
         }
     }
+    .text-truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
