@@ -1,6 +1,6 @@
 const programInfo = {
-    infoCardsVisible: true,
-    examScoresVisible: true,
+    infoCardsVisible: false,
+    examScoresVisible: false,
     narrativesVisible: true,
     rotationList: ["EM", "EM(REGINA)", "EM(PED)", "EM(RGNL)", "ACE", "ANESTHESIA", "CARDIO", "ICU", "GIM", "GEN SURG", "NEURO", "OBS/GYN", "OPTHO", "ORTHO", "OTHER", "PICU", "PLASTICS", "PSYCH", "SELECTIVE", "TOXICOLOGY", "TRAUMA", "TRANSPORT"],
     rotationRequired: {

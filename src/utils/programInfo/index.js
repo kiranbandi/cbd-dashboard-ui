@@ -6,10 +6,24 @@ import { default as IM } from './programs/IM';
 import { default as GIM } from './programs/GIM';
 import { default as SURGFND } from './programs/SURGFND';
 import { default as NEURO } from './programs/NEURO';
+import { default as PMR } from './programs/PMR';
+import { default as ORTHOSURG } from './programs/ORTHOSURG';
 import { default as UNDERGRADUATE } from './programs/UNDERGRADUATE';
 
-// populate program info with multiple department information and export its
-const PROGRAM_INFO = { EM, ANESTHESIA, OBGYN, PATH, GIM, IM, NEURO, SURGFND, UNDERGRADUATE };
+// populate program info with multiple department information and export it
+const PROGRAM_INFO = {
+    EM,
+    ANESTHESIA,
+    OBGYN,
+    PATH,
+    GIM,
+    IM,
+    NEURO,
+    SURGFND,
+    PMR,
+    ORTHOSURG,
+    UNDERGRADUATE
+};
 
 export { PROGRAM_INFO };
 export { default as ROTATION_SCHEDULE_MAP }
