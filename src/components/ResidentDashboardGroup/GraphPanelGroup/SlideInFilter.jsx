@@ -20,7 +20,8 @@ export default class SlideInFilter extends Component {
             this.props.onHighlightChange(clinicalFilter, selectRef.action == 'clear' ? '' : option.value, typeFilter);
         }
         else if (selectRef.name == 'tp') {
-            this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, selectRef.action == 'clear' ? '' : option.value);
+            debugger
+            this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, selectRef.action == 'clear' ? '' : option.value.substring(0, 6));
         }
     }
 
@@ -47,11 +48,16 @@ export default class SlideInFilter extends Component {
             context.map((contextType, contextIndex) => {
                 // if a particular value is in the array then find its position and 
                 //  increase the count in that position by 1
-                if (optionArray.indexOf(contextType) > -1) {
+                let index = (
+                    label === 'Type' ?
+                        optionArray.findIndex(d => d.substring(0, 6) === contextType) :
+                        optionArray.indexOf(contextType)
+                );
+                if (index >= 0) {
                     // if the option is other then make sure it is not in the first place since 
                     //  the first place is normally for situation and there is a chance this could be other too
                     if (contextType == 'other' && contextIndex == 0) { return; }
-                    optionCountMap[optionArray.indexOf(contextType)] += 1;
+                    optionCountMap[index] += 1;
                 }
             })
         });
