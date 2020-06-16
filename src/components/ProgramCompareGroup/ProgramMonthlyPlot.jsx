@@ -16,18 +16,30 @@ export default class ProgramMonthyPlot extends Component {
             remappedData = _.map(programData, (d) => {
                 return {
                     'title': d.programName,
-                    'lineData': {
+                    'monthlyCount': {
                         labels: monthList,
                         datasets: [{
                             label: d.programName,
-                            fillColor: "rgba(28,168,221,.03)",
-                            strokeColor: '#43b98e',
-                            pointColor: '#43b98e',
-                            pointStrokeColor: 'rgba(28,168,221,.03)',
-                            pointHighlightFill: "rgba(28,168,221,.03)",
-                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            fillColor: "rgba(18,147,154,.03)",
+                            strokeColor: 'rgba(18,147,154)',
+                            pointColor: 'rgba(18,147,154)',
+                            pointStrokeColor: 'rgba(18,147,154,.03)',
+                            pointHighlightFill: "rgba(0,0,0,.5)",
+                            pointHighlightStroke: "black",
                             data: _.map(monthList, (month) => {
                                 return d.monthly_count[month] ? d.monthly_count[month].length : 0;
+                            })
+                        },
+                        {
+                            label: 'Expired',
+                            fillColor: "rgba(121, 199, 227,.03)",
+                            strokeColor: 'rgb(121, 199, 227)',
+                            pointColor: 'rgb(121, 199, 227)',
+                            pointStrokeColor: 'rgba(121, 199, 227,.03)',
+                            pointHighlightFill: "rgba(0, 0, 0,.5)",
+                            pointHighlightStroke: "black",
+                            data: _.map(monthList, (month) => {
+                                return d.monthly_count_expired[month] ? d.monthly_count_expired[month].length : 0;
                             })
                         }]
                     }
@@ -42,7 +54,7 @@ export default class ProgramMonthyPlot extends Component {
                         return <div key={'compare-monthly-' + i} className='compare-monthly-box'>
                             <Line
                                 options={{ 'scaleBeginAtZero': true }}
-                                data={d.lineData}
+                                data={d.monthlyCount}
                                 width={350} height={350}
                                 redraw={true} />
                             <h3 className='text-center text-primary'>{d.title}</h3>
