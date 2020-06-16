@@ -76,9 +76,9 @@ const programInfo = {
                 '1.3': ['clinical', 'simulation']
             },
             type: {
-                '1.1': ['Part A'],
-                '1.2': ['Part A'],
-                '1.3': ['Part A']
+                '1.1': ['Part A: Initial assessments'],
+                '1.2': ['Part A: Unstable patients'],
+                '1.3': ['Part A: Procedures']
             },
             filterTitles: {
                 '1.1': ['Type of Patient Visit', '', ''],
@@ -127,13 +127,13 @@ const programInfo = {
                 '2.7': []
             },
             type: {
-                '2.1': ["Part A"],
-                '2.2': ["Part A", "Part B", "Part C"],
-                '2.3': ["Part A"],
-                '2.4': ["Part A", "Part B"],
-                '2.5': ["Part A"],
-                '2.6': ["Part A"],
-                '2.7': ["Part A"]
+                '2.1': ["Part A: Initial assessments"],
+                '2.2': ["Part A: Patient Assessment and Management", "Part B: Communication with Patient/Family", "Part C: Handover"],
+                '2.3': ["Part A: Consulting others"],
+                '2.4': ["Part A: Discharge plan documentation", "Part B: Discharge plan communication"],
+                '2.5': ["Part A: Unstable patients"],
+                '2.6': ["Part A: Goals of care"],
+                '2.7': ["Part A: Acute presentations"]
             },
             patientDemographic: {
                 '2.1': ["chest pain", "shortness of breath", "altered level of consciousness", "fever", "hemodynamic instability", "other"],
@@ -201,17 +201,17 @@ const programInfo = {
                 '3.11': []
             },
             type: {
-                '3.1': ["Part A"],
-                '3.2': ["Part A", "Part B"],
-                '3.3': ["Part A", "Part B", "Part C"],
-                '3.4': ["Part A", "Part B"],
-                '3.5': ["Part A", "Part B"],
-                '3.6': ["Part A"],
-                '3.7': ["Part A"],
-                '3.8': ["Part A"],
-                '3.9': ["Part A", "Part B"],
-                '3.10': ["Part A"],
-                '3.11': ["Part A", "Part B"]
+                '3.1': ["Part A: Acute presentations"],
+                '3.2': ["Part A: Assessment, Diagnosis, and Management", "Part B: Patient Education/Communication"],
+                '3.3': ["Part A: Patient Assessment and Decision-Making", "Part B: Written Communication", "Part C: Oral Communication"],
+                '3.4': ["Part A: Patient Care", "Part B: Interprofessional Care"],
+                '3.5': ["Part A: Procedure", "Part B: Submission of Procedure Log"],
+                '3.6': ["Part A: Capacity"],
+                '3.7': ["Part A: Complex discussions"],
+                '3.8': ["Part A: Patient safety"],
+                '3.9': ["Part A: Symptom Management in End of Life Care", "Part B: Discussion about transition away from disease modifying treatment"],
+                '3.10': ["Part A: Health promotion"],
+                '3.11': ["Part A: Teaching", "Part B: Running the Team"]
             },
             patientDemographic: {
                 '3.1': ["ambulatory care", "inpatient"],
@@ -281,14 +281,14 @@ const programInfo = {
                 "4.8": []
             },
             type: {
-                "4.1": ["Part A", "Part B"],
-                "4.2": ["Part A", "Part B"],
-                "4.3": ["Part A"],
-                "4.4": ["Part A"],
-                "4.5": ["Part A"],
-                "4.6": ["Part A"],
-                "4.7": ["Part A"],
-                "4.8": ["Part A"]
+                "4.1": ["Part A: Overall Patient Care", "Part B: Interprofessional Care"],
+                "4.2": ["Part A: Overall Patient Care", "Part B: Collaboration and Efficiency"],
+                "4.3": ["Part A: Uncertainty"],
+                "4.4": ["Part A: Off-site consultations"],
+                "4.5": ["Part A: Transfers"],
+                "4.6": ["Part A: Interprofessional care"],
+                "4.7": ["Part A: PLP"],
+                "4.8": ["Part A: QA"]
             },
         },
     }
