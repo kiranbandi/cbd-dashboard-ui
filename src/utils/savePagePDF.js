@@ -3,9 +3,9 @@ import html2canvas from 'html2canvas';
 import computedStyleToInlineStyle from "computed-style-to-inline-style";
 import jsPDF from 'jspdf';
 
-export default function (fileName = 'download.pdf', isCondensed = false, isUG = false, dashboard = 'fac') {
+export default function(fileName = 'download.pdf', isCondensed = false, isUG = false, dashboard = 'fac') {
 
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
         try {
             switch (dashboard) {
                 case 'fac':
@@ -45,8 +45,7 @@ function processForFacultyDashboard(isUG, isCondensed, fileName, resolve) {
                 if (isCondensed) {
                     pdf.save(fileName);
                     resolve();
-                }
-                else {
+                } else {
                     return getElementAsCanvas('.table-box', pdf, 5);
                 }
             })
@@ -56,8 +55,7 @@ function processForFacultyDashboard(isUG, isCondensed, fileName, resolve) {
                     resolve();
                 }
             });
-    }
-    else {
+    } else {
         getElementAsCanvas('.print-info', {}, 1)
             .then((pdf) => getElementAsCanvas('.printable-graph-1', pdf, 2))
             .then((pdf) => getElementAsCanvas('.printable-graph-2', pdf, 3))
@@ -67,8 +65,7 @@ function processForFacultyDashboard(isUG, isCondensed, fileName, resolve) {
                 if (isCondensed) {
                     pdf.save(fileName);
                     resolve();
-                }
-                else {
+                } else {
                     return getElementAsCanvas('.table-box', pdf, 6);
                 }
             })
@@ -93,8 +90,7 @@ function getElementAsCanvas(selector, pdfInstance, pageCount) {
 
     let pdfLocalCopy = _.clone(pdfInstance);
 
-    return new Promise(async (resolve, reject) => {
-        debugger
+    return new Promise(async(resolve, reject) => {
         // get the element
         const element = document.querySelector(selector);
         // set the options to generate the canvas
