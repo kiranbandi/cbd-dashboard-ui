@@ -11,7 +11,7 @@ export default function(allRecords = [], residentList = [], programList) {
     let filteredProgramList = _.filter(programList, (d) => d.value != 'UNDERGRADUATE');
 
     // add an 'All' program to the grouped list and recordsgroup collection
-    filteredProgramList.push({ value: "all", label: "All Programs" });
+    filteredProgramList.push({ value: "all", label: "All" });
     recordsGroupedByProgram['all'] = _.clone(allRecords);
 
     // convert the grouped records into list such that every group has 

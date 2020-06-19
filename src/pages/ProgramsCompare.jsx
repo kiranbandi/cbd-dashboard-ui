@@ -87,10 +87,10 @@ export default class ProgramsCompare extends Component {
 
         const moddedProgramData = _.map(programData, (d, i) => {
             // if anonymize is true then replace program name for all programs
-            // except for 'all programs' entry with P-Index.
+            // except for 'all' entry with P-Index.
             return {
                 ...d,
-                'programName': d.programName != 'All Programs' ?
+                'programName': d.programName != 'All' ?
                     anonymize ? ('Program - ' + anonymizeCharList[i]) : d.programName : d.programName,
             }
         });
@@ -137,20 +137,24 @@ export default class ProgramsCompare extends Component {
                         {moddedProgramData.length > 0 &&
                             <div>
                                 {/* dont include all program entry in the summary calculation */}
-                                <ProgramSummary programData={_.filter(moddedProgramData, (d) => d.programName != 'All Programs')} />
-                                <div className='summary-chart-container '>
+                                <ProgramSummary programData={_.filter(moddedProgramData, (d) => d.programName != 'All')} />
+                                <div className='text-center'>
                                     <div className='program-name-container'>
+                                        <div className="hr-divider">
+                                            <h4 className="hr-divider-content"> Program </h4>
+                                        </div>
                                         {_.reverse(_.map(moddedProgramData, (d, idx) => {
                                             return <p className='text-truncate' key={'pg-' + idx}>{d.programName}</p>
                                         }))}
                                     </div>
                                     <ProgramCountPlot width={partWidth} programData={moddedProgramData} />
                                     <ProgramPhaseDistribution width={partWidth} programData={moddedProgramData} />
-
                                 </div>
-
-                                <div className='summary-chart-container '>
+                                <div className='text-center'>
                                     <div className='program-name-container'>
+                                        <div className="hr-divider">
+                                            <h4 className="hr-divider-content"> Program </h4>
+                                        </div>
                                         {_.reverse(_.map(moddedProgramData, (d, idx) => {
                                             return <p className='text-truncate' key={'pg-' + idx}>{d.programName}</p>
                                         }))}

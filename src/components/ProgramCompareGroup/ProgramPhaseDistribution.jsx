@@ -29,39 +29,41 @@ export default class ProgramCountPlot extends Component {
 
         return (
             <div className='program-part-container'>
-                <div>
-                    <XYPlot yType="ordinal" stackBy='x'
-                        width={width} height={500}
-                        margin={{ left: 20, right: 20, top: 10, bottom: 40 }}>
-                        {_.map(fivePointColorScale, (colorShade, idx) => {
-
-                            const phaseName = capitalize(PHASES_LIST[+idx].split('-').join(' '));
-
-                            return <HorizontalBarSeries
-                                key={'bar-graph-' + idx}
-                                color={colorShade}
-                                onValueMouseOut={(datapoint) => { this.setState({ 'hoverValue': null }) }}
-                                onValueMouseOver={(datapoint, { event }) => {
-                                    this.setState({
-                                        'hoverValue': datapoint.yLabel,
-                                        'HoverX': event.pageX - 10,
-                                        'HoverY': event.pageY - 50
-                                    });
-                                }}
-                                data={_.map(processedDataList, (d, i) => ({
-                                    'x': d.data[idx],
-                                    y: i + 1,
-                                    'yLabel': d.yLabel + ', ' + phaseName + ', ' + Math.round(d.data[idx]) + '%'
-                                }))} />
-                        })}
-                    </XYPlot>
-                    <h2 className='chart-title'>Resident Training Phase</h2>
-                    {hoverValue &&
-                        <div className='graph-tooltip' style={{ 'left': HoverX, 'top': HoverY }}>
-                            <span>{hoverValue}</span>
-                        </div>}
+                <div className="hr-divider">
+                    <h4 className="hr-divider-content"> Resident Training Phase Distribution </h4>
                 </div>
-            </div >
+                <div className='chart-container'>
+                    <div>
+                        <XYPlot yType="ordinal" stackBy='x'
+                            width={width} height={500}
+                            margin={{ left: 20, right: 20, top: 10, bottom: 40 }}>
+                            {_.map(fivePointColorScale, (colorShade, idx) => {
+                                const phaseName = capitalize(PHASES_LIST[+idx].split('-').join(' '));
+                                return <HorizontalBarSeries
+                                    key={'bar-graph-' + idx}
+                                    color={colorShade}
+                                    onValueMouseOut={(datapoint) => { this.setState({ 'hoverValue': null }) }}
+                                    onValueMouseOver={(datapoint, { event }) => {
+                                        this.setState({
+                                            'hoverValue': datapoint.yLabel,
+                                            'HoverX': event.pageX - 10,
+                                            'HoverY': event.pageY - 50
+                                        });
+                                    }}
+                                    data={_.map(processedDataList, (d, i) => ({
+                                        'x': d.data[idx],
+                                        y: i + 1,
+                                        'yLabel': d.yLabel + ', ' + phaseName + ', ' + Math.round(d.data[idx]) + '%'
+                                    }))} />
+                            })}
+                        </XYPlot>
+                        {hoverValue &&
+                            <div className='graph-tooltip' style={{ 'left': HoverX, 'top': HoverY }}>
+                                <span>{hoverValue}</span>
+                            </div>}
+                    </div>
+                </div >
+            </div>
         );
     }
 }

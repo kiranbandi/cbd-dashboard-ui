@@ -28,7 +28,10 @@ export default class ProgramCountPlot extends Component {
 
         return (
             <div className='program-part-container'>
-                <div>
+                <div className="hr-divider">
+                    <h4 className="hr-divider-content"> EPA Rating Distribution </h4>
+                </div>
+                <div className='chart-container'>
                     <XYPlot yType="ordinal" stackBy='x'
                         width={width} height={500}
                         margin={{ left: 20, right: 20, top: 10, bottom: 40 }}>
@@ -51,7 +54,6 @@ export default class ProgramCountPlot extends Component {
                                 }))} />
                         })}
                     </XYPlot>
-                    <h2 className='chart-title'>EPA Rating Distribution</h2>
                     {hoverValue &&
                         <div className='graph-tooltip' style={{ 'left': HoverX, 'top': HoverY }}>
                             <span>{hoverValue}</span>
