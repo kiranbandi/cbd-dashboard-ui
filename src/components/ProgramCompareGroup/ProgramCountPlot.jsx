@@ -42,7 +42,32 @@ export default class ProgramCountPlot extends Component {
 
         return (
             <div className='program-part-container'>
-                <div>
+                <div className="hr-divider">
+                    <h4 className="hr-divider-content"> EPAs Acquired and Expired
+                    <span className='switch-container'>
+                            <div className='switch-inner'>
+                                <label htmlFor="material-switch-norm">
+                                    <Switch
+                                        checked={normalizeByResident}
+                                        onChange={this.normalizeResidentToggle}
+                                        onColor="#86d3ff"
+                                        onHandleColor="#2693e6"
+                                        handleDiameter={16}
+                                        uncheckedIcon={false}
+                                        checkedIcon={false}
+                                        boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                                        activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                                        height={12}
+                                        width={35}
+                                        className="react-switch"
+                                        id="material-switch-norm" />
+                                </label>
+                            </div>
+                            <span className='switch-label'>Normalize per Resident</span>
+                        </span>
+                    </h4>
+                </div>
+                <div className='chart-container'>
                     <XYPlot yType="ordinal"
                         width={width} height={500}
                         margin={{ left: 20, right: 20, top: 10, bottom: 40 }}>
@@ -70,30 +95,6 @@ export default class ProgramCountPlot extends Component {
                         <div className='graph-tooltip' style={{ 'left': HoverX, 'top': HoverY }}>
                             <span>{hoverValue}</span>
                         </div>}
-                    <h2 className='chart-title'>
-                        <span>EPAs Acquired and Expired</span>
-                        <span className='switch-container'>
-                            <div className='switch-inner'>
-                                <label htmlFor="material-switch-norm">
-                                    <Switch
-                                        checked={normalizeByResident}
-                                        onChange={this.normalizeResidentToggle}
-                                        onColor="#86d3ff"
-                                        onHandleColor="#2693e6"
-                                        handleDiameter={20}
-                                        uncheckedIcon={false}
-                                        checkedIcon={false}
-                                        boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                                        activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                                        height={15}
-                                        width={35}
-                                        className="react-switch"
-                                        id="material-switch-norm" />
-                                </label>
-                            </div>
-                            <span style={{ 'fontSize': '14px', 'fontWeight': 'bold' }}>Normalize by No. of Residents</span>
-                        </span>
-                    </h2>
                 </div>
             </div>
         );

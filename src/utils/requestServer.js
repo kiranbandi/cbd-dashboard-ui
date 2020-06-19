@@ -336,10 +336,18 @@ requestServer.getRecordsByYear = function(academicYear = '', programSpecific = t
 
 function errorCallback(error, reject) {
     if (error.response && error.response.data) {
-        toastr["error"](error.response.data.message, "ERROR");
-    } else {
-        toastr["error"]("Error connecting to the server", "ERROR");
-    }
+        // if its an authorization error, we simply redirect
+        // the users to the paws login page
+        let loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent((process.env.NODE_ENV == 'development') ? 'https://localhost:8887/' : 'https://cbme.usask.ca/');
+        if (error.response.status == 401) {
+            //  handle token expiry gracefully and log the user back in 
+            // with minimal effort.
+            toastr["error"]("Your session has expired, please wait while we log you back in again.", "ERROR");
+            window.setTimeout(() => { window.location.replace(loginRedirectURL) }, 2500);
+
+        } else { toastr["error"](error.response.data.message, "ERROR") }
+
+    } else { toastr["error"]("Error connecting to the server", "ERROR") }
     reject();
 }
 

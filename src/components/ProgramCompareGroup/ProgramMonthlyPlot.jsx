@@ -48,14 +48,16 @@ export default class ProgramMonthyPlot extends Component {
 
         return (
             <div className='text-center compare-monthly-container'>
-                <h3 className='text-center'>{'Monthly Distribution by Program'}</h3>
+                <div className="hr-divider">
+                    <h4 className="hr-divider-content"> Monthly Distribution by Program </h4>
+                </div>
                 <div className='overall-wrapper'>
                     {_.map(remappedData, (d, i) => {
                         return <div key={'compare-monthly-' + i} className='compare-monthly-box'>
                             <Line
                                 options={{ 'scaleBeginAtZero': true }}
                                 data={d.monthlyCount}
-                                width={400} height={350}
+                                width={350} height={300}
                                 redraw={true} />
                             <h3 className='text-center text-primary'>{d.title}</h3>
                         </div>
