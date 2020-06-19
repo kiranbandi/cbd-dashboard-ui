@@ -123,7 +123,7 @@ export default class ProgramDashboard extends Component {
                                 </div>
                             </div>
                             : <h2 className='text-center text-danger m-t-lg'>No program data available currently</h2>}
-                        <button id='print-report' className="btn btn-primary print-button partaway" onClick={this.onPrintClick}>
+                        <button id='print-report' className="btn btn-primary print-button" onClick={this.onPrintClick}>
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Report</span>
                         </button>
