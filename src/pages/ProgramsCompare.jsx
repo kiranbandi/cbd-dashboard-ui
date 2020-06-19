@@ -90,8 +90,8 @@ export default class ProgramsCompare extends Component {
             // except for 'all' entry with P-Index.
             return {
                 ...d,
-                'programName': d.programName != 'All' ?
-                    anonymize ? ('Program - ' + anonymizeCharList[i]) : d.programName : d.programName,
+                'programName': d.programName != 'Overall' ?
+                    anonymize ? ('Program-' + anonymizeCharList[i]) : d.programName : d.programName,
             }
         });
 
@@ -130,35 +130,18 @@ export default class ProgramsCompare extends Component {
                         </div>
                     </span>
                 </div>
-
                 {loaderState ?
                     <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
                     <div className='m-t'>
                         {moddedProgramData.length > 0 &&
                             <div>
                                 {/* dont include all program entry in the summary calculation */}
-                                <ProgramSummary programData={_.filter(moddedProgramData, (d) => d.programName != 'All')} />
+                                <ProgramSummary programData={_.filter(moddedProgramData, (d) => d.programName != 'Overall')} />
                                 <div className='text-center'>
-                                    <div className='program-name-container'>
-                                        <div className="hr-divider">
-                                            <h4 className="hr-divider-content"> Program </h4>
-                                        </div>
-                                        {_.reverse(_.map(moddedProgramData, (d, idx) => {
-                                            return <p className='text-truncate' key={'pg-' + idx}>{d.programName}</p>
-                                        }))}
-                                    </div>
                                     <ProgramCountPlot width={partWidth} programData={moddedProgramData} />
                                     <ProgramPhaseDistribution width={partWidth} programData={moddedProgramData} />
                                 </div>
                                 <div className='text-center'>
-                                    <div className='program-name-container'>
-                                        <div className="hr-divider">
-                                            <h4 className="hr-divider-content"> Program </h4>
-                                        </div>
-                                        {_.reverse(_.map(moddedProgramData, (d, idx) => {
-                                            return <p className='text-truncate' key={'pg-' + idx}>{d.programName}</p>
-                                        }))}
-                                    </div>
                                     <ProgramScoreDistribution width={partWidth} programData={moddedProgramData} />
                                     <ProgramWordCount width={partWidth} programData={moddedProgramData} />
                                 </div>

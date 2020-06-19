@@ -1,30 +1,18 @@
 import React, { Component } from 'react';
 import {
-    XYPlot,
-    XAxis,
-    HorizontalBarSeries
-} from 'react-vis';
+    BarChart, Bar, XAxis, YAxis,
+    Tooltip, ReferenceLine, Legend
+} from 'recharts';
 
 
 export default class ProgramCountPlot extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            hoverValue: '',
-            HoverX: 0,
-            HoverY: 0
-        };
-    }
 
     render() {
         const { programData, width } = this.props,
-            { hoverValue, HoverX, HoverY } = this.state,
-            data = _.map(programData, (d, i) => ({
-                'x': d.words_per_comment,
-                'y': i + 1,
-                'yLabel': d.programName + ', ' + d.words_per_comment + ' words'
-            }));
+            custom_data = _.map(programData, (d, i) => ({ 'name': d.programName, 'Words Per Comment': d.words_per_comment }));
+
+        const averageData = custom_data.slice(-1)[0];
 
         return (
             <div className='program-part-container'>
@@ -32,24 +20,21 @@ export default class ProgramCountPlot extends Component {
                     <h4 className="hr-divider-content"> EPA Feedback Word Count </h4>
                 </div>
                 <div className='chart-container'>
-                    <XYPlot yType="ordinal"
-                        width={width} height={500}
-                        margin={{ left: 20, right: 20, top: 10, bottom: 40 }}>
-                        <XAxis />
-                        <HorizontalBarSeries data={data}
-                            onValueMouseOut={() => { this.setState({ 'hoverValue': null }) }}
-                            onValueMouseOver={(datapoint, { event }) => {
-                                this.setState({
-                                    'hoverValue': datapoint.yLabel,
-                                    'HoverX': event.pageX - 10,
-                                    'HoverY': event.pageY - 50
-                                });
-                            }} />
-                    </XYPlot>
-                    {hoverValue &&
-                        <div className='graph-tooltip' style={{ 'left': HoverX, 'top': HoverY }}>
-                            <span>{hoverValue}</span>
-                        </div>}
+
+                    <BarChart width={width} height={600}
+                        data={_.reverse(custom_data)}
+                        layout="vertical"
+                        margin={{ left: 25, right: 30, top: 10, bottom: 10 }}>
+                        <XAxis style={{ fill: 'black', 'fontWeight': 'bolder' }}
+                            type="number" />
+                        <YAxis style={{ 'fontWeight': 'bold' }}
+                            width={105} tickSize={0} tickMargin={5} type="category" axisLine={false} dataKey="name" />
+                        <Tooltip labelStyle={{ 'color': 'black' }}
+                            wrapperStyle={{ 'fontWeight': 'bold' }} />
+                        <Legend wrapperStyle={{ 'color': 'black' }} />
+                        <Bar dataKey="Words Per Comment" fill="#82ca9d" />
+                        <ReferenceLine x={averageData["Words Per Comment"]} stroke="#82ca9d" strokeWidth='2' strokeDasharray="3 3" />
+                    </BarChart>
                 </div>
             </div >
         );
