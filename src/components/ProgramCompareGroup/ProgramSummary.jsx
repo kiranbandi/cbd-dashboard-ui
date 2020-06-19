@@ -1,6 +1,7 @@
 import React from 'react';
 import { MicroStatCard } from '..';
 import FacultyScorePie from '../FacultyDashbordGroup/FacultyScorePie';
+import PhaseSummaryPie from '../ProgramEvaluationGroup/PhaseSummaryPie';
 
 export default (props) => {
 
@@ -17,11 +18,12 @@ export default (props) => {
 
     let averageEPAScore = !showNA ? Math.round((_.meanBy(refinedProgramList, (d) => d.entrustment_score) || 0) * 100) / 100 : 'N/A',
         averageWords = !showNA ? Math.round(_.meanBy(refinedProgramList, (d) => d.words_per_comment) || 0) : 'N/A',
-        ratingGroupSet = !showNA ? _.reduce(refinedProgramList, (acc, d) => _.map(acc, (inner_d, i) => (inner_d + d.rating_group[i])), [0, 0, 0, 0, 0]) : [];
+        ratingGroupSet = !showNA ? _.reduce(refinedProgramList, (acc, d) => _.map(acc, (inner_d, i) => (inner_d + d.rating_group[i])), [0, 0, 0, 0, 0]) : [],
+        phaseGroupSet = !showNA ? _.reduce(refinedProgramList, (acc, d) => _.map(acc, (inner_d, i) => (inner_d + d.current_phase_group[i])), [0, 0, 0, 0]) : [];
 
     const percentageSymbol = !showNA ? '%' : '';
 
-    return <div className='faculty-MicroStatCard-group  m-b container'>
+    return <div className='faculty-MicroStatCard-group  m-b container-fluid'>
         <div className="hr-divider">
             <h4 className="hr-divider-content"> Overall Acquisition Metrics for all Programs </h4>
         </div>
@@ -32,6 +34,7 @@ export default (props) => {
             <MicroStatCard style={{ display: 'inline' }} title='Average EPA Score' type='primary' metric={averageEPAScore} />
             <MicroStatCard style={{ display: 'inline' }} title='Average words per comment' type='danger' metric={averageWords} />
             <FacultyScorePie dateFilterActive={false} data={ratingGroupSet} />
+            <PhaseSummaryPie data={phaseGroupSet} />
         </div>
     </div>
 

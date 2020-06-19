@@ -10,6 +10,8 @@ import {
     ProgramScoreDistribution, ProgramWordCount, ProgramPhaseDistribution
 } from '../components';
 
+
+
 const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP), (d) => (
     { 'label': d + "-" + (Number(d) + 1), 'value': d }
 ));
@@ -97,9 +99,10 @@ export default class ProgramsCompare extends Component {
 
         return (
             <div className='m-a program-compare-root container-fluid' >
+
                 <div className='m-t text-center'>
                     <div className='year-selection-box'>
-                        <h2 className='header'>Please Select Academic Year </h2>
+                        <h2 className='header'>Please Select Academic Year</h2>
                         <div className='react-select-root'>
                             <ReactSelect
                                 value={academicYear}
