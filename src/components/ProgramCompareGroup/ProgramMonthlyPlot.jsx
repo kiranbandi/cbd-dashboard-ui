@@ -12,7 +12,7 @@ export default class ProgramMonthyPlot extends Component {
 
     render() {
 
-        const { programData } = this.props,
+        const { programData, printModeON } = this.props,
             remappedData = _.map(programData, (d) => {
                 return {
                     'title': d.programName,
@@ -47,7 +47,9 @@ export default class ProgramMonthyPlot extends Component {
             });
 
         return (
-            <div className='text-center compare-monthly-container'>
+            <div className='text-center compare-monthly-container printable-content'
+                style={{ paddingTop: printModeON ? '200px' : '' }}
+            >
                 <div className="hr-divider">
                     <h4 className="hr-divider-content"> Monthly Distribution by Program </h4>
                 </div>
