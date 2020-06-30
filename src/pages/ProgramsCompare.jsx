@@ -177,7 +177,7 @@ export default class ProgramsCompare extends Component {
                                 </div>
                                 <ProgramMonthlyPlot width={overallWidth} printModeON={printModeON} programData={_.reverse([...moddedProgramData])} />
                             </div>}
-                        <button id='print-report' className="btn btn-primary print-button partaway" onClick={this.onPrintClick}>
+                        <button id='print-report' className="btn btn-primary print-button" onClick={this.onPrintClick}>
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Report</span>
                         </button>
