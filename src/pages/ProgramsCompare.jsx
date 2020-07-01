@@ -9,6 +9,7 @@ import {
     ProgramSummary, ProgramCountPlot, ProgramMonthlyPlot,
     ProgramScoreDistribution, ProgramWordCount, ProgramPhaseDistribution
 } from '../components';
+import savePagePDF from '../utils/savePagePDF';
 
 
 
@@ -32,9 +33,11 @@ export default class ProgramsCompare extends Component {
             loaderState: false,
             programData: [],
             residentList: [],
-            anonymize: true
+            anonymize: true,
+            printModeON: false
         };
         this.onSelectAcademicYear = this.onSelectAcademicYear.bind(this);
+        this.onPrintClick = this.onPrintClick.bind(this);
     }
 
     componentWillUnmount() {
@@ -64,6 +67,25 @@ export default class ProgramsCompare extends Component {
             });
     }
 
+    onPrintClick(event) {
+
+        this.setState({ printModeON: true });
+        // give a gap of 2 seconds to ensure everything has changed
+        // quick hack fix
+        setTimeout(() => {
+            // move to the top of the page
+            window.scrollTo(0, 0);
+            let filename = 'Export.pdf';
+            // once printing is complete reset back to original state
+            savePagePDF(filename, false, false, 'prog').finally(() => {
+                this._isMounted && this.setState({ printModeON: false });
+            });
+            // wait a couple of seconds quick hack
+        }, 500)
+
+
+    }
+
     onSelectAcademicYear(academicYear) {
         // set the academic year and turn loader on
         this.setState({ academicYear, loaderState: true });
@@ -81,7 +103,7 @@ export default class ProgramsCompare extends Component {
 
     render() {
 
-        const { loaderState, programData, academicYear, anonymize } = this.state;
+        const { loaderState, programData, academicYear, anonymize, printModeON } = this.state;
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let overallWidth = document.body.getBoundingClientRect().width - 350,
@@ -99,7 +121,10 @@ export default class ProgramsCompare extends Component {
 
         return (
             <div className='m-a program-compare-root container-fluid' >
-
+                {printModeON &&
+                    <div className='on-screen-cover-banner'>
+                        <h2 className='text-center m-t-lg text-primary'>Generating PDF Export, Please Wait...</h2>
+                    </div>}
                 <div className='m-t text-center'>
                     <div className='year-selection-box'>
                         <h2 className='header'>Please Select Academic Year</h2>
@@ -140,18 +165,25 @@ export default class ProgramsCompare extends Component {
                             <div>
                                 {/* dont include all program entry in the summary calculation */}
                                 <ProgramSummary programData={_.filter(moddedProgramData, (d) => d.programName != 'Overall')} />
-                                <div className='text-center'>
+                                <div className='text-center printable-content'
+                                    style={{ paddingTop: printModeON ? '200px' : '' }}>
                                     <ProgramCountPlot width={partWidth} programData={moddedProgramData} />
                                     <ProgramPhaseDistribution width={partWidth} programData={moddedProgramData} />
                                 </div>
-                                <div className='text-center'>
+                                <div className='text-center printable-content'
+                                    style={{ paddingTop: printModeON ? '200px' : '' }}>
                                     <ProgramScoreDistribution width={partWidth} programData={moddedProgramData} />
                                     <ProgramWordCount width={partWidth} programData={moddedProgramData} />
                                 </div>
-                                <ProgramMonthlyPlot width={overallWidth} programData={_.reverse([...moddedProgramData])} />
+                                <ProgramMonthlyPlot width={overallWidth} printModeON={printModeON} programData={_.reverse([...moddedProgramData])} />
                             </div>}
+                        <button id='print-report' className="btn btn-primary print-button" onClick={this.onPrintClick}>
+                            <span className="icon icon-download"></span>
+                            <span className="icon-label">Report</span>
+                        </button>
                     </div>
                 }
+
             </div>
         );
     }
