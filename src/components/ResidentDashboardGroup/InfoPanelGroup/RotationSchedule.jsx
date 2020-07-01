@@ -117,7 +117,7 @@ class RotatioSchedule extends Component {
         // if the current month is before july then pick the last year  
         const currentAcademicYear = moment().month() <= 5 ? moment().year() - 1 : moment().year();
         const currentScheduleDates = ROTATION_SCHEDULE_MAP[currentAcademicYear];
-        const currentSchedule = rotationSchedule[currentAcademicYear];
+        const currentSchedule = rotationSchedule[currentAcademicYear] ||[];
         const currentLongSchedule = longitudinalSchedule[currentAcademicYear];
 
         let historicalYears = _.filter(_.keys(rotationSchedule), (year) => {

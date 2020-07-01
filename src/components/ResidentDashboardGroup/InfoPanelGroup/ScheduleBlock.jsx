@@ -53,7 +53,7 @@ export default class ScheduleBlock extends Component {
                     internalWidth = widthAvailable - widthFromleft;
                 }
 
-                const rotationLabel = scheduleRotationList[index] || 'EM';
+                const rotationLabel = scheduleRotationList[index] || '-';
                 // append the individual box to the list
                 scheduleChart.push(<span
                     className={'text-truncate chart-line ' + isTodayInPeriod + (infoCardsVisible ? ' are-clickable' : '')}
