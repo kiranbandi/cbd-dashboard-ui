@@ -11,8 +11,8 @@ export default function(fileName = 'download.pdf', isCondensed = false, isUG = f
                 case 'fac':
                     processForFacultyDashboard(isUG, isCondensed, fileName, resolve);
                     break;
-                case 'prog':
-                    processForProgramDashboard(isUG, fileName, resolve);
+                default:
+                    process(isUG, fileName, resolve);
                     break;
             }
 
@@ -78,7 +78,7 @@ function processForFacultyDashboard(isUG, isCondensed, fileName, resolve) {
     }
 }
 
-async function processForProgramDashboard(isUG, fileName, resolve) {
+async function process(isUG, fileName, resolve) {
     const pdf = await getPDF('.printable-content');
     if (pdf) {
         pdf.save(fileName);
@@ -173,10 +173,9 @@ async function getPDF(selector) {
             // for the first content use pdf as is and for every other content
             // add a new page based on the content dimensions
             if (i <= 0) {
-                pdf = new jsPDF('l', 'px', [width, height]);
-
-            } else {
                 // For the first page we hardcode the page size 
+                pdf = new jsPDF('l', 'px', [width, height]);
+            } else {
                 pdf.addPage([width, height]);
             }
             //then we get the dimensions from the 'pdf' file itself

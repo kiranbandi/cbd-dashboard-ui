@@ -80,7 +80,7 @@ export default class RotationSpecificEPA extends Component {
         };
 
         return (
-            <div className='col-sm-6 col-xs-12  epa-specific reel-in-left printable-content'>
+            <div className='col-sm-6 col-xs-12  epa-specific reel-in-left'>
                 <div className='m-a program-vis-box row'>
                     <h3 className='text-left m-b'>Rotation Specific EPA Distribution</h3>
                     <div className="epa-select m-a text-left">
