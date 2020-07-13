@@ -7,6 +7,7 @@ export default [{ "value": "ANESTHESIA", "label": "Anesthesia" },
     { "value": "ORTHOSURG", "label": "Orthopedic Surgery" },
     { "value": "PATH", "label": "Pathology & Lab Medicine" },
     { "value": "PMR", "label": "Physiatry" },
+    { "value": "PSYCH", "label": "Psychiatry" },
     { "value": "SURGFND", "label": "Surgical Foundation" },
     { "value": "UNDERGRADUATE", "label": "Undergraduate (UG)" }
 ];
