@@ -9,7 +9,7 @@ export default class ProgramCountPlot extends Component {
 
 
     render() {
-        const { programData, width } = this.props,
+        const { programData, width, printModeON } = this.props,
             custom_data = _.map(programData, (d, i) => ({ 'name': d.programName, 'Words Per Comment': d.words_per_comment }));
 
         const averageData = custom_data.slice(-1)[0];
@@ -17,7 +17,11 @@ export default class ProgramCountPlot extends Component {
         return (
             <div className='program-part-container'>
                 <div className="hr-divider">
-                    <h4 className="hr-divider-content"> EPA Feedback Word Count </h4>
+                    <h4
+                        className="hr-divider-content"
+                        style={printModeON ? { background: 'white', color: 'black' } : undefined}>
+                        EPA Feedback Word Count
+                    </h4>
                 </div>
                 <div className='chart-container'>
 

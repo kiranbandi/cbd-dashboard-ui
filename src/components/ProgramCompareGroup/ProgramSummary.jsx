@@ -5,7 +5,7 @@ import PhaseSummaryPie from '../ProgramEvaluationGroup/PhaseSummaryPie';
 
 export default (props) => {
 
-    const { programData = [], showNA = false } = props;
+    const { programData = [], showNA = false, printModeON } = props;
 
     let EPACount = !showNA ? _.sumBy(programData, (d) => d.epa_count) : 'N/A',
         averageEPApercentage = !showNA ? Math.round(_.meanBy(programData, (d) => d.expired_epa_percentage) || 0) : 'N/A';
@@ -25,7 +25,11 @@ export default (props) => {
 
     return <div className='faculty-MicroStatCard-group  m-b container-fluid  printable-content'>
         <div className="hr-divider">
-            <h4 className="hr-divider-content"> Overall Acquisition Metrics for all Programs </h4>
+            <h4
+                className="hr-divider-content"
+                style={printModeON ? { background: 'white', color: 'black' } : undefined}>
+                Overall Acquisition Metrics for all Programs
+            </h4>
         </div>
         <div className='text-center'>
             <MicroStatCard style={{ display: 'inline' }} title='Total Programs' type='primary' metric={programData.length} />
