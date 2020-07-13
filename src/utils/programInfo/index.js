@@ -7,6 +7,7 @@ import { default as GIM } from './programs/GIM';
 import { default as SURGFND } from './programs/SURGFND';
 import { default as NEURO } from './programs/NEURO';
 import { default as PMR } from './programs/PMR';
+import { default as PSYCH } from './programs/PSYCH';
 import { default as ORTHOSURG } from './programs/ORTHOSURG';
 import { default as UNDERGRADUATE } from './programs/UNDERGRADUATE';
 
@@ -21,6 +22,7 @@ const PROGRAM_INFO = {
     NEURO,
     SURGFND,
     PMR,
+    PSYCH,
     ORTHOSURG,
     UNDERGRADUATE
 };
