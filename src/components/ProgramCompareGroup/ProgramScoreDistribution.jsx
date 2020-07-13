@@ -8,7 +8,7 @@ const moddedRatingList = _.map(fivePointColorScale, (d, i) => ('Rating-' + (i + 
 export default class ProgramScoreDist extends Component {
 
     render() {
-        const { programData, width } = this.props;
+        const { programData, width, printModeON } = this.props;
 
         const processedDataList = _.map(programData, (d) => {
             const total = _.sum(d.rating_group);
@@ -22,7 +22,11 @@ export default class ProgramScoreDist extends Component {
         return (
             <div className='program-part-container'>
                 <div className="hr-divider">
-                    <h4 className="hr-divider-content"> EPA Rating Distribution </h4>
+                    <h4
+                        className="hr-divider-content"
+                        style={printModeON ? { background: 'white', color: 'black' } : undefined}>
+                        EPA Rating Distribution
+                    </h4>
                 </div>
                 <div className='chart-container'>
                     <BarChart width={width} height={600}
