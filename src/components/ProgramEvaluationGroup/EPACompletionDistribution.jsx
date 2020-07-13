@@ -15,7 +15,7 @@ export default class ProgramDashboard extends Component {
     render() {
 
         const { programInfo: { epaSourceMap },
-            records, width, possibleAcademicYears } = this.props,
+            records, width, possibleAcademicYears, printModeON } = this.props,
             { academicYear } = this.state;
 
         const epaObservationMap = {};
@@ -136,7 +136,7 @@ export default class ProgramDashboard extends Component {
             x={5}
             y={scaleY(d) + 5}
             fontWeight='bold'
-            fill={d === 1 ? 'white' : '#a9a1a1'}
+            fill={d === 1 ? (printModeON ? 'black' : 'white') : '#a9a1a1'}
             key={d}
         >{(d * 100).toFixed() + '%'}</text>);
 
@@ -153,9 +153,15 @@ export default class ProgramDashboard extends Component {
 
         return (
             <div className='container-fluid text-center m-t m-l-md m-r-md printable-content'>
-                <div className='program-vis-box row p-a-md'>
+                <div
+                    className='program-vis-box row p-a-md'
+                    style={printModeON ? { background: 'white' } : undefined}>
                     <div>
-                        <h3 className='text-left m-a-0 pull-left'>EPA Completion Distribution</h3>
+                        <h3
+                            className='text-left m-a-0 pull-left'
+                            style={printModeON ? { color: 'black' } : undefined}>
+                            EPA Completion Distribution
+                        </h3>
                         <div className='year-selection-box pull-right'>
                             <h2 className='header'>Academic Year: </h2>
                             <div className='react-select-root'>

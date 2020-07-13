@@ -14,7 +14,7 @@ export default class EPASpecRotation extends Component {
     }
 
     render() {
-        const { possibleAcademicYears, residentList, allRecords, normalizeByCount = true, width } = this.props;
+        const { possibleAcademicYears, residentList, allRecords, normalizeByCount = true, width, printModeON } = this.props;
 
         const programData = processAndFilterRecords(allRecords, residentList, this.state.academicYear.value, normalizeByCount)
 
@@ -34,9 +34,15 @@ export default class EPASpecRotation extends Component {
 
         return (
             <div className='col-sm-6 printable-content'>
-                <div className='m-a program-vis-box row p-t-md'>
+                <div
+                    className='m-a program-vis-box row p-t-md'
+                    style={printModeON ? { background: 'white' } : undefined}>
                     <div>
-                        <h3 className='text-left m-a-0 pull-left'>{normalizeByCount ? 'EPA Count per Rotation' : 'EPA Overall Count'}</h3>
+                        <h3
+                            className='text-left m-a-0 pull-left'
+                            style={printModeON ? { color: 'black' } : undefined}>
+                            {normalizeByCount ? 'EPA Count per Rotation' : 'EPA Overall Count'}
+                        </h3>
                         <div className='year-selection-box pull-right'>
                             <h2 className='header'>Academic Year: </h2>
                             <div className='react-select-root'>
