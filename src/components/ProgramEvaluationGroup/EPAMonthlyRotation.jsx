@@ -7,7 +7,7 @@ const monthList = ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"
 
 export default (props) => {
 
-    const { allRecords, width, possibleAcademicYears } = props;
+    const { allRecords, width, possibleAcademicYears, printModeON } = props;
 
     const lineData = {
         labels: monthList,
@@ -76,8 +76,14 @@ export default (props) => {
 
     return (
         <div className='col-sm-6 epa-specific printable-content'>
-            <div className='m-a program-vis-box row'>
-                <h3 className='text-left m-b'>EPA Monthly Distribution</h3>
+            <div
+                className='m-a program-vis-box row'
+                style={printModeON ? { background: 'white' } : undefined}>
+                <h3
+                    className='text-left m-b'
+                    style={printModeON ? { color: 'black' } : undefined}>
+                    EPA Monthly Distribution
+                </h3>
 
                 <div className='col-xs-12'>
                     <Line

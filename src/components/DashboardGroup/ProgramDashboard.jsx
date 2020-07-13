@@ -100,12 +100,14 @@ export default class ProgramDashboard extends Component {
                                     allRecords={allRecords}
                                     programInfo={programInfo}
                                     residentList={residentList}
-                                    possibleAcademicYears={possibleAcademicYears} />
+                                    possibleAcademicYears={possibleAcademicYears}
+                                    printModeON={printModeON} />
                                 <EPACompletionDistribution
                                     width={fullWidth}
                                     possibleAcademicYears={possibleAcademicYears}
                                     programInfo={programInfo}
-                                    records={allRecords} />
+                                    records={allRecords}
+                                    printModeON={printModeON} />
                                 <div className='container-fluid'>
                                     <div className='row'>
                                         <EPAOverallbyRotation
@@ -113,11 +115,13 @@ export default class ProgramDashboard extends Component {
                                             programInfo={programInfo}
                                             allRecords={allRecords}
                                             residentList={residentList}
-                                            possibleAcademicYears={possibleAcademicYears} />
+                                            possibleAcademicYears={possibleAcademicYears}
+                                            printModeON={printModeON} />
                                         <EPAMonthlyRotation
                                             width={fullWidth / 2}
                                             possibleAcademicYears={possibleAcademicYears}
-                                            allRecords={allRecords} />
+                                            allRecords={allRecords}
+                                            printModeON={printModeON} />
                                     </div>
 
                                 </div>
