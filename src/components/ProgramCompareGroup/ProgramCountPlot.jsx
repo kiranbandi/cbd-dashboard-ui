@@ -39,8 +39,10 @@ export default class ProgramCountPlot extends Component {
                     <h4
                         className="hr-divider-content"
                         style={printModeON ? { background: 'white', color: 'black' } : undefined}>
-                        EPAs Acquired and Expired
-                    <span className='switch-container'>
+                        {'EPAs Acquired and Expired' + (normalizeByResident ? ' (Per resident)' : '')}
+                        <span
+                            className='switch-container'
+                            style={printModeON ? { display: 'none' } : undefined}>
                             <div className='switch-inner'>
                                 <label htmlFor="material-switch-norm">
                                     <Switch
