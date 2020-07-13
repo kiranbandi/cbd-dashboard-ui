@@ -164,16 +164,16 @@ export default class ProgramsCompare extends Component {
                         {moddedProgramData.length > 0 &&
                             <div>
                                 {/* dont include all program entry in the summary calculation */}
-                                <ProgramSummary programData={_.filter(moddedProgramData, (d) => d.programName != 'Overall')} />
+                                <ProgramSummary programData={_.filter(moddedProgramData, (d) => d.programName != 'Overall')} printModeON={printModeON} />
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
-                                    <ProgramCountPlot width={partWidth} programData={moddedProgramData} />
-                                    <ProgramPhaseDistribution width={partWidth} programData={moddedProgramData} />
+                                    <ProgramCountPlot width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramPhaseDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
-                                    <ProgramScoreDistribution width={partWidth} programData={moddedProgramData} />
-                                    <ProgramWordCount width={partWidth} programData={moddedProgramData} />
+                                    <ProgramScoreDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramWordCount width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <ProgramMonthlyPlot width={overallWidth} printModeON={printModeON} programData={_.reverse([...moddedProgramData])} />
                             </div>}
