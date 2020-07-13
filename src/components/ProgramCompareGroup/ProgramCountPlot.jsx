@@ -19,7 +19,7 @@ export default class ProgramCountPlot extends Component {
     }
 
     render() {
-        const { programData, width } = this.props,
+        const { programData, width, printModeON } = this.props,
             { normalizeByResident } = this.state;
 
         const custom_data = _.map(programData, (d, i) => {
@@ -36,7 +36,10 @@ export default class ProgramCountPlot extends Component {
         return (
             <div className='program-part-container'>
                 <div className="hr-divider">
-                    <h4 className="hr-divider-content"> EPAs Acquired and Expired
+                    <h4
+                        className="hr-divider-content"
+                        style={printModeON ? { background: 'white', color: 'black' } : undefined}>
+                        EPAs Acquired and Expired
                     <span className='switch-container'>
                             <div className='switch-inner'>
                                 <label htmlFor="material-switch-norm">

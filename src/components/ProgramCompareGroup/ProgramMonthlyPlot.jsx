@@ -51,7 +51,11 @@ export default class ProgramMonthyPlot extends Component {
                 style={{ paddingTop: printModeON ? '200px' : '' }}
             >
                 <div className="hr-divider">
-                    <h4 className="hr-divider-content"> Monthly Distribution by Program </h4>
+                    <h4
+                        className="hr-divider-content"
+                        style={printModeON ? { background: 'white', color: 'black' } : undefined}>
+                        Monthly Distribution by Program
+                    </h4>
                 </div>
                 <div className='overall-wrapper'>
                     {_.map(remappedData, (d, i) => {
