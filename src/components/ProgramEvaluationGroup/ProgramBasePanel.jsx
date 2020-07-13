@@ -31,7 +31,7 @@ export default class ProgramBasePanel extends Component {
 
     render() {
 
-        const { allRecords, programInfo, residentList, possibleAcademicYears, width } = this.props,
+        const { allRecords, programInfo, residentList, possibleAcademicYears, width, printModeON } = this.props,
             { academicYear, selected } = this.state;
 
         const { recordsInYearAndPhase, summaryData } = processSingleProgramRecords(allRecords, academicYear, selected, residentList);
@@ -66,7 +66,7 @@ export default class ProgramBasePanel extends Component {
                     </div>
                 </div>
                 <div className='row'>
-                    <Summary data={summaryData} />
+                    <Summary data={summaryData} printModeON={printModeON} />
                     <EPAspecificRotation
                         width={width / 2}
                         epaSourceMap={programInfo.epaSourceMap}
