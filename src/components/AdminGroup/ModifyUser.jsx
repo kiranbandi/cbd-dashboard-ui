@@ -26,7 +26,7 @@ export default class ModifyUser extends Component {
             currentPhase: 'transition-to-discipline',
             earlierPhaseCount: 0,
             promotedDate: [],
-            academicYear: '2019',
+            academicYear: '2020',
             rotationSchedule: {},
             longitudinalSchedule: {},
             isGraduated: false
@@ -70,7 +70,7 @@ export default class ModifyUser extends Component {
                         currentPhase: 'transition-to-discipline',
                         earlierPhaseCount: 0,
                         promotedDate: [],
-                        academicYear: '2019',
+                        academicYear: '2020',
                         rotationSchedule: {},
                         longitudinalSchedule: {},
                         isGraduated: false
@@ -101,7 +101,7 @@ export default class ModifyUser extends Component {
                         promotedDate: userData.promotedDate || [],
                         rotationSchedule: userData.rotationSchedule || {},
                         longitudinalSchedule: userData.longitudinalSchedule || {},
-                        academicYear: '2019',
+                        academicYear: '2020',
                         isGraduated: userData.isGraduated || false
                     });
                 })
@@ -187,7 +187,7 @@ export default class ModifyUser extends Component {
                     currentPhase: 'transition-to-discipline',
                     earlierPhaseCount: 0,
                     promotedDate: [],
-                    academicYear: '2019',
+                    academicYear: '2020',
                     rotationSchedule: {},
                     longitudinalSchedule: {},
                     isGraduated: false

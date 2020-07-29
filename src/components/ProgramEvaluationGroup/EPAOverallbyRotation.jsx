@@ -9,7 +9,7 @@ export default class EPASpecRotation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            academicYear: { 'label': '2019-2020', 'value': '2019' },
+            academicYear: { 'label': '2020-2021', 'value': '2020' },
         };
     }
 
