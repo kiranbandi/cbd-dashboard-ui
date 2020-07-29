@@ -17,7 +17,7 @@ export default class ProgramDashboard extends Component {
         super(props);
         this.state = {
             isLoaderVisible: false,
-            academicYear: { 'label': '2019-2020', 'value': '2019' },
+            academicYear: { 'label': '2020-2021', 'value': '2020' },
             allRecords: [],
             residentList: [],
             printModeON: false

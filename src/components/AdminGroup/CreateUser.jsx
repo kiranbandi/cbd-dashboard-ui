@@ -23,7 +23,7 @@ export default class CreateUser extends Component {
             programStartDate: moment().format('MM/DD/YYYY'),
             earlierPhaseCount: 0,
             promotedDate: [],
-            academicYear: '2019',
+            academicYear: '2020',
             currentPhase: 'transition-to-discipline',
             rotationSchedule: {},
             longitudinalSchedule: {}
@@ -104,7 +104,7 @@ export default class CreateUser extends Component {
                         accessList: '',
                         programStartDate: moment().format('MM/DD/YYYY'),
                         earlierPhaseCount: 0,
-                        academicYear: '2019',
+                        academicYear: '2020',
                         // array of dates
                         promotedDate: [],
                         currentPhase: 'transition-to-discipline',

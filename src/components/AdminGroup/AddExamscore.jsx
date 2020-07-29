@@ -18,7 +18,7 @@ export default class AddExamscore extends Component {
             userList: [],
             selectedUserIndex: 0,
             username: '',
-            academicYear: '2019',
+            academicYear: '2020',
             oralExamScore: {},
             citeExamScore: {},
             activeEdit: 'written',
