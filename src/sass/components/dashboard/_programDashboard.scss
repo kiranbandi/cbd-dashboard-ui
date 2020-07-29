@@ -24,6 +24,9 @@
         .react-select-root {
             width: 175px;
             display: inline-block;
+            &>div:first-child {
+                z-index: 100;
+            }
         }
         margin-right: 30px;
     }
