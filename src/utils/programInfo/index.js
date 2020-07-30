@@ -9,7 +9,6 @@ import { default as NEURO } from './programs/NEURO';
 import { default as PMR } from './programs/PMR';
 import { default as PSYCH } from './programs/PSYCH';
 import { default as ORTHOSURG } from './programs/ORTHOSURG';
-import { default as TEST } from './programs/TEST';
 import { default as UNDERGRADUATE } from './programs/UNDERGRADUATE';
 
 // populate program info with multiple department information and export it
@@ -25,8 +24,7 @@ const PROGRAM_INFO = {
     PMR,
     PSYCH,
     ORTHOSURG,
-    UNDERGRADUATE,
-    TEST
+    UNDERGRADUATE
 };
 
 export { PROGRAM_INFO };
