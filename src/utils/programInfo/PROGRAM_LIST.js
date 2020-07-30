@@ -9,5 +9,6 @@ export default [{ "value": "ANESTHESIA", "label": "Anesthesia" },
     { "value": "PMR", "label": "Physiatry" },
     { "value": "PSYCH", "label": "Psychiatry" },
     { "value": "SURGFND", "label": "Surgical Foundation" },
-    { "value": "UNDERGRADUATE", "label": "Undergraduate (UG)" }
+    { "value": "UNDERGRADUATE", "label": "Undergraduate (UG)" },
+    { "value": "TEST", "label": "TEST Program" }
 ];
