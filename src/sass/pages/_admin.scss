@@ -128,6 +128,45 @@
             font-size: 14px;
             width: 245px;
         }
+        .dropzone-container {
+            display: flex;
+            flex-direction: column;
+            font-family: sans-serif;
+            .dropzone {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 50px;
+                border-width: 2px;
+                border-radius: 2px;
+                border-color: #eeeeee;
+                border-style: dashed;
+                background-color: #292323;
+                color: #bdbdbd;
+                outline: none;
+                text-transform: capitalize;
+                transition: border .24s ease-in-out;
+            }
+        }
+        .multi-file-container {
+            margin-top: 20px;
+            .multi-file-upload {
+                margin: 10px 5px;
+                font-weight: bold;
+                color: white;
+                font-size: 1.1em;
+                .text-success {
+                    margin-left: 8px;
+                }
+                .text-danger {
+                    margin-left: 8px;
+                }
+                .text-info {
+                    margin-left: 8px;
+                }
+            }
+        }
     }
     .add-data-root {
         .radio-button-container {
