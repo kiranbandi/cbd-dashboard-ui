@@ -199,7 +199,7 @@ export default function(rawData) {
                 console.log(error);
             }
 
-            resolve({ 'data': dataStore, 'narrativeData': processNarratives(narrativeInRows, residentName), epaSourceMap });
+            resolve({ 'residentName': residentName, 'data': dataStore, 'narrativeData': processNarratives(narrativeInRows, residentName), epaSourceMap });
         } catch (e) {
             reject();
         };
