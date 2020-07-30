@@ -282,11 +282,8 @@ export default class AddData extends Component {
 
     render() {
         let { uploadType = 'single', multiFileList = [], multiProcessStatus = [], loaderState, processing, selectedIndex, userList } = this.state;
-
         // Sort the residents alphabetically so that they are easier to look up
         userList.sort((previous, current) => previous.fullname.localeCompare(current.fullname));
-
-        console.log(multiProcessStatus);
 
         return (
             <div className='add-data-root m-t' >
