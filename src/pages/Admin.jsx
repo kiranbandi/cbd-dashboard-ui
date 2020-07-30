@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-    AddData,MultiAddData, CreateUser, AddExamscore,
+    AddData, CreateUser, AddExamscore,
     ModifyUser, AddCCFeedback
 } from '../components';
 
@@ -10,7 +10,7 @@ class Admin extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeTab: 'addData-tab'
+            activeTab: 'create-tab'
         };
         this.onTabClick = this.onTabClick.bind(this);
     }
@@ -50,7 +50,7 @@ class Admin extends Component {
                     {(activeTab == 'modify-tab') && <ModifyUser programInfo={programInfo} />}
                     {(activeTab == 'add-exam-tab') && <AddExamscore programInfo={programInfo} />}
                     {(activeTab == 'add-cc-tab') && <AddCCFeedback programInfo={programInfo} />}
-                    {(activeTab == 'addData-tab') && <MultiAddData programInfo={programInfo} />}
+                    {(activeTab == 'addData-tab') && <AddData programInfo={programInfo} />}
                 </div>
             </div >
         );

@@ -2,7 +2,6 @@
 export { default as CreateUser } from './AdminGroup/CreateUser';
 export { default as ModifyUser } from './AdminGroup/ModifyUser';
 export { default as AddData } from './AdminGroup/AddData';
-export { default as MultiAddData } from './AdminGroup/MultiAddData';
 export { default as AddExamscore } from './AdminGroup/AddExamscore';
 export { default as AddCCFeedback } from './AdminGroup/AddCCFeedback';
 // Components for each of the five dashboards
