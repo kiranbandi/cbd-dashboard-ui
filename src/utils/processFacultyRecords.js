@@ -1,5 +1,6 @@
 import moment from 'moment';
 import * as d3 from 'd3';
+import { PHASES_LIST } from './programInfo';
 
 export default function(allResidentRecords = [], currentRotation, startDate, endDate, dateFilterActive, minimumRequired) {
 
@@ -44,8 +45,11 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
         const nonExpiredRecords = records.filter(dd => !dd.isExpired),
             nonExpiredRecordsInPeriod = recordsInPeriod.filter(dd => !dd.isExpired);
 
+        // group records by training phase
+        const trainingPhaseGroup = _.groupBy(dateFilterActive ? nonExpiredRecordsInPeriod : nonExpiredRecords, (d) => d.phaseTag);
         // group records by rating
         const ratingGroup = _.groupBy(dateFilterActive ? nonExpiredRecordsInPeriod : nonExpiredRecords, (d) => d.rating);
+
         return {
             faculty_name,
             records,
@@ -53,6 +57,7 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
             all_expired: nonExpiredRecords.length == 0,
             all_expired_period: nonExpiredRecordsInPeriod.length == 0,
             rating_group: _.map([1, 2, 3, 4, 5], (d) => (ratingGroup[d] ? ratingGroup[d].length : 0)),
+            phase_group: _.map(PHASES_LIST, (d) => (ratingGroup[d] ? ratingGroup[d].length : 0)),
             epa_count: records.length,
             epa_count_period: recordsInPeriod.length,
             expired_epa_percentage: Math.round(records.filter(dd => dd.isExpired).length / records.length * 100),
