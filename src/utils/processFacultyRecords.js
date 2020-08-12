@@ -1,6 +1,6 @@
 import moment from 'moment';
 import * as d3 from 'd3';
-import { PHASES_LIST } from './programInfo';
+const phaseList = ['TTD', 'F', 'CORE', 'TP'];
 
 export default function(allResidentRecords = [], currentRotation, startDate, endDate, dateFilterActive, minimumRequired) {
 
@@ -57,7 +57,7 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
             all_expired: nonExpiredRecords.length == 0,
             all_expired_period: nonExpiredRecordsInPeriod.length == 0,
             rating_group: _.map([1, 2, 3, 4, 5], (d) => (ratingGroup[d] ? ratingGroup[d].length : 0)),
-            phase_group: _.map(PHASES_LIST, (d) => (ratingGroup[d] ? ratingGroup[d].length : 0)),
+            phase_group: _.map(phaseList, (d) => (trainingPhaseGroup[d] ? trainingPhaseGroup[d].length : 0)),
             epa_count: records.length,
             epa_count_period: recordsInPeriod.length,
             expired_epa_percentage: Math.round(records.filter(dd => dd.isExpired).length / records.length * 100),

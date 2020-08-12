@@ -228,7 +228,7 @@ export default (props) => {
     const columnStore = isUG ? [UGcolumns, UGMultiColumns] : [columns, multiColumns];
 
     return <div>
-        <div className='m-r-lg m-l-md print-info' style={{ 'display': 'inline-block', 'width': '905px' }}>
+        <div className='m-r-lg m-l-md print-info' style={{ 'display': 'inline-block', 'width': '1080px' }}>
             <FacultyStatCardSet
                 isUG={isUG}
                 title={"Acquistion Metrics for All Faculties in Rotation - " + currentRotation}
@@ -242,7 +242,7 @@ export default (props) => {
                 dateFilterActive={dateFilterActive} />
         </div>
         {!printModeON && <div className={'normative-table table-box ' + (dateFilterActive ? 'm-t-md' : '')}
-            style={{ width: width - 930 }}>
+            style={{ width: width - 1105 }}>
             <ReactTable
                 data={processedRecords}
                 columns={dateFilterActive ? columnStore[1] : columnStore[0]}
