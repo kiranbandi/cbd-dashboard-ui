@@ -1,6 +1,7 @@
 import React from 'react';
 import { MicroStatCard } from '..';
 import FacultyScorePie from './FacultyScorePie';
+import PhaseSummaryPie from '../ProgramEvaluationGroup/PhaseSummaryPie';
 
 export default (props) => {
 
@@ -24,7 +25,8 @@ export default (props) => {
         averageEPAScorePeriod = !showNA ? Math.round((_.meanBy(refinedFacultyListInPeriod, (d) => d.entrustment_score_period) || 0) * 100) / 100 : 'N/A',
         averageWords = !showNA ? Math.round(_.meanBy(refinedFacultyList, (d) => d.words_per_comment) || 0) : 'N/A',
         averageWordsPeriod = !showNA ? Math.round(_.meanBy(refinedFacultyListInPeriod, (d) => d.words_per_comment_period) || 0) : 'N/A',
-        ratingGroupSet = !showNA ? _.reduce(refinedFacultyList, (acc, d) => _.map(acc, (inner_d, i) => (inner_d + d.rating_group[i])), [0, 0, 0, 0, 0]) : [];
+        ratingGroupSet = !showNA ? _.reduce(refinedFacultyList, (acc, d) => _.map(acc, (inner_d, i) => (inner_d + d.rating_group[i])), [0, 0, 0, 0, 0]) : [],
+        phaseGroupSet = !showNA ? _.reduce(refinedFacultyList, (acc, d) => _.map(acc, (inner_d, i) => (inner_d + d.phase_group[i])), [0, 0, 0, 0]) : [];
 
     const percentageSymbol = !showNA ? '%' : '';
 
@@ -40,6 +42,7 @@ export default (props) => {
                     <MicroStatCard style={{ display: 'inline' }} dual={true} title='Average EPA Score' type='primary' metric={averageEPAScore} secondMetric={averageEPAScorePeriod} />
                     <MicroStatCard style={{ display: 'inline' }} dual={true} title='Average words per comment' type='danger' metric={averageWords} secondMetric={averageWordsPeriod} />
                     <FacultyScorePie dateFilterActive={dateFilterActive} isUG={isUG} data={ratingGroupSet} />
+                    <PhaseSummaryPie data={phaseGroupSet} />
                 </div> :
                 <div className='text-center'>
                     <MicroStatCard style={{ display: 'inline' }} title='Total EPAs observed' type='info' metric={EPACount} />
@@ -47,6 +50,7 @@ export default (props) => {
                     <MicroStatCard style={{ display: 'inline' }} title='Average EPA Score' type='primary' metric={averageEPAScore} />
                     <MicroStatCard style={{ display: 'inline' }} title='Average words per comment' type='danger' metric={averageWords} />
                     <FacultyScorePie dateFilterActive={dateFilterActive} isUG={isUG} data={ratingGroupSet} />
+                    <PhaseSummaryPie data={phaseGroupSet} />
                 </div>
         }
     </div>
