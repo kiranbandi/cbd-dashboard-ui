@@ -30,6 +30,7 @@ export { default as ExpiredRecordTable } from './ResidentDashboardGroup/ExpiredR
 export { default as FilterPanel } from './ResidentDashboardGroup/FilterPanel';
 export { default as InfoCardsPanel } from './ResidentDashboardGroup/InfoCardsPanel';
 export { default as NarrativeTable } from './ResidentDashboardGroup/NarrativeTable';
+export { default as ChecklistModal } from './ResidentDashboardGroup/ChecklistModal';
 
 // Components for Program Compare Dashboard to compare programs
 export { default as ProgramSummary } from './ProgramCompareGroup/ProgramSummary';

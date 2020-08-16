@@ -4,6 +4,7 @@ export default {
     filterLoaderState: false,
     activeDashboard: 'resident',
     isModalVisible: false,
+    isChecklistVisible: false,
     infoCard: ['EM-TTD'],
     sessionStatus: !!sessionStorage.jwt,
     residentData: null,

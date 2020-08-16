@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { setActiveDashboard } from '../redux/actions/actions';
 import {
     ResidentDashboard, ProgramDashboard,
-    FacultyDashboard, Modal,
+    FacultyDashboard, Modal,ChecklistModal,
     NormativeDashboard, DownloadDashboard
 } from '../components';
 
@@ -24,7 +24,7 @@ class DashboardRoot extends Component {
 
     render() {
 
-        let { userType, isModalVisible, infoCard,
+        let { userType, isModalVisible, infoCard, isChecklistVisible,
             programInfo, activeDashboard = 'resident' } = this.props;
 
         let boardsLevel = '0';
@@ -40,6 +40,7 @@ class DashboardRoot extends Component {
         return (
             <div className='dashboard-page-root' >
                 {isModalVisible && <Modal infoCard={infoCard} />}
+                {isChecklistVisible && <ChecklistModal />}
                 {boardsLevel == '1' &&
                     <div>
                         <div className="hr-divider nav-pill-container-dashboard">
@@ -99,6 +100,7 @@ function mapStateToProps(state) {
         programInfo: state.oracle.programInfo,
         activeDashboard: state.oracle.activeDashboard,
         isModalVisible: state.oracle.isModalVisible,
+        isChecklistVisible: state.oracle.isChecklistVisible,
         infoCard: state.oracle.infoCard
     };
 }

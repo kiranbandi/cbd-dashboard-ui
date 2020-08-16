@@ -14,6 +14,10 @@ class InfoPanel extends Component {
         super(props);
     }
 
+    showChecklist = () => {
+        debugger;
+    }
+
 
     render() {
 
@@ -35,9 +39,13 @@ class InfoPanel extends Component {
                 {residentInfo &&
                     <div className='info-panel-inner'>
                         <div className='titular-block'>
-                            <span><b>CURRENT PHASE -</b> {residentInfo.currentPhase.split("-").join(" ")}</span>
-                            <span><b>PROGRAM START DATE -</b> {(new Date(residentInfo.programStartDate)).toDateString()}</span>
-                            <span><b>LAST UPDATED ON -</b> {(new Date(residentInfo.uploadedData)).toDateString()}</span>
+                            <span className='inner-title-block'><b>CURRENT PHASE -</b> {residentInfo.currentPhase.split("-").join(" ")}</span>
+                            <span className='inner-title-block'><b>PROGRAM START DATE -</b> {(new Date(residentInfo.programStartDate)).toDateString()}</span>
+                            <span className='inner-title-block'><b>LAST UPDATED ON -</b> {(new Date(residentInfo.uploadedData)).toDateString()}</span>
+                            <button onClick={this.showChecklist} className='view-checklist-button btn btn-primary-outline'>
+                                <span className="icon icon-new-message"></span>
+                                <span>Personal Checklist</span>
+                            </button>
                         </div>
                         {!!residentData &&
                             <RotationSchedule
@@ -46,8 +54,7 @@ class InfoPanel extends Component {
                                 infoCardsVisible={infoCardsVisible && !smallScreen}
                                 residentData={residentData}
                                 residentInfo={residentInfo}
-                                rotationRequired={programInfo.rotationRequired} />
-                        }
+                                rotationRequired={programInfo.rotationRequired} />}
                         {!!residentData &&
                             <EPASpeedInfo
                                 width={width}
