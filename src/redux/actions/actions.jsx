@@ -37,6 +37,10 @@ export function toggleModalVisbility() {
     return { type: types.TOGGLE_MODAL };
 }
 
+export function toggleChecklistVisbility() {
+    return { type: types.TOGGLE_CHECKLIST };
+}
+
 export function setInfoCard(infoCard) {
     // set the card and show modal
     return dispatch => {

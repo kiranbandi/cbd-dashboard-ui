@@ -34,6 +34,8 @@ export default function oracleReducer(state = initialState.oracle, action) {
       return Object.assign({}, state, { tooltipData: action.tooltipData })
     case types.TOGGLE_MODAL:
       return Object.assign({}, state, { isModalVisible: !state.isModalVisible })
+      case types.TOGGLE_CHECKLIST:
+        return Object.assign({}, state, { isChecklistVisible: !state.isChecklistVisible })
     case types.SET_USER_DATA:
       return Object.assign({}, state, { userDetails: action.userDetails })
     case types.SET_DATA_DUMP:
