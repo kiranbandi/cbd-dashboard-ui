@@ -1,0 +1,53 @@
+.dashboard-page-root {
+    .checklist-modal-root {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        z-index: 9999;
+        .modal-main {
+            position: fixed;
+            background: #252830;
+            width: auto;
+            height: auto;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 12px 20px 12px 20px;
+            border-radius: 5px;
+            .close {
+                color: black;
+                background: white;
+                border-radius: 10px;
+                width: 20px;
+                margin: -5px 0px;
+            }
+        }
+        .loader-modify {
+            margin: 50px auto;
+        }
+        .checklist-container {
+            padding-top: 5px;
+            min-width: 750px;
+        }
+        .hr-divider {
+            .nav-pills {
+                a {
+                    font-size: 14.5px;
+                    padding: 5px 15px;
+                    margin: 10px;
+                    font-weight: bold !important;
+                    cursor: pointer;
+                }
+                @media (max-width: 768px) {
+                    li {
+                        float: none;
+                    }
+                }
+            }
+            margin:15px 30px;
+        }
+    }
+}
