@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 import RotationSchedule from './RotationSchedule';
 import EPASpeedInfo from './EPASpeedInfo';
@@ -7,17 +8,13 @@ import CiteScoreGraph from './CiteScoreGraph';
 import OralScoreGraph from './OralScoreGraph';
 import RecentEPATrend from './RecentEPATrend';
 import FeedbackBlock from './FeedbackBlock';
+import { toggleChecklistVisbility } from '../../../redux/actions/actions';
 
 class InfoPanel extends Component {
 
     constructor(props) {
         super(props);
     }
-
-    showChecklist = () => {
-        debugger;
-    }
-
 
     render() {
 
@@ -42,9 +39,9 @@ class InfoPanel extends Component {
                             <span className='inner-title-block'><b>CURRENT PHASE -</b> {residentInfo.currentPhase.split("-").join(" ")}</span>
                             <span className='inner-title-block'><b>PROGRAM START DATE -</b> {(new Date(residentInfo.programStartDate)).toDateString()}</span>
                             <span className='inner-title-block'><b>LAST UPDATED ON -</b> {(new Date(residentInfo.uploadedData)).toDateString()}</span>
-                            <button onClick={this.showChecklist} className='view-checklist-button btn btn-primary-outline'>
+                            <button onClick={this.props.actions.toggleChecklistVisbility} className='view-checklist-button btn btn-primary-outline'>
                                 <span className="icon icon-new-message"></span>
-                                <span>Personal Checklist</span>
+                                <span>Checklist</span>
                             </button>
                         </div>
                         {!!residentData &&
@@ -89,7 +86,14 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, null)(InfoPanel);
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators({ toggleChecklistVisbility }, dispatch)
+    };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(InfoPanel);
 
 
 // This santizes the exam scores so if that if a key is empty it is deleted
