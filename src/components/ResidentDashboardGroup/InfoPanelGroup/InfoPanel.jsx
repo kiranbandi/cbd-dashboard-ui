@@ -25,7 +25,7 @@ class InfoPanel extends Component {
 
     render() {
 
-        let { residentData, residentFilter,
+        let { residentData, residentFilter, userType,
             residentList, expiredResidentData, infoCardsVisible,
             programInfo, width, smallScreen } = this.props,
             residentInfo = false, citeScoreData = {}, oralScoreData = {}, ccFeedbackList = [];
@@ -38,6 +38,8 @@ class InfoPanel extends Component {
             ccFeedbackList = residentInfo && residentInfo.ccFeedbackList.sort((a, b) => (new Date(a.meetingDate) - new Date(b.meetingDate)));
         }
 
+        let isChecklistFeatureAvailable = ['admin', 'super-admin', 'resident'].indexOf(userType) > -1;
+
         return (
             <div className='info-panel'>
                 {residentInfo &&
@@ -46,15 +48,16 @@ class InfoPanel extends Component {
                             <span className='inner-title-block'><b>CURRENT PHASE -</b> {residentInfo.currentPhase.split("-").join(" ")}</span>
                             <span className='inner-title-block'><b>PROGRAM START DATE -</b> {(new Date(residentInfo.programStartDate)).toDateString()}</span>
                             <span className='inner-title-block'><b>LAST UPDATED ON -</b> {(new Date(residentInfo.uploadedData)).toDateString()}</span>
-                            <ReactTooltip type='info' />
-                            <button
+                            {isChecklistFeatureAvailable && <ReactTooltip type='info' />}
+                            {isChecklistFeatureAvailable && <button
                                 id='checklist-trigger-btn'
                                 data-tip="New feature to set goals and milestones !!"
                                 onClick={this.props.actions.toggleChecklistVisbility}
                                 className='view-checklist-button btn btn-primary-outline'>
                                 <span className="icon icon-new-message"></span>
                                 <span>Checklist</span>
-                            </button>
+                            </button>}
+
                         </div>
                         {!!residentData &&
                             <RotationSchedule
@@ -90,6 +93,7 @@ class InfoPanel extends Component {
 
 function mapStateToProps(state) {
     return {
+        userType: state.oracle.userDetails.accessType,
         residentData: state.oracle.residentData,
         expiredResidentData: state.oracle.expiredResidentData,
         residentFilter: state.oracle.residentFilter,
