@@ -328,7 +328,7 @@ requestServer.setNarratives = function(narratives, username, yearTag) {
 requestServer.getTaskList = function(username) {
     return new Promise((resolve, reject) => {
         axios.get(endPoints.getTaskList + "/" + username, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
-            .then((response) => { resolve(response.data.taskList || []) })
+            .then((response) => { resolve(response.data ? response.data.taskList || [] : []) })
             .catch((err) => errorCallback(err, reject));
     });
 }
