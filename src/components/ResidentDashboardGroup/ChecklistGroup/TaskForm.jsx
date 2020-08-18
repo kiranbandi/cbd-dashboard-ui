@@ -40,7 +40,7 @@ export default  class TaskForm extends Component {
                     value={this.state.taskText}
                     onChange={this.handleChange}
                     onKeyUp={this.handleKeyUp}
-                    placeholder='What need to be done?' />
+                    placeholder='What needs to be done?' />
             </form>
         );
     }

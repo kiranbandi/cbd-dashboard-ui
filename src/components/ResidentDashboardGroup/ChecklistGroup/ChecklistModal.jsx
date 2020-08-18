@@ -7,6 +7,7 @@ import Loading from 'react-loading';
 import TaskList from './TaskList';
 import TaskForm from './TaskForm';
 import shortid from 'shortid';
+import { getTaskList, setTaskList } from '../../../utils/requestServer';
 
 class ChecklistModal extends Component {
 
@@ -24,6 +25,11 @@ class ChecklistModal extends Component {
         this.setState({ taskFilter });
     }
 
+    syncTaskList = (taskList) => {
+        const { residentFilter } = this.props, { username = '' } = residentFilter;
+        setTaskList(username, taskList);
+    }
+
     addTask = (label) => {
         let { taskList } = this.state;
         taskList.push({ 'taskID': shortid(), 'completed': false, label });
@@ -32,14 +38,16 @@ class ChecklistModal extends Component {
         setTimeout(() => {
             $('.tasklist-container').scrollTop(+$('.tasklist-container')[0].scrollHeight + 100);
         }, 250)
-        // call sync function
+        // sync list to server
+        this.syncTaskList(taskList);
     }
 
     deleteTask = (taskIndex) => {
         let { taskList } = this.state;
         taskList = _.filter(taskList, (d) => d.taskID != taskIndex);
         this.setState({ taskList });
-        // call sync function
+        // sync list to server
+        this.syncTaskList(taskList);
     }
 
     toggleCompleteTask = (taskIndex) => {
@@ -52,7 +60,8 @@ class ChecklistModal extends Component {
             return d;
         })
         this.setState({ taskList });
-        // call sync function
+        // sync list to server
+        this.syncTaskList(taskList);
     }
 
     editTask = (taskText, taskIndex) => {
@@ -65,57 +74,23 @@ class ChecklistModal extends Component {
             return d;
         })
         this.setState({ taskList });
-        // call sync function
+        // sync list to server
+        this.syncTaskList(taskList);
     }
 
 
     componentDidMount() {
-        const taskList = [{
-            'taskID': shortid(), 'completed': false, 'label': 'Lorem ipsum'
-        }, {
-            'taskID': shortid(), 'completed': true, 'label': 'Test ipsum'
-        }, {
-            'taskID': shortid(), 'completed': false, 'label': 'Lorem ipsum'
-        }, {
-            'taskID': shortid(), 'completed': true, 'label': 'Lorem Test'
-        }, {
-            'taskID': shortid(), 'completed': true, 'label': 'Test ipsum'
-        }, {
-            'taskID': shortid(), 'completed': true, 'label': 'Lorem Test'
-        }, {
-            'taskID': shortid(), 'completed': false, 'label': 'Lorem ipsum Lorem ipsum Lorem ipsumLorem ipsum Lorem ipsum'
-        }, {
-            'taskID': shortid(), 'completed': true, 'label': 'Test ipsum'
-        }, {
-            'taskID': shortid(), 'completed': false, 'label': 'Lorem ipsum'
-        }, {
-            'taskID': shortid(), 'completed': true, 'label': 'Lorem Test'
-        }, {
-            'taskID': shortid(), 'completed': true, 'label': 'Test ipsum'
-        }, {
-            'taskID': shortid(), 'completed': true, 'label': 'Lorem Test'
-        }, {
-            'taskID': shortid(), 'completed': false, 'label': 'Lorem ipsum Lorem ipsum Lorem ipsumLorem ipsum Lorem ipsum'
-        }, {
-            'taskID': shortid(), 'completed': true, 'label': 'Test ipsum'
-        }, {
-            'taskID': shortid(), 'completed': false, 'label': 'Lorem ipsum'
-        }, {
-            'taskID': shortid(), 'completed': true, 'label': 'Lorem Test'
-        }, {
-            'taskID': shortid(), 'completed': true, 'label': 'Test ipsum'
-        }, {
-            'taskID': shortid(), 'completed': true, 'label': 'Lorem Test'
-        }];
-
-
         const { residentFilter } = this.props, { username = '' } = residentFilter;
-        // turn on loader
-        this.setState({ isLoading: true });
-        // Get the checklist data for the selected resident
-        setTimeout(() => {
-            this.setState({ isLoading: false, taskList });
-        }, 500)
+        // Get the checklist for the selected resident
+        if (username) {
+            // turn on loader
+            this.setState({ isLoading: true });
+            // Get the checklist data for the selected resident
+            getTaskList(username)
+                .then((taskList) => this.setState({ taskList }))
+                .catch((err) => console.log(err))
+                .finally(() => this.setState({ isLoading: false }))
+        }
     }
 
     render() {
