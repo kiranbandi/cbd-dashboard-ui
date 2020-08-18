@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleChecklistVisbility } from '../../../redux/actions/actions';
 import Loading from 'react-loading';
+import TaskList from './TaskList';
+import TaskForm from './TaskForm';
+import shortid from 'shortid';
 
 class ChecklistModal extends Component {
 
@@ -11,7 +14,8 @@ class ChecklistModal extends Component {
         super(props);
         this.state = {
             isLoading: false,
-            taskFilter: 'all'
+            taskFilter: 'all',
+            taskList: []
         }
     }
 
@@ -20,20 +24,109 @@ class ChecklistModal extends Component {
         this.setState({ taskFilter });
     }
 
+    addTask = (label) => {
+        let { taskList } = this.state;
+        taskList.push({ 'taskID': shortid(), 'completed': false, label });
+        this.setState({ taskList });
+        // weird fix to ensure item is scrolled into view after element is rendered by react
+        setTimeout(() => {
+            $('.tasklist-container').scrollTop(+$('.tasklist-container')[0].scrollHeight + 100);
+        }, 250)
+        // call sync function
+    }
+
+    deleteTask = (taskIndex) => {
+        let { taskList } = this.state;
+        taskList = _.filter(taskList, (d) => d.taskID != taskIndex);
+        this.setState({ taskList });
+        // call sync function
+    }
+
+    toggleCompleteTask = (taskIndex) => {
+        let { taskList } = this.state;
+        taskList = _.map(taskList, (d) => {
+            if (d.taskID == taskIndex) {
+                d.completed = !d.completed;
+                return d;
+            }
+            return d;
+        })
+        this.setState({ taskList });
+        // call sync function
+    }
+
+    editTask = (taskText, taskIndex) => {
+        let { taskList } = this.state;
+        taskList = _.map(taskList, (d) => {
+            if (d.taskID == taskIndex) {
+                d.label = taskText;
+                return d;
+            }
+            return d;
+        })
+        this.setState({ taskList });
+        // call sync function
+    }
+
 
     componentDidMount() {
+        const taskList = [{
+            'taskID': shortid(), 'completed': false, 'label': 'Lorem ipsum'
+        }, {
+            'taskID': shortid(), 'completed': true, 'label': 'Test ipsum'
+        }, {
+            'taskID': shortid(), 'completed': false, 'label': 'Lorem ipsum'
+        }, {
+            'taskID': shortid(), 'completed': true, 'label': 'Lorem Test'
+        }, {
+            'taskID': shortid(), 'completed': true, 'label': 'Test ipsum'
+        }, {
+            'taskID': shortid(), 'completed': true, 'label': 'Lorem Test'
+        }, {
+            'taskID': shortid(), 'completed': false, 'label': 'Lorem ipsum Lorem ipsum Lorem ipsumLorem ipsum Lorem ipsum'
+        }, {
+            'taskID': shortid(), 'completed': true, 'label': 'Test ipsum'
+        }, {
+            'taskID': shortid(), 'completed': false, 'label': 'Lorem ipsum'
+        }, {
+            'taskID': shortid(), 'completed': true, 'label': 'Lorem Test'
+        }, {
+            'taskID': shortid(), 'completed': true, 'label': 'Test ipsum'
+        }, {
+            'taskID': shortid(), 'completed': true, 'label': 'Lorem Test'
+        }, {
+            'taskID': shortid(), 'completed': false, 'label': 'Lorem ipsum Lorem ipsum Lorem ipsumLorem ipsum Lorem ipsum'
+        }, {
+            'taskID': shortid(), 'completed': true, 'label': 'Test ipsum'
+        }, {
+            'taskID': shortid(), 'completed': false, 'label': 'Lorem ipsum'
+        }, {
+            'taskID': shortid(), 'completed': true, 'label': 'Lorem Test'
+        }, {
+            'taskID': shortid(), 'completed': true, 'label': 'Test ipsum'
+        }, {
+            'taskID': shortid(), 'completed': true, 'label': 'Lorem Test'
+        }];
+
+
         const { residentFilter } = this.props, { username = '' } = residentFilter;
         // turn on loader
         this.setState({ isLoading: true });
         // Get the checklist data for the selected resident
         setTimeout(() => {
-            this.setState({ isLoading: false });
+            this.setState({ isLoading: false, taskList });
         }, 500)
     }
 
     render() {
 
-        const { isLoading, taskFilter = 'all' } = this.state;
+        const { isLoading, taskList = [], taskFilter = 'all' } = this.state;
+
+        let filteredList = _.filter(taskList, (d) => {
+            if (taskFilter == 'all') { return true }
+            else if (taskFilter == 'completed') { return d.completed; }
+            return !d.completed;
+        })
 
         return (
             <div className='checklist-modal-root'>
@@ -46,7 +139,9 @@ class ChecklistModal extends Component {
                         {isLoading ?
                             <Loading className='loader-modify' type='spin' height='100px' width='100px' color='#d6e5ff' delay={-1} /> :
                             <div>
-                                <h4 className='text-info'>This space can be used to keep track of your own goals and milestones for every academic year.</h4>
+                                <h4 className='minify'>This space can be used to keep track of your goals and milestones. Use the buttons below to filter for active and completed tasks. </h4>
+                                <h4 className='minify'>To enter a <b>new task</b>, use the entry box at the bottom and <b>press enter</b> when you are done. To mark a task as <b>completed</b> click on the checkmark icon.</h4>
+                                <h4 className='minify'>To <b>edit</b> a task, click on the pencil icon and edit the text and then <b>press enter</b>. Finally to delete a task, click on the trashcan icon.</h4>
                                 <div className="hr-divider">
                                     <ul className="nav nav-pills hr-divider-content hr-divider-nav">
                                         <li className={taskFilter == 'all' ? 'active' : ''}>
@@ -60,6 +155,13 @@ class ChecklistModal extends Component {
                                         </li>
                                     </ul>
                                 </div>
+                                <TaskList
+                                    taskList={filteredList}
+                                    taskFilter={taskFilter}
+                                    deleteTask={this.deleteTask}
+                                    toggleCompleteTask={this.toggleCompleteTask}
+                                    editTask={this.editTask} />
+                                <TaskForm addTask={this.addTask} />
                             </div>}
                     </div>
                 </div>
