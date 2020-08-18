@@ -135,6 +135,7 @@ class FilterPanel extends Component {
                     })
 
                     actions.setNarrativeData(markedNarrativeData);
+
                 })
                 .finally(() => { actions.toggleFilterLoader(); });
         }
