@@ -59,7 +59,7 @@ export default class TaskEntry extends Component {
                             value={taskText}
                             onChange={this.handleChange}
                             onKeyUp={this.handleKeyUp}
-                            placeholder='What need to be done?' />
+                            placeholder='What needs to be done?' />
                     </form> :
                     <span className={'task-item task-label ' + (completed ? 'complete' : '')}>{label}</span>}
                 {!editModeON && <button

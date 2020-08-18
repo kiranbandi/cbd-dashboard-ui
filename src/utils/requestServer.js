@@ -195,8 +195,6 @@ requestServer.getObserverData = function(observername) {
     });
 }
 
-
-
 requestServer.getResidentData = function(username) {
     return new Promise((resolve, reject) => {
         axios.get(endPoints.residentRecords + "/" + username, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
@@ -325,6 +323,24 @@ requestServer.setNarratives = function(narratives, username, yearTag) {
             .catch((err) => errorCallback(err, reject));
     });
 }
+
+// APIs for task lists
+requestServer.getTaskList = function(username) {
+    return new Promise((resolve, reject) => {
+        axios.get(endPoints.getTaskList + "/" + username, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            .then((response) => { resolve(response.data.taskList || []) })
+            .catch((err) => errorCallback(err, reject));
+    });
+}
+
+requestServer.setTaskList = function(username, taskList) {
+    return new Promise((resolve, reject) => {
+        axios.post(endPoints.setTaskList, { username, taskList }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
+            .then((response) => { resolve(response.data) })
+            .catch((err) => errorCallback(err, reject));
+    });
+}
+
 
 requestServer.getRecordsByYear = function(academicYear = '', programSpecific = true) {
     return new Promise((resolve, reject) => {
