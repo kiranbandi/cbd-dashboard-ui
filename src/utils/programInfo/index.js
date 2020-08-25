@@ -6,6 +6,7 @@ import { default as IM } from './programs/IM';
 import { default as GIM } from './programs/GIM';
 import { default as SURGFND } from './programs/SURGFND';
 import { default as NEURO } from './programs/NEURO';
+import { default as NEUROG } from './programs/NEUROG';
 import { default as PMR } from './programs/PMR';
 import { default as PSYCH } from './programs/PSYCH';
 import { default as ORTHOSURG } from './programs/ORTHOSURG';
@@ -20,6 +21,7 @@ const PROGRAM_INFO = {
     GIM,
     IM,
     NEURO,
+    NEUROG,
     SURGFND,
     PMR,
     PSYCH,

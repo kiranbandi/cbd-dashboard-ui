@@ -9,18 +9,11 @@ import OralScoreGraph from './OralScoreGraph';
 import RecentEPATrend from './RecentEPATrend';
 import FeedbackBlock from './FeedbackBlock';
 import { toggleChecklistVisbility } from '../../../redux/actions/actions';
-import ReactTooltip from 'react-tooltip';
 
 class InfoPanel extends Component {
 
     constructor(props) {
         super(props);
-    }
-
-    componentDidUpdate() {
-        // needs to be hidden in the future
-        // show tootlip for now to let users know of this new feature.
-        ReactTooltip.show(document.getElementById('checklist-trigger-btn'));
     }
 
     render() {
@@ -48,10 +41,8 @@ class InfoPanel extends Component {
                             <span className='inner-title-block'><b>CURRENT PHASE -</b> {residentInfo.currentPhase.split("-").join(" ")}</span>
                             <span className='inner-title-block'><b>PROGRAM START DATE -</b> {(new Date(residentInfo.programStartDate)).toDateString()}</span>
                             <span className='inner-title-block'><b>LAST UPDATED ON -</b> {(new Date(residentInfo.uploadedData)).toDateString()}</span>
-                            {isChecklistFeatureAvailable && <ReactTooltip type='info' />}
                             {isChecklistFeatureAvailable && <button
                                 id='checklist-trigger-btn'
-                                data-tip="New feature to set goals and milestones !!"
                                 onClick={this.props.actions.toggleChecklistVisbility}
                                 className='view-checklist-button btn btn-primary-outline'>
                                 <span className="icon icon-new-message"></span>
