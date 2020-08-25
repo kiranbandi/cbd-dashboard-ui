@@ -5,7 +5,6 @@ import { requestLogin, reIssueToken } from '../utils/requestServer';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setLoginData } from '../redux/actions/actions';
-import ReactTooltip from 'react-tooltip';
 
 class Container extends Component {
 
@@ -59,8 +58,6 @@ class Container extends Component {
                     <Loading type='spin' className='paws-loader' height='100px' width='100px' color='#d6e5ff' delay={-1} />
                     : <div id='container-body'>
                         {this.props.children}
-                        {/* mounting react info tooltip wrapper */}
-                        <ReactTooltip place="top" type="info" effect="solid" />
                     </div>
                 }
                 <footer className="footer w-full m-t hidden-xs">
