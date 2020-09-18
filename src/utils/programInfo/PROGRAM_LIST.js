@@ -1,6 +1,7 @@
 export default [{ "value": "ANESTHESIA", "label": "Anesthesia" },
     { "value": "EM", "label": "Emergency Medicine" },
     { "value": "GIM", "label": "General Internal Medicine" },
+    { "value": "GENSURG", "label": "General Surgery" },
     { "value": "IM", "label": "Internal Medicine" },
     { "value": "NEURO", "label": "Neurosurgery" },
     // nuerology was added after nuerosurgery so the name nuero was already taken :-(

@@ -10,6 +10,7 @@ import { default as NEUROG } from './programs/NEUROG';
 import { default as PMR } from './programs/PMR';
 import { default as PSYCH } from './programs/PSYCH';
 import { default as ORTHOSURG } from './programs/ORTHOSURG';
+import { default as GENSURG } from './programs/GENSURG';
 import { default as UNDERGRADUATE } from './programs/UNDERGRADUATE';
 
 // populate program info with multiple department information and export it
@@ -19,6 +20,7 @@ const PROGRAM_INFO = {
     OBGYN,
     PATH,
     GIM,
+    GENSURG,
     IM,
     NEURO,
     NEUROG,
