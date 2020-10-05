@@ -4,7 +4,10 @@ import moment from 'moment';
 import { getAllData } from '../../utils/requestServer';
 import toastr from '../../utils/toastr';
 import savePagePDF from '../../utils/savePagePDF';
-import { FacultyFilterPanel, FacultyInfoGroup, FacultyRecordTable, FacultyGraphGroup } from '../';
+import {
+    FacultyFilterPanel, FacultyInfoGroup,
+    FacultyRecordTable, FacultyGraphGroup, AllFacultyTable
+} from '../';
 import Loading from 'react-loading';
 import processFacultyRecords from '../../utils/processFacultyRecords';
 
@@ -219,6 +222,11 @@ export default class FacultyDashboard extends Component {
                                 currentFaculty={currentFaculty}
                                 width={printModeON ? 1100 : overallWidth}
                                 currentFacultyRecords={currentFacultyRecords} />
+
+                            {!printModeON && <AllFacultyTable
+                                width={overallWidth}
+                                processedRecords={processedRecords}
+                                dateFilterActive={dateFilterActive} />}
                         </div>
                         <button id='print-report' className="btn btn-primary print-button partaway" onClick={this.onPrintClick}>
                             <span className="icon icon-download"></span>

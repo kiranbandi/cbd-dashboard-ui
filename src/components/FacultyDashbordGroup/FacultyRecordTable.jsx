@@ -66,7 +66,9 @@ export default (props) => {
 
     return <div className='table-box' style={{ width: width }}>
         {currentFacultyRecords.length > 0 &&
+            [<h3 key='faculty-table-title'>Summary of EPAs by <span className='text-capitalize'>{currentFaculty} </span></h3>,
             <ReactTable
+                key='faculty-table'
                 data={innerRecords}
                 columns={columns}
                 defaultPageSize={10}
@@ -74,7 +76,7 @@ export default (props) => {
                 resizable={false}
                 filterable={true}
                 className='-highlight -striped'
-                defaultSorted={[{ id: "observation_date", desc: true }]} />}
+                defaultSorted={[{ id: "observation_date", desc: true }]} />]}
     </div>
 
 }
