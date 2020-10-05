@@ -1,30 +1,6 @@
 import React from 'react';
 import FacultyStatCardSet from './FacultyStatCardSet';
-import {
-    Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
-} from 'recharts';
-import programInfo from '../../utils/programInfo/programs/EM';
-
-const data = [
-    {
-        subject: 'Math', A: 120, B: 110,
-    },
-    {
-        subject: 'Chinese', A: 98, B: 130,
-    },
-    {
-        subject: 'English', A: 86, B: 130,
-    },
-    {
-        subject: 'Geography', A: 99, B: 100,
-    },
-    {
-        subject: 'Physics', A: 85, B: 90,
-    },
-    {
-        subject: 'History', A: 65, B: 85,
-    },
-];
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, } from 'recharts';
 
 
 export default (props) => {
@@ -32,7 +8,7 @@ export default (props) => {
     const { isUG = false, width, currentRotation, currentFaculty, dateFilterActive,
         processedRecords, currentFacultyRecords, programInfo } = props;
 
-    const radarChartWidth = width - 1100 > 400 ? 400 : width - 110,
+    let radarChartWidth = width - 1100 > 400 ? 400 : width / 2,
         radarRadius = (radarChartWidth / 2) - 30;
 
     let epaList = getEPAList(programInfo.epaSourceMap),
@@ -73,12 +49,12 @@ export default (props) => {
             {overallepaGroupSummed.length > 0 &&
                 <RadarChart cx={radarRadius + 35} cy={radarRadius + 25}
                     outerRadius={radarRadius}
-                    width={radarChartWidth} height={500} data={newData}>
+                    width={radarChartWidth} height={radarChartWidth} data={newData}>
                     <PolarGrid />
                     <PolarAngleAxis dataKey="label" />
-                    {currentFacultyRecords.length > 0
-                        && <Radar name="CurrentFaculty" dataKey="currentFaculty" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.6} />}
                     <Radar name="Overall" dataKey="overall" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+                    {currentFacultyRecords.length > 0
+                        && <Radar name="CurrentFaculty" dataKey="currentFaculty" stroke="#1ca8dd" fill="#1ca8dd" fillOpacity={0.6} />}
                 </RadarChart>}
 
         </div>

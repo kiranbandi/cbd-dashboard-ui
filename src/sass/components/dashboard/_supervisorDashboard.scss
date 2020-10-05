@@ -99,6 +99,15 @@
         display: inline-block;
         margin: 22px auto;
         vertical-align: top;
+        .recharts-text>* {
+            filL: white;
+            font-weight: bold;
+        }
+        .recharts-radar-polygon {
+            stroke-width: 4px;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
     }
     // force styling during printing
     .printable-content {
