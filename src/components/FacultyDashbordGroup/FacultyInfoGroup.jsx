@@ -27,6 +27,8 @@ export default (props) => {
             };
         });
 
+    debugger;
+
     return <div className='text-center'>
         <div className='m-r-lg m-l-md print-info' style={{ 'display': 'inline-block', 'width': '1080px' }}>
             <FacultyStatCardSet
@@ -67,14 +69,23 @@ function getEPAList(epaSourceMap) {
     // create a epa list to map epa distribution
     let templateEpaSourceMap = _.cloneDeep(epaSourceMap),
         EPAList = [];
-    // remove special assessment EPAs if any
-    _.map(templateEpaSourceMap, (epaSource, key) => {
-        _.map(epaSource.subRoot, (epa, epaKey) => {
-            if (epa.indexOf('(SA)') == -1) {
-                EPAList.push({ 'label': epaKey, 'max': epaSource['maxObservation'][epaKey] });
-            }
-        })
-    });
+
+    // if sub root is available on first level then its UG
+    //  so do a shallow loop
+    if (templateEpaSourceMap.hasOwnProperty('subRoot')) {
+        _.map(templateEpaSourceMap.subRoot, (epa, epaKey) => {
+            EPAList.push({ 'label': epaKey, 'max': templateEpaSourceMap['maxObservation'][epaKey] });
+        });
+    } else {
+        // remove special assessment EPAs if any
+        _.map(templateEpaSourceMap, (epaSource, key) => {
+            _.map(epaSource.subRoot, (epa, epaKey) => {
+                if (epa.indexOf('(SA)') == -1) {
+                    EPAList.push({ 'label': epaKey, 'max': epaSource['maxObservation'][epaKey] });
+                }
+            })
+        });
+    }
     return EPAList;
 }
 

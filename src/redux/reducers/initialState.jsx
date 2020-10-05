@@ -2,7 +2,7 @@ export default {
   oracle: {
     loaderState: false,
     filterLoaderState: false,
-    activeDashboard: 'supervisor',
+    activeDashboard: 'resident',
     isModalVisible: false,
     isChecklistVisible: false,
     infoCard: ['EM-TTD'],
