@@ -95,6 +95,11 @@
             opacity: 1;
         }
     }
+    .faculty-radar-chart {
+        display: inline-block;
+        margin: 22px auto;
+        vertical-align: top;
+    }
     // force styling during printing
     .printable-content {
         .print-info {
