@@ -152,9 +152,9 @@ export default class FacultyDashboard extends Component {
 
         const { rotationList = [], facultyList = [], allResidentRecords = [],
             startDate, endDate, dateFilterActive, sliderValue,
-            printModeON, currentRotation, currentFaculty } = this.state;
+            printModeON, currentRotation, currentFaculty } = this.state, { programInfo } = this.props;
 
-        const processedRecords = processFacultyRecords(allResidentRecords, currentRotation, startDate, endDate, dateFilterActive, sliderValue),
+        const processedRecords = processFacultyRecords(allResidentRecords, currentRotation, startDate, endDate, dateFilterActive, sliderValue, programInfo),
             currentFacultyRecords = _.filter(processedRecords, (d) => d.faculty_name == currentFaculty);
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let overallWidth = document.body.getBoundingClientRect().width - 125;
@@ -202,6 +202,7 @@ export default class FacultyDashboard extends Component {
                             <FacultyInfoGroup
                                 isUG={true}
                                 printModeON={printModeON}
+                                programInfo={programInfo}
                                 width={printModeON ? 1450 : overallWidth}
                                 processedRecords={processedRecords}
                                 currentFacultyRecords={currentFacultyRecords}
