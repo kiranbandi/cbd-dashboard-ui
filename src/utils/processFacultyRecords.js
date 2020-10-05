@@ -2,7 +2,10 @@ import moment from 'moment';
 import * as d3 from 'd3';
 const phaseList = ['TTD', 'F', 'CORE', 'TP'];
 
-export default function(allResidentRecords = [], currentRotation, startDate, endDate, dateFilterActive, minimumRequired) {
+export default function(allResidentRecords = [], currentRotation, startDate, endDate, dateFilterActive, minimumRequired, programInfo) {
+
+    // create a epa list to map epa distribution
+    let epaList = getEPAList(programInfo.epaSourceMap);
 
     // if the current rotation is ALL or not selected then use all resident records as in,
     // if not filter out all records that were marked in that rotation
@@ -22,11 +25,9 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
 
     // remove faculties that dont meet the required minimum
     _.map(recordsGroupedByFaculty, (records, key) => {
-
         if (records.length < minimumRequired) {
             delete recordsGroupedByFaculty[key];
         }
-
     });
 
     // similary group the records in the date period by faculty name
@@ -48,7 +49,9 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
         // group records by training phase
         const trainingPhaseGroup = _.groupBy(dateFilterActive ? nonExpiredRecordsInPeriod : nonExpiredRecords, (d) => d.phaseTag);
         // group records by rating
-        const ratingGroup = _.groupBy(dateFilterActive ? nonExpiredRecordsInPeriod : nonExpiredRecords, (d) => d.rating);
+        const ratingGroup = _.groupBy(dateFilterActive ? nonExpiredRecordsInPeriod : nonExpiredRecords, (d) => d.rating),
+            // group records by EPA
+            epaGroup = _.groupBy(records, (d) => d.epa);
 
         return {
             faculty_name,
@@ -57,6 +60,7 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
             all_expired: nonExpiredRecords.length == 0,
             all_expired_period: nonExpiredRecordsInPeriod.length == 0,
             rating_group: _.map([1, 2, 3, 4, 5], (d) => (ratingGroup[d] ? ratingGroup[d].length : 0)),
+            epaGroup: _.map([...epaList], (d) => epaGroup[d.label] ? epaGroup[d.label].length : 0),
             phase_group: _.map(phaseList, (d) => (trainingPhaseGroup[d] ? trainingPhaseGroup[d].length : 0)),
             epa_count: records.length,
             epa_count_period: recordsInPeriod.length,
@@ -68,4 +72,20 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
             words_per_comment_period: recordsInPeriod.length > 0 ? Math.round(d3.mean(nonExpiredRecordsInPeriod.map(dd => dd.feedback.split(" ").length)) || 0) : 0
         }
     })
+}
+
+
+function getEPAList(epaSourceMap) {
+    // create a epa list to map epa distribution
+    let templateEpaSourceMap = _.cloneDeep(epaSourceMap),
+        EPAList = [];
+    // remove special assessment EPAs if any
+    _.map(templateEpaSourceMap, (epaSource, key) => {
+        _.map(epaSource.subRoot, (epa, epaKey) => {
+            if (epa.indexOf('(SA)') == -1) {
+                EPAList.push({ 'label': epaKey, 'max': epaSource['maxObservation'][epaKey] });
+            }
+        })
+    });
+    return EPAList;
 }
