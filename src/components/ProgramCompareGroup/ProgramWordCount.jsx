@@ -3,6 +3,7 @@ import {
     BarChart, Bar, XAxis, YAxis,
     Tooltip, ReferenceLine, Legend
 } from 'recharts';
+import ReactTooltip from 'react-tooltip';
 
 
 export default class ProgramCountPlot extends Component {
@@ -14,6 +15,8 @@ export default class ProgramCountPlot extends Component {
 
         const averageData = custom_data.slice(-1)[0];
 
+        const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
+
         return (
             <div className='program-part-container'>
                 <div className="hr-divider">
@@ -21,6 +24,16 @@ export default class ProgramCountPlot extends Component {
                         className="hr-divider-content"
                         style={printModeON ? { background: 'white', color: 'black' } : undefined}>
                         EPA Feedback Word Count
+                        <a
+                            data-tip="React-tooltip"
+                            data-for={randomTooltipId}
+                        >
+                            <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
+                        </a>
+                        <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
+                            <h1>EPA Feedback Word Count</h1>
+                            <h3>This is a placeholder</h3>
+                        </ReactTooltip>
                     </h4>
                 </div>
                 <div className='chart-container'>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
+import ReactTooltip from 'react-tooltip';
 
 export default class FacultyGraph extends Component {
     constructor(props) {
@@ -139,8 +140,22 @@ export default class FacultyGraph extends Component {
             </rect>
         });
 
+        const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
+
         return (<div className={'faculty-graph-box m-r m-b ' + className}>
-            <h3 className="text-left m-b">{title}<b className='title-append'>{titleValue}{(dateFilterActive) ? ' Overall - ' + secondTitleValue + ' Period' : ''}</b></h3>
+            <h3 className="text-left m-b">
+                {title}<b className='title-append'>{titleValue}{(dateFilterActive) ? ' Overall - ' + secondTitleValue + ' Period' : ''}</b>
+                <a
+                    data-tip="React-tooltip"
+                    data-for={randomTooltipId}
+                >
+                    <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
+                </a>
+                <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
+                    <h1>{title}</h1>
+                    <h3>This is a placeholder</h3>
+                </ReactTooltip>
+            </h3>
             <svg className='supervisor-line-chart' width={width} height={height} >
                 <path d={axisTickLines} fill="none" stroke="#564d4d4d" strokeWidth="2px"></path>
                 <g>{bars}</g>
