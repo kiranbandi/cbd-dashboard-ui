@@ -3,6 +3,7 @@ import moment from 'moment';
 import ReactSelect from 'react-select';
 import { Bar } from 'react-chartjs';
 import { ROTATION_SCHEDULE_MAP } from '../../utils/programInfo';
+import ReactTooltip from 'react-tooltip';
 
 export default class EPASpecRotation extends Component {
 
@@ -32,6 +33,8 @@ export default class EPASpecRotation extends Component {
             }]
         }
 
+        const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
+
         return (
             <div className='col-sm-6 printable-content'>
                 <div
@@ -42,6 +45,16 @@ export default class EPASpecRotation extends Component {
                             className='text-left m-a-0 pull-left'
                             style={printModeON ? { color: 'black' } : undefined}>
                             {normalizeByCount ? 'EPA Count per Rotation' : 'EPA Overall Count'}
+                            <a
+                                data-tip="React-tooltip"
+                                data-for={randomTooltipId}
+                            >
+                                <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
+                            </a>
+                            <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
+                                <h1>{normalizeByCount ? 'EPA Count per Rotation' : 'EPA Overall Count'}</h1>
+                                <h3>This is a placeholder</h3>
+                            </ReactTooltip>
                         </h3>
                         <div className='year-selection-box pull-right'>
                             <h2 className='header'>Academic Year: </h2>

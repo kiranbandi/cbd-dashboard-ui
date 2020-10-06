@@ -42,7 +42,7 @@
         "react-switch": "^5.0.1",
         "react-table": "^6.9.2",
         "react-to-print": "^2.5.0",
-        "react-tooltip": "^4.2.8",
+        "react-tooltip": "^4.2.10",
         "react-youtube": "^7.9.0",
         "recharts": "^1.8.5",
         "redux": "^4.0.0",

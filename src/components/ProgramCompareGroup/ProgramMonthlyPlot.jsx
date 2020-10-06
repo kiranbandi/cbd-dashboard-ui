@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs';
+import ReactTooltip from 'react-tooltip';
 
 const monthList = ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun"];
 
@@ -46,6 +47,8 @@ export default class ProgramMonthyPlot extends Component {
                 };
             });
 
+        const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
+
         return (
             <div className='text-center compare-monthly-container printable-content'
                 style={{ paddingTop: printModeON ? '200px' : '' }}
@@ -55,6 +58,16 @@ export default class ProgramMonthyPlot extends Component {
                         className="hr-divider-content"
                         style={printModeON ? { background: 'white', color: 'black' } : undefined}>
                         Monthly Distribution by Program
+                        <a
+                            data-tip="React-tooltip"
+                            data-for={randomTooltipId}
+                        >
+                            <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
+                        </a>
+                        <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
+                            <h1>Monthly Distribution by Program</h1>
+                            <h3>This is a placeholder</h3>
+                        </ReactTooltip>
                     </h4>
                 </div>
                 <div className='overall-wrapper'>
