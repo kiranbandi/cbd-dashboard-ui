@@ -12,33 +12,42 @@ export default class SlideInFilter extends Component {
     }
 
     onSelectChange(option, selectRef) {
-        const { clinicalFilter, patientDemographicFilter, typeFilter } = this.props;
+        const { clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter } = this.props;
         if (selectRef.name == 'cp') {
-            this.props.onHighlightChange(selectRef.action == 'clear' ? '' : option.value, patientDemographicFilter, typeFilter);
+            this.props.onHighlightChange(selectRef.action == 'clear' ? '' : option.value, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter);
         }
         else if (selectRef.name == 'dm') {
-            this.props.onHighlightChange(clinicalFilter, selectRef.action == 'clear' ? '' : option.value, typeFilter);
+            this.props.onHighlightChange(clinicalFilter, selectRef.action == 'clear' ? '' : option.value, typeFilter, directVsIndirectFilter, staffObservationfilter);
         }
         else if (selectRef.name == 'tp') {
-            this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, selectRef.action == 'clear' ? '' : option.value.substring(0, 6));
+            this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, selectRef.action == 'clear' ? '' : option.value.substring(0, 6), directVsIndirectFilter, staffObservationfilter);
+        }
+        else if (selectRef.name == 'di') {
+            this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, typeFilter, selectRef.action == 'clear' ? '' : option.value, staffObservationfilter);
+        }
+        else if (selectRef.name == 'so') {
+            this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, selectRef.action == 'clear' ? '' : option.value);
         }
     }
 
     createSelect(label, optionArray = [], filterKey, defaultValue) {
 
-        let { data = [], clinicalFilter, patientDemographicFilter, typeFilter } = this.props,
+        let { data = [], clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter } = this.props,
             // create a count map that is then merged with the text at the end
             optionCountMap = _.times(optionArray.length, () => 0);
 
         // The filter shows count on its labels which need to work synchronously with each other
         // so if filter A is active then labels in filter B are modified based on value selected in A
         //  and the same if B is active , but if both are active then count resets to original count
-        if (clinicalFilter.length > 0 && patientDemographicFilter.length == 0 && typeFilter.length == 0 && filterKey == 'dm') {
+        if (clinicalFilter.length > 0 && patientDemographicFilter.length == 0 && typeFilter.length == 0 && directVsIndirectFilter.length == 0 && staffObservationfilter.length == 0 && filterKey == 'dm') {
             data = _.filter(data, (d) => d.highlight);
-        }
-        else if (patientDemographicFilter.length > 0 && clinicalFilter.length == 0 && typeFilter.length == 0 && filterKey == 'cp') {
+        } else if (patientDemographicFilter.length > 0 && clinicalFilter.length == 0 && typeFilter.length == 0 && directVsIndirectFilter.length == 0 && staffObservationfilter.length == 0 && filterKey == 'cp') {
             data = _.filter(data, (d) => d.highlight);
-        } else if (typeFilter.length > 0 && patientDemographicFilter.length == 0 && clinicalFilter.length == 0 && filterKey == 'tp') {
+        } else if (typeFilter.length > 0 && patientDemographicFilter.length == 0 && clinicalFilter.length == 0 && directVsIndirectFilter.length == 0 && staffObservationfilter.length == 0 && filterKey == 'tp') {
+            data = _.filter(data, (d) => d.highlight);
+        } else if (directVsIndirectFilter.length > 0 && patientDemographicFilter.length == 0 && clinicalFilter.length == 0 && typeFilter.length == 0 && staffObservationfilter.length == 0 && filterKey == 'di') {
+            data = _.filter(data, (d) => d.highlight);
+        } else if (staffObservationfilter.length > 0 && patientDemographicFilter.length == 0 && clinicalFilter.length == 0 && typeFilter.length == 0 && directVsIndirectFilter.length == 0 && filterKey == 'so') {
             data = _.filter(data, (d) => d.highlight);
         }
 
@@ -102,16 +111,19 @@ export default class SlideInFilter extends Component {
 
     render() {
 
-        const { innerKey, epaSource, width, clinicalFilter, patientDemographicFilter, typeFilter, onHighlightChange, epaSourceMap } = this.props,
+        const { innerKey, epaSource, width, clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter, onHighlightChange, epaSourceMap } = this.props,
             { clinicalPresentation, patientDemographic, type, filterTitles = {} } = epaSourceMap[innerKey];
 
         const innerTitles = filterTitles[epaSource] || ["Clinical Presentation", "Demographic"];
 
+        const data = this.props.data.map(d => d.pureData);
         return (
             <div className='filter-box' style={{ width: (width * 4) - 75 }}>
                 {this.createSelect(innerTitles[0], clinicalPresentation[epaSource], 'cp', clinicalFilter)}
                 {this.createSelect(innerTitles[1], patientDemographic[epaSource], 'dm', patientDemographicFilter)}
                 {innerTitles[2] && type && type[epaSource] && this.createSelect(innerTitles[2], type[epaSource], 'tp', typeFilter)}
+                {innerTitles[3] && data.filter(d => splitAndTrim(d.Situation_Context).indexOf('direct') > -1).length >= +innerTitles[3].split('\t')[1] && this.createSelect(innerTitles[3].split('\t')[0], ['direct', 'indirect'], 'di', directVsIndirectFilter)}
+                {innerTitles[4] && data.filter(d => splitAndTrim(d.Situation_Context).indexOf('staff') > -1).length >= +innerTitles[4].split('\t')[1] && this.createSelect(innerTitles[4].split('\t')[0], ['staff'], 'so', staffObservationfilter)}
                 <div className='inner-button-box'>
                     <button type="submit"
                         className="btn btn-primary-outline icon-container"
