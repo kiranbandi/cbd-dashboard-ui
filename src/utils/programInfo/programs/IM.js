@@ -82,7 +82,7 @@ const programInfo = {
             },
             filterTitles: {
                 '1.1': ['Type of Patient Visit', '', ''],
-                '1.2': ['Presentation', 'Setting', ''],
+                '1.2': ['Presentation', 'Setting', '', 'Direct vs Indirect\t1', 'Staff Observations\t1'],
                 '1.3': ['Procedure', 'Setting', '']
             }
 
@@ -109,12 +109,12 @@ const programInfo = {
                 "2.7": 12
             },
             filterTitles: {
-                '2.1': ['Patient Visit', 'Case Mix', ''],
+                '2.1': ['Patient Visit', 'Case Mix', '', 'Direct vs Indirect\t5', 'Staff Observations\t3'],
                 '2.2': ['', '', 'Type'],
                 '2.3': ["Role of Observer", 'Setting', ''],
                 '2.4': ["Complex Hospital Stay", '', 'Type'],
-                '2.5': ["Presentation", "Setting", ''],
-                '2.6': ["Category", "Setting", ''],
+                '2.5': ["Presentation", "Setting", '', '', 'Staff Observations\t1'],
+                '2.6': ["Category", "Setting", '', '', 'Staff Observations\t1'],
                 '2.7': ['', '', '']
             },
             clinicalPresentation: {
@@ -175,14 +175,14 @@ const programInfo = {
                 "3.11": 6
             },
             filterTitles: {
-                '3.1': ["Focus of Care", "Setting", ''],
+                '3.1': ["Focus of Care", "Setting", '', 'Direct vs Indirect\t6', 'Staff Observations\t3'],
                 '3.2': ["Condition", "Setting", 'Type'],
                 '3.3': ["Case Mix", "Setting", 'Type'],
                 '3.4': ["Focus of Care", "Presentation", 'Type'],
                 '3.5': ["Procedure", "Site", 'Type'],
-                '3.6': ["Category", "Type of Observation", ''],
+                '3.6': ["Category", "Type of Observation", '', '', 'Staff Observations\t3'],
                 '3.7': ["Complexity", "Issue", ''],
-                '3.8': ["Type of Event", "Setting", ''],
+                '3.8': ["Type of Event", "Setting", '', '', 'Staff Observations\t1'],
                 '3.9': ["Scenario", '', 'Type'],
                 '3.10': ["Condition", '', ''],
                 '3.11': ['', '', 'Type']
