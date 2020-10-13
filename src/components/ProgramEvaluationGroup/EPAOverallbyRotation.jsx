@@ -102,7 +102,7 @@ function processAndFilterRecords(allRecords, residentList, academicYear, normali
             value: Math.ceil(group.length / (normalizeByCount ? rotationCount[label] : 1)),
             label
         };
-    }).sort((a, b) => (b.value - a.value));
+    }).filter((d) => !isNaN(d.value)).sort((a, b) => (b.value - a.value));
 
 }
 
