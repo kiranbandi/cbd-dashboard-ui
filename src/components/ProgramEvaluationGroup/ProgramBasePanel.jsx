@@ -50,10 +50,10 @@ export default class ProgramBasePanel extends Component {
                         </div>
                     </div>
                     <div className='selection-box-container'>
-                        <h2 className='header'>Resident Phase : </h2>
+                        <h2 className='header'>Resident Stage : </h2>
                         <div
                             className={'selection-box box-id-all' + " " + (selected == 'all' ? 'selected-button' : '')}
-                            key={'select-all'} onClick={this.selectionChange}> All Phases
+                            key={'select-all'} onClick={this.selectionChange}> All Stages
                         </div>
                         {_.map(programInfo.epaSourceMap, (inner, i) => {
                             return <div

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PHASES_LIST } from '../../utils/programInfo';
+import { STAGES_LIST } from '../../utils/programInfo';
 import {
     BarChart, Bar, XAxis, YAxis,
     Tooltip, Legend
@@ -9,7 +9,7 @@ import _ from 'lodash';
 import ReactTooltip from 'react-tooltip';
 
 const capitalizeStr = (str, lower = false) => (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, match => match.toUpperCase());
-const moddedPhaseList = _.map(PHASES_LIST, (d) => capitalizeStr(d.split('-').join(' ')));
+const moddedPhaseList = _.map(STAGES_LIST, (d) => capitalizeStr(d.split('-').join(' ')));
 const multiColorScale = ["#f28e2c", "#76b7b2", "#4e79a7", "#59a14f"];
 
 export default class ProgramCountPlot extends Component {
@@ -35,7 +35,7 @@ export default class ProgramCountPlot extends Component {
                     <h4
                         className="hr-divider-content"
                         style={printModeON ? { background: 'white', color: 'black' } : undefined}>
-                        Resident Training Phase Distribution
+                        Resident Training Stage Distribution
                         <a
                             data-tip="React-tooltip"
                             data-for={randomTooltipId}
@@ -43,7 +43,7 @@ export default class ProgramCountPlot extends Component {
                             <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
                         </a>
                         <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                            <h1>Resident Training Phase Distribution</h1>
+                            <h1>Resident Training Stage Distribution</h1>
                             <h3>This is a placeholder</h3>
                         </ReactTooltip>
                     </h4>

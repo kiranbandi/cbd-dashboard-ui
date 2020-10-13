@@ -7,7 +7,7 @@ import ReactSelect from 'react-select';
 import { ROTATION_SCHEDULE_MAP, PROGRAM_LIST } from '../utils/programInfo';
 import {
     ProgramSummary, ProgramCountPlot, ProgramMonthlyPlot,
-    ProgramScoreDistribution, ProgramWordCount, ProgramPhaseDistribution
+    ProgramScoreDistribution, ProgramWordCount, ProgramStageDistribution
 } from '../components';
 import savePagePDF from '../utils/savePagePDF';
 
@@ -168,7 +168,7 @@ export default class ProgramsCompare extends Component {
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
                                     <ProgramCountPlot width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
-                                    <ProgramPhaseDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramStageDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>

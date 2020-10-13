@@ -238,7 +238,7 @@ class FilterPanel extends Component {
                         </div>
                         <div className="checkbox custom-control text-center custom-checkbox">
                             <label className='filter-label'>
-                                {"Open All Phases"}
+                                {"Open All Stages"}
                                 <input id='filter-hide-phases' type="checkbox" checked={!this.state.openOnlyCurrentPhase} onChange={this.onVisbilityToggle} />
                                 <span className="custom-control-indicator"></span>
                             </label>

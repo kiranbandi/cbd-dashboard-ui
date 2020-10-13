@@ -27,8 +27,6 @@ export default (props) => {
             };
         });
 
-    debugger;
-
     return <div className='text-center'>
         <div className='m-r-lg m-l-md print-info' style={{ 'display': 'inline-block', 'width': '1080px' }}>
             <FacultyStatCardSet
