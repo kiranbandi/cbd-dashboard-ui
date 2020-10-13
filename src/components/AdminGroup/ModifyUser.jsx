@@ -1,7 +1,7 @@
 /*global $*/
 import React, { Component } from 'react';
 import { getAllUsers, getUser, updateUser, deleteUser } from '../../utils/requestServer';
-import { PHASES_LIST, ROTATION_SCHEDULE_MAP } from '../../utils/programInfo';
+import { STAGES_LIST, ROTATION_SCHEDULE_MAP } from '../../utils/programInfo';
 import Loading from 'react-loading';
 import moment from 'moment';
 import ReactSelect from 'react-select';
@@ -97,7 +97,7 @@ export default class ModifyUser extends Component {
                         accessList: userData.accessList || '',
                         programStartDate: moment(userData.programStartDate).format('MM/DD/YYYY') || moment().format('MM/DD/YYYY'),
                         currentPhase: userData.currentPhase || 'transition-to-discipline',
-                        earlierPhaseCount: PHASES_LIST.indexOf(userData.currentPhase || 'transition-to-discipline'),
+                        earlierPhaseCount: STAGES_LIST.indexOf(userData.currentPhase || 'transition-to-discipline'),
                         promotedDate: userData.promotedDate || [],
                         rotationSchedule: userData.rotationSchedule || {},
                         longitudinalSchedule: userData.longitudinalSchedule || {},
@@ -112,8 +112,8 @@ export default class ModifyUser extends Component {
     onPhaseChange(event) {
         // if he is in a phase > 1 then we need promoted dates for all previous phases
         let currentPhase = event.target.value, earlierPhaseCount = 0;
-        if (PHASES_LIST.indexOf(currentPhase) > 0) {
-            earlierPhaseCount = PHASES_LIST.indexOf(currentPhase);
+        if (STAGES_LIST.indexOf(currentPhase) > 0) {
+            earlierPhaseCount = STAGES_LIST.indexOf(currentPhase);
         }
         this.setState({ currentPhase, earlierPhaseCount });
     }
@@ -287,7 +287,7 @@ export default class ModifyUser extends Component {
 
                         {accessType == 'resident' &&
                             <div className="input-group m-a">
-                                <span className='inner-span'>CURRENT PHASE</span>
+                                <span className='inner-span'>CURRENT STAGE</span>
                                 <select id='select-current-phase' name="currentPhase" className='custom-select' value={currentPhase} onChange={this.onPhaseChange}>
                                     <option value='transition-to-discipline' >TRANSITION TO DISCIPLINE</option>
                                     <option value='foundations-of-discipline' >FOUNDATIONS OF DISCIPLINE</option>
@@ -301,7 +301,7 @@ export default class ModifyUser extends Component {
                             <div className='promoted-container'>
                                 {_.map(Array(earlierPhaseCount), (d, index) => {
                                     return <div className="input-group m-a" key={'date-promoted-' + index}>
-                                        <span className='inner-span'>PROMOTED DATE - {PHASES_LIST[index].split("-").join(" ")}</span>
+                                        <span className='inner-span'>PROMOTED DATE - {STAGES_LIST[index].split("-").join(" ")}</span>
                                         <div className="input-group">
                                             <span className="input-group-addon">
                                                 <span className="icon icon-calendar"></span>

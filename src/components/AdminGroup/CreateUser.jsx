@@ -1,7 +1,7 @@
 /*global $*/
 import React, { Component } from 'react';
 import { registerUser } from '../../utils/requestServer';
-import { ROTATION_SCHEDULE_MAP, PHASES_LIST } from '../../utils/programInfo';
+import { ROTATION_SCHEDULE_MAP, STAGES_LIST } from '../../utils/programInfo';
 import Loading from 'react-loading';
 import moment from 'moment';
 
@@ -66,8 +66,8 @@ export default class CreateUser extends Component {
         // if he is in a phase > 1 then we need promoted dates for all previous phases
         let currentPhase = event.target.value, earlierPhaseCount = 0;
 
-        if (PHASES_LIST.indexOf(currentPhase) > 0) {
-            earlierPhaseCount = PHASES_LIST.indexOf(currentPhase);
+        if (STAGES_LIST.indexOf(currentPhase) > 0) {
+            earlierPhaseCount = STAGES_LIST.indexOf(currentPhase);
         }
         this.setState({ currentPhase, earlierPhaseCount });
     }
@@ -178,7 +178,7 @@ export default class CreateUser extends Component {
 
                     {accessType == 'resident' &&
                         <div className="input-group m-a">
-                            <span className='inner-span'>CURRENT PHASE</span>
+                            <span className='inner-span'>CURRENT STAGE</span>
                             <select id='select-current-phase' name="currentPhase" className='custom-select' value={currentPhase} onChange={this.onPhaseChange}>
                                 <option value='transition-to-discipline' >TRANSITION TO DISCIPLINE</option>
                                 <option value='foundations-of-discipline' >FOUNDATIONS OF DISCIPLINE</option>
@@ -192,7 +192,7 @@ export default class CreateUser extends Component {
                         <div className='promoted-container'>
                             {_.map(Array(earlierPhaseCount), (d, index) => {
                                 return <div className="input-group m-a" key={'date-promoted-' + index}>
-                                    <span className='inner-span'>PROMOTED DATE FROM {PHASES_LIST[index].split("-").join(" ")}</span>
+                                    <span className='inner-span'>PROMOTED DATE FROM {STAGES_LIST[index].split("-").join(" ")}</span>
                                     <div className="input-group">
                                         <span className="input-group-addon">
                                             <span className="icon icon-calendar"></span>

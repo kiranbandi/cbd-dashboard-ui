@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Loading from 'react-loading';
-import { PHASES_LIST } from '../../utils/programInfo';
+import { STAGES_LIST } from '../../utils/programInfo';
 import moment from 'moment';
 
 const defaultDateValue = moment().format('MM/DD/YYYY');
 // create a clone and then Add extra option all to the list
-let PHASES_LIST_COPY = _.clone(PHASES_LIST);
-PHASES_LIST_COPY.unshift('all-phases');
+let STAGES_LIST_COPY = _.clone(STAGES_LIST);
+STAGES_LIST_COPY.unshift('all-stages');
 
 export default class NormativeFilterPanel extends Component {
     constructor(props) {
@@ -32,9 +32,9 @@ export default class NormativeFilterPanel extends Component {
                 <div className='text-xs-left advanced-filter-box normative-filter-box'>
 
                     <div className='phase-box'>
-                        <label className='filter-label'>Resident Phase  </label>
+                        <label className='filter-label'>Resident Stage  </label>
                         <select id='filter-phaselist' className="custom-select">
-                            {PHASES_LIST_COPY.map((val, index) => { return <option key={index} value={val}> {val.split('-').join(' ')}</option> })}
+                            {STAGES_LIST_COPY.map((val, index) => { return <option key={index} value={val}> {val.split('-').join(' ')}</option> })}
                         </select>
                     </div>
 

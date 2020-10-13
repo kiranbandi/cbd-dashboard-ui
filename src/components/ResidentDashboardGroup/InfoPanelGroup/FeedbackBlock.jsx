@@ -6,7 +6,7 @@ import { line, scaleLinear, scaleTime } from 'd3';
 import moment from 'moment';
 import TrackTrails from '../GraphPanelGroup/TrackTrails';
 import { showTooltip } from '../../../redux/actions/actions';
-import { PHASES_LIST } from '../../../utils/programInfo';
+import { STAGES_LIST } from '../../../utils/programInfo';
 
 const optionsList = ['Accelerated', 'As Expected', 'Not as Expected', 'Not Progressing', 'Inactive'];
 
@@ -89,7 +89,7 @@ class FeedbackBlock extends Component {
 
 
         // from the 4 phases find the number at the which the resident is currently in
-        const maxPromotedIndex = _.findIndex(PHASES_LIST, (d) => d == residentInfo.currentPhase);
+        const maxPromotedIndex = _.findIndex(STAGES_LIST, (d) => d == residentInfo.currentPhase);
 
         // now use that to add the promotion dates for all the phases he was in before that
         // so if he is in phase 4 add the promotion dates for phase 2 and 3

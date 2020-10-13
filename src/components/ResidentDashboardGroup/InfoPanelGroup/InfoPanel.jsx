@@ -38,7 +38,7 @@ class InfoPanel extends Component {
                 {residentInfo &&
                     <div className='info-panel-inner'>
                         <div className='titular-block'>
-                            <span className='inner-title-block'><b>CURRENT PHASE -</b> {residentInfo.currentPhase.split("-").join(" ")}</span>
+                            <span className='inner-title-block'><b>CURRENT STAGE -</b> {residentInfo.currentPhase.split("-").join(" ")}</span>
                             <span className='inner-title-block'><b>PROGRAM START DATE -</b> {(new Date(residentInfo.programStartDate)).toDateString()}</span>
                             <span className='inner-title-block'><b>LAST UPDATED ON -</b> {(new Date(residentInfo.uploadedData)).toDateString()}</span>
                             {isChecklistFeatureAvailable && <button

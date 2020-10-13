@@ -70,7 +70,7 @@ export default class NormativeDashboard extends Component {
             return moment(d.observation_date, 'YYYY-MM-DD').isAfter(moment(startDate, 'MM/DD/YYYY')) && moment(d.observation_date, 'YYYY-MM-DD').isBefore(moment(endDate, 'MM/DD/YYYY'));
         });
 
-        const residentsInPhase = (currentPhase == 'all-phases') ? residentList : _.filter(residentList, (res) => res.currentPhase == currentPhase);
+        const residentsInPhase = (currentPhase == 'all-stages') ? residentList : _.filter(residentList, (res) => res.currentPhase == currentPhase);
 
         // process only if records are available
         if (residentRecords.length > 0) {

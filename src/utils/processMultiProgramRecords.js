@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import moment from 'moment';
-import { PHASES_LIST } from './programInfo';
+import { STAGES_LIST } from './programInfo';
 
 export default function(allRecords = [], residentList = [], programList) {
 
@@ -41,7 +41,7 @@ export default function(allRecords = [], residentList = [], programList) {
             programName,
             resident_count,
             rating_group: _.map([1, 2, 3, 4, 5], (d) => (ratingGroup[d] ? ratingGroup[d].length : 0)),
-            current_phase_group: _.map(PHASES_LIST, (d) => (currentPhaseGroup[d] ? currentPhaseGroup[d].length : 0)),
+            current_phase_group: _.map(STAGES_LIST, (d) => (currentPhaseGroup[d] ? currentPhaseGroup[d].length : 0)),
             epa_count: records.length,
             expired_count: records.length - nonExpiredRecords.length,
             monthly_count: _.groupBy(nonExpiredRecords, (d) => moment(d.observation_date, 'YYYY-MM-DD').format('MMM')),

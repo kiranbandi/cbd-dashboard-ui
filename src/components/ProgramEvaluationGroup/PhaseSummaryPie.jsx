@@ -37,7 +37,7 @@ const Pie = props => {
 
     return (
         <div className={'faculty-pie-wrapper ' + (showNA ? 'p-a' : '')}>
-            <span className="pie-title">TRAINING PHASE</span>
+            <span className="pie-title">TRAINING STAGE</span>
             {showNA ?
                 <h2 className="statcard-number m-a"> N/A</h2> :
                 <svg width={150} height={100}>

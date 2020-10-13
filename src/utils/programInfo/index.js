@@ -38,7 +38,7 @@ export { default as UG_ROTATION_MAP }
 from './UG_ROTATION_MAP';
 export { default as CARDS_LIST }
 from './CARDS_LIST';
-export { default as PHASES_LIST }
-from './PHASES_LIST';
+export { default as STAGES_LIST }
+from './STAGES_LIST';
 export { default as PROGRAM_LIST }
 from './PROGRAM_LIST';
