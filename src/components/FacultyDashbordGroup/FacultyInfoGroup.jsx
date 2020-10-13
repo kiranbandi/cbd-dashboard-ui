@@ -28,7 +28,7 @@ export default (props) => {
         });
 
     return <div className='text-center'>
-        <div className='m-r-lg m-l-md print-info' style={{ 'display': 'inline-block', 'width': '1080px' }}>
+        <div className='print-info' style={{ 'display': 'inline-block', 'width': '1120px' }}>
             <FacultyStatCardSet
                 isUG={isUG}
                 title={"Acquistion Metrics for All Faculty in Rotation - " + currentRotation}
@@ -45,7 +45,6 @@ export default (props) => {
             <div className="hr-divider">
                 <h4 className="hr-divider-content"> EPA Distribution </h4>
             </div>
-
             {overallepaGroupSummed.length > 0 &&
                 <RadarChart cx={radarRadius + 35} cy={radarRadius + 25}
                     outerRadius={radarRadius}
@@ -56,7 +55,6 @@ export default (props) => {
                     {currentFacultyRecords.length > 0
                         && <Radar name="CurrentFaculty" dataKey="currentFaculty" stroke="#1ca8dd" fill="#1ca8dd" fillOpacity={0.6} />}
                 </RadarChart>}
-
         </div>
     </div>
 
