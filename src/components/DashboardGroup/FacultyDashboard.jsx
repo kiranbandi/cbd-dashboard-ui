@@ -6,7 +6,7 @@ import toastr from '../../utils/toastr';
 import savePagePDF from '../../utils/savePagePDF';
 import {
     FacultyFilterPanel, FacultyInfoGroup,
-    FacultyRecordTable, FacultyGraphGroup, AllFacultyTable
+    FacultyRecordTable, FacultyGraphGroup
 } from '../';
 import Loading from 'react-loading';
 import processFacultyRecords from '../../utils/processFacultyRecords';
@@ -83,7 +83,7 @@ export default class FacultyDashboard extends Component {
     }
 
     // when a rotation is selected we update the faculty list
-    // so it only has the faculties who graded in that rotation
+    // so it only has the faculty who graded in that rotation
     onRotationSelect(option) {
         let currentRotation = option.value, { allResidentRecords } = this.state, recordsInRotation = [];
 
@@ -93,7 +93,7 @@ export default class FacultyDashboard extends Component {
         else {
             recordsInRotation = _.filter(allResidentRecords, (d) => d.rotationTag == currentRotation);
         }
-        // create a list of all faculties within the records in that rotation
+        // create a list of all faculty within the records in that rotation
         let facultyList = _.map(_.groupBy(recordsInRotation, (d) => d.observer_name),
             (records, key) => ({ 'label': key })).sort((previous, current) => previous.label.localeCompare(current.label));
         // sub in a value at the front of the list for 'ALL'
@@ -128,7 +128,7 @@ export default class FacultyDashboard extends Component {
                     'label': key,
                     'count': records.length,
                 })).sort((a, b) => b.count - a.count);
-                // create a list of all faculties 
+                // create a list of all faculty 
                 let facultyList = _.map(_.groupBy(allResidentRecords, (d) => d.observer_name),
                     (records, key) => ({ 'label': key })).sort((previous, current) => previous.label.localeCompare(current.label));
                 // sub in a value at the front of the list for 'ALL'
@@ -163,13 +163,13 @@ export default class FacultyDashboard extends Component {
         // quick fix to legacy code 
         // if a faculty name doesnt appear in the processed records remove it also 
         // from the original faculty list
-        let facultiesWithEnoughRecords = _.map(processedRecords, (d) => d.faculty_name);
+        let facultyWithEnoughRecords = _.map(processedRecords, (d) => d.faculty_name);
         let filteredFacultyList = _.filter(facultyList, (d) => {
             if (d.label == 'ALL') {
                 return true;
             }
             else {
-                return facultiesWithEnoughRecords.indexOf(d.label) > -1;
+                return facultyWithEnoughRecords.indexOf(d.label) > -1;
             }
         });
 
@@ -225,10 +225,6 @@ export default class FacultyDashboard extends Component {
                                 width={printModeON ? 1100 : overallWidth}
                                 currentFacultyRecords={currentFacultyRecords} />
 
-                            {!printModeON && <AllFacultyTable
-                                width={overallWidth}
-                                processedRecords={processedRecords}
-                                dateFilterActive={dateFilterActive} />}
                         </div>
                         <button id='print-report' className="btn btn-primary print-button partaway" onClick={this.onPrintClick}>
                             <span className="icon icon-download"></span>

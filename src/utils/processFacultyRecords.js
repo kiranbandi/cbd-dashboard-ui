@@ -23,7 +23,7 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
     // now group the records by the faculty name
     let recordsGroupedByFaculty = _.groupBy(allResidentRecords, (d) => d.observer_name);
 
-    // remove faculties that dont meet the required minimum
+    // remove faculty that dont meet the required minimum
     _.map(recordsGroupedByFaculty, (records, key) => {
         if (records.length < minimumRequired) {
             delete recordsGroupedByFaculty[key];
@@ -56,7 +56,7 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
         return {
             faculty_name,
             records,
-            // for some faculties all there records are expired and so we can completely ignore
+            // for some faculty all there records are expired and so we can completely ignore
             all_expired: nonExpiredRecords.length == 0,
             all_expired_period: nonExpiredRecordsInPeriod.length == 0,
             rating_group: _.map([1, 2, 3, 4, 5], (d) => (ratingGroup[d] ? ratingGroup[d].length : 0)),
