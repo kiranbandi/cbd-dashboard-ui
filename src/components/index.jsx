@@ -22,7 +22,6 @@ export { default as FacultyFilterPanel } from './FacultyDashbordGroup/FacultyFil
 export { default as FacultyInfoGroup } from './FacultyDashbordGroup/FacultyInfoGroup';
 export { default as FacultyGraphGroup } from './FacultyDashbordGroup/FacultyGraphGroup';
 export { default as FacultyRecordTable } from './FacultyDashbordGroup/FacultyRecordTable';
-export { default as AllFacultyTable } from './FacultyDashbordGroup/AllFacultyTable';
 
 // Components for Resident Dashboard to compare residents
 export { default as GraphPanel } from './ResidentDashboardGroup/GraphPanelGroup/GraphPanel';

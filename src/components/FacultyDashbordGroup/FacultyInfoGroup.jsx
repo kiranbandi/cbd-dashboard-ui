@@ -31,7 +31,7 @@ export default (props) => {
         <div className='m-r-lg m-l-md print-info' style={{ 'display': 'inline-block', 'width': '1080px' }}>
             <FacultyStatCardSet
                 isUG={isUG}
-                title={"Acquistion Metrics for All Faculties in Rotation - " + currentRotation}
+                title={"Acquistion Metrics for All Faculty in Rotation - " + currentRotation}
                 processedRecords={processedRecords}
                 dateFilterActive={dateFilterActive} />
             <FacultyStatCardSet
