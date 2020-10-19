@@ -53,7 +53,7 @@ class DashboardRoot extends Component {
                                     <a id='normative-tab' onClick={this.onTabClick} title={infoTooltipReference.normativeAssessment.main}>NORMATIVE ASSESSMENT</a>
                                 </li>
                                 <li className={activeDashboard == 'supervisor' ? 'active' : ''}>
-                                    <a id='supervisor-tab' onClick={this.onTabClick}>FACULTY DEVELOPMENT</a>
+                                    <a id='supervisor-tab' onClick={this.onTabClick} title={infoTooltipReference.facultyDevlopment.main}>FACULTY DEVELOPMENT</a>
                                 </li>
                                 <li className={activeDashboard == 'program' ? 'active' : ''} title={infoTooltipReference.programEvaluation.main}>
                                     <a id='program-tab' onClick={this.onTabClick}>PROGRAM EVALUATION</a>

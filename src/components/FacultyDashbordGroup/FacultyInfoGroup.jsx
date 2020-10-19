@@ -1,6 +1,8 @@
 import React from 'react';
 import FacultyStatCardSet from './FacultyStatCardSet';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, } from 'recharts';
+import ReactTooltip from 'react-tooltip';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 
 export default (props) => {
@@ -27,6 +29,8 @@ export default (props) => {
             };
         });
 
+    const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
+
     return <div className='text-center'>
         <div className='print-info' style={{ 'display': 'inline-block', 'width': '1120px' }}>
             <FacultyStatCardSet
@@ -43,7 +47,18 @@ export default (props) => {
         </div>
         <div className='faculty-radar-chart'>
             <div className="hr-divider">
-                <h4 className="hr-divider-content"> EPA Distribution </h4>
+                <h4 className="hr-divider-content">
+                    EPA Distribution
+                <a
+                        data-tip="React-tooltip"
+                        data-for={randomTooltipId}
+                    >
+                        <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
+                    </a>
+                    <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
+                        <p>{infoTooltipReference.facultyDevlopment.EPADistribution}</p>
+                    </ReactTooltip>
+                </h4>
             </div>
             {overallepaGroupSummed.length > 0 &&
                 <RadarChart cx={radarRadius + 35} cy={radarRadius + 25}

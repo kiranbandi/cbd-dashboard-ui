@@ -5,7 +5,20 @@
 // module.exports = reference;
 
 export default {
-    facultyDevlopment: {},
+    facultyDevlopment: {
+        main: `This dashboard organizes all of the EPAs that have been completed for residents in the program by the Faculty member that completed them with the goal of informing faculty development.`,
+        getRecords: `Select a rotation to review EPA metrics for Faculty that completed EPAs on that rotation. Select a specific Faculty member for their metrics to be highlighted. Filter by date to compare a specified time interval to overall data.`,
+        filterOutFacultyWithMinimumRecords: `Adjust this slider to exclude faculty with less than the selected number of EPAs completed from these analyses.`,
+        acquisitionMetricsForAllFaculty: `These are the amalgamated metrics for EPAs completed by all Faculty in a given rotation. Mouse-over the EPA Rating visual to see the proportion of EPAs rated at each level of entrustment. Mouse-over the Training Stage visual to see the proportion of EPAs completed in each stage of training.`,
+        acquisitionMetricsForSingleFaculty: `These are the metrics for EPAs completed by the selected Faculty. Mouse-over the EPA Rating visual to see the proportion of EPAs rated at each level of entrustment. Mouse-over the Training Stage visual to see the proportion of EPAs completed in each stage of training.`,
+        EPADistribution: `This spider plot displays the breadth of the EPAs that the Faculty member completes. A Faculty that fills out EPAs in proportion to the program's requirements would display a perfect circle.`,
+        totalEPAsObserved: `This chart displays the number of EPAs observed by each faculty member. Mouse-over for each faculty's name. Click to load that faculy member's dashboard. `,
+        EPAExpiryRate: `This chart displays the percentage of EPAs sent to each faculty member that expired before completion. Mouse-over for each faculty's name. Click to load that faculy member's dashboard. `,
+        averageEntrustmentScore: `This chart displays the average entrustment score of EPAs completed by each faculty member. Mouse-over for each faculty's name. Click to load that faculy member's dashboard. `,
+        averageWordsPerComment: `This chart displays the average number of words per comment included with the EPAs completed by each faculty member. Mouse-over for each faculty's name. Click to load that faculy member's dashboard. `,
+        summaryOfEPAsByFacultyName: `This table displays EPAs completed by the selected Faculty. It is searchable (click the white box) and sortable (click the column header).`,
+        reportAndCondensedReport: `Clicking the Report button will prepare a PDF version of this page with the currently selected rotation and/or Faculty. Clicking condensed report does the same but removes the table of EPAs completed by the Faculty to present only unidentifiable data. These reports are intended to be used for Faculty coaching.`
+    },
     residentMetrics: {},
     normativeAssessment: {
         main: `This dashboard compares the EPA completion and expiration of each of the residents in the program with the goal of providing normative context to the competence committee.`,
