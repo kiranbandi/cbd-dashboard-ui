@@ -7,7 +7,10 @@
 export default {
     facultyDevlopment: {},
     residentMetrics: {},
-    normativeAssessment: {},
+    normativeAssessment: {
+        main: `This dashboard compares the EPA completion and expiration of each of the residents in the program with the goal of providing normative context to the competence committee.`,
+        getRecords: `Select a resident stage to chart the EPA metrics of the residents currently in that stage. The number of EPAs/week, total number of EPAs, and EPA expiry percentage can be reviewed by selecting the respective graph. Clicking 'Filter by Date' adds the same metrics for the specified time interval.`
+    },
     programEvaluation: {
         main: `This dashboard organizes all of the EPAs that have been completed for residents in the program by the rotation and year they were completed during with the goal of informing program evaluation.`,
         overallAcuisitionMetrics: `These EPA metrics contextualize the EPAs that have been completed within your program over the selected academic year. The 'EPA Rating' graphic demonstrates the number of EPAs that have been rated at each level of entrustment from 1 (I had to do) to 5 (I didn't need to be there).`,
