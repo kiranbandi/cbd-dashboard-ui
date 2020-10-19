@@ -4,9 +4,10 @@ import { bindActionCreators } from 'redux';
 import { setActiveDashboard } from '../redux/actions/actions';
 import {
     ResidentDashboard, ProgramDashboard,
-    FacultyDashboard, Modal,ChecklistModal,
+    FacultyDashboard, Modal, ChecklistModal,
     NormativeDashboard, DownloadDashboard
 } from '../components';
+import infoTooltipReference from '../utils/infoTooltipReference';
 
 class DashboardRoot extends Component {
 
@@ -54,7 +55,7 @@ class DashboardRoot extends Component {
                                 <li className={activeDashboard == 'supervisor' ? 'active' : ''}>
                                     <a id='supervisor-tab' onClick={this.onTabClick}>FACULTY DEVELOPMENT</a>
                                 </li>
-                                <li className={activeDashboard == 'program' ? 'active' : ''}>
+                                <li className={activeDashboard == 'program' ? 'active' : ''} title={infoTooltipReference.programEvaluation.main}>
                                     <a id='program-tab' onClick={this.onTabClick}>PROGRAM EVALUATION</a>
                                 </li>
                                 <li className={activeDashboard == 'table' ? 'active' : ''}>

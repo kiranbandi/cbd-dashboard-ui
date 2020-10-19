@@ -3,6 +3,7 @@ import ReactSelect from 'react-select';
 import moment from 'moment';
 import * as d3 from 'd3';
 import ReactTooltip from 'react-tooltip';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 export default class ProgramDashboard extends Component {
 
@@ -171,8 +172,7 @@ export default class ProgramDashboard extends Component {
                                 <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
                             </a>
                             <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                                <h1>EPA Completion Distribution</h1>
-                                <h3>This is a placeholder</h3>
+                                <p>{infoTooltipReference.programEvaluation.EPACompletionDistribution}</p>
                             </ReactTooltip>
                         </h3>
                         <div className='year-selection-box pull-right'>

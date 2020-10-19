@@ -3,6 +3,7 @@ import { Line } from 'react-chartjs';
 import moment from 'moment';
 import * as d3 from 'd3';
 import ReactTooltip from 'react-tooltip';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 const monthList = ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun"];
 
@@ -93,8 +94,7 @@ export default (props) => {
                         <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
                     </a>
                     <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                        <h1>EPA Monthly Distribution</h1>
-                        <h3>This is a placeholder</h3>
+                        <p>{infoTooltipReference.programEvaluation.EPAMonthlyDistribution}</p>
                     </ReactTooltip>
                 </h3>
 
