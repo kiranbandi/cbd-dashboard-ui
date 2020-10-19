@@ -18,5 +18,12 @@ export default {
         EPAMonthlyDistribution: `This graph demonstrates the number of EPA observations submitted per month over multiple years. It is intended to identify increases and decreases in EPA assessments over seasons and years.`,
         Report: `Clicking the Report button will prepare a PDF version of this page (with the exception of the 'EPA Specific Rotation Distribution' and 'Rotation Specific EPA Distribution' - these do not appear in the Export).`
     },
-    comparePrograms: {}
+    comparePrograms: {
+        OverallAcquisitionMetricsForAllPrograms: `These EPA metrics contextualize the EPAs that have been completed within all programs over the selected academic year. The 'EPA Rating' graphic demonstrates the number of EPAs that have been rated at each level of entrustment from 1 (I had to do) to 5 (I didn't need to be there). The 'Training Stage' graphic demonstrates the proportion of residents in each stage of training.`,
+        EPAsAcquiredAndExpired: `This graph displays the number of EPAs that have been completed and expired in each program. The toggle button allows this metric to be displayed per resident. Mouse-over each row for additional details.`,
+        ResidentTrainingStageDistribution: `This stack chart displays the proportion of residents in each program that are in each stage of training (TTD, Foundations, Core, TTP). Mouse-over each row for additional details.`,
+        EPARatingDistribution: `This stack chart displays the proportion of EPAs in each program that have been rated at each level of entrustment ('I had to do' to 'I didn't need to be there'). Mouse-over each row for additional details.`,
+        EPAFeedbackWordCount: `This graph displays the average number of words contained within the completed EPAs of each program. The length of the feedback has been found to correlate with feedback quality.`,
+        MonthlyDistributionByProgram: `These graphs display the number of EPAs completed within each of the programs during each month of the selected year.`
+    }
 }

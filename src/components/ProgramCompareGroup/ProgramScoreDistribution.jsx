@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import ReactTooltip from 'react-tooltip';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 const fivePointColorScale = ["#e15759", "#f28e2c", "#76b7b2", "#4e79a7", "#59a14f"];
 const moddedRatingList = _.map(fivePointColorScale, (d, i) => ('Rating-' + (i + 1)));
@@ -36,8 +37,7 @@ export default class ProgramScoreDist extends Component {
                             <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
                         </a>
                         <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                            <h1>EPA Rating Distribution</h1>
-                            <h3>This is a placeholder</h3>
+                            <p>{infoTooltipReference.comparePrograms.EPARatingDistribution}</p>
                         </ReactTooltip>
                     </h4>
                 </div>
