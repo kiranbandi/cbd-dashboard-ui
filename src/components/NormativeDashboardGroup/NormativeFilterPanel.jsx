@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Loading from 'react-loading';
 import { STAGES_LIST } from '../../utils/programInfo';
 import moment from 'moment';
-import ReactTooltip from 'react-tooltip';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 
 const defaultDateValue = moment().format('MM/DD/YYYY');
@@ -28,8 +27,6 @@ export default class NormativeFilterPanel extends Component {
 
         const { filterLoaderState, onSubmit } = this.props,
             { dateFilterActive } = this.state;
-
-        const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
 
         return (
             <div className='filter-panel'>
@@ -72,17 +69,8 @@ export default class NormativeFilterPanel extends Component {
                     </span>}
 
                     <div className='text-xs-left button-box'>
-                        <button type="submit" className="filter-button btn btn-primary-outline" onClick={onSubmit}>
+                        <button type="submit" className="filter-button btn btn-primary-outline" onClick={onSubmit} title={infoTooltipReference.normativeAssessment.getRecords}>
                             GET RECORDS
-                            <a
-                                data-tip="React-tooltip"
-                                data-for={randomTooltipId}
-                            >
-                                <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
-                            </a>
-                            <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                                <p>{infoTooltipReference.normativeAssessment.getRecords}</p>
-                            </ReactTooltip>
                             {filterLoaderState && <Loading className='filter-loader' type='spin' height='25px' width='25px' color='white' delay={-1} />}
                         </button>
                     </div>
