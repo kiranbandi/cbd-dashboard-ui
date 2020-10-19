@@ -4,6 +4,7 @@ import BulletChart from './BulletChart';
 import { scaleLinear } from 'd3';
 import SlideInTable from './SlideInTable';
 import SlideInFilter from './SlideInFilter';
+import infoTooltipReference from "../../../utils/infoTooltipReference";
 
 export default class GraphRow extends Component {
 
@@ -158,8 +159,8 @@ export default class GraphRow extends Component {
                         innerHeight={innerHeight}
                         onMouseOver={onMouseOver}
                         onMouseOut={onMouseOut} />
-                    {!smallScreen && nonDemoMode && <span className={"icon table-icon icon-open-book " + epaSource + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}></span>}
-                    {!smallScreen && nonDemoMode && isAnyFilterAvailable && <span className={"icon filter-icon icon-sound-mix " + epaSource + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick}></span>}
+                    {!smallScreen && nonDemoMode && <span className={"icon table-icon icon-open-book " + epaSource + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick} title={infoTooltipReference.residentMetrics.showEPATable}></span>}
+                    {!smallScreen && nonDemoMode && isAnyFilterAvailable && <span className={"icon filter-icon icon-sound-mix " + epaSource + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick} title={infoTooltipReference.residentMetrics.showEPAFilter}></span>}
 
                 </div>
                 {!smallScreen && isTableVisible && nonDemoMode &&
