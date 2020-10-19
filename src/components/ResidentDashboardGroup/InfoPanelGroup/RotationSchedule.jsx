@@ -7,6 +7,8 @@ import { ROTATION_SCHEDULE_MAP, CARDS_LIST } from '../../../utils/programInfo';
 import { setInfoCard, updateResidentData, setResidentFilter } from '../../../redux/actions/actions';
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import ReactTooltip from 'react-tooltip';
+import infoTooltipReference from '../../../utils/infoTooltipReference';
 
 
 class RotatioSchedule extends Component {
@@ -117,7 +119,7 @@ class RotatioSchedule extends Component {
         // if the current month is before july then pick the last year  
         const currentAcademicYear = moment().month() <= 5 ? moment().year() - 1 : moment().year();
         const currentScheduleDates = ROTATION_SCHEDULE_MAP[currentAcademicYear];
-        const currentSchedule = rotationSchedule[currentAcademicYear] ||[];
+        const currentSchedule = rotationSchedule[currentAcademicYear] || [];
         const currentLongSchedule = longitudinalSchedule[currentAcademicYear];
 
         let historicalYears = _.filter(_.keys(rotationSchedule), (year) => {
@@ -133,16 +135,26 @@ class RotatioSchedule extends Component {
         const sliderDatesLabel = sliderValue[1] - sliderValue[0] >= 1 ?
             currentScheduleDates[sliderValue[0]] + ' to ' + currentScheduleDates[sliderValue[1]] : '(Drag slider or click points to set range)';
 
+        const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
+
         return (
             <div className='schedule-box text-center hidden-xs'>
                 <div className="hr-divider">
                     <h4 className="hr-divider-content"> ROTATION SCHEDULE </h4>
                 </div>
-                <button onClick={this.showHistorySchedule} className={'view-back-button btn btn-primary-outline' + (isHistoryVisible ? ' selected' : '')}>
+                <button
+                    onClick={this.showHistorySchedule}
+                    className={'view-back-button btn btn-primary-outline' + (isHistoryVisible ? ' selected' : '')}
+                    title={infoTooltipReference.residentMetrics.viewHistory}
+                >
                     <span className="icon icon-clock"></span>
                     <span>View History</span>
                 </button>
-                <button onClick={this.showEPAsPerBlock} className={'view-back-button per-block-button btn btn-primary-outline' + (isEPAperBlockVisible ? ' selected' : '')}>
+                <button
+                    onClick={this.showEPAsPerBlock}
+                    className={'view-back-button per-block-button btn btn-primary-outline' + (isEPAperBlockVisible ? ' selected' : '')}
+                    title={infoTooltipReference.residentMetrics.viewEPAsBlock}
+                >
                     <span className="icon icon-book"></span>
                     <span>View EPAs/Block</span>
                 </button>
@@ -184,6 +196,15 @@ class RotatioSchedule extends Component {
                 <div style={{ 'width': widthAvailable + 'px' }}
                     className='slider-container-resident'>
                     <label className='filter-label'>Filter EPAs by Rotation Schedule </label>
+                    <a
+                        data-tip="React-tooltip"
+                        data-for={randomTooltipId}
+                    >
+                        <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
+                    </a>
+                    <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
+                        <p>{infoTooltipReference.residentMetrics.calendarSlider}</p>
+                    </ReactTooltip>
                     <h2>{sliderDatesLabel}</h2>
                     <Range dots min={0} max={currentSchedule.length} step={1} defaultValue={[0, 0]} allowCross={false} onAfterChange={this.onRangeChange} />
                 </div>

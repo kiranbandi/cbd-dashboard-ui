@@ -47,7 +47,7 @@ class DashboardRoot extends Component {
                         <div className="hr-divider nav-pill-container-dashboard">
                             <ul className="nav nav-pills hr-divider-content hr-divider-nav">
                                 <li className={activeDashboard == 'resident' ? 'active' : ''}>
-                                    <a id='resident-tab' onClick={this.onTabClick} >RESIDENT METRICS</a>
+                                    <a id='resident-tab' onClick={this.onTabClick}  title={infoTooltipReference.residentMetrics.main}>RESIDENT METRICS</a>
                                 </li>
                                 <li className={activeDashboard == 'normative' ? 'active' : ''}>
                                     <a id='normative-tab' onClick={this.onTabClick} title={infoTooltipReference.normativeAssessment.main}>NORMATIVE ASSESSMENT</a>
