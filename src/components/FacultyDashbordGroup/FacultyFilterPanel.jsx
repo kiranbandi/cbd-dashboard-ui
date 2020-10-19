@@ -29,7 +29,6 @@ export default class FacultyFilterPanel extends Component {
         const currentFacultyValue = _.find(facultyOptions, (d) => d.label == currentFaculty) || null;
 
         const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
-        const randomTooltipId2 = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
 
         return (
             <div className='filter-panel faculty-filter'>
@@ -88,17 +87,8 @@ export default class FacultyFilterPanel extends Component {
                     </span>}
 
                     <div className='text-xs-left button-box'>
-                        <button type="submit" className="filter-button btn btn-primary-outline" onClick={onSubmit}>
+                        <button type="submit" className="filter-button btn btn-primary-outline" onClick={onSubmit} title={infoTooltipReference.facultyDevlopment.getRecords}>
                             GET RECORDS
-                            <a
-                                data-tip="React-tooltip"
-                                data-for={randomTooltipId}
-                            >
-                                <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
-                            </a>
-                            <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                                <p>{infoTooltipReference.facultyDevlopment.getRecords}</p>
-                            </ReactTooltip>
                         </button>
                     </div>
 
@@ -108,11 +98,11 @@ export default class FacultyFilterPanel extends Component {
                         <label className='filter-label'>records</label>
                         <a
                             data-tip="React-tooltip"
-                            data-for={randomTooltipId2}
+                            data-for={randomTooltipId}
                         >
                             <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
                         </a>
-                        <ReactTooltip id={randomTooltipId2} place="left" type="dark" effect="float">
+                        <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
                             <p>{infoTooltipReference.facultyDevlopment.filterOutFacultyWithMinimumRecords}</p>
                         </ReactTooltip>
                         <Slider min={0} max={25} step={1} value={sliderValue} onChange={onSliderChange} />
