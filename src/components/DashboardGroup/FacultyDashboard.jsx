@@ -10,6 +10,7 @@ import {
 } from '../';
 import Loading from 'react-loading';
 import processFacultyRecords from '../../utils/processFacultyRecords';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 export default class FacultyDashboard extends Component {
     constructor(props) {
@@ -226,11 +227,20 @@ export default class FacultyDashboard extends Component {
                                 currentFacultyRecords={currentFacultyRecords} />
 
                         </div>
-                        <button id='print-report' className="btn btn-primary print-button partaway" onClick={this.onPrintClick}>
+                        <button
+                            id='print-report' className="btn btn-primary print-button partaway"
+                            onClick={this.onPrintClick}
+                            title={infoTooltipReference.facultyDevlopment.reportAndCondensedReport}
+                        >
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Report</span>
                         </button>
-                        <button id='print-report-condensed' className="btn btn-primary print-button" onClick={this.onPrintClick}>
+                        <button
+                            id='print-report-condensed'
+                            className="btn btn-primary print-button"
+                            onClick={this.onPrintClick}
+                            title={infoTooltipReference.facultyDevlopment.reportAndCondensedReport}
+                        >
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Condensed Report</span>
                         </button>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
 import ReactTooltip from 'react-tooltip';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 export default class FacultyGraph extends Component {
     constructor(props) {
@@ -144,7 +145,7 @@ export default class FacultyGraph extends Component {
 
         return (<div className={'faculty-graph-box m-r m-b ' + className}>
             <h3 className="text-left m-b">
-                {title}<b className='title-append'>{titleValue}{(dateFilterActive) ? ' Overall - ' + secondTitleValue + ' Period' : ''}</b>
+                {title}
                 <a
                     data-tip="React-tooltip"
                     data-for={randomTooltipId}
@@ -152,9 +153,9 @@ export default class FacultyGraph extends Component {
                     <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
                 </a>
                 <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                    <h1>{title}</h1>
-                    <h3>This is a placeholder</h3>
+                    <p>{this.getTooltipText(title)}</p>
                 </ReactTooltip>
+                <b className='title-append'>{titleValue}{(dateFilterActive) ? ' Overall - ' + secondTitleValue + ' Period' : ''}</b>
             </h3>
             <svg className='supervisor-line-chart' width={width} height={height} >
                 <path d={axisTickLines} fill="none" stroke="#564d4d4d" strokeWidth="2px"></path>
@@ -165,5 +166,18 @@ export default class FacultyGraph extends Component {
             </svg >
         </div>);
 
+    }
+
+    getTooltipText(title) {
+        switch (title) {
+            case 'Total EPAs Observed ':
+                return infoTooltipReference.facultyDevlopment.totalEPAsObserved;
+            case 'EPA Expiry Rate ':
+                return infoTooltipReference.facultyDevlopment.EPAExpiryRate;
+            case 'Average Entrustment Score ':
+                return infoTooltipReference.facultyDevlopment.averageEntrustmentScore;
+            case 'Average Words Per Comment ':
+                return infoTooltipReference.facultyDevlopment.averageWordsPerComment;
+        }
     }
 }
