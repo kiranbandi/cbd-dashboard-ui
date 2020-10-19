@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Bar } from 'react-chartjs';
 import ReactSelect from 'react-select';
 import ReactTooltip from 'react-tooltip';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 export default class RotationSpecificEPA extends Component {
 
@@ -94,8 +95,7 @@ export default class RotationSpecificEPA extends Component {
                             <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
                         </a>
                         <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                            <h1>Rotation Specific EPA Distribution</h1>
-                            <h3>This is a placeholder</h3>
+                            <p>{infoTooltipReference.programEvaluation.rotationSpecificEPADistribution}</p>
                         </ReactTooltip>
                     </h3>
                     <div className="epa-select m-a text-left">
