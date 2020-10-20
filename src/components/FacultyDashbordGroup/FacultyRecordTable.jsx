@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactTable from 'react-table';
 import { customFilter } from '../../utils/genericUtility';
+import ReactTooltip from 'react-tooltip';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 const columns = [{
     Header: 'Date',
@@ -36,6 +38,8 @@ const columns = [{
 }];
 
 
+const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
+
 export default (props) => {
 
     const { currentFacultyRecords = [], currentFaculty = 'ALL', width } = props;
@@ -66,7 +70,18 @@ export default (props) => {
 
     return <div className='table-box' style={{ width: width }}>
         {currentFacultyRecords.length > 0 &&
-            [<h3 key='faculty-table-title'>Summary of EPAs by <span className='text-capitalize'>{currentFaculty} </span></h3>,
+            [<h3 key='faculty-table-title'>
+                Summary of EPAs by <span className='text-capitalize'>{currentFaculty} </span>
+                <a
+                    data-tip="React-tooltip"
+                    data-for={randomTooltipId}
+                >
+                    <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
+                </a>
+                <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
+                    <p>{infoTooltipReference.facultyDevlopment.summaryOfEPAsByFacultyName}</p>
+                </ReactTooltip>
+            </h3>,
             <ReactTable
                 key='faculty-table'
                 data={innerRecords}

@@ -4,9 +4,10 @@ import { bindActionCreators } from 'redux';
 import { setActiveDashboard } from '../redux/actions/actions';
 import {
     ResidentDashboard, ProgramDashboard,
-    FacultyDashboard, Modal,ChecklistModal,
+    FacultyDashboard, Modal, ChecklistModal,
     NormativeDashboard, DownloadDashboard
 } from '../components';
+import infoTooltipReference from '../utils/infoTooltipReference';
 
 class DashboardRoot extends Component {
 
@@ -46,15 +47,15 @@ class DashboardRoot extends Component {
                         <div className="hr-divider nav-pill-container-dashboard">
                             <ul className="nav nav-pills hr-divider-content hr-divider-nav">
                                 <li className={activeDashboard == 'resident' ? 'active' : ''}>
-                                    <a id='resident-tab' onClick={this.onTabClick} >RESIDENT METRICS</a>
+                                    <a id='resident-tab' onClick={this.onTabClick}  title={infoTooltipReference.residentMetrics.main}>RESIDENT METRICS</a>
                                 </li>
                                 <li className={activeDashboard == 'normative' ? 'active' : ''}>
-                                    <a id='normative-tab' onClick={this.onTabClick} >NORMATIVE ASSESSMENT</a>
+                                    <a id='normative-tab' onClick={this.onTabClick} title={infoTooltipReference.normativeAssessment.main}>NORMATIVE ASSESSMENT</a>
                                 </li>
                                 <li className={activeDashboard == 'supervisor' ? 'active' : ''}>
-                                    <a id='supervisor-tab' onClick={this.onTabClick}>FACULTY DEVELOPMENT</a>
+                                    <a id='supervisor-tab' onClick={this.onTabClick} title={infoTooltipReference.facultyDevlopment.main}>FACULTY DEVELOPMENT</a>
                                 </li>
-                                <li className={activeDashboard == 'program' ? 'active' : ''}>
+                                <li className={activeDashboard == 'program' ? 'active' : ''} title={infoTooltipReference.programEvaluation.main}>
                                     <a id='program-tab' onClick={this.onTabClick}>PROGRAM EVALUATION</a>
                                 </li>
                                 <li className={activeDashboard == 'table' ? 'active' : ''}>

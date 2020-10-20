@@ -4,6 +4,7 @@ import {
     Tooltip, ReferenceLine, Legend
 } from 'recharts';
 import ReactTooltip from 'react-tooltip';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 
 export default class ProgramCountPlot extends Component {
@@ -31,8 +32,7 @@ export default class ProgramCountPlot extends Component {
                             <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
                         </a>
                         <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                            <h1>EPA Feedback Word Count</h1>
-                            <h3>This is a placeholder</h3>
+                            <p>{infoTooltipReference.comparePrograms.EPAFeedbackWordCount}</p>
                         </ReactTooltip>
                     </h4>
                 </div>

@@ -7,6 +7,8 @@ import moment from 'moment';
 import TrackTrails from '../GraphPanelGroup/TrackTrails';
 import { showTooltip } from '../../../redux/actions/actions';
 import { STAGES_LIST } from '../../../utils/programInfo';
+import ReactTooltip from 'react-tooltip';
+import infoTooltipReference from '../../../utils/infoTooltipReference';
 
 const optionsList = ['Accelerated', 'As Expected', 'Not as Expected', 'Not Progressing', 'Inactive'];
 
@@ -187,11 +189,23 @@ class FeedbackBlock extends Component {
             </text>
         })
 
+        const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
 
         return (
             <div className='feedback-block pullto-left' >
                 <div className="hr-divider">
-                    <h4 className="hr-divider-content"> Competence Committee Feedback and Resident Progress </h4>
+                    <h4 className="hr-divider-content">
+                        Competence Committee Feedback and Resident Progress
+                    <a
+                            data-tip="React-tooltip"
+                            data-for={randomTooltipId}
+                        >
+                            <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
+                        </a>
+                        <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
+                            <p>{infoTooltipReference.residentMetrics.competenceCommitteeFeedbackAndResidentProgress}</p>
+                        </ReactTooltip>
+                    </h4>
                 </div>
                 <svg height={innerHeight} width={width} className='recent-svg' >
                     {ccFeedbackList.length <= 0 ?

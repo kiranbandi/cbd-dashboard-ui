@@ -3,6 +3,8 @@ import moment from 'moment';
 import ReactSelect from 'react-select';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import ReactTooltip from 'react-tooltip';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 const defaultDateValue = moment().format('MM/DD/YYYY');
 
@@ -25,6 +27,8 @@ export default class FacultyFilterPanel extends Component {
         // Process faculty names so they match the react select format
         const facultyOptions = _.map(facultyList, (d) => ({ 'label': d.label, 'value': d.label }));
         const currentFacultyValue = _.find(facultyOptions, (d) => d.label == currentFaculty) || null;
+
+        const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
 
         return (
             <div className='filter-panel faculty-filter'>
@@ -83,7 +87,7 @@ export default class FacultyFilterPanel extends Component {
                     </span>}
 
                     <div className='text-xs-left button-box'>
-                        <button type="submit" className="filter-button btn btn-primary-outline" onClick={onSubmit}>
+                        <button type="submit" className="filter-button btn btn-primary-outline" onClick={onSubmit} title={infoTooltipReference.facultyDevlopment.getRecords}>
                             GET RECORDS
                         </button>
                     </div>
@@ -92,6 +96,15 @@ export default class FacultyFilterPanel extends Component {
                         <label className='filter-label'>Filter out Faculty with &lt; </label>
                         <h2>{sliderValue}</h2>
                         <label className='filter-label'>records</label>
+                        <a
+                            data-tip="React-tooltip"
+                            data-for={randomTooltipId}
+                        >
+                            <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
+                        </a>
+                        <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
+                            <p>{infoTooltipReference.facultyDevlopment.filterOutFacultyWithMinimumRecords}</p>
+                        </ReactTooltip>
                         <Slider min={0} max={25} step={1} value={sliderValue} onChange={onSliderChange} />
                     </div>
                 </div>
