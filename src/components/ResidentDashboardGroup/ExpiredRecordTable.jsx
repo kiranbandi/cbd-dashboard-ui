@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import { customFilter } from '../../utils/genericUtility';
-import ReactTooltip from 'react-tooltip';
+import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 
 const columns = [{
@@ -40,8 +40,6 @@ class ExpiredResidentData extends Component {
 
         let { expiredResidentData = [], smallScreen = false } = this.props;
 
-        const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
-
         return (
             <div className='expired-box' >
                 {expiredResidentData.length > 0 && !smallScreen &&
@@ -49,15 +47,7 @@ class ExpiredResidentData extends Component {
                         <h4 onClick={this.toggleVisibility} className="text-left">
                             {this.state.isVisible ? <span className="icon icon-chevron-down"></span> : <span className="icon icon-chevron-right"></span>}
                             View Expired EPAs
-                            <a
-                                data-tip="React-tooltip"
-                                data-for={randomTooltipId}
-                            >
-                                <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
-                            </a>
-                            <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                                <p>{infoTooltipReference.residentMetrics.viewExpiredEPAs}</p>
-                            </ReactTooltip>
+                            <InfoTip info={infoTooltipReference.residentMetrics.viewExpiredEPAs} />
                         </h4>
                         <div className={'table-box ' + (this.state.isVisible ? '' : 'hidden-table-box')}>
                             <ReactTable

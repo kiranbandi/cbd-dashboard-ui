@@ -20,6 +20,7 @@
         margin: 100px auto;
     }
     .year-selection-box {
+        z-index: 100;
         display: inline-block;
         .react-select-root {
             width: 175px;

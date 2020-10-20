@@ -2,7 +2,7 @@ import React from 'react';
 import { Line } from 'react-chartjs';
 import moment from 'moment';
 import * as d3 from 'd3';
-import ReactTooltip from 'react-tooltip';
+import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 
 const monthList = ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun"];
@@ -76,8 +76,6 @@ export default (props) => {
         scaleBeginAtZero: true
     };
 
-    const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
-
     return (
         <div className='col-sm-6 epa-specific printable-content'>
             <div
@@ -87,17 +85,8 @@ export default (props) => {
                     className='text-left m-b'
                     style={printModeON ? { color: 'black' } : undefined}>
                     EPA Monthly Distribution
-                    <a
-                        data-tip="React-tooltip"
-                        data-for={randomTooltipId}
-                    >
-                        <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
-                    </a>
-                    <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                        <p>{infoTooltipReference.programEvaluation.EPAMonthlyDistribution}</p>
-                    </ReactTooltip>
+                    <InfoTip info={infoTooltipReference.programEvaluation.EPAMonthlyDistribution} />
                 </h3>
-
                 <div className='col-xs-12'>
                     <Line
                         options={lineOptions}

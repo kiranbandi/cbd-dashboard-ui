@@ -1,7 +1,7 @@
 import React from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, } from 'recharts';
 import infoTooltipReference from '../../utils/infoTooltipReference';
-import ReactTooltip from 'react-tooltip';
+import { InfoTip } from '../';
 
 export default (props) => {
 
@@ -56,17 +56,10 @@ export default (props) => {
         };
     });
 
-
-
     return <div className='faculty-radar-chart'>
         <div className="hr-divider">
             <h4 className="hr-divider-content"> EPA Distribution </h4>
-            <a data-tip="React-tooltip" data-for={randomTooltipId}>
-                <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
-            </a>
-            <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                <p>{infoTooltipReference.facultyDevlopment.EPADistribution}</p>
-            </ReactTooltip>
+            <InfoTip info={infoTooltipReference.facultyDevlopment.EPADistribution} />
         </div>
         {overallepaGroupSummed.length > 0 &&
             <RadarChart cx={radarRadius + 35} cy={radarRadius + 25}

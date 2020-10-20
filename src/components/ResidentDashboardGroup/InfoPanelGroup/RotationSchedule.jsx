@@ -7,7 +7,7 @@ import { ROTATION_SCHEDULE_MAP, CARDS_LIST } from '../../../utils/programInfo';
 import { setInfoCard, updateResidentData, setResidentFilter } from '../../../redux/actions/actions';
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import ReactTooltip from 'react-tooltip';
+import { InfoTip } from '../../';
 import infoTooltipReference from '../../../utils/infoTooltipReference';
 
 
@@ -135,8 +135,6 @@ class RotatioSchedule extends Component {
         const sliderDatesLabel = sliderValue[1] - sliderValue[0] >= 1 ?
             currentScheduleDates[sliderValue[0]] + ' to ' + currentScheduleDates[sliderValue[1]] : '(Drag slider or click points to set range)';
 
-        const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
-
         return (
             <div className='schedule-box text-center hidden-xs'>
                 <div className="hr-divider">
@@ -196,15 +194,7 @@ class RotatioSchedule extends Component {
                 <div style={{ 'width': widthAvailable + 'px' }}
                     className='slider-container-resident'>
                     <label className='filter-label'>Filter EPAs by Rotation Schedule </label>
-                    <a
-                        data-tip="React-tooltip"
-                        data-for={randomTooltipId}
-                    >
-                        <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
-                    </a>
-                    <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                        <p>{infoTooltipReference.residentMetrics.calendarSlider}</p>
-                    </ReactTooltip>
+                    <InfoTip info={infoTooltipReference.residentMetrics.calendarSlider} />
                     <h2>{sliderDatesLabel}</h2>
                     <Range dots min={0} max={currentSchedule.length} step={1} defaultValue={[0, 0]} allowCross={false} onAfterChange={this.onRangeChange} />
                 </div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
-import ReactTooltip from 'react-tooltip';
+import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 
 const fivePointColorScale = ["#e15759", "#f28e2c", "#76b7b2", "#4e79a7", "#59a14f"];
@@ -21,8 +21,6 @@ export default class ProgramScoreDist extends Component {
             return dataPoint;
         });
 
-        const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
-
         return (
             <div className='program-part-container'>
                 <div className="hr-divider">
@@ -30,15 +28,7 @@ export default class ProgramScoreDist extends Component {
                         className="hr-divider-content"
                         style={printModeON ? { background: 'white', color: 'black' } : undefined}>
                         EPA Rating Distribution
-                        <a
-                            data-tip="React-tooltip"
-                            data-for={randomTooltipId}
-                        >
-                            <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
-                        </a>
-                        <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                            <p>{infoTooltipReference.comparePrograms.EPARatingDistribution}</p>
-                        </ReactTooltip>
+                        <InfoTip info={infoTooltipReference.comparePrograms.EPARatingDistribution} />
                     </h4>
                 </div>
                 <div className='chart-container'>

@@ -13,6 +13,7 @@
         }
     }
     .year-selection-box {
+        z-index: 100;
         display: inline-block;
         .react-select-root {
             width: 200px;
