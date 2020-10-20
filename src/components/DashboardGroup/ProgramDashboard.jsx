@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { getAllData, getResidentList } from '../../utils/requestServer';
 import Loading from 'react-loading';
 import { ROTATION_SCHEDULE_MAP } from '../../utils/programInfo';
+import ProgramAllYearsSummary from '../ProgramEvaluationGroup/ProgramAllYearsSummary';
 import ProgramBasePanel from '../ProgramEvaluationGroup/ProgramBasePanel';
 import EPACompletionDistribution from '../ProgramEvaluationGroup/EPACompletionDistribution';
 import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation';
@@ -96,11 +97,16 @@ export default class ProgramDashboard extends Component {
                             </div>}
                         {allRecords.length > 0 ?
                             <div className='row'>
+                                <ProgramAllYearsSummary
+                                    width={fullWidth}
+                                    allRecords={allRecords}
+                                    programInfo={programInfo}
+                                    possibleAcademicYears={_.reverse(possibleAcademicYears.slice(0,-1))}
+                                    printModeON={printModeON} />
                                 <ProgramBasePanel
                                     width={fullWidth - 50}
                                     allRecords={allRecords}
                                     programInfo={programInfo}
-                                    residentList={residentList}
                                     possibleAcademicYears={possibleAcademicYears}
                                     printModeON={printModeON} />
                                 <EPACompletionDistribution

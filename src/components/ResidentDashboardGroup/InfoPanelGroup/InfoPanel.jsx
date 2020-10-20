@@ -46,8 +46,7 @@ class InfoPanel extends Component {
                                 id='checklist-trigger-btn'
                                 onClick={this.props.actions.toggleChecklistVisbility}
                                 className='view-checklist-button btn btn-primary-outline'
-                                title={infoTooltipReference.residentMetrics.checklist}
-                            >
+                                title={infoTooltipReference.residentMetrics.checklist}>
                                 <span className="icon icon-new-message"></span>
                                 <span>Checklist</span>
                             </button>}

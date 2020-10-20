@@ -96,7 +96,7 @@ export default class FacultyFilterPanel extends Component {
                         <h2>{sliderValue}</h2>
                         <label className='filter-label'>records</label>
                         <InfoTip info={infoTooltipReference.facultyDevlopment.filterOutFacultyWithMinimumRecords} />
-                        <Slider min={0} max={25} step={1} value={sliderValue} onChange={onSliderChange} />
+                        <Slider min={0} max={25} step={1} defaultValue={sliderValue} onAfterChange={onSliderChange} />
                     </div>
                 </div>
 
