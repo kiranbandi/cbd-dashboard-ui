@@ -50,7 +50,7 @@ export default class ProgramBasePanel extends Component {
                         {'# Residents with Records'}
                     </h3>
                     <div className='chart-container'>
-                        <BarChart width={width / 2} height={300}
+                        <BarChart width={width / 2} height={250}
                             data={custom_data}
                             layout="vertical"
                             barGap={0}
@@ -74,7 +74,7 @@ export default class ProgramBasePanel extends Component {
                         {'Total EPAs Observed'}
                     </h3>
                     <div className='chart-container'>
-                        <BarChart width={width / 2} height={300}
+                        <BarChart width={width / 2} height={250}
                             data={custom_data}
                             layout="vertical"
                             barGap={0}
@@ -98,7 +98,7 @@ export default class ProgramBasePanel extends Component {
                         {'Percentage of EPAs Expired'}
                     </h3>
                     <div className='chart-container'>
-                        <BarChart width={width / 2} height={300}
+                        <BarChart width={width / 2} height={250}
                             data={custom_data}
                             layout="vertical"
                             barGap={0}
@@ -122,7 +122,7 @@ export default class ProgramBasePanel extends Component {
                         {'Average Words Per Comment'}
                     </h3>
                     <div className='chart-container'>
-                        <BarChart width={width / 2} height={300}
+                        <BarChart width={width / 2} height={250}
                             data={custom_data}
                             layout="vertical"
                             barGap={0}
