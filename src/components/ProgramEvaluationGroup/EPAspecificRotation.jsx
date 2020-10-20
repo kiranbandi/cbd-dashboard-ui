@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs';
 import ReactSelect from 'react-select';
-import ReactTooltip from 'react-tooltip';
+import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 
 export default class EPASpecRotation extends Component {
@@ -71,23 +71,13 @@ export default class EPASpecRotation extends Component {
         let lineOptions = {
             scaleBeginAtZero: true
         };
-
-        const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
-
+        
         return (
             <div className='col-sm-6 col-xs-12 epa-specific'>
                 <div className='m-a program-vis-box row'>
                     <h3 className='text-left m-b'>
                         EPA Specific Rotation Distribution
-                        <a
-                            data-tip="React-tooltip"
-                            data-for={randomTooltipId}
-                        >
-                            <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
-                        </a>
-                        <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                            <p>{infoTooltipReference.programEvaluation.EPASpecificRotationDistribution}</p>
-                        </ReactTooltip>
+                        <InfoTip info={infoTooltipReference.programEvaluation.EPASpecificRotationDistribution} />
                     </h3>
                     <div className="epa-select m-a text-left">
                         <span className='inner-span'>Select EPA</span>

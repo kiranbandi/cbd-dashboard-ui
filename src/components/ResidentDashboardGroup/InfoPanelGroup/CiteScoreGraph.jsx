@@ -1,6 +1,6 @@
 import React from 'react';
 import { line, curveCardinal, scaleLinear } from 'd3';
-import ReactTooltip from 'react-tooltip';
+import { InfoTip } from '../../';
 import infoTooltipReference from '../../../utils/infoTooltipReference';
 
 export default (props) => {
@@ -65,23 +65,12 @@ export default (props) => {
         </text>
     })
 
-
-    const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
-
     return (
         <div className='cite-exam-score-container'>
             <div className="hr-divider">
                 <h4 className="hr-divider-content">
-                    Written Exam Scores
-                    <a
-                        data-tip="React-tooltip"
-                        data-for={randomTooltipId}
-                    >
-                        <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
-                    </a>
-                    <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                        <p>{infoTooltipReference.residentMetrics.writtenExamScores}</p>
-                    </ReactTooltip>
+                    Written Exam Scores 
+                    <InfoTip info={infoTooltipReference.residentMetrics.writtenExamScores} />
                 </h4>
             </div>
             <svg height={innerHeight} width={width} className='cite-svg' >

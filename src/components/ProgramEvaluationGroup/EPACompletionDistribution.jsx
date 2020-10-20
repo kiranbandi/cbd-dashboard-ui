@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactSelect from 'react-select';
 import moment from 'moment';
 import * as d3 from 'd3';
-import ReactTooltip from 'react-tooltip';
+import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 
 export default class ProgramDashboard extends Component {
@@ -153,8 +153,6 @@ export default class ProgramDashboard extends Component {
             }}
         >{d.epa}</text>);
 
-        const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
-
         return (
             <div className='container-fluid text-center m-t m-l-md m-r-md printable-content'>
                 <div
@@ -165,15 +163,7 @@ export default class ProgramDashboard extends Component {
                             className='text-left m-a-0 pull-left'
                             style={printModeON ? { color: 'black' } : undefined}>
                             EPA Completion Distribution
-                            <a
-                                data-tip="React-tooltip"
-                                data-for={randomTooltipId}
-                            >
-                                <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
-                            </a>
-                            <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                                <p>{infoTooltipReference.programEvaluation.EPACompletionDistribution}</p>
-                            </ReactTooltip>
+                            <InfoTip info={infoTooltipReference.programEvaluation.EPACompletionDistribution} />
                         </h3>
                         <div className='year-selection-box pull-right'>
                             <h2 className='header'>Academic Year: </h2>

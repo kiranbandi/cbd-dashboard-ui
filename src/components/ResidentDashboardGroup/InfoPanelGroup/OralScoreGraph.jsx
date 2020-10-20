@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { showTooltip } from '../../../redux/actions/actions';
 import { line, curveCardinal, scaleLinear } from 'd3';
-import ReactTooltip from 'react-tooltip';
+import { InfoTip } from '../../';
 import infoTooltipReference from '../../../utils/infoTooltipReference';
 
 class OralScoreGraph extends Component {
@@ -101,24 +101,14 @@ class OralScoreGraph extends Component {
                 x={d.x - 8} y={d.y + 4}>
                 {d.value}
             </text>
-        })
-
-        const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
+        });
 
         return (
             <div className='cite-exam-score-container pullto-left'>
                 <div className="hr-divider">
                     <h4 className="hr-divider-content">
                         Oral Exam Scores
-                        <a
-                            data-tip="React-tooltip"
-                            data-for={randomTooltipId}
-                        >
-                            <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
-                        </a>
-                        <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                            <p>{infoTooltipReference.residentMetrics.oralExamScores}</p>
-                        </ReactTooltip>
+                        <InfoTip info={infoTooltipReference.residentMetrics.oralExamScores} />
                     </h4>
                 </div>
                 <div className='recent-range-selection'>

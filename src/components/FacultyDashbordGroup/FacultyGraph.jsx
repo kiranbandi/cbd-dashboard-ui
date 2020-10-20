@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
-import ReactTooltip from 'react-tooltip';
 import infoTooltipReference from '../../utils/infoTooltipReference';
+import { InfoTip } from '../';
 
 export default class FacultyGraph extends Component {
     constructor(props) {
@@ -141,20 +141,10 @@ export default class FacultyGraph extends Component {
             </rect>
         });
 
-        const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
-
         return (<div className={'faculty-graph-box m-r m-b ' + className}>
             <h3 className="text-left m-b">
                 {title}
-                <a
-                    data-tip="React-tooltip"
-                    data-for={randomTooltipId}
-                >
-                    <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
-                </a>
-                <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                    <p>{this.getTooltipText(title)}</p>
-                </ReactTooltip>
+                <InfoTip info={this.getTooltipText(title)} />
                 <b className='title-append'>{titleValue}{(dateFilterActive) ? ' Overall - ' + secondTitleValue + ' Period' : ''}</b>
             </h3>
             <svg className='supervisor-line-chart' width={width} height={height} >

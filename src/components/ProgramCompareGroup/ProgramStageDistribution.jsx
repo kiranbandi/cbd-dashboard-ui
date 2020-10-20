@@ -6,7 +6,7 @@ import {
 } from 'recharts';
 
 import _ from 'lodash';
-import ReactTooltip from 'react-tooltip';
+import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 
 const capitalizeStr = (str, lower = false) => (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, match => match.toUpperCase());
@@ -28,8 +28,6 @@ export default class ProgramCountPlot extends Component {
             return dataPoint;
         });
 
-        const randomTooltipId = `info-tooltip-${(Math.random() * 10000).toFixed(0)}`;
-
         return (
             <div className='program-part-container'>
                 <div className="hr-divider">
@@ -37,15 +35,7 @@ export default class ProgramCountPlot extends Component {
                         className="hr-divider-content"
                         style={printModeON ? { background: 'white', color: 'black' } : undefined}>
                         Resident Training Stage Distribution
-                        <a
-                            data-tip="React-tooltip"
-                            data-for={randomTooltipId}
-                        >
-                            <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
-                        </a>
-                        <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                            <p>{infoTooltipReference.comparePrograms.ResidentTrainingStageDistribution}</p>
-                        </ReactTooltip>
+                        <InfoTip info={infoTooltipReference.comparePrograms.ResidentTrainingStageDistribution}/>
                     </h4>
                 </div>
                 <div className='chart-container'>
