@@ -1,4 +1,33 @@
 .dashboard-root-program {
+    .yearall-summary-wrapper {
+        text-align: center;
+        background: #1a1c22;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        .hr-divider {
+            z-index: 2;
+            margin: 0px 10%;
+            .hr-divider-content {
+                background: #1a1c22;
+                font-size: 1.65em;
+            }
+        }
+        .program-part-container {
+            display: inline-block;
+            background: #25282f;
+            margin: 25px;
+            border-radius: 10px;
+            text-align: left;
+            .part-year-title {
+                color: white;
+                margin-top: 25px;
+                margin-left: 15px;
+            }
+            .recharts-cartesian-axis-tick-value {
+                fill: #cecece !important;
+            }
+        }
+    }
     .program-base-panel {
         background: #1a1c22;
         padding: 25px 20px 20px 20px;
@@ -13,6 +42,7 @@
     }
     .faculty-MicroStatCard-group {
         margin-bottom: 20px;
+        z-index: 2;
         .hr-divider {
             margin: 20px 30px 5px 30px !important;
         }

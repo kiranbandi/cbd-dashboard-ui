@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import processSingleProgramRecords from '../../utils/processSingleProgramRecords';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
-
+import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
+import { InfoTip } from '../';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 export default class ProgramBasePanel extends Component {
 
@@ -34,15 +35,22 @@ export default class ProgramBasePanel extends Component {
             });
 
         return (
-            <div>
-                <div className='program-part-container'>
+            <div className='yearall-summary-wrapper'>
+                <div className="hr-divider">
                     <h4
                         className="hr-divider-content"
+                        style={printModeON ? { background: 'white', color: 'black' } : undefined}>
+                        Overall Acquisition Metrics By Year
+                        <InfoTip info={infoTooltipReference.programEvaluation.overallAcuisitionMetricsYears} />
+                    </h4>
+                </div>
+                <div className='program-part-container'>
+                    <h3 className="part-year-title"
                         style={printModeON ? { background: 'white', color: 'black' } : undefined}>
                         {'# Residents with Records'}
-                    </h4>
+                    </h3>
                     <div className='chart-container'>
-                        <BarChart width={width / 2} height={350}
+                        <BarChart width={width / 2} height={300}
                             data={custom_data}
                             layout="vertical"
                             barGap={0}
@@ -55,18 +63,18 @@ export default class ProgramBasePanel extends Component {
                                 type="category" axisLine={false} dataKey="year" />
                             <Tooltip labelStyle={{ 'color': 'black' }}
                                 wrapperStyle={{ 'fontWeight': 'bold' }} />
-                            <Bar dataKey="Residents with Records" fill="#82ca9d" />
+                            <Bar dataKey="Residents with Records" fill="#43b98e" />
                         </BarChart>
                     </div>
                 </div>
                 <div className='program-part-container'>
-                    <h4
-                        className="hr-divider-content"
+                    <h3
+                        className="part-year-title"
                         style={printModeON ? { background: 'white', color: 'black' } : undefined}>
                         {'Total EPAs Observed'}
-                    </h4>
+                    </h3>
                     <div className='chart-container'>
-                        <BarChart width={width / 2} height={350}
+                        <BarChart width={width / 2} height={300}
                             data={custom_data}
                             layout="vertical"
                             barGap={0}
@@ -79,18 +87,18 @@ export default class ProgramBasePanel extends Component {
                                 type="category" axisLine={false} dataKey="year" />
                             <Tooltip labelStyle={{ 'color': 'black' }}
                                 wrapperStyle={{ 'fontWeight': 'bold' }} />
-                            <Bar dataKey="Total EPAs Observed" fill="#82ca9d" />
+                            <Bar dataKey="Total EPAs Observed" fill="#43b98e" />
                         </BarChart>
                     </div>
                 </div>
                 <div className='program-part-container'>
-                    <h4
-                        className="hr-divider-content"
+                    <h3
+                        className="part-year-title"
                         style={printModeON ? { background: 'white', color: 'black' } : undefined}>
                         {'Percentage of EPAs Expired'}
-                    </h4>
+                    </h3>
                     <div className='chart-container'>
-                        <BarChart width={width / 2} height={350}
+                        <BarChart width={width / 2} height={300}
                             data={custom_data}
                             layout="vertical"
                             barGap={0}
@@ -103,18 +111,18 @@ export default class ProgramBasePanel extends Component {
                                 type="category" axisLine={false} dataKey="year" />
                             <Tooltip labelStyle={{ 'color': 'black' }}
                                 wrapperStyle={{ 'fontWeight': 'bold' }} />
-                            <Bar dataKey="Percentage of EPAs Expired" fill="#82ca9d" />
+                            <Bar dataKey="Percentage of EPAs Expired" fill="#43b98e" />
                         </BarChart>
                     </div>
                 </div>
                 <div className='program-part-container'>
-                    <h4
-                        className="hr-divider-content"
+                    <h3
+                        className="part-year-title"
                         style={printModeON ? { background: 'white', color: 'black' } : undefined}>
                         {'Average Words Per Comment'}
-                    </h4>
+                    </h3>
                     <div className='chart-container'>
-                        <BarChart width={width / 2} height={350}
+                        <BarChart width={width / 2} height={300}
                             data={custom_data}
                             layout="vertical"
                             barGap={0}
@@ -127,7 +135,7 @@ export default class ProgramBasePanel extends Component {
                                 type="category" axisLine={false} dataKey="year" />
                             <Tooltip labelStyle={{ 'color': 'black' }}
                                 wrapperStyle={{ 'fontWeight': 'bold' }} />
-                            <Bar dataKey="Average Words Per Comment" fill="#82ca9d" />
+                            <Bar dataKey="Average Words Per Comment" fill="#43b98e" />
                         </BarChart>
                     </div>
                 </div>
