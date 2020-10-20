@@ -46,15 +46,30 @@ export default (props) => {
 
 
     let newData = _.map(epaList, (epa, epaIndex) => {
-
         let trainingStageMax = trainingStageGroupMax[epa.label[0]];
-
         return {
             'label': epa.label,
             'overall': (+overallepaGroupSummed[epaIndex] / trainingStageMax.epaCount) / (+epa.max / trainingStageMax.max),
             'currentFaculty': ((currentFacultyepaGroupList[epaIndex] || 0) / trainingStageMax.currentFacultyCount) / (+epa.max / trainingStageMax.max)
         };
     });
+
+    // cap the values to a maximum of 2 or in this case 200%
+    newData = _.map(newData, (d) => {
+        if (isNaN(d.overall)) {
+            d.overall = 0
+        }
+        else {
+            d.overall = d.overall > 2 ? 2 : d.overall;
+        }
+        if (isNaN(d.currentFaculty)) {
+            d.currentFaculty = 0
+        }
+        else {
+            d.currentFaculty = d.currentFaculty > 2 ? 2 : d.currentFaculty;
+        }
+        return d;
+    })
 
     return <div className='faculty-radar-chart'>
         <div className="hr-divider">
@@ -65,11 +80,13 @@ export default (props) => {
             <RadarChart cx={radarRadius + 35} cy={radarRadius + 25}
                 outerRadius={radarRadius}
                 width={radarChartWidth} height={radarChartWidth} data={newData}>
-                <PolarGrid />
+                <PolarGrid strokeOpacity={0.1} strokeWidth={0.5} />
                 <PolarAngleAxis dataKey="label" />
-                <Radar name="Overall" dataKey="overall" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+                <Radar name="Overall" dataKey="overall"
+                    stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
                 {currentFacultyRecords.length > 0
-                    && <Radar name="CurrentFaculty" dataKey="currentFaculty" stroke="#1ca8dd" fill="#1ca8dd" fillOpacity={0.6} />}
+                    && <Radar name="CurrentFaculty" dataKey="currentFaculty"
+                        stroke="#1ca8dd" fill="#1ca8dd" fillOpacity={0.6} />}
             </RadarChart>}
     </div>
 }
