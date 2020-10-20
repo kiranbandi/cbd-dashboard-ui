@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Loading from 'react-loading';
 import { STAGES_LIST } from '../../utils/programInfo';
 import moment from 'moment';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 const defaultDateValue = moment().format('MM/DD/YYYY');
 // create a clone and then Add extra option all to the list
@@ -68,9 +69,9 @@ export default class NormativeFilterPanel extends Component {
                     </span>}
 
                     <div className='text-xs-left button-box'>
-                        <button type="submit" className="filter-button btn btn-primary-outline" onClick={onSubmit}>
+                        <button type="submit" className="filter-button btn btn-primary-outline" onClick={onSubmit} title={infoTooltipReference.normativeAssessment.getRecords}>
                             GET RECORDS
-                        {filterLoaderState && <Loading className='filter-loader' type='spin' height='25px' width='25px' color='white' delay={-1} />}
+                            {filterLoaderState && <Loading className='filter-loader' type='spin' height='25px' width='25px' color='white' delay={-1} />}
                         </button>
                     </div>
                 </div>

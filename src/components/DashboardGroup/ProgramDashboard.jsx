@@ -7,6 +7,7 @@ import EPACompletionDistribution from '../ProgramEvaluationGroup/EPACompletionDi
 import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation';
 import EPAMonthlyRotation from '../ProgramEvaluationGroup/EPAMonthlyRotation';
 import savePagePDF from '../../utils/savePagePDF';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP),
     (d) => ({ 'label': d + "-" + (Number(d) + 1), 'value': d }));
@@ -127,7 +128,12 @@ export default class ProgramDashboard extends Component {
                                 </div>
                             </div>
                             : <h2 className='text-center text-danger m-t-lg'>No program data available currently</h2>}
-                        <button id='print-report' className="btn btn-primary print-button" onClick={this.onPrintClick}>
+                        <button
+                            id='print-report'
+                            className="btn btn-primary print-button"
+                            onClick={this.onPrintClick}
+                            title={infoTooltipReference.programEvaluation.Report}
+                        >
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Report</span>
                         </button>

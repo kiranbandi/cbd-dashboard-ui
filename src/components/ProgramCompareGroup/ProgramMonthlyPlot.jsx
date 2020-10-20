@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs';
 import ReactTooltip from 'react-tooltip';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 const monthList = ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun"];
 
@@ -65,8 +66,7 @@ export default class ProgramMonthyPlot extends Component {
                             <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
                         </a>
                         <ReactTooltip id={randomTooltipId} place="left" type="dark" effect="float">
-                            <h1>Monthly Distribution by Program</h1>
-                            <h3>This is a placeholder</h3>
+                            <p>{infoTooltipReference.comparePrograms.MonthlyDistributionByProgram}</p>
                         </ReactTooltip>
                     </h4>
                 </div>

@@ -9,6 +9,7 @@ import OralScoreGraph from './OralScoreGraph';
 import RecentEPATrend from './RecentEPATrend';
 import FeedbackBlock from './FeedbackBlock';
 import { toggleChecklistVisbility } from '../../../redux/actions/actions';
+import infoTooltipReference from '../../../utils/infoTooltipReference';
 
 class InfoPanel extends Component {
 
@@ -44,7 +45,9 @@ class InfoPanel extends Component {
                             {isChecklistFeatureAvailable && <button
                                 id='checklist-trigger-btn'
                                 onClick={this.props.actions.toggleChecklistVisbility}
-                                className='view-checklist-button btn btn-primary-outline'>
+                                className='view-checklist-button btn btn-primary-outline'
+                                title={infoTooltipReference.residentMetrics.checklist}
+                            >
                                 <span className="icon icon-new-message"></span>
                                 <span>Checklist</span>
                             </button>}
