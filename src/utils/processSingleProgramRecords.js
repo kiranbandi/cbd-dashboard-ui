@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 
-export default function(allRecords = [], academicYear, trainingPhase) {
+export default function(allRecords = [], academicYear, trainingPhase = 'all') {
 
     // remove records that dont have a rotation or a phase tag as  they might be erroneous
     // as also consider only records that lie in that given academic year

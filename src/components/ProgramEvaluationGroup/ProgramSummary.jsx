@@ -17,7 +17,7 @@ export default (props) => {
             <h4
                 className="hr-divider-content"
                 style={printModeON ? { background: 'white', color: 'black' } : undefined}>
-                Overall Acquisition Metrics
+                Overall Acquisition Metrics By Year
                 <InfoTip info={infoTooltipReference.programEvaluation.overallAcuisitionMetrics} />
             </h4>
         </div>
