@@ -8,7 +8,7 @@ export default (props) => {
 
     return <span className='tooltip-wrapper'>
         <a className='tooltip-anchor' data-tip="React-tooltip" data-for={tooltipCustomID}>
-            <img width="20" height="20" src="https://www.flaticon.com/svg/static/icons/svg/189/189664.svg"></img>
+            <span className="icon icon-info-with-circle"></span>
         </a>
         <ReactTooltip
             className='custom-tooltip'
