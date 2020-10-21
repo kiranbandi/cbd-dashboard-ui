@@ -20,12 +20,22 @@ export default function(allRecords = [], academicYear, trainingPhase = 'all') {
         epa_count = recordsInYearAndPhase.length,
         expired_count = epa_count - nonExpiredRecords.length;
 
+    // create a month count so we can identify the months in which epas
+    // are not being filled out 
+    let month_count = {};
+    _.map(recordsInYearAndPhase, (d) => {
+        let monthKey = moment(d.observation_date, 'YYYY-MM-DD').format('MMM');
+        if (month_count.hasOwnProperty(monthKey)) { month_count[monthKey] += 1 } else { month_count[monthKey] = 1 }
+    });
+
+
     return {
         recordsInYearAndPhase,
         'summaryData': {
             resident_count,
             epa_count,
             expired_count,
+            month_count,
             rating_group: _.map([1, 2, 3, 4, 5], (d) => (ratingGroup[d] ? ratingGroup[d].length : 0)),
             expired_epa_percentage: epa_count == 0 ? 0 : Math.round((expired_count / epa_count) * 100),
             entrustment_score: Math.round((_.meanBy(nonExpiredRecords, (dd) => +dd.rating || 0) || 0) * 100) / 100,

@@ -20,8 +20,10 @@
             text-align: left;
             .part-year-title {
                 color: white;
-                margin-top: 25px;
-                margin-left: 15px;
+                margin-top: 15px;
+                margin-left: 25px;
+                font-size: 1.5em;
+                margin-bottom: 0px;
             }
             .recharts-cartesian-axis-tick-value {
                 fill: #cecece !important;
@@ -102,9 +104,17 @@
         background: #1a1c22;
         padding: 20px;
         border-radius: 10px;
+        display: inline-block;
+        margin: 5px;
+        vertical-align: top;
         canvas {
             display: block;
             margin: 0px auto;
+        }
+        .program-vis-box h3 {
+            font-size: 1.5em;
+            margin-top: 0px;
+            margin-top: 2px;
         }
         .error-code {
             min-height: 309px;

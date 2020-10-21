@@ -145,7 +145,6 @@ export default class ProgramDashboard extends Component {
         const epaTexts = epaPercentageList.map((d, i) => <text
             x={scaleX(i) + (itemSize - (0.25 * itemSize)) / 2}
             y={height - margin - Yoffset / 2}
-            fontWeight='bold'
             fill='#a9a1a1'
             key={d.epa}
             style={{
@@ -153,44 +152,41 @@ export default class ProgramDashboard extends Component {
             }}
         >{d.epa}</text>);
 
-        return (
-            <div className='container-fluid text-center m-t m-l-md m-r-md printable-content'>
-                <div
-                    className='program-vis-box row p-a-md'
-                    style={printModeON ? { background: 'white' } : undefined}>
-                    <div>
-                        <h3
-                            className='text-left m-a-0 pull-left'
-                            style={printModeON ? { color: 'black' } : undefined}>
-                            EPA Completion Distribution
+        return (<div
+            className='program-vis-box'
+            style={printModeON ? { background: 'white' } : undefined}>
+            <div>
+                <h3
+                    className='text-left m-a-0 pull-left'
+                    style={printModeON ? { color: 'black' } : undefined}>
+                    EPA Completion Distribution
                             <InfoTip info={infoTooltipReference.programEvaluation.EPACompletionDistribution} />
-                        </h3>
-                        <div className='year-selection-box pull-right'>
-                            <h2 className='header'>Academic Year: </h2>
-                            <div className='react-select-root'>
-                                <ReactSelect
-                                    value={academicYear}
-                                    options={possibleAcademicYears}
-                                    styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
-                                    onChange={(academicYear) => this.setState({ academicYear })} />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='col-xs-12 m-t'>
-                        {filteredRecords.length > 0 ?
-                            <svg width={width} height={350}>
-                                <g>{axisTickLines}</g>
-                                <g>{axisTexts}</g>
-                                <g>{epaTexts}</g>
-                                <g>{bars}</g>
-                            </svg>
-                            : <h3 className='error-code text-left m-b'>No Records</h3>
-                        }
-                        <div className='chart-tooltip' id="chartjs-tooltip-completion-distribution"></div>
+                </h3>
+                <div className='year-selection-box pull-right'>
+                    <h2 className='header'>Academic Year: </h2>
+                    <div className='react-select-root'>
+                        <ReactSelect
+                            value={academicYear}
+                            options={possibleAcademicYears}
+                            styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
+                            onChange={(academicYear) => this.setState({ academicYear })} />
                     </div>
                 </div>
-            </div>);
+            </div>
+
+            <div className='col-xs-12 m-t'>
+                {filteredRecords.length > 0 ?
+                    <svg width={width} height={350}>
+                        <g>{axisTickLines}</g>
+                        <g>{axisTexts}</g>
+                        <g>{epaTexts}</g>
+                        <g>{bars}</g>
+                    </svg>
+                    : <h3 className='error-code text-left m-b'>No Records</h3>
+                }
+                <div className='chart-tooltip' id="chartjs-tooltip-completion-distribution"></div>
+            </div>
+        </div>);
     };
 }
 
