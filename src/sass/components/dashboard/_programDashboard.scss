@@ -106,18 +106,18 @@
         border-radius: 10px;
         display: inline-block;
         margin: 5px;
-        vertical-align: top;
+        vertical-align: middle;
         canvas {
             display: block;
             margin: 0px auto;
         }
-        .program-vis-box h3 {
+        h3 {
             font-size: 1.5em;
             margin-top: 0px;
             margin-top: 2px;
         }
         .error-code {
-            min-height: 309px;
+            min-height: 328px;
             padding: 141px 20px;
             text-align: center;
         }
