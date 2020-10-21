@@ -182,7 +182,7 @@ export default class ProgramDashboard extends Component {
                         <g>{epaTexts}</g>
                         <g>{bars}</g>
                     </svg>
-                    : <h3 className='error-code text-left m-b'>No Records</h3>
+                    : <h3 style={{ width }} className='error-code text-left m-b'>No Records</h3>
                 }
                 <div className='chart-tooltip' id="chartjs-tooltip-completion-distribution"></div>
             </div>
