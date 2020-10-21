@@ -40,7 +40,7 @@ export default class EPASpecRotation extends Component {
                 <h3
                     className='text-left m-a-0 pull-left'
                     style={printModeON ? { color: 'black' } : undefined}>
-                    {normalizeByCount ? 'EPA per Rotation' : 'EPA Overall Count'}
+                    {normalizeByCount ? 'EPAs per Rotation' : 'EPA Overall Count'}
                     <InfoTip info={infoTooltipReference.programEvaluation.EPACountPerRotation} />
                 </h3>
                 <div className='year-selection-box pull-right'>
