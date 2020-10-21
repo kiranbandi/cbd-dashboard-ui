@@ -6,7 +6,6 @@ import ProgramAllYearsSummary from '../ProgramEvaluationGroup/ProgramAllYearsSum
 import ProgramBasePanel from '../ProgramEvaluationGroup/ProgramBasePanel';
 import EPACompletionDistribution from '../ProgramEvaluationGroup/EPACompletionDistribution';
 import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation';
-import EPAMonthlyRotation from '../ProgramEvaluationGroup/EPAMonthlyRotation';
 import savePagePDF from '../../utils/savePagePDF';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 
@@ -101,7 +100,7 @@ export default class ProgramDashboard extends Component {
                                     width={fullWidth}
                                     allRecords={allRecords}
                                     programInfo={programInfo}
-                                    possibleAcademicYears={_.reverse(possibleAcademicYears.slice(0,-1))}
+                                    possibleAcademicYears={_.reverse(possibleAcademicYears.slice(1, -1))}
                                     printModeON={printModeON} />
                                 <ProgramBasePanel
                                     width={fullWidth - 50}
@@ -109,40 +108,33 @@ export default class ProgramDashboard extends Component {
                                     programInfo={programInfo}
                                     possibleAcademicYears={possibleAcademicYears}
                                     printModeON={printModeON} />
-                                <EPACompletionDistribution
-                                    width={fullWidth}
-                                    possibleAcademicYears={possibleAcademicYears}
-                                    programInfo={programInfo}
-                                    records={allRecords}
-                                    printModeON={printModeON} />
-                                <div className='container-fluid'>
-                                    <div className='row'>
-                                        <EPAOverallbyRotation
-                                            width={fullWidth / 2}
-                                            programInfo={programInfo}
-                                            allRecords={allRecords}
-                                            residentList={residentList}
-                                            possibleAcademicYears={possibleAcademicYears}
-                                            printModeON={printModeON} />
-                                        <EPAMonthlyRotation
-                                            width={fullWidth / 2}
-                                            possibleAcademicYears={possibleAcademicYears}
-                                            allRecords={allRecords}
-                                            printModeON={printModeON} />
-                                    </div>
 
+                                <div className='container-fluid text-center'>
+                                    <EPAOverallbyRotation
+                                        width={fullWidth / 3}
+                                        programInfo={programInfo}
+                                        allRecords={allRecords}
+                                        residentList={residentList}
+                                        possibleAcademicYears={possibleAcademicYears}
+                                        printModeON={printModeON} />
+                                    <EPACompletionDistribution
+                                        width={fullWidth * (2 / 3)}
+                                        possibleAcademicYears={possibleAcademicYears}
+                                        programInfo={programInfo}
+                                        records={allRecords}
+                                        printModeON={printModeON} />
                                 </div>
                             </div>
                             : <h2 className='text-center text-danger m-t-lg'>No program data available currently</h2>}
-                        <button
+                        {/* export report button temporarily hidden as it is broken */}
+                        {/* <button
                             id='print-report'
                             className="btn btn-primary print-button"
                             onClick={this.onPrintClick}
-                            title={infoTooltipReference.programEvaluation.Report}
-                        >
+                            title={infoTooltipReference.programEvaluation.Report}>
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Report</span>
-                        </button>
+                        </button> */}
                     </div>}
             </div >
         );

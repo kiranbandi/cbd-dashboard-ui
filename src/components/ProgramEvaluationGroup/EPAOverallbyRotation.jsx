@@ -34,38 +34,34 @@ export default class EPASpecRotation extends Component {
             }]
         }
 
-        return (
-            <div className='col-sm-6 printable-content'>
-                <div
-                    className='m-a program-vis-box row p-t-md'
-                    style={printModeON ? { background: 'white' } : undefined}>
-                    <div>
-                        <h3
-                            className='text-left m-a-0 pull-left'
-                            style={printModeON ? { color: 'black' } : undefined}>
-                            {normalizeByCount ? 'EPA Count per Rotation' : 'EPA Overall Count'}
-                            <InfoTip info={infoTooltipReference.programEvaluation.EPACountPerRotation} />
-                        </h3>
-                        <div className='year-selection-box pull-right'>
-                            <h2 className='header'>Academic Year: </h2>
-                            <div className='react-select-root'>
-                                <ReactSelect
-                                    value={this.state.academicYear}
-                                    options={possibleAcademicYears}
-                                    styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
-                                    onChange={(academicYear) => this.setState({ academicYear })} />
-                            </div>
-                        </div>
-                    </div>
-                    <div className='col-xs-12 m-t'>
-                        <Bar
-                            options={{ scaleBeginAtZero: true }}
-                            data={lineData}
-                            width={width} height={400}
-                            redraw={true} />
+        return (<div className='program-vis-box'
+            style={printModeON ? { background: 'white' } : undefined}>
+            <div>
+                <h3
+                    className='text-left m-a-0 pull-left'
+                    style={printModeON ? { color: 'black' } : undefined}>
+                    {normalizeByCount ? 'EPA Count per Rotation' : 'EPA Overall Count'}
+                    <InfoTip info={infoTooltipReference.programEvaluation.EPACountPerRotation} />
+                </h3>
+                <div className='year-selection-box pull-right'>
+                    <h2 className='header'>Academic Year: </h2>
+                    <div className='react-select-root'>
+                        <ReactSelect
+                            value={this.state.academicYear}
+                            options={possibleAcademicYears}
+                            styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
+                            onChange={(academicYear) => this.setState({ academicYear })} />
                     </div>
                 </div>
-            </div>)
+            </div>
+            <div className='m-t'>
+                <Bar
+                    options={{ scaleBeginAtZero: true }}
+                    data={lineData}
+                    width={width} height={400}
+                    redraw={true} />
+            </div>
+        </div>)
     };
 };
 
