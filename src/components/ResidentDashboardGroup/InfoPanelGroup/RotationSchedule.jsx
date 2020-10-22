@@ -143,18 +143,18 @@ class RotatioSchedule extends Component {
                 <button
                     onClick={this.showHistorySchedule}
                     className={'view-back-button btn btn-primary-outline' + (isHistoryVisible ? ' selected' : '')}
-                    title={infoTooltipReference.residentMetrics.viewHistory}
                 >
                     <span className="icon icon-clock"></span>
                     <span>View History</span>
+                    <s-tooltip border-width="1px" orientation="right" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.viewHistory}</s-tooltip>
                 </button>
                 <button
                     onClick={this.showEPAsPerBlock}
                     className={'view-back-button per-block-button btn btn-primary-outline' + (isEPAperBlockVisible ? ' selected' : '')}
-                    title={infoTooltipReference.residentMetrics.viewEPAsBlock}
                 >
                     <span className="icon icon-book"></span>
                     <span>View EPAs/Block</span>
+                    <s-tooltip border-width="1px" orientation="right" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.viewEPAsBlock}</s-tooltip>
                 </button>
 
                 {isHistoryVisible && <div className='all-historical-schedule'>
