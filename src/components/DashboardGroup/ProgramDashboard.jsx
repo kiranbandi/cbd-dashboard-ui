@@ -134,6 +134,7 @@ export default class ProgramDashboard extends Component {
                             title={infoTooltipReference.programEvaluation.Report}>
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Report</span>
+                            <s-tooltip border-width="1px" orientation="left" max-width="800px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.programEvaluation.Report}</s-tooltip>
                         </button> */}
                     </div>}
             </div >
