@@ -159,16 +159,8 @@ export default class GraphRow extends Component {
                         innerHeight={innerHeight}
                         onMouseOver={onMouseOver}
                         onMouseOut={onMouseOut} />
-                    {!smallScreen && nonDemoMode &&
-                        <span className={"icon table-icon icon-open-book " + epaSource + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}>
-                            <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPATable}</s-tooltip>
-                        </span>
-                    }
-                    {!smallScreen && nonDemoMode && isAnyFilterAvailable &&
-                        <span className={"icon filter-icon icon-sound-mix " + epaSource + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick}>
-                            <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPAFilter}</s-tooltip>
-                        </span>
-                    }
+                    {!smallScreen && nonDemoMode && <span className={"icon table-icon icon-open-book " + epaSource + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick} title={infoTooltipReference.residentMetrics.showEPATable}></span>}
+                    {!smallScreen && nonDemoMode && isAnyFilterAvailable && <span className={"icon filter-icon icon-sound-mix " + epaSource + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick} title={infoTooltipReference.residentMetrics.showEPAFilter}></span>}
 
                 </div>
                 {!smallScreen && isTableVisible && nonDemoMode &&

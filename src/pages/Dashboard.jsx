@@ -47,28 +47,16 @@ class DashboardRoot extends Component {
                         <div className="hr-divider nav-pill-container-dashboard">
                             <ul className="nav nav-pills hr-divider-content hr-divider-nav">
                                 <li className={activeDashboard == 'resident' ? 'active' : ''}>
-                                    <a id='resident-tab' onClick={this.onTabClick}>
-                                        RESIDENT METRICS
-                                        <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.main}</s-tooltip>
-                                    </a>
+                                    <a id='resident-tab' onClick={this.onTabClick}  title={infoTooltipReference.residentMetrics.main}>RESIDENT METRICS</a>
                                 </li>
                                 <li className={activeDashboard == 'normative' ? 'active' : ''}>
-                                    <a id='normative-tab' onClick={this.onTabClick}>
-                                        NORMATIVE ASSESSMENT
-                                        <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.normativeAssessment.main}</s-tooltip>
-                                    </a>
+                                    <a id='normative-tab' onClick={this.onTabClick} title={infoTooltipReference.normativeAssessment.main}>NORMATIVE ASSESSMENT</a>
                                 </li>
                                 <li className={activeDashboard == 'supervisor' ? 'active' : ''}>
-                                    <a id='supervisor-tab' onClick={this.onTabClick}>
-                                        FACULTY DEVELOPMENT
-                                        <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.facultyDevlopment.main}</s-tooltip>
-                                    </a>
+                                    <a id='supervisor-tab' onClick={this.onTabClick} title={infoTooltipReference.facultyDevlopment.main}>FACULTY DEVELOPMENT</a>
                                 </li>
-                                <li className={activeDashboard == 'program' ? 'active' : ''}>
-                                    <a id='program-tab' onClick={this.onTabClick}>
-                                        PROGRAM EVALUATION
-                                        <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.programEvaluation.main}</s-tooltip>
-                                    </a>
+                                <li className={activeDashboard == 'program' ? 'active' : ''} title={infoTooltipReference.programEvaluation.main}>
+                                    <a id='program-tab' onClick={this.onTabClick}>PROGRAM EVALUATION</a>
                                 </li>
                                 <li className={activeDashboard == 'table' ? 'active' : ''}>
                                     <a id='table-tab' onClick={this.onTabClick}>EXPORT DATA</a>
