@@ -63,18 +63,27 @@ export default class ProgramBasePanel extends Component {
         });
 
         return (
-            <div className='yearall-summary-wrapper'>
+            <div
+                className='yearall-summary-wrapper printable-content'
+                style={printModeON ? { background: 'white', color: 'black' } : undefined}
+            >
                 <div className="hr-divider">
                     <h4
                         className="hr-divider-content"
-                        style={printModeON ? { background: 'white', color: 'black' } : undefined}>
+                        style={printModeON ? { background: 'white', color: 'black' } : undefined}
+                    >
                         Overall Acquisition Metrics By Year
                         <InfoTip info={infoTooltipReference.programEvaluation.overallAcuisitionMetricsYears} />
                     </h4>
                 </div>
-                <div className='program-part-container'>
-                    <h3 className="part-year-title"
-                        style={printModeON ? { background: 'white', color: 'black' } : undefined}>
+                <div
+                    className='program-part-container'
+                    style={printModeON ? { background: 'white', color: 'black' } : undefined}
+                >
+                    <h3
+                        className="part-year-title"
+                        style={printModeON ? { background: 'white', color: 'black' } : undefined}
+                    >
                         EPAs Acquired and Expired (Per resident)
                     </h3>
                     <div className='chart-container'>
@@ -104,8 +113,14 @@ export default class ProgramBasePanel extends Component {
                         </BarChart>
                     </div>
                 </div>
-                <div className='program-part-container'>
-                    <h3 className="part-year-title">
+                <div
+                    className='program-part-container'
+                    style={printModeON ? { background: 'white', color: 'black' } : undefined}
+                >
+                    <h3
+                        className="part-year-title"
+                        style={printModeON ? { background: 'white', color: 'black' } : undefined}
+                    >
                         EPA Rating Distribution
                     </h3>
                     <div className='chart-container'>
@@ -126,8 +141,14 @@ export default class ProgramBasePanel extends Component {
                         </BarChart>
                     </div>
                 </div>
-                <div className='program-part-container'>
-                    <h3 className="part-year-title">Monthly Distribution</h3>
+                <div
+                    className='program-part-container'
+                    style={printModeON ? { background: 'white', color: 'black' } : undefined}
+                >
+                    <h3
+                        className="part-year-title"
+                        style={printModeON ? { background: 'white', color: 'black' } : undefined}
+                    >Monthly Distribution</h3>
                     <div className='chart-container'>
                         <LineChart width={width / 2}
                             height={300} data={monthCountList}
@@ -150,11 +171,15 @@ export default class ProgramBasePanel extends Component {
                         </LineChart>
                     </div>
                 </div>
-                <div className='program-part-container'>
+                <div
+                    className='program-part-container'
+                    style={printModeON ? { background: 'white', color: 'black' } : undefined}
+                >
                     <h3
                         className="part-year-title"
-                        style={printModeON ? { background: 'white', color: 'black' } : undefined}>
-                        {'Average Words Per Comment'}
+                        style={printModeON ? { background: 'white', color: 'black' } : undefined}
+                    >
+                        Average Words Per Comment
                     </h3>
                     <div className='chart-container'>
                         <BarChart width={width / 2} height={300}
