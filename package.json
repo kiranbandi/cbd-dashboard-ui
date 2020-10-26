@@ -41,11 +41,11 @@
         "react-switch": "^5.0.1",
         "react-table": "^6.9.2",
         "react-to-print": "^2.5.0",
-        "react-tooltip": "^4.2.10",
         "react-youtube": "^7.9.0",
         "recharts": "^1.8.5",
         "redux": "^4.0.0",
         "redux-thunk": "^2.3.0",
+        "s-tooltip": "git+https://github.com/SeanWong24/s-tooltip.git#v0.6.0",
         "shortid": "^2.2.15",
         "toastr": "^2.1.4",
         "xlsx": "^0.14.1"
