@@ -230,19 +230,19 @@ export default class FacultyDashboard extends Component {
                         <button
                             id='print-report' className="btn btn-primary print-button partaway"
                             onClick={this.onPrintClick}
-                            title={infoTooltipReference.facultyDevlopment.reportAndCondensedReport}
                         >
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Report</span>
+                            <s-tooltip border-width="1px" orientation="left" max-width="800px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.facultyDevlopment.reportAndCondensedReport}</s-tooltip>
                         </button>
                         <button
                             id='print-report-condensed'
                             className="btn btn-primary print-button"
                             onClick={this.onPrintClick}
-                            title={infoTooltipReference.facultyDevlopment.reportAndCondensedReport}
                         >
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Condensed Report</span>
+                            <s-tooltip border-width="1px" orientation="left" max-width="800px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.facultyDevlopment.reportAndCondensedReport}</s-tooltip>
                         </button>
                     </div>}
             </div>);
