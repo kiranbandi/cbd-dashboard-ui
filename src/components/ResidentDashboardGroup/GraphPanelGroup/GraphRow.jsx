@@ -63,26 +63,27 @@ export default class GraphRow extends Component {
             let highlight = false;
 
             if (isFilterVisible) {
+                highlight = true;
 
                 const context = splitAndTrim(d.Situation_Context);
 
                 if (clinicalFilter.length > 0 && patientDemographicFilter.length > 0 && typeFilter.length > 0 && directVsIndirectFilter.length > 0) {
-                    highlight = (context.indexOf(clinicalFilter) > 0 && context.indexOf(patientDemographicFilter) > -1) ? true : false;
+                    highlight = highlight && (context.indexOf(clinicalFilter) > 0 && context.indexOf(patientDemographicFilter) > -1) ? true : false;
                 }
-                else if (clinicalFilter.length > 0) {
-                    highlight = (context.indexOf(clinicalFilter) > -1);
+                if (clinicalFilter.length > 0) {
+                    highlight = highlight && (context.indexOf(clinicalFilter) > -1);
                 }
-                else if (patientDemographicFilter.length > 0) {
-                    highlight = (context.indexOf(patientDemographicFilter) > -1);
+                if (patientDemographicFilter.length > 0) {
+                    highlight = highlight && (context.indexOf(patientDemographicFilter) > -1);
                 }
-                else if (typeFilter.length > 0) {
-                    highlight = (context.indexOf(typeFilter) > -1);
+                if (typeFilter.length > 0) {
+                    highlight = highlight && (context.indexOf(typeFilter) > -1);
                 }
-                else if (directVsIndirectFilter.length > 0) {
-                    highlight = (context.indexOf(directVsIndirectFilter) > -1);
+                if (directVsIndirectFilter.length > 0) {
+                    highlight = highlight && (context.indexOf(directVsIndirectFilter) > -1);
                 }
-                else if (staffObservationfilter.length > 0) {
-                    highlight = (context.indexOf(staffObservationfilter) > -1);
+                if (staffObservationfilter.length > 0) {
+                    highlight = highlight && (context.indexOf(staffObservationfilter) > -1);
                 }
             }
 

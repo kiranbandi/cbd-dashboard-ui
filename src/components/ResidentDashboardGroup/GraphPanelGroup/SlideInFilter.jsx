@@ -36,21 +36,6 @@ export default class SlideInFilter extends Component {
             // create a count map that is then merged with the text at the end
             optionCountMap = _.times(optionArray.length, () => 0);
 
-        // The filter shows count on its labels which need to work synchronously with each other
-        // so if filter A is active then labels in filter B are modified based on value selected in A
-        //  and the same if B is active , but if both are active then count resets to original count
-        if (clinicalFilter.length > 0 && patientDemographicFilter.length == 0 && typeFilter.length == 0 && directVsIndirectFilter.length == 0 && staffObservationfilter.length == 0 && filterKey == 'dm') {
-            data = _.filter(data, (d) => d.highlight);
-        } else if (patientDemographicFilter.length > 0 && clinicalFilter.length == 0 && typeFilter.length == 0 && directVsIndirectFilter.length == 0 && staffObservationfilter.length == 0 && filterKey == 'cp') {
-            data = _.filter(data, (d) => d.highlight);
-        } else if (typeFilter.length > 0 && patientDemographicFilter.length == 0 && clinicalFilter.length == 0 && directVsIndirectFilter.length == 0 && staffObservationfilter.length == 0 && filterKey == 'tp') {
-            data = _.filter(data, (d) => d.highlight);
-        } else if (directVsIndirectFilter.length > 0 && patientDemographicFilter.length == 0 && clinicalFilter.length == 0 && typeFilter.length == 0 && staffObservationfilter.length == 0 && filterKey == 'di') {
-            data = _.filter(data, (d) => d.highlight);
-        } else if (staffObservationfilter.length > 0 && patientDemographicFilter.length == 0 && clinicalFilter.length == 0 && typeFilter.length == 0 && directVsIndirectFilter.length == 0 && filterKey == 'so') {
-            data = _.filter(data, (d) => d.highlight);
-        }
-
         _.map(data, (record) => {
             const context = splitAndTrim(record.pureData.Situation_Context);
             context.map((contextType, contextIndex) => {
