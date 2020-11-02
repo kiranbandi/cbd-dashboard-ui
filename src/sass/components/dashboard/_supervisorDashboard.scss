@@ -95,6 +95,13 @@
             opacity: 1;
         }
     }
+    .radar-chart-wrapper {
+        display: block;
+        text-align: center;
+        .radar-chart-inner {
+            display: inline-block;
+        }
+    }
     .faculty-radar-chart {
         display: inline-block;
         margin: 22px auto;

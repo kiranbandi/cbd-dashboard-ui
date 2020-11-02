@@ -1,5 +1,5 @@
 import React from 'react';
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, } from 'recharts';
+import { Radar, Tooltip, RadarChart, PolarGrid, PolarAngleAxis, } from 'recharts';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 import { InfoTip } from '../';
 
@@ -69,25 +69,43 @@ export default (props) => {
             d.currentFaculty = d.currentFaculty > 2 ? 2 : d.currentFaculty;
         }
         return d;
-    })
+    });
+
+    // group the values by training phase 
+    newData = _.groupBy(newData, (d) => d.label[0]);
 
     return <div className='faculty-radar-chart'>
         <div className="hr-divider">
             <h4 className="hr-divider-content"> EPA Distribution </h4>
             <InfoTip info={infoTooltipReference.facultyDevlopment.EPADistribution} />
         </div>
-        {overallepaGroupSummed.length > 0 &&
-            <RadarChart cx={radarRadius + 35} cy={radarRadius + 25}
-                outerRadius={radarRadius}
-                width={radarChartWidth} height={radarChartWidth} data={newData}>
-                <PolarGrid strokeOpacity={0.1} strokeWidth={0.5} />
-                <PolarAngleAxis dataKey="label" />
-                <Radar name="Overall" dataKey="overall"
-                    stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
-                {currentFacultyRecords.length > 0
-                    && <Radar name="CurrentFaculty" dataKey="currentFaculty"
-                        stroke="#1ca8dd" fill="#1ca8dd" fillOpacity={0.6} />}
-            </RadarChart>}
+        <div className='radar-chart-wrapper'>
+            {['1', '2', '3', '4'].map((radarKey) => {
+                if (newData[radarKey]) {
+                    return <div key={'radar-' + radarKey} className='radar-chart-inner'>
+                        <RadarChart cx={radarRadius + 35} cy={radarRadius + 25}
+                            outerRadius={radarRadius}
+                            width={radarChartWidth} height={radarChartWidth} data={newData[radarKey]}>
+                            <PolarGrid strokeOpacity={0.1} strokeWidth={0.5} />
+                            <PolarAngleAxis dataKey="label" />
+                            <Radar name="Overall" dataKey="overall"
+                                stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+                            {currentFacultyRecords.length > 0
+                                && <Radar name="CurrentFaculty" dataKey="currentFaculty"
+                                    stroke="#1ca8dd" fill="#1ca8dd" fillOpacity={0.6} />}
+                            <Tooltip labelStyle={{ 'color': 'black' }}
+                                wrapperStyle={{ 'fontWeight': 'bold' }}
+                                formatter={(value, name) => {
+                                    let tooltipText = Math.round(value * 100);
+                                    // if value is 200, let the user know its capped
+                                    tooltipText = tooltipText == '200' ? '> 200' : tooltipText;
+                                    return [tooltipText + '%', (name == 'Overall' ? 'Program' : 'Faculty') + ' EPA Filled Ratio'];
+                                }} />
+                        </RadarChart>
+                    </div>
+                }
+            })}
+        </div>
     </div>
 }
 
