@@ -34,7 +34,7 @@ export default class EPASpecRotation extends Component {
             }]
         }
 
-        return (<div className='program-vis-box'
+        return (<div className='program-vis-box printable-content'
             style={printModeON ? { background: 'white' } : undefined}>
             <div>
                 <h3

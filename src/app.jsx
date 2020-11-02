@@ -13,6 +13,8 @@ import { Provider } from 'react-redux';
 import { checkloginStatus, checkAdminStatus } from './utils/authorization';
 import processQueryParams from './utils/processQueryParams';
 
+import { applyPolyfills, defineCustomElements } from "@seanwong24/s-tooltip/loader";
+
 //Root sass file for webpack to compile
 import './sass/main.scss';
 //Initial Default settings 
@@ -44,3 +46,6 @@ class App extends Component {
 
 ReactDOM.render(<App />, document.getElementById('root'))
 
+applyPolyfills().then(() => {
+  defineCustomElements();
+});
