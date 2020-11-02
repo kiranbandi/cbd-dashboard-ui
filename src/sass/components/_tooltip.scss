@@ -14,12 +14,12 @@
     }
     // make sure no capitilization occurs if the tooltip is
     // placed inside a header component
-    text-transform:none;
-    .custom-tooltip {
-        max-width: 500px;
-        z-index: 1000;
-        p {
-            line-height: 1.45em;
-        }
-    }
+    // text-transform:none;
+    // .custom-tooltip {
+    //     max-width: 500px;
+    //     z-index: 1000;
+    //     p {
+    //         line-height: 1.45em;
+    //     }
+    // }
 }

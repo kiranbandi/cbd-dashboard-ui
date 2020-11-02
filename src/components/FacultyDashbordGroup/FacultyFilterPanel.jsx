@@ -86,8 +86,9 @@ export default class FacultyFilterPanel extends Component {
                     </span>}
 
                     <div className='text-xs-left button-box'>
-                        <button type="submit" className="filter-button btn btn-primary-outline" onClick={onSubmit} title={infoTooltipReference.facultyDevlopment.getRecords}>
+                        <button type="submit" className="filter-button btn btn-primary-outline" onClick={onSubmit}>
                             GET RECORDS
+                            <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.facultyDevlopment.getRecords}</s-tooltip>
                         </button>
                     </div>
 
