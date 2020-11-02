@@ -1,6 +1,8 @@
 #!/bin/sh
 # Script to update apache server
 git pull origin master
+# install dependencies
+npm i
 # create new build folder
 npm run build
 # stop nginx  server
