@@ -63,6 +63,7 @@ class UGStudentDashboard extends Component {
                 const studentList = _.map(_.groupBy(studentRecords, (d) => d.nsid),
                     (records) => ({ name: records[0].name, records }))
                     .sort((a, b) => a.name.localeCompare(b.name));
+
                 // set records and raw dump on the state 
                 this._isMounted && this.setState({
                     studentList,
