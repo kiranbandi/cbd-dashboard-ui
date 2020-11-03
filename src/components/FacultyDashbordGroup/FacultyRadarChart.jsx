@@ -98,7 +98,7 @@ export default (props) => {
                                 formatter={(value, name) => {
                                     let tooltipText = Math.round(value * 100);
                                     // if value is 200, let the user know its capped
-                                    tooltipText = tooltipText == '200' ? '> 200' : tooltipText;
+                                    tooltipText = tooltipText == '200' ? '>200' : tooltipText;
                                     return [tooltipText + '%', (name == 'Overall' ? 'Program' : 'Faculty') + ' EPA Filled Ratio'];
                                 }} />
                         </RadarChart>
