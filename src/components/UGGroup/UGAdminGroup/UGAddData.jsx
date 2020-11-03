@@ -4,17 +4,14 @@ import getFile from '../../../utils/getFile';
 import processUGFile from '../../../utils/processUGFile';
 import toastr from '../../../utils/toastr';
 import Loading from 'react-loading';
-import { setUGRecords, getResidentList, registerUser } from '../../../utils/requestServer';
+import { setUGRecords, getResidentList } from '../../../utils/requestServer';
 
-const possibleYearTags = [{ label: 'Mobile App Export', value: 'app' }, { label: '145 System Export', value: '145' }, { label: 'Paper Files', value: 'paper' }];
-const possibleCohorts = ["2020", "2021", "2022", "2023", "2024", "2025"];
 export default class AddData extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             processing: false,
-            yearTag: 'app',
             cohort: '2020',
             residentList: [],
             loaderState: true
@@ -45,32 +42,26 @@ export default class AddData extends Component {
 
         event.preventDefault();
 
-        const { residentList, yearTag = 'app', cohort = '2020' } = this.state,
+        const { residentList } = this.state,
             residentNSIDlist = _.map(residentList, (d) => d.username);
 
         // turn on file processing loader
         this.setState({ processing: true });
         // fetch the file from the system and then process it 
         getFile('add-data-rcm-file', true)
-            .then((response) => { return processUGFile(response) })
+            .then((response) => { return processUGFile(response, residentList) })
             .then((processedOutput) => {
-
-                let { studentRecords, studentList } = processedOutput;
+                let { studentRecords, unmapped = [] } = processedOutput;
                 if (studentRecords.length > 0) {
-                    // Get the list of students who dont have profiles in the system
-                    const nonMappedStudents = _.filter(studentList, (d) => residentNSIDlist.indexOf(d.username) == -1);
-
-                    if (nonMappedStudents.length > 0) {
-                        toastr["warning"](_.map(nonMappedStudents, (d) => d.name.toUpperCase()).join(", "), "Unmapped Students");
-                        toastr["warning"]("The following students dont have a corresponding user profile or a record with a wrong entry so their data will be ignored, Please create a profile for them and try again", "New Students Found on File");
-                        const nonMappedNSIDList = _.map(nonMappedStudents, (d) => d.username);
-                        studentRecords = _.filter(studentRecords, (d) => nonMappedNSIDList.indexOf(d.username) > -1);
-                        return setUGRecords(studentRecords, yearTag + '_' + cohort);
+                    // Get the list of students who dont have profiles in the system or have wrong entries in th file
+                    if (unmapped.length > 0) {
+                        toastr["warning"](_.map(unmapped, (d) => d.toUpperCase()).join(", "), "Unmapped Students");
+                        toastr["warning"]("The following students dont have a corresponding user profile or have records with a wrong entry so their data will be ignored, Please create a profile for them and try again", "New Students Found on File");
+                        return setUGRecords(studentRecords);
                     }
                     else {
-                        return setUGRecords(studentRecords, yearTag + '_' + cohort);
+                        return setUGRecords(studentRecords);
                     }
-
                 }
                 else {
                     toastr["warning"]("There were no valid EPA records in the file you have uploaded so skipping upload", "No Records");
@@ -83,45 +74,21 @@ export default class AddData extends Component {
                     toastr["success"](insertedCount + " records were updated", "SUCCESS");
                 }
             })
-            .catch(() => {
+            .catch((e) => {
                 toastr["error"]("Failed to process files , Please try again.", "ERROR");
             })
             // turn off file processing loader
             .finally(() => { this.setState({ processing: false }) });
-
     }
 
     render() {
-        let { processing, loaderState, yearTag, cohort } = this.state;
+        let { processing, loaderState } = this.state;
 
         return (
             <div className='add-data-root m-t' >
-
                 {loaderState ?
                     <Loading className='loader-modify' type='spin' height='100px' width='100px' color='#d6e5ff' delay={-1} /> :
-
                     <form className="add-data-form col-lg-7 col-lg-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
-
-                        <div className="input-group m-a">
-                            <span className='inner-span' style={{ width: '165px' }}>DATA TYPE</span>
-                            <select name="yearTag" className='custom-select' value={yearTag} onChange={this.onSelectYearTag}>
-                                {possibleYearTags.map((yearSlot, index) =>
-                                    <option key={'tag-' + (index + 1)} value={yearSlot.value}>
-                                        {yearSlot.label}
-                                    </option>)}
-                            </select>
-                        </div>
-
-                        <div className="input-group m-a">
-                            <span className='inner-span' style={{ width: '165px' }}>COHORT</span>
-                            <select name="yearTag" className='custom-select' value={cohort} onChange={this.onSelectCohort}>
-                                {possibleCohorts.map((cohort, index) =>
-                                    <option key={'cohort-' + (index + 1)} value={cohort}>
-                                        {cohort}
-                                    </option>)}
-                            </select>
-                        </div>
-
                         <FileUpload className={'m-a'} id='add-data-rcm-file' label='Data Export CSV File' />
                         <button className={"btn btn-success create-btn m-a m-t-md "} type="submit" onClick={this.onProcessFile}>
                             <span className='create-span'>{"UPLOAD"} </span>

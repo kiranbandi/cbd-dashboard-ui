@@ -1,52 +1,75 @@
 import _ from 'lodash';
-import moment from 'moment';
 
-export default function(rawData) {
+export default function(rawData, residentList) {
 
     return new Promise((resolve, reject) => {
         try {
-
             // parse the csv file and remove empty entries
             let records = _.filter(CSVToArray(rawData, ','), (d) => d.length == '12');
+            let studentRecords = [],
+                unmappedList = [];
             // remove the 1st head row ,as it contains column names, 
             // from the records list and then start processing it
             // remove spaces and convert to lowercase for uniformity
-            const studentRecords = _.filter(records.slice(1), (d) => d[3].indexOf('@mail.usask.ca') > -1)
+            _.filter(records.slice(1), (d) => d[3].indexOf('usask.ca') > -1)
                 .map((row) => {
-
-                    const rating = row[7].toLowerCase().trim();
-
-                    return {
-                        'epa': Number(row[0].slice(3)),
-                        'resident_name': (row[1] + " " + row[2]).toLowerCase().trim(),
-                        'username': row[3].slice(0, 6).toLowerCase().trim(),
-                        'observer_name': row[4].toLowerCase().trim(),
-                        'observation_date': row[6].slice(0, 10),
-                        'observer_type': '',
-                        'rating': rating == 'low' ? 1 : rating == 'high' ? 3 : 2,
-                        'rotationTag': setRotation(row[8].toLowerCase().trim()),
-                        'feedback': row[9].toLowerCase().trim(),
-                        // patient type is rewritten under situation_context
-                        'situation_context': row[10].toLowerCase().trim(),
-                        // admission type is rewritten under professionalism_safety
-                        'professionalism_safety': row[11].toLowerCase().trim()
-                    };
+                    let rating = row[7].toLowerCase().trim(),
+                        resident_name = (row[1] + " " + row[2]).toLowerCase().trim(),
+                        username = '',
+                        year_tag = '';
+                    // if a resident has an email that doesnt match the @mail.usask.ca format
+                    // then search them from the resident list by their full and
+                    // assign a username
+                    // if the student doesnt exist then skip them and add their name 
+                    // to the unmapped list 
+                    if (row[3].includes('mail')) {
+                        username = row[3].slice(0, 6).toLowerCase().trim();
+                    } else if (row[3].includes('.')) {
+                        let residentNameFromMailEntry = row[3]
+                            // removes trailing @mail.usask.ca
+                            .slice(0, -9)
+                            // remove '.' and makes everything lower case 
+                            .toLowerCase().trim().split('.').join(' '),
+                            matchedStudent = _.find(residentList, (d) => d.fullname.toLowerCase().trim() == residentNameFromMailEntry);
+                        if (matchedStudent && matchedStudent.username) {
+                            username = matchedStudent.username;
+                        }
+                    }
+                    // if we have a residents username
+                    // we look for their corresponding cohort and tag it
+                    // if a resident doesnt have a profile then we add them to the unmapped list 
+                    if (username.length > 0) {
+                        const matchedStudentByUsername = _.find(residentList, (d) => d.username == username);
+                        year_tag = matchedStudentByUsername ? matchedStudentByUsername.currentPhase : '';
+                    }
+                    if (username && year_tag) {
+                        studentRecords.push({
+                            'epa': Number(row[0].slice(3)),
+                            'resident_name': resident_name,
+                            username,
+                            'observer_name': row[4].trim(),
+                            'observation_date': row[6].slice(0, 8),
+                            'observer_type': '',
+                            year_tag,
+                            'rating': rating == 'low' ? 1 : rating == 'high' ? 3 : 2,
+                            'rotationTag': setRotation(row[8].toLowerCase().trim()),
+                            'feedback': row[9].trim(),
+                            // patient type is rewritten under situation_context
+                            'situation_context': row[10].toLowerCase().trim(),
+                            // admission type is rewritten under professionalism_safety
+                            'professionalism_safety': row[11].toLowerCase().trim(),
+                            'type': 'app'
+                        })
+                    } else {
+                        unmappedList.push(resident_name);
+                    }
                 });
-
-            const studentList = _.map(_.groupBy(studentRecords, (d) => d.username), (records, username) => {
-                return { username, name: records[0].resident_name, records };
-            }).sort((a, b) => a.username.localeCompare(b.username));
-
-            resolve({ studentRecords, studentList });
-
+            resolve({ studentRecords, 'unmapped': _.uniq(unmappedList) });
         } catch (e) {
             reject();
         };
     })
 }
-
-
-
 
 function setRotation(rotation) {
 
@@ -86,10 +109,7 @@ function setRotation(rotation) {
         default:
             tag = 'Medicine';
     }
-
     return tag;
-
-
 }
 
 

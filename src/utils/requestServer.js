@@ -229,17 +229,13 @@ requestServer.getResidentData = function(username) {
 
 
 requestServer.setUGRecords = function(records, yearTag = '') {
-
     var recordsList = records.map((record) => {
         return {
             ...record,
-            year_tag: yearTag,
-            type: '',
             isExpired: false,
             phaseTag: ''
         }
     })
-
     return new Promise((resolve, reject) => {
         axios.post(endPoints.setRecords, { username: 'all', recordsList, yearTag }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
             .then((response) => { resolve(response.data) })
