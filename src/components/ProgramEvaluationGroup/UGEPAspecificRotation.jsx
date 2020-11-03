@@ -82,7 +82,7 @@ export default class EPASpecRotation extends Component {
                             data={lineData}
                             width={width} height={350}
                             redraw={true} /> :
-                            <h3 className='error-code text-left m-b'>No Records</h3>
+                            <h3 style={{ width }} className='error-code text-left m-b'>No Records</h3>
                         }
 
                     </div>
