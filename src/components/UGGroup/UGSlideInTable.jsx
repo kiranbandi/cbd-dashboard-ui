@@ -48,7 +48,7 @@ export default (props) => {
             <ReactTable
                 data={props.data}
                 columns={columns}
-                defaultPageSize={5}
+                defaultPageSize={10}
                 resizable={false}
                 filterable={true}
                 className='-highlight'

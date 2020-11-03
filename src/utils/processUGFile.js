@@ -58,6 +58,7 @@ export default function(rawData, residentList) {
                             'situation_context': row[10].toLowerCase().trim(),
                             // admission type is rewritten under professionalism_safety
                             'professionalism_safety': row[11].toLowerCase().trim(),
+                            // using type to distinguish app,one45 and paper records
                             'type': 'app'
                         })
                     } else {

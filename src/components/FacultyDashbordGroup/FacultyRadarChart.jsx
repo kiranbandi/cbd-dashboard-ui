@@ -5,7 +5,7 @@ import { InfoTip } from '../';
 
 export default (props) => {
 
-    const { width, processedRecords, currentFacultyRecords, programInfo } = props;
+    const { isUG = false, width, processedRecords, currentFacultyRecords, programInfo } = props;
 
     let radarChartWidth = width - 1100 > 400 ? 400 : width / 2,
         radarRadius = (radarChartWidth / 2) - 30;
@@ -15,10 +15,11 @@ export default (props) => {
         currentFacultyepaGroupList = currentFacultyRecords.length > 0 ? currentFacultyRecords[0].epaGroup : [];
 
     let trainingStageGroupMax = {};
+
     // For every training stage get the corresponding maximum count
     // from EPA list then from overall list and current faculty list 
     _.map(epaList, (d, epaListIndex) => {
-        const trainingStageKey = d.label[0];
+        const trainingStageKey = isUG ? '1' : d.label[0];
         if (trainingStageGroupMax.hasOwnProperty(trainingStageKey)) {
             const currentKey = trainingStageGroupMax[trainingStageKey];
             // update each individual epa value into count
@@ -44,68 +45,88 @@ export default (props) => {
 
     let overallepaGroupSummed = sumArrays(...overallepaGroupList);
 
-
     let newData = _.map(epaList, (epa, epaIndex) => {
-        let trainingStageMax = trainingStageGroupMax[epa.label[0]];
+        let trainingStageMax = trainingStageGroupMax[isUG ? '1' : epa.label[0]];
         return {
             'label': epa.label,
+            'epaCount': +overallepaGroupSummed[epaIndex],
+            'facEpaCount': +currentFacultyepaGroupList[epaIndex],
             'overall': (+overallepaGroupSummed[epaIndex] / trainingStageMax.epaCount) / (+epa.max / trainingStageMax.max),
             'currentFaculty': ((currentFacultyepaGroupList[epaIndex] || 0) / trainingStageMax.currentFacultyCount) / (+epa.max / trainingStageMax.max)
         };
     });
 
-    // cap the values to a maximum of 2 or in this case 200%
+    const maxCap = isUG ? 1.5 : 2;
+
+    // cap the values to a maximum of 2 or in this case 200% or the maxCap
     newData = _.map(newData, (d) => {
-        if (isNaN(d.overall)) {
-            d.overall = 0
-        }
-        else {
-            d.overall = d.overall > 2 ? 2 : d.overall;
-        }
-        if (isNaN(d.currentFaculty)) {
-            d.currentFaculty = 0
-        }
-        else {
-            d.currentFaculty = d.currentFaculty > 2 ? 2 : d.currentFaculty;
-        }
+        if (isNaN(d.overall)) { d.overall = 0 }
+        else { d.overall = d.overall > maxCap ? maxCap : d.overall }
+        if (isNaN(d.currentFaculty)) { d.currentFaculty = 0 }
+        else { d.currentFaculty = d.currentFaculty > maxCap ? maxCap : d.currentFaculty }
         return d;
     });
 
     // group the values by training phase 
-    newData = _.groupBy(newData, (d) => d.label[0]);
+    newData = isUG ? newData : _.groupBy(newData, (d) => d.label[0]);
 
     return <div className='faculty-radar-chart'>
         <div className="hr-divider">
             <h4 className="hr-divider-content"> EPA Distribution </h4>
             <InfoTip info={infoTooltipReference.facultyDevlopment.EPADistribution} />
         </div>
-        <div className='radar-chart-wrapper'>
-            {['1', '2', '3', '4'].map((radarKey) => {
-                if (newData[radarKey]) {
-                    return <div key={'radar-' + radarKey} className='radar-chart-inner'>
-                        <RadarChart cx={radarRadius + 35} cy={radarRadius + 25}
-                            outerRadius={radarRadius}
-                            width={radarChartWidth} height={radarChartWidth} data={newData[radarKey]}>
-                            <PolarGrid strokeOpacity={0.1} strokeWidth={0.5} />
-                            <PolarAngleAxis dataKey="label" />
-                            <Radar name="Overall" dataKey="overall"
-                                stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
-                            {currentFacultyRecords.length > 0
-                                && <Radar name="CurrentFaculty" dataKey="currentFaculty"
-                                    stroke="#1ca8dd" fill="#1ca8dd" fillOpacity={0.6} />}
-                            <Tooltip labelStyle={{ 'color': 'black' }}
-                                wrapperStyle={{ 'fontWeight': 'bold' }}
-                                formatter={(value, name) => {
-                                    let tooltipText = Math.round(value * 100);
-                                    // if value is 200, let the user know its capped
-                                    tooltipText = tooltipText == '200' ? '>200' : tooltipText;
-                                    return [tooltipText + '%', (name == 'Overall' ? 'Program' : 'Faculty') + ' EPA Filled Ratio'];
-                                }} />
-                        </RadarChart>
-                    </div>
-                }
-            })}
+        {isUG ? <div className='radar-chart-wrapper'>
+            <div className='radar-chart-inner'>
+                <RadarChart cx={radarRadius + 35} cy={radarRadius + 25}
+                    outerRadius={radarRadius}
+                    width={radarChartWidth} height={radarChartWidth} data={newData}>
+                    <PolarGrid strokeOpacity={0.1} strokeWidth={0.5} />
+                    <PolarAngleAxis dataKey="label" />
+                    <Radar name="Overall" dataKey="overall"
+                        stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+                    {currentFacultyRecords.length > 0
+                        && <Radar name="CurrentFaculty" dataKey="currentFaculty"
+                            stroke="#1ca8dd" fill="#1ca8dd" fillOpacity={0.6} />}
+                    <Tooltip labelStyle={{ 'color': 'black' }}
+                        wrapperStyle={{ 'fontWeight': 'bold' }}
+                        formatter={(value, name, datapoint) => {
+                            let tooltipText = Math.round(value * 100),
+                                tooltipPre = name == 'Overall' ? datapoint.payload.epaCount : datapoint.payload.facEpaCount;
+                            // if value is 150, let the user know its capped
+                            tooltipText = tooltipText == '150' ? '>150' : tooltipText;
+                            return [tooltipPre + ' EPAs, ' + tooltipText + '%', (name == 'Overall' ? 'Program' : 'Faculty') + ' EPA Filled Ratio'];
+                        }} />
+                </RadarChart>
+            </div>
         </div>
+            : <div className='radar-chart-wrapper'>
+                {['1', '2', '3', '4'].map((radarKey) => {
+                    if (newData[radarKey]) {
+                        return <div key={'radar-' + radarKey} className='radar-chart-inner'>
+                            <RadarChart cx={radarRadius + 35} cy={radarRadius + 25}
+                                outerRadius={radarRadius}
+                                width={radarChartWidth} height={radarChartWidth} data={newData[radarKey]}>
+                                <PolarGrid strokeOpacity={0.1} strokeWidth={0.5} />
+                                <PolarAngleAxis dataKey="label" />
+                                <Radar name="Overall" dataKey="overall"
+                                    stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+                                {currentFacultyRecords.length > 0
+                                    && <Radar name="CurrentFaculty" dataKey="currentFaculty"
+                                        stroke="#1ca8dd" fill="#1ca8dd" fillOpacity={0.6} />}
+                                <Tooltip labelStyle={{ 'color': 'black' }}
+                                    wrapperStyle={{ 'fontWeight': 'bold' }}
+                                    formatter={(value, name) => {
+                                        let tooltipText = Math.round(value * 100);
+                                        // if value is 200, let the user know its capped
+                                        tooltipText = tooltipText == '200' ? '>200' : tooltipText;
+                                        return [tooltipText + '%', (name == 'Overall' ? 'Program' : 'Faculty') + ' EPA Filled Ratio'];
+                                    }} />
+                            </RadarChart>
+                        </div>
+                    }
+                })}
+            </div>}
+
     </div>
 }
 
