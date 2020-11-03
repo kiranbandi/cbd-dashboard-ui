@@ -22,6 +22,7 @@ export default (props) => {
                 dateFilterActive={dateFilterActive} />
         </div>
         <FacultyRadarChart
+            isUG={isUG}
             width={width}
             processedRecords={processedRecords}
             currentFacultyRecords={currentFacultyRecords}

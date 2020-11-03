@@ -10,7 +10,7 @@ module.exports = {
         path: path.resolve("build/assets/bundle"),
         filename: "[name].bundle.[chunkhash].js",
         chunkFilename: "[name].[chunkhash].js",
-        publicPath: "/assets/bundle"
+        publicPath: "/assets/bundle/"
     },
     plugins: [new webpack.DefinePlugin({
             'process.env': {
