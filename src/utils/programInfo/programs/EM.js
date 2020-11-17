@@ -56,7 +56,25 @@ const programInfo = {
                 '1.3': ["infant", "child", "youth", "adult", "senior"],
                 '1.4': []
             },
-            filterTitles: {}
+            filterTitles: {},
+            assessmentInfo: {
+                '1.1': `Collect 10 observations of achievement
+                - At least 1 of each clinical presentation
+                - May be simulated
+                - At least 3 different observers`,
+                '1.2': `Collect 20 observations of achievement
+                - At least 5 observations of each of the 4 clinical presentations listed
+                - At least 2 direct observations of each of the 4 clinical presentations listed
+                - At least 3 different observers`,
+                '1.3': `Collect 10 observations of achievement
+                - Observation must be informed by at least 3 sources of information, such as nursing,
+                other healthcare professionals, attending physicians or resident in Core or TTP from
+                consulting services, emergency department administrative and support staff,
+                patients and their families
+                - At least 3 different observers`,
+                '1.4': `Direct observation over a series of two or more emergency department clinical shifts by
+                supervising physician or transition to practice emergency medicine resident`
+            }
 
         },
         2: {
@@ -90,7 +108,26 @@ const programInfo = {
                 '2.4': ["infant", "child", "youth", "adult", "senior"],
                 '2.5': []
             },
-            filterTitles: {}
+            filterTitles: {},
+            assessmentInfo: {
+                '2.1': `Collect 15 observations of achievement
+                - At least 3 presentations in a clinical (not simulated) environment
+                - At least 2 pediatric presentations
+                - Pediatric presentations may be simulated`,
+                '2.2': `Collect 30 observations of achievement
+                - At least 2 observations of each example clinical presentation listed above
+                - At least 5 pediatric presentations`,
+                '2.3': `Collect 10 observations of achievement
+                - At least 5 informed by direct input from a non-physician member of the healthcare
+                team with a knowledge of emergency department function (input from the nonphysician member must be documented in the narrative section)`,
+                '2.4': `Collect 25 observations of achievement
+                - At least 2 observations of each procedure for adult patients
+                - At least 3 observations of simple wound repair for pediatric presentations
+                - At least 3 observations of casting or splinting for pediatric presentations
+                - At least 2 different observers for each procedure type
+                - Intraosseous access may be simulated`,
+                '2.5': `Collect 1 submission of satisfactory achievement. `
+            }
         },
         3: {
             'ID': 'CORE',
@@ -183,7 +220,84 @@ const programInfo = {
                 '3.19': [],
                 '3.20': []
             },
-            filterTitles: {}
+            filterTitles: {},
+            assessmentInfo: {
+                '3.1': `Collect 40 observations of achievement
+                - At least 5 pediatric presentations, of which three may be simulated
+                - At least 20 observations in a clinical environment `,
+                '3.2': `Collect 25 observations of achievement:
+                - At least 5 adults with penetrating trauma
+                - At least 10 adults in a clinical (not simulation) setting
+                - At least 5 pediatric presentations
+                - At least 3 different observers for adult observations
+                - At least 2 different observers for pediatric presentations`,
+                '3.3': `Collect 20 observations of achievement
+                - At least 5 observations of predicted difficult airways based on patient anatomy or
+                physiology
+                - At least 5 observations within the emergency department
+                - At least 10 pediatric presentations
+                - At least 5 pediatric presentations in the clinical (not simulated) environment
+                - At least 3 different observers`,
+                '3.4': `Collect 20 observations of achievement
+                - At least 5 adults in the emergency department
+                - At least 5 pediatric presentations
+                - At least 3 different observers`,
+                '3.5': `Collect 40 observations of achievement
+                - At least 10 pediatric presentations
+                - At least 2 observations of each clinical presentation
+                - At least 2 different observers for each presentation`,
+                '3.6': `Collect 40 observations of achievement
+                - At least 2 observations of each clinical presentation
+                - At least 10 pediatric presentations
+                - At least 3 different observers`,
+                '3.7': `Collect 15 observations of achievement
+                - At least 2 observations of each clinical presentation
+                - At least 5 observations must be in the clinical environment
+                - At least 5 vaginal deliveries in the clinical environment`,
+                '3.8': `Collect 15 observations of achievement
+                - At least 1 observation of each clinical presentation
+                - At least 5 clinical (not simulated) observations
+                - At least 3 different observers`,
+                '3.9': `Collect 15 observations of achievement
+                - At least 1 of each clinical presentation
+                - At least 2 pediatric presentations
+                - At least 3 different observers`,
+                '3.10': `Collect 5 observations of achievement`,
+                '3.11': `Collect 5 observations of achievement
+                - May include simulation
+                - At least one pediatric presentation`,
+                '3.12': `Collect 5 observations of achievement
+                - At least 2 different observers
+                - Simulation is acceptable for all observations`,
+                '3.13': `Collect 25 observations of achievement
+                - At least 2 observations of each procedure in the clinical (not simulated) environment
+                - At least 2 different observers for each procedure`,
+                '3.14': `Collect 50 observations of achievement
+                - At least 5 of each of the following potential conditions to determine the presence of:
+                pericardial effusion; global estimation of left ventricular fraction; pneumothorax;
+                hemothorax; pleural effusion; abdominal aortic aneurysm; abdominal or pelvic free
+                fluid; first trimester intrauterine gestation
+                - At least 2 of each category must be directly observed
+                - At least 3 different observers`,
+                '3.15': `Collect 5 observations of achievement
+                - At least 2 different observers
+                - At least 2 emergency department presentations`,
+                '3.16': `Resident’s descriptions of the indication and performance of the procedure, without
+                assistance or resources, reviewed by PD or Competence Committee. Collect 1 submission of satisfactory achievement. `,
+                '3.17': `Direct observation over a series of two or more emergency department clinical shifts by
+                supervising physician or transition to practice emergency medicine resident
+                Collect two observations of satisfactory achievement from two different observers. `,
+                '3.18': `Direct observation of a session by supervisor with access to participant evaluations of the
+                session
+                Collect 1 submission of satisfactory achievement`,
+                '3.19': `Direct or indirect observation of resident completion of a disaster medicine exercise, as
+                approved by the residency training program, by PD
+                Collect 1 submission of satisfactory achievement. `,
+                '3.20': `Resident’s submission of a report on a clinical research, quality improvement/patient safety,
+                or education project, relevant to Emergency Medicine, reviewed by PD or Competence
+                Committee
+                Collect one submission of satisfactory achievement`
+            }
         },
         4: {
             'ID': 'TP',
@@ -228,7 +342,30 @@ const programInfo = {
                 '4.7': [],
                 '4.8': []
             },
-            filterTitles: {}
+            filterTitles: {},
+            assessmentInfo: {
+                '4.1': `Collect 25 observations of achievement.`,
+                '4.2': `Collect 15 observations of achievement
+                - At least 2 different observers
+                - At least 3 observations each of teaching a medical student, off service resident and
+                EM resident`,
+                '4.3': `Collect 5 observations of achievement
+                - At least 2 different observers
+                - At least 3 clinical (not simulated) observations `,
+                '4.4': `Collect 5 observations of achievement
+                - At least 2 different observers `,
+                '4.5': `Collect 10 observations of achievement:
+                - At least 5 EP to EP handovers
+                - At least 2 different observers`,
+                '4.6': `Collect 5 observations of achievement
+                - At least 2 different observers`,
+                '4.7': `Resident submission of a personal learning plan around a specific, completed learning need
+                reviewed by PD or Competence Committee
+                Collect 1 submission of satisfactory achievement. `,
+                '4.8': `Direct observation of a presentation (e.g. rounds) or indirect review of resident’s submission
+                of a report by supervisor
+                Collect 1 submission of satisfactory achievement`
+            }
         },
     }
 };

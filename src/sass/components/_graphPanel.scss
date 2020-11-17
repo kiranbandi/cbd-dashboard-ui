@@ -128,6 +128,33 @@
                 text-overflow: ellipsis;
                 margin: 20px 0px;
                 vertical-align: top;
+                .plan-icon {
+                    color: #4682b4;
+                    border: 2px solid #4682b4;
+                    font-size: 15px;
+                    border-radius: 50px;
+                    padding: 2px 4px;
+                    cursor: pointer;
+                    background: #25282f;
+                    margin-left: 5px;
+                    &.open-plan {
+                        background: #25282f;
+                    }
+                }
+                .assessment-plan-box {
+                    margin-left: 25px;
+                    margin-top: 10px;
+                    font-size: 15px;
+                    display: block;
+                    font-family: sans-serif;
+                    text-align: left;
+                    background: #283a5d;
+                    padding: 10px;
+                    border-radius: 5px;
+                    .assessment-plan-content {
+                        white-space: pre-line;
+                    }
+                }
                 .inner-offset-label {
                     margin-left: 25px;
                     text-overflow: ellipsis;
