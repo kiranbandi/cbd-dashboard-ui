@@ -47,7 +47,7 @@ export default (props) => {
                     <MicroStatCard style={{ display: 'inline' }} dual={true} title='Average EPA Score' type='primary' metric={averageEPAScore} secondMetric={averageEPAScorePeriod} />
                     <MicroStatCard style={{ display: 'inline' }} dual={true} title='Average words per comment' type='danger' metric={averageWords} secondMetric={averageWordsPeriod} />
                     <FacultyScorePie dateFilterActive={dateFilterActive} isUG={isUG} data={ratingGroupSet} />
-                    <PhaseSummaryPie data={phaseGroupSet} />
+                    {!isUG && <PhaseSummaryPie data={phaseGroupSet} />}
                 </div> :
                 <div className='text-center'>
                     <MicroStatCard style={{ display: 'inline' }} title='Total EPAs observed' type='info' metric={EPACount} />
@@ -55,7 +55,7 @@ export default (props) => {
                     <MicroStatCard style={{ display: 'inline' }} title='Average EPA Score' type='primary' metric={averageEPAScore} />
                     <MicroStatCard style={{ display: 'inline' }} title='Average words per comment' type='danger' metric={averageWords} />
                     <FacultyScorePie dateFilterActive={dateFilterActive} isUG={isUG} data={ratingGroupSet} />
-                    <PhaseSummaryPie data={phaseGroupSet} />
+                    {!isUG && <PhaseSummaryPie data={phaseGroupSet} />}
                 </div>
         }
     </div>
