@@ -56,6 +56,7 @@ export default class GraphRow extends Component {
         const xScale = scaleLinear().domain([0, residentEPAData.length - 1]).range([marginHorizontal, width - marginHorizontal])
         const yScale = scaleLinear().domain([5, 1]).range([marginVertical, innerHeight - marginVertical])
 
+
         const scoreData = residentEPAData.map((d, i) => {
 
             let highlight = false;
@@ -88,7 +89,8 @@ export default class GraphRow extends Component {
                 x: xScale(i),
                 y: yScale(d.Rating),
                 highlight,
-                pureData: d
+                pureData: d,
+                concern: (d.Professionalism_Safety != '' && d.Professionalism_Safety != "No")
             };
 
         });

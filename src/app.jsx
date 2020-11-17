@@ -12,7 +12,6 @@ import configureStore from './redux/store/configureStore';
 import { Provider } from 'react-redux';
 import { checkloginStatus, checkAdminStatus } from './utils/authorization';
 import processQueryParams from './utils/processQueryParams';
-
 import { applyPolyfills, defineCustomElements } from "@seanwong24/s-tooltip/loader";
 
 //Root sass file for webpack to compile
@@ -46,6 +45,6 @@ class App extends Component {
 
 ReactDOM.render(<App />, document.getElementById('root'))
 
-applyPolyfills().then(() => {
-  defineCustomElements();
-});
+// For Sean's tooltip , might have to move this out of root 
+// and probably into the tooltip defining component itself.
+applyPolyfills().then(() => { defineCustomElements() });
