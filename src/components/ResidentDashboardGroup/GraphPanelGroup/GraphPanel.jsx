@@ -17,9 +17,11 @@ class GraphPanel extends Component {
         this.onEPALabelClick = this.onEPALabelClick.bind(this);
         this.onTableExpandClick = this.onTableExpandClick.bind(this);
         this.onFilterExpandClick = this.onFilterExpandClick.bind(this);
+        this.onAssessmentPlanClick = this.onAssessmentPlanClick.bind(this);
         this.state = {
             openTableID: '',
-            openFilterID: ''
+            openFilterID: '',
+            openPlanID: ''
         };
     }
 
@@ -49,6 +51,17 @@ class GraphPanel extends Component {
         }
         else {
             this.setState({ openFilterID, openTableID: '' });
+        }
+    }
+
+    onAssessmentPlanClick() {
+        const openPlanID = event.target.className.split(" ")[3];
+        // if already open close it , if not open it !
+        if (event.target.className.indexOf('open-plan') > -1) {
+            this.setState({ openPlanID: '' });
+        }
+        else {
+            this.setState({ openPlanID });
         }
     }
 
@@ -86,7 +99,7 @@ class GraphPanel extends Component {
 
         const { hidePercentages = false, hideTogoNumbers } = programInfo;
 
-        const { openTableID, openFilterID } = this.state;
+        const { openTableID, openFilterID, openPlanID } = this.state;
 
         // if there is no source map provided then use the Emergency medicine Template Map
         epaSourceMap = !!epaSourceMap ? epaSourceMap : programInfo.epaSourceMap;
@@ -153,6 +166,7 @@ class GraphPanel extends Component {
                                                     epaSource={epaSource}
                                                     isTableVisible={epaSource == openTableID}
                                                     isFilterVisible={epaSource == openFilterID}
+                                                    isPlanVisible={epaSource == openPlanID}
                                                     widthPartition={widthPartition}
                                                     epaSourceMap={epaSourceMap}
                                                     smallScreen={smallScreen}
@@ -162,6 +176,7 @@ class GraphPanel extends Component {
                                                     onMouseOver={this.onMouseOver}
                                                     onMouseOut={this.onMouseOut}
                                                     nonDemoMode={nonDemoMode}
+                                                    onAssessmentPlanClick={this.onAssessmentPlanClick}
                                                     onTableExpandClick={this.onTableExpandClick}
                                                     onFilterExpandClick={this.onFilterExpandClick} />)
                                         })}

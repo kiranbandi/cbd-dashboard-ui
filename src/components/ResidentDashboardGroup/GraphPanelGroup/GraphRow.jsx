@@ -23,11 +23,12 @@ export default class GraphRow extends Component {
 
         const { clinicalFilter, patientDemographicFilter, typeFilter = '', directVsIndirectFilter = '', staffObservationfilter = '' } = this.state;
 
-        let { epaSource, isTableVisible, innerKey,
+        let { epaSource, isTableVisible, isPlanVisible, innerKey,
             widthPartition, smallScreen, epaSourceMap,
             residentEPAData, expiredResidentEPAData,
             onMouseOut, onMouseOver, hideTogoNumbers,
             onTableExpandClick, onFilterExpandClick,
+            onAssessmentPlanClick,
             nonDemoMode, isFilterVisible } = this.props;
 
         //  margin of 20px on either side reduces the available width by 40 
@@ -122,7 +123,17 @@ export default class GraphRow extends Component {
                 <div style={{ width: widthPartition - 10 }} className='inner-cell epa-title-cell'>
                     <span className='inner-offset-label'>
                         {epaSource + " - " + epaSourceMap[innerKey].subRoot[epaSource]}
+                        <span className={"icon plan-icon icon-layers " + epaSource + (isPlanVisible ? ' open-plan' : ' ')} onClick={onAssessmentPlanClick}>
+                            <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPAPlan}</s-tooltip>
+                        </span>
                     </span>
+                    {isPlanVisible && epaSourceMap[innerKey].assessmentInfo && epaSourceMap[innerKey].assessmentInfo[epaSource] &&
+                        <div className="assessment-plan-box">
+                            <div>Assessment Plan</div>
+                            <div className='assessment-plan-content'>
+                                {epaSourceMap[innerKey].assessmentInfo[epaSource] || ''}
+                            </div>
+                        </div>}
                 </div>
                 <div style={{ width: widthPartition }} className='inner-cell observation-cell'>
                     <BulletChart
