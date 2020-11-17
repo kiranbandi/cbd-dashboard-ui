@@ -7,4 +7,5 @@ export default (props) =>
         {props.context && <p><b>SITUATION CONTEXT: </b><span>{props.context}</span></p>}
         {props.name && <p><b>OBSERVER NAME: </b><span>{props.name}</span></p>}
         {props.feedback && <p><b>FEEDBACK: </b><span>{props.feedback}</span></p>}
+        {props.concern && <p><b className='text-danger'>PROFESSIONALISM AND SAFETY CONCERN: </b><span >{props.concern}</span></p>}
     </div>;
