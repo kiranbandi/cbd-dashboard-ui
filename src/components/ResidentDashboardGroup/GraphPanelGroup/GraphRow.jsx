@@ -115,7 +115,8 @@ export default class GraphRow extends Component {
             isPatientDemoFilteringAvailable = (patientDemographic[epaSource] && patientDemographic[epaSource].length > 0),
             isTypeFilteringAvailable = (type[epaSource] && type[epaSource].length > 0),
             // turn filtering on if filtering in any one filter is available
-            isAnyFilterAvailable = !!isClinicalFilteringAvailable || !!isPatientDemoFilteringAvailable || !!isTypeFilteringAvailable;
+            isAnyFilterAvailable = !!isClinicalFilteringAvailable || !!isPatientDemoFilteringAvailable || !!isTypeFilteringAvailable,
+            isAssessmentPlanAvailable = epaSourceMap[innerKey].assessmentInfo && epaSourceMap[innerKey].assessmentInfo[epaSource];
 
         return (
             <div className='text-xs-center'>
@@ -123,11 +124,12 @@ export default class GraphRow extends Component {
                 <div style={{ width: widthPartition - 10 }} className='inner-cell epa-title-cell'>
                     <span className='inner-offset-label'>
                         {epaSource + " - " + epaSourceMap[innerKey].subRoot[epaSource]}
-                        <span className={"icon plan-icon icon-layers " + epaSource + (isPlanVisible ? ' open-plan' : ' ')} onClick={onAssessmentPlanClick}>
-                            <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPAPlan}</s-tooltip>
-                        </span>
+                        {isAssessmentPlanAvailable &&
+                            <span className={"icon plan-icon icon-layers " + epaSource + (isPlanVisible ? ' open-plan' : ' ')} onClick={onAssessmentPlanClick}>
+                                <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPAPlan}</s-tooltip>
+                            </span>}
                     </span>
-                    {isPlanVisible && epaSourceMap[innerKey].assessmentInfo && epaSourceMap[innerKey].assessmentInfo[epaSource] &&
+                    {isPlanVisible && isAssessmentPlanAvailable &&
                         <div className="assessment-plan-box">
                             <div>Assessment Plan</div>
                             <div className='assessment-plan-content'>
