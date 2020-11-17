@@ -262,7 +262,6 @@ const programInfo = {
                 - At least 1 of each clinical presentation
                 - At least 2 pediatric presentations
                 - At least 3 different observers`,
-                '3.10': `Collect 5 observations of achievement`,
                 '3.11': `Collect 5 observations of achievement
                 - May include simulation
                 - At least one pediatric presentation`,
