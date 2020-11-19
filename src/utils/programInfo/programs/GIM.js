@@ -38,7 +38,11 @@ const programInfo = {
             },
             clinicalPresentation: {},
             patientDemographic: {},
-            filterTitles: {}
+            filterTitles: {},
+            filterValuesDict: {
+                '1.1': {},
+                '1.2': {}
+            }
         },
         2: {
             'ID': 'F',
@@ -64,6 +68,16 @@ const programInfo = {
             filterTitles: {
                 '2.1': ["Complexity"],
                 '2.3': ["Complexity", "Decision"]
+            },
+            filterValuesDict: {
+                '2.1': {
+                    'Complexity': ["low", "medium", "high"]
+                },
+                '2.2': {},
+                '2.3': {
+                    'Complexity': ["low", "medium", "high"],
+                    'Decision': ["followup", "refer back", "refer on", "admit"]
+                }
             }
         },
         3: {
@@ -112,7 +126,7 @@ const programInfo = {
                 '3.19': 22
             },
             clinicalPresentation: {
-                '3.1':  ["social", "undifferentiated condition", "multi-system"],
+                '3.1': ["social", "undifferentiated condition", "multi-system"],
                 '3.2': ["undifferentiated", "new diagnosis", "chronic medical condition"],
                 '3.3': ["low", "medium", "high"],
                 '3.4': ["inpatient", "outpatient"],
@@ -133,6 +147,44 @@ const programInfo = {
                 '3.8': ["Ventilation"],
                 '3.9': ["Document"],
                 '3.19': ["Procedure", "Site"]
+            },
+            filterValuesDict: {
+                '3.1': {
+                    'Complexity': ["social", "undifferentiated condition", "multi-system"],
+                    'Stage of Care': ["transition planning", "ongoing management"]
+                },
+                '3.2': {
+                    'Presentation': ["undifferentiated", "new diagnosis", "chronic medical condition"]
+                },
+                '3.3': {
+                    'Complexity': ["low", "medium", "high"]
+                },
+                '3.4': {
+                    'Setting': ["inpatient", "outpatient"],
+                    'Presentation': ["acute dyspnea", "asthma", "acute respiratory failure", "chest pain", "acute heart failure", "dysrhythmias", "edema", "headache", "Type 1 diabetes", "Type 2 diabetes", "gestational diabetes", "pre-existing hypertension", "gestational hypertension", "thromboembolic disease", "thrombocytopenia", "other"]
+                },
+                '3.5': {},
+                '3.6': {},
+                '3.7': {},
+                '3.8': {
+                    'Ventilation': ["none", "invasive", "non-invasive"]
+                },
+                '3.9': {
+                    'Document': ["consultations", "discharge summary", "progress notes"]
+                },
+                '3.10': {},
+                '3.11': {},
+                '3.12': {},
+                '3.13': {},
+                '3.14': {},
+                '3.15': {},
+                '3.16': {},
+                '3.17': {},
+                '3.18': {},
+                '3.19': {
+                    'Procedure': ["airway management & endotracheal intubation", "non-invasive ventilation", "invasive ventilation", "arterial line catheter insertion", "central line placement", "thoracentesis", "paracentesis", "lumbar puncture", "joint arthrocentesis"],
+                    'Site': ["not applicable", "femoral", "internal jugular", "subclavian", "knee"]
+                }
             }
         },
         4: {
@@ -148,7 +200,11 @@ const programInfo = {
             },
             clinicalPresentation: {},
             patientDemographic: {},
-            filterTitles: {}
+            filterTitles: {},
+            filterValuesDict: {
+                '4.1': {},
+                '4.2': {}
+            }
         },
     }
 };

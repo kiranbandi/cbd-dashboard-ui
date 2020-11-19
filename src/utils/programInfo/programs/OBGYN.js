@@ -49,8 +49,17 @@ const programInfo = {
             filterTitles: {
                 '1.1': ["Patient", "Setting"],
                 '1.2': ["Gynecologic presentation", "Setting"],
+            },
+            filterValuesDict: {
+                '1.1': {
+                    'Patient': ["intrapartum", "antepartum"],
+                    'Setting': ["in-patient", "out-patient"]
+                },
+                '1.2': {
+                    'Gynecologic presentation': ["pelvic pain", "abnormal uterine bleeding", "vulvovaginitis", "other"],
+                    'Setting': ["in-patient", "out-patient"]
+                }
             }
-
         },
         2: {
             'ID': 'F',
@@ -117,6 +126,46 @@ const programInfo = {
                 '2.8': ["Patient issue", "TYPE"],
                 '2.9': ["Presentation", "Procedure"],
                 '2.10': ["Procedure", "TYPE"]
+            },
+            filterValuesDict: {
+                '2.1': {
+                    'visit': ["initial vist", "follow up visit"],
+                    'patient': ["pre-conception", "first trimester", "second trimester", "third trimester", "term", "postdate"]
+                },
+                '2.2': {
+                    'investigation': ["non stress test", "Point of Care Ultrasound (POCUS)", "biophysical profile", "fetal heart rate tracing", "other"],
+                    'Setting': ["clinic", "obstetrics day unit", "triage", "labour & delivery"]
+                },
+                '2.3': {
+                    'Presentation': ["diagnosis of labour", "suspected fetal compromise", "preterm labour", "preterm rupture of membranes", "antepartum bleeding", "hypertensive disorders of pregnancy", "trauma", "pain", "GI/GU complaints", "respiratory complaints", "other"],
+                    'TYPE': []
+                },
+                '2.4': {
+                    'patient': ["multiparous", "nulliparous"],
+                    'Perineal Trauma': ["1st degree", "2nd degree", "not applicable"]
+                },
+                '2.5': {},
+                '2.6': {
+                    'Observation/Complication': ["direct", "indirect", "postpartum bleeding", "postpartum pain", "postpartum fever", "other"],
+                    'Setting': ["in-patient", "out-patient", "in-hospital", "other"]
+                },
+                '2.7': {
+                    'Presentation': ["first trimester complications", "pregnancy of unknown location (PUL)", "ectopic pregnancy", "first trimester loss", "hyperemesis", "acute abdominal/pelvic pain", "ovarian cyst/torsion", "vulvar abscesses/Bartholin’s"],
+                    'Setting': ["emergency department", "outpatient clinic", "inpatient ward"]
+                },
+                '2.8': {
+                    'Patient issue': ["reversible contraception", "permanent contraception", "emergency contraception", "medical pregnancy termination", "surgical pregnancy termination"],
+                    'TYPE': []
+                },
+                '2.9': {
+                    'Presentation': ["menopausal disorders including postmenopausal bleeding", "menstrual disorders", "vulvovaginal complaints", "adnexal masses", "sexually transmitted infections", "primary dysmenorrhea", "gynecologic preventative care"],
+                    'Procedure': ["not applicable", "endometrial biopsy", "cervical biopsy", "vulvar biopsy", "IUD/ IUS insertion", "Pap smear"]
+                },
+                '2.10': {
+                    'Procedure': ["basic laparoscopy (port placement, electrocautery, closing incisions)", "diagnostic hysteroscopy", "global endometrial ablation", "drainage and marsupialization of Bartholin’s abscess", "dilatation and curettage"],
+                    'TYPE': []
+                },
+                '2.11': {}
             }
         },
         3: {
@@ -165,11 +214,11 @@ const programInfo = {
                 '3.19': 4
             },
             clinicalPresentation: {
-                '3.1':  ["genetic disorder", "maternal medical disorder", "history of previous pregnancy complication", "fetal complication", "pregnancy complication"],
+                '3.1': ["genetic disorder", "maternal medical disorder", "history of previous pregnancy complication", "fetal complication", "pregnancy complication"],
                 '3.2': ["not applicable", "preterm delivery (gestational age <32 weeks)", "multiples", "intrauterine fetal death", "malposition", "cord prolapse", "atypical/abnormal fetal heart rate tracing"],
-                '3.3':  ["vacuum", "outlet forceps (non-rotation)", "low forceps (non-rotation)", "rotational forceps", "perineal laceration", "shoulder dystocia", "internal podalic version", "breech extraction"],
+                '3.3': ["vacuum", "outlet forceps (non-rotation)", "low forceps (non-rotation)", "rotational forceps", "perineal laceration", "shoulder dystocia", "internal podalic version", "breech extraction"],
                 '3.4': ["classical", "multiple pregnancy", "2nd stage", "morbidly obese patient", "extensive extension", "abnormal placentation (e.g., accreta, previa)", "difficult repeat cesarean section", "STAT cesarean section", "transverse lie", "other"],
-                '3.5':  ["delayed postpartum hemorrhage", "infection", "perineal complications, vaginal hematoma", "mastitis", "endometritis", "venous thromboembolism/pulmonary embolus", "septic thrombophlebitis", "psychosocial comorbidities", "postpartum psychiatric disorders (e.g., psychosis, depression)"],
+                '3.5': ["delayed postpartum hemorrhage", "infection", "perineal complications, vaginal hematoma", "mastitis", "endometritis", "venous thromboembolism/pulmonary embolus", "septic thrombophlebitis", "psychosocial comorbidities", "postpartum psychiatric disorders (e.g., psychosis, depression)"],
                 '3.6': ["direct", "image review"],
                 '3.7': ["acute intra-abdominal process", "severe ovarian hyperstimulation syndrome", "acute uterine bleeding", "early pregnancy complications"],
                 '3.8': ["menstrual disorder", "complex menopausal complaint", "pre-invasive gynecologic condition", "complex gynecologic infection", "pelvic mass", "vulvar dystrophy", "other"],
@@ -177,9 +226,9 @@ const programInfo = {
                 '3.10': ["labial agglutination", "vaginal discharge", "vulvovaginitis", "simple straddle injuries", "sexual health counselling", "abnormal uterine bleeding", "amenorrhea", "other menstrual irregularities", "adnexal masses", "delayed/precocious puberty", "obstructive Mullerian anomalies", "other"],
                 '3.11': ["pelvic organ prolapse (POP)", "urinary incontinence (UI)- stress", "urinary incontinence (UI)- urge", "lower urinary tract symptoms (LUTS)", "anal incontinence and defecatory dysfunction", "fistulas"],
                 '3.12': ["chronic pelvic pain", "sexual health concern"],
-                '3.13':   ["ovarian/fallopian tube/primary peritoneal", "endometrial/sarcoma", "cervix", "vulva/vagina", "gestational trophoblastic disease (GTD)", "other"],
+                '3.13': ["ovarian/fallopian tube/primary peritoneal", "endometrial/sarcoma", "cervix", "vulva/vagina", "gestational trophoblastic disease (GTD)", "other"],
                 '3.14': ["endometrial resection", "endometrial ablation", "myomectomy", "septoplasty of partial/complete septum", "lysis of intrauterine adhesions", "other"],
-                '3.15':  ["vaginal hysterectomy", "anterior and posterior repair", "simple vulvectomy", "cervical conization", "perineorrhaphy", "colpocleisis"],
+                '3.15': ["vaginal hysterectomy", "anterior and posterior repair", "simple vulvectomy", "cervical conization", "perineorrhaphy", "colpocleisis"],
                 '3.16': ["laparoscopic salpingostomy/salpingectomy", "laparoscopic ovarian cystectomy", "salpingo-oophorectomy", "laparoscopic treatment of endometriosis", "laparoscopic-assisted vaginal hysterectomy (LAVH)", "total laparoscopic hysterectomy (TLH)"],
                 '3.17': ["total abdominal hysterectomy", "subtotal abdominal hysterectomy", "salpingo-oophorectomy/oophorectomy", "ovarian cystectomy", "abdominal myomectomy", "omentectomy", "peritoneal biopsy", "conversion from planned laparoscopy", "repair of incisional dehiscence", "adhesiolysis"],
                 '3.18': ["bowel obstruction", "bowel injury", "infection", "perioperative bleeding", "genitourinary complication", "thromboembolic disease", "wound complication", "nerve injury", "uterine perforation", "vascular injury", "other"],
@@ -189,7 +238,7 @@ const programInfo = {
                 '3.1': ["clinic", "inpatient unit", "labour and delivery", "intensive care unit"],
                 '3.2': ["not applicable", "chorioamnionitis", "trial of labour after cesarean section", "complicated induction", "severe hypertensive disorder of pregnancy", "pre-gestational diabetes", "maternal comorbidities (e.g., cardiac, GI, renal, pulmonary)", " 1st or 2nd stage dystocia", "intrapartum hemorrhage", "uterine rupture", "shock", "eclampsia", "other"],
                 '3.3': ["shoulder dystocia", "vaginal breech, multiple delivery", "postpartum hemorrhage (PPH)", "3rd or 4th degree tear", "other"],
-                '3.4':  ["repair of extensive extension", "surgical management of postpartum hemorrhage", "uterine dehiscence/rupture repair", "management of extensive intra-abdominal adhesions/ scar tissue", "not applicable"],
+                '3.4': ["repair of extensive extension", "surgical management of postpartum hemorrhage", "uterine dehiscence/rupture repair", "management of extensive intra-abdominal adhesions/ scar tissue", "not applicable"],
                 '3.5': ["office setting", "postpartum ward", "triage/ER", "simulation"],
                 '3.6': ["ER", "inpatient", "gynecology clinic", "diagnostic imaging", "ultrasound unit", "simulation"],
                 '3.7': ["emergency department", "inpatient ward", "outpatient clinic"],
@@ -226,6 +275,84 @@ const programInfo = {
                 '3.17': ["Procedure", "TYPE"],
                 '3.18': ["Complication", "TYPE"],
                 '3.19': ["Day Complexity", "TYPE"]
+            },
+            filterValuesDict: {
+                '3.1': {
+                    'presentation': ["genetic disorder", "maternal medical disorder", "history of previous pregnancy complication", "fetal complication", "pregnancy complication"],
+                    'Setting': ["clinic", "inpatient unit", "labour and delivery", "intensive care unit"]
+                },
+                '3.2': {
+                    'Fetal Complication': ["not applicable", "preterm delivery (gestational age <32 weeks)", "multiples", "intrauterine fetal death", "malposition", "cord prolapse", "atypical/abnormal fetal heart rate tracing"],
+                    'Maternal Complication': ["not applicable", "chorioamnionitis", "trial of labour after cesarean section", "complicated induction", "severe hypertensive disorder of pregnancy", "pre-gestational diabetes", "maternal comorbidities (e.g., cardiac, GI, renal, pulmonary)", " 1st or 2nd stage dystocia", "intrapartum hemorrhage", "uterine rupture", "shock", "eclampsia", "other"]
+                },
+                '3.3': {
+                    'Procedure': ["vacuum", "outlet forceps (non-rotation)", "low forceps (non-rotation)", "rotational forceps", "perineal laceration", "shoulder dystocia", "internal podalic version", "breech extraction"],
+                    'complication': ["shoulder dystocia", "vaginal breech, multiple delivery", "postpartum hemorrhage (PPH)", "3rd or 4th degree tear", "other"],
+                },
+                '3.4': {
+                    'Type of C Section': ["classical", "multiple pregnancy", "2nd stage", "morbidly obese patient", "extensive extension", "abnormal placentation (e.g., accreta, previa)", "difficult repeat cesarean section", "STAT cesarean section", "transverse lie", "other"],
+                    'Complication management': ["repair of extensive extension", "surgical management of postpartum hemorrhage", "uterine dehiscence/rupture repair", "management of extensive intra-abdominal adhesions/ scar tissue", "not applicable"]
+                },
+                '3.5': {
+                    'Patient presentation': ["delayed postpartum hemorrhage", "infection", "perineal complications, vaginal hematoma", "mastitis", "endometritis", "venous thromboembolism/pulmonary embolus", "septic thrombophlebitis", "psychosocial comorbidities", "postpartum psychiatric disorders (e.g., psychosis, depression)"],
+                    'Setting': ["office setting", "postpartum ward", "triage/ER", "simulation"]
+                },
+                '3.6': {
+                    'Observation': ["direct", "image review"],
+                    'Setting': ["ER", "inpatient", "gynecology clinic", "diagnostic imaging", "ultrasound unit", "simulation"]
+                },
+                '3.7': {
+                    'Patient presentation': ["acute intra-abdominal process", "severe ovarian hyperstimulation syndrome", "acute uterine bleeding", "early pregnancy complications"],
+                    'setting': ["emergency department", "inpatient ward", "outpatient clinic"]
+                },
+                '3.8': {
+                    'Gynecologic Condition': ["menstrual disorder", "complex menopausal complaint", "pre-invasive gynecologic condition", "complex gynecologic infection", "pelvic mass", "vulvar dystrophy", "other"],
+                    'Procedure': ["endometrial biopsy", "cervical biopsy", "vulvar biopsy", "loop electrosurgical excision procedure (LEEP)", "not applicable"]
+                },
+                '3.9': {
+                    'Patient presentation': ["infertility", "fertility preservation", "fertility pursuit (e.g., Solo/LGBTQ+)", "recurrent pregnancy loss", "complications following artificial reproductive technologies (ART)"],
+                    'Etiology': ["endometriosis", "anovulation/amenorrhea", "congenital uterine anomaly", "social", "tubal factor", "male factor infertility", "complications from treatment", "ovarian hyperstimulation syndrome (OHSS)", "other"]
+                },
+                '3.10': {
+                    'Patient presentation': ["labial agglutination", "vaginal discharge", "vulvovaginitis", "simple straddle injuries", "sexual health counselling", "abnormal uterine bleeding", "amenorrhea", "other menstrual irregularities", "adnexal masses", "delayed/precocious puberty", "obstructive Mullerian anomalies", "other"],
+                    'setting': ["outpatient", "inpatient", "emergency room"]
+                },
+                '3.11': {
+                    'Patient presentation': ["pelvic organ prolapse (POP)", "urinary incontinence (UI)- stress", "urinary incontinence (UI)- urge", "lower urinary tract symptoms (LUTS)", "anal incontinence and defecatory dysfunction", "fistulas"],
+                    'Management': ["pessary fitting", "cystoscopy", "urodynamic interpretation", "primary surgical correction of stress incontinence", "other"]
+                },
+                '3.12': {
+                    'Patient presentation': ["chronic pelvic pain", "sexual health concern"],
+                    'Diagnosis': ["vulvodynia", "levator hypertonicity", "myofascial pain", "female sexual dysfunction", "other"]
+                },
+                '3.13': {
+                    'Tumour Site': ["ovarian/fallopian tube/primary peritoneal", "endometrial/sarcoma", "cervix", "vulva/vagina", "gestational trophoblastic disease (GTD)", "other"],
+                    'setting': ["outpatient", "inpatient", "emergency room"]
+                },
+                '3.14': {
+                    'Procedure': ["endometrial resection", "endometrial ablation", "myomectomy", "septoplasty of partial/complete septum", "lysis of intrauterine adhesions", "other"],
+                    'TYPE': []
+                },
+                '3.15': {
+                    'Procedure': ["vaginal hysterectomy", "anterior and posterior repair", "simple vulvectomy", "cervical conization", "perineorrhaphy", "colpocleisis"],
+                    'TYPE': []
+                },
+                '3.16': {
+                    'Procedure': ["laparoscopic salpingostomy/salpingectomy", "laparoscopic ovarian cystectomy", "salpingo-oophorectomy", "laparoscopic treatment of endometriosis", "laparoscopic-assisted vaginal hysterectomy (LAVH)", "total laparoscopic hysterectomy (TLH)"],
+                    'TYPE': []
+                },
+                '3.17': {
+                    'Procedure': ["total abdominal hysterectomy", "subtotal abdominal hysterectomy", "salpingo-oophorectomy/oophorectomy", "ovarian cystectomy", "abdominal myomectomy", "omentectomy", "peritoneal biopsy", "conversion from planned laparoscopy", "repair of incisional dehiscence", "adhesiolysis"],
+                    'TYPE': []
+                },
+                '3.18': {
+                    'Complication': ["bowel obstruction", "bowel injury", "infection", "perioperative bleeding", "genitourinary complication", "thromboembolic disease", "wound complication", "nerve injury", "uterine perforation", "vascular injury", "other"],
+                    'TYPE': []
+                },
+                '3.19': {
+                    'Day Complexity': ["low", "medium", "high"],
+                    'TYPE': []
+                }
             }
         },
         4: {
@@ -257,6 +384,15 @@ const programInfo = {
             },
             filterTitles: {
                 '4.1': ["Case", "TYPE"]
+            },
+            filterValuesDict: {
+                '4.1': {
+                    'Case': ["gynecology", "obstetrics"],
+                    'TYPE': []
+                },
+                '4.2': {},
+                '4.3': {},
+                '4.4': {}
             }
         },
     }

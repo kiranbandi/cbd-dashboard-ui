@@ -63,6 +63,18 @@ const programInfo = {
                 '1.1': ['Procedure Type'],
                 '1.2': ['Procedure Type'],
                 '1.3': ['Procedure Type', 'Anesthesia Type'],
+            },
+            filterValuesDict: {
+                '1.1': {
+                    'Procedure Type': ["general surgery", "gynecology", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "urology", "other surgery"]
+                },
+                '1.2': {
+                    'Procedure Type': ["general surgery", "gynecology", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "urology", "other surgery"]
+                },
+                '1.3': {
+                    'Procedure Type': ["general surgery", "gynecology", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "urology", "other surgery"],
+                    'Anesthesia Type': ["general", "regional", "monitored anesthesia care (MAC)"]
+                }
             }
         },
         2: {
@@ -107,8 +119,8 @@ const programInfo = {
             clinicalPresentation: {
                 '2.1': ["general surgery", "gynecology", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "trauma", "urology", "other surgery"],
                 '2.2': ["general surgery", "gynecology", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "trauma", "urology", "other surgery"],
-                '2.3':  ["arterial line", "central line", "spinal"],
-                '2.5':  ["general surgery", "gynecology", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "urology", "spine surgery", "neurosurgery", "other surgery"],
+                '2.3': ["arterial line", "central line", "spinal"],
+                '2.5': ["general surgery", "gynecology", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "urology", "spine surgery", "neurosurgery", "other surgery"],
                 '2.8': ["general surgery", "gynecology", "neurosurgery", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "thoracic surgery", "urology", "vascular surgery", "other surgery"],
                 '2.10': ["surgical condition", "chest pain", "shortness of breath", "altered LOC", "fever", "hemodynamic instability", "other condition"],
                 '2.12': ['direct', 'case review'],
@@ -116,13 +128,13 @@ const programInfo = {
             },
             patientDemographic: {
                 '2.1': ["not done", "done", "language barrier", "cognitive impairment", "substitute decision maker"],
-                '2.2':  ["general", "neuraxial", "regional", "monitored anesthesia care (MAC)"],
-                '2.3':  ["not applicable", "jugular", "subclavian", "femoral", "PICC"],
+                '2.2': ["general", "neuraxial", "regional", "monitored anesthesia care (MAC)"],
+                '2.3': ["not applicable", "jugular", "subclavian", "femoral", "PICC"],
                 '2.5': ["supine", "supine with laparoscopic surgery", "gynecologic positioning/lithotomy", "lateral decubitus", "prone", "sitting/semi-sitting", "other"],
                 '2.8': ["pain", "nausea and/or vomiting", "hypotension", "hypertension", "arrhythmias", "cardiac ischemia", "hypoxemia", "respiratory depression", "bronchospasm", "pulmonary edema", "deep venous thrombosis", "delirium", "slow awakening", "decreased urine output", "other issue"],
-                '2.10':  ["surgical ward", "medical ward", "coronary care unit", "ICU", "ER", "other location"],
+                '2.10': ["surgical ward", "medical ward", "coronary care unit", "ICU", "ER", "other location"],
                 '2.12': ['epidural', 'other analgesia'],
-                '2.13':  ["spinal", "use of epidural previously inserted for labor analgesia", "GA"]
+                '2.13': ["spinal", "use of epidural previously inserted for labor analgesia", "GA"]
             },
             filterTitles: {
                 '2.1': ['Procedure Type', 'Observation Consent'],
@@ -133,6 +145,48 @@ const programInfo = {
                 '2.10': ['Condition', 'Location'],
                 '2.12': ['Observation Type', 'Analgesia Type'],
                 '2.13': ['Surgery Priority', 'Anesthesia Type']
+            },
+            filterValuesDict: {
+                '2.1': {
+                    'Procedure Type': ["general surgery", "gynecology", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "trauma", "urology", "other surgery"],
+                    'Observation Consent': ["not done", "done", "language barrier", "cognitive impairment", "substitute decision maker"]
+                },
+                '2.2': {
+                    'Procedure Type': ["general surgery", "gynecology", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "trauma", "urology", "other surgery"],
+                    'Anesthesia Type': ["general", "neuraxial", "regional", "monitored anesthesia care (MAC)"]
+                },
+                '2.3': {
+                    'Procedure Type': ["arterial line", "central line", "spinal"],
+                    'Site of Central Line': ["not applicable", "jugular", "subclavian", "femoral", "PICC"]
+                },
+                '2.4': {},
+                '2.5': {
+                    'Procedure Type': ["general surgery", "gynecology", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "urology", "spine surgery", "neurosurgery", "other surgery"],
+                    'Patient Position': ["supine", "supine with laparoscopic surgery", "gynecologic positioning/lithotomy", "lateral decubitus", "prone", "sitting/semi-sitting", "other"]
+                },
+                '2.6': {},
+                '2.7': {},
+                '2.8': {
+                    'Procedure Type': ["general surgery", "gynecology", "neurosurgery", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "thoracic surgery", "urology", "vascular surgery", "other surgery"],
+                    'Issue Type': ["pain", "nausea and/or vomiting", "hypotension", "hypertension", "arrhythmias", "cardiac ischemia", "hypoxemia", "respiratory depression", "bronchospasm", "pulmonary edema", "deep venous thrombosis", "delirium", "slow awakening", "decreased urine output", "other issue"]
+                },
+                '2.9': {},
+                '2.10': {
+                    'Condition': ["surgical condition", "chest pain", "shortness of breath", "altered LOC", "fever", "hemodynamic instability", "other condition"],
+                    'Location': ["surgical ward", "medical ward", "coronary care unit", "ICU", "ER", "other location"]
+                },
+                '2.11': {},
+                '2.12': {
+                    'Observation Type': ['direct', 'case review'],
+                    'Analgesia Type': ['epidural', 'other analgesia']
+                },
+                '2.13': {
+                    'Surgery Priority': ['scheduled', 'urgent'],
+                    'Anesthesia Type': ["spinal", "use of epidural previously inserted for labor analgesia", "GA"]
+                },
+                '2.14': {},
+                '2.15': {},
+                '2.16': {}
             }
         },
         3: {
@@ -199,21 +253,21 @@ const programInfo = {
                 '3.4': ["anticipated difficult BMV", "unanticipated difficult BMV", "anticipated difficult intubation", "unanticipated difficult intubation", "airway foreign body", "other airway issue"],
                 '3.5': ['OR', 'PACU'],
                 '3.7': ['yes', 'no'],
-                '3.11':  ["upper limb", "lower limb", "trunk", "other location"],
+                '3.11': ["upper limb", "lower limb", "trunk", "other location"],
                 '3.15': ["aortic surgery", "carotid surgery", "peripheral vascular surgery"],
                 '3.16': ["lumbar surgery", "thoracic surgery", "cervical surgery", "scoliosis surgery", "unstable cervical spine surgery", "other surgery"],
                 '3.17': ["tumour", "pituitary tumour", "vascular intracranial surgery", "functional neurosurgery", "neuroradiology", "other procedure"],
-                '3.18':  ["thoracotomy", "thoracoscopy", "other surgery"],
+                '3.18': ["thoracotomy", "thoracoscopy", "other surgery"],
                 '3.19': ['initial assessment', 'followup care'],
                 '3.21': ["cardiac disease", "neurologic disease", "respiratory disease", "sepsis", "trauma", "shock", "postoperative", "other diagnosis"],
-                '3.22':  ["cardiac event", "neurologic event", "respiratory failure", "sepsis", "shock", "other condition"]
+                '3.22': ["cardiac event", "neurologic event", "respiratory failure", "sepsis", "shock", "other condition"]
 
             },
             patientDemographic: {
                 '3.1': ["cancer: cardiovascular disease", "connective tissue disease", "diabetes mellitus", "end organ disease", "endocrine disorders", "frailty", "significant hematological disorders", "infectious diseases", "morbid obesity", "neurological diseases", "neuromuscular and musculoskeletal disease", "obstructive sleep apnea (OSA)", "organ transplantation", "advanced significant respiratory disease"],
                 '3.3': ['cardiac', 'other surgery'],
                 '3.4': ["fiberoptic", "direct laryngoscopy", "video laryngoscopy", "adjunct airway use", "other management technique"],
-                '3.5':  ["cardiac arrest", "unstable arrhythmia", "polytrauma", "massive hemorrhage", "severe burn", "sepsis, shock", "other condition"],
+                '3.5': ["cardiac arrest", "unstable arrhythmia", "polytrauma", "massive hemorrhage", "severe burn", "sepsis, shock", "other condition"],
                 '3.7': ["spinal", "epidural", "combined spinal/epidural", "general", "other anesthesia"],
                 '3.11': ["interscalenic", "supra-clavicular", "infra-clavicular", "axillary", "peripheral block", "transversus abdominis plane block", "sciatic nerve", "femoral nerve", "popliteal sciatic", "ankle block", "other block"],
                 '3.15': ["arterial line", "central line", "spinal cord protection", "cerebral monitoring, lung isolation"],
@@ -240,6 +294,74 @@ const programInfo = {
                 '3.19': ['Issue Type', 'Complication of Pain Management'],
                 '3.21': ['Primary diagnosis', 'Setting'],
                 '3.22': ['Type of condition', 'Location']
+            },
+            filterValuesDict: {
+                '3.1': {
+                    'Procedure Type': ["cardiac surgery", "general surgery", "gynecology", "neurosurgery", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "thoracic surgery", "urology", "vascular surgery"],
+                    'Co-morbidity Type': ["cancer: cardiovascular disease", "connective tissue disease", "diabetes mellitus", "end organ disease", "endocrine disorders", "frailty", "significant hematological disorders", "infectious diseases", "morbid obesity", "neurological diseases", "neuromuscular and musculoskeletal disease", "obstructive sleep apnea (OSA)", "organ transplantation", "advanced significant respiratory disease"]
+                },
+                '3.2': {
+                    'Critical Life Support Type': ["circulatory", "respiratory", "renal", "other life support"]
+                },
+                '3.3': {
+                    'Cardiac Diesease Type': ["coronary disease", "mitral stenosis", "mitral regurgitation", "aortic stenosis", "aortic regurgitation", "cardiomyopathy", "left ventricular dysfunction", "right ventricular dysfunction"],
+                    'Surgery Type': ['cardiac', 'other surgery']
+                },
+                '3.4': {
+                    'Airway Issue': ["anticipated difficult BMV", "unanticipated difficult BMV", "anticipated difficult intubation", "unanticipated difficult intubation", "airway foreign body", "other airway issue"],
+                    'Airway Management Technique': ["fiberoptic", "direct laryngoscopy", "video laryngoscopy", "adjunct airway use", "other management technique"]
+                },
+                '3.5': {
+                    'Setting': ['OR', 'PACU'],
+                    'Condition Type': ["cardiac arrest", "unstable arrhythmia", "polytrauma", "massive hemorrhage", "severe burn", "sepsis, shock", "other condition"]
+                },
+                '3.6': {},
+                '3.7': {
+                    'Urgent': ['yes', 'no'],
+                    'Anesthesia Type': ["spinal", "epidural", "combined spinal/epidural", "general", "other anesthesia"]
+                },
+                '3.8': {},
+                '3.9': {},
+                '3.10': {},
+                '3.11': {
+                    'Location of block': ["upper limb", "lower limb", "trunk", "other location"],
+                    'Type of block': ["interscalenic", "supra-clavicular", "infra-clavicular", "axillary", "peripheral block", "transversus abdominis plane block", "sciatic nerve", "femoral nerve", "popliteal sciatic", "ankle block", "other block"]
+                },
+                '3.12': {},
+                '3.13': {},
+                '3.14': {},
+                '3.15': {
+                    'Procedure Type': ["aortic surgery", "carotid surgery", "peripheral vascular surgery"],
+                    'Type of monitors': ["arterial line", "central line", "spinal cord protection", "cerebral monitoring, lung isolation"]
+                },
+                '3.16': {
+                    'Surgery Type': ["lumbar surgery", "thoracic surgery", "cervical surgery", "scoliosis surgery", "unstable cervical spine surgery", "other surgery"],
+                    'Timing': ['elective', 'emergency']
+                },
+                '3.17': {
+                    'Type of neurosurgical procedure': ["tumour", "pituitary tumour", "vascular intracranial surgery", "functional neurosurgery", "neuroradiology", "other procedure"],
+                    'Increased intracranial pressure': ['yes', 'no']
+                },
+                '3.18': {
+                    'Surgery Type': ["thoracotomy", "thoracoscopy", "other surgery"],
+                    'Procedure Type': ["lung resection", "pneumonectomy", "esophagectomy", "mediastinoscopy", "surgery for anterior mediastinal mass", "other procedure"]
+                },
+                '3.19': {
+                    'Issue Type': ['initial assessment', 'followup care'],
+                    'Complication of Pain Management': ['yes', 'no']
+                },
+                '3.20': {},
+                '3.21': {
+                    'Primary diagnosis': ["cardiac disease", "neurologic disease", "respiratory disease", "sepsis", "trauma", "shock", "postoperative", "other diagnosis"],
+                    'Setting': ['initial assessment', 'daily care']
+                },
+                '3.22': {
+                    'Type of condition': ["cardiac event", "neurologic event", "respiratory failure", "sepsis", "shock", "other condition"],
+                    'Location': ['ICU', 'ER', 'ward']
+                },
+                '3.23': {},
+                '3.24': {},
+                '3.25': {}
             }
         },
         4: {
@@ -277,6 +399,25 @@ const programInfo = {
                 '1.2': ['Procedure Type', 'Complexity'],
                 '1.3': ['Shift Type', 'Complexity'],
                 '1.4': ['Time', 'Complexity']
+            },
+            filterValuesDict: {
+                '4.1': {
+                    'Procedure Type': ["general surgery", "gynecology", "neurosurgery", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "spinal surgery", "thoracic surgery", "urology", "vascular surgery"],
+                    'Complexity': ['low', 'medium', 'high']
+                },
+                '4.2': {
+                    'Procedure Type': ["general surgery", "gynecology", "neurosurgery", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "spinal surgery", "thoracic surgery", "urology", "vascular surgery", "out-of-OR procedures"],
+                    'Complexity': ['low', 'medium', 'high']
+                },
+                '4.3': {
+                    'Shift Type': ["week night", "weekend day", "weekend night"],
+                    'Complexity': ['low', 'medium', 'high']
+                },
+                '4.4': {
+                    'Time': ["day", "night"],
+                    'Complexity': ['low', 'medium', 'high']
+                },
+                '4.5': {}
             }
         },
     }

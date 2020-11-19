@@ -68,8 +68,13 @@ const programInfo = {
             },
             clinicalPresentation: {},
             patientDemographic: {},
-            filterTitles: {}
-
+            filterTitles: {},
+            filterValuesDict: {
+                '1.1': {},
+                '1.2': {},
+                '1.3': {},
+                '1.4': {}
+            }
         },
         2: {
             'ID': 'F',
@@ -99,6 +104,20 @@ const programInfo = {
                 '2.1': ['Observation Type', 'Setting'],
                 '2.2': ['Observation Type', 'Setting'],
                 '2.3': ['Procedure', 'Setting'],
+            },
+            filterValuesDict: {
+                '2.1': {
+                    'Observation Type': ['direct', 'indirect'],
+                    'Setting': ["emergency room", "medicine inpatient unit", "surgery inpatient unit", "outpatient medicine clinic", "outpatient surgery clinic", "simulation", "other"]
+                },
+                '2.2': {
+                    'Observation Type': ['direct', 'indirect'],
+                    'Setting': ["emergency room", "medicine inpatient unit", "surgery inpatient unit", "outpatient medicine clinic", "outpatient surgery clinic", "simulation", "other"]
+                },
+                '2.3': {
+                    'Procedure': ["bladder catheterization", "casting", "cast removal", "IV insertion", "joint aspiration/injection", "musculoskeletal injection", "NG tube insertion", "PEG tube removal", "removal of sutures", "superficial skin suturing", "tracheostomy removal", "other"],
+                    'Setting': ["consultation service", "inpatient unit", "outpatient clinic", "simulation"]
+                }
             }
         },
         3: {
@@ -139,7 +158,7 @@ const programInfo = {
                 '3.3': ["acute joint swelling", "acute limb swelling", "acute undifferentiated functional deterioration", "acute wound deterioration", "altered level of consciousness", "altered neurological status", "angioedema/anaphylaxis", "autonomic dysreflexia", "code blue", "critical abnormal investigation result", "critical abnormal vitals", "falls/acute trauma", "major hemorrhage", "overdose", "palpitations", "post-traumatic agitation", "pulseless limb", "respiratory distress", "severe acute pain", "urgent mental health and behavioral issues"],
                 '3.4': ["amputee/limb deficiency", "brain injury/tumour", "cerebral palsy", "spina bifida", "muscular dystrophy", "MSK (e.g., scoliosis, JIA, apophysitis, SCFE, osteochondritis dessicans)"],
                 '3.6': ["consultation service", "inpatient unit", "outpatient clinic", "electrodiagnostic clinic", "simulation"],
-                '3.7':  ["inpatient unit", "outpatient clinic", "simulation"]
+                '3.7': ["inpatient unit", "outpatient clinic", "simulation"]
             },
             filterTitles: {
                 '3.1': ['Complexity', 'Setting'],
@@ -149,6 +168,36 @@ const programInfo = {
                 '3.5': ['Setting'],
                 '3.6': ['Complexity', 'Setting'],
                 '3.7': ['Meeting Type', 'Setting']
+            },
+            filterValuesDict: {
+                '3.1': {
+                    'Complexity': ['low', 'high'],
+                    'Setting': ["inpatient rehabilitation", "outpatient physiatry clinic", "outpatient electrodiagnostic clinic", "consultation service"]
+                },
+                '3.2': {
+                    'Complexity': ['low', 'high'],
+                    'Setting': ["inpatient rehabilitation", "outpatient physiatry clinic", "outpatient electrodiagnostic clinic", "consultation service"]
+                },
+                '3.3': {
+                    'Setting': ["inpatient rehabilitation", "outpatient physiatry clinic", "outpatient electrodiagnostic clinic", "consultation service", "simulation"],
+                    'Medical Issue': ["acute joint swelling", "acute limb swelling", "acute undifferentiated functional deterioration", "acute wound deterioration", "altered level of consciousness", "altered neurological status", "angioedema/anaphylaxis", "autonomic dysreflexia", "code blue", "critical abnormal investigation result", "critical abnormal vitals", "falls/acute trauma", "major hemorrhage", "overdose", "palpitations", "post-traumatic agitation", "pulseless limb", "respiratory distress", "severe acute pain", "urgent mental health and behavioral issues"]
+                },
+                '3.4': {
+                    'Setting': ["inpatient pediatric rehabilitation", "outpatient pediatric rehabilitation or transition clinic"],
+                    'Pediatric rehabilitation population': ["amputee/limb deficiency", "brain injury/tumour", "cerebral palsy", "spina bifida", "muscular dystrophy", "MSK (e.g., scoliosis, JIA, apophysitis, SCFE, osteochondritis dessicans)"]
+                },
+                '3.5': {
+                    'Setting': ["consultation service", "inpatient rehabilitation", "outpatient physiatry", "electrodiagnostic clinic", "simulation"]
+                },
+                '3.6': {
+                    'Complexity': ['low', 'high'],
+                    'Setting': ["consultation service", "inpatient unit", "outpatient clinic", "electrodiagnostic clinic", "simulation"]
+                },
+                '3.7': {
+                    'Meeting Type': ["interprofessional family/care conference", "team conference/encounter"],
+                    'Setting': ["inpatient unit", "outpatient clinic", "simulation"]
+                },
+                '3.8': []
             }
         },
         4: {
@@ -174,6 +223,15 @@ const programInfo = {
             patientDemographic: {},
             filterTitles: {
                 '4.2': ['Learning Activity']
+            },
+            filterValuesDict: {
+                '4.1': {},
+                '4.2': {
+                    'Learning Activity': ["MOC section 3 - knowledge ( accredited self-assessment program)", "MOC section 3 – performance (accredited simulation, chart audit, MSF, practice assessment)", "personal learning project/critical appraisal", "narrative on plans for improvement", "narrative on areas of interest and plan to address", "rotation specific teaching", "grand rounds presentations", "journal club presentations"]
+                },
+                '4.3': {},
+                '4.4': {},
+                '4.5': {}
             }
         },
     }

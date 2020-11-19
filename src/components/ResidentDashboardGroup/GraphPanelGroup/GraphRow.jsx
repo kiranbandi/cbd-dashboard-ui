@@ -10,18 +10,29 @@ export default class GraphRow extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { clinicalFilter: '', patientDemographicFilter: '', typeFilter: '', directVsIndirectFilter: '', staffObservationfilter: '' };
+        // this.state = { clinicalFilter: '', patientDemographicFilter: '', typeFilter: '', directVsIndirectFilter: '', staffObservationfilter: '' };
+        this.state = { filterDict: {} };
         this.onHighlightChange = this.onHighlightChange.bind(this);
 
     }
 
-    onHighlightChange(clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter) {
-        this.setState({ clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter });
+    // onHighlightChange(clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter) {
+    //     this.setState({ clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter });
+    // }
+    onHighlightChange(filterKey, filterValue) {
+        if (filterKey === '*') {
+            this.setState({ filterDict: filterValue });
+        } else {
+            this.state.filterDict[filterKey] = filterValue;
+            const filterDict = this.state.filterDict;
+            this.setState({ filterDict });
+        }
     }
 
     render() {
 
-        const { clinicalFilter, patientDemographicFilter, typeFilter = '', directVsIndirectFilter = '', staffObservationfilter = '' } = this.state;
+        // const { clinicalFilter, patientDemographicFilter, typeFilter = '', directVsIndirectFilter = '', staffObservationfilter = '' } = this.state;
+        const { filterDict } = this.state;
 
         let { epaSource, isTableVisible, isPlanVisible, innerKey,
             widthPartition, smallScreen, epaSourceMap,
@@ -63,28 +74,33 @@ export default class GraphRow extends Component {
             let highlight = false;
 
             if (isFilterVisible) {
-                highlight = true;
 
                 const context = splitAndTrim(d.Situation_Context);
+                highlight = true;
+                for (const filter of Object.values(filterDict)) {
+                    if (filter) {
+                        highlight = highlight && context.indexOf(filter) > -1;
+                    }
+                }
 
-                if (clinicalFilter.length > 0 && patientDemographicFilter.length > 0 && typeFilter.length > 0 && directVsIndirectFilter.length > 0) {
-                    highlight = highlight && (context.indexOf(clinicalFilter) > 0 && context.indexOf(patientDemographicFilter) > -1) ? true : false;
-                }
-                if (clinicalFilter.length > 0) {
-                    highlight = highlight && (context.indexOf(clinicalFilter) > -1);
-                }
-                if (patientDemographicFilter.length > 0) {
-                    highlight = highlight && (context.indexOf(patientDemographicFilter) > -1);
-                }
-                if (typeFilter.length > 0) {
-                    highlight = highlight && (context.indexOf(typeFilter) > -1);
-                }
-                if (directVsIndirectFilter.length > 0) {
-                    highlight = highlight && (context.indexOf(directVsIndirectFilter) > -1);
-                }
-                if (staffObservationfilter.length > 0) {
-                    highlight = highlight && (context.indexOf(staffObservationfilter) > -1);
-                }
+                // if (clinicalFilter.length > 0 && patientDemographicFilter.length > 0 && typeFilter.length > 0 && directVsIndirectFilter.length > 0) {
+                //     highlight = highlight && (context.indexOf(clinicalFilter) > 0 && context.indexOf(patientDemographicFilter) > -1) ? true : false;
+                // }
+                // if (clinicalFilter.length > 0) {
+                //     highlight = highlight && (context.indexOf(clinicalFilter) > -1);
+                // }
+                // if (patientDemographicFilter.length > 0) {
+                //     highlight = highlight && (context.indexOf(patientDemographicFilter) > -1);
+                // }
+                // if (typeFilter.length > 0) {
+                //     highlight = highlight && (context.indexOf(typeFilter) > -1);
+                // }
+                // if (directVsIndirectFilter.length > 0) {
+                //     highlight = highlight && (context.indexOf(directVsIndirectFilter) > -1);
+                // }
+                // if (staffObservationfilter.length > 0) {
+                //     highlight = highlight && (context.indexOf(staffObservationfilter) > -1);
+                // }
             }
 
             return {
@@ -112,12 +128,13 @@ export default class GraphRow extends Component {
             type = {} } = epaSourceMap[innerKey];
 
 
-        const isClinicalFilteringAvailable = (clinicalPresentation[epaSource] && clinicalPresentation[epaSource].length > 0),
-            isPatientDemoFilteringAvailable = (patientDemographic[epaSource] && patientDemographic[epaSource].length > 0),
-            isTypeFilteringAvailable = (type[epaSource] && type[epaSource].length > 0),
-            // turn filtering on if filtering in any one filter is available
-            isAnyFilterAvailable = !!isClinicalFilteringAvailable || !!isPatientDemoFilteringAvailable || !!isTypeFilteringAvailable,
-            isAssessmentPlanAvailable = epaSourceMap[innerKey].assessmentInfo && epaSourceMap[innerKey].assessmentInfo[epaSource];
+        // const isClinicalFilteringAvailable = (clinicalPresentation[epaSource] && clinicalPresentation[epaSource].length > 0),
+        //     isPatientDemoFilteringAvailable = (patientDemographic[epaSource] && patientDemographic[epaSource].length > 0),
+        //     isTypeFilteringAvailable = (type[epaSource] && type[epaSource].length > 0),
+        //     // turn filtering on if filtering in any one filter is available
+        //     isAnyFilterAvailable = !!isClinicalFilteringAvailable || !!isPatientDemoFilteringAvailable || !!isTypeFilteringAvailable;
+        const isAnyFilterAvailable = Object.keys(filterDict).map(key => epaSourceMap[key] && epaSourceMap[key][epaSource] && epaSourceMap[key][epaSource].every(Boolean));
+        const isAssessmentPlanAvailable = epaSourceMap[innerKey].assessmentInfo && epaSourceMap[innerKey].assessmentInfo[epaSource];
 
         return (
             <div className='text-xs-center'>
@@ -199,11 +216,12 @@ export default class GraphRow extends Component {
                         epaSource={epaSource}
                         epaSourceMap={epaSourceMap}
                         onHighlightChange={this.onHighlightChange}
-                        clinicalFilter={clinicalFilter}
-                        patientDemographicFilter={patientDemographicFilter}
-                        typeFilter={typeFilter}
-                        directVsIndirectFilter={directVsIndirectFilter}
-                        staffObservationfilter={staffObservationfilter}
+                        filterDict={filterDict}
+                    // clinicalFilter={clinicalFilter}
+                    // patientDemographicFilter={patientDemographicFilter}
+                    // typeFilter={typeFilter}
+                    // directVsIndirectFilter={directVsIndirectFilter}
+                    // staffObservationfilter={staffObservationfilter}
                     />}
             </div>
         );

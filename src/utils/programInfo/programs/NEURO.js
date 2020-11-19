@@ -33,7 +33,10 @@ const programInfo = {
             },
             clinicalPresentation: {},
             patientDemographic: {},
-            filterTitles: {}
+            filterTitles: {},
+            filterValuesDict: {
+                '1.1': {}
+            }
         },
         2: {
             'ID': 'F',
@@ -66,8 +69,8 @@ const programInfo = {
             },
             clinicalPresentation: {
                 '2.1': ["central", "spine", "peripheral"],
-                '2.2':  ["subarachnoid hemorrhage", "severe traumatic brain injury", "spontaneous intracranial hemorrhage", "acute hydrocephalus", "mass lesion with acute deterioration"],
-                '2.3':  ["cervical", "thoracic and/or lumbar"],
+                '2.2': ["subarachnoid hemorrhage", "severe traumatic brain injury", "spontaneous intracranial hemorrhage", "acute hydrocephalus", "mass lesion with acute deterioration"],
+                '2.3': ["cervical", "thoracic and/or lumbar"],
                 '2.4': ["CSF leak", "seizure", "CNS related endocrine and metabolic disturbances", "CNS infection", "vasospasm", "new postoperative neurologic deficit", "trouble shooting drains"],
                 '2.5': ["central", "spinal", "peripheral"],
                 '2.7': ["lumbar drain", "intracranial pressure monitor", "external ventricular drain"],
@@ -85,6 +88,35 @@ const programInfo = {
                 '2.5': ["Location"],
                 '2.7': ['Type of Drain'],
                 '2.11': ['Location']
+            },
+            filterValuesDict: {
+                '2.1': {
+                    'Location': ["central", "spine", "peripheral"],
+                    'Etiology': ["trauma", "tumour", "hemorrhage", "other"]
+                },
+                '2.2': {
+                    'Case Mix': ["subarachnoid hemorrhage", "severe traumatic brain injury", "spontaneous intracranial hemorrhage", "acute hydrocephalus", "mass lesion with acute deterioration"],
+                    'Herination Syndrome': ["yes", "no"]
+                },
+                '2.3': {
+                    'Level': ["cervical", "thoracic and/or lumbar"]
+                },
+                '2.4': {
+                    'Issue Type': ["CSF leak", "seizure", "CNS related endocrine and metabolic disturbances", "CNS infection", "vasospasm", "new postoperative neurologic deficit", "trouble shooting drains"]
+                },
+                '2.5': {
+                    'Location': ["central", "spinal", "peripheral"]
+                },
+                '2.6': {},
+                '2.7': {
+                    'Type of Drain': ["lumbar drain", "intracranial pressure monitor", "external ventricular drain"]
+                },
+                '2.8': {},
+                '2.9': {},
+                '2.10': {},
+                '2.11': {
+                    'Location': ["cervical", "thoracic", "lumbar"]
+                }
             }
         },
         3: {
@@ -188,7 +220,55 @@ const programInfo = {
             },
             clinicalPresentation: {},
             patientDemographic: {},
-            filterTitles: {}
+            filterTitles: {},
+            filterValuesDict: {
+                '3.1': {},
+                '3.2': {},
+                '3.3': {},
+                '3.4': {},
+                '3.5': {},
+                '3.6': {},
+                '3.7': {},
+                '3.8': {},
+                '3.9': {},
+                '3.10': {},
+                '3.11': {},
+                '3.12': {},
+                '3.13': {},
+                '3.14': {},
+                '3.15': {},
+                '3.16': {},
+                '3.17': {},
+                '3.18': {},
+                '3.19': {},
+                '3.20': {},
+                '3.21': {},
+                '3.22': {},
+                '3.23': {},
+                '3.24': {},
+                '3.25': {},
+                '3.26': {},
+                '3.27': {},
+                '3.28': {},
+                '3.29': {},
+                '3.30': {},
+                '3.31': {},
+                '3.32': {},
+                '3.33': {},
+                '3.34': {},
+                '3.35': {},
+                '3.36': {},
+                '3.37': {},
+                '3.38': {},
+                '3.39': {},
+                '3.40': {},
+                '3.41': {},
+                '3.42': {},
+                '3.43': {},
+                '3.44': {},
+                '3.45': {},
+                '3.46': {}
+            }
         },
         4: {
             'ID': 'TP',
@@ -209,6 +289,13 @@ const programInfo = {
             patientDemographic: {},
             filterTitles: {
                 '4.2': ['Procedure']
+            },
+            filterValuesDict: {
+                '4.1': {},
+                '4.2': {
+                    'Procedure': ["general", "functional", "peripheral", "spinal", "vascular", "oncology", "pediatric", "other"]
+                },
+                '4.3': {}
             }
         },
     }
