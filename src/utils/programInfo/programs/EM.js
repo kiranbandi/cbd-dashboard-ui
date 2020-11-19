@@ -57,6 +57,20 @@ const programInfo = {
                 '1.4': []
             },
             filterTitles: {},
+            filterValuesDict: {
+                '1.1': {
+                    'Clinical Presentation': ["cardiorespiratory arrest", "unstable dysrhythmia", "shock", "respiratory distress", "altered neurological status", "other"],
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '1.2': {
+                    'Clinical Presentation': ["chest pain", "shortness of breath", "abdominal pain", "minor trauma", "other"],
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '1.3': {
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '1.4': {}
+            },
             assessmentInfo: {
                 '1.1': `Collect 10 observations of achievement
                 - At least 1 of each clinical presentation
@@ -75,7 +89,6 @@ const programInfo = {
                 '1.4': `Direct observation over a series of two or more emergency department clinical shifts by
                 supervising physician or transition to practice emergency medicine resident`
             }
-
         },
         2: {
             'ID': 'F',
@@ -109,6 +122,24 @@ const programInfo = {
                 '2.5': []
             },
             filterTitles: {},
+            filterValuesDict: {
+                '2.1': {
+                    'Clinical Presentation': ["cardiorespiratory arrest", "unstable dysrhythmia", "shock", "respiratory distress", "altered neurological status", "other"],
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '2.2': {
+                    'Clinical Presentation': ["cough or wheeze", "musculoskeletal injury or pain", "eye complaint", "ENT complaint", "headache", "other"],
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '2.3': {
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '2.4': {
+                    'Clinical Presentation': ["simple wound repair including anesthesia", "abscess drainage", "casting or splinting", "anterior nasal packing", "arthrocentesis", "intraocular pressure measurement", "intraosseous acces"],
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '2.5': {}
+            },
             assessmentInfo: {
                 '2.1': `Collect 15 observations of achievement
                 - At least 3 presentations in a clinical (not simulated) environment
@@ -177,7 +208,7 @@ const programInfo = {
                 '3.20': 1
             },
             clinicalPresentation: {
-                '3.1':  ["shock", "cardiorespiratory arrest", "respiratory failure", "severe sepsis", "other"],
+                '3.1': ["shock", "cardiorespiratory arrest", "respiratory failure", "severe sepsis", "other"],
                 '3.2': ["blunt trauma", "penetrating trauma", "other"],
                 '3.3': [],
                 '3.4': [],
@@ -189,7 +220,7 @@ const programInfo = {
                 '3.10': [],
                 '3.11': [],
                 '3.12': [],
-                '3.13':  ["complex wound repair", "central venous access with ultrasound guidance", "reduction of an extremity fracture", "lumbar puncture", "reduction of large joint dislocation", "regional anesthesia (e.g. large peripheral nerve block, not a digital nerve)", "thoracostomy tube insertion"],
+                '3.13': ["complex wound repair", "central venous access with ultrasound guidance", "reduction of an extremity fracture", "lumbar puncture", "reduction of large joint dislocation", "regional anesthesia (e.g. large peripheral nerve block, not a digital nerve)", "thoracostomy tube insertion"],
                 '3.14': ["pericardial effusion and cardiac tamponade", "global estimation of left ventricular fraction", "pneumothorax", "hemothorax", "pleural effusion", "abdominal aortic aneurysm", "abdominal or pelvic free fluid", " first trimester intrauterine gestation"],
                 '3.15': [],
                 '3.16': [],
@@ -221,6 +252,65 @@ const programInfo = {
                 '3.20': []
             },
             filterTitles: {},
+            filterValuesDict: {
+                '3.1': {
+                    'Clinical Presentation': ["shock", "cardiorespiratory arrest", "respiratory failure", "severe sepsis", "other"],
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '3.2': {
+                    'Clinical Presentation': ["blunt trauma", "penetrating trauma", "other"],
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '3.3': {
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '3.4': {
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '3.5': {
+                    'Clinical Presentation': ["abdominal pain", "chest pain", "dysrhythmia", "respiratory distress", "altered mental status", "other"],
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '3.6': {
+                    'Clinical Presentation': ["fever", "vomiting", "rash", "syncope", "weakness", "acute gynecological", "other"],
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '3.7': {
+                    'Clinical Presentation': ["first trimester bleeding", "complications of pregnancy", "vaginal delivery", "post-partum hemorrhage", "other"],
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '3.8': {
+                    'Clinical Presentation': ["sympathomimetic toxidrome", "opioid toxidrome", "antidepressant toxicity", "toxic bradycardia", "other"],
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '3.9': {
+                    'Clinical Presentation': ["psychosis or mania", "major depressive disorder", "anxiety disorder", "suicidality", "personality disorder", "other"],
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '3.10': {
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '3.11': {
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '3.12': {
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '3.13': {
+                    'Clinical Presentation': ["complex wound repair", "central venous access with ultrasound guidance", "reduction of an extremity fracture", "lumbar puncture", "reduction of large joint dislocation", "regional anesthesia (e.g. large peripheral nerve block, not a digital nerve)", "thoracostomy tube insertion"],
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '3.14': {
+                    'Clinical Presentation': ["pericardial effusion and cardiac tamponade", "global estimation of left ventricular fraction", "pneumothorax", "hemothorax", "pleural effusion", "abdominal aortic aneurysm", "abdominal or pelvic free fluid", " first trimester intrauterine gestation"],
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '3.15': {},
+                '3.16': {},
+                '3.17': {},
+                '3.18': {},
+                '3.19': {},
+                '3.20': {}
+            },
             assessmentInfo: {
                 '3.1': `Collect 40 observations of achievement
                 - At least 5 pediatric presentations, of which three may be simulated
@@ -342,6 +432,31 @@ const programInfo = {
                 '4.8': []
             },
             filterTitles: {},
+            filterValuesDict: {
+                '4.1': {
+                    'Clinical Presentation': ["resuscitation", "acute care", "ambulatory", "other"]
+                },
+                '4.2': {
+                    'Clinical Presentation': ["individual", "multiple"],
+                    'Demographic': ["medical student", "off service resident", "EM resident", " other"]
+                },
+                '4.3': {
+                    'Demographic': ["patient interaction", "family interaction", "physician interaction", "other health care professional interaction"]
+                },
+                '4.4': {
+                    'Clinical Presentation': ["consulting service", "community ED", "outpatient clinic", "family physician", "other"],
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '4.5': {
+                    'Clinical Presentation': ["EP to EP", "EP to OP within hospital", "EP to OP at another hospital", "EP to LTC", "EP to PCP", "EP to follow-up with OP", "other"],
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '4.6': {
+                    'Demographic': ["infant", "child", "youth", "adult", "senior"]
+                },
+                '4.7': {},
+                '4.8': {}
+            },
             assessmentInfo: {
                 '4.1': `Collect 25 observations of achievement.`,
                 '4.2': `Collect 15 observations of achievement

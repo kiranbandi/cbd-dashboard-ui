@@ -81,11 +81,28 @@ const programInfo = {
                 '1.3': ['Part A: Procedures']
             },
             filterTitles: {
-                '1.1': ['Type of Patient Visit', '', ''],
-                '1.2': ['Presentation', 'Setting', '', 'Direct vs Indirect\t1', 'Staff Observations\t1'],
-                '1.3': ['Procedure', 'Setting', '']
+                '1.1': ['Type of Patient Visit', 'Type'],
+                '1.2': ['Presentation', 'Setting', 'Type', 'Direct vs Indirect\t1', 'Staff Observations\t1'],
+                '1.3': ['Procedure', 'Setting', 'Type']
+            },
+            filterValuesDict: {
+                '1.1': {
+                    'Type of Patient Visit': ['new patient', 'focused follow-up'],
+                    'Type': ['Part A: Initial assessments']
+                },
+                '1.2': {
+                    'Presentation': ["acute respiratory distress", "hemodynamic instability", "altered level of consciousness"],
+                    'Setting': ['clinical', 'simulation'],
+                    'Type': ['Part A: Unstable patients'],
+                    'Direct vs Indirect': ['direct\f1', 'indirect'],
+                    'Staff Observations': ['staff\f1']
+                },
+                '1.3': {
+                    'Procedure': ["venipuncture", "peripheral intravenous placement", "radial arterial blood gas sampling", "nasogastric tube placement", "preparation of sterile field with local anesthetic injection for invasive procedures"],
+                    'Setting': ['clinical', 'simulation'],
+                    'Type': ['Part A: Procedures']
+                }
             }
-
         },
         2: {
             'ID': 'F',
@@ -116,6 +133,37 @@ const programInfo = {
                 '2.5': ["Presentation", "Setting", '', '', 'Staff Observations\t1'],
                 '2.6': ["Category", "Setting", '', '', 'Staff Observations\t1'],
                 '2.7': ['', '', '']
+            },
+            filterValuesDict: {
+                '2.1': {
+                    'Patient Visit': ["emergency department", "ward"],
+                    'Case Mix': ["chest pain", "shortness of breath", "altered level of consciousness", "fever", "hemodynamic instability", "other"],
+                    'Direct vs Indirect': ['direct\f5', 'indirect'],
+                    'Staff Observations' : ['staff\f3']
+                },
+                '2.2': {
+                    'Type': ["Part A: Patient Assessment and Management", "Part B: Communication with Patient/Family", "Part C: Handover"],
+                    'Staff Observations' : ['staff\f2']
+                },
+                '2.3': {
+                    'Role of Observer': ["supervisor", "physician specialist being consulted", "other health professional"],
+                    'Setting': ["ambulatory care", "inpatient", "emergency department"]
+                },
+                '2.4': {
+                    'Complex Hospital Stay': ["yes", 'no'],
+                    'Type': ["Part A: Discharge plan documentation", "Part B: Discharge plan communication"]
+                },
+                '2.5': {
+                    'Presentation': ["acute respiratory distress", "hemodynamic instability", "altered level of consciousness"],
+                    'Setting': ["emergency department", "step-down unit", "critical care unit", "ward", "simulation"],
+                    'Staff Observations': ['staff\f1']
+                },
+                '2.6': {
+                    'Category': ["stable acute condition", "unstable acute condition", "progressive chronic condition"],
+                    'Setting': ["ambulatory", "inpatient", "simulation"],
+                    'Staff Observations': ['staff\f1']
+                },
+                '2.7': {}
             },
             clinicalPresentation: {
                 '2.1': ["emergency department", "ward"],
@@ -186,6 +234,59 @@ const programInfo = {
                 '3.9': ["Scenario", '', 'Type'],
                 '3.10': ["Condition", '', ''],
                 '3.11': ['', '', 'Type']
+            },
+            filterValuesDict: {
+                '3.1': {
+                    'Focus of Care': ["initial assessment", "diagnosis", "management"],
+                    'Setting': ["ambulatory care", "inpatient"],
+                    'Direct vs Indirect': ['direct\f6', 'indirect'],
+                    'Staff Observations': ['staff\f3']
+                },
+                '3.2': {
+                    'Condition': ["asthma", "anemia", "arthritis", "cancer", "chronic fatigue", "chronic kidney disease", "chronic obstructive pulmonary disease", "congestive heart failure", "connective tissue disease", "coronary artery disease", "cirrhosis", "dementia", "diabetes mellitus", "hypertension", "other"],
+                    'Setting': ["ambulatory care", "inpatient"],
+                    'Type': ["Part A: Assessment, Diagnosis, and Management", "Part B: Patient Education/Communication"]
+                },
+                '3.3': {
+                    'Case Mix': ["perioperative", "obstetrical medicine", "other clinical service"],
+                    'Setting': ["ambulatory care", "inpatient"],
+                    'Type': ["Part A: Patient Assessment and Decision-Making", "Part B: Written Communication", "Part C: Oral Communication"],
+                    'Staff Observations': ['staff\f3']
+                },
+                '3.4': {
+                    'Focus of Care': ["resuscitation", "initiating plan", "ongoing management"],
+                    'Presentation': ["shock", "systemic inflammatory response syndrome/sepsis", "acute respiratory distress", "unstable cardiac rhythms", "acute coronary syndrome", "seizures/altered level of consciousness", "coagulation emergencies"],
+                    'Type': ["Part A: Patient Care", "Part B: Interprofessional Care"]
+                },
+                '3.5': {
+                    'Procedure': ["airway management & endotracheal intubation", "arterial line catheter insertion", "central line placement", "thoracentesis", "paracentesis", "lumbar puncture", "joint arthrocentesis"],
+                    'Site': ["not applicable", "femoral", "internal jugular", "subclavian", "knee", "other joint"],
+                    'Type': ["Part A: Procedure", "Part B: Submission of Procedure Log"]
+                },
+                '3.6': {
+                    'Category': ["patient leaving hospital against medical advice", "patient refusing recommended treatment", "patient or substitute decision maker refusing recommended home supports or nursing home placement", "other"],
+                    'Type of Observation': ["direct", "indirect"],
+                    'Staff Observations': ['staff\f3']
+                },
+                '3.7': {
+                    'Complexity': ["low", "medium", "high"],
+                    'Issue': ["futility of care", "breaking bad news", "discharge related discussion", "conflicting recommendations of consultants"]
+                },
+                '3.8': {
+                    'Type of Event': ["error", "near miss", "adverse event"],
+                    'Setting': ['clinical', 'simulation'],
+                    'Staff Observations': ['staff\f1']
+                },
+                '3.9': {
+                    'Scenario': ["cancer", "organ failure", "neurodegenerative diseases"],
+                    'Type': ["Part A: Symptom Management in End of Life Care", "Part B: Discussion about transition away from disease modifying treatment"]
+                },
+                '3.10': {
+                    'Condition': ["asthma/COPD", "cancer screening in at risk populations", "diabetes", "falls/frailty", "immunocompromised patient", "medication reviews", "vaccinations", "vascular risk reduction", "other"]
+                },
+                '3.11': {
+                    'Type': ["Part A: Teaching", "Part B: Running the Team"]
+                },
             },
             clinicalPresentation: {
                 '3.1': ["initial assessment", "diagnosis", "management"],
@@ -259,6 +360,25 @@ const programInfo = {
                 "4.6": ['', '', ''],
                 "4.7": ['', '', ''],
                 "4.8": ['', '', '']
+            },
+            filterValuesDict: {
+                '4.1': {
+                    'Category': ["acute", "chronic", "both acute and chronic"],
+                    'Type': ["Part A: Overall Patient Care", "Part B: Interprofessional Care"],
+                },
+                '4.2': {
+                    'Clinic Type': ["general IM", "focused", "general subspecialty"],
+                    'Type': ["Part A: Overall Patient Care", "Part B: Collaboration and Efficiency"],
+                },
+                '4.3': {
+                    'Condition': ["acute", "chronic", "both acute and chronic"],
+                    'Type of undifferentiated issue': ["limited data", "non-diagnostic data", "conflicting data"]
+                },
+                '4.4': {},
+                '4.5': {},
+                '4.6': {},
+                '4.7': {},
+                '4.8': {}
             },
             clinicalPresentation: {
                 "4.1": ["acute", "chronic", "both acute and chronic"],

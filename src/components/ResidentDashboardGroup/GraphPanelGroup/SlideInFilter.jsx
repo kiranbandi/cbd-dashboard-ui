@@ -13,53 +13,57 @@ export default class SlideInFilter extends Component {
 
     onSelectChange(option, selectRef) {
         const { clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter } = this.props;
-        if (selectRef.name == 'cp') {
-            this.props.onHighlightChange(selectRef.action == 'clear' ? '' : option.value, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter);
-        }
-        else if (selectRef.name == 'dm') {
-            this.props.onHighlightChange(clinicalFilter, selectRef.action == 'clear' ? '' : option.value, typeFilter, directVsIndirectFilter, staffObservationfilter);
-        }
-        else if (selectRef.name == 'tp') {
-            this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, selectRef.action == 'clear' ? '' : option.value.substring(0, 6), directVsIndirectFilter, staffObservationfilter);
-        }
-        else if (selectRef.name == 'di') {
-            this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, typeFilter, selectRef.action == 'clear' ? '' : option.value, staffObservationfilter);
-        }
-        else if (selectRef.name == 'so') {
-            this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, selectRef.action == 'clear' ? '' : option.value);
-        }
+        const { filterDict } = this.props;
+        this.props.onHighlightChange(selectRef.name, selectRef.action === 'clear' ? '' : option.value);
+
+        // if (selectRef.name == 'cp') {
+        //     this.props.onHighlightChange(selectRef.action == 'clear' ? '' : option.value, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter);
+        // }
+        // else if (selectRef.name == 'dm') {
+        //     this.props.onHighlightChange(clinicalFilter, selectRef.action == 'clear' ? '' : option.value, typeFilter, directVsIndirectFilter, staffObservationfilter);
+        // }
+        // else if (selectRef.name == 'tp') {
+        //     this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, selectRef.action == 'clear' ? '' : option.value.substring(0, 6), directVsIndirectFilter, staffObservationfilter);
+        // }
+        // else if (selectRef.name == 'di') {
+        //     this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, typeFilter, selectRef.action == 'clear' ? '' : option.value, staffObservationfilter);
+        // }
+        // else if (selectRef.name == 'so') {
+        //     this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, selectRef.action == 'clear' ? '' : option.value);
+        // }
     }
 
-    createSelect(label, optionArray = [], filterKey, defaultValue) {
-
-        let { data = [], clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter } = this.props,
+    createSelect(
+        label,
+        optionArray = [],
+        // filterKey,
+        defaultValue,
+        accessor = value => value
+    ) {
+        let { data = [] } = this.props,
             // create a count map that is then merged with the text at the end
             optionCountMap = _.times(optionArray.length, () => 0);
 
-        _.map(data, (record) => {
+        data.map(record => {
             const context = splitAndTrim(record.pureData.Situation_Context);
             context.map((contextType, contextIndex) => {
                 // if a particular value is in the array then find its position and 
                 //  increase the count in that position by 1
-                let index = (
-                    label === 'Type' ?
-                        optionArray.findIndex(d => d.substring(0, 6) === contextType) :
-                        optionArray.indexOf(contextType)
-                );
+                let index = optionArray.map(option => accessor(option)).indexOf(contextType);
                 if (index >= 0) {
                     // if the option is other then make sure it is not in the first place since 
                     //  the first place is normally for situation and there is a chance this could be other too
                     if (contextType == 'other' && contextIndex == 0) { return; }
                     optionCountMap[index] += 1;
                 }
-            })
-        });
+            });
+        })
 
         // Merge the option Array text with the count of records present in each type
         const modifiedOptionArray = _.map(optionArray, (option, index) => {
             return {
                 label: option + " (" + optionCountMap[index] + ") ",
-                value: optionArray[index]
+                value: accessor(option)
             }
         });
 
@@ -69,12 +73,13 @@ export default class SlideInFilter extends Component {
             const selectStyles = { base: styles => ({ ...styles, zIndex: 999 }), option: (styles) => ({ ...styles, color: 'black' }) };
 
             return (
-                <div className='demographic-box inner-filter-box'>
+                <div className='demographic-box inner-filter-box' key={label}>
                     <label className='filter-label'>{label}</label>
                     <div className='select-container-filter'>
                         <Select
                             isClearable={true}
-                            name={filterKey}
+                            // name={filterKey}
+                            name={label}
                             // react select needs a value and so we need to set it in a complicated way with a function
                             //  need to find a more elegant solution in future
                             value={(modifiedOptionArray.find(option => option.value === defaultValue)) || ''}
@@ -86,7 +91,7 @@ export default class SlideInFilter extends Component {
         }
         else {
             return (
-                <div className='demographic-box inner-filter-box'>
+                <div className='demographic-box inner-filter-box' key={label}>
                     <label className='filter-label'>{label}</label>
                     {/* if there isnt a label then no need to show even the N/A option */}
                     {label && <span className='no-option-text'>N/A</span>}
@@ -96,23 +101,43 @@ export default class SlideInFilter extends Component {
 
     render() {
 
-        const { innerKey, epaSource, width, clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter, onHighlightChange, epaSourceMap } = this.props,
+        const { innerKey, epaSource, width, filterDict, clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter, onHighlightChange, epaSourceMap } = this.props,
             { clinicalPresentation, patientDemographic, type, filterTitles = {} } = epaSourceMap[innerKey];
 
-        const innerTitles = filterTitles[epaSource] || ["Clinical Presentation", "Demographic"];
+        debugger
+        const innerTitles = Object.keys(epaSourceMap[innerKey]['filterValuesDict'][epaSource]) || ["Clinical Presentation", "Demographic"];
 
         const data = this.props.data.map(d => d.pureData);
         return (
             <div className='filter-box' style={{ width: (width * 4) - 75 }}>
-                {this.createSelect(innerTitles[0], clinicalPresentation[epaSource], 'cp', clinicalFilter)}
+                {
+                    innerTitles.map(title => {
+                        debugger
+                        const shouldDisplay = epaSourceMap[innerKey]['filterValuesDict'][epaSource][title].every(d => {
+                            const [value, minRequired] = d.split('\f');
+                            if (minRequired) {
+                                return data.filter(dd => splitAndTrim(dd.Situation_Context).indexOf(value) > -1).length >= minRequired;
+                            } else {
+                                return true;
+                            }
+                        })
+                        return shouldDisplay ? this.createSelect(
+                            title,
+                            epaSourceMap[innerKey]['filterValuesDict'][epaSource][title].map(d=> d.split('\f')[0]),
+                            filterDict[title],
+                            title === 'Type' ? value => value.substring(0, 6) : undefined
+                        ) : null;
+                    })
+                }
+                {/* {this.createSelect(innerTitles[0], clinicalPresentation[epaSource], 'cp', clinicalFilter)}
                 {this.createSelect(innerTitles[1], patientDemographic[epaSource], 'dm', patientDemographicFilter)}
                 {innerTitles[2] && type && type[epaSource] && this.createSelect(innerTitles[2], type[epaSource], 'tp', typeFilter)}
                 {innerTitles[3] && data.filter(d => splitAndTrim(d.Situation_Context).indexOf('direct') > -1).length >= +innerTitles[3].split('\t')[1] && this.createSelect(innerTitles[3].split('\t')[0], ['direct', 'indirect'], 'di', directVsIndirectFilter)}
-                {innerTitles[4] && data.filter(d => splitAndTrim(d.Situation_Context).indexOf('staff') > -1).length >= +innerTitles[4].split('\t')[1] && this.createSelect(innerTitles[4].split('\t')[0], ['staff'], 'so', staffObservationfilter)}
+                {innerTitles[4] && data.filter(d => splitAndTrim(d.Situation_Context).indexOf('staff') > -1).length >= +innerTitles[4].split('\t')[1] && this.createSelect(innerTitles[4].split('\t')[0], ['staff'], 'so', staffObservationfilter)} */}
                 <div className='inner-button-box'>
                     <button type="submit"
                         className="btn btn-primary-outline icon-container"
-                        onClick={() => { onHighlightChange('', '', '') }}>
+                        onClick={() => { onHighlightChange('*', {}) }}>
                         RESET <span className="icon icon-ccw"></span>
                     </button>
                 </div>

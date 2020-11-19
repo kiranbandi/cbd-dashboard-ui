@@ -33,7 +33,8 @@ const programInfo = {
             maxObservation: {},
             clinicalPresentation: {},
             patientDemographic: {},
-            filterTitles: {}
+            filterTitles: {},
+            filterValuesDict: {}
         },
         2: {
             'ID': 'F',
@@ -63,6 +64,19 @@ const programInfo = {
             filterTitles: {
                 '2.3': ["Procedure", "Setting"],
                 '2.4': ["Endoscopy", "Urgency"]
+            },
+            filterValuesDict: {
+                '2.1': {},
+                '2.2': {},
+                '2.3': {
+                    'Procedure': ["laparotomy", "laparoscopy"],
+                    'Setting': ["OR", "simulation lab"]
+                },
+                '2.4': {
+                    'Endoscopy': ["upper", "lower"],
+                    'Urgency': ["elective", "non-elective"]
+                },
+                '2.5': {}
             }
         },
         3: {
@@ -151,6 +165,60 @@ const programInfo = {
                 "3.13": ["Procedure", "Complexity"],
                 '3.19': ["Procedure", "Findings"],
                 '3.20': ["Setting", "Findings"]
+            },
+            filterValuesDict: {
+                '3.1': {
+                    'Setting': ["emergency", "inpatient", "outpatient", "OR", "ICU", "simulation"],
+                    'Complex Case': ["yes", "no"]
+                },
+                '3.2': {},
+                '3.3': {
+                    'Setting': ["community", "tertiary", "other setting"],
+                    'Average # of Inpatients per day': ["1-9", "10+"]
+                },
+                '3.4': {},
+                '3.5': {
+                    'Procedure': ["anti-reflux surgery", "partial/total gastrectomy", "paraesophageal hernia", "bariatric and metabolic surgery", "distal esophagectomy", "Whipple’s procedure", "surgical treatment of peptic ulcer disease and acute complications", "traumatic injury of stomach and duodenum"],
+                    'Presentation': ["malignant", "benign", "bleeding", "other presentation"]
+                },
+                '3.6': {
+                    'Procedure': ["lysis of adhesions", "small bowel resection with or without anastomosis", "ileostomy creation", "ileostomy closure", "feeding jejunostomy", "stricturoplasty", "repair of enterotomy", "trauma repair"],
+                    'Presentation': ["malignant", "benign", "bleeding", "other presentation"]
+                },
+                '3.7': {
+                    'Complexity': ["yes", "no"],
+                    'Presentation': ["malignant", "benign", "bleeding", "other presentation"]
+                },
+                '3.8': {
+                    'Procedure': ["proctectomy/low anterior resection, including total mesorectal excision (TME)", "abdominal perineal resection", "examination under anesthesia", "proctocolectomy", "hemorrhoidectomy (all modalities)", "sphincterotomy", "surgical management of anorectal fistula", "drainage of abscess", "rectal prolapse procedures", "rectal foreign body removal", "transanal excision of lesions", "traumatic injury to the rectum and anus", "anoscopy", "rigid sigmoidoscopy"],
+                    'Presentation': ["malignant", "benign", "bleeding", "other presentation"]
+                },
+                '3.9': {
+                    'Procedure': ["hepatic resection", "cholecystectomy", "CBD exploration", "CBD resection and biliary reconstruction", "Whipple", "organ harvest", "liver transplantation", "repair of traumatic injury to liver and common bile ducts"],
+                    'Presentation': ["malignant", "benign", "bleeding", "other presentation"]
+                },
+                '3.10': {},
+                '3.11': {},
+                '3.12': {},
+                '3.13': {
+                    'Procedure': ["drainage of abscess", "duct excision", "lumpectomy with or without localization", "mastectomy", "modified radical mastectomy", "core needle biopsy", "other procedure"],
+                    'Complexity': ["yes", "no"]
+                },
+                '3.14': {},
+                '3.15': {},
+                '3.16': {},
+                '3.17': {},
+                '3.18': {},
+                '3.19': {
+                    'Procedure': ["elective", "non-elective", "therapeutic"],
+                    'Findings': ["normal", "abnormal"]
+                },
+                '3.20': {
+                    'Setting': ["endoscopy suite", "ambulatory clinic", "operating room", "ICU"],
+                    'Findings': ["normal", "abnormal"]
+                },
+                '3.21': {},
+                '3.22': {}
             }
         },
         4: {
@@ -178,6 +246,16 @@ const programInfo = {
             },
             filterTitles: {
                 '4.4': ["Case Mix", "Actively Bleeding"]
+            },
+            filterValuesDict: {
+                '4.1': {},
+                '4.2': {},
+                '4.3': {},
+                '4.4': {
+                    'Case Mix': ["hemostasis", "dilation", "polypectomy", "foreign body removal", "endoluminal stent insertion", "colonic decompression"],
+                    'Actively Bleeding': ["yes", "no"]
+                },
+                '4.5': {}
             }
         },
     }

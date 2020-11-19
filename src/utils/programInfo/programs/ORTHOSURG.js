@@ -46,8 +46,14 @@ const programInfo = {
                 '1.1': ["direct", "case review"]
             },
             patientDemographic: {},
-            filterTitles: { '1.1': ["Observation"] }
-
+            filterTitles: {
+                '1.1': ["Observation"]
+            },
+            filterValuesDict: {
+                '1.1': {
+                    'Observation': ["direct", "case review"]
+                }
+            }
         },
         2: {
             'ID': 'F',
@@ -80,10 +86,25 @@ const programInfo = {
                 '2.6': ["ward", "clinic", "emergency department", "operating room", "simulation"]
             },
             patientDemographic: {
-                '2.6':  ["closed reduction and casting", "skeletal traction", "skin traction", "joint aspiration and fluid analysis", "joint injection", "other procedure"]
+                '2.6': ["closed reduction and casting", "skeletal traction", "skin traction", "joint aspiration and fluid analysis", "joint injection", "other procedure"]
             },
             filterTitles: {
                 '2.6': ['Setting', 'Procedure']
+            },
+            filterValuesDict: {
+                '2.1': {},
+                '2.2': {},
+                '2.3': {},
+                '2.4': {},
+                '2.5': {},
+                '2.6': {
+                    'Setting': ["ward", "clinic", "emergency department", "operating room", "simulation"],
+                    'Procedure': ["closed reduction and casting", "skeletal traction", "skin traction", "joint aspiration and fluid analysis", "joint injection", "other procedure"]
+                },
+                '2.7': {},
+                '2.8': {},
+                '2.9': {},
+                '2.10': {}
             }
         },
         3: {
@@ -164,12 +185,53 @@ const programInfo = {
                 '3.8': ["ward", "OR", "clinic", "small group"]
             },
             patientDemographic: {
-                '3.1':  ["direct", "case review"],
+                '3.1': ["direct", "case review"],
                 '3.8': ["orthopedic surgeon", "fellow", "TTP resident", "Core resident", "Foundations resident", "TTD resident"]
             },
             filterTitles: {
                 '3.1': ['Domain', 'Observation'],
                 '3.8': ['Setting', 'Observer']
+            },
+            filterValuesDict: {
+                '3.1': {
+                    'Domain': ["trauma", "foot and ankle", "hip and knee", "sports", "upper extremity/hand", "oncology", "spine"],
+                    'Observation': ["direct", "case review"]
+                },
+                '3.2': {},
+                '3.3': {},
+                '3.4': {},
+                '3.5': {},
+                '3.6': {},
+                '3.7': {},
+                '3.8': {
+                    'Setting': ["ward", "OR", "clinic", "small group"],
+                    'Observer': ["orthopedic surgeon", "fellow", "TTP resident", "Core resident", "Foundations resident", "TTD resident"]
+                },
+                '3.9': {},
+                '3.10': {},
+                '3.11': {},
+                '3.12': {},
+                '3.13': {},
+                '3.14': {},
+                '3.15': {},
+                '3.16': {},
+                '3.17': {},
+                '3.18': {},
+                '3.19': {},
+                '3.20': {},
+                '3.21': {},
+                '3.22': {},
+                '3.23': {},
+                '3.24': {},
+                '3.25': {},
+                '3.26': {},
+                '3.27': {},
+                '3.28': {},
+                '3.29': {},
+                '3.30': {},
+                '3.31': {},
+                '3.32': {},
+                '3.33': {}
             }
         },
         4: {
@@ -187,7 +249,12 @@ const programInfo = {
             },
             clinicalPresentation: {},
             patientDemographic: {},
-            filterTitles: {}
+            filterTitles: {},
+            filterValuesDict: {
+                '4.1': {},
+                '4.2': {},
+                '4.3': {}
+            }
         },
     }
 };

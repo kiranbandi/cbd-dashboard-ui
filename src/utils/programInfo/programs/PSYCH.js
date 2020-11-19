@@ -38,8 +38,11 @@ const programInfo = {
             },
             clinicalPresentation: {},
             patientDemographic: {},
-            filterTitles: {}
-
+            filterTitles: {},
+            filterValuesDict: {
+                '1.1': {},
+                '1.2': {}
+            }
         },
         2: {
             'ID': 'F',
@@ -58,10 +61,16 @@ const programInfo = {
                 '2.4': 5,
                 '2.5': 2
             },
-
             clinicalPresentation: {},
             patientDemographic: {},
-            filterTitles: {}
+            filterTitles: {},
+            filterValuesDict: {
+                '2.1': {},
+                '2.2': {},
+                '2.3': {},
+                '2.4': {},
+                '2.5': {}
+            }
         },
         3: {
             'ID': 'CORE',
@@ -92,7 +101,19 @@ const programInfo = {
             },
             clinicalPresentation: {},
             patientDemographic: {},
-            filterTitles: {}
+            filterTitles: {},
+            filterValuesDict: {
+                '3.1': {},
+                '3.2': {},
+                '3.3': {},
+                '3.4': {},
+                '3.5': {},
+                '3.6': {},
+                '3.7': {},
+                '3.8': {},
+                '3.9': {},
+                '3.10': {}
+            }
         },
         4: {
             'ID': 'TP',
@@ -109,7 +130,12 @@ const programInfo = {
             },
             clinicalPresentation: {},
             patientDemographic: {},
-            filterTitles: {}
+            filterTitles: {},
+            filterValuesDict: {
+                '4.1': {},
+                '4.2': {},
+                '4.3': {}
+            }
         },
     }
 };
