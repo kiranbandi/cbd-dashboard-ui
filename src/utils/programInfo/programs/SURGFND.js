@@ -49,6 +49,13 @@ const programInfo = {
                 '1.6': 1,
                 '1.7': 1
             },
+            assessmentInfo: {
+                '1.3': `Collect 2 observations of achievement
+                - At least 1 inpatient
+                - At least 1 outpatient`,
+                '1.6': `Collect 1 observation of achievement
+                - Wound must be at least 5 cm long`,
+            },
             clinicalPresentation: {},
             patientDemographic: {},
             filterTitles: {},
@@ -67,7 +74,7 @@ const programInfo = {
             'topic': 'Foundations of Discipline (F)',
             subRoot: {
                 "2.1": "Providing initial management for critically ill surgical patients",
-                "2.2": "Providing initial management for trauma patients",
+                "2.2": "Providing initial management for trauma patients.",
                 "2.3": "Assessing and performing risk optimization for preoperative patients in preparation for surgery",
                 "2.4": "Providing patient education and informed consent in preparation for surgical care",
                 "2.5": "Demonstrating the fundamental aspects of surgical procedures",
@@ -77,7 +84,7 @@ const programInfo = {
                 "2.9": "Supervising junior learners in the clinical setting"
             },
             maxObservation: {
-                '2.1': 3,
+                '2.1': 7,
                 '2.2': 2,
                 '2.3': 4,
                 '2.4': 3,
@@ -86,6 +93,62 @@ const programInfo = {
                 '2.7': 8,
                 '2.8': 8,
                 '2.9': 6
+            },
+            assessmentInfo: {
+                '2.1': `Part A: Patient Assessment
+                Collect 3 observations of achievement
+                - At least 2 different presentations.
+                
+                Part B: Procedure
+                Collect 4 observations of achievement
+                - At least one needle thoracostomy
+                - At least one tube thoracostomy
+                - At least one surgical airway
+                - At least one central venous line insertion`,
+                '2.2': `Part A: ATLS Certification
+                Submission of the certificate of course completion upon successful completion of ATLS
+                course, to the Competence Committee.
+
+                Part B: Patient assessment
+                Direct observation by trauma team leader.
+                
+                Collect 2 observations of achievement
+                - At least one each primary and secondary survey.`,
+                '2.3': `Collect 4 observations of achievement
+                - At least one elective, one emergent
+                - At least one high risk
+                - At least one critically ill
+                - At least 2 assessors`,
+                '2.4': `Collect 3 observations of achievement
+                - At least 2 different assessors
+                - At least one emergency procedure
+                - At least one elective procedure
+                - At least two in clinical setting`,
+                '2.5': `Part A: Collect 4 observations of achievement
+                - At least 2 by faculty
+                - At least 2 different types of procedures
+                - At least 2 different assessors.
+                
+                Part B: Collect feedback from at least 6 observers
+                - At least one each of surgeon, nurse, and anesthetist.`,
+                '2.6': `Collect 4 observations of achievement
+                - At least 2 by faculty
+                - At least 2 different types of procedures
+                - At least 2 different assessors.`,
+                '2.7': `Part A: Collect 8 observations of achievement
+                - At least 2 from each stage of management
+                - A range of hospital stays
+                - A range of patient complexity
+                - At least 4 different assessors.
+                
+                Part B: Collect feedback from at least 6 observers
+                - At least 2 different roles`,
+                '2.8': `Collect 8 observations of achievement
+                - At least 4 different complications
+                - At least 3 assessors.`,
+                '2.9': `Collect 6 observations of achievement
+                - At least 3 different junior learners
+                - At least 3 different senior residents or faculty.`
             },
             clinicalPresentation: {},
             patientDemographic: {},
