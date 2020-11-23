@@ -40,6 +40,21 @@ const programInfo = {
                 "1.3": 2,
                 "1.4": 1
             },
+            assessmentInfo: {
+                "1.1": `Collect 13 observations of achievement
+                - At least 1 of each organ system or tissue.`,
+                "1.2": `Part A: Collect 15 observations of achievement
+                - At least 3 different tissue specimens
+                - At least 3 blood specimens
+                - At least 3 microbiology specimens
+                - At least 1 of each other specimen type.
+                
+                Part B: Evidence of satisfactory completion of a structured oral or written quiz administered by the
+                supervising pathologist. Collect 1 observation of achievement.`,
+                "1.3": `Collect 2 observations of achievement.`,
+                "1.4": `Resident’s submission of teaching and learning plan (portfolio), and logbook reviewed by
+                pathologist, TTP trainee, academic advisor, or mentor. Collect 1 observation of achievement.`
+            },
             clinicalPresentation: {
                 "1.1": ["breast", "bone & soft tissue", "gynecology", "gastrointestinal", "genitourinary", "head & neck", "endocrine", "skin", "cardiovascular", "thoracic", "neuropathology", "blood, bone marrow, lymph nodes & spleen", "placenta"],
                 "1.2": ["tissue", "blood", "microbiological", "appendix", "gallbladder", "simple hysterectomy for fibroids or prolapse", "colon for diverticulosis", "ischemic small bowel", "other"],
@@ -91,6 +106,30 @@ const programInfo = {
                 "2.4": 6,
                 "2.5": 10,
                 "2.6": 2
+            },
+            assessmentInfo: {
+                "2.1": `Collect at least 10 observations of achievement
+                - At least 2 of each type of observation
+                - At least 2 each for medicine, surgery, oncology, and pediatrics
+                - At least 1 assessment from a staff supervisor in each setting.`,
+                "2.2": `Part A: Collect 2 observations of achievement.
+                
+                Part B: Collect 14 observations of achievement
+                - At least 2 of each task.`,
+                "2.3": `Collect 10 observations of achievement
+                - A variety of cases
+                - At least 5 direct observations
+                - At least 3 different observers.`,
+                "2.4": `Collect 6 observations of achievement
+                - At least 2 other clinical laboratory specimens
+                - At least 2 flow cytometry
+                - At least 2 lymphoma protocol
+                - At least 1 observation by pathologist.`,
+                "2.5": `Collect 10 observations of achievement
+                - At least 4 organ systems
+                - At least 3 observers.`,
+                "2.6": `Collect 2 observations of achievement
+                - At least one of each procedure.`
             },
             clinicalPresentation: {
                 '2.1': ["direct observation of history", "direct observation of communication with patients", "case discussion or chart review - Setting: medicine", "surgery", "oncology", "pediatrics", "other"],
@@ -190,6 +229,139 @@ const programInfo = {
                 "3.20": 10,
                 "3.21": 4,
                 "3.22": 1
+            },
+            assessmentInfo: {
+                "3.1": `Part A: Collect 6 observations of achievement
+                - At least 3 routine full autopsies
+                - At least 3 complex full autopsies
+                - At least 2 different pathologist observers.
+                
+                Part B: Collect 1 observation of achievement.
+                
+                Part C: Collect 6 observations of achievement
+                - At least 3 routine full autopsies
+                - At least 3 complex full autopsies
+                - At least 2 different pathologist observers.`,
+                "3.2": `Part A: Collect 3 observations of achievement
+                - At least 1 case with age >20 weeks gestational age.
+                
+                Part B: Collect 3 observations of achievement.`,
+                "3.3": `Part A: Collect 6 observations of achievement
+                - At least 1 of each manner of death: natural, accidental, and suicide
+                - At least 2 different observers.
+                
+                Part B: Collect 6 observations of achievement
+                - At least 1 of each natural, accident, and suicide
+                - At least 2 different observers.`,
+                "3.4": `Part A: Collect 50 observations of achievement
+                - A variety of organ systems
+                - A variety of specimens
+                - At least 8 each of breast, gynecology, gastrointestinal, and genitourinary
+                - At least 10 different observers.
+
+                Part B: Collect 100 observations of achievement
+                - A variety of systems
+                - A variety of specimens
+                - At least 15 gastrointestinal (including hepatobiliary/pancreas)
+                - At least 10 each of gynecology, genitourinary, breast, and placenta
+                - At least 5 each head and neck, and respiratory
+                - At least 5 pediatric oncology
+                - At least 10 different observers.`,
+                "3.5": `Collect 70 observations of achievement encompassing a wide breadth of presentations
+                - At least 7 from each of breast, gynecology, gastrointestinal, genitourinary, and skin
+                - At least 3 from each of the other organ systems
+                - At least 50 observed by pathologists
+                - At least 10 different observers.`,
+                "3.6": `Collect 70 observations of achievement encompassing a wide breadth of presentations
+                - At least 7 from each gynecology, gastrointestinal, genitourinary, breast, and skin
+                - At least 3 from each of the other organ systems
+                - A variety of specimens and diagnosis, including malignant and non-malignant,
+                biopsies, and surgical resection
+                - At least 10 observers.`,
+                "3.7": `Collect 10 observations of achievement
+                - Variety of tissue types and indications
+                - At least 3 different observers.`,
+                "3.8": `Collect 5 observations of achievement
+                - Multidisciplinary rounds of at least 3 different specialties
+                - At least 2 different observers
+                - At least 1 pathologist.`,
+                "3.9": `Part A: Collect 12 observations of achievement
+                - At least 12 unique microorganisms
+                - At least 5 bacteriology, with interpretation of antimicrobial sensitivity tests results
+                - At least 3 interpretations of positive viral serology specimens
+                - At least 1 viral hepatitis
+                - At least 2 each of parasitology and mycology
+                - A variety of specimen types
+                - At least 5 performances of gram stains with test interpretations
+                - At least 3 observers.
+                
+                Part B: Collect 2 observations of achievement
+                - At least 2 different reasons for consultation
+                - At least 2 different observers.`,
+                "3.10": `Part A: Collect 12 observations of achievement
+                - A variety of diagnoses including critical values
+                - At least 2 observers, one of which must be a pathologist or clinician practicing
+                hematopathology.
+                
+                Part B: Collect 10 observations of achievement
+                - At least 2 from each category including a mix of diagnoses (max 1 normal)
+                - At least 2 observers, one of which must be a pathologist.
+                
+                Part C: Collect 12 observations of achievement
+                - At least 2 each from category including a mix of diagnoses
+                - At least 2 observers, one of which must be a pathologist.`,
+                "3.11": `Collect 5 observations of achievement
+                - Variety of cases, including a maximum of one normal sample.`,
+                "3.12": `Collect 10 observations of achievement
+                - A variety of bleeding and thrombotic disorders
+                - At least 2 different observers
+                - At least 5 observations by pathologist or hematologist.`,
+                "3.13": `Part A: Collect 5 observations of achievement
+                - A mix of clinical and laboratory scenarios
+                - At least 2 observers
+                - At least 1 pathologist/hematologist.
+                
+                Part B: Collect 5 observations of achievement
+                - A mix of clinical and laboratory scenarios incorporating both blood components and
+                products
+                - At least 2 observers
+                - At least 3 by a pathologist or hematologist.
+                
+                Part C: Collect 5 observations of achievement.`,
+                "3.14": `Collect 25 observations of achievement
+                - At least 10 cases of test selection, including
+                --- At least 2 each of FFPE tissue, fresh/frozen tissue and blood/bone marrow
+                tissue
+                - At least 10 result interpretations, including
+                --- At least one of PCR, karyotype, FISH/CISH
+                --- At least 3 of each hematology, microbiology, and biochemistry cases.`,
+                "3.15": `Part A: Collect 5 observations of achievement
+                - At least 3 different specimen types
+                - At least 2 different observers.
+                
+                Part B: Collect 40 observations of achievement
+                - At least 20 gynecological
+                - At least 10 FNA (a mix of specimen type including EUS or EBUS)
+                - At least 10 fluids
+                - At least 3 different observers.`,
+                "3.16": `Collect 10 observations of achievement
+                - At least 2 from each lab discipline.`,
+                "3.17": `Collect 1 observations of achievement
+                - At least 3 modalities.`,
+                "3.18": `Collect 5 observations of achievement
+                - At least 1 from each category
+                - At least 2 observers, one of which must be a pathologist or laboratory physician.`,
+                "3.19": `Collect 3 observations of achievement
+                - A variety of indications for consultation.`,
+                "3.20": `Collect 10 observations of achievement
+                - At least 5 electrophoresis, including at least 3 monoclonal gammopathies
+                - At least 2 joint aspirates for crystals, including at least 1 positive for uric acid/gout
+                - At least 1 case discussion about reflective/reflexive testing
+                - At least 1 case discussion about TDM or clinical toxicology
+                - At least 6 must be observed by pathologist`,
+                "3.21": `Part A: Collect at least 2 observations of achievement.
+                
+                Part B: Collect at least 2 observations of achievement.`
             },
             clinicalPresentation: {
                 '3.1': ["complex", "routine"],
@@ -339,6 +511,28 @@ const programInfo = {
                 "4.2": 4,
                 "4.3": 4,
                 "4.4": 1
+            },
+            assessmentInfo: {
+                "4.1": `Part A: Collect 12 observations of achievement
+                - At least 2 each of surgical pathology, hematopathology, biochemistry, and
+                microbiology
+                - At least 2 observers from each laboratory domain (i.e. surgical pathology,
+                hematopathology, biochemistry, and microbiology)
+                
+                Part B: Collect feedback on at least 6 occasions
+                - At least two each of surgical pathology and hematopathology
+                - At least one each of biochemistry and microbiology
+                - At least two observers on each occasion.`,
+                "4.2": `Part A: Collect 4 observations of achievement
+                - At least 1 from each discipline.
+                
+                Part B: Collect at least 1 observation with feedback from at least 4 observers over the TTP stage.
+                
+                Part C: Collect 1 narrative statement for each 1 month of call during TTP stage.`,
+                "4.3": `Collect 4 observations of achievement
+                - At least 1 from each discipline.`,
+                "4.4": `Supervisor review of resident’s submission of a personal learning plan.
+                Collect 1 observation of achievement.`
             },
             clinicalPresentation: {
                 '4.1': ["surgical pathology", "cytopathology", "autopsy pathology", "biochemistry", "microbiology", "hematopathology", "transfusion medicine", "hemostasis and coagulation", "molecular pathology"],

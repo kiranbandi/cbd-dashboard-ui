@@ -111,7 +111,7 @@ export default class GraphRow extends Component {
                     </span>
                     {isPlanVisible && isAssessmentPlanAvailable &&
                         <div className="assessment-plan-box">
-                            <div>Assessment Plan</div>
+                            <div> <b>Assessment Plan</b></div>
                             <div className='assessment-plan-content'>
                                 {epaSourceMap[innerKey].assessmentInfo[epaSource] || ''}
                             </div>

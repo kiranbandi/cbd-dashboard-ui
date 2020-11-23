@@ -49,7 +49,18 @@ const programInfo = {
             maxObservation: {
                 '1.1': 4,
                 '1.2': 3,
-                '1.3': 3,
+                '1.3': 3
+            },
+            assessmentInfo: {
+                '1.1': `Part A: Collect observations from a large breadth of training experience with the expectations not
+                all will be achieved, with a minimum of 3 observations of achievement.
+                
+                Part B: Submit logbook of patient assessment encounters.`,
+                '1.2': `Collect observations from a large breadth of training experience with the expectations not
+                all will be achieved, with a minimum of 3 observations of achievement `,
+                '1.3': `Collect a minimum of 3 observations
+                - At least 1 general anesthesia
+                - At least 2 different assessors`,
             },
             clinicalPresentation: {
                 '1.1': ["general surgery", "gynecology", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "urology", "other surgery"],
@@ -115,6 +126,65 @@ const programInfo = {
                 '2.14': 3,
                 '2.15': 3,
                 '2.16': 4
+            },
+            assessmentInfo: {
+                '2.1': `Collect observations from a large breadth of training experience with the expectations not
+                all will be achieved, with a minimum of 8 observations of achievement
+                - At least 3 involving consent`,
+                '2.2': `Part A: Collect observations from a large breadth of training experiences including different types of
+                anesthesia and priority of surgery with the expectations not all will be achieved, with a
+                minimum of 20 observations of achievement.
+                
+                Part B: Feedback must come from different environments.
+                
+                Part C: Submit resident logbook of anesthetic cases.`,
+                '2.3': `Part A: Collect 20 observations of achievement:
+                - At least 2 arterial lines
+                - At least 5 central lines
+                - At least 5 spinals.
+                
+                Part B: Submit logbook of procedures performed.
+                Logbook should demonstrate performance of at least 20 of each procedure.`,
+                '2.4': `Collect observations of a variety of management plans, with a minimum of 5 observations of
+                achievement`,
+                '2.5': `Collect a minimum of 8 observations
+                - At least five different positions`,
+                '2.6': `Part A: Collect observations from a large breadth of training experience with the expectations not
+                all will be achieved, with a minimum of 5 observations of achievement.
+                
+                Part B: Written submission to supervisor of a reflection on a patient safety event or near miss.
+                Supervisor’s summary of the debrief is submitted to the Competence Committee.`,
+                '2.7': `The Specialty Committee has not provided guidance for the entrustment of this EPA.
+                Entrustment decisions are left to discretion of the Competence Committee`,
+                '2.8': `Collect observations from a large breadth of training experience and issues with the
+                expectations not all will be achieved, with a minimum of 8 observations of achievement
+                These observations should be performed in both the PACU and on the surgical ward
+                - At least 4 managing pain `,
+                '2.9': `Collect at least 3 observations of achievement `,
+                '2.10': `Collect observations from a large breadth of training experience with the expectations not
+                all will be achieved, with a minimum of 8 observations of achievement
+                - At least 4 observations of achievement for patient assessment, diagnosis and/or
+                management (including at least 1 staff and both medical and surgical conditions)
+                - At least 2 observations of handover (including 1 staff observation)`,
+                '2.11': `Collect at least 3 observations of achievement
+                At least 1 observation of a routine assessment
+                At least 1 observation of an acute medical, surgical or obstetric condition`,
+                '2.12': `Part A: Collect observations from a large breadth of training experience with the expectations not
+                all will be achieved, with a minimum of 10 observations of achievement
+                - At least 6 direct observations.
+                
+                Part B: Collect at least 3 observations of achievement.`,
+                '2.13': `Collect a minimum of 5 observations of achievement.`,
+                '2.14': `Collect observations from a large breadth of training experience with the expectations not
+                all will be achieved, with at least 3 observations of achievement
+                - At least two observations of patients under the age of 10`,
+                '2.15': `Collect observations from a large breadth of training experience with the expectations not
+                all will be achieved, with a minimum of 3 observations of achievement
+                - At least two patients under the age of 10
+                - At least two different settings `,
+                '2.16': `Collect observations from a large breadth of training experience with the expectations not
+                all will be achieved, with at least 4 observations of achievement
+                - At least 2 patients under the age of 10`
             },
             clinicalPresentation: {
                 '2.1': ["general surgery", "gynecology", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "trauma", "urology", "other surgery"],
@@ -245,6 +315,97 @@ const programInfo = {
                 '3.23': 3,
                 '3.24': 1,
                 '3.25': 1
+            },
+            assessmentInfo: {
+                '3.1': `Collect observations from a large breadth of training experience with the expectations not
+                all will be achieved, with a minimum of 10 observations of achievement`,
+                '3.2': `Collect observations from a large breadth of training experiences including patients with
+                various critical illnesses with the expectations not all will be achieved, with a minimum of 5
+                observations of achievement `,
+                '3.3': `Collect observation from a large breadth of training experiences including patients with
+                various cardiac disease with the expectations not all will be achieved, with a minimum of 6
+                observations of achievement
+                - At least one each of: severe mitral valve disease; severe aortic stenosis;
+                significant left ventricular dysfunction.`,
+                '3.4': `Collect observations from a large breadth of both anticipated and unanticipated difficult
+                airway with the expectations not all will be achieved, with a minimum of six (6)
+                observations of achievement `,
+                '3.5': `Collect observations from a large breadth of training experiences including major
+                polytraumatic injury, with the expectations not all will be achieved, with a minimum of 6
+                observations of achievement. `,
+                '3.6': `Collect observations from a large breadth of situations including different types of exams
+                with the expectation not all will be achieved, with a minimum of
+                - 3 direct observations obtaining transthoracic cardiac standard views
+                - 3 direct observations applying ultrasound data to answer a clinical question`,
+                '3.7': `Part A: Collect observations from a large breadth of training experience with the expectations not
+                all will be achieved, with a minimum of 10 observations of achievement
+                - At least one cesarean section under general anesthesia.
+                
+                Part B: Multiple observers provide feedback individually, which is then collated to one report.`,
+                '3.8': `Collect observations from a large breadth of training experience with the expectations not
+                all will be achieved, with a minimum of 2 observations of achievement`,
+                '3.9': `Collect observations from a large breadth of training experiences including different types of
+                procedures and patient comorbidity with the expectations not all will be achieved, with a
+                minimum of 5 observations of achievement
+                - At least two patients under the age of 3`,
+                '3.10': `Collect observations from a large breadth of training experiences including different types of
+                procedures and patient comorbidity with the expectations not all will be achieved, with a
+                minimum of 5 observations of achievement
+                - At least two patients under the age of three
+                - For achievement, the complexity of cases should be in line with what is expected to
+                be managed by an anesthesiologist who does not have pediatric anesthesiology
+                training. However, observations should also be completed for more complex cases.`,
+                '3.11': `Part A: Collect observations from a large breadth of regional anesthesia experience with the
+                expectations not all will be achieved, with a minimum of10 observations of achievement
+                - At least 3 upper limb
+                - At least 3 lower limb
+                - At least 1 trunk block.
+                
+                Part B: Submit logbook of regional anesthesia experience
+                Logbook tracks
+                - Location of block: upper limb; lower limb; trunk; other
+                - Type of block: interscalenic; supra-clavicular; infra-clavicular; axillary; peripheral
+                block; transversus abdominis plane block; sciatic nerve; femoral nerve; popliteal
+                sciatic; ankle block; other block.`,
+                '3.12': `Collect observations from a large breadth of training experience and issues with the
+                expectations not all will be achieved, with a minimum of 5 observations of achievement.`,
+                '3.13': `Collect observations from a large breadth of training experiences including various
+                environments, various patient populations and various types of anesthesia with the
+                expectations not all will be achieved, with a minimum of 3 observations of achievement.`,
+                '3.14': `Collect observations from a large breadth of training with the expectations not all will be
+                achieved, with a minimum of 5 observations of achievement. `,
+                '3.15': `Collect observations from a large breadth of training experiences with the expectations not
+                all will be achieved, with a minimum of 6 observations of achievement.`,
+                '3.16': `Collect observations from a large breadth of training experiences with the expectations no
+                all will be achieved, with a minimum of 6 observations of achievement.`,
+                '3.17': `Collect observations from a large breadth of training experiences with the expectations not
+                all will be achieved, with a minimum of 8 observations of achievement
+                - At least two patients with increased intracranial pressure.`,
+                '3.18': `Collect observations from a large breadth of training experiences with the expectations not
+                all will be achieved, with a minimum of 8 observations of achievement
+                - At least one lung resection
+                - At least one anterior mediastinal mass (can be completed by simulation or case
+                discussion).`,
+                '3.19': `Collect observations from a large breadth of training experiences and issues, including
+                complications of pain management, with the expectations not all will be achieved, with a
+                minimum of 6 observations of achievement.`,
+                '3.20': `Collect observations from a large breadth of training experiences with the expectations not
+                all will be achieved, with a minimum of 4 observations of achievement.`,
+                '3.21': `Part A: Collect observations from a large breadth of training experience with the expectations not
+                all will be achieved, with a minimum of 7 observations of achievement including 3 different
+                primary diagnoses.
+                
+                Part B: Multiple observers provide feedback individually, which is then collated to one report.`,
+                '3.22': `Collect observations from a large breadth of training experiences with the expectations not
+                all will be achieved, with a minimum of 7 observations of achievement.
+                - At least 3 different type of conditions
+                - At least 1 on ward or in ER. `,
+                '3.23': `Collect 3 observations of achievement
+                - At least one from perioperative setting.`,
+                '3.24': `One direct observation or chart review and debrief by supervisor `,
+                '3.25': `Review by supervisor of resident submission of a brief critique (max 2 pages) that identifies
+                the clinical issue, the relevant ethical concepts, any relevant legal, professional or
+                institutional statements and the outcome.`
             },
             clinicalPresentation: {
                 '3.1': ["cardiac surgery", "general surgery", "gynecology", "neurosurgery", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "thoracic surgery", "urology", "vascular surgery"],
@@ -380,6 +541,30 @@ const programInfo = {
                 '4.3': 5,
                 '4.4': 5,
                 '4.5': 3
+            },
+            assessmentInfo: {
+                '4.1': `Part A: Collect 3 observations of achievement (i.e. 3 different clinic days).
+                
+                Part B: Chart audit by supervisor or review of the preoperative chart by the anesthesiologist
+                performing the case. Collect observations of achievement for 5 cases.`,
+                '4.2': `Collect observations from a large breadth of training experience with the expectation that
+                not all will be achieved, with a minimum of 10 observations of achievement
+                - At least 1 pediatric list`,
+                '4.3': `Collect observations from a large breadth of training experiences including during different
+                types of on-call period with the expectations not all will be achieved, with a minimum of 5
+                observations of achievement`,
+                '4.4': `Collect observations from a large breadth of training experiences including during both day
+                and night shifts with the expectations not all will be achieved, with a minimum of 5
+                observations of achievement`,
+                '4.5': `Part A: Teaching dossier
+                Review by competence committee of resident’s submission of a teaching dossier.
+
+                Part B: Scholarly Project
+                Review by competence committee of resident’s submission of a scholarly project completed
+                during training.
+                
+                Part C: Personal Learning
+                Review by competence committee of resident’s submission of a personal learning plan `
             },
             clinicalPresentation: {
                 '1.1': ["general surgery", "gynecology", "neurosurgery", "ophthalmology", "orthopedic surgery", "otolaryngology", "plastic surgery", "spinal surgery", "thoracic surgery", "urology", "vascular surgery"],
