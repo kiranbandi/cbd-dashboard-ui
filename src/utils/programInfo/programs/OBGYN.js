@@ -38,6 +38,17 @@ const programInfo = {
                 '1.1': 3,
                 '1.2': 3,
             },
+            assessmentInfo: {
+                '1.1': `Collect 3 observations of achievement 
+                - At least 1 antepartum patient
+                - At least 1 intrapartum patient
+                - At least 2 observations by faculty
+                - At least 3 different observers`,
+                '1.2': `Collect 3 observations of achievement 
+                - At least 3 different presentations
+                - At least 2 observations by faculty
+                - At least 2 different observers`
+            },
             clinicalPresentation: {
                 '1.1': ["intrapartum", "antepartum"],
                 '1.2': ["pelvic pain", "abnormal uterine bleeding", "vulvovaginitis", "other"],
@@ -78,6 +89,19 @@ const programInfo = {
                 '2.11': '(SA) Performing critical appraisal of health literature and initiating scholarly projects'
             },
             maxObservation: {
+                '2.1': 5,
+                '2.2': 10,
+                '2.3': 10,
+                '2.4': 5,
+                '2.5': 6,
+                '2.6': 10,
+                '2.7': 5,
+                '2.8': 7,
+                '2.9': 5,
+                '2.10': 11,
+                '2.11': 2
+            },
+            assessmentInfo: {
                 '2.1': 5,
                 '2.2': 10,
                 '2.3': 10,
