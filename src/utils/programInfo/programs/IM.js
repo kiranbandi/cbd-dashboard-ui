@@ -102,6 +102,19 @@ const programInfo = {
                     'Setting': ['clinical', 'simulation'],
                     'Type': ['Part A: Procedures']
                 }
+            },
+            assessmentInfo: {
+                "1.1": `Collect 2 observations of achievement:
+                - At least one new patient visit
+                - At least one focused follow-up visit `,
+                "1.2": `Collect 3 observations of achievement:
+                - At least one direct observation
+                - At least one observation each of acute respiratory distress; hemodynamic instability;
+                altered level of consciousness
+                - At least one clinical observation
+                - At least 2 different assessors; at least 1 faculty`,
+                "1.3": `Collect 10 observations of achievement:
+                - Two observations of each procedure`
             }
         },
         2: {
@@ -125,6 +138,37 @@ const programInfo = {
                 "2.6": 3,
                 "2.7": 12
             },
+            assessmentInfo: {
+                "2.1": `Collect 10 observations of achievement:
+                - At least 5 direct observation
+                - At least 3 must be in the emergency department
+                - At least 1 of each of the following: chest pain; shortness of breath; altered level of
+                consciousness; fever; hemodynamic instability
+                - At least 3 from staff `,
+                "2.2": `Part A: Collect 8 observations of achievement
+                - At least 8 different categories
+                - At least 6 different assessors`,
+                "2.3": `Collect 4 observations of achievement:
+                - At least two from supervisor
+                - At least one from other physician specialist
+                - At least one from other health professional
+                - At least two in ambulatory care setting`,
+                "2.4": `Part A: Collect 2 observations of achievement:
+                - At least one complex hospital stay `,
+                "2.5": `Collect 7 observations of achievement
+                - At least one from each category: acute respiratory distress; hemodynamic instability
+                altered level of consciousness
+                - No more than 3 in simulation setting
+                - At least one in each category by most responsible physician`,
+                "2.6": `Collect 3 observations of achievement
+                - One from each category
+                - Not more than one in simulation setting
+                - At least 1 involves a substitute decision-maker
+                - At least 2 staff as supervisor
+                - At least 2 different assessors`,
+                "2.7": `Competence Committee review of resident submissions
+                Collect 12 submitted personal learning plans. `
+            },
             filterTitles: {
                 '2.1': ['Patient Visit', 'Case Mix', '', 'Direct vs Indirect\t5', 'Staff Observations\t3'],
                 '2.2': ['', '', 'Type'],
@@ -139,11 +183,11 @@ const programInfo = {
                     'Patient Visit': ["emergency department", "ward"],
                     'Case Mix': ["chest pain", "shortness of breath", "altered level of consciousness", "fever", "hemodynamic instability", "other"],
                     'Direct vs Indirect': ['direct\f5', 'indirect'],
-                    'Staff Observations' : ['staff\f3']
+                    'Staff Observations': ['staff\f3']
                 },
                 '2.2': {
                     'Type': ["Part A: Patient Assessment and Management", "Part B: Communication with Patient/Family", "Part C: Handover"],
-                    'Staff Observations' : ['staff\f2']
+                    'Staff Observations': ['staff\f2']
                 },
                 '2.3': {
                     'Role of Observer': ["supervisor", "physician specialist being consulted", "other health professional"],
@@ -207,7 +251,7 @@ const programInfo = {
                 "3.8": "Caring for patients who have experienced a patient safety incident (adverse event)",
                 "3.9": "Caring for patients at the end of life",
                 "3.10": "Implementing health promotion strategies in patients with or at risk for disease",
-                "3.11": "Supervising junior learners in the clinical setting"
+                "3.11": "Supervising junior learners in the clinical setting."
             },
             maxObservation: {
                 "3.1": 18,
@@ -221,6 +265,73 @@ const programInfo = {
                 "3.9": 5,
                 "3.10": 4,
                 "3.11": 6
+            },
+            assessmentInfo: {
+                "3.1": `Collect 18 observations of achievement
+                - At least 6 direct observations
+                - At least 6 observations in ambulatory care setting
+                - At least 4 of each focus of care
+                - At least 6 different assessors`,
+                "3.2": `Part A: Collect 12 observations of achievement
+                - At least 6 in ambulatory care setting
+                - Case mix must include a variety of conditions
+                - At least 6 different faculty.
+
+                Part B: Collect 5 observations of achievement
+                - At least one from faculty
+                - At least one from other health professional
+                - At least 3 from different patients and/or families
+                - Role of observer: faculty; other health professional; patient and/or family`,
+                "3.3": `Part A: Collect 10 observations of achievement
+                - At least 4 in peri-operative
+                - At least one in obstetrical medicine
+                - At least 3 in ambulatory setting
+                - At least 3 different assessors.
+
+                Part B: Collect 6 observations of achievement.
+                Part C: Collect 2 observations of achievement`,
+                "3.4": `Part A: Collect 14 observations of achievement
+                - At least one from each presentation
+                - At least 3 from each focus of care category
+                - At least one from faculty for each presentation
+                
+                Part B: Collect multisource feedback from at least 6 observers
+                - At least 2 nurses
+                - At least 2 other health professions`,
+                "3.5": `Part A: Collect 21 observations of achievement
+                - At least one of each procedure in the clinical setting
+                - At least 5 central line placements using ultrasound guidance
+                -- Must include different sites
+                - At least 3 thoracentesis
+                - At least 3 paracentesis
+                - At least 3 lumbar puncture
+                - At least 2 arthrocentesis
+                -- At least one knee
+                - At least 3 airway management (bag and mask ventilation) and endotracheal
+                intubations
+                - At least 2 arterial line catheter insertions`,
+                "3.6": `Collect 3 observations of achievement
+                - At least one direct observation
+                - At least one faculty/staff observer
+                - At least 2 categories`,
+                "3.7": `Collect 3 observations of achievement `,
+                "3.8": `Collect 2 observations of achievement
+                - At least one clinical
+                - At least one observation of disclosure
+                - At least one by a faculty member`,
+                "3.9": `Part A: Collect 3 observations of achievement.
+
+                Part B: Collect 2 observations of achievement:
+                - Two different scenarios
+                - At least one from clinical setting`,
+                "3.10": `Collect 4 observations of achievement:
+                - Case mix must include a range of conditions`,
+                "3.11": `Part A: Collect 4 observations of achievement
+                - At least 2 different junior learners.
+
+                Part B: Collect 2 observations of achievement
+                - At least one case load of medium complexity
+                - Two different supervisors.`
             },
             filterTitles: {
                 '3.1': ["Focus of Care", "Setting", '', 'Direct vs Indirect\t6', 'Staff Observations\t3'],
@@ -350,6 +461,49 @@ const programInfo = {
                 "4.6": 1,
                 "4.7": 1,
                 "4.8": 1
+            },
+            assessmentInfo: {
+                "4.1": `Part A: Collect ten observations of achievement
+                - A variety of medical diagnoses
+                - A mix of acute and chronic conditions
+                - At least 4 different assessors.
+                
+                Part B: Collect multisource feedback from at least 10 observers
+                - At least 2 other health care professionals`,
+                "4.2": `Part A: Collect ten observations of achievement.
+                
+                Part B: Collect feedback from 5 observers
+                - At least 2 supervisors
+                - At least 1 member of clinic staff.
+                
+                Part C: Collect feedback from 15 patients and collate into one report. `,
+                "4.3": `Collect 4 observations of achievement
+                - At least one review of consult note/written communication to other MD
+                - At least one direct observation of communication with patient`,
+                "4.4": `Collect 2 observations of achievement
+                - At least one transfer to ward
+                - At least one transfer to ICU/CCU`,
+                "4.5": `Collect 2 observations of achievement
+                - No more than one simulation`,
+                "4.6": `Collect feedback from 8 observers
+                - At least 2 supervisors
+                - At least 3 consulting physicians
+                - At least 2 other health care professionals`,
+                "4.7": `Review of documentation by supervisor
+                a. Review a submission-ready documentation of a “Personal Learning Plan (PLP)”
+                appropriate for entry into MAINPORT in which a resident identifies:
+                i) a personal knowledge or performance gap, or
+                ii) an emerging need in the community that they serve
+                and then creates and implements a plan to update their knowledge/skills
+                b. Review the resident’s e-portfolio for evidence of literature searches, attendance at
+                conferences, or other activity that addresses their learning needs over the TTP stage `,
+                "4.8": `Resident submission must include all of the following:
+                - For Project: Summary of data identifying the concern(s) in safety, quality or resource
+                stewardship; Analysis of the human and system factors related to that concern
+                - For advanced course: syllabus and evidence of participation
+                - For committee: Summary of participation including examples of the concern(s) in
+                safety, quality or resource stewardship and analysis of the human and system
+                factors related to that concern`
             },
             filterTitles: {
                 "4.1": ["Category", '', 'Type'],
