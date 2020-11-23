@@ -95,7 +95,7 @@ const programInfo = {
                 '2.1': "Using the anesthetic assessment to generate the anesthetic considerations and management plan including postoperative disposition, and obtaining informed consent, for non-complex patients and non-complex surgery",
                 '2.2': "Providing perioperative anesthetic management for non-complex cases in adult patients",
                 '2.3': "Performing the non-airway basic procedures of Anesthesiology",
-                '2.4': "Identifying patients presenting with an anticipated difficult airway and preparing for management options",
+                '2.4': "Identifying patients presenting with an anticipated difficult airway and preparing for management options.",
                 '2.5': "Managing and coordinating patient positioning during anesthesia care and preventing and recognizing related complications",
                 '2.6': "Anticipating, preventing and managing common or expected intraoperative events and physiologic changes during non-complex cases",
                 '2.7': "(SA) Assessing the indications for transfusion of blood products and managing side effects and complications",

@@ -94,7 +94,7 @@ const programInfo = {
             subRoot: {
                 "2.1": "Assessing patients and integrating clinical and laboratory information in the evaluation of disease processes",
                 "2.2": "Performing basic tasks in autopsy pathology",
-                "2.3": "Performing gross dissection of simple surgical specimens from accessioning to submission of blocks",
+                "2.3": "Performing gross dissection of simple surgical specimens from accessioning to submission of blocks. ",
                 "2.4": "Selecting specimens for ancillary testing",
                 "2.5": "Generating diagnostically accurate and complete pathology reports for simple surgical pathology cases",
                 "2.6": "(SA) Performing clinical diagnostic procedures"
@@ -197,7 +197,7 @@ const programInfo = {
                 "3.12": "Diagnosing and reporting common coagulopathies",
                 "3.13": "Diagnosing and managing routine clinical and laboratory problems in transfusion medicine",
                 "3.14": "Selecting, correlating and interpreting common genomic/molecular pathology test results",
-                "3.15": "Managing, interpreting and reporting of gynecologic and non-gynecologic cytology specimens",
+                "3.15": "Managing, interpreting and reporting of gynecologic and non-gynecologic cytology specimens. ",
                 "3.16": "Identifying, investigating and resolving pre-analytical, analytical and post-analytical issues in laboratory medicine",
                 "3.17": "(SA) Participating in the selection and validation of new instrumentation, and evaluation of new tests",
                 "3.18": "Ensuring appropriate use of lab resources and test utilization",
