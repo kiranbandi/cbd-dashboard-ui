@@ -105,8 +105,11 @@ export default class GraphRow extends Component {
                     <span className='inner-offset-label'>
                         {epaSource + " - " + epaSourceMap[innerKey].subRoot[epaSource]}
                         {isAssessmentPlanAvailable &&
-                            <span className={"icon plan-icon icon-layers " + epaSource + (isPlanVisible ? ' open-plan' : ' ')} onClick={onAssessmentPlanClick}>
-                                <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPAPlan}</s-tooltip>
+                            <span
+                                className={"s-tooltip-assessment-plan-button icon plan-icon icon-layers " + epaSource + (isPlanVisible ? ' open-plan' : ' ')}
+                                data-s-tooltip-text={infoTooltipReference.residentMetrics.showEPAPlan}
+                                onClick={onAssessmentPlanClick}
+                            >
                             </span>}
                     </span>
                     {isPlanVisible && isAssessmentPlanAvailable &&

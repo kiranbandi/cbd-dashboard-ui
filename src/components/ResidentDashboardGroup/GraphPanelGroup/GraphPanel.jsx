@@ -127,6 +127,8 @@ class GraphPanel extends Component {
             <div>
                 {epaSourcesThatExist && <div className='graph-panel-root'>
 
+                    <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }} attach-to=".s-tooltip-assessment-plan-button"></s-tooltip>
+
                     {/* code chunk to show tooltip*/}
                     {isTooltipVisible && <Tooltip {...tooltipData} />}
 
