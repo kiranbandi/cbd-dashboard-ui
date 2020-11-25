@@ -354,7 +354,7 @@ function errorCallback(error, reject) {
     if (error.response && error.response.data) {
         // if its an authorization error, we simply redirect
         // the users to the paws login page
-        let loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent((process.env.NODE_ENV == 'development') ? 'https://localhost:8887/' : 'https://cbme.usask.ca/');
+        let loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent((process.env.NODE_ENV == 'development') ? 'https://localhost:8887/' : window.location.href);
         if (error.response.status == 401) {
             //  handle token expiry gracefully and log the user back in 
             // with minimal effort.
