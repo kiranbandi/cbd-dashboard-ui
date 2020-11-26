@@ -44,30 +44,27 @@ class DashboardRoot extends Component {
                 {isChecklistVisible && <ChecklistModal />}
                 {boardsLevel == '1' &&
                     <div>
+                        <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }} attach-to=".dashboard-tab"></s-tooltip>
                         <div className="hr-divider nav-pill-container-dashboard">
                             <ul className="nav nav-pills hr-divider-content hr-divider-nav">
                                 <li className={activeDashboard == 'resident' ? 'active' : ''}>
-                                    <a id='resident-tab' onClick={this.onTabClick}>
+                                    <a id='resident-tab' className="dashboard-tab" onClick={this.onTabClick} data-s-tooltip-text={infoTooltipReference.residentMetrics.main}>
                                         RESIDENT METRICS
-                                        <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.main}</s-tooltip>
                                     </a>
                                 </li>
                                 <li className={activeDashboard == 'normative' ? 'active' : ''}>
-                                    <a id='normative-tab' onClick={this.onTabClick}>
+                                    <a id='normative-tab' className="dashboard-tab" onClick={this.onTabClick} data-s-tooltip-text={infoTooltipReference.normativeAssessment.main}>
                                         NORMATIVE ASSESSMENT
-                                        <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.normativeAssessment.main}</s-tooltip>
                                     </a>
                                 </li>
                                 <li className={activeDashboard == 'supervisor' ? 'active' : ''}>
-                                    <a id='supervisor-tab' onClick={this.onTabClick}>
+                                    <a id='supervisor-tab' className="dashboard-tab" onClick={this.onTabClick} data-s-tooltip-text={infoTooltipReference.facultyDevlopment.main}>
                                         FACULTY DEVELOPMENT
-                                        <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.facultyDevlopment.main}</s-tooltip>
                                     </a>
                                 </li>
                                 <li className={activeDashboard == 'program' ? 'active' : ''}>
-                                    <a id='program-tab' onClick={this.onTabClick}>
+                                    <a id='program-tab' className="dashboard-tab" onClick={this.onTabClick} data-s-tooltip-text={infoTooltipReference.programEvaluation.main}>
                                         PROGRAM EVALUATION
-                                        <s-tooltip border-width="1px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.programEvaluation.main}</s-tooltip>
                                     </a>
                                 </li>
                                 <li className={activeDashboard == 'table' ? 'active' : ''}>
