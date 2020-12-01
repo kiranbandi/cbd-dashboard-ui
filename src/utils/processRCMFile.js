@@ -3,11 +3,13 @@ import _ from 'lodash';
 import moment from 'moment';
 
 
-export default function(rawData) {
+export default function (rawData) {
     return new Promise((resolve, reject) => {
         try {
 
-            var workbook = XLSX.read((new Uint8Array(rawData)), { type: 'array' });
+            var workbook = XLSX.read((new Uint8Array(rawData)), {
+                type: 'array'
+            });
             var dataInRows = XLSX.utils.sheet_to_json(workbook.Sheets['EPA Observations']);
             var narrativeInRows = XLSX.utils.sheet_to_json(workbook.Sheets['Narratives']);
             var dataStore = [];
@@ -103,13 +105,6 @@ export default function(rawData) {
                                         epaRating,
                                         isDateSlashFormat;
 
-                                    // Skip records that are in progress
-                                    if (dataPoint.__EMPTY_2 == 'In Progress') {
-                                        // internal loop increase iteratorIndex
-                                        iteratorIndex += 1;
-                                        continue;
-                                    }
-
                                     // Set the flag for records that have expired
                                     if (dataPoint.__EMPTY_2.length == 0 && dataPoint.__EMPTY_8 && dataPoint.__EMPTY_8.length > 0) {
                                         // store data of expired records differently , since they have values
@@ -162,6 +157,13 @@ export default function(rawData) {
                                             epaRating = 5;
                                         }
 
+                                        // For special assessment EPAs sometimes the EPA rating is simply set as In Progress even
+                                        // though its complete so for these , allow them through with a rating of 3.
+                                        if (dataPoint.__EMPTY_2.indexOf('In Progress') > -1) {
+                                            // internal loop increase iteratorIndex
+                                            epaRating = 3;
+                                        }
+
                                         isDateSlashFormat = dataPoint.__EMPTY_7.indexOf('/') > -1;
 
                                         dataStore.push({
@@ -199,7 +201,12 @@ export default function(rawData) {
                 console.log(error);
             }
 
-            resolve({ 'residentName': residentName, 'data': dataStore, 'narrativeData': processNarratives(narrativeInRows, residentName), epaSourceMap });
+            resolve({
+                'residentName': residentName,
+                'data': dataStore,
+                'narrativeData': processNarratives(narrativeInRows, residentName),
+                epaSourceMap
+            });
         } catch (e) {
             reject();
         };
