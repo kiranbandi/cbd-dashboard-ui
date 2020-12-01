@@ -55,7 +55,7 @@ class GraphPanel extends Component {
     }
 
     onAssessmentPlanClick() {
-        const openPlanID = event.target.className.split(" ")[3];
+        const openPlanID = event.target.dataset.epaSource;
         // if already open close it , if not open it !
         if (event.target.className.indexOf('open-plan') > -1) {
             this.setState({ openPlanID: '' });

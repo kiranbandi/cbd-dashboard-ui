@@ -66,16 +66,20 @@ export default class GraphRow extends Component {
         const scoreData = residentEPAData.map((d, i) => {
 
             let highlight = false;
+            let hasValidFilter = false;
 
             if (isFilterVisible) {
                 const context = splitAndTrim(d.Situation_Context);
                 highlight = true;
                 for (const filter of Object.values(filterDict)) {
                     if (filter) {
+                        hasValidFilter = true;
                         highlight = highlight && context.indexOf(filter) > -1;
                     }
                 }
+
             }
+            highlight = highlight && hasValidFilter;
 
             return {
                 x: xScale(i),
@@ -106,7 +110,8 @@ export default class GraphRow extends Component {
                         {epaSource + " - " + epaSourceMap[innerKey].subRoot[epaSource]}
                         {isAssessmentPlanAvailable &&
                             <span
-                                className={"s-tooltip-assessment-plan-button icon plan-icon icon-layers " + epaSource + (isPlanVisible ? ' open-plan' : ' ')}
+                                className={"s-tooltip-assessment-plan-button icon plan-icon icon-layers " + (isPlanVisible ? ' open-plan' : ' ')}
+                                data-epa-source={epaSource}
                                 data-s-tooltip-text={infoTooltipReference.residentMetrics.showEPAPlan}
                                 onClick={onAssessmentPlanClick}
                             >
