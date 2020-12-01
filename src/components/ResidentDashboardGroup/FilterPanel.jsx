@@ -155,12 +155,24 @@ class FilterPanel extends Component {
             } = residentFilter,
             { isFilterOpen } = this.state;
 
-        // Sort the residents alphabetically so that they are easier to look up and create a list
-        // matching the required format of the select dropdown
-        const selectOptions = _.map(residentList, (d) => ({ 'label': d.fullname, 'value': d.username }))
-            .sort((previous, current) => previous.label.localeCompare(current.label));
 
-        const currentSelectValue = _.find(selectOptions, (d) => d.value == username) || null;
+        //  first convert the array into the format required by react-select 
+        let modifiedResidentList = _.map(residentList, (d) => {
+            return {
+                label: d.fullname,
+                value: d.username,
+                currentPhase: d.currentPhase.split("-").join(" ").toUpperCase()
+            };
+        })
+        // then group the array based on current phase of resident
+        let groupedResidentList = _.groupBy(modifiedResidentList, (d) => d.currentPhase);
+        //  then remap the array without the phase info in it 
+        // and also internally sort the elements
+        groupedResidentList = _.map(groupedResidentList, (options, label) => {
+            return { label, options: options.sort((prev, cur) => prev.label.localeCompare(cur.label)) }
+        })
+
+        const currentSelectValue = _.find(modifiedResidentList, (d) => d.value == username) || null;
 
         return (
             <div className='filter-panel m-t center-align'>
@@ -172,7 +184,7 @@ class FilterPanel extends Component {
                             placeholder='Select Resident...'
                             isSearchable={true}
                             value={currentSelectValue}
-                            options={selectOptions}
+                            options={groupedResidentList}
                             styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
                             onChange={this.onResidentNameChange} />
 
