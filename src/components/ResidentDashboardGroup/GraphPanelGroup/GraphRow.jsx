@@ -106,7 +106,8 @@ export default class GraphRow extends Component {
                         {epaSource + " - " + epaSourceMap[innerKey].subRoot[epaSource]}
                         {isAssessmentPlanAvailable &&
                             <span
-                                className={"s-tooltip-assessment-plan-button icon plan-icon icon-layers " + epaSource + (isPlanVisible ? ' open-plan' : ' ')}
+                                className={"s-tooltip-assessment-plan-button icon plan-icon icon-layers " + (isPlanVisible ? ' open-plan' : ' ')}
+                                data-epa-source={epaSource}
                                 data-s-tooltip-text={infoTooltipReference.residentMetrics.showEPAPlan}
                                 onClick={onAssessmentPlanClick}
                             >
