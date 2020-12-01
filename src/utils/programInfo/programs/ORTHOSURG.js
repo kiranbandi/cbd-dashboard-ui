@@ -1,4 +1,5 @@
 const programInfo = {
+    programName: "ORTHOSURG",
     infoCardsVisible: false,
     examScoresVisible: false,
     narrativesVisible: true,

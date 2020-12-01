@@ -1,4 +1,5 @@
 const programInfo = {
+    programName: "PSYCH",
     infoCardsVisible: false,
     examScoresVisible: false,
     narrativesVisible: true,

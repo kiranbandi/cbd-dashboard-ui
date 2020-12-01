@@ -1,4 +1,5 @@
 const programInfo = {
+    programName: "PMR",
     infoCardsVisible: false,
     examScoresVisible: false,
     narrativesVisible: true,

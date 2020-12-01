@@ -1,4 +1,5 @@
 const programInfo = {
+    programName: "NEURO",
     infoCardsVisible: false,
     examScoresVisible: false,
     narrativesVisible: false,
