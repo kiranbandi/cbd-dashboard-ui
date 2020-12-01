@@ -66,16 +66,20 @@ export default class GraphRow extends Component {
         const scoreData = residentEPAData.map((d, i) => {
 
             let highlight = false;
+            let hasValidFilter = false;
 
             if (isFilterVisible) {
                 const context = splitAndTrim(d.Situation_Context);
                 highlight = true;
                 for (const filter of Object.values(filterDict)) {
                     if (filter) {
+                        hasValidFilter = true;
                         highlight = highlight && context.indexOf(filter) > -1;
                     }
                 }
+
             }
+            highlight = highlight && hasValidFilter;
 
             return {
                 x: xScale(i),
