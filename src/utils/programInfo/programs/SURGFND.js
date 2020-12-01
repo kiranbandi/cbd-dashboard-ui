@@ -1,4 +1,5 @@
 const programInfo = {
+    programName: "SURGFND",
     infoCardsVisible: false,
     examScoresVisible: false,
     narrativesVisible: true,

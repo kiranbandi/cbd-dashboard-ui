@@ -3,7 +3,9 @@ import _ from 'lodash';
 import moment from 'moment';
 
 
-export default function (rawData) {
+export default function (rawData, programInfo = {
+    programName: ''
+}) {
     return new Promise((resolve, reject) => {
         try {
 
@@ -190,7 +192,9 @@ export default function (rawData) {
                         }
                         // if the row has the entry "Archived Observations" stop processing the file 
                         // and break the loop by setting the iterator index to the maximum
-                        else if (dataInColumnOne.indexOf('Archived Observations') > -1) {
+                        // Except for Anesthesia keep counting the EPAs since for them
+                        // correct EPAs have been mistakenly marked as Archived
+                        else if (dataInColumnOne.indexOf('Archived Observations') > -1 && programInfo.programName != "ANESTHESIA") {
                             iteratorIndex = maxLength;
                         }
                     }

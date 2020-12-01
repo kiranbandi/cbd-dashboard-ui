@@ -1,4 +1,5 @@
 const programInfo = {
+    programName: "GENSURG",
     infoCardsVisible: false,
     examScoresVisible: false,
     narrativesVisible: true,
