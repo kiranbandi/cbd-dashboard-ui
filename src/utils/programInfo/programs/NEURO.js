@@ -35,8 +35,9 @@ const programInfo = {
             clinicalPresentation: {},
             patientDemographic: {},
             filterTitles: {},
-            filterValuesDict: {
-                '1.1': {}
+            filterValuesDict: {},
+            assessmentInfo: {
+                '1.1': "Collect 2 observations of achievement."
             }
         },
         2: {
@@ -67,6 +68,63 @@ const programInfo = {
                 '2.9': 2,
                 '2.10': 3,
                 '2.11': 3,
+            },
+            assessmentInfo: {
+                '2.1': `Collect 5 observations of achievement
+                - At least 2 outpatient clinic
+                - At least 2 emergency room or inpatient
+                - At least 1 each of trauma, tumor, hemorrhage, spine, peripheral
+                - At least 2 different assessors`,
+                '2.2': `Collect 5 observations
+                ‐ At least 1 of each case mix
+                ‐ At least 1 herniation syndrome
+                ‐ At least 2 different assessors.`,
+                '2.3': `Collect 3 observations of achievement
+                - At least 1 cervical
+                - At least 1 thoracic and/or lumbar
+                - At least 1 patient with a neurologic deficit
+                - At least 1 patient with a mechanically unstable spine
+                - At least 2 different assessors `,
+                '2.4': `Collect 5 observations of achievement
+                - At least 4 different issues
+                - At least 2 assessors`,
+                '2.5': `Collect 3 observations of achievement
+                - At least 1 of each type of location
+                - At least 1 direct observation`,
+                '2.6': `Collect 2 observations of achievement
+                - At least 1 patient who had active intervention `,
+                '2.7': `Part A:Procedural skills 
+                Collect 5 observations of achievement
+                - At least 1 lumbar drain
+                - At least 1 ICP monitor
+                - At least 2 EVDs.
+                
+                Part B:Logbook
+                Resident submits logbook of general neurosurgical procedures`,
+                '2.8': `Part A: Procedural skills 
+                Collect 1 observation of achievement.
+
+                Part B:Logbook
+                Submit logbook of general neurosurgical procedures`,
+                '2.9': `Part A: Procedural skills 
+                Collect 2 observations of achievement
+                    - At least one with staff as supervisor
+
+                Part B:Logbook
+                Resident submits logbook of general neurosurgical procedures`,
+                '2.10': `Part A: Procedural skills 
+                Collect 3 observations
+                    - At least 2 assessors 
+
+                Part B:Logbook
+                Submit logbook of general neurosurgical procedures`,
+                '2.11': `Part A: Procedural skills 
+                Collect 3 observations of achievement
+                - At least one of each location (cervical, thoracic, lumbar)
+                - At least two assessors 
+
+                Part B:Logbook
+                Submit logbook of general neurosurgical procedures`
             },
             clinicalPresentation: {
                 '2.1': ["central", "spine", "peripheral"],
@@ -219,6 +277,241 @@ const programInfo = {
                 '3.45': 1,
                 '3.46': 1,
             },
+            assessmentInfo: {
+                '3.1': `Collect feedback on 2 occasions, one each at junior core and senior core.
+                Each occasion should include
+                - At least 4 observers
+                - At least 1 attending staff
+                - At least 2 other observer roles `,
+                '3.2': `Collect 5 observations of achievement
+                - At least 1 of each case mix
+                - At least 2 different assessors `,
+                '3.3': `Collect 5 observations of achievement
+                - At least 1 of each type of issue
+                - At least 2 assessors`,
+                '3.4': `Collect 2 observations of achievement `,
+                '3.5': `Collect 2 observations of achievement
+                - At least one intracranial
+                - At least one spinal `,
+                '3.6': `Collect 5 observations of achievement
+                - At least 2 hydrocephalus of any type with at least 1 normal pressure hydrocephalus
+                - At least 1 Chiari
+                - At least 1 arachnoid cyst `,
+                '3.7': `Collect 2 observations of achievement
+                - At least 2 different procedures `,
+                '3.8': `Part A: Surgical competence 
+                Collect 4 observations of achievement
+                    - At least 1 infratentorial
+                    - At least 1 pterional
+                    - No more than 2 observations by senior/chief resident 
+                
+                Part B: Logbook
+                Submit logbook of general neurosurgical procedures  `,
+                '3.9': `Part A: Surgical competence 
+                Collect 3 observations of achievement
+                    - At least 1 craniotomy
+                    - At least 1 repair of a skull fracture 
+                
+                Part B: Logbook
+                Submit logbook of general neurosurgical procedures  `,
+                '3.10': `Part A: Surgical competence 
+                Collect 5 observations of achievement
+                    - At least 3 CSF shunt procedures
+                    - At least 1 CSF shunt revision procedure
+                    - At least 2 endoscopic third ventriculostomy procedures
+                    - At least 2 different assessors
+                
+                Part B: Logbook
+                Submit logbook of general neurosurgical procedures  `,
+                '3.11': `Collect 3 observations of achievement
+                - At least 2 different operations
+                - At least 2 observations by a neurosurgeon `,
+                '3.12': `Supervisor does assessment based on review of resident’s submission of the research
+                project.
+                Collect 1 observation of achievement.`,
+                '3.13': `Part A: Quality Improvement
+                Collect 1 observation of achievement
+
+                Part B: Teaching
+                Collect evaluations from 2 teaching encounters
+                - At least two evaluations from each teaching presentation `,
+                '3.14': `Collect 4 observations of achievement
+                - At least one each of epilepsy, movement disorder and pain and/or spasticity`,
+                '3.15': `Collect 2 observations of achievement
+                - At least one trigeminal neuralgia `,
+                '3.16': `Part A: Surgical competence
+                Collect 2 observations of achievement
+                - At least one biopsy
+                - At least one application of stereotactic frame
+
+                Part B: Logbook
+                Submit logbook of functional neurosurgical procedures`,
+                '3.17': `Part A: Surgical competence
+                Collect 3 observations of achievement
+                ‐ At least one percutaneous rhizotomy
+                ‐ At least one microvascular decompression
+
+                Part B: Logbook
+                Submit logbook of functional neurosurgical procedures`,
+                '3.18': `Collect 4 observations of achievement
+                - At least 1 carpal
+                - At least 1 ulnar
+                - At least 1 brachial plexus
+                - At least 1 other `,
+                '3.19': `Part A: Surgical competence
+                Collect 2 observations of achievement
+
+                Part B: Logbook
+                Submit logbook of peripheral nerve neurosurgical procedures`,
+                '3.20': `Part A: Surgical competence
+                Collect 1 observation of achievement
+
+                Part B: Logbook
+                Submit logbook of peripheral nerve neurosurgical procedures`,
+                '3.21': `Part A: Surgical competence
+                Collect 1 observation of achievement
+
+                Part B: Logbook
+                Submit logbook of peripheral nerve neurosurgical procedures`,
+                '3.22': `Collect 5 observations of achievement
+                - At least 2 degenerative spinal conditions
+                - At least 1 neoplastic spinal condition
+                - At least 1 deformity condition
+                - At least 1 with neurological deficit
+                - At least 1 with mechanical instability
+                - At least 2 assessors `,
+                '3.23': `Collect 5 observations of achievement
+                - At least 2 cervical
+                - At least 2 thoracic and/or lumbar
+                - At least 1 patient with a neurologic deficit
+                - At least 1 patient with a mechanically unstable spine
+                - At least 2 trauma
+                - At least 1 urgent spinal oncology case
+                - At least 2 different assessors`,
+                '3.24': `Part A: Surgical competence
+                Collect 2 observations of achievement
+
+                Part B: Logbook
+                Submit logbook of spinal neurosurgical procedures`,
+                '3.25': `Part A: Surgical competence
+                Collect 2 observations of achievement
+                    - At least one trauma case
+
+                Part B: Logbook
+                Submit logbook of spinal neurosurgical procedures`,
+                '3.26': `Part A: Surgical competence
+                Collect 2 observations of achievement
+                    - At least one revision procedure 
+
+                Part B: Logbook
+                Submit logbook of spinal neurosurgical procedures`,
+                '3.27': `Part A: Surgical competence
+                Collect 2 observations of achievement
+
+                Part B: Logbook
+                Submit logbook of spinal neurosurgical procedures`,
+                '3.28': `Part A: Surgical competence
+                Collect 2 observations of achievement
+
+                Part B: Logbook
+                Submit logbook of spinal neurosurgical procedures`,
+                '3.29': `Part A: Surgical competence
+                Collect 8 observations of achievement
+                    - At least one occipito-cervical
+                    - At least 2 anterior cervical
+                    - At least 2 posterior cervical
+                    - At least 1 posterior thoracic
+                    - At least 2 posterior lumbar
+                    - At least one lumbar interbody instrumentation
+                    - At least two different assessors 
+
+                Part B: Logbook
+                Submit logbook of spinal neurosurgical procedures`,
+                '3.30': `Part A: Surgical competence
+                Collect 2 observations of achievement
+                    ‐ At least one extramedullary at spinal cord level
+                    ‐ At least one intramedullary
+
+                Part B: Logbook
+                Submit logbook of spinal neurosurgical procedures`,
+                '3.31': `Collect 3 observations of achievement
+                - At least one cranial aneurysm
+                - At least one vascular malformation
+                - At least one carotid stenosis `,
+                '3.32': `Collect 3 observations of achievement
+                - At least one cranial aneurysm
+                - At least one vascular malformation
+                - At least one carotid stenosis `,
+                '3.33': `Part A: Surgical competence
+                Collect 2 observations of achievement
+
+                Part B: Logbook
+                Submit logbook of vascular neurosurgical procedures`,
+                '3.34': `Part A: Surgical competence
+                Collect 2 observations of achievement
+
+                Part B: Logbook
+                Submit logbook of vascular neurosurgical procedures`,
+                '3.35': `Part A: Surgical competence
+                Collect 2 observations of achievement
+
+                Part B: Logbook
+                Submit logbook of vascular neurosurgical procedures`,
+                '3.36': `Collect 4 observations of achievement
+                - At least one extra-axial
+                - At least one pituitary adenoma
+                - At least one metastatic tumour
+                - At least one primary intra-axial tumour
+                - At least two different assessors `,
+                '3.37': `Collect 5 observations of achievement
+                ‐ At least three different types of case mix
+                ‐ At least two different assessors `,
+                '3.38': `Part A: Surgical competence
+                Collect 4 observations of achievement
+                - At least one extra-axial
+                - At least one metastatic intra-axial
+                - At least one primary intra-axial
+                - At least one posterior fossa tumour 
+
+                Part B: Logbook
+                Submit logbook of oncologic neurosurgical procedures`,
+                '3.39': `Part A: Surgical competence
+                Collect 4 observations of achievement
+                    - At least one posterior fosa tumour
+                    - At least one complex meningioma
+                    - At least one eloquent intraaxial brain tumour 
+
+                Part B: Logbook
+                Submit logbook of oncologic neurosurgical procedures`,
+                '3.40': `Part A: Surgical competence
+                Collect 2 observations of achievement
+
+                Part B: Logbook
+                Submit logbook of oncologic neurosurgical procedures`,
+                '3.41': `Collect 2 observations of achievement
+                - At least one child less than 5 years of age `,
+                '3.42': `Collect 3 observations of achievement
+                - At least one posterior fossa brain tumour
+                - At least two other diagnoses
+                - At least one child less than 5 years of age `,
+                '3.43': `Collect 2 observations of achievement `,
+                '3.44': `Part A: Surgical competence
+                Collect 2 observations of achievement
+                - At least one infant or toddler 
+
+                Part B: Logbook
+                Submit logbook of pediatric neurosurgical procedures`,
+                '3.45': `Part A: Surgical competence
+                Collect 1 observation of achievement
+
+                Part B: Logbook
+                Submit logbook of pediatric neurosurgical procedures`,
+                '3.46': `Part A: Surgical competence
+                Collect 1 observation of achievement
+
+                Part B: Logbook
+                Submit logbook of pediatric neurosurgical procedures`
+            },
             clinicalPresentation: {},
             patientDemographic: {},
             filterTitles: {},
@@ -284,20 +577,22 @@ const programInfo = {
                 '4.2': 3,
                 '4.3': 1
             },
-            clinicalPresentation: {
-                '4.2': ["general", "functional", "peripheral", "spinal", "vascular", "oncology", "pediatric", "other"]
+            assessmentInfo: {
+                '4.1': `Collect 2 observations during Transition to Practice`,
+                '4.2': `Part A: Surgical competence 
+                Collect 3 observations of achievement
+                - At least two different types of procedures
+                - Two different assessors
+                
+                Part B: Interprofessional teamwork
+                Collect feedback from at least 4 observers on one occasion
+                - At least one anesthetist
+                - At least two nurses`,
+                '4.3': `Collect 1 observation of achievement
+                - At least 1 neurosurgeon
+                - At least 1 other physician or health care professional `
             },
-            patientDemographic: {},
-            filterTitles: {
-                '4.2': ['Procedure']
-            },
-            filterValuesDict: {
-                '4.1': {},
-                '4.2': {
-                    'Procedure': ["general", "functional", "peripheral", "spinal", "vascular", "oncology", "pediatric", "other"]
-                },
-                '4.3': {}
-            }
+            filterValuesDict: {}
         },
     }
 };
