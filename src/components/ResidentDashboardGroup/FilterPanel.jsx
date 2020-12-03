@@ -7,10 +7,13 @@ import _ from 'lodash';
 import Loading from 'react-loading';
 import ReactSelect from 'react-select';
 import { getResidentData, getNarratives } from '../../utils/requestServer';
+import { STAGES_LIST } from '../../utils/programInfo';
 import {
     toggleFilterLoader, setResidentFilter, toggleExamScore,
     setResidentData, setNarrativeData
 } from '../../redux/actions/actions';
+
+const MODDED_PHASE_LIST = STAGES_LIST.map((phase) => phase.split('-').join(" ").toUpperCase());
 
 class FilterPanel extends Component {
 
@@ -110,7 +113,6 @@ class FilterPanel extends Component {
                             if (groupedResidentData[innerKey]) {
                                 groupedResidentData[innerKey] = _.sortBy(groupedResidentData[innerKey], (d) => d.Date);
                             }
-
                         })
                     })
 
@@ -122,7 +124,6 @@ class FilterPanel extends Component {
 
                 })
                 .then((narrativeData) => {
-
                     // mark records in the selected date range with a flag
                     var markedNarrativeData = _.map(narrativeData, (d) => {
                         if (residentFilter.isAllData) {
@@ -133,9 +134,7 @@ class FilterPanel extends Component {
                         }
                         return d;
                     })
-
                     actions.setNarrativeData(markedNarrativeData);
-
                 })
                 .finally(() => { actions.toggleFilterLoader(); });
         }
@@ -151,7 +150,7 @@ class FilterPanel extends Component {
                 isAllData = false,
                 username = '',
                 startDate = moment().format('MM/DD/YYYY'),
-                endDate = moment().format('MM/DD/YYYY')
+                endDate = moment().format('MM/DDF/YYYY')
             } = residentFilter,
             { isFilterOpen } = this.state;
 
@@ -166,11 +165,14 @@ class FilterPanel extends Component {
         })
         // then group the array based on current phase of resident
         let groupedResidentList = _.groupBy(modifiedResidentList, (d) => d.currentPhase);
+
         //  then remap the array without the phase info in it 
         // and also internally sort the elements
+        // so first the groups are sorted based on the order in which the resident goes 
+        // through them and then the residents in each group are sorted alpabetically
         groupedResidentList = _.map(groupedResidentList, (options, label) => {
             return { label, options: options.sort((prev, cur) => prev.label.localeCompare(cur.label)) }
-        })
+        }).sort((a, b) => MODDED_PHASE_LIST.indexOf(a.label) - MODDED_PHASE_LIST.indexOf(b.label));
 
         const currentSelectValue = _.find(modifiedResidentList, (d) => d.value == username) || null;
 
