@@ -68,15 +68,17 @@ class InfoPanel extends Component {
                                 residentInfo={residentInfo}
                                 expiredResidentData={expiredResidentData}
                                 residentFilter={residentFilter} />}
+                        <div className="info-panel-subcharts-wrapper">
+                            {!smallScreen && programInfo.examScoresVisible && <CiteScoreGraph width={width / 2} citeScoreData={filterOutEmptyKeys(citeScoreData)} />}
+                            {!smallScreen && programInfo.examScoresVisible && < OralScoreGraph width={width / 2} oralScoreData={filterOutEmptyKeys(oralScoreData)} />}
+                            {!smallScreen && <RecentEPATrend width={width / 2} residentData={residentData} programInfo={programInfo} />}
+                            {!smallScreen && <FeedbackBlock
+                                width={width / 2}
+                                programInfo={programInfo}
+                                residentInfo={residentInfo}
+                                ccFeedbackList={ccFeedbackList} />}
+                        </div>
 
-                        {!smallScreen && programInfo.examScoresVisible && <CiteScoreGraph width={width / 2} citeScoreData={filterOutEmptyKeys(citeScoreData)} />}
-                        {!smallScreen && programInfo.examScoresVisible && < OralScoreGraph width={width / 2} oralScoreData={filterOutEmptyKeys(oralScoreData)} />}
-                        {!smallScreen && <RecentEPATrend width={width / 2} residentData={residentData} programInfo={programInfo} />}
-                        {!smallScreen && <FeedbackBlock
-                            width={width / 2}
-                            programInfo={programInfo}
-                            residentInfo={residentInfo}
-                            ccFeedbackList={ccFeedbackList} />}
                     </div>
                 }
             </div>

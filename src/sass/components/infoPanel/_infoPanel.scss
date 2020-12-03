@@ -4,43 +4,57 @@
 @import 'rotationSchedule';
 @import 'rotationSchedule';
 @import 'feedbackPanel';
+
 // Import sub components then add in base level styling
 .info-panel {
     background: #1a1c22;
     margin: 30px 30px 20px 30px;
     margin-top: 0px !important;
     border-radius: 5px;
+
     @media (max-width: 768px) {
         margin-right: 10px;
         margin-left: 10px;
         text-align: center;
     }
+
     .info-panel-inner {
         margin: 20px;
         padding: 20px;
+
+        .info-panel-subcharts-wrapper {
+            margin: 15px -10px;
+        }
+
         .titular-block {
             text-align: center;
+
             span.inner-title-block {
                 display: inline-block;
                 margin: 10px;
                 text-transform: uppercase;
                 font-size: 17px;
+
                 @media (max-width: 768px) {
                     font-size: 13px;
                 }
             }
+
             .view-checklist-button {
                 font-weight: bold;
                 font-size: 15px;
                 padding: 5px 7.5px;
                 margin-left: 10px;
+
                 .icon {
                     margin-right: 5px;
                 }
             }
         }
+
         .hr-divider {
             margin: 0px 30px 20px 30px;
+
             h4 {
                 padding: 10px;
                 margin-top: 12px;
@@ -48,6 +62,7 @@
                 color: #cfd2da;
             }
         }
+
         .pullto-left {
             margin-left: 15px;
         }
