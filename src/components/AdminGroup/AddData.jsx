@@ -78,7 +78,7 @@ export default class AddData extends Component {
                     // First get the file by its file path
                     const fileContents = await getFileByPath(file);
                     // Then process the RCM file and extract its contents
-                    let processedOutput = await processRCMFile(fileContents);
+                    let processedOutput = await processRCMFile(fileContents, this.props.programInfo);
                     // set resident name from user list 
                     let { data, residentName = '', narrativeData = [] } = processedOutput;
                     let userInFile = _.find(userList, (d) => d.fullname.toLowerCase() == residentName.toLowerCase()) || {};
@@ -155,7 +155,7 @@ export default class AddData extends Component {
             this.setState({ processing: true });
             // fetch the file from the system and then process it 
             getFile('add-data-rcm-file')
-                .then((response) => { return processRCMFile(response) })
+                .then((response) => { return processRCMFile(response, this.props.programInfo) })
                 .then((processedOutput) => {
                     let { data, narrativeData = [] } = processedOutput,
                         { rotationSchedule = {}, promotedDate = [] } = userData;
