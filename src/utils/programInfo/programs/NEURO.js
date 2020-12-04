@@ -32,9 +32,6 @@ const programInfo = {
             maxObservation: {
                 '1.1': 2
             },
-            clinicalPresentation: {},
-            patientDemographic: {},
-            filterTitles: {},
             filterValuesDict: {},
             assessmentInfo: {
                 '1.1': "Collect 2 observations of achievement."
@@ -126,30 +123,9 @@ const programInfo = {
                 Part B:Logbook
                 Submit logbook of general neurosurgical procedures`
             },
-            clinicalPresentation: {
-                '2.1': ["central", "spine", "peripheral"],
-                '2.2': ["subarachnoid hemorrhage", "severe traumatic brain injury", "spontaneous intracranial hemorrhage", "acute hydrocephalus", "mass lesion with acute deterioration"],
-                '2.3': ["cervical", "thoracic and/or lumbar"],
-                '2.4': ["CSF leak", "seizure", "CNS related endocrine and metabolic disturbances", "CNS infection", "vasospasm", "new postoperative neurologic deficit", "trouble shooting drains"],
-                '2.5': ["central", "spinal", "peripheral"],
-                '2.7': ["lumbar drain", "intracranial pressure monitor", "external ventricular drain"],
-                '2.11': ["cervical", "thoracic", "lumbar"]
-            },
-            patientDemographic: {
-                '2.1': ["trauma", "tumour", "hemorrhage", "other"],
-                '2.2': ["yes", "no"]
-            },
-            filterTitles: {
-                '2.1': ["Location", "Etiology"],
-                '2.2': ["Case Mix", "Herination Syndrome"],
-                '2.3': ['Level'],
-                '2.4': ['Issue Type'],
-                '2.5': ["Location"],
-                '2.7': ['Type of Drain'],
-                '2.11': ['Location']
-            },
             filterValuesDict: {
                 '2.1': {
+                    'Setting': ["emergency room", "inpatient", "outpatient clinic"],
                     'Location': ["central", "spine", "peripheral"],
                     'Etiology': ["trauma", "tumour", "hemorrhage", "other"]
                 },
@@ -164,17 +140,30 @@ const programInfo = {
                     'Issue Type': ["CSF leak", "seizure", "CNS related endocrine and metabolic disturbances", "CNS infection", "vasospasm", "new postoperative neurologic deficit", "trouble shooting drains"]
                 },
                 '2.5': {
-                    'Location': ["central", "spinal", "peripheral"]
+                    'Location': ["central", "spinal", "peripheral"],
+                    'Observation Type': ["indirect", "direct"]
                 },
-                '2.6': {},
+                '2.6': {
+                    'Active Intervention': ['yes', 'no'],
+                },
                 '2.7': {
-                    'Type of Drain': ["lumbar drain", "intracranial pressure monitor", "external ventricular drain"]
+                    'Type of Drain': ["lumbar drain", "intracranial pressure monitor", "external ventricular drain"],
+                    'Type': ['Part A: Procedural skills', 'Part B: Logbook']
                 },
-                '2.8': {},
-                '2.9': {},
-                '2.10': {},
+                '2.8': {
+                    'Scenario': ['clinical', 'simulation'],
+                    'Type': ['Part A: Procedural skills', 'Part B: Logbook']
+                },
+                '2.9': {
+                    'Supervisor role': ['staff', 'senior resident'],
+                    'Type': ['Part A: Procedural skills', 'Part B: Logbook']
+                },
+                '2.10': {
+                    'Type': ['Part A: Procedural skills', 'Part B: Logbook']
+                },
                 '2.11': {
-                    'Location': ["cervical", "thoracic", "lumbar"]
+                    'Location': ["cervical", "thoracic", "lumbar"],
+                    'Type': ['Part A: Procedural skills', 'Part B: Logbook']
                 }
             }
         },
@@ -276,6 +265,144 @@ const programInfo = {
                 '3.44': 2,
                 '3.45': 1,
                 '3.46': 1,
+            },
+            filterValuesDict: {
+                '3.1': {
+                    'Observer Role': ["attending staff", "other services (ICU) nurse", "clinical assistant", "other health professional", "other trainee (e.g. fellow", "resident", "medical student)"]
+                },
+                '3.2': {
+                    'Case Mix': ["subarachnoid hemorrhage", "severe traumatic brain injury", "spontaneous intracranial hemorrhage", "acute hydrocephalus", "mass lesion with acute deterioration"],
+                    'Herniation Syndrome': ['yes', 'no']
+                },
+                '3.3': {
+                    'Issue Type': ["CSF leak", "wound infection", "vasospasm", "new postoperative neurologic deficit", "post-operative hemorrhage"]
+                },
+                '3.4': {
+                    'Scenario': ["bad news", "adverse event", "other"]
+                },
+                '3.5': {
+                    'Location': ["intracranial infection", "spinal epidural abscess", "other"]
+                },
+                '3.6': {
+                    'Case Mix': ["obstructive hydrocephalus", "normal pressure hydrocephalus", "communicating hydrocephalus", "Chiari/syrinx", "arachnoid cyst"]
+                },
+                '3.7': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook'],
+                    'Craniotomy Type': ["infratentorial", "pterional", "supratentorial"]
+                },
+                '3.8': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook'],
+                    'Location': ["epidural", "subdural", "intraaxial"]
+                },
+                '3.9': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook'],
+                    'Procedure': ["shunt insertion", "shunt revision", "Chiari", "Cyst", "ETV", "Syrinx to SAH/P shunt"],
+                    'Location': ["not applicable", "ventriculoperitonal", "ventriculopleural", "ventriculoatrial", "lumboperitoenal"]
+                },
+                '3.10': {},
+                '3.11': {},
+                '3.12': {},
+                '3.13': {
+                    'Type': ['Part A: Quality Improvement', 'Part B: Teaching'],
+                },
+                '3.14': {
+                    'Patient Presentation': ["epilepsy", "movement disorder", "pain and/or spasticity, other"]
+                },
+                '3.15': {
+                    'Trigeminal neuralgia': ['yes', 'no'],
+                    'Decision': ["no surgery", "percutaneous technique", "open technique"]
+                },
+                '3.16': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook'],
+                    'Indication': ["biopsy", "movement disorder", "radiosurgery", "other"],
+                    'Use of stereotactic frame': ['yes', 'no']
+                },
+                '3.17': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook'],
+                    'Surgical Technique': ["percutaneous rhizotomy", "microvascular decompression"]
+                },
+                '3.18': {
+                    'Case Mix': ["carpal", "ulnar", "brachial plexus", "other"]
+                },
+                '3.19': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook'],
+                    'Type of Procedure': ["carpal tunnel decompression", "ulnar nerve decompression/transposition"]
+                },
+                '3.20': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook'],
+                    'Type of Procedure': ["sural nerve biopsy", "muscle biopsy"]
+                },
+                '3.21': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook']
+                },
+                '3.22': {
+                    'Spinal Condition': ["degenerative", "neoplastic", "congenital", "deformity", "syrinx", "other"],
+                    'Level': ["cervical", "thoracic and/or lumbar"]
+                },
+                '3.23': {
+                    'Level': ["cervical", "thoracic and/or lumbar"],
+                    'Etiology': ["trauma", "malignancy", "other"]
+                },
+                '3.24': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook']
+                },
+                '3.25': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook'],
+                    'Etiology': ["trauma", "other"]
+                },
+                '3.26': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook'],
+                    'Etiology': ["cauda equina syndrome", "other"],
+                    'Revision': ['yes', 'no']
+                },
+                '3.27': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook']
+                },
+                '3.28': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook']
+                },
+                '3.29': {
+                    'Approach': ['anterior', 'posterior'],
+                    'Level': ["occipito-cervical", "cervical", "thoracic", "lumbar"],
+                    'Interbody Fusion': ['yes', 'no'],
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook']
+                },
+                '3.30': {
+                    'Location': ['intramedullary', 'extramedullary'],
+                    'Level': ["cervical", "thoracic", "lumbar"],
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook']
+                },
+                '3.31': {
+                    'Location': ['cranial', 'spinal', 'other'],
+                    'Condition': ["aneurysm", "vascular malformation", "carotid stenosis"]
+                },
+                '3.32': {
+                    'Location': ['cranial', 'spinal', 'other'],
+                    'Condition': ["aneurysm", "vascular malformation", "carotid stenosis"]
+                },
+                '3.33': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook']
+                },
+                '3.34': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook']
+                },
+                '3.35': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook']
+                },
+                '3.36': {
+                    'Location': ["extra-axial", "intra-axial", "pituitary adenoma"],
+                    'Tumour': ["primary", "metastatic", "other"]
+                },
+                '3.37': {},
+                '3.38': {},
+                '3.39': {},
+                '3.40': {},
+                '3.41': {},
+                '3.42': {},
+                '3.43': {},
+                '3.44': {},
+                '3.45': {},
+                '3.46': {}
             },
             assessmentInfo: {
                 '3.1': `Collect feedback on 2 occasions, one each at junior core and senior core.
@@ -511,57 +638,6 @@ const programInfo = {
 
                 Part B: Logbook
                 Submit logbook of pediatric neurosurgical procedures`
-            },
-            clinicalPresentation: {},
-            patientDemographic: {},
-            filterTitles: {},
-            filterValuesDict: {
-                '3.1': {},
-                '3.2': {},
-                '3.3': {},
-                '3.4': {},
-                '3.5': {},
-                '3.6': {},
-                '3.7': {},
-                '3.8': {},
-                '3.9': {},
-                '3.10': {},
-                '3.11': {},
-                '3.12': {},
-                '3.13': {},
-                '3.14': {},
-                '3.15': {},
-                '3.16': {},
-                '3.17': {},
-                '3.18': {},
-                '3.19': {},
-                '3.20': {},
-                '3.21': {},
-                '3.22': {},
-                '3.23': {},
-                '3.24': {},
-                '3.25': {},
-                '3.26': {},
-                '3.27': {},
-                '3.28': {},
-                '3.29': {},
-                '3.30': {},
-                '3.31': {},
-                '3.32': {},
-                '3.33': {},
-                '3.34': {},
-                '3.35': {},
-                '3.36': {},
-                '3.37': {},
-                '3.38': {},
-                '3.39': {},
-                '3.40': {},
-                '3.41': {},
-                '3.42': {},
-                '3.43': {},
-                '3.44': {},
-                '3.45': {},
-                '3.46': {}
             }
         },
         4: {
@@ -592,7 +668,13 @@ const programInfo = {
                 - At least 1 neurosurgeon
                 - At least 1 other physician or health care professional `
             },
-            filterValuesDict: {}
+            filterValuesDict: {
+                '4.1': {},
+                '4.2': {},
+                '4.3': {
+                    'Observer Role': ["neurosurgeon", "other physician or health care professional"]
+                }
+            }
         },
     }
 };
