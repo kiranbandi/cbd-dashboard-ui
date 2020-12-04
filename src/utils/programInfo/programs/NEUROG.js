@@ -54,9 +54,22 @@ const programInfo = {
                 "1.4": 2,
                 "1.5": 1
             },
-            clinicalPresentation: {},
-            patientDemographic: {},
-            filterTitles: {},
+            assessmentInfo: {
+                "1.1": `Collect 2 observations of achievement:
+                - At least 1 direct observation of history taking (including indirect or direct
+                observations of collecting corroborating information, as applicable)
+                - At least 1 direct observation of physical exam
+                - At least 1 patient with a neurological presentation
+                - At least 2 observers
+                - At least 1 faculty/attending observer`,
+                "1.2": `Collect 1 observation of achievement. `,
+                "1.3": `Collect 1 observation of achievement. `,
+                "1.4": `Collect 2 observations of achievement.
+                - At least 1 consult or admission note
+                - At least 1 progress note
+                - At least 1 faculty observer`,
+                "1.5": `Collect 1 observation of achievement. `
+            },
             filterValuesDict: {
                 '1.1': {},
                 '1.2': {},
@@ -84,9 +97,28 @@ const programInfo = {
                 "2.5": 2,
                 "2.6": 1
             },
-            clinicalPresentation: {},
-            patientDemographic: {},
-            filterTitles: {},
+            assessmentInfo: {
+                "2.1": `Collect 3 observations of achievement.
+                - At least 1 acute stroke
+                - At least 2 different presentations
+                - At least 2 faculty observers`,
+                "2.2": `Collect 3 observations of achievement.
+                - At least 1 history
+                - At least 2 physical
+                - At least 2 different presentations
+                - At least 2 attending staff`,
+                "2.3": `Collect 4 observations of achievement.
+                - At least 2 observation by staff neurologist
+                - At least 4 different presentations `,
+                "2.4": `Collect 3 observations of achievement.
+                - At least 3 different domains
+                - At least 1 psychiatric presentation
+                - At least 2 attending staff with appropriate area of expertise`,
+                "2.5": `Collect 2 observations of achievement
+                - At least 1 complex
+                - At least 1 staff physician observer`,
+                "2.6": `Collect 1 observation of achievement. `
+            },
             filterValuesDict: {
                 '2.1': {},
                 '2.2': {},
@@ -119,9 +151,44 @@ const programInfo = {
                 "3.7": 2,
                 "3.8": 3
             },
-            clinicalPresentation: {},
-            patientDemographic: {},
-            filterTitles: {},
+            assessmentInfo: {
+                "3.1": `Collect 6 observations of achievement
+                - At least 1 acute stroke
+                - At least 1 seizure
+                - At least 1 acute neuromuscular weakness
+                - At least 2 other presentations
+                - At least 1 pediatric presentation
+                - At least 3 observations by attending physician `,
+                "3.2": `Collect 6 observations of achievement.
+                - At least 6 different examples of the case mix
+                - At least 3 complex
+                - At least 5 observations from staff physicians
+                - At least 3 different assessors`,
+                "3.3": `Complete 4 observations of achievement.
+                - At least 1 code stroke
+                - At least 1 complex stroke
+                - At least 1 refractory status epilepticus
+                - At least 2 different observers
+                - At least 1 staff observer`,
+                "3.4": `Collect 10 observations of achievement
+                - At least 1 of each specified exam technique
+                - At least 1 cognitive testing`,
+                "3.5": `Collect 2 observations of achievement.
+                - At least 1 new letter to referring physician
+                - At least 1 complex
+                - At least 2 different assessors `,
+                "3.6": `Collect 2 observations of achievement.
+                - At least 2 different attending staff
+                - Includes feedback from at least 3 other health professionals`,
+                "3.7": `Collect 2 observations of achievement
+                - At least 1 complex case
+                - At least 2 different observers
+                - At least 1 staff observer`,
+                "3.8": `Collect 3 observations of achievement.
+                - At least 1 goals of care discussion
+                - At least 1 breaking bad news
+                - At least 1 conversation in the setting of acute neurological emergency`
+            },
             filterValuesDict: {
                 '3.1': {},
                 '3.2': {},
@@ -146,9 +213,18 @@ const programInfo = {
                 '4.2': 2,
                 '4.3': 2
             },
-            clinicalPresentation: {},
-            patientDemographic: {},
-            filterTitles: {},
+            assessmentInfo: {
+                '4.1': `Part A: Patient care
+                Collect 2 observations of achievement
+                - At least 1 case load of high complexity
+                - 2 different supervisors
+                
+                Part B: Interprofessional care/supervision
+                Collect feedback from at least 3 observers on one occasion during Transition to Practice`,
+                '4.2': `Collect 2 observations of achievement.`,
+                '4.3': `Collect 2 observations of achievement.
+                - At least 2 different observers`
+            },
             filterValuesDict: {
                 '4.1': {},
                 '4.2': {},
