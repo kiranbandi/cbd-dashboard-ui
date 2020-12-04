@@ -43,12 +43,9 @@ const programInfo = {
             maxObservation: {
                 '1.1': 3
             },
-            clinicalPresentation: {
-                '1.1': ["direct", "case review"]
-            },
-            patientDemographic: {},
-            filterTitles: {
-                '1.1': ["Observation"]
+            assessmentInfo: {
+                '1.1': `Collect 3 observations of achievement
+                    - At least 1 direct observation by orthopedic surgeon`
             },
             filterValuesDict: {
                 '1.1': {
@@ -83,14 +80,32 @@ const programInfo = {
                 '2.9': 2,
                 '2.10': 2
             },
-            clinicalPresentation: {
-                '2.6': ["ward", "clinic", "emergency department", "operating room", "simulation"]
-            },
-            patientDemographic: {
-                '2.6': ["closed reduction and casting", "skeletal traction", "skin traction", "joint aspiration and fluid analysis", "joint injection", "other procedure"]
-            },
-            filterTitles: {
-                '2.6': ['Setting', 'Procedure']
+            assessmentInfo: {
+                '2.1': `Collect 4 observations of achievement
+                - At least 1 open fracture
+                - At least 1 fracture or joint dislocation`,
+                '2.2': `Collect 4 observations of achievement
+                - At least 2 different domains
+                - At least 1 direct observation`,
+                '2.3': `Collect 3 observations achievement `,
+                '2.4': `Collect 4 observations of achievement
+                - At least 1 of each, fracture and MSK infection `,
+                '2.5': `Collect 1 observation of achievement`,
+                '2.6': `Collect 5 observations of achievement
+                - At least 1 closed reduction in an adult patient
+                - At least 1 closed reduction in a pediatric patient
+                - At least 1 skeletal traction
+                - At least 1 joint aspiration and fluid analysis
+                - At least 1 joint injection`,
+                '2.7': `Collect 3 observations of achievement
+                - At least 3 different procedures`,
+                '2.8': `Collect 2 observations of achievement`,
+                '2.9': `Collect 2 observations of achievement
+                - At least 1 THA
+                - At least 1 TKA `,
+                '2.10': `Collect 2 observations of achievement
+                - At least 1 knee
+                - At least 1 shoulder`
             },
             filterValuesDict: {
                 '2.1': {},
@@ -181,17 +196,93 @@ const programInfo = {
                 '3.32': 1,
                 '3.33': 1
             },
-            clinicalPresentation: {
-                '3.1': ["trauma", "foot and ankle", "hip and knee", "sports", "upper extremity/hand", "oncology", "spine"],
-                '3.8': ["ward", "OR", "clinic", "small group"]
-            },
-            patientDemographic: {
-                '3.1': ["direct", "case review"],
-                '3.8': ["orthopedic surgeon", "fellow", "TTP resident", "Core resident", "Foundations resident", "TTD resident"]
-            },
-            filterTitles: {
-                '3.1': ['Domain', 'Observation'],
-                '3.8': ['Setting', 'Observer']
+            assessmentInfo: {
+                '3.1': `Collect 14 observations of achievement
+                - At least 2 from each domain
+                - At least 1 direct observation for each domain`,
+                '3.2': `Collect 4 observations of achievement
+                - At least 2 complex conditions
+                - At least 1 direct observation`,
+                '3.3': `Collect 4 observations of achievement
+                - At least 4 different complications`,
+                '3.4': `Collect 3 observations of achievement
+                - At least 1 pediatric patient
+                - At least 3 different observers`,
+                '3.5': `Part A: Overall patient care
+                Collect 1 observation of achievement 
+                
+                Part B: Working effectively with the interprofessional team
+                Collect observations from multiple observers at least 2 times during the Core stage
+                - At least 3 observers at each time point`,
+                '3.6': `Part A: Written documentation
+                Collect 3 observations of achievements
+                - At least 1 operative note
+                - At least 1 discharge summary or transfer of care note
+                - At least 1 consult note or admission note
+
+                Part B: CMPA module completion 
+                Collect 1 observation of achievement`,
+                '3.7': `Collect 1 observation of achievement `,
+                '3.8': `Collect feedback from at least 5 observers
+                - At least 1 from orthopedic surgeon
+                - At least 4 from different residents
+                - At least 2 different settings`,
+                '3.9': `Collect 2 observations of achievement `,
+                '3.10': `Collect 4 observations of achievement
+                - At least 4 different complications`,
+                '3.11': `Collect 2 observation of achievement
+                - At least 1 ankle/foot amputation
+                - At least 1 AKA, through knee or BKA`,
+                '3.12': `Collect 4 observations of achievement
+                - At least 1 upper extremity
+                - At least 1 lower extremity`,
+                '3.13': `Collect 4 observations of achievement
+                - At least 1 application of external fixator to pelvis
+                - At least 1 application of external fixator to an extremity
+                - No more than 2 in simulation `,
+                '3.14': `Collect 4 observations of achievement
+                - At least 2 femur
+                - At least 2 tibia
+                - At least 1 complex case`,
+                '3.15': `Collect 4 observations of achievement
+                - At least 1 upper extremity
+                - At least 1 lower extremity`,
+                '3.16': `Collect 4 observations of achievement
+                - At least 1 distal radius
+                - At least 1 tibial plateau
+                - At least 1 ankle `,
+                '3.17': `Collect 4 observations of achievement
+                - At least 1 with screws or plate and screws
+                - At least 1 with proximal femoral nail
+                - At least 1 complex case`,
+                '3.18': `Collect 2 observations of achievement`,
+                '3.19': `Collect 2 observation of achievement
+                - At least 2 different conditions`,
+                '3.20': `Collect 1 observation of achievement`,
+                '3.21': `Collect 4 observations of achievement
+                - At least 2 of each procedure `,
+                '3.22': `Collect 2 observation of achievement
+                - At least 1 hip and 1 knee`,
+                '3.23': `Collect 3 observations of achievement
+                - At least 2 knee
+                - At least 1 shoulder`,
+                '3.24': `Collect 2 observations of achievement
+                - At least 1 shoulder or elbow
+                - At least 1 wrist or hand`,
+                '3.25': `Collect 1 observation of achievement`,
+                '3.26': `Collect 1 observation of achievement`,
+                '3.27': `Collect 1 observation of achievement`,
+                '3.28': `Collect 3 observations of achievement
+                - At least 1 elbow fracture (supracondylar or lateral condyle fracture)
+                - At least 1 physeal fractures (may include SCFE)
+                - At least 1 arthrotomy for infection`,
+                '3.29': `Collect 2 observations of achievement
+                - At least 1 Pavlik or hip spica
+                - At least 1 cast for clubfoot`,
+                '3.30': `Collect 2 observations of achievement `,
+                '3.31': `Collect 1 observation of achievement`,
+                '3.32': `Collect 1 observation of achievement`,
+                '3.33': `Collect 1 observation of achievement`
             },
             filterValuesDict: {
                 '3.1': {
@@ -248,9 +339,16 @@ const programInfo = {
                 '4.2': 1,
                 '4.3': 2
             },
-            clinicalPresentation: {},
-            patientDemographic: {},
-            filterTitles: {},
+            assessmentInfo: {
+                '4.1': `Collect 1 observation of achievement `,
+                '4.2': `Part A: Overall surgical management
+                Collect 1 observation of achievement
+
+                Part B: Interprofessional skills
+                Collect 1 observation of achievement
+                - At least 2 team members providing feedback`,
+                '4.3': `Collect 2 observations of achievement`
+            },
             filterValuesDict: {
                 '4.1': {},
                 '4.2': {},
