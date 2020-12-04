@@ -52,30 +52,51 @@ const programInfo = {
                 "2.2": 3,
                 "2.3": 6,
                 "2.4": 6,
-                "2.5": 1,
+                "2.5": 1
             },
-            clinicalPresentation: {
-                '2.3': ["laparotomy", "laparoscopy"],
-                '2.4': ["upper", "lower"]
-            },
-            patientDemographic: {
-                '2.3': ["OR", "simulation lab"],
-                '2.4': ["elective", "non-elective"]
-            },
-            filterTitles: {
-                '2.3': ["Procedure", "Setting"],
-                '2.4': ["Endoscopy", "Urgency"]
+            assessmentInfo: {
+                "2.1": `Collect 5 observations of achievement
+                - At least 1 direct observation
+                - At least 2 different observers
+                - At least 3 observations by faculty`,
+                "2.2": `Collect 3 observations of achievement
+                - At least 2 observations by faculty`,
+                "2.3": `Collect 6 observations of achievement
+                - At least 2 laparotomy, including 1 opening and 1 closing
+                - At least 2 laparoscopy
+                - No more than 1 simulated scenario for each surgical task
+                - At least 3 observations by faculty`,
+                "2.4": `Part A: Consent
+                Collect 2 observations of achievement
+                - At least 1 observation by faculty
+                
+                Part B: Patient preparation
+                Collect 4 observations of achievement
+                - At least 1 upper endoscopy
+                - At least 1 lower endoscopy
+                - At least 1 non-elective
+                - At least 2 different observers
+                - At least 2 observations by faculty`,
+                "2.5": `Collect 1 observation of achievement`,
             },
             filterValuesDict: {
-                '2.1': {},
-                '2.2': {},
+                '2.1': {
+                    "Setting": ["inpatient", "outpatient", "emergency"],
+                    "Observation": ["direct", "indirect"]
+                },
+                '2.2': {
+                    "Setting": ["inpatient", "emergency department", "ICU"],
+                    "Observation": ["direct", "case review"]
+                },
                 '2.3': {
                     'Procedure': ["laparotomy", "laparoscopy"],
                     'Setting': ["OR", "simulation lab"]
                 },
                 '2.4': {
+                    'Type': ["Part A: Consent", "Part B: Patient preparation"],
                     'Endoscopy': ["upper", "lower"],
-                    'Urgency': ["elective", "non-elective"]
+                    'Urgency': ["elective", "non-elective"],
+                    "Setting": ["clinic", "endoscopy suite", "inpatient", "emergency department", "ICU"]
                 },
                 '2.5': {}
             }
@@ -131,41 +152,122 @@ const programInfo = {
                 "3.21": 1,
                 "3.22": 2
             },
-            clinicalPresentation: {
-                "3.1": ["emergency", "inpatient", "outpatient", "OR", "ICU", "simulation"],
-                "3.3": ["community", "tertiary", "other setting"],
-                "3.5": ["anti-reflux surgery", "partial/total gastrectomy", "paraesophageal hernia", "bariatric and metabolic surgery", "distal esophagectomy", "Whipple’s procedure", "surgical treatment of peptic ulcer disease and acute complications", "traumatic injury of stomach and duodenum"],
-                "3.6": ["lysis of adhesions", "small bowel resection with or without anastomosis", "ileostomy creation", "ileostomy closure", "feeding jejunostomy", "stricturoplasty", "repair of enterotomy", "trauma repair"],
-                "3.7": ["yes", "no"],
-                "3.8": ["proctectomy/low anterior resection, including total mesorectal excision (TME)", "abdominal perineal resection", "examination under anesthesia", "proctocolectomy", "hemorrhoidectomy (all modalities)", "sphincterotomy", "surgical management of anorectal fistula", "drainage of abscess", "rectal prolapse procedures", "rectal foreign body removal", "transanal excision of lesions", "traumatic injury to the rectum and anus", "anoscopy", "rigid sigmoidoscopy"],
-                "3.9": ["hepatic resection", "cholecystectomy", "CBD exploration", "CBD resection and biliary reconstruction", "Whipple", "organ harvest", "liver transplantation", "repair of traumatic injury to liver and common bile ducts"],
-                "3.13": ["drainage of abscess", "duct excision", "lumpectomy with or without localization", "mastectomy", "modified radical mastectomy", "core needle biopsy", "other procedure"],
-                '3.19': ["elective", "non-elective", "therapeutic"],
-                '3.20': ["endoscopy suite", "ambulatory clinic", "operating room", "ICU"]
-            },
-            patientDemographic: {
-                "3.1": ["yes", "no"],
-                "3.3": ["1-9", "10+"],
-                "3.5": ["malignant", "benign", "bleeding", "other presentation"],
-                "3.6": ["malignant", "benign", "bleeding", "other presentation"],
-                "3.7": ["malignant", "benign", "bleeding", "other presentation"],
-                '3.8': ["malignant", "benign", "bleeding", "other presentation"],
-                '3.9': ["malignant", "benign", "bleeding", "other presentation"],
-                '3.13': ["yes", "no"],
-                '3.19': ["normal", "abnormal"],
-                '3.20': ["normal", "abnormal"]
-            },
-            filterTitles: {
-                "3.1": ["Setting", "Complex Case"],
-                "3.3": ["Setting", "Average # of Inpatients per day"],
-                "3.5": ["Procedure", "Presentation"],
-                "3.6": ["Procedure", "Presentation"],
-                "3.7": ["Complexity", "Presentation"],
-                "3.8": ["Procedure", "Presentation"],
-                "3.9": ["Procedure", "Presentation"],
-                "3.13": ["Procedure", "Complexity"],
-                '3.19': ["Procedure", "Findings"],
-                '3.20': ["Setting", "Findings"]
+            assessmentInfo: {
+                "3.1": `Collect 10 observations of achievement
+                - At least 2 different settings
+                - No more than 1 in simulation setting
+                - At least 5 complex cases
+                - At least 1 thyroid or parathyroid presentation
+                - At least 3 different observers
+                - At least 5 observations by faculty`,
+                "3.2": `Collect 5 observations of achievement
+                - At least 1 penetrating trauma, may be in the simulation setting
+                - At least 1 unstable patient
+                - At least 3 direct observations
+                - At least 3 observations by faculty`,
+                "3.3": `Part A: Patient care
+                Collect 5 observations of achievement
+                - At least 1 in a community setting
+                - At least 1 in a General Surgery acute care service
+                - At least 3 in a service with more than 10 patients on average
+                - At least 3 different observers
+                
+                Part B: Interprofessional care/supervision
+                Collect 3 observations of achievement`,
+                "3.4": `Collect 5 observations of achievement
+                - At least 2 in outpatient setting
+                - At least 2 complex patients
+                - A range of treatment decisions
+                - At least 1 transition to palliative care
+                - At least 2 different observers`,
+                "3.5": `Collect 12 observations of achievement
+                - At least 2 of each surgical task
+                - At least 1 resection of stomach in a malignant case
+                - At least 2 different observers, including at least 1 attending surgeon
+                - At least 6 observations by faculty`,
+                "3.6": `Collect 12 observations of achievement
+                - At least 2 of each surgical task
+                - At least 2 different observers
+                - At least 1 general surgeon observer
+                - At least 6 observations by faculty`,
+                "3.7": `Collect 18 observations of achievement
+                - At least 2 of each surgical task
+                - At least 1 left sided colon resection
+                - At least 1 emergent colon resection
+                - At least 2 different observers
+                - At least 9 observations by faculty`,
+                "3.8": `Collect 18 observations of achievement
+                - At least 1 of each surgical task
+                - At least 2 different observers
+                - At least 9 observations by faculty`,
+                "3.9": `Collect 13 observations of achievement
+                - At least of 2 each of the following surgical tasks: mobilization of liver; wedge
+                resection/biopsy of liver; dissection of biliary tree; dissection of gallbladder; and
+                intraoperative cholangiogram
+                - At least 1 dissection of gallbladder must be complex
+                - At least 1 CBD drainage (may be completed in simulation)
+                - At least 1 biliary-enteric anastomosis
+                - At least 1 hemorrhage control
+                - At least 2 different observers
+                - No more than 2 in simulation setting
+                - At least 7 observations by faculty `,
+                "3.10": `Collect 2 observations of achievement
+                - At least 1 observation by faculty`,
+                "3.11": `Collect 2 observations of achievement
+                - At least 1 emergent or sim-trauma setting
+                - No more than 1 in simulation setting
+                - At least 1 observation by faculty `,
+                "3.12": `Collect 4 observations of achievement
+                - At least 1 ALND
+                - At least 1 of each surgical task
+                - At least 2 observations by faculty`,
+                "3.13": `Collect 10 observations of achievement
+                - At least 2 partial resections of breast without localization
+                - At least 2 partial resections of breast with localization
+                - At least 2 complete resections of breast
+                - At least 1 each of the following: incision and/or drainage of abscess and sparing of
+                skin and/or nipple
+                - At least 2 different observers
+                - At least 5 observations by faculty`,
+                "3.14": `Collect 10 observations of achievement of the following tasks:
+                - At least 1 emergent procedure
+                - At least 2 in each region (abdominal wall, groin)
+                - At least 1 temporary abdominal wall closure
+                - At least 2 of each surgical task
+                - At least 2 different observers
+                - At least 5 observations by faculty`,
+                "3.15": `Collect 8 observations of achievement
+                - At least 1 soft tissue infection
+                - At least 1 of each surgical task
+                - At least 2 different observers
+                - At least 4 observations by faculty`,
+                "3.16": `Collect 10 successful observations of achievement
+                - At least 1 trauma laparotomy
+                - At least 3 different tasks
+                - Surgical tasks may be observed in either the clinical or simulation setting EXCEPT the
+                following, which must be observed in the clinical setting: trauma laparotomy; control
+                and management of intraabdominal vascular bleeding; exposure of the
+                retroperitoneum; chest tube in a complex patient (obese, redo, unstable); and
+                tracheostomy
+                - At least 5 observations by faculty`,
+                "3.17": `Collect 4 observations of achievement
+                - At least 1 of each surgical task
+                - At least 2 different observers
+                - At least 2 observations by faculty`,
+                "3.18": `Collect 3 observations of achievement
+                - At least 1 of each surgical task
+                - At least 2 observations by faculty`,
+                "3.19": `Collect 10 observations of achievement
+                - At least 2 therapeutic procedures
+                - At least 2 different observers
+                - At least 5 observations by faculty`,
+                "3.20": `Collect 10 observations of achievement
+                - At least 6 colonoscopies to the level of the terminal ileum
+                - At least 5 polypectomies including 2 >1cm
+                - At least 2 different observers
+                - At least 5 observations by faculty`,
+                "3.21": `Collect 1 observation of achievement `,
+                "3.22": `Collect 2 observations of achievement`,
             },
             filterValuesDict: {
                 '3.1': {
@@ -239,14 +341,26 @@ const programInfo = {
                 "4.4": 15,
                 "4.5": 1
             },
-            clinicalPresentation: {
-                '4.4': ["hemostasis", "dilation", "polypectomy", "foreign body removal", "endoluminal stent insertion", "colonic decompression"]
-            },
-            patientDemographic: {
-                '4.4': ["yes", "no"]
-            },
-            filterTitles: {
-                '4.4': ["Case Mix", "Actively Bleeding"]
+            assessmentInfo: {
+                "4.1": `Collect 2 observations of achievement
+                - At least 2 clinics of at least a half-day each
+                - At least 2 different observers`,
+                "4.2": `Collect at least 2 observations of achievement
+                - At least 2 different observers`,
+                "4.3": `Collect 2 observations of achievement
+                - Mix of inpatients and outpatients
+                - At least 2 different observers
+                - At least 1 observation by faculty`,
+                "4.4": `Collect 15 observations of achievement
+                - At least 2 hemostasis in active bleeding
+                - At least 2 dilations
+                - At least 2 foreign body
+                - At least 5 polypectomy >1 cm
+                - At least 1 endoluminal stent insertion
+                - At least 1 colonic decompression
+                - At least 2 different observers
+                - At least 8 observations by faculty`,
+                "4.5": `Collect 1 observation of achievement `
             },
             filterValuesDict: {
                 '4.1': {},
@@ -254,7 +368,8 @@ const programInfo = {
                 '4.3': {},
                 '4.4': {
                     'Case Mix': ["hemostasis", "dilation", "polypectomy", "foreign body removal", "endoluminal stent insertion", "colonic decompression"],
-                    'Actively Bleeding': ["yes", "no"]
+                    'Actively Bleeding': ["yes", "no"],
+                    "Setting": ["OR", "ER", "endoscopy", "ICU"]
                 },
                 '4.5': {}
             }
