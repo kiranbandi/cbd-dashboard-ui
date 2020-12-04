@@ -67,14 +67,34 @@ const programInfo = {
                 '1.5': 2
 
             },
-            clinicalPresentation: {},
-            patientDemographic: {},
-            filterTitles: {},
+            assessmentInfo: {
+                '1.1': `Collect 2 observations of achievement.
+                - At least 1 physiatrist `,
+                '1.2': `Collect 2 observations of achievement.
+                - At least 1 physiatrist observer`,
+                '1.3': `Collect 2 observations of achievement.
+                - At least 1 physiatrist observer`,
+                '1.4': `Collect 2 observations of achievement.
+                - At least 1 physiatrist observer`,
+                '1.5': `Collect 2 observations of achievement.
+                - At least 1 physiatrist observer`
+            },
             filterValuesDict: {
-                '1.1': {},
-                '1.2': {},
-                '1.3': {},
-                '1.4': {}
+                '1.1': {
+                    "Setting": ["inpatient", "outpatient"]
+                },
+                '1.2': {
+                    "Setting": ["inpatient", "outpatient"]
+                },
+                '1.3': {
+                    "Setting": ["inpatient", "outpatient"]
+                },
+                '1.4': {
+                    "Setting": ["inpatient", "outpatient"]
+                },
+                '1.5': {
+                    "Setting": ["inpatient", "outpatient"]
+                }
             }
         },
         2: {
@@ -91,20 +111,26 @@ const programInfo = {
                 '2.3': 10,
 
             },
-            clinicalPresentation: {
-                '2.1': ['direct', 'indirect'],
-                '2.2': ['direct', 'indirect'],
-                '2.3': ["bladder catheterization", "casting", "cast removal", "IV insertion", "joint aspiration/injection", "musculoskeletal injection", "NG tube insertion", "PEG tube removal", "removal of sutures", "superficial skin suturing", "tracheostomy removal", "other"]
-            },
-            patientDemographic: {
-                '2.1': ["emergency room", "medicine inpatient unit", "surgery inpatient unit", "outpatient medicine clinic", "outpatient surgery clinic", "simulation", "other"],
-                '2.2': ["emergency room", "medicine inpatient unit", "surgery inpatient unit", "outpatient medicine clinic", "outpatient surgery clinic", "simulation", "other"],
-                '2.3': ["consultation service", "inpatient unit", "outpatient clinic", "simulation"]
-            },
-            filterTitles: {
-                '2.1': ['Observation Type', 'Setting'],
-                '2.2': ['Observation Type', 'Setting'],
-                '2.3': ['Procedure', 'Setting'],
+            assessmentInfo: {
+                '2.1': `Collect 10 observations of achievement.
+                - At least 4 direct observations
+                - At least 4 different issues
+                - A variety of settings
+                - No more than 1 in simulation setting
+                - At least 4 different observers
+                - At least 4 physician observers`,
+                '2.2': `Collect 10 observations of achievement.
+                - At least 4 direct observations
+                - At least 4 different medical issues
+                - At least 2 different settings
+                - No more than 2 in simulation setting
+                - At least 4 different observers
+                - At least 4 physician observers`,
+                '2.3': `Collect 10 observations of achievement.
+                - No more than 3 in simulation setting
+                - At least 3 different procedures
+                - At least 3 different observers`,
+
             },
             filterValuesDict: {
                 '2.1': {
@@ -116,6 +142,7 @@ const programInfo = {
                     'Setting': ["emergency room", "medicine inpatient unit", "surgery inpatient unit", "outpatient medicine clinic", "outpatient surgery clinic", "simulation", "other"]
                 },
                 '2.3': {
+                    'Observation Type': ['direct', 'indirect'],
                     'Procedure': ["bladder catheterization", "casting", "cast removal", "IV insertion", "joint aspiration/injection", "musculoskeletal injection", "NG tube insertion", "PEG tube removal", "removal of sutures", "superficial skin suturing", "tracheostomy removal", "other"],
                     'Setting': ["consultation service", "inpatient unit", "outpatient clinic", "simulation"]
                 }
@@ -144,31 +171,63 @@ const programInfo = {
                 '3.7': 10,
                 '3.8': 5
             },
-            clinicalPresentation: {
-                '3.1': ['low', 'high'],
-                '3.2': ['low', 'high'],
-                '3.3': ["inpatient rehabilitation", "outpatient physiatry clinic", "outpatient electrodiagnostic clinic", "consultation service", "simulation"],
-                '3.4': ["inpatient pediatric rehabilitation", "outpatient pediatric rehabilitation or transition clinic"],
-                '3.5': ["consultation service", "inpatient rehabilitation", "outpatient physiatry", "electrodiagnostic clinic", "simulation"],
-                '3.6': ['low', 'high'],
-                '3.7': ["interprofessional family/care conference", "team conference/encounter"],
-            },
-            patientDemographic: {
-                '3.1': ["inpatient rehabilitation", "outpatient physiatry clinic", "outpatient electrodiagnostic clinic", "consultation service"],
-                '3.2': ["inpatient rehabilitation", "outpatient physiatry clinic", "outpatient electrodiagnostic clinic", "consultation service"],
-                '3.3': ["acute joint swelling", "acute limb swelling", "acute undifferentiated functional deterioration", "acute wound deterioration", "altered level of consciousness", "altered neurological status", "angioedema/anaphylaxis", "autonomic dysreflexia", "code blue", "critical abnormal investigation result", "critical abnormal vitals", "falls/acute trauma", "major hemorrhage", "overdose", "palpitations", "post-traumatic agitation", "pulseless limb", "respiratory distress", "severe acute pain", "urgent mental health and behavioral issues"],
-                '3.4': ["amputee/limb deficiency", "brain injury/tumour", "cerebral palsy", "spina bifida", "muscular dystrophy", "MSK (e.g., scoliosis, JIA, apophysitis, SCFE, osteochondritis dessicans)"],
-                '3.6': ["consultation service", "inpatient unit", "outpatient clinic", "electrodiagnostic clinic", "simulation"],
-                '3.7': ["inpatient unit", "outpatient clinic", "simulation"]
-            },
-            filterTitles: {
-                '3.1': ['Complexity', 'Setting'],
-                '3.2': ['Complexity', 'Setting'],
-                '3.3': ['Setting', 'Medical Issue'],
-                '3.4': ['Setting', 'Pediatric rehabilitation population'],
-                '3.5': ['Setting'],
-                '3.6': ['Complexity', 'Setting'],
-                '3.7': ['Meeting Type', 'Setting']
+            assessmentInfo: {
+                '3.1': `Collect 30 observations of achievement.
+                - At least 2 of each rehab population group
+                - At least 1 assessment per population group must comprise history, physical, and
+                diagnosis and management
+                - Variety of inpatient and outpatient settings
+                - At least 1 physiatrist per rehabilitation population group`,
+                '3.2': `Collect 30 observations of achievement.
+                - At least 2 of each rehab population group
+                - Variety of inpatient and outpatient settings
+                - At least 1 assessment per population group must comprise history, physical, and
+                diagnosis and management
+                - At least 1 physiatrist per rehabilitation population group`,
+                '3.3': `Collect 10 observations of achievement.
+                - At least 2 direct observations
+                - At least 4 different medical issues
+                - At least 1 autonomic dysreflexia (may be observed in simulation)
+                - No more than 4 in simulation setting
+                - At least 4 different observers
+                - At least 4 observations from faculty`,
+                '3.4': `Collect 6 observations of achievement.
+                - At least 3 observations of history
+                - At least 3 observations of physical examination
+                - At least 3 observations of management plan
+                - At least 5 observations of communication
+                - At least 1 comprehensive observation that covers a complete assessment and
+                management plan
+                - At least 1 of each pediatric rehabilitation population
+                - At least 2 different observers`,
+                '3.5': `Collect 33 successful observations of achievement
+                - At least 3 of each procedure
+                - No more than 1 of each procedure in simulation setting
+                - At least 3 different observers`,
+                '3.6': `Part A: Interpreting electrodiagnostic testing (NCS/EMG)
+                Collect 20 observations of achievement.
+                - At least 10 upper limb
+                - At least 10 lower limb
+                - At least 5 complex cases
+                - No more than 3 simulated
+                - At least 3 different observers
+                
+                Part B: Interpreting other investigations 
+                Collect 6 observations of achievement.
+                - At least 3 different procedures
+                - No more than 3 simulated
+                - At least 3 observers`,
+                '3.7': `Collect 10 observations of achievement.
+                - At least 3 of each meeting type
+                - No more than 2 in simulation setting
+                - At least 5 different patient populations
+                - At least 3 different observers`,
+                '3.8': `Part A: Informal/bedside teaching
+                Collect 3 observations of achievement 
+                
+                Part B: Formal scheduled teaching
+                Collect 2 observations of achievement
+                - At least 2 different settings/presentation types`
             },
             filterValuesDict: {
                 '3.1': {
@@ -191,14 +250,18 @@ const programInfo = {
                     'Setting': ["consultation service", "inpatient rehabilitation", "outpatient physiatry", "electrodiagnostic clinic", "simulation"]
                 },
                 '3.6': {
+                    'Type': ["Part A: Interpreting electrodiagnostic testing (NCS/EMG)", "Part B: Interpreting other investigations"],
                     'Complexity': ['low', 'high'],
+                    'Observation Type': ['direct', 'indirect'],
                     'Setting': ["consultation service", "inpatient unit", "outpatient clinic", "electrodiagnostic clinic", "simulation"]
                 },
                 '3.7': {
                     'Meeting Type': ["interprofessional family/care conference", "team conference/encounter"],
                     'Setting': ["inpatient unit", "outpatient clinic", "simulation"]
                 },
-                '3.8': []
+                '3.8': {
+                    "Type": ["Part A: Informal/bedside teaching", "Part B: Formal scheduled teaching"]
+                }
             }
         },
         4: {
@@ -218,20 +281,37 @@ const programInfo = {
                 '4.4': 3,
                 '4.5': 1
             },
-            clinicalPresentation: {
-                '4.2': ["MOC section 3 - knowledge ( accredited self-assessment program)", "MOC section 3 – performance (accredited simulation, chart audit, MSF, practice assessment)", "personal learning project/critical appraisal", "narrative on plans for improvement", "narrative on areas of interest and plan to address", "rotation specific teaching", "grand rounds presentations", "journal club presentations"]
-            },
-            patientDemographic: {},
-            filterTitles: {
-                '4.2': ['Learning Activity']
+            assessmentInfo: {
+                '4.1': `Collect 3 observations of achievement.
+                - At least 3 different experience types
+                - Strongly recommended to include both an inpatient and outpatient setting
+                - At least 3 different observers`,
+                '4.2': `Part A: Engaging in self-directed learning
+                Collect 8 observations of achievement.
+                - At least 1 MOC section 3 activity
+                
+                Part B: Participating in Mainport MOC
+                Collect 1 observation of achievement.`,
+                '4.3': `Review of resident’s plan and outcome by Competence Committee, program director or
+                supervisor.
+                Collect 1 observation of achievement.`,
+                '4.4': `Part A: Engagement in management and leadership
+                Collect evidence of participation in at least two management and/or leadership activities.
+                
+                Part B: Self-reflection
+                Collect evidence of one completed self-reflection activity`,
+                '4.5': `Collect 1 observation of achievement.`
             },
             filterValuesDict: {
                 '4.1': {},
                 '4.2': {
+                    'Type': ["Part A: Engaging in self-directed learning", "Part B: Participating in Mainport MOC"],
                     'Learning Activity': ["MOC section 3 - knowledge ( accredited self-assessment program)", "MOC section 3 – performance (accredited simulation, chart audit, MSF, practice assessment)", "personal learning project/critical appraisal", "narrative on plans for improvement", "narrative on areas of interest and plan to address", "rotation specific teaching", "grand rounds presentations", "journal club presentations"]
                 },
                 '4.3': {},
-                '4.4': {},
+                '4.4': {
+                    'Type': ["Part A: Engagement in management and leadership", "Part B: Self-reflection"]
+                },
                 '4.5': {}
             }
         },
