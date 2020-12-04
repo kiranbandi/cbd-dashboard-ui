@@ -286,27 +286,27 @@ const programInfo = {
                 '3.6': {
                     'Case Mix': ["obstructive hydrocephalus", "normal pressure hydrocephalus", "communicating hydrocephalus", "Chiari/syrinx", "arachnoid cyst"]
                 },
-                '3.7': {
+                '3.7': {},
+                '3.8': {
                     'Type': ['Part A: Surgical competence', 'Part B: Logbook'],
                     'Craniotomy Type': ["infratentorial", "pterional", "supratentorial"]
                 },
-                '3.8': {
+                '3.9': {
                     'Type': ['Part A: Surgical competence', 'Part B: Logbook'],
                     'Location': ["epidural", "subdural", "intraaxial"]
                 },
-                '3.9': {
+                '3.10': {
                     'Type': ['Part A: Surgical competence', 'Part B: Logbook'],
                     'Procedure': ["shunt insertion", "shunt revision", "Chiari", "Cyst", "ETV", "Syrinx to SAH/P shunt"],
                     'Location': ["not applicable", "ventriculoperitonal", "ventriculopleural", "ventriculoatrial", "lumboperitoenal"]
                 },
-                '3.10': {},
                 '3.11': {},
                 '3.12': {},
                 '3.13': {
                     'Type': ['Part A: Quality Improvement', 'Part B: Teaching'],
                 },
                 '3.14': {
-                    'Patient Presentation': ["epilepsy", "movement disorder", "pain and/or spasticity, other"]
+                    'Patient Presentation': ["epilepsy", "movement disorder", "pain and/or spasticity", "other"]
                 },
                 '3.15': {
                     'Trigeminal neuralgia': ['yes', 'no'],
@@ -393,16 +393,37 @@ const programInfo = {
                     'Location': ["extra-axial", "intra-axial", "pituitary adenoma"],
                     'Tumour': ["primary", "metastatic", "other"]
                 },
-                '3.37': {},
-                '3.38': {},
-                '3.39': {},
-                '3.40': {},
+                '3.37': {
+                    'Case Mix': ["skull base", "eloquent brain primary", "ventricular", "pineal region", "posterior fossa", "acoustic neuroma"]
+                },
+                '3.38': {
+                    'Location': ["extra-axial", "intra-axial", "posterior fossa"],
+                    'Tumour Type': ["primary", "metastatic"],
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook'],
+                },
+                '3.39': {
+                    'Case Mix': ["complex meningioma", "skull base tumour", "primary posterior fossa tumour", "eloquent intraaxial brain tumour"],
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook']
+                },
+                '3.40': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook']
+                },
                 '3.41': {},
-                '3.42': {},
+                '3.42': {
+                    'Diagnosis': ["hydrocephalus", "craniosynostosis", "tethered cord", "epilepsy", "brain tumour", "posterior fossa brain tumour"]
+                },
                 '3.43': {},
-                '3.44': {},
-                '3.45': {},
-                '3.46': {}
+                '3.44': {
+                    'Age': ["infant", "toddler", "older child", "adolescent"],
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook']
+                },
+                '3.45': {
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook']
+                },
+                '3.46': {
+                    'Diagnosis': ['tethered cord', 'other'],
+                    'Type': ['Part A: Surgical competence', 'Part B: Logbook']
+                }
             },
             assessmentInfo: {
                 '3.1': `Collect feedback on 2 occasions, one each at junior core and senior core.
