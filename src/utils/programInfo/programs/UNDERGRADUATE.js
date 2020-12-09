@@ -5,18 +5,18 @@ const programInfo = {
     narrativesVisible: false,
     rotationList: ["Anesthesia", "EM", "Elective", "Family", "Medicine", "OBS/GYN", "Other", "PED", "Psych", "Selective", "Surgery", "LIC"],
     rotationRequired: {
-        "EM": 6,
-        "Anesthesia": 6,
-        "Family": 6,
-        "Surgery": 6,
-        "Medicine": 6,
-        "OBS/GYN": 6,
-        "PED": 6,
-        "Psych": 6,
-        "Elective": 6,
-        "Selective": 6,
-        "Other": 6,
-        "LIC": 6
+        "EM": 12,
+        "Anesthesia": 12,
+        "Family": 12,
+        "Surgery": 12,
+        "Medicine": 12,
+        "OBS/GYN": 12,
+        "PED": 12,
+        "Psych": 12,
+        "Elective": 12,
+        "Selective": 12,
+        "Other": 12,
+        "LIC": 12
     },
     epaSourceMap: {
         subRoot: {
