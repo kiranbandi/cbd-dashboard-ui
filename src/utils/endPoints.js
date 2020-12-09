@@ -1,4 +1,4 @@
-var endPointRoot = 'https://cbme.usask.ca/api/';
+var endPointRoot = './api/';
 // When testing a local server uncomment the line below but for most
 // cases we will be working with the prod server
 // endPointRoot = 'http://localhost:8081/api/'
