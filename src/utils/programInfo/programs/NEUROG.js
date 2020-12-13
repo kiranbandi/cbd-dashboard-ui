@@ -71,10 +71,16 @@ const programInfo = {
                 "1.5": `Collect 1 observation of achievement. `
             },
             filterValuesDict: {
-                '1.1': {},
-                '1.2': {},
+                '1.1': {
+                    'Observation Type': ['direct', 'indirect']
+                },
+                '1.2': {
+                    'Presentation': ["acute abdomen", "confusion", "chest pain", "decreased level of consciousness", "deterioration of neurological status (i.e., weakness, impending herniation)", "psychosis/mania", "respiratory distress", "seizure", "shock", "unstable vital signs", "other presentation"]
+                },
                 '1.3': {},
-                '1.4': {},
+                '1.4': {
+                    'Type of documentation': ["consult note", "admission note", "progress note"]
+                },
                 '1.5': {}
             }
         },
@@ -120,12 +126,26 @@ const programInfo = {
                 "2.6": `Collect 1 observation of achievement. `
             },
             filterValuesDict: {
-                '2.1': {},
-                '2.2': {},
-                '2.3': {},
-                '2.4': {},
-                '2.5': {},
-                '2.6': {}
+                '2.1': {
+                    'Presentation': ["acute stroke", "status epilepticus", "neuromuscular respiratory failure", "suspected spinal cord compression", "meningitis/encephalitis", "impending herniation", "reduced level of consciousness/coma", "thunderclap headache", "other"]
+                },
+                '2.2': {
+                    'Event Observed': ["history", "physical"],
+                    'Presentation': ["abnormal movements", "altered mental status", "dizziness/balance problems", "headache/pain", "paroxysmal event", "sensory disturbance", "visual disturbance", "weakness", "other"]
+                },
+                '2.3': {
+                    'Presentation': ["abnormal movements", "altered mental status", "dizziness/balance problems", "headache/pain", "paroxysmal event", "sensory disturbance", "visual disturbance", "weakness", "other"]
+                },
+                '2.4': {
+                    'Setting': ["inpatient", "outpatient"],
+                    'Domain': ["cardiology", "critical care", "dermatology", "endocrinology", "gastrointestinal", "genetics/metabolics", "hematology", "infectious disease", "neonatology", "neurosurgery", "oncology", "psychiatry", "respirology", "rheumatology", "other"]
+                },
+                '2.5': {
+                    'Complexity': ['simple', 'complex']
+                },
+                '2.6': {
+                    'Context': ["patient-directed", "substitute decision maker"]
+                }
             }
         },
         3: {
@@ -190,13 +210,34 @@ const programInfo = {
                 - At least 1 conversation in the setting of acute neurological emergency`
             },
             filterValuesDict: {
-                '3.1': {},
-                '3.2': {},
-                '3.3': {},
-                '3.4': {},
-                '3.5': {},
+                '3.1': {
+                    'Case Mix': ["acute stroke, seizures, acute neuromuscular weakness", "myelitis", "increased intracranial pressure", "CNS infection", "acute demyelination", "encephalopathy/coma", "other"]
+                },
+                '3.2': {
+                    'Age': ["adult", "neonate", "infant", "child", "adolescent"],
+                    'Settings': ["outpatient", "inpatient", "ED", "LTC"],
+                    'Complex': ['yes', 'no']
+                },
+                '3.3': {
+                    'Presentation': ["acute stroke", "impending herniation", "reduced level of consciousness/coma", "neuromuscular respiratory distress", "suspected meningitis/encephalitis", "suspected spinal cord compression", "suspected status epilepticus", "thunderclap headache", "other"],
+                    'Complexity': ['simple', 'complex']
+                },
+                '3.4': {
+                    'Setting': ["inpatient", "outpatient", "simulation", "ED", "LTC"],
+                    'Exam technique': ["movement disorder exam", "neuro-muscular exam", "neuroophthalmological exam", "cognitive/developmental exam", "functional exam", "examination of the comatose patient", "Epley maneuver", "Dix-Hallpike test", "HINTS", "neonatal exam", "other"],
+                    'Complex': ['yes', 'no'],
+                    'Age': ["adult", "neonate", "infant", "child", "adolescent"]
+
+                },
+                '3.5': {
+                    'Setting': ["inpatient", "outpatient", "ED"],
+                    'Complex': ['yes', 'no'],
+                    'Type of Document': ["new assessment consultation note", "follow-up consultation note", "discharge summary", "letter to referring physician"]
+                },
                 '3.6': {},
-                '3.7': {},
+                '3.7': {
+                    'Complex': ['yes', 'no']
+                },
                 '3.8': {}
             }
         },
@@ -226,7 +267,10 @@ const programInfo = {
                 - At least 2 different observers`
             },
             filterValuesDict: {
-                '4.1': {},
+                '4.1': {
+                    'Type': ['Part A: Patient care', 'Part B: Interprofessional care/supervision'],
+                    'Complexity and volume of case load': ['low', 'high']
+                },
                 '4.2': {},
                 '4.3': {}
             }
