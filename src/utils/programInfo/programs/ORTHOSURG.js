@@ -108,19 +108,43 @@ const programInfo = {
                 - At least 1 shoulder`
             },
             filterValuesDict: {
-                '2.1': {},
-                '2.2': {},
-                '2.3': {},
-                '2.4': {},
-                '2.5': {},
+                '2.1': {
+                    'Injury': ["open fracture", "fracture", "joint dislocation", "soft tissue injury"]
+                },
+                '2.2': {
+                    'Domain': ["trauma", "foot and ankle", "hip and knee", "sports", "upper extremity/hand", "oncology", "spine"],
+                    'Observation': ["direct", "case review"]
+                },
+                '2.3': {
+                    'Condition': ["compartment syndrome", "joint infection", "urgent soft tissue infection", "cauda equine", "neurovascular compromise", "other condition"],
+                    'Setting': ["emergency department", "inpatient unit", "simulation"]
+                },
+                '2.4': {
+                    'Setting': ["emergency department", "outpatient", "inpatient", "operating room"],
+                    'Condition': ["fracture", "MSK infection"]
+                },
+                '2.5': {
+                    'Presentation': ["literature review based on clinical question", "paper or grant presentation", "paper review at journal club"]
+                },
                 '2.6': {
                     'Setting': ["ward", "clinic", "emergency department", "operating room", "simulation"],
-                    'Procedure': ["closed reduction and casting", "skeletal traction", "skin traction", "joint aspiration and fluid analysis", "joint injection", "other procedure"]
+                    'Procedure': ["closed reduction and casting", "skeletal traction", "skin traction", "joint aspiration and fluid analysis", "joint injection", "other procedure"],
+                    'Demographic': ['adult', 'pediatric']
                 },
-                '2.7': {},
-                '2.8': {},
-                '2.9': {},
-                '2.10': {}
+                '2.7': {
+                    'Procedure': ["cannulated screws", "sliding hip screw", "IM nail", "diaphyseal plating", "periarticular fracture plating"]
+                },
+                '2.8': {
+                    'Site': ["forearm", "distal radius", "tibia", "ankle"]
+                },
+                '2.9': {
+                    'Setting': ["operating room", "simulation lab"],
+                    'Procedure': ["primary THA", "primary TKA"]
+                },
+                '2.10': {
+                    'Procedure': ["knee scope", "shoulder scope"],
+                    'Simulation': ['yes', 'no']
+                }
             }
         },
         3: {
@@ -289,37 +313,94 @@ const programInfo = {
                     'Domain': ["trauma", "foot and ankle", "hip and knee", "sports", "upper extremity/hand", "oncology", "spine"],
                     'Observation': ["direct", "case review"]
                 },
-                '3.2': {},
-                '3.3': {},
-                '3.4': {},
+                '3.2': {
+                    'Complexity': ['simple', 'complex'],
+                    'Condition': ["foot abnormality", "club foot", "angular or rotational deformity", "DDH", "perthes", "scoliosis", "SCFE", "syndromes", "other"],
+                    'Observation': ["direct", "case review"]
+                },
+                '3.3': {
+                    'Complication': ["soft tissue infection/dehiscence", "peripheral nerve injury", "deep vein thrombosis/pulmonary embolus", "vascular injury", "loss of reduction or implant complication post-ORIF", "mal-union", "non-union", "peri-prosthetic fracture", "joint dislocation", "other"]
+                },
+                '3.4': {
+                    'Age': ['pediatric', 'adult']
+                },
                 '3.5': {},
-                '3.6': {},
+                '3.6': {
+                    'Document': ["consultation note", "admission note", "operative note", "transfer of care note", "progress note", "discharge summary"]
+                },
                 '3.7': {},
                 '3.8': {
                     'Setting': ["ward", "OR", "clinic", "small group"],
                     'Observer': ["orthopedic surgeon", "fellow", "TTP resident", "Core resident", "Foundations resident", "TTD resident"]
                 },
                 '3.9': {},
-                '3.10': {},
-                '3.11': {},
-                '3.12': {},
-                '3.13': {},
-                '3.14': {},
-                '3.15': {},
-                '3.16': {},
-                '3.17': {},
-                '3.18': {},
-                '3.19': {},
-                '3.20': {},
-                '3.21': {},
-                '3.22': {},
-                '3.23': {},
-                '3.24': {},
-                '3.25': {},
+                '3.10': {
+                    'Complication': ["loss of reduction", "implant complication", "infection", "mal-union", "nonunion", "peri-prosthetic fracture", "joint dislocation"]
+                },
+                '3.11': {
+                    'Procedure': ["AKA", "through knee", "BKA", "ankle/foot"]
+                },
+                '3.12': {
+                    'Site': ["upper extremity", "lower extremity"]
+                },
+                '3.13': {
+                    'Site': ["upper extremity", "lower extremity", "pelvis"],
+                    'Setting': ['ER/OR', 'simulation']
+                },
+                '3.14': {
+                    'Site': ['femur', 'tibia'],
+                    'Complexity': ['simple', 'complex']
+                },
+                '3.15': {
+                    'Location': ["diaphyseal", "meta-diaphyseal"],
+                    'Site': ["upper extremity", "lower extremity"],
+                    'Complexity': ['simple', 'complex']
+                },
+                '3.16': {
+                    'Site': ["proximal humerus", "distal humerus", "olecranon", "distal radius", "distal femur", "tibial plateau", "pilon", "ankle"],
+                    'Complexity': ['simple', 'complex']
+                },
+                '3.17': {
+                    'Fixation': ["plate and/or screws", "proximal femoral nail"],
+                    'Complexity': ['simple', 'complex']
+                },
+                '3.18': {
+                    'Procedure': ["hemiarthroplasty", "total hip arthroplasty"]
+                },
+                '3.19': {
+                    'Condition': ["hallux valgus", "hammer toes", "hallux rigidus", "rheumatoid forefoot deformity"],
+                    'Procedure': ["metatarsophalangeal (MTP) fusion", "hallux valgus correction", "toe corrections", "other procedure"]
+                },
+                '3.20': {
+                    'Site': ['ankle', 'hindfoot', 'midfoot']
+                },
+                '3.21': {
+                    'Procedure': ['TKA', 'THA']
+                },
+                '3.22': {
+                    'Site': ['hip', 'knee']
+                },
+                '3.23': {
+                    'Site': ['shoulder', 'hip', 'knee', 'ankle']
+                },
+                '3.24': {
+                    'Site': ["shoulder", "elbow", "wrist", "hand"],
+                    'Procedure': ["arthroplasty", "fusion", "osteotomy", "resection", "debridement/release"]
+                },
+                '3.25': {
+                    'Procedure': ["decompression of ulnar nerve", "cubital tunnel release", "decompression of median nerve", "carpal tunnel release"]
+                },
                 '3.26': {},
-                '3.27': {},
-                '3.28': {},
-                '3.29': {},
+                '3.27': {
+                    'Fixation': ["upper extremity", "lower extremity", "NA"]
+                },
+                '3.28': {
+                    'Presentation': ["supracondylar fracture", "lateral condyle fracture", "growth plate fracture", "SCFE", "diaphyseal bone fracture", "Monteggia fracture/dislocation", "infection"],
+                    'Arthrotomy': ["yes", "no"]
+                },
+                '3.29': {
+                    "Procedure": ["application of Pavlik harness", "application of cast for clubfoot", "application of hip spica"]
+                },
                 '3.30': {},
                 '3.31': {},
                 '3.32': {},
@@ -352,7 +433,9 @@ const programInfo = {
             filterValuesDict: {
                 '4.1': {},
                 '4.2': {},
-                '4.3': {}
+                '4.3': {
+                    'Complexity': ['simple', 'complex']
+                }
             }
         },
     }
