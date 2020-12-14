@@ -1,6 +1,7 @@
 import _ from 'lodash';
+import moment from 'moment';
 
-export default function(rawData, residentList) {
+export default function (rawData, residentList) {
 
     return new Promise((resolve, reject) => {
         try {
@@ -48,7 +49,7 @@ export default function(rawData, residentList) {
                             'resident_name': resident_name,
                             username,
                             'observer_name': row[4].trim(),
-                            'observation_date': row[6].slice(0, 8),
+                            'observation_date': moment(row[6].trim()).format('YYYY-MM-DD'),
                             'observer_type': '',
                             year_tag,
                             'rating': rating == 'low' ? 1 : rating == 'high' ? 3 : 2,
