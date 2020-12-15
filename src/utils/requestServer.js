@@ -5,28 +5,19 @@ import _ from 'lodash';
 
 var requestServer = {};
 
-requestServer.requestLogin = function(ticket) {
+requestServer.requestLogin = function (ticket) {
     return new Promise((resolve, reject) => {
-        axios.post(endPoints.login, {
-                ticket,
-                isDevSite: (process.env.NODE_ENV == 'development')
-            })
-            .then((response) => {
-                resolve(response.data)
-            })
+        axios.post(endPoints.login, { ticket, isDevSite: (process.env.NODE_ENV == 'development') })
+            .then((response) => { resolve(response.data) })
             .catch((err) => errorCallback(err, reject));
     });
 }
 
-requestServer.reIssueToken = function(program) {
+requestServer.reIssueToken = function (program) {
     return new Promise((resolve, reject) => {
-        axios.post(endPoints.reIssueToken, {
-                program
-            }, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+        axios.post(endPoints.reIssueToken, { program }, {
+            headers: { 'authorization': 'Bearer ' + sessionStorage.jwt }
+        })
             .then((response) => {
                 resolve(response.data)
             })
@@ -35,14 +26,14 @@ requestServer.reIssueToken = function(program) {
 }
 
 
-requestServer.registerUser = function(userData) {
+requestServer.registerUser = function (userData) {
 
     let {
         username,
         fullname,
         email,
         accessType,
-        accessList,
+        accessList = '',
         currentPhase,
         rotationSchedule,
         isGraduated = false,
@@ -59,25 +50,21 @@ requestServer.registerUser = function(userData) {
             toastr["error"]("fullname or email is empty", "CREATE USER ERROR");
             reject();
         } else {
-            // convert accessList from string to array of values
-            accessList = accessList.length > 0 ? accessList.split(',') : [];
             axios.post(endPoints.register, {
-                    username,
-                    fullname,
-                    email,
-                    accessList,
-                    accessType,
-                    isGraduated,
-                    currentPhase,
-                    rotationSchedule,
-                    longitudinalSchedule,
-                    programStartDate,
-                    promotedDate
-                }, {
-                    headers: {
-                        'authorization': 'Bearer ' + sessionStorage.jwt
-                    }
-                })
+                username,
+                fullname,
+                email,
+                accessList,
+                accessType,
+                isGraduated,
+                currentPhase,
+                rotationSchedule,
+                longitudinalSchedule,
+                programStartDate,
+                promotedDate
+            }, {
+                headers: { 'authorization': 'Bearer ' + sessionStorage.jwt }
+            })
                 .then((response) => {
                     toastr["success"]("User " + username + " created successfully");
                     resolve();
@@ -87,7 +74,7 @@ requestServer.registerUser = function(userData) {
     });
 }
 
-requestServer.updateUser = function(userData) {
+requestServer.updateUser = function (userData) {
 
     let {
         username,
@@ -108,25 +95,23 @@ requestServer.updateUser = function(userData) {
             toastr["error"]("NSID or email or fullname cannot be empty", "UPDATE USER ERROR");
             reject();
         } else {
-            // convert accessList from string to array of values
-            accessList = accessList.length > 0 ? accessList.split(',') : [];
             axios.post(endPoints.updateUser + "/" + username, {
-                    username,
-                    email,
-                    accessList,
-                    fullname,
-                    accessType,
-                    currentPhase,
-                    isGraduated,
-                    rotationSchedule,
-                    longitudinalSchedule,
-                    programStartDate,
-                    promotedDate
-                }, {
-                    headers: {
-                        'authorization': 'Bearer ' + sessionStorage.jwt
-                    }
-                })
+                username,
+                email,
+                accessList,
+                fullname,
+                accessType,
+                currentPhase,
+                isGraduated,
+                rotationSchedule,
+                longitudinalSchedule,
+                programStartDate,
+                promotedDate
+            }, {
+                headers: {
+                    'authorization': 'Bearer ' + sessionStorage.jwt
+                }
+            })
                 .then((response) => {
                     toastr["success"]("User " + username + " updated successfully");
                     resolve();
@@ -137,16 +122,16 @@ requestServer.updateUser = function(userData) {
 }
 
 
-requestServer.updateCCFeedbackList = function(username, ccFeedbackList) {
+requestServer.updateCCFeedbackList = function (username, ccFeedbackList) {
 
     return new Promise((resolve, reject) => {
         axios.post(endPoints.updateCCFeedbackList + "/" + username, {
-                ccFeedbackList
-            }, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+            ccFeedbackList
+        }, {
+            headers: {
+                'authorization': 'Bearer ' + sessionStorage.jwt
+            }
+        })
             .then((response) => {
                 toastr["success"]("CC Feedback for " + username + " was updated successfully");
                 resolve(response.data.data.ccFeedbackList);
@@ -156,16 +141,16 @@ requestServer.updateCCFeedbackList = function(username, ccFeedbackList) {
 }
 
 
-requestServer.updateExamscore = function(username, citeExamScore, oralExamScore) {
+requestServer.updateExamscore = function (username, citeExamScore, oralExamScore) {
     return new Promise((resolve, reject) => {
         axios.post(endPoints.updateExamscore + "/" + username, {
-                citeExamScore,
-                oralExamScore
-            }, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+            citeExamScore,
+            oralExamScore
+        }, {
+            headers: {
+                'authorization': 'Bearer ' + sessionStorage.jwt
+            }
+        })
             .then((response) => {
                 toastr["success"]("Exam scores for " + username + " was updated successfully");
                 const {
@@ -181,20 +166,16 @@ requestServer.updateExamscore = function(username, citeExamScore, oralExamScore)
 }
 
 
-requestServer.getAllUsers = function() {
+requestServer.getAllUsers = function () {
     return new Promise((resolve, reject) => {
         axios.get(endPoints.allUsers, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+            headers: {
+                'authorization': 'Bearer ' + sessionStorage.jwt
+            }
+        })
             .then((response) => {
                 resolve(response.data.map((user) => {
-                    const {
-                        username,
-                        fullname,
-                        accessType
-                    } = user;
+                    const { username, fullname, accessType } = user;
                     return {
                         username,
                         fullname,
@@ -206,13 +187,13 @@ requestServer.getAllUsers = function() {
     });
 }
 
-requestServer.getUser = function(username) {
+requestServer.getUser = function (username) {
     return new Promise((resolve, reject) => {
         axios.get(endPoints.getUser + "/" + username, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+            headers: {
+                'authorization': 'Bearer ' + sessionStorage.jwt
+            }
+        })
             .then((response) => {
                 resolve(response.data)
             })
@@ -222,13 +203,13 @@ requestServer.getUser = function(username) {
 
 //  only difference being the API method get vs delete , should I combine both 
 //  would this be over engineering shit !
-requestServer.deleteUser = function(username) {
+requestServer.deleteUser = function (username) {
     return new Promise((resolve, reject) => {
         axios.delete(endPoints.getUser + "/" + username, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+            headers: {
+                'authorization': 'Bearer ' + sessionStorage.jwt
+            }
+        })
             .then((response) => {
                 toastr["success"]("User " + username + " deleted successfully");
                 resolve(response.data)
@@ -237,33 +218,9 @@ requestServer.deleteUser = function(username) {
     });
 }
 
-requestServer.getObserverList = function() {
+requestServer.getResidentList = function (filterGraduated = false) {
     return new Promise((resolve, reject) => {
-        axios.get(endPoints.observerList, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
-            // we take the zeroth index because mongo returns an object inside the array 
-            .then((response) => {
-                resolve(_.map(response.data[0], (d, k) => {
-                    return {
-                        'name': k,
-                        'count': d
-                    }
-                }));
-            })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
-
-requestServer.getResidentList = function(filterGraduated = false) {
-    return new Promise((resolve, reject) => {
-        axios.get(endPoints.residents, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+        axios.get(endPoints.residents, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
             .then((response) => {
                 if (filterGraduated) {
                     resolve(_.filter(response.data, (d) => !d.isGraduated));
@@ -275,13 +232,9 @@ requestServer.getResidentList = function(filterGraduated = false) {
     });
 }
 
-requestServer.getAllResidentsList = function(filterGraduated = false) {
+requestServer.getAllResidentsList = function (filterGraduated = false) {
     return new Promise((resolve, reject) => {
-        axios.get(endPoints.residentsAll, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+        axios.get(endPoints.residentsAll, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
             .then((response) => {
                 if (filterGraduated) {
                     resolve(_.filter(response.data, (d) => !d.isGraduated));
@@ -293,15 +246,9 @@ requestServer.getAllResidentsList = function(filterGraduated = false) {
     });
 }
 
-requestServer.getObserverData = function(observername) {
+requestServer.getObserverData = function (observername) {
     return new Promise((resolve, reject) => {
-        axios.post(endPoints.recordsByObserver, {
-                observername
-            }, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+        axios.post(endPoints.recordsByObserver, { observername }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
             .then((response) => {
                 if (response.data.length == 0) {
                     toastr["error"]("No records found", "ERROR");
@@ -329,13 +276,9 @@ requestServer.getObserverData = function(observername) {
     });
 }
 
-requestServer.getResidentData = function(username) {
+requestServer.getResidentData = function (username) {
     return new Promise((resolve, reject) => {
-        axios.get(endPoints.residentRecords + "/" + username, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+        axios.get(endPoints.residentRecords + "/" + username, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
             .then((response) => {
                 if (response.data.length == 0) {
                     toastr["error"]("No records found", "ERROR");
@@ -366,7 +309,7 @@ requestServer.getResidentData = function(username) {
 }
 
 
-requestServer.setUGRecords = function(records, yearTag = '') {
+requestServer.setUGRecords = function (records, yearTag = '') {
     var recordsList = records.map((record) => {
         return {
             ...record,
@@ -376,14 +319,14 @@ requestServer.setUGRecords = function(records, yearTag = '') {
     })
     return new Promise((resolve, reject) => {
         axios.post(endPoints.setRecords, {
-                username: 'all',
-                recordsList,
-                yearTag
-            }, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+            username: 'all',
+            recordsList,
+            yearTag
+        }, {
+            headers: {
+                'authorization': 'Bearer ' + sessionStorage.jwt
+            }
+        })
             .then((response) => {
                 resolve(response.data)
             })
@@ -392,7 +335,7 @@ requestServer.setUGRecords = function(records, yearTag = '') {
 }
 
 
-requestServer.setRecords = function(records, username, yearTag) {
+requestServer.setRecords = function (records, username, yearTag) {
 
     var recordsList = records.map((record) => {
         return {
@@ -416,14 +359,14 @@ requestServer.setRecords = function(records, username, yearTag) {
 
     return new Promise((resolve, reject) => {
         axios.post(endPoints.setRecords, {
-                username,
-                recordsList,
-                yearTag
-            }, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+            username,
+            recordsList,
+            yearTag
+        }, {
+            headers: {
+                'authorization': 'Bearer ' + sessionStorage.jwt
+            }
+        })
             .then((response) => {
                 resolve(response.data)
             })
@@ -431,13 +374,13 @@ requestServer.setRecords = function(records, username, yearTag) {
     });
 }
 
-requestServer.getAllData = function() {
+requestServer.getAllData = function () {
     return new Promise((resolve, reject) => {
         axios.get(endPoints.dataDump, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+            headers: {
+                'authorization': 'Bearer ' + sessionStorage.jwt
+            }
+        })
             .then((response) => {
                 resolve(response.data)
             })
@@ -446,13 +389,13 @@ requestServer.getAllData = function() {
 }
 
 // APIs for narratives
-requestServer.getNarratives = function(username) {
+requestServer.getNarratives = function (username) {
     return new Promise((resolve, reject) => {
         axios.get(endPoints.residentNarratives + "/" + username, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+            headers: {
+                'authorization': 'Bearer ' + sessionStorage.jwt
+            }
+        })
             .then((response) => {
                 var narrativeList = response.data.map((record) => {
                     return {
@@ -472,7 +415,7 @@ requestServer.getNarratives = function(username) {
     });
 }
 
-requestServer.setNarratives = function(narratives, username, yearTag) {
+requestServer.setNarratives = function (narratives, username, yearTag) {
 
     var narrativesList = narratives.map((narrative) => {
         return {
@@ -483,14 +426,14 @@ requestServer.setNarratives = function(narratives, username, yearTag) {
 
     return new Promise((resolve, reject) => {
         axios.post(endPoints.setNarratives, {
-                username,
-                narrativesList,
-                yearTag
-            }, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+            username,
+            narrativesList,
+            yearTag
+        }, {
+            headers: {
+                'authorization': 'Bearer ' + sessionStorage.jwt
+            }
+        })
             .then((response) => {
                 resolve(response.data)
             })
@@ -499,13 +442,13 @@ requestServer.setNarratives = function(narratives, username, yearTag) {
 }
 
 // APIs for task lists
-requestServer.getTaskList = function(username) {
+requestServer.getTaskList = function (username) {
     return new Promise((resolve, reject) => {
         axios.get(endPoints.getTaskList + "/" + username, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+            headers: {
+                'authorization': 'Bearer ' + sessionStorage.jwt
+            }
+        })
             .then((response) => {
                 resolve(response.data ? response.data.taskList || [] : [])
             })
@@ -513,16 +456,16 @@ requestServer.getTaskList = function(username) {
     });
 }
 
-requestServer.setTaskList = function(username, taskList) {
+requestServer.setTaskList = function (username, taskList) {
     return new Promise((resolve, reject) => {
         axios.post(endPoints.setTaskList, {
-                username,
-                taskList
-            }, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+            username,
+            taskList
+        }, {
+            headers: {
+                'authorization': 'Bearer ' + sessionStorage.jwt
+            }
+        })
             .then((response) => {
                 resolve(response.data)
             })
@@ -531,16 +474,16 @@ requestServer.setTaskList = function(username, taskList) {
 }
 
 
-requestServer.getRecordsByYear = function(academicYear = '', programSpecific = true) {
+requestServer.getRecordsByYear = function (academicYear = '', programSpecific = true) {
     return new Promise((resolve, reject) => {
         axios.post(endPoints.getRecordsByYear, {
-                academicYear,
-                programSpecific
-            }, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
+            academicYear,
+            programSpecific
+        }, {
+            headers: {
+                'authorization': 'Bearer ' + sessionStorage.jwt
+            }
+        })
             .then((response) => {
                 resolve(response.data)
             })
