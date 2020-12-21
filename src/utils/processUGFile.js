@@ -49,7 +49,7 @@ export default function (rawData, residentList) {
                             'resident_name': resident_name,
                             username,
                             'observer_name': row[4].trim(),
-                            'observation_date': moment(row[6].trim()).format('YYYY-MM-DD'),
+                            'observation_date': moment(row[5].trim()).format('YYYY-MM-DD'),
                             'observer_type': '',
                             year_tag,
                             'rating': rating == 'low' ? 1 : rating == 'high' ? 3 : 2,
