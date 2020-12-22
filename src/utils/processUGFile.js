@@ -15,7 +15,7 @@ export default function (rawData, residentList) {
             _.filter(records.slice(1), (d) => d[3].indexOf('usask.ca') > -1)
                 .map((row) => {
                     let rating = row[7].toLowerCase().trim(),
-                        resident_name = (row[1] + " " + row[2]).toLowerCase().trim(),
+                        resident_name = (row[1].trim() + " " + row[2].trim()).toLowerCase().trim(),
                         username = '',
                         year_tag = '';
                     // if a resident has an email that doesnt match the @mail.usask.ca format
