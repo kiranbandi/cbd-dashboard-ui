@@ -164,12 +164,12 @@ export default class GraphRow extends Component {
                         onMouseOut={onMouseOut} />
                     {!smallScreen && nonDemoMode &&
                         <span className={"icon table-icon icon-open-book " + epaSource + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}>
-                            <s-tooltip border-width="1px" show-delay="2000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPATable}</s-tooltip>
+                            <s-tooltip border-width="1px" show-delay="1000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPATable}</s-tooltip>
                         </span>
                     }
                     {!smallScreen && nonDemoMode && isAnyFilterAvailable &&
                         <span className={"icon filter-icon icon-sound-mix " + epaSource + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick}>
-                            <s-tooltip border-width="1px" show-delay="2000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPAFilter}</s-tooltip>
+                            <s-tooltip border-width="1px" show-delay="1000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPAFilter}</s-tooltip>
                         </span>
                     }
 

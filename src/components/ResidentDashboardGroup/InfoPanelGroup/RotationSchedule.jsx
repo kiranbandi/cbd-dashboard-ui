@@ -146,7 +146,7 @@ class RotatioSchedule extends Component {
                 >
                     <span className="icon icon-clock"></span>
                     <span>View History</span>
-                    <s-tooltip border-width="1px" show-delay="2000" orientation="right" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.viewHistory}</s-tooltip>
+                    <s-tooltip border-width="1px" show-delay="1000" orientation="right" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.viewHistory}</s-tooltip>
                 </button>
                 <button
                     onClick={this.showEPAsPerBlock}
@@ -154,7 +154,7 @@ class RotatioSchedule extends Component {
                 >
                     <span className="icon icon-book"></span>
                     <span>View EPAs/Block</span>
-                    <s-tooltip border-width="1px" show-delay="2000" orientation="right" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.viewEPAsBlock}</s-tooltip>
+                    <s-tooltip border-width="1px" show-delay="1000" orientation="right" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.viewEPAsBlock}</s-tooltip>
                 </button>
 
                 {isHistoryVisible && <div className='all-historical-schedule'>

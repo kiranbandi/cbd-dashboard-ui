@@ -48,7 +48,7 @@ class InfoPanel extends Component {
                                 className='view-checklist-button btn btn-primary-outline'>
                                 <span className="icon icon-new-message"></span>
                                 <span>Checklist</span>
-                                <s-tooltip border-width="1px" show-delay="2000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.checklist}</s-tooltip>
+                                <s-tooltip border-width="1px" show-delay="1000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.checklist}</s-tooltip>
                             </button>}
 
                         </div>

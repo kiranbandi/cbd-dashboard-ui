@@ -72,7 +72,7 @@ export default class NormativeFilterPanel extends Component {
                         <button type="submit" className="filter-button btn btn-primary-outline" onClick={onSubmit}>
                             GET RECORDS
                             {filterLoaderState && <Loading className='filter-loader' type='spin' height='25px' width='25px' color='white' delay={-1} />}
-                            <s-tooltip border-width="1px" show-delay="2000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.normativeAssessment.getRecords}</s-tooltip>
+                            <s-tooltip border-width="1px" show-delay="1000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.normativeAssessment.getRecords}</s-tooltip>
                         </button>
                     </div>
                 </div>
