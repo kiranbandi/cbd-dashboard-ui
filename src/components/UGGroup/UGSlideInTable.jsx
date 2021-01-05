@@ -14,6 +14,13 @@ const columns = [{
     filterMethod: customFilter
 },
 {
+    Header: 'Rotation',
+    accessor: 'rotation',
+    className: 'text-left',
+    maxWidth: 150,
+    filterMethod: customFilter
+},
+{
     Header: 'Observer Name',
     accessor: 'observer_name',
     maxWidth: 150,
