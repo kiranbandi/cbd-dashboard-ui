@@ -49,6 +49,7 @@ export default (props) => {
         let trainingStageMax = trainingStageGroupMax[isUG ? '1' : epa.label[0]];
         return {
             'label': epa.label,
+            'labelDescription': epa.description,
             'epaCount': +overallepaGroupSummed[epaIndex],
             'facEpaCount': +currentFacultyepaGroupList[epaIndex],
             'overall': (+overallepaGroupSummed[epaIndex] / trainingStageMax.epaCount) / (+epa.max / trainingStageMax.max),
@@ -89,6 +90,10 @@ export default (props) => {
                             stroke="#1ca8dd" fill="#1ca8dd" fillOpacity={0.6} />}
                     <Tooltip labelStyle={{ 'color': 'black' }}
                         wrapperStyle={{ 'fontWeight': 'bold' }}
+                        labelFormatter={(label) => {
+                            // we find the epa through its label and tag on its description into the label
+                            return (label + ': ' + _.find(epaList, (d) => d.label == label).description);
+                        }}
                         formatter={(value, name, datapoint) => {
                             let tooltipText = Math.round(value * 100),
                                 tooltipPre = name == 'Overall' ? datapoint.payload.epaCount : datapoint.payload.facEpaCount;
@@ -113,8 +118,13 @@ export default (props) => {
                                 {currentFacultyRecords.length > 0
                                     && <Radar name="CurrentFaculty" dataKey="currentFaculty"
                                         stroke="#1ca8dd" fill="#1ca8dd" fillOpacity={0.6} />}
-                                <Tooltip labelStyle={{ 'color': 'black' }}
-                                    wrapperStyle={{ 'fontWeight': 'bold' }}
+                                <Tooltip labelStyle={{ 'color': '#252830' }}
+                                    // zindex set high to prevent tooltip overlap issue
+                                    wrapperStyle={{ 'fontWeight': 'bold', 'zIndex': 1000 }}
+                                    labelFormatter={(label) => {
+                                        // we find the epa through its label and tag on its description into the label
+                                        return (label + ': ' + _.find(epaList, (d) => d.label == label).description);
+                                    }}
                                     formatter={(value, name) => {
                                         let tooltipText = Math.round(value * 100);
                                         // if value is 200, let the user know its capped
@@ -140,14 +150,22 @@ function getEPAList(epaSourceMap) {
     //  so do a shallow loop
     if (templateEpaSourceMap.hasOwnProperty('subRoot')) {
         _.map(templateEpaSourceMap.subRoot, (epa, epaKey) => {
-            EPAList.push({ 'label': epaKey, 'max': templateEpaSourceMap['maxObservation'][epaKey] });
+            EPAList.push({
+                'label': epaKey,
+                'max': templateEpaSourceMap['maxObservation'][epaKey],
+                'description': epa
+            });
         });
     } else {
         // remove special assessment EPAs if any
         _.map(templateEpaSourceMap, (epaSource, key) => {
             _.map(epaSource.subRoot, (epa, epaKey) => {
                 if (epa.indexOf('(SA)') == -1) {
-                    EPAList.push({ 'label': epaKey, 'max': epaSource['maxObservation'][epaKey] });
+                    EPAList.push({
+                        'label': epaKey,
+                        'max': epaSource['maxObservation'][epaKey],
+                        'description': epa
+                    });
                 }
             })
         });
