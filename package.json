@@ -17,7 +17,7 @@
     "author": "kiranbandi",
     "license": "MIT",
     "dependencies": {
-        "@seanwong24/s-tooltip": "^1.0.0",
+        "@seanwong24/s-tooltip": "^1.0.1",
         "axios": "^0.21.1",
         "canvg": "^3.0.4",
         "chart.js": "^1.1.1",
