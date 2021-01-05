@@ -12,6 +12,7 @@ export default (props) => {
                 border-width="1px"
                 margin="30px"
                 max-width="500px"
+                show-delay="2000"
                 style={{ fontFamily: 'inherit' }}
             >{info}</s-tooltip>
         </a>
