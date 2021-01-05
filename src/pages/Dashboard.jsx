@@ -44,7 +44,7 @@ class DashboardRoot extends Component {
                 {isChecklistVisible && <ChecklistModal />}
                 {boardsLevel == '1' &&
                     <div>
-                        <s-tooltip border-width="1px" show-delay="2000" style={{ fontFamily: 'inherit' }} attach-to=".dashboard-tab"></s-tooltip>
+                        <s-tooltip border-width="1px" show-delay="1000" style={{ fontFamily: 'inherit' }} attach-to=".dashboard-tab"></s-tooltip>
                         <div className="hr-divider nav-pill-container-dashboard">
                             <ul className="nav nav-pills hr-divider-content hr-divider-nav">
                                 <li className={activeDashboard == 'resident' ? 'active' : ''}>

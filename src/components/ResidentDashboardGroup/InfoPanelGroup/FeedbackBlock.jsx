@@ -207,9 +207,7 @@ class FeedbackBlock extends Component {
                             <TrackTrails trackTrailPositions={trackTrailPositions} />
                             <path className='score-spark-line' d={d3Line(pointList)}></path>
                             {elementList}
-
-                        </g>
-                    }
+                        </g>}
                 </svg>
             </div >)
     }
