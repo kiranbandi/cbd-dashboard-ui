@@ -233,7 +233,7 @@ export default class FacultyDashboard extends Component {
                         >
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Report</span>
-                            <s-tooltip border-width="1px" orientation="left" max-width="800px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.facultyDevlopment.reportAndCondensedReport}</s-tooltip>
+                            <s-tooltip border-width="1px" orientation="left" max-width="800px" show-delay="2000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.facultyDevlopment.reportAndCondensedReport}</s-tooltip>
                         </button>
                         <button
                             id='print-report-condensed'
@@ -242,7 +242,7 @@ export default class FacultyDashboard extends Component {
                         >
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Condensed Report</span>
-                            <s-tooltip border-width="1px" orientation="left" max-width="800px" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.facultyDevlopment.reportAndCondensedReport}</s-tooltip>
+                            <s-tooltip border-width="1px" orientation="left" max-width="800px" show-delay="2000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.facultyDevlopment.reportAndCondensedReport}</s-tooltip>
                         </button>
                     </div>}
             </div>);
