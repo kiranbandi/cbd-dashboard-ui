@@ -18,7 +18,7 @@
     "license": "MIT",
     "dependencies": {
         "@seanwong24/s-tooltip": "^1.0.0",
-        "axios": "^0.18.1",
+        "axios": "^0.21.1",
         "canvg": "^3.0.4",
         "chart.js": "^1.1.1",
         "computed-style-to-inline-style": "^3.0.0",
