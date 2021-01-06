@@ -188,7 +188,7 @@ export default class ProgramDashboard extends Component {
                 <div className='chart-tooltip' id="chartjs-tooltip-completion-distribution"></div>
             </div>
 
-            <s-tooltip border-width="1px" show-delay="0" style={{ fontFamily: 'inherit' }} attach-to=".epa-completion-distribution-chart-bar"></s-tooltip>
+            <s-tooltip follow-mouse orientation="top" border-width="1px" show-delay="0" style={{ fontFamily: 'inherit' }} attach-to=".epa-completion-distribution-chart-bar"></s-tooltip>
         </div>);
     };
 }
