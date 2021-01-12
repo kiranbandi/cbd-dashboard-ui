@@ -37,7 +37,6 @@ class DashboardRoot extends Component {
             boardsLevel = '2';
         }
 
-
         return (
             <div className='dashboard-page-root' >
                 {isModalVisible && <Modal infoCard={infoCard} />}

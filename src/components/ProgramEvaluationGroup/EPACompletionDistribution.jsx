@@ -94,6 +94,7 @@ export default class ProgramDashboard extends Component {
         // create bars
         const bars = epaPercentageList.map((d, i) => (
             <rect
+                className="epa-completion-distribution-chart-bar"
                 x={scaleX(i)}
                 y={scaleY(d.percentageOffset) <= xOne ? scaleY(d.percentageOffset) : xOne}
                 height={scaleY(d.percentageOffset) <= xOne ? xOne - scaleY(d.percentageOffset) : scaleY(d.percentageOffset) - xOne}
@@ -113,14 +114,14 @@ export default class ProgramDashboard extends Component {
                 })()}
                 width={itemSize - (0.25 * itemSize)}
                 stroke={d.percentageOffset > maxPercentageOffset ? 'white' : 'transparent'}
-                key={d.epa}>
-                <title>{
+                key={d.epa}
+                data-s-tooltip-text={
                     (d.percentageOffset * 100).toFixed() + '%' +
                     ' - ' + d.epa +
                     ' - ' + epaSourceMap[d.epa.split('.')[0]].topic +
                     ' - ' + epaSourceMap[d.epa.split('.')[0]].subRoot[d.epa]
-                }</title>
-            </rect>
+                }
+            ></rect>
         ));
 
         // create the vertical tick lines 
@@ -186,6 +187,8 @@ export default class ProgramDashboard extends Component {
                 }
                 <div className='chart-tooltip' id="chartjs-tooltip-completion-distribution"></div>
             </div>
+
+            <s-tooltip follow-mouse orientation="top" border-width="1px" show-delay="0" style={{ fontFamily: 'inherit' }} attach-to=".epa-completion-distribution-chart-bar"></s-tooltip>
         </div>);
     };
 }
