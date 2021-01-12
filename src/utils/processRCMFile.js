@@ -23,22 +23,26 @@ export default function (rawData, programInfo = {
                 1: {
                     'topic': 'Transition to Discipline (D)',
                     subRoot: {},
-                    maxObservation: {}
+                    maxObservation: {},
+                    filterValuesDict: {}
                 },
                 2: {
                     'topic': 'Foundations of Discipline (F)',
                     subRoot: {},
-                    maxObservation: {}
+                    maxObservation: {},
+                    filterValuesDict: {}
                 },
                 3: {
                     'topic': 'Core of Discipline (C)',
                     subRoot: {},
-                    maxObservation: {}
+                    maxObservation: {},
+                    filterValuesDict: {}
                 },
                 4: {
                     'topic': 'Transition to Practice (P)',
                     subRoot: {},
-                    maxObservation: {}
+                    maxObservation: {},
+                    filterValuesDict: {}
                 }
             };
 
