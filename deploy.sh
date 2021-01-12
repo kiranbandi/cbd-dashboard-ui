@@ -2,7 +2,9 @@
 # Script to update apache server
 git pull origin master
 # install dependencies
-npm i
+sudo npm i
+#force install node-sass
+sudo npm install node-sass
 # create new build folder
 npm run build
 # stop nginx  server
