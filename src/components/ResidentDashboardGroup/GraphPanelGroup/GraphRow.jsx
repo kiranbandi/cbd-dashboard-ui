@@ -5,6 +5,7 @@ import { scaleLinear } from 'd3';
 import SlideInTable from './SlideInTable';
 import SlideInFilter from './SlideInFilter';
 import infoTooltipReference from "../../../utils/infoTooltipReference";
+import { NumberToEPAText } from "../../../utils/convertEPA";
 
 export default class GraphRow extends Component {
 
@@ -107,7 +108,7 @@ export default class GraphRow extends Component {
                 {/* widthly reduced slightly by 10px to facilitate extra gap at the last */}
                 <div style={{ width: widthPartition - 10 }} className='inner-cell epa-title-cell'>
                     <span className='inner-offset-label'>
-                        {epaSource + " - " + epaSourceMap[innerKey].subRoot[epaSource]}
+                        {NumberToEPAText(epaSource) + " - " + epaSourceMap[innerKey].subRoot[epaSource]}
                         {isAssessmentPlanAvailable &&
                             <span
                                 className={"s-tooltip-assessment-plan-button icon plan-icon icon-layers " + (isPlanVisible ? ' open-plan' : ' ')}
