@@ -131,11 +131,11 @@ class Tools extends Component {
                  </p>
                     <FileUpload id='rcm-file' label='File Exported from Royal College Portal' />
                     <button className="btn btn-primary-outline m-t process-btn" onClick={this.onProcessFile}>
-                        <span className='process-span'>{"PROCESS FILE"} </span>
+                        <span className='process-span'>{"PROCESS UPLOADED FILE"} </span>
                         {processing && <Loading type='spin' height='25px' width='25px' color='#d6e5ff' delay={-1} />}
                     </button>
                     <button className="btn btn-primary-outline m-t process-btn m-l" onClick={this.loadSampleData}>
-                        <span className='sample-span'>{"LOAD SAMPLE EXPORT FILE"}</span>
+                        <span className='sample-span'>{"LOAD PRESET SAMPLE FILE"}</span>
                         {processingSample ?
                             <Loading type='spin' height='25px' width='25px' color='#d6e5ff' delay={-1} /> :
                             <span className="icon icon-info-with-circle sample-icon"></span>}
