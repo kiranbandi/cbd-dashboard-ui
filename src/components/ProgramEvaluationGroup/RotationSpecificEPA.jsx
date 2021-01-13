@@ -3,6 +3,7 @@ import { Bar } from 'react-chartjs';
 import ReactSelect from 'react-select';
 import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
+import { NumberToEPAText,EPATextToNumber } from "../../utils/convertEPA";
 
 export default class RotationSpecificEPA extends Component {
 
@@ -63,7 +64,7 @@ export default class RotationSpecificEPA extends Component {
         });
 
         let lineData = {
-            labels: _.map(dataList, (d) => d.label),
+            labels: _.map(dataList, (d) => NumberToEPAText(d.label)),
             datasets: [{
                 label: "Rotations",
                 fillColor: "rgba(28,168,221,.03)",
@@ -130,7 +131,7 @@ function customToolTip(tooltip, elementId, templateEpaSourceMap) {
         return;
     }
 
-    let epaId = tooltip.text.split(":")[0],
+    let epaId = EPATextToNumber(tooltip.text.split(":")[0]),
         epaRootId = epaId.split(".")[0];
 
     // Set caret Position
