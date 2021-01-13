@@ -3,13 +3,14 @@ import { Bar } from 'react-chartjs';
 import ReactSelect from 'react-select';
 import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
+import { NumberToEPAText } from "../../utils/convertEPA";
 
 export default class EPASpecRotation extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            selectedEPA: { 'label': '1.1 - Recognizing the unstable/critically ill patien…and supervisor, and initiating basic life support', 'value': '1.1' }
+            selectedEPA: { 'label': 'D1', 'value': '1.1' }
         };
         this.onSelectChange = this.onSelectChange.bind(this);
     }
@@ -39,7 +40,7 @@ export default class EPASpecRotation extends Component {
             'label': d.topic,
             'options': _.map(d.subRoot, (sub, subKey) => {
                 return {
-                    'label': subKey + " - " + sub,
+                    'label': NumberToEPAText(subKey) + " - " + sub,
                     'value': subKey
                 };
             })
@@ -71,7 +72,7 @@ export default class EPASpecRotation extends Component {
         let lineOptions = {
             scaleBeginAtZero: true
         };
-        
+
         return (
             <div className='col-sm-6 col-xs-12 epa-specific'>
                 <div className='m-a program-vis-box row'>

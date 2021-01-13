@@ -4,6 +4,7 @@ import moment from 'moment';
 import * as d3 from 'd3';
 import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
+import { NumberToEPAText } from "../../utils/convertEPA";
 
 export default class ProgramDashboard extends Component {
 
@@ -117,7 +118,7 @@ export default class ProgramDashboard extends Component {
                 key={d.epa}
                 data-s-tooltip-text={
                     (d.percentageOffset * 100).toFixed() + '%' +
-                    ' - ' + d.epa +
+                    ' - ' + NumberToEPAText(d.epa) +
                     ' - ' + epaSourceMap[d.epa.split('.')[0]].topic +
                     ' - ' + epaSourceMap[d.epa.split('.')[0]].subRoot[d.epa]
                 }
@@ -148,10 +149,7 @@ export default class ProgramDashboard extends Component {
             y={height - margin - Yoffset / 2}
             fill='#a9a1a1'
             key={d.epa}
-            style={{
-                textAnchor: 'middle'
-            }}
-        >{d.epa}</text>);
+            style={{ textAnchor: 'middle' }}>{NumberToEPAText(d.epa)}</text>);
 
         return (<div
             className='program-vis-box printable-content'
