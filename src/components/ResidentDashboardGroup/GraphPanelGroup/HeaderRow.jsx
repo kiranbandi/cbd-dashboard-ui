@@ -68,7 +68,7 @@ class HeaderRow extends Component {
         return (
             <div className={'text-xs-center text-sm-left inner-epa-head' + (isCurrentSubRootVisible ? ' bottom-line ' : ' ') + 'label-index-' + innerKey} onClick={onEPALabelClick}>
                 {isCurrentSubRootVisible ? <span className="icon icon-chevron-down"></span> : <span className="icon icon-chevron-right"></span>}
-                <span className='epa-label' >{innerKey + " - " + epaSourceMap[innerKey].topic}</span>
+                <span className='epa-label' >{epaSourceMap[innerKey].topic}</span>
                 {nonDemoMode && <span className='epa-label-status' >{statusLabel}<span className={"icon " + iconLabel}></span> {percentageComplete}</span>}
             </div>
         );

@@ -3,6 +3,7 @@ import ReactTable from 'react-table';
 import { customFilter } from '../../utils/genericUtility';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 import { InfoTip } from '../';
+import { NumberToEPAText } from "../../utils/convertEPA";
 
 const columns = [{
     Header: 'Date',
@@ -73,7 +74,7 @@ export default (props) => {
             </h3>,
             <ReactTable
                 key='faculty-table'
-                data={innerRecords}
+                data={(_.map(innerRecords, (d) => ({ ...d, 'epa': NumberToEPAText(d.epa) })))}
                 columns={columns}
                 defaultPageSize={10}
                 pageSizeOptions={getPageSizeOptions()}

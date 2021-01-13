@@ -2,7 +2,7 @@ import React from "react";
 import * as d3 from "d3";
 
 const fourPointColorScale = ["#f28e2c", "#76b7b2", "#4e79a7", "#59a14f"];
-const phaseMiniLabelList = ['TD', 'FD', 'CR', 'TP'];
+const phaseMiniLabelList = ['D', 'F', 'C', 'P'];
 
 const innerRadius = 25, outerRadius = 50;
 
@@ -60,7 +60,7 @@ const Pie = props => {
                                     <title>{pieData[i] + "%"}</title>
                                 </circle>
                                 <text style={{ 'fontWeight': 'bold', 'fill': 'white', 'cursor': 'pointer' }}
-                                    x={91} y={23 * i + 20}>{phaseMiniLabelList[i]}
+                                    x={96} y={23 * i + 20}>{phaseMiniLabelList[i]}
                                     <title>{pieData[i] + "%"}</title>
                                 </text>
                             </g>

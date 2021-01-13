@@ -5,6 +5,7 @@ import Loading from 'react-loading';
 import ReactTable from 'react-table';
 import moment from 'moment';
 import { customFilter } from '../../utils/genericUtility';
+import { NumberToEPAText } from "../../utils/convertEPA";
 
 const columns = [{
     Header: 'Resident Name',
@@ -73,8 +74,7 @@ export default class ExportDataTab extends Component {
             if (data) {
                 this.setState({
                     data: _.map(data, (d) => {
-                        // example convert 3.10 to 310 and 3.1 to 301
-                        d.epa = d.epa.split(".")[0] + (+d.epa.split(".")[1] < 10 ? '0' : '') + (d.epa.split(".")[1]);
+                        d.epa = NumberToEPAText(d.epa);
                         return d;
                     })
                 });

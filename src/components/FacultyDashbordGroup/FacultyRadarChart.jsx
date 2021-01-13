@@ -2,6 +2,7 @@ import React from 'react';
 import { Radar, Tooltip, RadarChart, PolarGrid, PolarAngleAxis, } from 'recharts';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 import { InfoTip } from '../';
+import { NumberToEPAText, EPATextToNumber } from '../../utils/convertEPA';
 
 export default (props) => {
 
@@ -48,7 +49,7 @@ export default (props) => {
     let newData = _.map(epaList, (epa, epaIndex) => {
         let trainingStageMax = trainingStageGroupMax[isUG ? '1' : epa.label[0]];
         return {
-            'label': epa.label,
+            'label': isUG ? epa.label : NumberToEPAText(epa.label),
             'labelDescription': epa.description,
             'epaCount': +overallepaGroupSummed[epaIndex],
             'facEpaCount': +currentFacultyepaGroupList[epaIndex],
@@ -105,7 +106,7 @@ export default (props) => {
             </div>
         </div>
             : <div className='radar-chart-wrapper'>
-                {['1', '2', '3', '4'].map((radarKey) => {
+                {['D', 'F', 'C', 'P'].map((radarKey) => {
                     if (newData[radarKey]) {
                         return <div key={'radar-' + radarKey} className='radar-chart-inner'>
                             <RadarChart cx={radarRadius + 35} cy={radarRadius + 25}
@@ -123,7 +124,7 @@ export default (props) => {
                                     wrapperStyle={{ 'fontWeight': 'bold', 'zIndex': 1000 }}
                                     labelFormatter={(label) => {
                                         // we find the epa through its label and tag on its description into the label
-                                        return (label + ': ' + _.find(epaList, (d) => d.label == label).description);
+                                        return (label + ': ' + _.find(epaList, (d) => d.label == EPATextToNumber(label)).description);
                                     }}
                                     formatter={(value, name) => {
                                         let tooltipText = Math.round(value * 100);

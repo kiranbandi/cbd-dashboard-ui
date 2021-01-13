@@ -4,6 +4,7 @@ import ReactTable from 'react-table';
 import { customFilter } from '../../utils/genericUtility';
 import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
+import { NumberToEPAText } from "../../utils/convertEPA";
 
 const columns = [{
     Header: 'Expired Date',
@@ -51,7 +52,7 @@ class ExpiredResidentData extends Component {
                         </h4>
                         <div className={'table-box ' + (this.state.isVisible ? '' : 'hidden-table-box')}>
                             <ReactTable
-                                data={expiredResidentData}
+                                data={(_.map(expiredResidentData, (d) => ({ ...d, 'EPA': NumberToEPAText(d.EPA) })))}
                                 columns={columns}
                                 defaultPageSize={5}
                                 resizable={false}
