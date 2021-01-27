@@ -15,19 +15,9 @@
 @import 'components/statcard';
 @import 'components/modal';
 @import 'components/tooltip';
-@import 'components/checklistModal';
 @import 'components/facultyPie';
 @import 'components/dashboard/residentDashboard';
-@import 'components/dashboard/supervisorDashboard';
-@import 'components/dashboard/programDashboard';
 @import 'components/dashboard/normativeDashboard';
-@import 'components/dashboard/exportData';
 // import pages contains page-specific styling
 @import 'pages/home';
-@import 'pages/notFound';
 @import 'pages/dashboard';
-@import 'pages/tools';
-@import 'pages/admin';
-@import 'pages/programCompare';
-// import UG component styling 
-@import 'components/UGcomponents/studentDashboard';

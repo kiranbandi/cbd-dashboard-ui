@@ -1,42 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<!--[if lt IE 9]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Emergency Medicine Dashboard UI developed at UofS">
-    <meta name="author" content="kiranbandi">
-
-    <title>CBME Dashboard</title>
-    <!--font used by bootstrap theme-->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
-    <!--vendor stylesheet-->
-    <link rel="stylesheet" type="text/css" href="assets/css/toolkit-inverse.css">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
-
-
-    <!-- Link for favicon-->
-    <link href="assets/img/favicon.png" rel="icon">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-138225592-1"></script>
-    <script>
-        if (document.location.hostname.search("cbme.usask.ca") !== -1) {
-            window.dataLayer = window.dataLayer || [];
-
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag('js', new Date());
-            gtag('config', 'UA-138225592-1');
-        }
-    </script>
+    <link rel="stylesheet" type="text/css" href="assets/css/toolkit-light.css">
 </head>
 
 <body class='with-top-navbar'>
-    <!--react root container where content would be loaded-->
     <div id="root"></div>
     <!--loading assets and webpack bundle-->
     <script src="assets/js/jquery.min.js"></script>
