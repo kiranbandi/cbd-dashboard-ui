@@ -60,7 +60,7 @@ export default (props) => {
     return (
         <div className='epaSpeedBox'>
             <div className="hr-divider">
-                <h4 className="hr-divider-content"> EPA ACQUISITION METRICS </h4>
+                <h4 className="hr-divider-content"> ACQUISITION METRICS </h4>
             </div>
             <div className='card-wrapper'>
                 {residentFilter.isAllData ?

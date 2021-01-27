@@ -35,9 +35,9 @@
         .inner-epa-head {
             padding: 5px;
             cursor: pointer;
-            margin: 15px 0px 0px 0;
+            margin: 10px 0px 0px 0;
             background: #252830;
-            border-radius: 5px 5px 0px 0px;
+            border-radius: 5px;
             &.bottom-line {
                 border-bottom: 2px solid #777373;
             }
@@ -59,7 +59,7 @@
                 text-transform: uppercase;
                 font-weight: bold;
                 padding: 4px 15px;
-                background: #283a5d;
+                background: steelblue;
                 border-radius: 10px;
                 margin-left: 15px;
                 vertical-align: middle;
@@ -148,7 +148,7 @@
                     display: block;
                     font-family: sans-serif;
                     text-align: left;
-                    background: #283a5d;
+                    background: steelblue;
                     padding: 10px;
                     border-radius: 5px;
                     .assessment-plan-content {

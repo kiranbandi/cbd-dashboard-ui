@@ -483,7 +483,9 @@
 
 .table-box {
     margin: 10px auto 40px auto;
-    border-radius: 10px;
+    border-radius: 5px;
+    background: white;
+    color: black;
     .ReactTable {
         border-radius: 5px;
         .rt-thead.-header {
