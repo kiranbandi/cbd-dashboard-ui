@@ -1,6 +1,6 @@
 {
     "name": "@kiranbandi/sask-cbme-dashboard",
-    "version": "2.0.0",
+    "version": "3.0.0",
     "description": "Elentra Module to integrate CBME Dashboard",
     "main": "build/sask-dashboard.js",
     "private": false,
