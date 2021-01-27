@@ -6,7 +6,7 @@ export default {
     isModalVisible: false,
     isChecklistVisible: false,
     infoCard: ['EM-TTD'],
-    sessionStatus: !!sessionStorage.jwt,
+    sessionStatus: 'sample',
     residentData: null,
     narrativeData: [],
     dataDumpPresent: false,
@@ -21,10 +21,10 @@ export default {
       4: true
     },
     userDetails: {
-      username: sessionStorage.username,
-      accessType: sessionStorage.accessType,
-      program: sessionStorage.program
+      username:'sample',
+      accessType: 'sample',
+      program: 'EM'
     },
-    programInfo: JSON.parse(sessionStorage.programInfo || null)
+    programInfo: null
   }
 };

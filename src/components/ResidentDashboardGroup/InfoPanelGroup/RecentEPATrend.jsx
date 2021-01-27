@@ -15,7 +15,7 @@ class RecentEPATrend extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filterRange: '10'
+            filterRange: '25'
         }
         this.setFilterRange = this.setFilterRange.bind(this);
         this.getDataList = this.getDataList.bind(this);

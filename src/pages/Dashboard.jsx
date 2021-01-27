@@ -48,11 +48,8 @@ class DashboardRoot extends Component {
 
 function mapStateToProps(state) {
     return {
-        userType: state.oracle.userDetails.accessType,
         programInfo: state.oracle.programInfo,
         activeDashboard: state.oracle.activeDashboard,
-        isModalVisible: state.oracle.isModalVisible,
-        isChecklistVisible: state.oracle.isChecklistVisible,
         infoCard: state.oracle.infoCard
     };
 }

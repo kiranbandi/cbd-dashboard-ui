@@ -6,7 +6,6 @@ import { Home, Dashboard} from './pages';
 import { Container } from './components';
 import configureStore from './redux/store/configureStore';
 import { Provider } from 'react-redux';
-import { checkloginStatus } from './utils/authorization';
 import processQueryParams from './utils/processQueryParams';
 import { applyPolyfills, defineCustomElements } from "@seanwong24/s-tooltip/loader";
 
@@ -29,7 +28,7 @@ class App extends Component {
       <Router history={hashHistory}>
         <Route path='/' component={Container} pawsTicket={pawsTicket}>
           <IndexRoute component={Home} />
-          <Route path='PGME/Dashboard' component={Dashboard} onEnter={checkloginStatus} />
+          <Route path='PGME/Dashboard' component={Dashboard}/>
         </Route>
       </Router>
     </Provider>)

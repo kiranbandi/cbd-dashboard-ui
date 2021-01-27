@@ -6,7 +6,7 @@ import moment from 'moment';
 import _ from 'lodash';
 import Loading from 'react-loading';
 import ReactSelect from 'react-select';
-import { getResidentData, getNarratives } from '../../utils/requestServer';
+import { getResidentData } from '../../utils/requestServer';
 import { STAGES_LIST } from '../../utils/programInfo';
 import {
     toggleFilterLoader, setResidentFilter, toggleExamScore,
@@ -119,22 +119,6 @@ class FilterPanel extends Component {
                     // store the info of visibility of phase into resident info
                     residentInfo.openOnlyCurrentPhase = openOnlyCurrentPhase;
                     actions.setResidentData(groupedResidentData, residentInfo);
-                    // Finally get narratives for the resident
-                    return getNarratives(residentFilter.username);
-
-                })
-                .then((narrativeData) => {
-                    // mark records in the selected date range with a flag
-                    var markedNarrativeData = _.map(narrativeData, (d) => {
-                        if (residentFilter.isAllData) {
-                            d.mark = false;
-                        }
-                        else {
-                            d.mark = moment(d.observation_date, 'YYYY-MM-DD').isBetween(moment(residentFilter.startDate, 'MM/DD/YYYY'), moment(residentFilter.endDate, 'MM/DD/YYYY'), 'days', '[]');
-                        }
-                        return d;
-                    })
-                    actions.setNarrativeData(markedNarrativeData);
                 })
                 .finally(() => { actions.toggleFilterLoader(); });
         }

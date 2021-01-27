@@ -2,7 +2,7 @@ import * as types from './actionTypes';
 import _ from 'lodash';
 import { hashHistory } from 'react-router';
 import { PROGRAM_INFO } from '../../utils/programInfo';
-import { getResidentData, getNarratives } from '../../utils/requestServer';
+import { getResidentData } from '../../utils/requestServer';
 
 
 export function loginSuccess(isUG = false) {
@@ -30,24 +30,6 @@ export function setActiveDashboard(activeDashboard) {
 
 export function toggleFilterLoader() {
     return { type: types.TOGGLE_FILTER_LOADER };
-}
-
-
-export function toggleModalVisbility() {
-    return { type: types.TOGGLE_MODAL };
-}
-
-export function toggleChecklistVisbility() {
-    return { type: types.TOGGLE_CHECKLIST };
-}
-
-export function setInfoCard(infoCard) {
-    // set the card and show modal
-    return dispatch => {
-        dispatch({ type: types.SET_INFO_CARD, infoCard });
-        dispatch(toggleModalVisbility());
-    };
-
 }
 
 export function setResidentList(residentList) {
@@ -151,29 +133,19 @@ export function setLoginData(userDetails) {
     storeDataInSessionStorage(userDetails, programInfo);
 
     return dispatch => {
-        if (program == 'UNDERGRADUATE') {
-            // then set user details and program information
-            dispatch(setUserDetails(userDetails));
-            // dispatch source map  to action 
-            dispatch(setProgramInfo(programInfo));
-            dispatch(loginSuccess(true));
-        }
-        else {
-            // dispatch actions to store all user and program related data in redux store
-            // this can also be called when token is being reissued 
-            // so in that case reset resident data and filter if any
-            dispatch({ type: types.SET_RESIDENT_DATA, residentData: null });
-            dispatch({ type: types.SET_EXPIRED_RESIDENT_DATA, expiredResidentData: [] });
-            dispatch({ type: types.SET_NARRATIVE_DATA, narrativeData: [] });
-            dispatch({ type: types.SET_ACTIVE_DASHBOARD, activeDashboard: 'resident' });
-            dispatch(setResidentFilter({ isAllData: true }))
-            // then set user details and program information
-            dispatch(setUserDetails(userDetails));
-            // dispatch source map  to action 
-            dispatch(setProgramInfo(programInfo));
-            dispatch(loginSuccess());
-        }
-
+        // dispatch actions to store all user and program related data in redux store
+        // this can also be called when token is being reissued 
+        // so in that case reset resident data and filter if any
+        dispatch({ type: types.SET_RESIDENT_DATA, residentData: null });
+        dispatch({ type: types.SET_EXPIRED_RESIDENT_DATA, expiredResidentData: [] });
+        dispatch({ type: types.SET_NARRATIVE_DATA, narrativeData: [] });
+        dispatch({ type: types.SET_ACTIVE_DASHBOARD, activeDashboard: 'resident' });
+        dispatch(setResidentFilter({ isAllData: true }))
+        // then set user details and program information
+        dispatch(setUserDetails(userDetails));
+        // dispatch source map  to action 
+        dispatch(setProgramInfo(programInfo));
+        dispatch(loginSuccess());
     };
 
 
@@ -244,19 +216,9 @@ export function switchToResidentDashboard(residentInfo, residentFilter, programI
                         groupedResidentData[innerKey] = _.sortBy(groupedResidentData[innerKey] || [], (d) => d.Date);
                     })
                 })
-
-
                 // store the info of visibility of phase into resident info
                 residentInfo.openOnlyCurrentPhase = true;
                 dispatch(setResidentData(groupedResidentData, residentInfo));
-                // Finally get narratives for the resident
-                return getNarratives(residentFilter.username);
-
-            })
-            .then((narrativeData) => {
-                // mark records in the selected date range with a flag
-                var markedNarrativeData = _.map(narrativeData, (d) => ({ ...d, mark: false }));
-                dispatch(setNarrativeData(markedNarrativeData));
             })
             .finally(() => { dispatch(toggleFilterLoader()); });
     };

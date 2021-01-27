@@ -47,7 +47,6 @@ class InfoPanel extends Component {
 
 function mapStateToProps(state) {
     return {
-        userType: state.oracle.userDetails.accessType,
         residentData: state.oracle.residentData,
         expiredResidentData: state.oracle.expiredResidentData,
         residentFilter: state.oracle.residentFilter,
