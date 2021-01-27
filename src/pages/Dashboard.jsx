@@ -23,7 +23,7 @@ class DashboardRoot extends Component {
         let { activeDashboard = 'resident' } = this.props;
 
         return (
-            <div className='dashboard-page-root' >
+            <div className='custom-dashboard-page-root' >
                 <div>
                     <div className="hr-divider nav-pill-container-dashboard">
                         <ul className="nav nav-pills hr-divider-content hr-divider-nav">

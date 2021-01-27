@@ -23,8 +23,7 @@ export default {
     userDetails: {
       username: sessionStorage.username,
       accessType: sessionStorage.accessType,
-      program: sessionStorage.program,
-      programList: JSON.parse(sessionStorage.programList || "[]")
+      program: sessionStorage.program
     },
     programInfo: JSON.parse(sessionStorage.programInfo || null)
   }

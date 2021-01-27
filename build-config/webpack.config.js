@@ -1,16 +1,13 @@
 const path = require('path');
 var webpack = require("webpack");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 
 'use strict';
 module.exports = {
     mode: 'development',
     entry: ['babel-polyfill', './src/app.jsx'],
     output: {
-        path: __dirname + '/build/assets/bundle',
-        filename: "bundle.js",
-        publicPath: "/assets/bundle"
+        path: path.resolve("build"),
+        filename: "sask-dashboard.js"
     },
     devServer: {
         inline: true,
@@ -28,13 +25,7 @@ module.exports = {
             'process.env': {
                 NODE_ENV: JSON.stringify('development')
             }
-        }),
-        new HtmlWebpackPlugin({
-            filename: '../../../../build/index.html',
-            template: './src/assets/index.template.html',
-            alwaysWriteToDisk: true
-        }),
-        new HtmlWebpackHarddiskPlugin()
+        })
     ],
     module: {
         rules: require("./rules.config"),

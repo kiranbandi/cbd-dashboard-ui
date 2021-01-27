@@ -14,6 +14,8 @@ import './utils/libraries/toolkit.min.js';
 
 //Root sass file for webpack to compile
 import './sass/main.scss';
+import './utils/css/toolkit-light.css';
+
 //Initial Default settings 
 const store = configureStore();
 // Custom implementation , if a ticket is being passed it is consumed here 
@@ -34,7 +36,7 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById('custom-dashboard-mount'))
 
 // For Sean's tooltip , might have to move this out of root 
 // and probably into the tooltip defining component itself.

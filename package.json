@@ -1,8 +1,8 @@
 {
-    "name": "em-cbd-ui",
+    "name": "@kiranbandi/sask-cbme-dashboard",
     "version": "1.0.0",
-    "description": "UI for EM-CBD Dashboard",
-    "main": "src/app.js",
+    "description": "Elentra Module to integrate CBME Dashboard",
+    "main": "build/sask-dashboard.js",
     "keywords": [
         "visualization",
         "medicine",
@@ -11,8 +11,8 @@
         "d3"
     ],
     "scripts": {
-        "start": "webpack-dev-server --config ./build-config/webpack.config.js --watch-poll",
-        "build": "webpack -p --config ./build-config/webpack.prod.config.js"
+        "start": "webpack-dev-server --optimize-max-chunks 1 --config ./build-config/webpack.config.js --watch-poll",
+        "build": "webpack -p --optimize-max-chunks 1 --config ./build-config/webpack.prod.config.js"
     },
     "author": "kiranbandi",
     "license": "MIT",
@@ -73,7 +73,7 @@
         "style-loader": "^0.21.0",
         "terser-webpack-plugin": "^3.0.6",
         "url-loader": "^1.0.1",
-        "webpack": "^4.12.0",
+        "webpack": "^4.46.0",
         "webpack-cli": "^3.0.7",
         "webpack-dev-server": "^3.11.1"
     }

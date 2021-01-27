@@ -134,7 +134,6 @@ class RecentEPATrend extends Component {
                 <div className="hr-divider">
                     <h4 className="hr-divider-content">
                         RECENT EPAs
-                        <InfoTip info={infoTooltipReference.residentMetrics.recentEPAs} />
                     </h4>
                 </div>
                 <div className='recent-range-selection'>
