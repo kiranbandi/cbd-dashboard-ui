@@ -20,13 +20,13 @@
         display: inline-block;
         .btn-primary-outline.active-button {
             color: #ffffff;
-            background-color: #1997c6;
+            background-color: steelblue;
             box-shadow: none;
         }
         .btn-primary-outline.not-active {
-            color: #1997c6;
+            color: steelblue;
             background-color: transparent;
-            border-color: #1997c6;
+            border-color: steelblue;
         }
         .btn {
             @media (max-width: 768px) {

@@ -37,9 +37,7 @@ class Container extends Component {
             <div id='app-container'>
                 {showPawsLoginLoader ?
                     <Loading type='spin' className='paws-loader' height='100px' width='100px' color='#d6e5ff' delay={-1} />
-                    : <div id='container-body'>
-                        {this.props.children}
-                    </div>}
+                    : <div id='container-body'> {this.props.children} </div>}
             </div>
         );
     }

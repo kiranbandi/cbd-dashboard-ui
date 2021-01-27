@@ -3,19 +3,13 @@
 @import 'vendor/react-table';
 // import components- contains each self-contained component in its own .scss partial
 @import 'components/container';
-@import 'components/navbar';
 @import 'components/radioButton';
 @import 'components/fileUpload';
 @import 'components/graphPanel';
 @import 'components/infoPanel/infoPanel';
-@import 'components/infoCardPanel';
-@import 'components/expiredRecordTable';
-@import 'components/narrativeTable';
 @import 'components/filterPanel';
 @import 'components/statcard';
-@import 'components/modal';
 @import 'components/tooltip';
-@import 'components/facultyPie';
 @import 'components/dashboard/residentDashboard';
 @import 'components/dashboard/normativeDashboard';
 // import pages contains page-specific styling

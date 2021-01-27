@@ -8,10 +8,12 @@
     }
     .panel-inner-root {
         margin: 0px auto;
+        color: white;
     }
     .graph-tooltip {
         position: absolute;
         width: 400px;
+        color: white;
         background: #253b46;
         min-height: 200px;
         padding: 10px;
@@ -189,13 +191,13 @@
                                 font-family: sans-serif;
                                 font-weight: bold;
                                 &.recorded-title {
-                                    color: steelblue
+                                    color: steelblue;
                                 }
                                 &.required-title {
-                                    color: lightsteelblue
+                                    color: lightsteelblue;
                                 }
                                 &.expired-title {
-                                    color: #b44646
+                                    color: #b44646;
                                 }
                                 &.remaining-title {
                                     color: #46b44a;
@@ -249,7 +251,7 @@
                         background: white;
                         .score-spark-line {
                             fill: none;
-                            stroke: #1997c6;
+                            stroke: steelblue;
                             stroke-width: 2px;
                         }
                         .score-point {

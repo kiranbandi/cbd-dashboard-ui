@@ -1,9 +1,5 @@
 @import 'epaSpeedInfo';
-@import 'examScore';
 @import 'recentEPATrend';
-@import 'rotationSchedule';
-@import 'rotationSchedule';
-@import 'feedbackPanel';
 
 // Import sub components then add in base level styling
 .info-panel {
@@ -58,7 +54,7 @@
                 padding: 10px;
                 margin-top: 12px;
                 font-size: 15px;
-                color: #cfd2da;
+                font-weight: bold;
             }
         }
 

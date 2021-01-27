@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setActiveDashboard } from '../redux/actions/actions';
-import {
-    ResidentDashboard, Modal, NormativeDashboard
-} from '../components';
+import { ResidentDashboard, NormativeDashboard } from '../components';
 
 class DashboardRoot extends Component {
 
@@ -22,11 +20,10 @@ class DashboardRoot extends Component {
 
     render() {
 
-        let { isModalVisible, infoCard, isChecklistVisible, activeDashboard = 'resident' } = this.props;
+        let { activeDashboard = 'resident' } = this.props;
 
         return (
             <div className='dashboard-page-root' >
-                {isModalVisible && <Modal infoCard={infoCard} />}
                 <div>
                     <div className="hr-divider nav-pill-container-dashboard">
                         <ul className="nav nav-pills hr-divider-content hr-divider-nav">

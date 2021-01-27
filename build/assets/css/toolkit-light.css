@@ -323,7 +323,7 @@ textarea {
 }
 
 a {
-    color: #1CA8DD;
+    color: steelblue;
     text-decoration: none;
 }
 
@@ -602,7 +602,7 @@ mark,
 }
 
 .text-primary {
-    color: #1CA8DD;
+    color: steelblue;
 }
 
 a.text-primary:hover,
@@ -648,7 +648,7 @@ a.text-danger:focus {
 
 .bg-primary {
     color: #fff;
-    background-color: #1CA8DD;
+    background-color: steelblue;
 }
 
 a.bg-primary:hover,
@@ -1246,7 +1246,7 @@ output {
 }
 
 .form-control:focus {
-    border-color: #1CA8DD;
+    border-color: steelblue;
     outline: 0;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(28, 168, 221, 0.6);
 }
@@ -1869,8 +1869,8 @@ fieldset[disabled] .btn-default.focus {
 
 .btn-primary {
     color: #fff;
-    background-color: #1CA8DD;
-    border-color: #1997c6;
+    background-color: steelblue;
+    border-color: steelblue;
 }
 
 .btn-primary:focus,
@@ -1923,12 +1923,12 @@ fieldset[disabled] .btn-primary:focus,
 .btn-primary.disabled.focus,
 .btn-primary[disabled].focus,
 fieldset[disabled] .btn-primary.focus {
-    background-color: #1CA8DD;
-    border-color: #1997c6;
+    background-color: steelblue;
+    border-color: steelblue;
 }
 
 .btn-primary .badge {
-    color: #1CA8DD;
+    color: steelblue;
     background-color: #fff;
 }
 
@@ -2193,7 +2193,7 @@ fieldset[disabled] .btn-danger.focus {
 }
 
 .btn-link {
-    color: #1CA8DD;
+    color: steelblue;
     font-weight: normal;
     border-radius: 0;
 }
@@ -3203,7 +3203,7 @@ tbody.collapse.in {
     color: #fff;
     text-decoration: none;
     outline: 0;
-    background-color: #1CA8DD;
+    background-color: steelblue;
 }
 
 .dropdown-menu>.disabled>a,
@@ -3718,7 +3718,7 @@ select[multiple].input-group-sm>.input-group-btn>.btn {
 .nav .open>a:hover,
 .nav .open>a:focus {
     background-color: #e3f5fb;
-    border-color: #1CA8DD;
+    border-color: steelblue;
 }
 
 .nav .nav-divider {
@@ -3830,7 +3830,7 @@ select[multiple].input-group-sm>.input-group-btn>.btn {
 .nav-pills>li.active>a:hover,
 .nav-pills>li.active>a:focus {
     color: #fff;
-    background-color: #1CA8DD;
+    background-color: steelblue;
 }
 
 .nav-stacked>li {
@@ -4552,7 +4552,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
     padding: 6px 12px;
     line-height: 1.5;
     text-decoration: none;
-    color: #1CA8DD;
+    color: steelblue;
     background-color: #fff;
     border: 1px solid #ddd;
     margin-left: -1px;
@@ -4589,8 +4589,8 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pagination>.active>span:focus {
     z-index: 3;
     color: #fff;
-    background-color: #1CA8DD;
-    border-color: #1CA8DD;
+    background-color: steelblue;
+    border-color: steelblue;
     cursor: default;
 }
 
@@ -4730,7 +4730,7 @@ a.label:focus {
 }
 
 .label-primary {
-    background-color: #1CA8DD;
+    background-color: steelblue;
 }
 
 .label-primary[href]:hover,
@@ -4813,7 +4813,7 @@ a.badge:focus {
 
 .list-group-item.active>.badge,
 .nav-pills>.active>a>.badge {
-    color: #1CA8DD;
+    color: steelblue;
     background-color: #fff;
 }
 
@@ -4900,7 +4900,7 @@ a.badge:focus {
 a.thumbnail:hover,
 a.thumbnail:focus,
 a.thumbnail.active {
-    border-color: #1CA8DD;
+    border-color: steelblue;
 }
 
 .thumbnail .caption {
@@ -5037,7 +5037,7 @@ a.thumbnail.active {
     line-height: 21px;
     color: #fff;
     text-align: center;
-    background-color: #1CA8DD;
+    background-color: steelblue;
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
     -webkit-transition: width 0.6s ease;
     transition: width 0.6s ease;
@@ -5227,8 +5227,8 @@ button.list-group-item {
 .list-group-item.active:focus {
     z-index: 2;
     color: #fff;
-    background-color: #1CA8DD;
-    border-color: #1CA8DD;
+    background-color: steelblue;
+    border-color: steelblue;
 }
 
 .list-group-item.active .list-group-item-heading,
@@ -5692,26 +5692,26 @@ button.list-group-item-danger.active:focus {
 }
 
 .panel-primary {
-    border-color: #1CA8DD;
+    border-color: steelblue;
 }
 
 .panel-primary>.panel-heading {
     color: #fff;
-    background-color: #1CA8DD;
-    border-color: #1CA8DD;
+    background-color: steelblue;
+    border-color: steelblue;
 }
 
 .panel-primary>.panel-heading+.panel-collapse>.panel-body {
-    border-top-color: #1CA8DD;
+    border-top-color: steelblue;
 }
 
 .panel-primary>.panel-heading .badge {
-    color: #1CA8DD;
+    color: steelblue;
     background-color: #fff;
 }
 
 .panel-primary>.panel-footer+.panel-collapse>.panel-body {
-    border-bottom-color: #1CA8DD;
+    border-bottom-color: steelblue;
 }
 
 .panel-success {
@@ -7093,7 +7093,7 @@ body {
 
 .nav-bordered>li>a:hover,
 .nav-bordered>li>a:focus {
-    color: #1CA8DD;
+    color: steelblue;
     background-color: transparent;
 }
 
@@ -7106,7 +7106,7 @@ body {
 .nav-bordered>li.active>a:focus {
     font-weight: 500;
     color: #777;
-    border-bottom-color: #1CA8DD;
+    border-bottom-color: steelblue;
 }
 
 .nav-bordered.nav-justified>li+li {
@@ -7129,7 +7129,7 @@ body {
 .nav-bordered.nav-stacked>li.active>a,
 .nav-bordered.nav-stacked>li.active>a:hover,
 .nav-bordered.nav-stacked>li.active>a:focus {
-    border-left-color: #1CA8DD;
+    border-left-color: steelblue;
 }
 
 .nav-bordered.nav-stacked>li>a {
@@ -7373,6 +7373,7 @@ body {
 }
 
 .icon:before {
+    margin-bottom: 5px;
     position: relative;
     top: 2px;
     display: inline-block;
@@ -9981,8 +9982,8 @@ fieldset[disabled] .datepicker table tr td.selected.disabled:hover.focus {
 .datepicker table tr td.active.disabled,
 .datepicker table tr td.active.disabled:hover {
     color: #fff;
-    background-color: #1CA8DD;
-    border-color: #1997c6;
+    background-color: steelblue;
+    border-color: steelblue;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
@@ -10117,15 +10118,15 @@ fieldset[disabled] .datepicker table tr td.active.focus,
 fieldset[disabled] .datepicker table tr td.active:hover.focus,
 fieldset[disabled] .datepicker table tr td.active.disabled.focus,
 fieldset[disabled] .datepicker table tr td.active.disabled:hover.focus {
-    background-color: #1CA8DD;
-    border-color: #1997c6;
+    background-color: steelblue;
+    border-color: steelblue;
 }
 
 .datepicker table tr td.active .badge,
 .datepicker table tr td.active:hover .badge,
 .datepicker table tr td.active.disabled .badge,
 .datepicker table tr td.active.disabled:hover .badge {
-    color: #1CA8DD;
+    color: steelblue;
     background-color: #fff;
 }
 
@@ -10156,8 +10157,8 @@ fieldset[disabled] .datepicker table tr td.active.disabled:hover.focus {
 .datepicker table tr td span.active.disabled,
 .datepicker table tr td span.active.disabled:hover {
     color: #fff;
-    background-color: #1CA8DD;
-    border-color: #1997c6;
+    background-color: steelblue;
+    border-color: steelblue;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
@@ -10292,15 +10293,15 @@ fieldset[disabled] .datepicker table tr td span.active.focus,
 fieldset[disabled] .datepicker table tr td span.active:hover.focus,
 fieldset[disabled] .datepicker table tr td span.active.disabled.focus,
 fieldset[disabled] .datepicker table tr td span.active.disabled:hover.focus {
-    background-color: #1CA8DD;
-    border-color: #1997c6;
+    background-color: steelblue;
+    border-color: steelblue;
 }
 
 .datepicker table tr td span.active .badge,
 .datepicker table tr td span.active:hover .badge,
 .datepicker table tr td span.active.disabled .badge,
 .datepicker table tr td span.active.disabled:hover .badge {
-    color: #1CA8DD;
+    color: steelblue;
     background-color: #fff;
 }
 
@@ -10385,8 +10386,8 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.focus {
     white-space: nowrap;
     cursor: pointer;
     font-weight: 700 !important;
-    color: #1CA8DD !important;
-    border-bottom-color: #1CA8DD !important;
+    color: steelblue !important;
+    border-bottom-color: steelblue !important;
 }
 
 .headerSortUp:after,
@@ -10609,7 +10610,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.focus {
 }
 
 .statcard-primary {
-    background-color: #1CA8DD;
+    background-color: steelblue;
 }
 
 .statcard-success {
@@ -10710,7 +10711,7 @@ canvas {
 }
 
 .custom-select:focus {
-    border-color: #1CA8DD;
+    border-color: steelblue;
     outline: 0;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(28, 168, 221, 0.6);
 }
@@ -10789,8 +10790,8 @@ canvas {
 /* Checked state */
 
 .custom-control input:checked~.custom-control-indicator {
-    background-color: #1CA8DD;
-    border-color: #1CA8DD;
+    background-color: steelblue;
+    border-color: steelblue;
     box-shadow: none;
 }
 
@@ -11297,9 +11298,9 @@ fieldset[disabled] .btn-default-outline.active {
 }
 
 .btn-primary-outline {
-    color: #1997c6;
+    color: steelblue;
     background-color: transparent;
-    border-color: #1997c6;
+    border-color: steelblue;
 }
 
 .btn-primary-outline:focus,
@@ -11309,7 +11310,7 @@ fieldset[disabled] .btn-default-outline.active {
 .btn-primary-outline.active,
 .open>.dropdown-toggle.btn-primary-outline {
     color: #fff;
-    background-color: #1997c6;
+    background-color: steelblue;
     box-shadow: none;
 }
 
@@ -11331,12 +11332,12 @@ fieldset[disabled] .btn-primary-outline:active,
 .btn-primary-outline.disabled.active,
 .btn-primary-outline[disabled].active,
 fieldset[disabled] .btn-primary-outline.active {
-    border-color: #1997c6;
+    border-color: steelblue;
 }
 
 .btn-primary-outline .badge {
     color: #fff;
-    background-color: #1997c6;
+    background-color: steelblue;
 }
 
 .btn-success-outline {

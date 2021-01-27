@@ -48,8 +48,8 @@ export default class WeeklyEPAChart extends Component {
         let datasets = [{
             label: "EPA Count by Week",
             fillColor: "rgba(28,168,221,0.05)",
-            strokeColor: "#1ca8dd",
-            pointColor: "#1ca8dd",
+            strokeColor: "steelblue",
+            pointColor: "steelblue",
             data: _.map(weekList, (d) => d.count)
         }];
 
