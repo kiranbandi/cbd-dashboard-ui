@@ -4,11 +4,7 @@ import { bindActionCreators } from 'redux';
 import { getResidentList } from '../../utils/requestServer';
 import { setResidentList } from '../../redux/actions/actions';
 import Loading from 'react-loading';
-import {
-    FilterPanel, GraphPanel, InfoPanel,
-    InfoCardsPanel, ExpiredRecordTable,
-    NarrativeTable
-} from '../';
+import { FilterPanel, GraphPanel, InfoPanel } from '../';
 
 
 class ResidentDashboard extends Component {
@@ -56,9 +52,7 @@ class ResidentDashboard extends Component {
                     <div className='m-t-md'>
                         {(residentList.length > 0) ?
                             <div>
-                                <FilterPanel
-                                    programInfo={programInfo} />
-                                {infoCardsVisible && smallScreen && <InfoCardsPanel width={width} />}
+                                <FilterPanel programInfo={programInfo} />
                                 <InfoPanel
                                     infoCardsVisible={infoCardsVisible}
                                     smallScreen={smallScreen}
@@ -68,12 +62,8 @@ class ResidentDashboard extends Component {
                                     nonDemoMode={true}
                                     width={width}
                                     smallScreen={smallScreen} />
-                                {narrativesVisible && <NarrativeTable />}
-                                <ExpiredRecordTable
-                                    smallScreen={smallScreen} />
-
                             </div> :
-                            <h2 className='text-center text-danger'>No resident information is available currently</h2>}
+                            <h2 className='text-center text-danger'>No data is available currently.</h2>}
                     </div>}
             </div >
         );

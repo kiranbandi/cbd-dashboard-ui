@@ -2,6 +2,7 @@
     margin: 30px 30px 20px 30px;
     .root-box {
         border-radius: 5px;
+        background: #e2eff5;
         @media (max-width: 768px) {
             width: 100%;
             padding: 10px;
@@ -38,6 +39,7 @@
         margin-top: 5px;
         border-radius: 0px 0px 5px 5px;
         width: 580px;
+        background: #e2eff5;
         @media (max-width: 768px) {
             width: 100%;
             padding: 10px;
