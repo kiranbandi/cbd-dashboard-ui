@@ -44,6 +44,11 @@
             .icon {
                 font-size: 22px;
                 vertical-align: middle;
+                margin-left: 5px;
+                font-size: 20px;
+                width: auto;
+                height: auto;
+                background: none;
             }
             .epa-label {
                 font-size: 18px;
@@ -137,6 +142,12 @@
                     cursor: pointer;
                     background: #25282f;
                     margin-left: 5px;
+
+                    vertical-align: middle;
+                    width: auto;
+                    height: auto;
+                    background: none;
+
                     &.open-plan {
                         background: #25282f;
                     }
@@ -224,6 +235,14 @@
                         padding: 0px 4px;
                         cursor: pointer;
                         background: white;
+
+                        vertical-align: middle;
+                        margin-left: 5px;
+
+                        width: auto;
+                        height: auto;
+                        background: none;
+
                         &.table-icon {
                             top: 145px;
                             left: 20px;

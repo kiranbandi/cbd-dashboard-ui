@@ -1,31 +1,23 @@
-/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
-html {
-    font-family: sans-serif;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
+@font-face {
+    font-family: "toolkit-entypo";
+    src: url('https://cdn.jsdelivr.net/npm/@kiranbandi/sask-cbme-dashboard@4.0.0/build/font.eot');
+    src: url('https://cdn.jsdelivr.net/npm/@kiranbandi/sask-cbme-dashboard@4.0.0/build/font.eot?#iefix') format('eot'), url('https://cdn.jsdelivr.net/npm/@kiranbandi/sask-cbme-dashboard@4.0.0/build/font.woff2') format('woff2'), url('https://cdn.jsdelivr.net/npm/@kiranbandi/sask-cbme-dashboard@4.0.0/build/font.woff') format('woff'), url('https://cdn.jsdelivr.net/npm/@kiranbandi/sask-cbme-dashboard@4.0.0/build/font.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
-body {
-    margin: 0;
-}
+#custom-dashboard-mount{
 
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-main,
-menu,
-nav,
-section,
-summary {
-    display: block;
-}
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555;
+    background-color: #fff;
+    font-weight: 300;
+    letter-spacing: 0;
 
+    
 audio,
 canvas,
 progress,
@@ -300,18 +292,8 @@ th {
     box-sizing: border-box;
 }
 
-html {
-    font-size: 10px;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
 
-body {
-    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #555;
-    background-color: #fff;
-}
+
 
 input,
 button,
@@ -3217,7 +3199,6 @@ tbody.collapse.in {
     text-decoration: none;
     background-color: transparent;
     background-image: none;
-    filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
     cursor: not-allowed;
 }
 
@@ -6413,7 +6394,6 @@ button.close {
     background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.0001) 100%);
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.0001) 100%);
     background-repeat: repeat-x;
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
 }
 
 .carousel-control.right {
@@ -6422,7 +6402,6 @@ button.close {
     background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.0001) 0%, rgba(0, 0, 0, 0.5) 100%);
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.0001) 0%, rgba(0, 0, 0, 0.5) 100%);
     background-repeat: repeat-x;
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1);
 }
 
 .carousel-control:hover,
@@ -6889,10 +6868,7 @@ button.close {
     }
 }
 
-body {
-    font-weight: 300;
-    letter-spacing: 0;
-}
+
 
 .lead {
     font-size: 16px;
@@ -7364,13 +7340,7 @@ body {
     }
 }
 
-@font-face {
-    font-family: "toolkit-entypo";
-    src: url('https://cdn.jsdelivr.net/npm/@kiranbandi/sask-cbme-dashboard@4.0.0/build/font.eot');
-    src: url('https://cdn.jsdelivr.net/npm/@kiranbandi/sask-cbme-dashboard@4.0.0/build/font.eot?#iefix') format('eot'), url('https://cdn.jsdelivr.net/npm/@kiranbandi/sask-cbme-dashboard@4.0.0/build/font.woff2') format('woff2'), url('https://cdn.jsdelivr.net/npm/@kiranbandi/sask-cbme-dashboard@4.0.0/build/font.woff') format('woff'), url('https://cdn.jsdelivr.net/npm/@kiranbandi/sask-cbme-dashboard@4.0.0/build/font.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
+
 
 .icon:before {
     margin-bottom: 5px;
@@ -11511,6 +11481,4 @@ fieldset[disabled] .btn-danger-outline.active {
     color: #fff;
     background-color: #e33145;
 }
-
-
-/*# sourceMappingURL=toolkit-light.css.map */
+}

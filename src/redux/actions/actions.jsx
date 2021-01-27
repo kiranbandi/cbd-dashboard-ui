@@ -1,18 +1,13 @@
 import * as types from './actionTypes';
 import _ from 'lodash';
-import { hashHistory } from 'react-router';
 import { PROGRAM_INFO } from '../../utils/programInfo';
 import { getResidentData } from '../../utils/requestServer';
 
-
 export function loginSuccess(isUG = false) {
-    let { state = { nextPathname: isUG ? '/UGME/Dashboard' : '/PGME/Dashboard' } } = hashHistory.getCurrentLocation();
-    hashHistory.push(state.nextPathname);
     return { type: types.LOG_IN_SUCCESS };
 }
 
 export function logOutUser() {
-    hashHistory.push("/");
     return { type: types.LOG_OUT };
 }
 

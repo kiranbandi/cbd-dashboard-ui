@@ -142,7 +142,7 @@ export default class NormativeDashboard extends Component {
         const { filterLoaderState } = this.state, processedRecords = this.processRecordsToTabularFormat();
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
-        let overallWidth = document.body.getBoundingClientRect().width - 125;
+        let overallWidth = document.getElementById('custom-dashboard-mount').getBoundingClientRect().width - 125;
 
         const dateFilterActive = document.getElementById('filter-dateFilterActive') && document.getElementById('filter-dateFilterActive').checked;
 

@@ -1,7 +1,7 @@
 export default [
 	{
 		"_id": "600210ec2e9bcd5bf9f18fc8",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-07-16",
 		"year_tag": "2019-2",
 		"epa": "1.1",
@@ -21,7 +21,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fc9",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-09-02",
 		"year_tag": "2019-2",
 		"epa": "1.2",
@@ -41,7 +41,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fca",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-07-10",
 		"year_tag": "2019-2",
 		"epa": "1.2",
@@ -61,7 +61,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fcb",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-08-03",
 		"year_tag": "2019-2",
 		"epa": "1.2",
@@ -81,7 +81,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fcc",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-08-21",
 		"year_tag": "2019-2",
 		"epa": "1.2",
@@ -101,7 +101,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fcd",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-08-25",
 		"year_tag": "2019-2",
 		"epa": "1.2",
@@ -121,7 +121,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fce",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-08-27",
 		"year_tag": "2019-2",
 		"epa": "1.2",
@@ -141,7 +141,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fcf",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-08-27",
 		"year_tag": "2019-2",
 		"epa": "1.2",
@@ -161,7 +161,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fd0",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-09-23",
 		"year_tag": "2019-2",
 		"epa": "1.2",
@@ -181,7 +181,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fd1",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-10-22",
 		"year_tag": "2019-2",
 		"epa": "1.2",
@@ -201,7 +201,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fd2",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-01-08",
 		"year_tag": "2020-1",
 		"epa": "1.2",
@@ -221,7 +221,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fd3",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-12-15",
 		"year_tag": "2019-2",
 		"epa": "1.3",
@@ -241,7 +241,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fd4",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-07-10",
 		"year_tag": "2019-2",
 		"epa": "1.3",
@@ -261,7 +261,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fd5",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-10-02",
 		"year_tag": "2019-2",
 		"epa": "1.3",
@@ -281,7 +281,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fd6",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-11-06",
 		"year_tag": "2019-2",
 		"epa": "1.3",
@@ -301,7 +301,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fd7",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-11-19",
 		"year_tag": "2019-2",
 		"epa": "1.3",
@@ -321,7 +321,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fd8",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-07-27",
 		"year_tag": "2019-2",
 		"epa": "1.4",
@@ -341,7 +341,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fd9",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-08-01",
 		"year_tag": "2019-2",
 		"epa": "1.4",
@@ -361,7 +361,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fda",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-11-29",
 		"year_tag": "2019-2",
 		"epa": "1.4",
@@ -381,7 +381,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fdb",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-11-29",
 		"year_tag": "2019-2",
 		"epa": "1.4",
@@ -401,7 +401,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fdc",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-07-11",
 		"year_tag": "2019-2",
 		"epa": "1.5",
@@ -421,7 +421,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fdd",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-11-06",
 		"year_tag": "2019-2",
 		"epa": "1.5",
@@ -441,7 +441,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fde",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-07-12",
 		"year_tag": "2019-2",
 		"epa": "1.6",
@@ -461,7 +461,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fdf",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-07-15",
 		"year_tag": "2019-2",
 		"epa": "1.6",
@@ -481,7 +481,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fe0",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-07-15",
 		"year_tag": "2019-2",
 		"epa": "1.6",
@@ -501,7 +501,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fe1",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-11-06",
 		"year_tag": "2019-2",
 		"epa": "1.6",
@@ -521,7 +521,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fe2",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-12-09",
 		"year_tag": "2019-2",
 		"epa": "1.7",
@@ -541,7 +541,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fe3",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-07-13",
 		"year_tag": "2019-2",
 		"epa": "1.7",
@@ -561,7 +561,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fe4",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-07-16",
 		"year_tag": "2019-2",
 		"epa": "1.7",
@@ -581,7 +581,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fe5",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-07-16",
 		"year_tag": "2019-2",
 		"epa": "1.7",
@@ -601,7 +601,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fe6",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-07-21",
 		"year_tag": "2019-2",
 		"epa": "1.7",
@@ -621,7 +621,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fe7",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-07-21",
 		"year_tag": "2019-2",
 		"epa": "1.7",
@@ -641,7 +641,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fe8",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-08-01",
 		"year_tag": "2019-2",
 		"epa": "1.7",
@@ -661,7 +661,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fe9",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-08-15",
 		"year_tag": "2019-2",
 		"epa": "2.1",
@@ -681,7 +681,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fea",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-08-17",
 		"year_tag": "2019-2",
 		"epa": "2.1",
@@ -701,7 +701,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18feb",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-08-20",
 		"year_tag": "2019-2",
 		"epa": "2.1",
@@ -721,7 +721,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fec",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-12-18",
 		"year_tag": "2019-2",
 		"epa": "2.1",
@@ -741,7 +741,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fed",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-12-21",
 		"year_tag": "2019-2",
 		"epa": "2.1",
@@ -761,7 +761,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fee",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-01-30",
 		"year_tag": "2020-1",
 		"epa": "2.1",
@@ -781,7 +781,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fef",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-02-03",
 		"year_tag": "2020-1",
 		"epa": "2.1",
@@ -801,7 +801,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18ff0",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-03-12",
 		"year_tag": "2020-1",
 		"epa": "2.1",
@@ -821,7 +821,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18ff1",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-05-12",
 		"year_tag": "2020-1",
 		"epa": "2.1",
@@ -841,7 +841,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18ff2",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-07-17",
 		"year_tag": "2020-2",
 		"epa": "2.1",
@@ -861,7 +861,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18ff3",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-08-18",
 		"year_tag": "2020-2",
 		"epa": "2.1",
@@ -881,7 +881,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18ff4",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-08-26",
 		"year_tag": "2020-2",
 		"epa": "2.1",
@@ -901,7 +901,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18ff5",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-10-01",
 		"year_tag": "2020-2",
 		"epa": "2.1",
@@ -921,7 +921,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18ff6",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-10-08",
 		"year_tag": "2019-2",
 		"epa": "2.2",
@@ -941,7 +941,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18ff7",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-10-09",
 		"year_tag": "2019-2",
 		"epa": "2.2",
@@ -961,7 +961,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18ff8",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-11-09",
 		"year_tag": "2019-2",
 		"epa": "2.2",
@@ -981,7 +981,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18ff9",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-07-17",
 		"year_tag": "2020-2",
 		"epa": "2.2",
@@ -1001,7 +1001,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18ffa",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-12-25",
 		"year_tag": "2020-2",
 		"epa": "2.3",
@@ -1021,7 +1021,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18ffb",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-09-13",
 		"year_tag": "2019-2",
 		"epa": "2.3",
@@ -1041,7 +1041,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18ffc",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-10-13",
 		"year_tag": "2019-2",
 		"epa": "2.3",
@@ -1061,7 +1061,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18ffd",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-05-11",
 		"year_tag": "2020-1",
 		"epa": "2.3",
@@ -1081,7 +1081,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18ffe",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-07-06",
 		"year_tag": "2020-2",
 		"epa": "2.3",
@@ -1101,7 +1101,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f18fff",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2021-01-13",
 		"year_tag": "2021-1",
 		"epa": "2.3",
@@ -1121,7 +1121,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19000",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-07-16",
 		"year_tag": "2019-2",
 		"epa": "2.4",
@@ -1141,7 +1141,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19001",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-09-03",
 		"year_tag": "2019-2",
 		"epa": "2.4",
@@ -1161,7 +1161,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19002",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-02-14",
 		"year_tag": "2020-1",
 		"epa": "2.4",
@@ -1181,7 +1181,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19003",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-05-12",
 		"year_tag": "2020-1",
 		"epa": "2.4",
@@ -1201,7 +1201,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19004",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-10-09",
 		"year_tag": "2019-2",
 		"epa": "2.5",
@@ -1221,7 +1221,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19005",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-12-31",
 		"year_tag": "2019-2",
 		"epa": "2.5",
@@ -1241,7 +1241,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19006",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-02-28",
 		"year_tag": "2020-1",
 		"epa": "2.5",
@@ -1261,7 +1261,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19007",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-04-17",
 		"year_tag": "2020-1",
 		"epa": "2.5",
@@ -1281,7 +1281,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19008",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-08-26",
 		"year_tag": "2019-2",
 		"epa": "2.6",
@@ -1301,7 +1301,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19009",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-09-05",
 		"year_tag": "2019-2",
 		"epa": "2.6",
@@ -1321,7 +1321,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f1900a",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-12-31",
 		"year_tag": "2019-2",
 		"epa": "2.6",
@@ -1341,7 +1341,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f1900b",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-02-27",
 		"year_tag": "2020-1",
 		"epa": "2.6",
@@ -1361,7 +1361,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f1900c",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-02-28",
 		"year_tag": "2020-1",
 		"epa": "2.6",
@@ -1381,7 +1381,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f1900d",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-05-12",
 		"year_tag": "2020-1",
 		"epa": "2.6",
@@ -1401,7 +1401,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f1900e",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-11-07",
 		"year_tag": "2019-2",
 		"epa": "2.7",
@@ -1421,7 +1421,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f1900f",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-12-09",
 		"year_tag": "2019-2",
 		"epa": "2.7",
@@ -1441,7 +1441,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19010",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-05-29",
 		"year_tag": "2020-1",
 		"epa": "2.7",
@@ -1461,7 +1461,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19011",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-10-04",
 		"year_tag": "2019-2",
 		"epa": "2.7",
@@ -1481,7 +1481,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19012",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-10-09",
 		"year_tag": "2019-2",
 		"epa": "2.7",
@@ -1501,7 +1501,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19013",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-10-09",
 		"year_tag": "2019-2",
 		"epa": "2.7",
@@ -1521,7 +1521,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19014",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-04-17",
 		"year_tag": "2020-1",
 		"epa": "2.7",
@@ -1541,7 +1541,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19015",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-06-23",
 		"year_tag": "2020-1",
 		"epa": "2.7",
@@ -1561,7 +1561,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19016",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-07-06",
 		"year_tag": "2020-2",
 		"epa": "2.7",
@@ -1581,7 +1581,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19017",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-07-07",
 		"year_tag": "2020-2",
 		"epa": "2.7",
@@ -1601,7 +1601,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19018",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2021-01-13",
 		"year_tag": "2021-1",
 		"epa": "2.7",
@@ -1621,7 +1621,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19019",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-11-07",
 		"year_tag": "2019-2",
 		"epa": "2.8",
@@ -1641,7 +1641,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f1901a",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-12-09",
 		"year_tag": "2019-2",
 		"epa": "2.8",
@@ -1661,7 +1661,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f1901b",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-04-13",
 		"year_tag": "2020-1",
 		"epa": "2.8",
@@ -1681,7 +1681,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f1901c",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-04-14",
 		"year_tag": "2020-1",
 		"epa": "2.8",
@@ -1701,7 +1701,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f1901d",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-04-14",
 		"year_tag": "2020-1",
 		"epa": "2.8",
@@ -1721,7 +1721,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f1901e",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-05-12",
 		"year_tag": "2020-1",
 		"epa": "2.8",
@@ -1741,7 +1741,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f1901f",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-06-26",
 		"year_tag": "2020-1",
 		"epa": "2.8",
@@ -1761,7 +1761,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19020",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-07-07",
 		"year_tag": "2020-2",
 		"epa": "2.8",
@@ -1781,7 +1781,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19021",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-07-07",
 		"year_tag": "2020-2",
 		"epa": "2.8",
@@ -1801,7 +1801,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19022",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-07-07",
 		"year_tag": "2020-2",
 		"epa": "2.8",
@@ -1821,7 +1821,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19023",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-11-25",
 		"year_tag": "2020-2",
 		"epa": "2.9",
@@ -1841,7 +1841,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19024",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2019-10-02",
 		"year_tag": "2019-2",
 		"epa": "2.9",
@@ -1861,7 +1861,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19025",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-06-09",
 		"year_tag": "2020-1",
 		"epa": "2.9",
@@ -1881,7 +1881,7 @@ export default [
 	},
 	{
 		"_id": "600210ec2e9bcd5bf9f19026",
-		"username": "kdm449",
+		"username": "testusername",
 		"observation_date": "2020-12-25",
 		"year_tag": "2020-2",
 		"epa": "2.9",

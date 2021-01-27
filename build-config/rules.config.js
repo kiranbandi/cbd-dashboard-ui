@@ -10,7 +10,7 @@ module.exports = [{
 },
 {
     test: /\.scss$/,
-    loaders: ['style-loader', 'css-loader', 'resolve-url-loader', 'sass-loader?sourceMap']
+    loaders: ['style-loader', { 'loader': 'css-loader', options: { url: false } }, { 'loader': 'sass-loader', options: { url: false } }]
 },
 {
     test: /\.css/,

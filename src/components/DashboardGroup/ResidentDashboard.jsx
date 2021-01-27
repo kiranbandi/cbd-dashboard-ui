@@ -42,7 +42,7 @@ class ResidentDashboard extends Component {
             { infoCardsVisible = false, narrativesVisible = false } = programInfo;
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
-        let width = document.body.getBoundingClientRect().width - 125;
+        let width = document.getElementById('custom-dashboard-mount').getBoundingClientRect().width - 125;
         let smallScreen = width < 800;
 
         return (

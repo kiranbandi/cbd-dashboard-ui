@@ -37,7 +37,7 @@ class RecentEPATrend extends Component {
             epaText = data['EPA'] + " - " + programInfo.epaSourceMap[tempEPA[0]].subRoot[data['EPA']];
 
 
-        var pageWidth = document.body.getBoundingClientRect().width;
+        var pageWidth = document.getElementById('custom-dashboard-mount').getBoundingClientRect().width;
         actions.showTooltip(true, {
             'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,
             'y': event.pageY - 50,

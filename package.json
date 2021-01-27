@@ -53,9 +53,7 @@
         "recharts": "^1.8.5",
         "redux": "^4.0.0",
         "redux-thunk": "^2.3.0",
-        "shortid": "^2.2.15",
-        "toastr": "^2.1.4",
-        "xlsx": "^0.14.1"
+        "shortid": "^2.2.15"
     },
     "devDependencies": {
         "babel-core": "^6.26.3",
