@@ -45,7 +45,7 @@ https://github.com/kiranbandi/cbd-dashboard-ui/blob/master/design_document.pdf
 ## Features
 
 ### Resident Dashboard
- - base EPA acquistion metrics 
+ - base EPA acquisition metrics 
  - Rotation schendule of a resident 
  - Recent EPAs that have been completed in the last month
  - A complete chart with EPAs scores corresponding to each Learning Stage
