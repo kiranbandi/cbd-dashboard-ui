@@ -11,12 +11,12 @@ export default (props) => {
         <div className='print-info' style={{ 'display': 'inline-block', 'width': '1120px' }}>
             <FacultyStatCardSet
                 isUG={isUG}
-                title={"Acquistion Metrics for All Faculty in Rotation - " + currentRotation}
+                title={"Acquisition Metrics for All Faculty in Rotation - " + currentRotation}
                 processedRecords={processedRecords}
                 dateFilterActive={dateFilterActive} />
             <FacultyStatCardSet
                 isUG={isUG}
-                title={"Acquistion Metrics for Faculty - " + currentFaculty}
+                title={"Acquisition Metrics for Faculty - " + currentFaculty}
                 showNA={currentFaculty == 'ALL'}
                 processedRecords={currentFaculty == 'ALL' ? [] : currentFacultyRecords}
                 dateFilterActive={dateFilterActive} />
