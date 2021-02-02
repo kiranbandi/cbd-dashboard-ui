@@ -2,8 +2,29 @@ import _ from 'lodash';
 import sampleName from '../utils/residentListSample';
 import sampleDump from '../utils/residentSampleDump';
 import sampleData from '../utils/residentSampleData';
+import endPoints from './endPoints';
 
 var requestServer = {};
+
+requestServer.getLearnerList = function (params) {
+    return new Promise((resolve, reject) => {
+        axios.get(endPoints.learnerApi, {
+            'params': {
+                ...params,
+                'section': 'api-learner-progress-dashboard',
+                'method': 'get-visual-summary-data'
+            },
+            headers: {
+                'authorization': 'Bearer ' + JWT
+            }
+        })
+            .then((response) => {
+                alert('received ' + response.data.length + ' learner profiles');
+            })
+            .catch((err) => errorCallback(err, reject));
+    });
+}
+
 
 requestServer.getResidentList = function () {
     return new Promise((resolve) => { resolve(sampleName) });
