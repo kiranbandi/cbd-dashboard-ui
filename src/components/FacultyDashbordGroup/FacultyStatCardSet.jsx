@@ -36,7 +36,7 @@ export default (props) => {
         <div className="hr-divider">
             <h4 className="hr-divider-content">
                 {title}
-                <InfoTip info={title.match('Acquistion Metrics for All Faculty in Rotation') ? infoTooltipReference.facultyDevlopment.acquisitionMetricsForAllFaculty : infoTooltipReference.facultyDevlopment.acquisitionMetricsForSingleFaculty} />
+                <InfoTip info={title.match('Acquisition Metrics for All Faculty in Rotation') ? infoTooltipReference.facultyDevlopment.acquisitionMetricsForAllFaculty : infoTooltipReference.facultyDevlopment.acquisitionMetricsForSingleFaculty} />
             </h4>
         </div>
         {
