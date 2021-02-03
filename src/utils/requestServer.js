@@ -1,27 +1,53 @@
 import _ from 'lodash';
-import sampleName from '../utils/residentListSample';
-import sampleDump from '../utils/residentSampleDump';
-import sampleData from '../utils/residentSampleData';
+import axios from 'axios';
+import sampleName from './sampleData/residentListSample';
+import sampleDump from './sampleData/residentSampleDump';
+import sampleData from './sampleData/residentSampleData';
+import sampleLearnerList from './sampleData/elentraSampleLearnerList';
+import sampleLearnerData from './sampleData/elentraSampleLearnerData';
+import processLearnerList from './processors/processLearnerList';
+import processLearnerData from './processors/processLearnerData';
+
 import endPoints from './endPoints';
 
 var requestServer = {};
 
 requestServer.getLearnerList = function (params) {
     return new Promise((resolve, reject) => {
-        axios.get(endPoints.learnerApi, {
-            'params': {
-                ...params,
-                'section': 'api-learner-progress-dashboard',
-                'method': 'get-visual-summary-data'
-            },
-            headers: {
-                'authorization': 'Bearer ' + JWT
-            }
-        })
-            .then((response) => {
-                alert('received ' + response.data.length + ' learner profiles');
-            })
-            .catch((err) => errorCallback(err, reject));
+
+        resolve(processLearnerList(sampleLearnerList));
+
+        // axios.get(endPoints.learners, {
+        //     'params': {
+        //         'proxy_id':3001878,
+        //         'section': 'api-learner-progress-dashboard',
+        //         'method': 'get-learner-assessments'
+        //     }
+        // })
+        //     .then((response) => {
+        //        debugger;
+        //     })
+        //     .catch((err) => errorCallback(err, reject));
+
+    });
+}
+
+requestServer.getLearnerData = function (username, residentName) {
+    return new Promise((resolve, reject) => {
+
+        resolve(processLearnerData(username, residentName, sampleLearnerData));
+
+        // axios.get(endPoints.learners, {
+        //     'params': {
+        //         'proxy_id':username,
+        //         'section': 'api-learner-progress-dashboard',
+        //         'method': 'get-learner-assessments'
+        //     }
+        // })
+        //     .then((response) => {
+        //        debugger;
+        //     })
+        //     .catch((err) => errorCallback(err, reject));
     });
 }
 

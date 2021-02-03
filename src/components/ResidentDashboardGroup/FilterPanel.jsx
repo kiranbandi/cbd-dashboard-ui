@@ -6,7 +6,7 @@ import moment from 'moment';
 import _ from 'lodash';
 import Loading from 'react-loading';
 import ReactSelect from 'react-select';
-import { getResidentData } from '../../utils/requestServer';
+import { getLearnerData } from '../../utils/requestServer';
 import { STAGES_LIST } from '../../utils/programInfo';
 import {
     toggleFilterLoader, setResidentFilter, toggleExamScore,
@@ -66,18 +66,16 @@ class FilterPanel extends Component {
     }
 
     onSubmit(event) {
-        let { residentFilter = {}, actions, residentList, programInfo } = this.props,
+        let { residentFilter = {}, actions, residentList } = this.props,
             { showUncommencedEPA, openOnlyCurrentPhase } = this.state;
 
-        residentFilter.startDate = document.getElementById('filter-startDate-resident').value;
-        residentFilter.endDate = document.getElementById('filter-endDate-resident').value;
+        // residentFilter.startDate = document.getElementById('filter-startDate-resident').value;
+        // residentFilter.endDate = document.getElementById('filter-endDate-resident').value;
 
         // Fitler out resident info from the list 
         let residentInfo = _.find(residentList, (d) => d.username == residentFilter.username);
-
         // if the selected resident is valid and his info is available
         if (residentInfo) {
-
             // set all the parameters in the resident filter
             actions.setResidentFilter({ ...residentFilter });
             // toggle loader
@@ -86,8 +84,10 @@ class FilterPanel extends Component {
             // fetch data from server based on the filter params
             // Dirty solution but eventually all filtering will happen on the server so no point 
             //  in repeating this again.
-            getResidentData(residentFilter.username)
-                .then((residentData) => {
+            getLearnerData(residentFilter.username, residentInfo.fullname)
+                .then((processedData) => {
+
+                    const { programInfo, residentData } = processedData;
 
                     // mark records in the selected date range with a flag
                     var markedResidentData = _.map(residentData, (d) => {
@@ -118,7 +118,7 @@ class FilterPanel extends Component {
 
                     // store the info of visibility of phase into resident info
                     residentInfo.openOnlyCurrentPhase = openOnlyCurrentPhase;
-                    actions.setResidentData(groupedResidentData, residentInfo);
+                    actions.setResidentData(groupedResidentData, residentInfo, programInfo);
                 })
                 .finally(() => { actions.toggleFilterLoader(); });
         }
@@ -128,17 +128,9 @@ class FilterPanel extends Component {
     render() {
 
         const { filterLoaderState, residentList = []
-            , residentFilter = {}, programInfo } = this.props,
-            { examScoresVisible } = programInfo,
-            {
-                isAllData = false,
-                username = '',
-                startDate = moment().format('MM/DD/YYYY'),
-                endDate = moment().format('MM/DDF/YYYY')
-            } = residentFilter,
-            { isFilterOpen } = this.state;
-
-
+            , residentFilter = {} } = this.props,
+            isFilterOpen = false,
+            { isAllData = false, username = '' } = residentFilter;
         //  first convert the array into the format required by react-select 
         let modifiedResidentList = _.map(residentList, (d) => {
             return {
@@ -173,7 +165,6 @@ class FilterPanel extends Component {
                             options={groupedResidentList}
                             styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
                             onChange={this.onResidentNameChange} />
-
                     </div>
 
                     <div className='filter-button-container'>
@@ -187,64 +178,6 @@ class FilterPanel extends Component {
                         </button>
                     </div>
                 </div>
-
-                {/* let the elements be hidden by css style instead of react , to prevent dead elements value problem when submitting */}
-
-                <div className={'text-xs-left advanced-filter-box ' + (isFilterOpen ? 'show-filter' : 'hide-filter')}>
-
-                    <div>
-                        <div className="checkbox custom-control text-center custom-checkbox">
-                            <label className='filter-label'>
-                                {"Filter Records by Date"}
-                                <input id='filter-isAllData' type="checkbox" checked={!isAllData} onChange={this.onAllDataToggle} />
-                                <span className="custom-control-indicator"></span>
-                            </label>
-                        </div>
-                        <div className='date-box'>
-                            <label className='filter-label'>Period</label>
-                            <div className="input-group col-sm-2">
-                                <span className="input-group-addon">
-                                    <span className="icon icon-calendar"></span>
-                                </span>
-                                <input type="text" id='filter-startDate-resident' defaultValue={startDate} disabled={isAllData} className="form-control" data-provide="datepicker" />
-                            </div>
-                        </div>
-                        <span className='inner-splice'>-</span>
-                        <div className='date-box trailing'>
-                            <div className="input-group col-sm-2">
-                                <span className="input-group-addon">
-                                    <span className="icon icon-calendar"></span>
-                                </span>
-                                <input type="text" id='filter-endDate-resident' disabled={isAllData} defaultValue={endDate} className="form-control" data-provide="datepicker" />
-                            </div>
-                        </div>
-                    </div>
-                    <div className='filter-row-2'>
-                        <div className="checkbox custom-control text-center custom-checkbox">
-                            <label className='filter-label'>
-                                {"Show Exam Scores"}
-                                <input id='filter-hide-epa' type="checkbox" checked={examScoresVisible} onChange={this.onExamScoreToggle} />
-                                <span className="custom-control-indicator"></span>
-                            </label>
-                        </div>
-                        <div className="checkbox custom-control text-center custom-checkbox">
-                            <label className='filter-label'>
-                                {"Hide Uncommenced EPAs"}
-                                <input id='filter-hide-epa' type="checkbox" checked={!this.state.showUncommencedEPA} onChange={this.onEPAToggle} />
-                                <span className="custom-control-indicator"></span>
-                            </label>
-                        </div>
-                        <div className="checkbox custom-control text-center custom-checkbox">
-                            <label className='filter-label'>
-                                {"Open All Stages"}
-                                <input id='filter-hide-phases' type="checkbox" checked={!this.state.openOnlyCurrentPhase} onChange={this.onVisbilityToggle} />
-                                <span className="custom-control-indicator"></span>
-                            </label>
-                        </div>
-                    </div>
-
-                </div>
-
             </div>
         );
     }

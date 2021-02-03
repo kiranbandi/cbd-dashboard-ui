@@ -10,7 +10,7 @@ class NormativeGraph extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            trackType: 'epa_per_week',
+            trackType: 'totalAssessments',
             dualTracks: true
         };
         this.radioChange = this.radioChange.bind(this);
@@ -51,14 +51,12 @@ class NormativeGraph extends Component {
 
     render() {
 
-        const { records, width } = this.props, { trackType, dualTracks } = this.state;
-
-        const dateFilterActive = document.getElementById('filter-dateFilterActive') && document.getElementById('filter-dateFilterActive').checked;
+        const { records, width } = this.props, { trackType } = this.state;
 
         let sortedRecords = _.sortBy(records, (d) => d[trackType]);
 
         let datasets = [{
-            label: "Overall",
+            label: "Completed",
             fillColor: "rgba(28,168,221,.03)",
             strokeColor: "#43b98e",
             pointColor: "#43b98e",
@@ -68,36 +66,22 @@ class NormativeGraph extends Component {
             data: _.map(sortedRecords, (d) => d[trackType])
         }];
 
-        if (dateFilterActive) {
-            if (dualTracks) {
-                datasets.push({
-                    label: "Period",
-                    fillColor: "rgba(151,187,205,0.2)",
-                    strokeColor: "rgba(151,187,205,1)",
-                    pointColor: "rgba(151,187,205,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(151,187,205,1)",
-                    data: _.map(sortedRecords, (d) => d[trackType + "_period"])
-                });
-            }
-            else {
-                datasets = [{
-                    label: "Period",
-                    fillColor: "rgba(151,187,205,0.2)",
-                    strokeColor: "rgba(151,187,205,1)",
-                    pointColor: "rgba(151,187,205,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(151,187,205,1)",
-                    data: _.map(sortedRecords, (d) => d[trackType + "_period"])
-                }];
-            }
+        if (trackType == 'completedAssessments') {
+            datasets.push({
+                label: "Total",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: _.map(sortedRecords, (d) => d['totalAssessments'])
+            });
         }
 
         // create Bar object for chart
         const BarData = {
-            labels: _.map(sortedRecords, (d) => d.resident_name),
+            labels: _.map(sortedRecords, (d) => d.fullname),
             datasets
         }
 
@@ -109,27 +93,23 @@ class NormativeGraph extends Component {
             <div className='normative-graph'>
                 <div className='sub-filter'>
                     <div className='radio-button-container'>
-                        <RadioButton value={'epa_per_week'} id={'track_epa_per_week'} className='track-radio' name='track-select'
-                            label={"EPAs/week"}
+                        <RadioButton value={'totalAssessments'} id={'track_totalAssessments'} className='track-radio' name='track-select'
+                            label={"Attempted EPAs"}
                             onChange={this.radioChange}
-                            checked={trackType == 'epa_per_week'} />
-                        <RadioButton value={'record_count'} id={'track_record_count'} className='track-radio' name='track-select'
-                            label={"EPAs"}
+                            checked={trackType == 'totalAssessments'} />
+                        <RadioButton value={'achievementRate'} id={'track_achievementRate'} className='track-radio' name='track-select'
+                            label={"Achievement Rate"}
                             onChange={this.radioChange}
-                            checked={trackType == 'record_count'} />
-                        <RadioButton value={'expiry_rate'} id={'track_expiry_rate'} className='track-radio' name='track-select'
-                            label={"EPA Expiry Rate(%)"}
+                            checked={trackType == 'achievementRate'} />
+                        <RadioButton value={'totalProgress'} id={'track_totalProgress'} className='track-radio' name='track-select'
+                            label={"Progress(%)"}
                             onChange={this.radioChange}
-                            checked={trackType == 'expiry_rate'} />
+                            checked={trackType == 'totalProgress'} />
+                        <RadioButton value={'completedAssessments'} id={'track_completedAssessments'} className='track-radio' name='track-select'
+                            label={"Attempted vs Completed"}
+                            onChange={this.radioChange}
+                            checked={trackType == 'completedAssessments'} />
                     </div>
-                    {dateFilterActive &&
-                        <div className="checkbox custom-control text-center custom-checkbox">
-                            <label className='filter-label'>
-                                {"Compare with Overall"}
-                                <input id='filter-dateFilterActive' type="checkbox" checked={dualTracks} onChange={this.onCheckboxChange} />
-                                <span className="custom-control-indicator"></span>
-                            </label>
-                        </div>}
                 </div>
                 <div onClick={this.handleChartClick}>
                     <Bar
@@ -139,7 +119,6 @@ class NormativeGraph extends Component {
                         data={BarData}
                         width={width} height={450} />
                 </div>
-
             </div>)
     }
 

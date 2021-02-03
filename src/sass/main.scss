@@ -1,7 +1,12 @@
 // import base - contains global styles, such as resets, typography, colors
 
-#custom-dashboard-mount {
+#visual-summary-content-mount {
     @import "vendor/react-table";
+
+    .preset-loader {
+        margin: 5% auto;
+    }
+
     // import components- contains each self-contained component in its own .scss partial
     @import "components/radioButton";
     @import "components/graphPanel";

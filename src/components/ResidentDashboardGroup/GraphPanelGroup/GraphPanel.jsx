@@ -69,7 +69,7 @@ class GraphPanel extends Component {
         let { residentData, actions } = this.props;
         let pointId = event.target.id.split("-");
         let data = residentData[pointId[2]][pointId[4]];
-        var pageWidth = document.getElementById('custom-dashboard-mount').getBoundingClientRect().width;
+        var pageWidth = document.getElementById('visual-summary-content-mount').getBoundingClientRect().width;
         actions.showTooltip(true, {
             'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,
             'y': event.pageY - 50,
@@ -93,16 +93,15 @@ class GraphPanel extends Component {
             expiredResidentData,
             isTooltipVisible,
             nonDemoMode = false,
-            tooltipData,
-            epaSourceMap, smallScreen, width,
+            tooltipData, smallScreen, width,
             levelVisibilityOpenStatus, programInfo = {} } = this.props;
 
         const { hidePercentages = false, hideTogoNumbers } = programInfo;
 
         const { openTableID, openFilterID, openPlanID } = this.state;
 
-        // if there is no source map provided then use the Emergency medicine Template Map
-        epaSourceMap = !!epaSourceMap ? epaSourceMap : programInfo.epaSourceMap;
+        // populate the source map from the program info
+        let epaSourceMap = programInfo.epaSourceMap;
 
         // if no data then set flag to false if not group data by root key
         let epaSourcesThatExist = false;

@@ -1,1 +1,1 @@
-export default ['transition-to-discipline', 'foundations-of-discipline', 'core-of-discipline', 'transition-to-practice'];
+export default ['transition-to-discipline', 'foundations-of-discipline', 'core-discipline', 'transition-to-practice'];

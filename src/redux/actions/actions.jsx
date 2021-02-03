@@ -43,7 +43,7 @@ export function updateResidentData(residentData) {
     return { type: types.SET_RESIDENT_DATA, residentData };
 }
 
-export function setResidentData(residentData, residentInfo = false) {
+export function setResidentData(residentData, residentInfo = false, programInfo) {
 
     let expiredResidentData = [];
 
@@ -82,7 +82,7 @@ export function setResidentData(residentData, residentInfo = false) {
             switch (residentInfo.currentPhase) {
                 case 'transition-to-discipline': currentPhaseIndex = 1; break;
                 case 'foundations-of-discipline': currentPhaseIndex = 2; break;
-                case 'core-of-discipline': currentPhaseIndex = 3; break;
+                case 'core-discipline': currentPhaseIndex = 3; break;
                 case 'transition-to-practice': currentPhaseIndex = 4; break;
             }
             visibilityOpenStatus[currentPhaseIndex] = true;
@@ -90,6 +90,7 @@ export function setResidentData(residentData, residentInfo = false) {
 
         return dispatch => {
             dispatch(setLevelVisibilityStatus(visibilityOpenStatus));
+            dispatch({ type: types.SET_PROGRAM_INFO, programInfo });
             dispatch({ type: types.SET_RESIDENT_DATA, residentData });
             dispatch({ type: types.SET_EXPIRED_RESIDENT_DATA, expiredResidentData });
         };

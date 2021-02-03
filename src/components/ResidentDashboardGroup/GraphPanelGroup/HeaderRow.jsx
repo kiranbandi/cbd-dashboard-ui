@@ -27,7 +27,7 @@ class HeaderRow extends Component {
                 switch (residentInfo.currentPhase) {
                     case 'transition-to-discipline': currentPhase = 1; break;
                     case 'foundations-of-discipline': currentPhase = 2; break;
-                    case 'core-of-discipline': currentPhase = 3; break;
+                    case 'core-discipline': currentPhase = 3; break;
                     case 'transition-to-practice': currentPhase = 4; break;
                 }
             }

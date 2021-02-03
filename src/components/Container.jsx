@@ -1,51 +1,44 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setLoginData } from '../redux/actions/actions';
-
+import Loading from 'react-loading';
+import { setResidentList } from '../redux/actions/actions';
 import { getLearnerList } from '../utils/requestServer';
 
 class Container extends Component {
 
     constructor(props) {
         super(props);
+        this.state = { showPresetLoader: true };
     }
 
     componentDidMount() {
-
-        let dashboard_prep = {
-            'jwt': JWT,
-            'api': ENTRADA_URL,
-            'user_id': proxy_id,
-            'course_id': course_id,
-            'organisation_id': organisation_id,
-            'cperiod_id': cperiod_id,
-            'epa_list': epa_list
+        // preset info from elentra global to redux store
+        let dashboardPreset = {
+            'userId': proxy_id,
+            'courseId': course_id,
+            'organisationId': organisation_id,
+            'cperiodId': cperiod_id,
+            'filterOptions': dashboard_filter_options
         };
-
-
-
-        getLearnerList({ course_id, organisation_id, cperiod_id }).then(() => {
-            debugger;
+        // Call the learner list API to get a list of all residents
+        // for the select filter parameters and store the response in redux
+        getLearnerList({ course_id, organisation_id, cperiod_id }).then((residentList) => {
+            this.props.actions.setResidentList(residentList);
         })
-
-
-
-        var user = {
-            accessType: "sampleType",
-            program: "EM",
-            token: "testtoken",
-            username: "testusername"
-        };
-        this.props.actions.setLoginData(user);
+            .catch((err) => { console.log(err) })
+            .finally(() => { this.setState({ showPresetLoader: false }) })
     }
 
 
     render() {
-
         return (
             <div id='app-container'>
-                <div id='container-body'> {this.props.children} </div>
+                {this.state.showPresetLoader ?
+                    <Loading type='spin'
+                        className='preset-loader' height='100px'
+                        width='100px' color='#1b6699' delay={-1} />
+                    : <div id='container-body'> {this.props.children} </div>}
             </div>
         );
     }
@@ -53,7 +46,7 @@ class Container extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ setLoginData }, dispatch)
+        actions: bindActionCreators({ setResidentList }, dispatch)
     };
 }
 
