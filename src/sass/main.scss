@@ -7,6 +7,10 @@
         margin: 5% auto;
     }
 
+    // so that the page has some empty space to begin with and doesnt 
+    // trigger page scrolling when switching tabs
+    min-height: 500px;
+
     // import components- contains each self-contained component in its own .scss partial
     @import "components/radioButton";
     @import "components/graphPanel";

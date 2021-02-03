@@ -1,6 +1,5 @@
 import * as types from './actionTypes';
 import _ from 'lodash';
-import { PROGRAM_INFO } from '../../utils/programInfo';
 import { getLearnerData } from '../../utils/requestServer';
 
 export function loginSuccess(isUG = false) {
@@ -124,7 +123,7 @@ export function toggleExamScore() {
 }
 
 export function setLoginData(userDetails) {
-    const { program = 'EM' } = userDetails, programInfo = PROGRAM_INFO[program];
+    const { program = 'EM' } = userDetails, programInfo = {};
     // store data that needs to be persisted in session storage
     storeDataInSessionStorage(userDetails, programInfo);
 

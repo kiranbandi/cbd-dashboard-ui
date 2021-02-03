@@ -11,7 +11,7 @@ module.exports = {
         filename: "sask-dashboard.js"
     },
     devServer: {
-        inline: true,
+        inline: false,
         hot: false,
         contentBase: './build',
         port: 8887,

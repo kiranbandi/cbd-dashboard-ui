@@ -69,11 +69,9 @@ class FilterPanel extends Component {
         let { residentFilter = {}, actions, residentList } = this.props,
             { showUncommencedEPA, openOnlyCurrentPhase } = this.state;
 
-        // residentFilter.startDate = document.getElementById('filter-startDate-resident').value;
-        // residentFilter.endDate = document.getElementById('filter-endDate-resident').value;
-
         // Fitler out resident info from the list 
         let residentInfo = _.find(residentList, (d) => d.username == residentFilter.username);
+
         // if the selected resident is valid and his info is available
         if (residentInfo) {
             // set all the parameters in the resident filter

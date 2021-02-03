@@ -22,7 +22,7 @@ class App extends Component {
   }
 }
 
-// ReactDOM.render(<App />, document.getElementById('visual-summary-content-mount'));
+ReactDOM.render(<App />, document.getElementById('visual-summary-content-mount'));
 
 // For Sean's tooltip , might have to move this out of root 
 // and probably into the tooltip defining component itself.
