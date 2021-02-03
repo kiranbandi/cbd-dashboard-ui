@@ -200,15 +200,11 @@ export function switchToResidentDashboard(residentInfo, residentFilter) {
         // will happen on the server so no point in repeating this again.
         getLearnerData(residentFilter.username, residentInfo.fullname)
             .then((processedData) => {
-
                 const { programInfo, residentData } = processedData;
                 // mark records to so no record is set in a date period filter
                 var markedResidentData = _.map(residentData, (d) => ({ ...d, mark: false }));
                 // group data on the basis of EPA
                 var groupedResidentData = _.groupBy(markedResidentData, (d) => d.EPA);
-
-                console.log(programInfo);
-
                 // if uncommenced EPAs are needed to be seen then sub in empty records and 
                 // sort records by Date --force
                 _.map(programInfo.epaSourceMap, (source) => {

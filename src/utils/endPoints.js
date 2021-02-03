@@ -1,6 +1,6 @@
 var endPoints = {
     // end points to get learner related info
-    learners: 'localhost' + "/assessments/learners",
+    learners: ENTRADA_URL + "/assessments/learners",
 }
 
 module.exports = endPoints;

@@ -91,9 +91,7 @@ class FilterPanel extends Component {
 
                     // mark records in the selected date range with a flag
                     var markedResidentData = _.map(residentData, (d) => {
-                        if (residentFilter.isAllData) {
-                            d.mark = false;
-                        }
+                        if (residentFilter.isAllData) { d.mark = false }
                         else {
                             d.mark = moment(d.Date, 'YYYY-MM-DD').isBetween(moment(residentFilter.startDate, 'MM/DD/YYYY'), moment(residentFilter.endDate, 'MM/DD/YYYY'), 'days', '[]')
                         }
@@ -174,7 +172,7 @@ class FilterPanel extends Component {
                     <div className='text-xs-left button-box'>
                         <button type="submit" className="filter-button btn btn-primary-outline" onClick={this.onSubmit}>
                             GET RECORDS
-                    {filterLoaderState && <Loading className='filter-loader' type='spin' height='25px' width='25px' color='white' delay={-1} />}
+                    {filterLoaderState && <Loading className='filter-loader' type='spin' height='25px' width='25px' color='grey' delay={-1} />}
                         </button>
                     </div>
                 </div>

@@ -11,13 +11,16 @@ export default function (username, learnerName, learnerDataDump) {
     // process and set the source map  
     const programInfo = getProgramInfo(advanced_search_epas, epaMaxCountList, course_name);
 
+    debugger;
+
     var residentData = _.map(assessments, (record) => {
+
         return {
             username,
             Date: moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD'),
             EPA: EPATextToNumber(record.title.split('-')[1].trim()),
             Observer_Name: record.assessor,
-            Feedback: record.comments.join('\n'),
+            Feedback: record.comment_response,
             Observer_Type: '',
             Professionalism_Safety: '',
             Rating: record.selected_iresponse_order == 0 ? 5 : record.selected_iresponse_order,

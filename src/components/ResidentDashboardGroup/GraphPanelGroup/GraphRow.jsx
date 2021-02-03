@@ -35,8 +35,7 @@ export default class GraphRow extends Component {
             residentEPAData, expiredResidentEPAData,
             onMouseOut, onMouseOver, hideTogoNumbers,
             onTableExpandClick, onFilterExpandClick,
-            onAssessmentPlanClick,
-            nonDemoMode, isFilterVisible } = this.props;
+            onAssessmentPlanClick, isFilterVisible } = this.props;
 
         //  margin of 20px on either side reduces the available width by 40 
         // 15px bullet chart padding on either sides
@@ -163,23 +162,23 @@ export default class GraphRow extends Component {
                         innerHeight={innerHeight}
                         onMouseOver={onMouseOver}
                         onMouseOut={onMouseOut} />
-                    {!smallScreen && nonDemoMode &&
+                    {!smallScreen && isAnyFilterAvailable &&
                         <span className={"icon table-icon icon-open-book " + epaSource + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}>
                             <s-tooltip border-width="1px" show-delay="1000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPATable}</s-tooltip>
                         </span>
                     }
-                    {!smallScreen && nonDemoMode && isAnyFilterAvailable &&
+                    {!smallScreen && isAnyFilterAvailable &&
                         <span className={"icon filter-icon icon-sound-mix " + epaSource + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick}>
                             <s-tooltip border-width="1px" show-delay="1000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPAFilter}</s-tooltip>
                         </span>
                     }
 
                 </div>
-                {!smallScreen && isTableVisible && nonDemoMode &&
+                {!smallScreen && isTableVisible &&
                     <SlideInTable
                         data={residentEPAData}
                         width={widthPartition} />}
-                {!smallScreen && isFilterVisible && nonDemoMode &&
+                {!smallScreen && isFilterVisible &&
                     <SlideInFilter
                         data={scoreData}
                         width={widthPartition}

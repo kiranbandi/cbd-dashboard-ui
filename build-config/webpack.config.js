@@ -12,6 +12,7 @@ module.exports = {
     },
     devServer: {
         inline: true,
+        hot: false,
         contentBase: './build',
         port: 8887,
         watchOptions: {

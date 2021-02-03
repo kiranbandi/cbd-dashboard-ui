@@ -92,7 +92,6 @@ class GraphPanel extends Component {
         let { residentData,
             expiredResidentData,
             isTooltipVisible,
-            nonDemoMode = false,
             tooltipData, smallScreen, width,
             levelVisibilityOpenStatus, programInfo = {} } = this.props;
 
@@ -152,7 +151,6 @@ class GraphPanel extends Component {
                                         onEPALabelClick={this.onEPALabelClick}
                                         innerKey={innerKey}
                                         smallScreen={smallScreen}
-                                        nonDemoMode={nonDemoMode}
                                         hidePercentages={hidePercentages}
                                         isCurrentSubRootVisible={isCurrentSubRootVisible}
                                         epaSourceMap={epaSourceMap} />
@@ -176,7 +174,6 @@ class GraphPanel extends Component {
                                                     expiredResidentEPAData={expiredResidentDataGrouped[epaSource] || []}
                                                     onMouseOver={this.onMouseOver}
                                                     onMouseOut={this.onMouseOut}
-                                                    nonDemoMode={nonDemoMode}
                                                     onAssessmentPlanClick={this.onAssessmentPlanClick}
                                                     onTableExpandClick={this.onTableExpandClick}
                                                     onFilterExpandClick={this.onFilterExpandClick} />)
