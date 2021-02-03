@@ -1,7 +1,7 @@
 import * as types from './actionTypes';
 import _ from 'lodash';
 import { PROGRAM_INFO } from '../../utils/programInfo';
-import { getResidentData } from '../../utils/requestServer';
+import { getLearnerData } from '../../utils/requestServer';
 
 export function loginSuccess(isUG = false) {
     return { type: types.LOG_IN_SUCCESS };
@@ -184,7 +184,7 @@ function clearSessionStorage() {
 
 // Not so elegant solution 
 //  but is needed when a user needs to be automatically switched between dashboards
-export function switchToResidentDashboard(residentInfo, residentFilter, programInfo) {
+export function switchToResidentDashboard(residentInfo, residentFilter) {
 
     return dispatch => {
         dispatch(setActiveDashboard('resident'));
@@ -196,14 +196,18 @@ export function switchToResidentDashboard(residentInfo, residentFilter, programI
         // then start the loading filter
         dispatch(toggleFilterLoader());
         // fetch data from server based on the filter params
-        // Dirty solution but eventually all filtering will happen on the server so no point 
-        //  in repeating this again.
-        getResidentData(residentFilter.username)
-            .then((residentData) => {
+        // TODO Dirty solution but eventually all filtering 
+        // will happen on the server so no point in repeating this again.
+        getLearnerData(residentFilter.username, residentInfo.fullname)
+            .then((processedData) => {
+
+                const { programInfo, residentData } = processedData;
                 // mark records to so no record is set in a date period filter
                 var markedResidentData = _.map(residentData, (d) => ({ ...d, mark: false }));
                 // group data on the basis of EPA
                 var groupedResidentData = _.groupBy(markedResidentData, (d) => d.EPA);
+
+                console.log(programInfo);
 
                 // if uncommenced EPAs are needed to be seen then sub in empty records and 
                 // sort records by Date --force
@@ -214,7 +218,7 @@ export function switchToResidentDashboard(residentInfo, residentFilter, programI
                 })
                 // store the info of visibility of phase into resident info
                 residentInfo.openOnlyCurrentPhase = true;
-                dispatch(setResidentData(groupedResidentData, residentInfo));
+                dispatch(setResidentData(groupedResidentData, residentInfo, programInfo));
             })
             .finally(() => { dispatch(toggleFilterLoader()); });
     };

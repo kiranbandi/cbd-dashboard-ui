@@ -32,7 +32,7 @@ class NormativeGraph extends Component {
 
     handleChartClick(event) {
 
-        const { actions, residentFilter, programInfo } = this.props;
+        const { actions, residentFilter } = this.props;
 
         let datapoint = this.chartCtx && this.chartCtx.getBarsAtEvent(event);
         // if a valid resident name has been clicked
@@ -43,7 +43,7 @@ class NormativeGraph extends Component {
             if (resident) {
                 // set the username on the filter
                 residentFilter.username = resident.username;
-                actions.switchToResidentDashboard(resident, residentFilter, programInfo);
+                actions.switchToResidentDashboard(resident, residentFilter);
             }
         }
 
@@ -135,9 +135,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         residentList: state.oracle.residentList,
-        residentFilter: state.oracle.residentFilter,
-        //  can be null occasionally so better to check and set it
-        programInfo: state.oracle.programInfo ? state.oracle.programInfo : {}
+        residentFilter: state.oracle.residentFilter
     };
 }
 
