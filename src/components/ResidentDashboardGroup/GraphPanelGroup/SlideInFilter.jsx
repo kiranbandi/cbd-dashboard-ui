@@ -12,25 +12,8 @@ export default class SlideInFilter extends Component {
     }
 
     onSelectChange(option, selectRef) {
-        const { clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter } = this.props;
         const { filterDict } = this.props;
         this.props.onHighlightChange(selectRef.name, selectRef.action === 'clear' ? '' : option.value);
-
-        // if (selectRef.name == 'cp') {
-        //     this.props.onHighlightChange(selectRef.action == 'clear' ? '' : option.value, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter);
-        // }
-        // else if (selectRef.name == 'dm') {
-        //     this.props.onHighlightChange(clinicalFilter, selectRef.action == 'clear' ? '' : option.value, typeFilter, directVsIndirectFilter, staffObservationfilter);
-        // }
-        // else if (selectRef.name == 'tp') {
-        //     this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, selectRef.action == 'clear' ? '' : option.value.substring(0, 6), directVsIndirectFilter, staffObservationfilter);
-        // }
-        // else if (selectRef.name == 'di') {
-        //     this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, typeFilter, selectRef.action == 'clear' ? '' : option.value, staffObservationfilter);
-        // }
-        // else if (selectRef.name == 'so') {
-        //     this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, selectRef.action == 'clear' ? '' : option.value);
-        // }
     }
 
     createSelect(

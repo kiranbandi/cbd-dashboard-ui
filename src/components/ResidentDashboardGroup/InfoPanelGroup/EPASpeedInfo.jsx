@@ -67,7 +67,7 @@ export default (props) => {
                     <div className='row text-center m-t'>
                         <CardComponent title='EPAs observed per week' type='success' metric={averageEPAsPerWeek} />
                         <CardComponent title='Total EPAs Observed' type='primary' metric={totalEPAs} />
-                        <CardComponent title='EPA Expiry Rate' type='danger' metric={expiryRate + '%'} />
+                        <CardComponent title='Achievement Rate' type='danger' metric={residentInfo.achievementRate + '%'} />
                     </div> :
                     <div className='row text-center'>
                         <CardComponent dual={true} title='EPAs observed per week' type='success' metric={averageEPAsPerWeek} secondMetric={averageEPAsPerWeekInPeriod} />

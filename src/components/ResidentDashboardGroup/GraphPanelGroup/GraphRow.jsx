@@ -53,12 +53,17 @@ export default class GraphRow extends Component {
 
         // Get recorded observation count
         const recordedCount = residentEPAData.length;
+
+        const achievedCount = residentEPAData.filter((record) => +record.Rating >= 4).length;
+
         //  Get expired record count 
         const expiredCount = expiredResidentEPAData.length;
         // Get remaining count 
         const remainingCount = Math.max((maxObservation - recordedCount), 0)
 
         const firstMeasure = Math.min((recordedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
+
+        const secondMeasure = Math.min((achievedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
 
         const xScale = scaleLinear().domain([0, residentEPAData.length - 1]).range([marginHorizontal, width - marginHorizontal])
         const yScale = scaleLinear().domain([5, 1]).range([marginVertical, innerHeight - marginVertical])
@@ -129,6 +134,7 @@ export default class GraphRow extends Component {
                     <BulletChart
                         widthPartition={widthPartition}
                         bulletInnerWidth={bulletInnerWidth}
+                        secondMeasure={secondMeasure}
                         firstMeasure={firstMeasure} />
 
                     <div className='card-container'>
@@ -146,8 +152,8 @@ export default class GraphRow extends Component {
                             <span className='card-title required-title'>REQUIRED</span>
                         </div>
                         <div className='graph-card '>
-                            <span className='card-text'>{expiredCount}</span>
-                            <span className='card-title expired-title'>EXPIRED</span>
+                            <span className='card-text'>{achievedCount}</span>
+                            <span className='card-title achieved-title'>ACHIEVED</span>
                         </div>
                     </div>
 
