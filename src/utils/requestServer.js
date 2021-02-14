@@ -2,7 +2,6 @@ import _ from 'lodash';
 import axios from 'axios';
 import processLearnerList from './processors/processLearnerList';
 import processLearnerData from './processors/processLearnerData';
-
 import endPoints from './endPoints';
 
 var requestServer = {};
@@ -30,6 +29,7 @@ requestServer.getLearnerData = function (username, residentName) {
         axios.get(endPoints.learners, {
             'params': {
                 'proxy_id': username,
+                'course_id': course_id,
                 'section': 'api-learner-progress-dashboard',
                 'method': 'get-learner-assessments'
             }

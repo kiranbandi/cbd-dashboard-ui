@@ -7,8 +7,7 @@ import configureStore from './redux/store/configureStore';
 import { Provider } from 'react-redux';
 import { applyPolyfills, defineCustomElements } from "@seanwong24/s-tooltip/loader";
 
-import './utils/setGlobals';
-import './utils/libraries/toolkit.min.js';
+// import './utils/libraries/toolkit.min.js';
 //Root sass file for webpack to compile
 import './sass/main.scss';
 import './utils/css/toolkit-light.scss';
