@@ -50,16 +50,13 @@ export default class GraphRow extends Component {
 
         // Get the maximum required observations for each EPA from source MAP *
         const maxObservation = +epaSourceMap[epaSource.split(".")[0]].maxObservation[epaSource];
-
         // Get recorded observation count
         const recordedCount = residentEPAData.length;
+        // Get achieved count based on values set by server
+        const achievedCount = +epaSourceMap[epaSource.split(".")[0]].achieved[epaSource];
 
-        const achievedCount = residentEPAData.filter((record) => +record.Rating >= 4).length;
-
-        //  Get expired record count 
-        const expiredCount = expiredResidentEPAData.length;
         // Get remaining count 
-        const remainingCount = Math.max((maxObservation - recordedCount), 0)
+        const remainingCount = Math.max((maxObservation - achievedCount), 0)
 
         const firstMeasure = Math.min((recordedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
 

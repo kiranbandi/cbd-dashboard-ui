@@ -35,7 +35,7 @@ class HeaderRow extends Component {
 
         // TODO remap stages as sequential array instead of object so ordering doesnt
         // screw things up
-        let currentStageStatus = _.map(residentInfo.stageProgress)[innerKey - 1];
+        let currentStageStatus = _.map(residentInfo.stageProgress)[+innerKey - 1];
 
         let percentageComplete = Math.round((completedEPACount * 100) / requiredEPACount),
             statusLabel, iconLabel;

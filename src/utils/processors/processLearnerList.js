@@ -2,13 +2,9 @@ import _ from 'lodash';
 
 export default function (learnerListDataDump) {
 
-    let [learnerList, epaMaxCountList, learnerMetricsList] = learnerListDataDump;
+    let [learnerList, learnerMetricsList] = learnerListDataDump;
 
     const stageMap = getStageMap();
-    // TODO quick hack - store epaMaxCountList in window and retrieve from there
-    // to use map programInfo when parsing learner data 
-    window.epaMaxCountList = epaMaxCountList;
-
     // First remap the metrics in metrics list into arrays from strings
     _.map(learnerMetricsList, (d, key) => { learnerMetricsList[key] = JSON.parse(d) });
 
@@ -17,11 +13,12 @@ export default function (learnerListDataDump) {
     ({
         "username": learner.proxy_id,
         "fullname": learnerMetricsList['resident_names'][learnerIndex].split(',').join(''),
-        "currentPhase": stageMap[learner.active_stage],
+        "currentPhase": stageMap[learner.active_stage] || _.values(stageMap)[0],
         "programStartDate": "2020-07-01T06:00:00.000Z",
         "leanerLevel": learner.learner_level,
         "number": learner.number,
         "stageProgress": learner.stage_data,
+        "epaProgress": _.map(learner.learner_epa_progress, (d) => JSON.parse(d) || '{}'),
         "totalAssessments": learner.total_assessments,
         "totalProgress": learner.total_progress,
         "completedAssessments": learnerMetricsList['completed_assessments'][learnerIndex],

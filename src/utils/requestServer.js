@@ -24,7 +24,7 @@ requestServer.getLearnerList = function (params) {
     });
 }
 
-requestServer.getLearnerData = function (username, residentName) {
+requestServer.getLearnerData = function (username, residentInfo) {
     return new Promise((resolve, reject) => {
         axios.get(endPoints.learners, {
             'params': {
@@ -35,7 +35,7 @@ requestServer.getLearnerData = function (username, residentName) {
             }
         })
             .then((response) => {
-                resolve(processLearnerData(username, residentName, response.data));
+                resolve(processLearnerData(username, residentInfo, response.data));
             })
             .catch((err) => errorCallback(err, reject));
     });

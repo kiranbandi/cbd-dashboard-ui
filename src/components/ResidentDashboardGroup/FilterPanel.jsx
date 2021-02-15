@@ -82,7 +82,7 @@ class FilterPanel extends Component {
             // fetch data from server based on the filter params
             // Dirty solution but eventually all filtering will happen on the server so no point 
             //  in repeating this again.
-            getLearnerData(residentFilter.username, residentInfo.fullname)
+            getLearnerData(residentFilter.username, residentInfo)
                 .then((processedData) => {
 
                     const { programInfo, residentData } = processedData;

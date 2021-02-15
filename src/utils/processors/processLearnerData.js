@@ -1,34 +1,30 @@
 import _ from 'lodash';
 import moment from 'moment';
 import { EPATextToNumber } from '../convertEPA';
-export default function (username, learnerName, learnerDataDump) {
+export default function (username, residentInfo, learnerDataDump) {
 
-    let { advanced_search_epas, assessments = [],
-        course_name, rotation_schedule, course_assessment_tools } = learnerDataDump;
-
-        debugger;
+    let { advanced_search_epas = [], assessments = [], course_name } = learnerDataDump,
+        { fullname, epaProgress } = residentInfo;
 
     // only consider assessments which are supervisor forms for now
     // field notes and narratives and rubric forms are ignored I guess 
-    let form_only_assessments = _.filter(assessments,(d)=>d.form_shortname=='cbme_supervisor');
+    let form_only_assessments = _.filter(assessments, (d) => d.form_shortname == 'cbme_supervisor');
 
-    // TODO get this value also through the same API if possible
-    const epaMaxCountList = window.epaMaxCountList;
     // process and set the source map  
-    const programInfo = getProgramInfo(advanced_search_epas, epaMaxCountList, course_name);
+    const programInfo = getProgramInfo(advanced_search_epas, epaProgress, course_name);
 
     var residentData = _.map(form_only_assessments, (record) => {
 
         return {
             username,
             Date: moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD'),
-            EPA: programInfo.rawEPAList[record.form_id],
+            EPA: EPATextToNumber(record.title.split('-')[1].trim()),
             Observer_Name: record.assessor,
             Feedback: record.comment_response ? record.comment_response : '',
             Observer_Type: '',
             Professionalism_Safety: '',
             Rating: record.selected_iresponse_order == 0 ? 5 : record.selected_iresponse_order,
-            Resident_Name: learnerName,
+            Resident_Name: fullname,
             Situation_Context: '',
             Type: '',
             isExpired: false
@@ -38,7 +34,7 @@ export default function (username, learnerName, learnerDataDump) {
     return { programInfo, residentData };
 }
 
-function getProgramInfo(epa_list, epaMaxCountList, course_name) {
+function getProgramInfo(epa_list, epaProgress, course_name) {
 
     let rawEPAList = {};
 
@@ -48,6 +44,9 @@ function getProgramInfo(epa_list, epaMaxCountList, course_name) {
             'topic': 'Transition to Discipline (D)',
             subRoot: {},
             maxObservation: {},
+            observed: {},
+            completed: {},
+            achieved: {},
             assessmentInfo: {},
             filterValuesDict: {}
         },
@@ -56,6 +55,9 @@ function getProgramInfo(epa_list, epaMaxCountList, course_name) {
             'topic': 'Foundations of Discipline (F)',
             subRoot: {},
             maxObservation: {},
+            observed: {},
+            completed: {},
+            achieved: {},
             assessmentInfo: {},
             filterValuesDict: {}
         },
@@ -64,6 +66,9 @@ function getProgramInfo(epa_list, epaMaxCountList, course_name) {
             'topic': 'Core of Discipline (C)',
             subRoot: {},
             maxObservation: {},
+            observed: {},
+            completed: {},
+            achieved: {},
             assessmentInfo: {},
             filterValuesDict: {}
         },
@@ -72,6 +77,9 @@ function getProgramInfo(epa_list, epaMaxCountList, course_name) {
             'topic': 'Transition to Practice (P)',
             subRoot: {},
             maxObservation: {},
+            observed: {},
+            completed: {},
+            achieved: {},
             assessmentInfo: {},
             filterValuesDict: {}
         },
@@ -79,15 +87,22 @@ function getProgramInfo(epa_list, epaMaxCountList, course_name) {
 
     // Map over each EPA and append it to its corresponding entry in the sourcemap 
     _.map(epa_list, (epa) => {
-        // first get the epa from the target label
-        // then convert it into its corresponding number format
-        const EPAID = EPATextToNumber(epa.target_title.slice(0, 3).trim());
-        // set the target ID for reference list 
-        rawEPAList[epa.target_id] = EPAID;
-        // set the EPA label
-        defaultSourceMap[EPAID[0]].subRoot[EPAID] = getEPATitle(epa.target_title);
-        // set the EPA required observation count 
-        defaultSourceMap[EPAID[0]].maxObservation[EPAID] = getEPARequiredCount(epa, epa.target_id);
+        // first find the corresponding EPA from the progess list 
+        const matchingEPA = _.find(epaProgress, (d) => d.objective_id == epa.target_id);
+        const EPAID = EPATextToNumber(matchingEPA.objective_code);
+
+        if (epa.target_title.indexOf('Special Assessment') == -1) {
+            // set the EPA label
+            defaultSourceMap[EPAID[0]].subRoot[EPAID] = getEPATitle(epa.target_title);
+            // set the EPA required observation count 
+            defaultSourceMap[EPAID[0]].maxObservation[EPAID] = matchingEPA.total_assessments_required || 0;
+            // set the EPA achieved count 
+            defaultSourceMap[EPAID[0]].observed[EPAID] = matchingEPA.total_assessment_attempts || 0;
+            // set the observed count 
+            defaultSourceMap[EPAID[0]].achieved[EPAID] = matchingEPA.total_requirement_met_assessments || 0;
+            // set the completed flag 
+            defaultSourceMap[EPAID[0]].completed[EPAID] = matchingEPA.completed || false;
+        }
     });
 
     return {
@@ -122,16 +137,6 @@ function getProgramInfo(epa_list, epaMaxCountList, course_name) {
     }
 }
 
-
-function getEPARequiredCount(epa, epaTargetID) {
-    if (epaMaxCountList[epaTargetID]) {
-        return Object.values(epaMaxCountList[epaTargetID])[0];
-    }
-    else {
-        // if no entry its a special assessment so default to 1
-        return 1;
-    }
-}
 
 function getEPATitle(title) {
     return title.slice(3).trim();
