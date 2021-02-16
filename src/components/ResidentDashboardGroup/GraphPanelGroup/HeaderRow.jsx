@@ -13,13 +13,15 @@ class HeaderRow extends Component {
         const { onEPALabelClick, innerKey, isCurrentSubRootVisible,
             epaSourceMap, residentData, residentList,
             hidePercentages, residentFilter } = this.props;
-        let requiredEPACount = 0, completedEPACount = 0, residentInfo, currentPhase;
+        let requiredEPACount = 0, achievedEPACount = 0, residentInfo, currentPhase;
 
         _.map(epaSourceMap[innerKey].maxObservation, (count, epaID) => {
             requiredEPACount += count;
+            const achievedCount = +epaSourceMap[innerKey].achieved[epaID];
             // reset the completed to max amount
-            completedEPACount += Math.min(residentData[epaID] ? residentData[epaID].length : 0, count);
+            achievedEPACount += Math.min(achievedCount ? achievedCount : 0, count);
         })
+
 
         if (residentFilter && residentFilter.username) {
             residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
@@ -37,8 +39,11 @@ class HeaderRow extends Component {
         // screw things up
         let currentStageStatus = _.map(residentInfo.stageProgress)[+innerKey - 1];
 
-        let percentageComplete = Math.round((completedEPACount * 100) / requiredEPACount),
+        let percentageComplete = Math.round((achievedEPACount * 100) / requiredEPACount),
             statusLabel, iconLabel;
+
+        // remap NaN values to 0
+        percentageComplete = isNaN(percentageComplete) ? 0 : percentageComplete;
 
         if (currentStageStatus.completed) {
             iconLabel = 'icon-check';

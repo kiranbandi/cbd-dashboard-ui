@@ -3,17 +3,38 @@ import moment from 'moment';
 import { EPATextToNumber } from '../convertEPA';
 export default function (username, residentInfo, learnerDataDump) {
 
-    let { advanced_search_epas = [], assessments = [], course_name } = learnerDataDump,
+    let { advanced_search_epas = [],
+        assessments = [], course_name = '',
+        contextual_variables = [] } = learnerDataDump,
         { fullname, epaProgress } = residentInfo;
+
+    // Fetch preset context variable map
+    const { contextual_variable_map } = window.saskDashboard;
 
     // only consider assessments which are supervisor forms for now
     // field notes and narratives and rubric forms are ignored I guess 
-    let form_only_assessments = _.filter(assessments, (d) => d.form_shortname == 'cbme_supervisor');
+    // Also filter out records which dont have a corresponding contextual variable map form ID
+    // this probably means they have not been defined yet
+    // TODO cross check this with STEVE
+    let valid_assessments = _.filter(assessments, (d) => d.form_shortname == 'cbme_supervisor' && contextual_variable_map[d.form_id]);
 
     // process and set the source map  
     const programInfo = getProgramInfo(advanced_search_epas, epaProgress, course_name);
 
-    var residentData = _.map(form_only_assessments, (record) => {
+    // Group the contextual variables by item code first 
+    const groupedContextualVariables = _.groupBy(contextual_variables, (d) => d.item_code);
+    // Get the contextual_variables alone for now 
+    // TODO add patient and safety concerns 
+    // Then group by form ID for easy access 
+    const subGroupedContextualVariables = _.groupBy(groupedContextualVariables['CBME_contextual_variables'] || [], (d) => d.form_id);
+    // For each form ID then further sub group by assessment ID
+    _.map(subGroupedContextualVariables, (values, formID) => {
+        subGroupedContextualVariables[formID] = _.groupBy(values, (d) => d.dassessment_id);
+    });
+
+    var residentData = _.map(valid_assessments, (record) => {
+
+        const situationContextCollection = subGroupedContextualVariables[record.form_id][record.dassessment_id] || [];
 
         return {
             username,
@@ -25,9 +46,10 @@ export default function (username, residentInfo, learnerDataDump) {
             Professionalism_Safety: '',
             Rating: record.selected_iresponse_order == 0 ? 5 : record.selected_iresponse_order,
             Resident_Name: fullname,
-            Situation_Context: '',
+            Situation_Context: _.map(situationContextCollection, (e) => e.item_text + " : " + e.text).join("\n"),
             Type: '',
-            isExpired: false
+            isExpired: false,
+            situationContextCollection
         }
     });
 
@@ -102,6 +124,9 @@ function getProgramInfo(epa_list, epaProgress, course_name) {
             defaultSourceMap[EPAID[0]].achieved[EPAID] = matchingEPA.total_requirement_met_assessments || 0;
             // set the completed flag 
             defaultSourceMap[EPAID[0]].completed[EPAID] = matchingEPA.completed || false;
+        }
+        else {
+            // TODO also include special assessment EPAs
         }
     });
 

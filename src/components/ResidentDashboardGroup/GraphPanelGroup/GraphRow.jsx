@@ -58,9 +58,12 @@ export default class GraphRow extends Component {
         // Get remaining count 
         const remainingCount = Math.max((maxObservation - achievedCount), 0)
 
-        const firstMeasure = Math.min((recordedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
+        let firstMeasure = Math.min((recordedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
+        let secondMeasure = Math.min((achievedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
 
-        const secondMeasure = Math.min((achievedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
+        // remap NaN values to 0
+        firstMeasure = isNaN(firstMeasure) ? 0 : firstMeasure;
+        secondMeasure = isNaN(secondMeasure) ? 0 : secondMeasure;
 
         const xScale = scaleLinear().domain([0, residentEPAData.length - 1]).range([marginHorizontal, width - marginHorizontal])
         const yScale = scaleLinear().domain([5, 1]).range([marginVertical, innerHeight - marginVertical])

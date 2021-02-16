@@ -2,9 +2,13 @@ import _ from 'lodash';
 
 export default function (learnerListDataDump) {
 
-    let [learnerList, learnerMetricsList] = learnerListDataDump;
+    let [learnerList, learnerMetricsList, contextualVariableMap] = learnerListDataDump;
 
     const stageMap = getStageMap();
+    // TODO - remap alternatively
+    window.saskDashboard = {};
+    window.saskDashboard.contextual_variable_map = _.groupBy(contextualVariableMap, (d) => d.form_id);
+
     // First remap the metrics in metrics list into arrays from strings
     _.map(learnerMetricsList, (d, key) => { learnerMetricsList[key] = JSON.parse(d) });
 

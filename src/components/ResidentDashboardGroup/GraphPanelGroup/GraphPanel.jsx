@@ -76,7 +76,8 @@ class GraphPanel extends Component {
             'feedback': data['Feedback'],
             'name': data['Observer_Name'],
             'date': data['Date'],
-            'context': data['Situation_Context'],
+            // Add an empty line to align info horizontally
+            'context': '\n'+data['Situation_Context'],
             // show safety concerns in the tooltip only if they are non empty and not "No"
             "concern": (data['Professionalism_Safety'] != 0 && data['Professionalism_Safety'] != "No") ? data['Professionalism_Safety'] : ''
         });
