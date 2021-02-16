@@ -6,6 +6,7 @@ import SlideInTable from './SlideInTable';
 import SlideInFilter from './SlideInFilter';
 import infoTooltipReference from "../../../utils/infoTooltipReference";
 import { NumberToEPAText } from "../../../utils/convertEPA";
+import { data } from 'jquery';
 
 export default class GraphRow extends Component {
 
@@ -56,7 +57,7 @@ export default class GraphRow extends Component {
         const achievedCount = +epaSourceMap[epaSource.split(".")[0]].achieved[epaSource];
 
         // Get remaining count 
-        const remainingCount = Math.max((maxObservation - achievedCount), 0)
+        const remainingCount = Math.max((maxObservation - achievedCount), 0);
 
         let firstMeasure = Math.min((recordedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
         let secondMeasure = Math.min((achievedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
@@ -68,22 +69,29 @@ export default class GraphRow extends Component {
         const xScale = scaleLinear().domain([0, residentEPAData.length - 1]).range([marginHorizontal, width - marginHorizontal])
         const yScale = scaleLinear().domain([5, 1]).range([marginVertical, innerHeight - marginVertical])
 
+        // Get the formID for the EPA and the corresponding contextual variable map
+        const formID = residentEPAData.length > 0 ? residentEPAData[0].formID : '',
+            contextual_variable_map = window.saskDashboard.contextual_variable_map[formID],
+            isAnyFilterAvailable = contextual_variable_map && contextual_variable_map.length > 0,
+            filterOptions = convertToFilterDict(contextual_variable_map, filterDict);
+
         const scoreData = residentEPAData.map((d, i) => {
 
             let highlight = false;
             let hasValidFilter = false;
 
             if (isFilterVisible) {
-                const context = splitAndTrim(d.Situation_Context);
+                const contexts = d.situationContextCollection;
                 highlight = true;
-                for (const filter of Object.values(filterDict)) {
-                    if (filter) {
+                for (const filter of Object.keys(filterDict)) {
+                    if (filter && filterDict[filter]) {
                         hasValidFilter = true;
-                        highlight = highlight && context.indexOf(filter) > -1;
+                        let relaventContext = _.find(contexts, (d) => d.item_text == filter);
+                        highlight = highlight && (relaventContext.text == filterDict[filter]);
                     }
                 }
-
             }
+
             highlight = highlight && hasValidFilter;
 
             return {
@@ -103,9 +111,7 @@ export default class GraphRow extends Component {
                 y: yScale(i + 1)
             }
         });
-
-        const isAnyFilterAvailable = Object.keys((epaSourceMap[innerKey].filterValuesDict[epaSource]) || {}).length > 0;
-        const isAssessmentPlanAvailable = epaSourceMap[innerKey].assessmentInfo && epaSourceMap[innerKey].assessmentInfo[epaSource];
+        const isAssessmentPlanAvailable = false;
 
         return (
             <div className='text-xs-center'>
@@ -118,8 +124,7 @@ export default class GraphRow extends Component {
                                 className={"s-tooltip-assessment-plan-button icon plan-icon icon-layers " + (isPlanVisible ? ' open-plan' : ' ')}
                                 data-epa-source={epaSource}
                                 data-s-tooltip-text={infoTooltipReference.residentMetrics.showEPAPlan}
-                                onClick={onAssessmentPlanClick}
-                            >
+                                onClick={onAssessmentPlanClick}>
                             </span>}
                     </span>
                     {isPlanVisible && isAssessmentPlanAvailable &&
@@ -168,7 +173,7 @@ export default class GraphRow extends Component {
                         innerHeight={innerHeight}
                         onMouseOver={onMouseOver}
                         onMouseOut={onMouseOut} />
-                    {!smallScreen && isAnyFilterAvailable &&
+                    {!smallScreen &&
                         <span className={"icon table-icon icon-open-book " + epaSource + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}>
                             <s-tooltip border-width="1px" show-delay="1000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPATable}</s-tooltip>
                         </span>
@@ -192,7 +197,8 @@ export default class GraphRow extends Component {
                         epaSource={epaSource}
                         epaSourceMap={epaSourceMap}
                         onHighlightChange={this.onHighlightChange}
-                        filterDict={filterDict} />}
+                        filterDict={filterDict}
+                        filterOptions={filterOptions} />}
             </div>
         );
     }
@@ -204,4 +210,19 @@ export default class GraphRow extends Component {
 function splitAndTrim(string) {
     var regex = /,(?![^(]*\)) /;
     return string.split(regex).map((s) => s.trim());
+}
+
+// This takes in values that are in contextual variable map format
+// of elentra and converts them into a more easily consumable form needed for the dashboard
+// as a array of options with a title
+function convertToFilterDict(contextual_variable_map, filterDict) {
+    let filterGroup = _.groupBy(contextual_variable_map, (d) => d.objective_parent_name);
+    // set the options simply as the obective title
+    return _.map(filterGroup, (options, filterKey) => {
+        return {
+            'label': filterKey,
+            'options': _.map(options, (d) => d.objective_name),
+            'selected': filterDict[filterKey] || ''
+        };
+    });
 }
