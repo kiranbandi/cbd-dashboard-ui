@@ -4,6 +4,8 @@ export default function (learnerListDataDump) {
 
     let [learnerList, learnerMetricsList, contextualVariableMap] = learnerListDataDump;
 
+    // The following info is fetched only during course load 
+    // to prevent repeated hits on server for the same info
     const stageMap = getStageMap();
     window.saskDashboard = {};
     window.saskDashboard.contextual_variable_map = _.groupBy(contextualVariableMap, (d) => d.form_id);
@@ -11,7 +13,7 @@ export default function (learnerListDataDump) {
     // First remap the metrics in metrics list into arrays from strings
     _.map(learnerMetricsList, (d, key) => { learnerMetricsList[key] = JSON.parse(d) });
 
-    // Then map these metrics into the main learner list 
+    // Then map these metrics` into the main learner list 
     return _.map(learnerList, (learner, learnerIndex) =>
     ({
         "username": learner.proxy_id,

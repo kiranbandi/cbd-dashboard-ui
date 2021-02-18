@@ -9,7 +9,7 @@ import ReactSelect from 'react-select';
 import { getLearnerData } from '../../utils/requestServer';
 import getTrainingStages from '../../utils/getTrainingStages';
 import {
-    toggleFilterLoader, setResidentFilter, toggleExamScore,setResidentData
+    toggleFilterLoader, setResidentFilter, toggleExamScore, setResidentData
 } from '../../redux/actions/actions';
 
 const MODDED_PHASE_LIST = getTrainingStages()
@@ -128,7 +128,7 @@ class FilterPanel extends Component {
         //  first convert the array into the format required by react-select 
         let modifiedResidentList = _.map(residentList, (d) => {
             return {
-                label: d.fullname,
+                label: d.fullname + " (" + (d.totalProgress || 0) + "%)",
                 value: d.username,
                 currentPhase: d.currentPhase.split("-").join(" ").toUpperCase()
             };
@@ -162,13 +162,14 @@ class FilterPanel extends Component {
                     </div>
 
                     <div className='filter-button-container'>
-                        <button className={'btn btn-primary-outline ' + (isFilterOpen ? " active-button" : "not-active")} onClick={this.onFilterToggleClick} ><span className="icon icon-funnel"></span></button>
+                        <button className={'btn btn-primary-outline ' + (isFilterOpen ? " active-button" : "not-active")}
+                            onClick={this.onFilterToggleClick} ><span className="icon icon-funnel"></span></button>
                     </div>
 
                     <div className='text-xs-left button-box'>
                         <button type="submit" className="filter-button btn btn-primary-outline" onClick={this.onSubmit}>
                             GET RECORDS
-                    {filterLoaderState && <Loading className='filter-loader' type='spin' height='25px' width='25px' color='grey' delay={-1} />}
+                    {filterLoaderState && <Loading className='filter-loader' type='spin' height='25px' width='25px' color='black' delay={-1} />}
                         </button>
                     </div>
                 </div>

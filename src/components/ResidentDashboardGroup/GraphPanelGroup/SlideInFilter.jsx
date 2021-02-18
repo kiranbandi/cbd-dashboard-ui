@@ -73,6 +73,8 @@ export default class SlideInFilter extends Component {
 
         const { width, filterOptions, onHighlightChange } = this.props;
 
+        debugger;
+
         return (
             <div className='filter-box' style={{ width: (width * 4) - 75 }}>
                 {_.map(filterOptions, (filter) => this.createSelect(filter.label, filter.options, filter.selected))}

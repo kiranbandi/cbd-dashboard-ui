@@ -14,31 +14,23 @@ class InfoPanel extends Component {
 
     render() {
 
-        let { residentData, residentFilter, residentList,
-            programInfo, width, smallScreen } = this.props,
-            residentInfo = false;
-
-        if (residentFilter && residentFilter.username) {
-            residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username)
-        }
+        let { residentData, residentFilter,
+            programInfo, width, smallScreen, residentInfo } = this.props;
 
         return (
             <div className='info-panel'>
-                {residentInfo &&
-                    <div className='info-panel-inner'>
-                        {!!residentData &&
-                            <EPASpeedInfo
-                                width={width}
-                                smallScreen={smallScreen}
-                                residentData={residentData}
-                                residentInfo={residentInfo}
-                                residentFilter={residentFilter} />}
-                        <div className="info-panel-subcharts-wrapper">
-                            {!smallScreen && <RecentEPATrend width={width} residentData={residentData} programInfo={programInfo} />}
-                        </div>
-
+                <div className='info-panel-inner'>
+                    {!!residentData &&
+                        <EPASpeedInfo
+                            width={width}
+                            smallScreen={smallScreen}
+                            residentData={residentData}
+                            residentInfo={residentInfo}
+                            residentFilter={residentFilter} />}
+                    <div className="info-panel-subcharts-wrapper">
+                        {!smallScreen && <RecentEPATrend width={width} residentData={residentData} programInfo={programInfo} />}
                     </div>
-                }
+                </div>
             </div>
         );
     }
@@ -47,8 +39,6 @@ class InfoPanel extends Component {
 function mapStateToProps(state) {
     return {
         residentData: state.oracle.residentData,
-        residentFilter: state.oracle.residentFilter,
-        residentList: state.oracle.residentList,
         programInfo: state.oracle.programInfo
     };
 }

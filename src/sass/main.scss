@@ -1,13 +1,11 @@
 // import base - contains global styles, such as resets, typography, colors
-
 #visual-summary-content-mount {
     @import "vendor/react-table";
-
+    // preset loader until data loads on first page load
     .preset-loader {
         margin: 5% auto;
     }
-
-    // so that the page has some empty space to begin with and doesnt 
+    // so that the page has some empty space to begin with and doesnt
     // trigger page scrolling when switching tabs
     min-height: 500px;
 

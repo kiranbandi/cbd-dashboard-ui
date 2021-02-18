@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { MicroStatCard, StatCard } from '../../';
 import WeeklyEPAChart from './WeeklyEPAChart';
 
@@ -9,35 +8,17 @@ export default (props) => {
         residentInfo = {} } = props,
         residentDataList = _.flatMap(residentData);
 
-    let startDate = moment("01-07-2018", "DD-MM-YYYY");
-
-    // All records we have are from 1st July 2018 , so if someone has 
-    //  a valid program start date and this date is after the July 2018 then we use it
-    // if not we assume he was from a batch earlier.
-    if (residentInfo.programStartDate && moment(residentInfo.programStartDate).isAfter(startDate)) {
-        startDate = moment(residentInfo.programStartDate);
-    }
-
-    // Get the number of weeks that have passed since the start of the program
-    const weeksPassed = (moment().diff(startDate, "weeks"));
-
     // Get the required Metrics 
     let totalEPAs = residentDataList.length,
-        averageEPAsPerWeek = Math.round((totalEPAs / weeksPassed) * 100) / 100;
-
-
-    let recordsInPeriod, recordsInPeriodCount,
-        weeksInPeriod, averageEPAsPerWeekInPeriod;
+        { achievementRate = 0, totalProgress = 0 } = residentInfo,
+        recordsInPeriod, recordsInPeriodCount;
     // if there is a date range
     if (!residentFilter.isAllData) {
         recordsInPeriod = _.filter(residentDataList, (d) => d.mark);
         recordsInPeriodCount = recordsInPeriod.length;
-
-        weeksInPeriod = (moment(residentFilter.endDate, 'MM/DD/YYYY').diff(moment(residentFilter.startDate, 'MM/DD/YYYY'), "weeks"));
-        averageEPAsPerWeekInPeriod = weeksInPeriod != 0 ? Math.round((recordsInPeriodCount / weeksInPeriod) * 100) / 100 : 0;
     }
 
-    // One mobile screens we use hide the weekly chart and show regular statcards
+    // One mobile screens we hide the weekly chart and show regular statcards
     const CardComponent = smallScreen ? StatCard : MicroStatCard;
 
     return (
@@ -48,14 +29,14 @@ export default (props) => {
             <div className='card-wrapper'>
                 {residentFilter.isAllData ?
                     <div className='row text-center m-t'>
-                        <CardComponent title='EPAs observed per week' type='success' metric={averageEPAsPerWeek} />
                         <CardComponent title='Total EPAs Observed' type='primary' metric={totalEPAs} />
-                        <CardComponent title='Achievement Rate' type='danger' metric={residentInfo.achievementRate + '%'} />
+                        <CardComponent title='Completion Progress Rate' type='success' metric={totalProgress + '%'} />
+                        <CardComponent title='Achievement Rate' type='danger' metric={achievementRate + '%'} />
                     </div> :
                     <div className='row text-center'>
-                        <CardComponent dual={true} title='EPAs observed per week' type='success' metric={averageEPAsPerWeek} secondMetric={averageEPAsPerWeekInPeriod} />
                         <CardComponent dual={true} title='Total EPAs Observed' type='primary' metric={totalEPAs} secondMetric={recordsInPeriodCount} />
-                        <CardComponent dual={true} title='Achievement Rate' type='danger' metric={residentInfo.achievementRate + '%'} secondMetric={residentInfo.achievementRate + '%'} />
+                        <CardComponent title='Completion Progress Rate' type='success' metric={totalProgress + '%'} />
+                        <CardComponent title='Achievement Rate' type='danger' metric={achievementRate + '%'} />
                     </div>
                 }
             </div>
@@ -67,7 +48,6 @@ export default (props) => {
                     residentData={residentData}
                     residentInfo={residentInfo}
                     residentFilter={residentFilter} />}
-
         </div>)
 
 }

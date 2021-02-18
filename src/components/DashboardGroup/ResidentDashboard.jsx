@@ -12,11 +12,17 @@ class ResidentDashboard extends Component {
 
     render() {
 
-        const { residentList = [], residentData } = this.props;
+        const { residentList = [], residentData, residentFilter } = this.props;
+        let residentInfo = false;
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let width = document.getElementById('visual-summary-content-mount').getBoundingClientRect().width - 125;
         let smallScreen = width < 600;
+
+        if (residentFilter && residentFilter.username) {
+            residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
+        }
+
 
         return (
             <div className='dashboard-root-resident m-t' >
@@ -24,16 +30,24 @@ class ResidentDashboard extends Component {
                     {(residentList.length > 0) ?
                         <div>
                             <FilterPanel />
-                            {!(_.isEmpty(residentData)) &&
-                                <InfoPanel
-                                    smallScreen={smallScreen}
-                                    // add some empty space around the sides
-                                    width={width - 35} />}
-                            <GraphPanel
-                                width={width}
-                                smallScreen={smallScreen} />
+                            {/* if the resident has no data hide everything */}
+                            {+residentInfo.totalAssessments > 0 ?
+                                <div>
+                                    {!(_.isEmpty(residentData)) && <InfoPanel
+                                        residentFilter={residentFilter}
+                                        residentInfo={residentInfo}
+                                        smallScreen={smallScreen}
+                                        // add some empty space around the sides
+                                        width={width - 35} />}
+                                    <GraphPanel
+                                        width={width}
+                                        smallScreen={smallScreen} />
+                                </div> :
+                                <h3 className='text-primary text-center m-t-lg'>
+                                    Sorry the selected resident has no observed EPAs.
+                                </h3>}
                         </div> :
-                        <h2 className='text-center text-danger'>No data is available currently.</h2>}
+                        <h2 className='text-center text-danger'>No resident data is available currently.</h2>}
                 </div>
             </div >
         );
@@ -43,7 +57,8 @@ class ResidentDashboard extends Component {
 function mapStateToProps(state) {
     return {
         residentList: state.oracle.residentList,
-        residentData: state.oracle.residentData
+        residentData: state.oracle.residentData,
+        residentFilter: state.oracle.residentFilter
     };
 }
 
