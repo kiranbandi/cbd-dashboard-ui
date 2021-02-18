@@ -14,7 +14,7 @@ class InfoPanel extends Component {
 
     render() {
 
-        let { residentData, residentFilter, residentList, expiredResidentData,
+        let { residentData, residentFilter, residentList,
             programInfo, width, smallScreen } = this.props,
             residentInfo = false;
 
@@ -32,7 +32,6 @@ class InfoPanel extends Component {
                                 smallScreen={smallScreen}
                                 residentData={residentData}
                                 residentInfo={residentInfo}
-                                expiredResidentData={expiredResidentData}
                                 residentFilter={residentFilter} />}
                         <div className="info-panel-subcharts-wrapper">
                             {!smallScreen && <RecentEPATrend width={width} residentData={residentData} programInfo={programInfo} />}
@@ -48,7 +47,6 @@ class InfoPanel extends Component {
 function mapStateToProps(state) {
     return {
         residentData: state.oracle.residentData,
-        expiredResidentData: state.oracle.expiredResidentData,
         residentFilter: state.oracle.residentFilter,
         residentList: state.oracle.residentList,
         programInfo: state.oracle.programInfo

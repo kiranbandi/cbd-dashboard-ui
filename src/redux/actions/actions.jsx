@@ -2,13 +2,6 @@ import * as types from './actionTypes';
 import _ from 'lodash';
 import { getLearnerData } from '../../utils/requestServer';
 
-export function loginSuccess(isUG = false) {
-    return { type: types.LOG_IN_SUCCESS };
-}
-
-export function logOutUser() {
-    return { type: types.LOG_OUT };
-}
 
 export function setLevelVisibilityStatus(visibilityOpenStatus) {
     return { type: types.SET_VISIBILITY_OPEN_STATUS, visibilityOpenStatus }
@@ -34,34 +27,18 @@ export function setResidentFilter(residentFilter) {
     return { type: types.SET_RESIDENT_FILTER, residentFilter };
 }
 
-export function setDataDumpState(dataDumpPresent) {
-    return { type: types.SET_DATA_DUMP, dataDumpPresent };
-}
-
 export function updateResidentData(residentData) {
     return { type: types.SET_RESIDENT_DATA, residentData };
 }
 
 export function setResidentData(residentData, residentInfo = false, programInfo) {
 
-    let expiredResidentData = [];
-
-    if (residentData) {
-        _.map(residentData, (innerEPAs, index) => {
-            var splitGroup = _.partition(innerEPAs, (record) => record.isExpired);
-            // we split records on the basis of whether or not they have expired
-            residentData[index] = splitGroup[1];
-            expiredResidentData.push(...splitGroup[0]);
-        })
-    }
-
     let visibilityOpenStatus = {
         1: false,
         2: false,
         3: false,
         4: false
-    },
-        currentPhaseIndex = 0;
+    }, currentPhaseIndex = 0;
 
     // If there is additional information about the resident then
     // set it to the redux store and also open the respective phase panel
@@ -91,68 +68,21 @@ export function setResidentData(residentData, residentInfo = false, programInfo)
             dispatch(setLevelVisibilityStatus(visibilityOpenStatus));
             dispatch({ type: types.SET_PROGRAM_INFO, programInfo });
             dispatch({ type: types.SET_RESIDENT_DATA, residentData });
-            dispatch({ type: types.SET_EXPIRED_RESIDENT_DATA, expiredResidentData });
         };
     }
     // if not simply dispatch the change to residentData alone
     return dispatch => {
         dispatch({ type: types.SET_RESIDENT_DATA, residentData });
-        dispatch({ type: types.SET_EXPIRED_RESIDENT_DATA, expiredResidentData });
     };
 
-}
-
-export function setNarrativeData(narrativeData) {
-    return { type: types.SET_NARRATIVE_DATA, narrativeData };
 }
 
 export function setTooltipData(tooltipData) {
     return { type: types.SET_TOOLTIP_DATA, tooltipData };
 }
 
-export function setUserDetails(userDetails) {
-    return { type: types.SET_USER_DATA, userDetails };
-}
-
 export function setProgramInfo(programInfo) {
     return { type: types.SET_PROGRAM_INFO, programInfo };
-}
-
-export function toggleExamScore() {
-    return { type: types.TOGGLE_EXAM_SCORE };
-}
-
-export function setLoginData(userDetails) {
-    const { program = 'EM' } = userDetails, programInfo = {};
-    // store data that needs to be persisted in session storage
-    storeDataInSessionStorage(userDetails, programInfo);
-
-    return dispatch => {
-        // dispatch actions to store all user and program related data in redux store
-        // this can also be called when token is being reissued 
-        // so in that case reset resident data and filter if any
-        dispatch({ type: types.SET_RESIDENT_DATA, residentData: null });
-        dispatch({ type: types.SET_EXPIRED_RESIDENT_DATA, expiredResidentData: [] });
-        dispatch({ type: types.SET_NARRATIVE_DATA, narrativeData: [] });
-        dispatch({ type: types.SET_ACTIVE_DASHBOARD, activeDashboard: 'resident' });
-        dispatch(setResidentFilter({ isAllData: true }))
-        // then set user details and program information
-        dispatch(setUserDetails(userDetails));
-        // dispatch source map  to action 
-        dispatch(setProgramInfo(programInfo));
-        dispatch(loginSuccess());
-    };
-
-
-}
-
-export function setLogoutData() {
-    // clear data that persists in session storage
-    clearSessionStorage();
-    return dispatch => {
-        dispatch(setUserDetails({}));
-        dispatch(logOutUser());
-    };
 }
 
 export function showTooltip(isTooltipVisible, tooltipData) {
@@ -164,25 +94,7 @@ export function showTooltip(isTooltipVisible, tooltipData) {
     };
 }
 
-function storeDataInSessionStorage(userDetails, programInfo) {
-    sessionStorage.setItem('jwt', userDetails.token);
-    sessionStorage.setItem('username', userDetails.username);
-    sessionStorage.setItem('accessType', userDetails.accessType);
-    sessionStorage.setItem('program', userDetails.program);
-    sessionStorage.setItem('programInfo', JSON.stringify(programInfo));
-}
-
-function clearSessionStorage() {
-    sessionStorage.removeItem('jwt');
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('accessType');
-    sessionStorage.removeItem('program');
-    sessionStorage.removeItem('programInfo');
-}
-
-
-// Not so elegant solution 
-//  but is needed when a user needs to be automatically switched between dashboards
+// Not so elegant solution  but its needed when a user needs to be automatically switched between dashboards
 export function switchToResidentDashboard(residentInfo, residentFilter) {
 
     return dispatch => {
@@ -190,13 +102,10 @@ export function switchToResidentDashboard(residentInfo, residentFilter) {
         // set all the parameters in the resident filter
         dispatch(setResidentFilter({ ...residentFilter }))
         // then clear any previously selected residents data
-        dispatch(setNarrativeData([]))
         dispatch(setResidentData(null))
         // then start the loading filter
         dispatch(toggleFilterLoader());
         // fetch data from server based on the filter params
-        // TODO Dirty solution but eventually all filtering 
-        // will happen on the server so no point in repeating this again.
         getLearnerData(residentFilter.username, residentInfo)
             .then((processedData) => {
                 const { programInfo, residentData } = processedData;

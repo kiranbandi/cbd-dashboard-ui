@@ -13,14 +13,6 @@ class Container extends Component {
     }
 
     componentDidMount() {
-        // preset info from elentra global to redux store
-        let dashboardPreset = {
-            'userId': proxy_id,
-            'courseId': course_id,
-            'organisationId': organisation_id,
-            'cperiodId': cperiod_id,
-            'filterOptions': dashboard_filter_options
-        };
         // Call the learner list API to get a list of all residents
         // for the select filter parameters and store the response in redux
         getLearnerList({ course_id, organisation_id, cperiod_id }).then((residentList) => {

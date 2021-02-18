@@ -203,14 +203,6 @@ export default class GraphRow extends Component {
     }
 }
 
-//  This takes in values that are comma seperated and splits them into an array
-// and also trims any leading or trailing whitespaces, additionally it also ignores commas in brackets
-// because the comma in that case is part of the option itself and not a seperator.
-function splitAndTrim(string) {
-    var regex = /,(?![^(]*\)) /;
-    return string.split(regex).map((s) => s.trim());
-}
-
 // This takes in values that are in contextual variable map format
 // of elentra and converts them into a more easily consumable form needed for the dashboard
 // as a array of options with a title

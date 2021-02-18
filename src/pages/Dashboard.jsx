@@ -49,8 +49,7 @@ class DashboardRoot extends Component {
 function mapStateToProps(state) {
     return {
         programInfo: state.oracle.programInfo,
-        activeDashboard: state.oracle.activeDashboard,
-        infoCard: state.oracle.infoCard
+        activeDashboard: state.oracle.activeDashboard
     };
 }
 

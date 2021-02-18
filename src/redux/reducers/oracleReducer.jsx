@@ -8,14 +8,6 @@ export default function oracleReducer(state = initialState.oracle, action) {
       return Object.assign({}, state, { loaderState: !state.loaderState })
     case types.TOGGLE_FILTER_LOADER:
       return Object.assign({}, state, { filterLoaderState: !state.filterLoaderState })
-    case types.LOG_IN_SUCCESS:
-      return Object.assign({}, state, { sessionStatus: true })
-    case types.LOG_OUT:
-      return Object.assign({}, state, { sessionStatus: false })
-    case types.LOG_IN_SUCCESS:
-      return Object.assign({}, state, { sessionStatus: true })
-    case types.SET_INFO_CARD:
-      return Object.assign({}, state, { infoCard: action.infoCard })
     case types.SET_ACTIVE_DASHBOARD:
       return Object.assign({}, state, { activeDashboard: action.activeDashboard })
     case types.SET_RESIDENT_LIST:
@@ -24,28 +16,14 @@ export default function oracleReducer(state = initialState.oracle, action) {
       return Object.assign({}, state, { residentFilter: action.residentFilter })
     case types.SET_RESIDENT_DATA:
       return Object.assign({}, state, { residentData: { ...action.residentData } })
-    case types.SET_EXPIRED_RESIDENT_DATA:
-      return Object.assign({}, state, { expiredResidentData: action.expiredResidentData })
-    case types.SET_NARRATIVE_DATA:
-      return Object.assign({}, state, { narrativeData: action.narrativeData })
     case types.SET_TOOLTIP_VISIBILITY:
       return Object.assign({}, state, { isTooltipVisible: action.isTooltipVisible })
     case types.SET_TOOLTIP_DATA:
       return Object.assign({}, state, { tooltipData: action.tooltipData })
-    case types.TOGGLE_MODAL:
-      return Object.assign({}, state, { isModalVisible: !state.isModalVisible })
-      case types.TOGGLE_CHECKLIST:
-        return Object.assign({}, state, { isChecklistVisible: !state.isChecklistVisible })
-    case types.SET_USER_DATA:
-      return Object.assign({}, state, { userDetails: action.userDetails })
-    case types.SET_DATA_DUMP:
-      return Object.assign({}, state, { dataDumpPresent: action.dataDumpPresent })
     case types.SET_VISIBILITY_OPEN_STATUS:
       return Object.assign({}, state, { visibilityOpenStatus: action.visibilityOpenStatus })
     case types.SET_PROGRAM_INFO:
       return Object.assign({}, state, { programInfo: action.programInfo })
-    case types.TOGGLE_EXAM_SCORE:
-      return Object.assign({}, state, { programInfo: { ...state.programInfo, examScoresVisible: !state.programInfo.examScoresVisible } })
     default:
       return state;
   }

@@ -6,7 +6,7 @@ import WeeklyEPAChart from './WeeklyEPAChart';
 export default (props) => {
 
     const { residentData, smallScreen, residentFilter, width,
-        residentInfo = {}, expiredResidentData = [] } = props,
+        residentInfo = {} } = props,
         residentDataList = _.flatMap(residentData);
 
     let startDate = moment("01-07-2018", "DD-MM-YYYY");
@@ -23,35 +23,18 @@ export default (props) => {
 
     // Get the required Metrics 
     let totalEPAs = residentDataList.length,
-        averageEPAsPerWeek = Math.round((totalEPAs / weeksPassed) * 100) / 100,
-        totalExpiredEPAs = expiredResidentData.length,
-        expiryRate = Math.round((totalExpiredEPAs / (totalEPAs + totalExpiredEPAs)) * 100);
+        averageEPAsPerWeek = Math.round((totalEPAs / weeksPassed) * 100) / 100;
 
 
-    if (isNaN(expiryRate)) {
-        expiryRate = 0;
-    }
-
-    let recordsInPeriod, recordsInPeriodCount, recordsExpiredInPeriod,
-        weeksInPeriod, averageEPAsPerWeekInPeriod, expiryRateInPeriod;
+    let recordsInPeriod, recordsInPeriodCount,
+        weeksInPeriod, averageEPAsPerWeekInPeriod;
     // if there is a date range
     if (!residentFilter.isAllData) {
         recordsInPeriod = _.filter(residentDataList, (d) => d.mark);
-        recordsExpiredInPeriod = _.filter(expiredResidentData, (d) => {
-            return moment(d.Date, 'YYYY-MM-DD').isBetween(moment(residentFilter.startDate, 'MM/DD/YYYY'), moment(residentFilter.endDate, 'MM/DD/YYYY'), 'days', '[]')
-        }).length;
-
         recordsInPeriodCount = recordsInPeriod.length;
 
         weeksInPeriod = (moment(residentFilter.endDate, 'MM/DD/YYYY').diff(moment(residentFilter.startDate, 'MM/DD/YYYY'), "weeks"));
         averageEPAsPerWeekInPeriod = weeksInPeriod != 0 ? Math.round((recordsInPeriodCount / weeksInPeriod) * 100) / 100 : 0;
-
-        expiryRateInPeriod = Math.round((recordsExpiredInPeriod / (recordsInPeriodCount + recordsExpiredInPeriod)) * 100);
-
-        if (isNaN(expiryRateInPeriod)) {
-            expiryRateInPeriod = 0;
-        }
-
     }
 
     // One mobile screens we use hide the weekly chart and show regular statcards
@@ -72,7 +55,7 @@ export default (props) => {
                     <div className='row text-center'>
                         <CardComponent dual={true} title='EPAs observed per week' type='success' metric={averageEPAsPerWeek} secondMetric={averageEPAsPerWeekInPeriod} />
                         <CardComponent dual={true} title='Total EPAs Observed' type='primary' metric={totalEPAs} secondMetric={recordsInPeriodCount} />
-                        <CardComponent dual={true} title='EPAs Expiry Rate' type='danger' metric={expiryRate + '%'} secondMetric={expiryRateInPeriod + '%'} />
+                        <CardComponent dual={true} title='Achievement Rate' type='danger' metric={residentInfo.achievementRate + '%'} secondMetric={residentInfo.achievementRate + '%'} />
                     </div>
                 }
             </div>
@@ -83,7 +66,6 @@ export default (props) => {
                     width={width - 575}
                     residentData={residentData}
                     residentInfo={residentInfo}
-                    expiredResidentData={expiredResidentData}
                     residentFilter={residentFilter} />}
 
         </div>)

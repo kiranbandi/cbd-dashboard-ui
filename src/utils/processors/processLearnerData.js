@@ -47,7 +47,6 @@ export default function (username, residentInfo, learnerDataDump) {
             Resident_Name: fullname,
             Situation_Context: _.map(situationContextCollection, (e) => e.item_text + " : " + e.text).join("\n"),
             Type: '',
-            isExpired: false,
             situationContextCollection,
             formID: record.form_id
         }

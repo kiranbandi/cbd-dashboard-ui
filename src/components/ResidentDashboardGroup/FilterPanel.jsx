@@ -9,8 +9,7 @@ import ReactSelect from 'react-select';
 import { getLearnerData } from '../../utils/requestServer';
 import getTrainingStages from '../../utils/getTrainingStages';
 import {
-    toggleFilterLoader, setResidentFilter, toggleExamScore,
-    setResidentData, setNarrativeData
+    toggleFilterLoader, setResidentFilter, toggleExamScore,setResidentData
 } from '../../redux/actions/actions';
 
 const MODDED_PHASE_LIST = getTrainingStages()
@@ -39,8 +38,6 @@ class FilterPanel extends Component {
         let { residentFilter = {}, actions } = this.props;
         residentFilter.username = option.value;
         actions.setResidentFilter({ ...residentFilter });
-        // clear data if present for any other previously selected resident
-        actions.setNarrativeData([]);
         actions.setResidentData(null);
     }
 
@@ -194,7 +191,6 @@ function mapDispatchToProps(dispatch) {
             toggleFilterLoader,
             setResidentFilter,
             setResidentData,
-            setNarrativeData,
             toggleExamScore
         }, dispatch)
     };

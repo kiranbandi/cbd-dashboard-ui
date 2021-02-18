@@ -13,8 +13,8 @@ class NormativeDashboard extends Component {
         };
     }
 
-    onStageChange = (stage) => { this.setState({ 'currentStage': stage.value }) }
-    onNoRecordChange = (event) => { this.setState({ 'removeNoRecords': event.target.checked }) }
+    onStageChange = (stage) => { this.setState({ 'currentStage': stage.value }) };
+    onNoRecordChange = (event) => { this.setState({ 'removeNoRecords': event.target.checked }) };
 
     render() {
 

@@ -91,7 +91,6 @@ class GraphPanel extends Component {
     render() {
 
         let { residentData,
-            expiredResidentData,
             isTooltipVisible,
             tooltipData, smallScreen, width,
             levelVisibilityOpenStatus, programInfo = {} } = this.props;
@@ -114,8 +113,6 @@ class GraphPanel extends Component {
                 epaSourcesThatExist[epaRootKey] = epaSource.filter((d) => epaSourceMap[epaRootKey].subRoot.hasOwnProperty(d));
             });
         }
-
-        let expiredResidentDataGrouped = _.groupBy(expiredResidentData, (d) => d.EPA);
 
         let widthOfRootGraphPanel = smallScreen ? (width + 50) : width;
         let widthPartition = smallScreen ? (width - 20) : (width / 4);
@@ -168,7 +165,6 @@ class GraphPanel extends Component {
                                                     epaSourceMap={epaSourceMap}
                                                     smallScreen={smallScreen}
                                                     residentEPAData={residentData[epaSource] || []}
-                                                    expiredResidentEPAData={expiredResidentDataGrouped[epaSource] || []}
                                                     onMouseOver={this.onMouseOver}
                                                     onMouseOut={this.onMouseOut}
                                                     onAssessmentPlanClick={this.onAssessmentPlanClick}
@@ -189,7 +185,6 @@ class GraphPanel extends Component {
 function mapStateToProps(state) {
     return {
         residentData: state.oracle.residentData,
-        expiredResidentData: state.oracle.expiredResidentData,
         isTooltipVisible: state.oracle.isTooltipVisible,
         tooltipData: state.oracle.tooltipData,
         levelVisibilityOpenStatus: state.oracle.visibilityOpenStatus,

@@ -10,7 +10,7 @@ export default {
         showEPAFilter: `Clicking the 'gears' icon opens a list of drop-down menus for contextual variables. When one or more contextual variable is selected the EPAs containing that variable will turn from black to pink.`,
     },
     normativeAssessment: {
-        main: `This dashboard compares the EPA completion and expiration of each of the residents in the program with the goal of providing normative context to the competence committee.`,
-        getRecords: `Select a resident stage to chart the EPA metrics of the residents currently in that stage. The number of EPAs/week, total number of EPAs, and EPA expiry percentage can be reviewed by selecting the respective graph. Clicking 'Filter by Date' adds the same metrics for the specified time interval.`
+        main: `This dashboard compares the EPA completion of each of the residents in the program with the goal of providing normative context to the competence committee.`,
+        getRecords: `Select a resident stage to chart the EPA metrics of the residents currently in that stage. The information can be reviewed by selecting the respective graph. Clicking 'Filter by Date' adds the same metrics for the specified time interval.`
     }
 }
