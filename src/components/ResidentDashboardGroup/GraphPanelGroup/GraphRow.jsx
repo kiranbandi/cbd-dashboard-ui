@@ -86,7 +86,14 @@ export default class GraphRow extends Component {
                     if (filter && filterDict[filter]) {
                         hasValidFilter = true;
                         let relaventContext = _.find(contexts, (d) => d.item_text == filter);
-                        highlight = highlight && (relaventContext.text == filterDict[filter]);
+
+                        if (relaventContext && relaventContext.text) {
+                            highlight = highlight && (relaventContext.text == filterDict[filter]);
+                        }
+                        else {
+                            highlight = false;
+                        }
+
                     }
                 }
             }
@@ -120,7 +127,7 @@ export default class GraphRow extends Component {
                         {NumberToEPAText(epaSource) + " - " + epaSourceMap[innerKey].subRoot[epaSource]}
                         {isAssessmentPlanAvailable &&
                             <span
-                                className={"s-tooltip-assessment-plan-button icon plan-icon icon-layers " + (isPlanVisible ? ' open-plan' : ' ')}
+                                className={"s-tooltip-assessment-plan-button plan-icon fa-file-text " + (isPlanVisible ? ' open-plan' : ' ')}
                                 data-epa-source={epaSource}
                                 data-s-tooltip-text={infoTooltipReference.residentMetrics.showEPAPlan}
                                 onClick={onAssessmentPlanClick}>
@@ -173,12 +180,12 @@ export default class GraphRow extends Component {
                         onMouseOver={onMouseOver}
                         onMouseOut={onMouseOut} />
                     {!smallScreen &&
-                        <span className={"icon table-icon icon-open-book " + epaSource + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}>
+                        <span className={"table-icon fa fa-book " + epaSource + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}>
                             <s-tooltip border-width="1px" show-delay="1000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPATable}</s-tooltip>
                         </span>
                     }
                     {!smallScreen && isAnyFilterAvailable &&
-                        <span className={"icon filter-icon icon-sound-mix " + epaSource + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick}>
+                        <span className={"fa filter-icon fa-sliders " + epaSource + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick}>
                             <s-tooltip border-width="1px" show-delay="1000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPAFilter}</s-tooltip>
                         </span>
                     }

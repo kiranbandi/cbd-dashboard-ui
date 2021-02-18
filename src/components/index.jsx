@@ -16,7 +16,6 @@ export { default as FilterPanel } from './ResidentDashboardGroup/FilterPanel';
 export { default as RadioButton } from './ReusableComponents/RadioButton';
 export { default as StatCard } from './ReusableComponents/StatCard';
 export { default as MicroStatCard } from './ReusableComponents/MicroStatCard';
-export { default as InfoTip } from './ReusableComponents/InfoTip';
 
 // Baselevel components that are wrappers
 export { default as Container } from './Container';

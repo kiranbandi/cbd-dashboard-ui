@@ -11,6 +11,7 @@ import getTrainingStages from '../../utils/getTrainingStages';
 import {
     toggleFilterLoader, setResidentFilter, toggleExamScore, setResidentData
 } from '../../redux/actions/actions';
+import { DateRangePicker } from 'react-dates';
 
 const MODDED_PHASE_LIST = getTrainingStages()
     .map((phase) => phase.split('-').join(" ").toUpperCase());
@@ -123,8 +124,9 @@ class FilterPanel extends Component {
 
         const { filterLoaderState, residentList = []
             , residentFilter = {} } = this.props,
-            isFilterOpen = false,
-            { isAllData = false, username = '' } = residentFilter;
+            { isFilterOpen = false } = this.state,
+            { isAllData = false, username = '',
+                startDate, endDate } = residentFilter;
         //  first convert the array into the format required by react-select 
         let modifiedResidentList = _.map(residentList, (d) => {
             return {
@@ -163,7 +165,7 @@ class FilterPanel extends Component {
 
                     <div className='filter-button-container'>
                         <button className={'btn btn-primary-outline ' + (isFilterOpen ? " active-button" : "not-active")}
-                            onClick={this.onFilterToggleClick} ><span className="icon icon-funnel"></span></button>
+                            onClick={this.onFilterToggleClick} ><i className="fa fa-filter" aria-hidden="true"></i></button>
                     </div>
 
                     <div className='text-xs-left button-box'>
@@ -172,6 +174,19 @@ class FilterPanel extends Component {
                     {filterLoaderState && <Loading className='filter-loader' type='spin' height='25px' width='25px' color='black' delay={-1} />}
                         </button>
                     </div>
+                </div>
+
+                {/* let the elements be hidden by css style instead of react , to prevent dead elements value problem when submitting */}
+                <div className={'text-xs-left advanced-filter-box ' + (isFilterOpen ? 'show-filter' : 'hide-filter')}>
+                    <DateRangePicker
+                        startDate={this.state.startDate}
+                        startDateId="dashboard_unique_start_date_id"
+                        endDate={this.state.endDate}
+                        endDateId="dashboard_unique_end_date_id"
+                        onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
+                        focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                        onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+                    />
                 </div>
             </div>
         );

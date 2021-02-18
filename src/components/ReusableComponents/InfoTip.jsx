@@ -6,7 +6,7 @@ export default (props) => {
 
     return <span className='tooltip-wrapper'>
         <a className='tooltip-anchor'>
-            <span className="icon icon-info-with-circle"></span>
+            <i class="fa fa-info-circle" aria-hidden="true"></i>
             <s-tooltip
                 follow-mouse
                 border-width="1px"

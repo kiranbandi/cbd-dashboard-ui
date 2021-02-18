@@ -45,31 +45,26 @@ class HeaderRow extends Component {
         percentageComplete = isNaN(percentageComplete) ? 0 : percentageComplete;
 
         if (currentStageStatus.completed) {
-            iconLabel = 'icon-check';
+            iconLabel = 'check-circle';
             statusLabel = 'COMPLETE ';
             percentageComplete = '';
         }
-        else if (currentStageStatus.in_progress) {
-            iconLabel = 'icon-hour-glass';
-            statusLabel = 'In Progress';
-            percentageComplete += '%';
-        }
-        else if (percentageComplete > 0) {
-            iconLabel = 'icon-hour-glass';
+        else if (currentStageStatus.in_progress || percentageComplete > 0) {
+            iconLabel = 'fa-hourglass-half';
             statusLabel = 'In Progress';
             percentageComplete += '%';
         }
         else {
-            iconLabel = 'icon-traffic-cone';
+            iconLabel = 'fa-flag-checkered';
             statusLabel = 'Not Started';
             percentageComplete = '';
         }
 
         return (
             <div className={'text-xs-center text-sm-left inner-epa-head' + (isCurrentSubRootVisible ? ' bottom-line ' : ' ') + 'label-index-' + innerKey} onClick={onEPALabelClick}>
-                {isCurrentSubRootVisible ? <span className="icon icon-chevron-down"></span> : <span className="icon icon-chevron-right"></span>}
+                {isCurrentSubRootVisible ? <span className="fa fa-chevron-down"></span> : <span className="fa fa-chevron-right"></span>}
                 <span className='epa-label' >{epaSourceMap[innerKey].topic}</span>
-                <span className='epa-label-status' >{statusLabel}<span className={"icon " + iconLabel}></span> {percentageComplete}</span>
+                <span className='epa-label-status' >{statusLabel}<span className={"fa " + iconLabel}></span> {percentageComplete}</span>
             </div>
         );
     }

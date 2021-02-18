@@ -26,7 +26,11 @@ export default class SlideInFilter extends Component {
             // Filter out the relavent context  
             let context_value = _.find(context_values, (d) => d.item_text == label);
             // find the option index of the matching context value
-            let index = optionArray.map(option => option).indexOf(context_value.text);
+            let index = -1;
+            // If there is a valid contextual value
+            if (context_value && context_value.text) {
+                index = optionArray.map(option => option).indexOf(context_value.text);
+            }
             if (index >= 0) { optionCountMap[index] += 1 }
         })
 
@@ -73,8 +77,6 @@ export default class SlideInFilter extends Component {
 
         const { width, filterOptions, onHighlightChange } = this.props;
 
-        debugger;
-
         return (
             <div className='filter-box' style={{ width: (width * 4) - 75 }}>
                 {_.map(filterOptions, (filter) => this.createSelect(filter.label, filter.options, filter.selected))}
@@ -82,7 +84,7 @@ export default class SlideInFilter extends Component {
                     <button type="submit"
                         className="btn btn-primary-outline custom-icon-container"
                         onClick={() => { onHighlightChange('*', {}) }}>
-                        RESET <span className="icon icon-ccw"></span>
+                        RESET <span className="fa fa-undo"></span>
                     </button>
                 </div>
             </div>)

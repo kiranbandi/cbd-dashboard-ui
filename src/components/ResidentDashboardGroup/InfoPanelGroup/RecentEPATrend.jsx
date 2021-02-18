@@ -6,8 +6,6 @@ import moment from 'moment';
 import { line, scaleLinear } from 'd3';
 import TrackTrails from '../GraphPanelGroup/TrackTrails';
 import { showTooltip } from '../../../redux/actions/actions';
-import { InfoTip } from '../../';
-import infoTooltipReference from '../../../utils/infoTooltipReference';
 
 
 class RecentEPATrend extends Component {
@@ -147,7 +145,7 @@ class RecentEPATrend extends Component {
                             <option value='3-month'>3 Months</option>
                         </select>
                         <button className={'btn btn-primary-outline'} onClick={this.setFilterRange}>
-                            <span className="icon icon-controller-play"></span>
+                            <span className="fa fa-play"></span>
                         </button>
 
                     </div>

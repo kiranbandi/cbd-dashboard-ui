@@ -41,11 +41,11 @@
             &.bottom-line {
                 border-bottom: 2px solid #777373;
             }
-            .icon {
-                font-size: 22px;
+            .fa {
                 vertical-align: middle;
-                margin-left: 5px;
-                font-size: 20px;
+                margin-left: 7px;
+                margin-right: 5px;
+                font-size: 15px;
                 width: auto;
                 height: auto;
                 background: none;
@@ -70,9 +70,10 @@
                 vertical-align: middle;
                 text-align: center;
                 color: white;
-                .icon {
-                    margin-left: 5px;
-                    font-size: 20px;
+                .fa {
+                    margin-left: 8px;
+                    font-size: 16px;
+                    margin-right: 4px;
                 }
                 @media (max-width: 768px) {
                     display: block;
@@ -130,7 +131,7 @@
                     .custom-icon-container {
                         padding: 3px 10px;
                         font-weight: bold;
-                        .icon-ccw {
+                        .fa-refresh {
                             font-size: 20px !important;
                             vertical-align: middle;
                             margin-left: 0px;
@@ -240,17 +241,15 @@
                 &.score-cell {
                     margin: 25px 0px 20px 0px;
                     position: relative;
-                    .icon {
+                    .fa {
                         position: absolute;
                         font-size: 15px;
                         border-radius: 50px;
-                        padding: 0px 4px;
+                        padding: 3px 6px 3px 6px;
                         cursor: pointer;
                         background: white;
-
                         vertical-align: middle;
                         margin-left: 5px;
-
                         width: auto;
                         height: auto;
                         background: none;
