@@ -66,7 +66,13 @@ class FilterPanel extends Component {
 
     onSubmit(event) {
         let { residentFilter = {}, actions, residentList } = this.props,
-            { showUncommencedEPA, openOnlyCurrentPhase } = this.state;
+            { showUncommencedEPA, isFilterOpen, openOnlyCurrentPhase, startDate, endDate } = this.state;
+
+        residentFilter.startDate = startDate.format('MM/DD/YYYY');
+        residentFilter.endDate = endDate.format('MM/DD/YYYY');
+
+        residentFilter.isAllData = !isFilterOpen;
+
 
         // Fitler out resident info from the list 
         let residentInfo = _.find(residentList, (d) => d.username == residentFilter.username);
@@ -88,7 +94,7 @@ class FilterPanel extends Component {
 
                     // mark records in the selected date range with a flag
                     var markedResidentData = _.map(residentData, (d) => {
-                        if (residentFilter.isAllData) { d.mark = false }
+                        if (!isFilterOpen) { d.mark = false }
                         else {
                             d.mark = moment(d.Date, 'YYYY-MM-DD').isBetween(moment(residentFilter.startDate, 'MM/DD/YYYY'), moment(residentFilter.endDate, 'MM/DD/YYYY'), 'days', '[]')
                         }
@@ -165,7 +171,7 @@ class FilterPanel extends Component {
 
                     <div className='filter-button-container'>
                         <button className={'btn btn-primary-outline ' + (isFilterOpen ? " active-button" : "not-active")}
-                            onClick={this.onFilterToggleClick} ><i className="fa fa-filter" aria-hidden="true"></i></button>
+                            onClick={this.onFilterToggleClick} ><i className="fa fa-calendar" aria-hidden="true"></i></button>
                     </div>
 
                     <div className='text-xs-left button-box'>
@@ -179,6 +185,8 @@ class FilterPanel extends Component {
                 {/* let the elements be hidden by css style instead of react , to prevent dead elements value problem when submitting */}
                 <div className={'text-xs-left advanced-filter-box ' + (isFilterOpen ? 'show-filter' : 'hide-filter')}>
                     <DateRangePicker
+                        hideKeyboardShortcutsPanel={true}
+                        isOutsideRange={() => false}
                         startDate={this.state.startDate}
                         startDateId="dashboard_unique_start_date_id"
                         endDate={this.state.endDate}

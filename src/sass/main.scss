@@ -9,6 +9,10 @@
     // trigger page scrolling when switching tabs
     min-height: 500px;
 
+    .DateRangePickerInput__withBorder {
+        border: none !important;
+    }
+
     // import components- contains each self-contained component in its own .scss partial
     @import "components/radioButton";
     @import "components/graphPanel";
