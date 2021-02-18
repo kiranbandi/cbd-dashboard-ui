@@ -96,8 +96,6 @@ class GraphPanel extends Component {
             tooltipData, smallScreen, width,
             levelVisibilityOpenStatus, programInfo = {} } = this.props;
 
-        const { hidePercentages = false, hideTogoNumbers } = programInfo;
-
         const { openTableID, openFilterID, openPlanID } = this.state;
 
         // populate the source map from the program info
@@ -152,7 +150,6 @@ class GraphPanel extends Component {
                                         onEPALabelClick={this.onEPALabelClick}
                                         innerKey={innerKey}
                                         smallScreen={smallScreen}
-                                        hidePercentages={hidePercentages}
                                         isCurrentSubRootVisible={isCurrentSubRootVisible}
                                         epaSourceMap={epaSourceMap} />
 
@@ -170,7 +167,6 @@ class GraphPanel extends Component {
                                                     widthPartition={widthPartition}
                                                     epaSourceMap={epaSourceMap}
                                                     smallScreen={smallScreen}
-                                                    hideTogoNumbers={hideTogoNumbers}
                                                     residentEPAData={residentData[epaSource] || []}
                                                     expiredResidentEPAData={expiredResidentDataGrouped[epaSource] || []}
                                                     onMouseOver={this.onMouseOver}

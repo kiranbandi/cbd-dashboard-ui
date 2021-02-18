@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { STAGES_LIST } from '../../utils/programInfo';
 import ReactSelect from 'react-select';
+import getTrainingStages from '../../utils/getTrainingStages';
 
 export default class NormativeFilterPanel extends Component {
     constructor(props) {
@@ -28,7 +28,7 @@ export default class NormativeFilterPanel extends Component {
                                 option: (styles) => ({
                                     ...styles, color: 'black',
                                     textAlign: 'left',
-                                    textTransform:'capitalize'
+                                    textTransform: 'capitalize'
                                 })
                             }}
                             onChange={onStageChange} />
@@ -48,8 +48,9 @@ export default class NormativeFilterPanel extends Component {
 }
 
 function getTrainingStageList() {
-    // create a clone  
-    let stageListCopy = _.clone(STAGES_LIST);
+    // access the training stages 
+    // TODO training stages only for one level not multiple
+    let stageListCopy = getTrainingStages();
     // and then add an extra option all to the list
     stageListCopy.unshift('All-Training-Stages');
     return _.map(stageListCopy, (d) => {

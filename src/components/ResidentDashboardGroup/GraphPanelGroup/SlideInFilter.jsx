@@ -38,7 +38,6 @@ export default class SlideInFilter extends Component {
             }
         });
 
-
         if (modifiedOptionArray.length > 0) {
 
             const selectStyles = {

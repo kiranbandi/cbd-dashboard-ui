@@ -7,13 +7,14 @@ import _ from 'lodash';
 import Loading from 'react-loading';
 import ReactSelect from 'react-select';
 import { getLearnerData } from '../../utils/requestServer';
-import { STAGES_LIST } from '../../utils/programInfo';
+import getTrainingStages from '../../utils/getTrainingStages';
 import {
     toggleFilterLoader, setResidentFilter, toggleExamScore,
     setResidentData, setNarrativeData
 } from '../../redux/actions/actions';
 
-const MODDED_PHASE_LIST = STAGES_LIST.map((phase) => phase.split('-').join(" ").toUpperCase());
+const MODDED_PHASE_LIST = getTrainingStages()
+    .map((phase) => phase.split('-').join(" ").toUpperCase());
 
 class FilterPanel extends Component {
 

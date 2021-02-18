@@ -5,7 +5,6 @@ export default function (learnerListDataDump) {
     let [learnerList, learnerMetricsList, contextualVariableMap] = learnerListDataDump;
 
     const stageMap = getStageMap();
-    // TODO - remap alternatively
     window.saskDashboard = {};
     window.saskDashboard.contextual_variable_map = _.groupBy(contextualVariableMap, (d) => d.form_id);
 

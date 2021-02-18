@@ -6,7 +6,6 @@ import SlideInTable from './SlideInTable';
 import SlideInFilter from './SlideInFilter';
 import infoTooltipReference from "../../../utils/infoTooltipReference";
 import { NumberToEPAText } from "../../../utils/convertEPA";
-import { data } from 'jquery';
 
 export default class GraphRow extends Component {
 
@@ -33,8 +32,8 @@ export default class GraphRow extends Component {
 
         let { epaSource, isTableVisible, isPlanVisible, innerKey,
             widthPartition, smallScreen, epaSourceMap,
-            residentEPAData, expiredResidentEPAData,
-            onMouseOut, onMouseOver, hideTogoNumbers,
+            residentEPAData,
+            onMouseOut, onMouseOver,
             onTableExpandClick, onFilterExpandClick,
             onAssessmentPlanClick, isFilterVisible } = this.props;
 
@@ -143,7 +142,7 @@ export default class GraphRow extends Component {
                         firstMeasure={firstMeasure} />
 
                     <div className='card-container'>
-                        {!hideTogoNumbers &&
+                        {true &&
                             <div className='graph-card first-card'>
                                 <span className='card-text'>{remainingCount}</span>
                                 <span className='card-title remaining-title'>TO GO</span>

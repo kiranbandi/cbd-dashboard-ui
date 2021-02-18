@@ -41,9 +41,14 @@ requestServer.getLearnerData = function (username, residentInfo) {
     });
 }
 
-
-requestServer.getAllLearnersData = function () {
-    return new Promise((resolve) => { resolve({}) });
+function errorCallback(error, reject) {
+    console.log(error);
+    if (error.response && error.response.data) {
+            alert("Error connecting to the server");
+    } else {
+        alert("Error connecting to the server");
+    }
+    reject();
 }
 
 module.exports = requestServer;

@@ -15,7 +15,6 @@ export default function (username, residentInfo, learnerDataDump) {
     // field notes and narratives and rubric forms are ignored I guess 
     // Also filter out records which dont have a corresponding contextual variable map form ID
     // this probably means they have not been defined yet
-    // TODO cross check this with STEVE
     let valid_assessments = _.filter(assessments, (d) => d.form_shortname == 'cbme_supervisor' && contextual_variable_map[d.form_id]);
 
     // process and set the source map  
@@ -50,7 +49,7 @@ export default function (username, residentInfo, learnerDataDump) {
             Type: '',
             isExpired: false,
             situationContextCollection,
-            formID:record.form_id
+            formID: record.form_id
         }
     });
 
@@ -127,7 +126,7 @@ function getProgramInfo(epa_list, epaProgress, course_name) {
             defaultSourceMap[EPAID[0]].completed[EPAID] = matchingEPA.completed || false;
         }
         else {
-            // TODO also include special assessment EPAs
+            // TODO also include special assessment EPAs 
         }
     });
 

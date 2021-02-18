@@ -11,8 +11,7 @@ class HeaderRow extends Component {
 
 
         const { onEPALabelClick, innerKey, isCurrentSubRootVisible,
-            epaSourceMap, residentData, residentList,
-            hidePercentages, residentFilter } = this.props;
+            epaSourceMap, residentList, residentFilter } = this.props;
         let requiredEPACount = 0, achievedEPACount = 0, residentInfo, currentPhase;
 
         _.map(epaSourceMap[innerKey].maxObservation, (count, epaID) => {
@@ -78,7 +77,6 @@ class HeaderRow extends Component {
 
 function mapStateToProps(state) {
     return {
-        residentData: state.oracle.residentData,
         residentFilter: state.oracle.residentFilter,
         residentList: state.oracle.residentList,
 
