@@ -45,7 +45,7 @@ class HeaderRow extends Component {
         percentageComplete = isNaN(percentageComplete) ? 0 : percentageComplete;
 
         if (currentStageStatus.completed) {
-            iconLabel = 'check-circle';
+            iconLabel = 'fa-check';
             statusLabel = 'COMPLETE ';
             percentageComplete = '';
         }
