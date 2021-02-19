@@ -4,7 +4,11 @@ export default {
     filterLoaderState: false,
     activeDashboard: 'normative',
     residentData: null,
-    residentFilter: { isAllData: true },
+    residentFilter: {
+      isAllData: true,
+      startDate: null,
+      endDate: null
+    },
     isTooltipVisible: false,
     tooltipData: null,
     visibilityOpenStatus: {

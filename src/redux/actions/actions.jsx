@@ -1,6 +1,7 @@
 import * as types from './actionTypes';
 import _ from 'lodash';
 import { getLearnerData } from '../../utils/requestServer';
+import moment from 'moment';
 
 
 export function setLevelVisibilityStatus(visibilityOpenStatus) {
@@ -109,8 +110,15 @@ export function switchToResidentDashboard(residentInfo, residentFilter) {
         getLearnerData(residentFilter.username, residentInfo)
             .then((processedData) => {
                 const { programInfo, residentData } = processedData;
-                // mark records to so no record is set in a date period filter
-                var markedResidentData = _.map(residentData, (d) => ({ ...d, mark: false }));
+                // mark records to so record is set in a date period filter
+                var markedResidentData = _.map(residentData, (d) => {
+                    if (residentFilter.isAllData) { d.mark = false }
+                    else if (!!residentFilter.startDate && !!residentFilter.endDate) {
+                        d.mark = moment(d.Date, 'YYYY-MM-DD').isBetween(residentFilter.startDate, residentFilter.endDate, 'days', '[]')
+                    }
+                    else { d.mark = false }
+                    return d;
+                });
                 // group data on the basis of EPA
                 var groupedResidentData = _.groupBy(markedResidentData, (d) => d.EPA);
                 // if uncommenced EPAs are needed to be seen then sub in empty records and 

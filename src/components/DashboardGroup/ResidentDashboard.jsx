@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Loading from 'react-loading';
 import { FilterPanel, GraphPanel, InfoPanel } from '../';
 
 

@@ -35,7 +35,6 @@
         "react-chartjs": "^1.2.0",
         "react-dates": "^21.8.0",
         "react-dom": "^16.1.1",
-        "react-loading": "^2.0.3",
         "react-redux": "^5.0.7",
         "react-select": "^2.4.4",
         "react-table": "^6.9.2",

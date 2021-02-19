@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import _ from 'lodash';
-import Loading from 'react-loading';
 import ReactSelect from 'react-select';
 import { getLearnerData } from '../../utils/requestServer';
 import getTrainingStages from '../../utils/getTrainingStages';
 import {
-    toggleFilterLoader, setResidentFilter, toggleExamScore, setResidentData
+    toggleFilterLoader, setResidentFilter,
+    toggleExamScore, setResidentData, updateResidentData
 } from '../../redux/actions/actions';
 import { DateRangePicker } from 'react-dates';
 
@@ -20,59 +20,67 @@ class FilterPanel extends Component {
 
     constructor(props) {
         super(props);
-        this.onAllDataToggle = this.onAllDataToggle.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-        this.onEPAToggle = this.onEPAToggle.bind(this);
-        this.onVisbilityToggle = this.onVisbilityToggle.bind(this);
-        this.onFilterToggleClick = this.onFilterToggleClick.bind(this);
-        this.onExamScoreToggle = this.onExamScoreToggle.bind(this);
-        this.onResidentNameChange = this.onResidentNameChange.bind(this);
-        this.state = {
-            showUncommencedEPA: true,
-            openOnlyCurrentPhase: true,
-            isFilterOpen: false
-        };
     }
 
-
-    onResidentNameChange(option) {
+    onResidentNameChange = (option) => {
         let { residentFilter = {}, actions } = this.props;
         residentFilter.username = option.value;
         actions.setResidentFilter({ ...residentFilter });
         actions.setResidentData(null);
     }
 
-    onAllDataToggle(event) {
-        let { residentFilter = {}, actions } = this.props;
-        residentFilter.isAllData = !residentFilter.isAllData;
+    onDatesChange = ({ startDate, endDate }) => {
+        let { residentFilter = {}, actions, residentData } = this.props;
+
+        //Set the dates on the resident filter
+        residentFilter.startDate = startDate;
+        residentFilter.endDate = endDate;
         actions.setResidentFilter({ ...residentFilter });
+
+        if (!!residentData) {
+            var updatedResidentData = {};
+            _.map(residentData, (epaList = [], epaKey) => {
+                updatedResidentData[epaKey] = _.map(epaList, (d) => {
+                    if (residentFilter.isAllData) { d.mark = false }
+                    else if (!!startDate && !!endDate) {
+                        d.mark = moment(d.Date, 'YYYY-MM-DD').isBetween(startDate, endDate, 'days', '[]')
+                    }
+                    else { d.mark = false }
+                    return d;
+                });
+            });
+            actions.updateResidentData(updatedResidentData);
+        }
+
     }
 
-    onFilterToggleClick(event) {
-        this.setState({ isFilterOpen: !this.state.isFilterOpen });
+    onDateFilterClick = (event) => {
+        let { residentFilter = {}, actions, residentData } = this.props,
+            { isAllData, startDate, endDate } = residentFilter;
+
+        // Toggle the resident filter and set it
+        residentFilter.isAllData = !isAllData;
+        actions.setResidentFilter({ ...residentFilter });
+
+        if (!!residentData) {
+            var updatedResidentData = {};
+            _.map(residentData, (epaList = [], epaKey) => {
+                updatedResidentData[epaKey] = _.map(epaList, (d) => {
+                    if (residentFilter.isAllData) { d.mark = false }
+                    else if (!!startDate && !!endDate) {
+                        d.mark = moment(d.Date, 'YYYY-MM-DD').isBetween(startDate, endDate, 'days', '[]')
+                    }
+                    else { d.mark = false }
+                    return d;
+                });
+            });
+            actions.updateResidentData(updatedResidentData);
+        }
+
     }
 
-    onExamScoreToggle(event) {
-        this.props.actions.toggleExamScore();
-    }
-
-    onEPAToggle(event) {
-        this.setState({ showUncommencedEPA: !this.state.showUncommencedEPA });
-    }
-
-    onVisbilityToggle(event) {
-        this.setState({ openOnlyCurrentPhase: !this.state.openOnlyCurrentPhase });
-    }
-
-    onSubmit(event) {
-        let { residentFilter = {}, actions, residentList } = this.props,
-            { showUncommencedEPA, isFilterOpen, openOnlyCurrentPhase, startDate, endDate } = this.state;
-
-        residentFilter.startDate = startDate.format('MM/DD/YYYY');
-        residentFilter.endDate = endDate.format('MM/DD/YYYY');
-
-        residentFilter.isAllData = !isFilterOpen;
-
+    onSubmit = (event) => {
+        let { residentFilter = {}, actions, residentList } = this.props;
 
         // Fitler out resident info from the list 
         let residentInfo = _.find(residentList, (d) => d.username == residentFilter.username);
@@ -83,43 +91,13 @@ class FilterPanel extends Component {
             actions.setResidentFilter({ ...residentFilter });
             // toggle loader
             actions.toggleFilterLoader();
-
             // fetch data from server based on the filter params
-            // Dirty solution but eventually all filtering will happen on the server so no point 
-            //  in repeating this again.
             getLearnerData(residentFilter.username, residentInfo)
                 .then((processedData) => {
-
                     const { programInfo, residentData } = processedData;
+                    // remap the data and set it on redux store
+                    mapDataAndMarkDatePeriod(residentData, residentFilter, programInfo, residentInfo, actions.setResidentData);
 
-                    // mark records in the selected date range with a flag
-                    var markedResidentData = _.map(residentData, (d) => {
-                        if (!isFilterOpen) { d.mark = false }
-                        else {
-                            d.mark = moment(d.Date, 'YYYY-MM-DD').isBetween(moment(residentFilter.startDate, 'MM/DD/YYYY'), moment(residentFilter.endDate, 'MM/DD/YYYY'), 'days', '[]')
-                        }
-                        return d;
-                    })
-
-                    // group data on the basis of EPA
-                    var groupedResidentData = _.groupBy(markedResidentData, (d) => d.EPA);
-
-                    // force sort data by Date in each EPA type
-                    // also if uncommenced EPAs are needed to be seen then sub in empty records
-                    _.map(programInfo.epaSourceMap, (source) => {
-                        _.map(source.subRoot, (epa, innerKey) => {
-                            if (showUncommencedEPA && !groupedResidentData.hasOwnProperty(innerKey)) {
-                                groupedResidentData[innerKey] = [];
-                            }
-                            if (groupedResidentData[innerKey]) {
-                                groupedResidentData[innerKey] = _.sortBy(groupedResidentData[innerKey], (d) => d.Date);
-                            }
-                        })
-                    })
-
-                    // store the info of visibility of phase into resident info
-                    residentInfo.openOnlyCurrentPhase = openOnlyCurrentPhase;
-                    actions.setResidentData(groupedResidentData, residentInfo, programInfo);
                 })
                 .finally(() => { actions.toggleFilterLoader(); });
         }
@@ -130,8 +108,7 @@ class FilterPanel extends Component {
 
         const { filterLoaderState, residentList = []
             , residentFilter = {} } = this.props,
-            { isFilterOpen = false } = this.state,
-            { isAllData = false, username = '',
+            { isAllData = true, username = '',
                 startDate, endDate } = residentFilter;
         //  first convert the array into the format required by react-select 
         let modifiedResidentList = _.map(residentList, (d) => {
@@ -170,28 +147,28 @@ class FilterPanel extends Component {
                     </div>
 
                     <div className='filter-button-container'>
-                        <button className={'btn btn-primary-outline ' + (isFilterOpen ? " active-button" : "not-active")}
-                            onClick={this.onFilterToggleClick} ><i className="fa fa-calendar" aria-hidden="true"></i></button>
+                        <button className={'btn btn-primary-outline ' + (!isAllData ? " active-button" : "not-active")}
+                            onClick={this.onDateFilterClick} ><i className="fa fa-calendar" aria-hidden="true"></i></button>
                     </div>
 
                     <div className='text-xs-left button-box'>
                         <button type="submit" className="filter-button btn btn-primary-outline" onClick={this.onSubmit}>
                             GET RECORDS
-                    {filterLoaderState && <Loading className='filter-loader' type='spin' height='25px' width='25px' color='black' delay={-1} />}
+                            {filterLoaderState && <i className='fa fa-spinner fa-spin filter-loader'></i>}
                         </button>
                     </div>
                 </div>
 
                 {/* let the elements be hidden by css style instead of react , to prevent dead elements value problem when submitting */}
-                <div className={'text-xs-left advanced-filter-box ' + (isFilterOpen ? 'show-filter' : 'hide-filter')}>
+                <div className={'text-xs-left advanced-filter-box ' + (!isAllData ? 'show-filter' : 'hide-filter')}>
                     <DateRangePicker
                         hideKeyboardShortcutsPanel={true}
                         isOutsideRange={() => false}
-                        startDate={this.state.startDate}
+                        startDate={startDate}
                         startDateId="dashboard_unique_start_date_id"
-                        endDate={this.state.endDate}
+                        endDate={endDate}
                         endDateId="dashboard_unique_end_date_id"
-                        onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
+                        onDatesChange={this.onDatesChange}
                         focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                         onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
                     />
@@ -205,6 +182,7 @@ function mapStateToProps(state) {
     return {
         residentFilter: state.oracle.residentFilter,
         residentList: state.oracle.residentList,
+        residentData: state.oracle.residentData,
         filterLoaderState: state.oracle.filterLoaderState
     };
 }
@@ -215,9 +193,44 @@ function mapDispatchToProps(dispatch) {
             toggleFilterLoader,
             setResidentFilter,
             setResidentData,
-            toggleExamScore
+            toggleExamScore,
+            updateResidentData
         }, dispatch)
     };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterPanel);
+
+
+function mapDataAndMarkDatePeriod(residentData, residentFilter, programInfo, residentInfo, setResidentData) {
+
+    const { isAllData, startDate, endDate } = residentFilter;
+
+    // mark records in the selected date range with a flag
+    var markedResidentData = _.map(residentData, (d) => {
+        if (isAllData) { d.mark = false }
+        else if (!!startDate && !!endDate) {
+            d.mark = moment(d.Date, 'YYYY-MM-DD').isBetween(startDate, endDate, 'days', '[]')
+        }
+        else { d.mark = false }
+        return d;
+    })
+
+    // group data on the basis of EPA
+    var groupedResidentData = _.groupBy(markedResidentData, (d) => d.EPA);
+
+    // force sort data by Date in each EPA type
+    // also if uncommenced EPAs are needed to be seen then sub in empty records
+    _.map(programInfo.epaSourceMap, (source) => {
+        _.map(source.subRoot, (epa, innerKey) => {
+            if (!groupedResidentData.hasOwnProperty(innerKey)) {
+                groupedResidentData[innerKey] = [];
+            }
+            if (groupedResidentData[innerKey]) {
+                groupedResidentData[innerKey] = _.sortBy(groupedResidentData[innerKey], (d) => d.Date);
+            }
+        })
+    })
+    // set the resident data onto redux store
+    setResidentData(groupedResidentData, residentInfo, programInfo);
+}

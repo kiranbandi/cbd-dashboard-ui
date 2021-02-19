@@ -44,9 +44,9 @@ requestServer.getLearnerData = function (username, residentInfo) {
 function errorCallback(error, reject) {
     console.log(error);
     if (error.response && error.response.data) {
-            alert("Error connecting to the server");
+            alert("Sorry there was an error in connecting to the server, Please try reloading the page");
     } else {
-        alert("Error connecting to the server");
+        alert("Sorry there was an error in connecting to the server, Please try reloading the page");
     }
     reject();
 }

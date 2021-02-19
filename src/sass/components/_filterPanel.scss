@@ -112,10 +112,10 @@
     .filter-button {
         font-size: 16px;
         font-weight: bold;
-        div.filter-loader {
+        .filter-loader {
             margin-left: 10px;
-            vertical-align: top;
             display: inline-block;
+            font-size: 20px;
         }
         @media (max-width: 768px) {
             font-size: 13px;

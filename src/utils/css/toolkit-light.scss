@@ -1,15 +1,5 @@
 
-@font-face {
-    font-family: "toolkit-entypo";
-    src: url('https://cdn.jsdelivr.net/npm/@kiranbandi/sask-cbme-dashboard@4.0.0/build/font.eot');
-    src: url('https://cdn.jsdelivr.net/npm/@kiranbandi/sask-cbme-dashboard@4.0.0/build/font.eot?#iefix') format('eot'), url('https://cdn.jsdelivr.net/npm/@kiranbandi/sask-cbme-dashboard@4.0.0/build/font.woff2') format('woff2'), url('https://cdn.jsdelivr.net/npm/@kiranbandi/sask-cbme-dashboard@4.0.0/build/font.woff') format('woff'), url('https://cdn.jsdelivr.net/npm/@kiranbandi/sask-cbme-dashboard@4.0.0/build/font.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
 #visual-summary-content-mount{
-
-    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 1.5;
     color: #555;
@@ -7853,7 +7843,6 @@ canvas {
 
 .hr-divider-content {
     position: relative;
-    z-index: 2;
     display: inline-block;
     padding-left: 1em;
     padding-right: 1em;

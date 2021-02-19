@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { NormativeTable, NormativeFilterPanel, NormativeGraph } from '../';
-import Loading from 'react-loading';
 
 class NormativeDashboard extends Component {
     constructor(props) {
@@ -31,9 +30,6 @@ class NormativeDashboard extends Component {
 
         return (
             <div className='normative-data-container'>
-
-                {this.state.isLoaderVisible ?
-                    <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
                     <div>
                         <NormativeFilterPanel
                             currentStage={currentStage}
@@ -53,7 +49,6 @@ class NormativeDashboard extends Component {
                                 Sorry there are no {removeNoRecords ? 'active' : ''} residents in the selected training stage.
                             </h3>}
                     </div>
-                }
             </div>
         );
     }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Loading from 'react-loading';
 import { setResidentList } from '../redux/actions/actions';
 import { getLearnerList } from '../utils/requestServer';
 
@@ -27,9 +26,9 @@ class Container extends Component {
         return (
             <div id='app-container'>
                 {this.state.showPresetLoader ?
-                    <Loading type='spin'
-                        className='preset-loader' height='100px'
-                        width='100px' color='#1b6699' delay={-1} />
+                    <div className='text-center'>
+                        <i className='fa fa-spinner fa-5x fa-spin m-t-lg' aria-hidden="true"></i>
+                    </div>
                     : <div id='container-body'> {this.props.children} </div>}
             </div>
         );
