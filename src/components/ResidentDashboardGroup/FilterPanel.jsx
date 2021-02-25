@@ -143,7 +143,13 @@ class FilterPanel extends Component {
                             isSearchable={true}
                             value={currentSelectValue}
                             options={groupedResidentList}
-                            styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
+                            styles={{
+                                option: (styles, { isSelected }) => ({
+                                    ...styles,
+                                    color: isSelected ? 'white' : 'black',
+                                    textAlign: 'left',
+                                })
+                            }}
                             onChange={this.onResidentNameChange} />
                     </div>
 

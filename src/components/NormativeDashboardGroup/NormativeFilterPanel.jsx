@@ -25,9 +25,14 @@ export default class NormativeFilterPanel extends Component {
                             value={currentStageEntry}
                             options={trainingStageList}
                             styles={{
-                                option: (styles) => ({
-                                    ...styles, color: 'black',
+                                option: (styles, { isSelected }) => ({
+                                    ...styles,
+                                    color: isSelected ? 'white' : 'black',
                                     textAlign: 'left',
+                                    textTransform: 'capitalize'
+                                }),
+                                singleValue:(styles) => ({
+                                    ...styles,
                                     textTransform: 'capitalize'
                                 })
                             }}

@@ -46,7 +46,7 @@ class ResidentDashboard extends Component {
                                     Sorry the selected resident has no observed EPAs.
                                 </h3>}
                         </div> :
-                        <h2 className='text-center text-danger'>No resident data is available currently.</h2>}
+                        <h3 className='text-center text-primary'>Sorry resident data is not available currently.</h3>}
                 </div>
             </div >
         );
