@@ -43,14 +43,19 @@ const programInfo = {
                 Submit evidence of active ACLS certification.
 
                 Part B:
-                One direct observation by attending staff.`,
+                Direct observation by attending staff.
+    
+                Collect information on
+                - Setting: clinical; simulation.
+                
+                Collect one observation`,
             },
-            clinicalPresentation: {},
-            patientDemographic: {},
-            filterTitles: {},
             filterValuesDict: {
                 '1.1': {},
-                '1.2': {}
+                '1.2': {
+                    'Setting': ["clinical", "simulation"],
+                    "Type": ["Part A", "Part B"]
+                }
             }
         },
         2: {
@@ -68,27 +73,13 @@ const programInfo = {
             },
             assessmentInfo: {
                 '2.1': `Collect at least 4 observations of achievement
-                - At least 2 high case complexity
                 - At least 2 assessors`,
                 '2.2': `Collect at least 4 observations of achievement: 
                 - At least 3 different conditions`,
                 '2.3': `Collect 4 observations of achievement
                 - At least 3 GIM clinic
                 - At least 2 medium complexity
-                - Range of decisions
                 - At least 2 assessors`
-            },
-            clinicalPresentation: {
-                '2.1': ["low", "medium", "high"],
-                '2.3': ["low", "medium", "high"]
-
-            },
-            patientDemographic: {
-                '2.3': ["followup", "refer back", "refer on", "admit"]
-            },
-            filterTitles: {
-                '2.1': ["Complexity"],
-                '2.3': ["Complexity", "Decision"]
             },
             filterValuesDict: {
                 '2.1': {
@@ -96,6 +87,7 @@ const programInfo = {
                 },
                 '2.2': {},
                 '2.3': {
+                    'Clinic Type': ["GIM", "other"],
                     'Complexity': ["low", "medium", "high"],
                     'Decision': ["followup", "refer back", "refer on", "admit"]
                 }
@@ -131,16 +123,16 @@ const programInfo = {
                 '3.3': 10,
                 '3.4': 8,
                 '3.5': 3,
-                '3.6': 2,
+                '3.6': 4,
                 '3.7': 3,
-                '3.8': 9,
+                '3.8': 10,
                 '3.9': 5,
                 '3.10': 3,
                 '3.11': 12,
-                '3.12': 2,
+                '3.12': 1,
                 '3.13': 2,
-                '3.14': 2,
-                '3.15': 8,
+                '3.14': 3,
+                '3.15': 9,
                 '3.16': 1,
                 '3.17': 4,
                 '3.18': 1,
@@ -156,12 +148,10 @@ const programInfo = {
                 - At least 4 chronic medical conditions
                 - At least 4 assessors`,
                 '3.3': `Part A: Collect 5 observations of achievement
-                - At least 2 urgent
                 - All medium or high complexity.
                 
                 Part B: Collect 5 observations of achievement
-                - At least 4 medium or high complexity
-                - At least 2 with unstable clinical status`,
+                - At least 4 medium or high complexity`,
                 '3.4': `Part A: Collect 6 observations of achievement
                 - At least 2 inpatient
                 - At least 3 each antepartum and postpartum
@@ -174,34 +164,39 @@ const programInfo = {
                 
                 Part B: Collect 2 observations of achievement 
                 - At least one outpatient.`,
-                '3.6': `Part A: Collect 2 observations
-                - At least one behavioural change.
+                '3.6': `Part A: Collect 2 observations.
                 
                 Part B: Collect 2 observations of achievement.`,
-                '3.7': `Collect 3 observations of achievement
-                - At least one transition from disease-modifying therapy to symptom management
-                - At least one transition to end of life care.`,
-                '3.8': `Part A: Collect 8 observations of achievement
+                '3.7': `Collect 3 observations of achievement.`,
+                '3.8': `Part A: Patient care 
+                Collect 8 observations of achievement
                 - At least two invasive ventilation
                 - At least two non-invasive ventilation
                 - At least two patients on vasopressor support
                 - No more than two that required transfer.
                 
-                Part B: Collect 1 observation of achievement.
+                Part B: Handover at transition of care
+                Collect 1 observation of achievement.
                 
-                Part C: Collect feedback from at least 3 observers
+                Part C: Crisis resource management 
+                Multiple observers provide feedback individually, which is then collated to one report for
+                Competence Committee review.
+                
+                Collect feedback from at least 3 observers
                 - At least one supervisor
-                - At least one nurse or other health care professional.`,
+                - At least one nurse or other health care professional`,
                 '3.9': `Collect 5 observations of achievement
                 - At least one of each type of document
                 - At least 2 different assessors.`,
                 '3.10': `Collect 3 observations of achievement
                 - At least one with patient/family
                 - At least one with other health care professional(s).`,
-                '3.11': `Part A: Collect on observation of achievement 
+                '3.11': `Part A: Holter, ABPM and PFT interpretation
+                Collect one observation of achievement 
                 - Must be a mix of studies
                 
-                Part B: Competence committee reviews resident’s procedure log.
+                Part B: Procedure log
+                Competence committee reviews resident’s procedure log.
                 
                 Part C: Supervision and interpretation of exercise stress tests.
                 Collect 10 observations of achievement.`,
@@ -213,29 +208,38 @@ const programInfo = {
                 Collect 2 observations of achievement.`,
                 '3.13': `Collect 2 observations
                 - At least one day of high complexity.`,
-                '3.14': `Part A: Collect one observation of achievement.
+                '3.14': `Part A: Triage of new referrals to ambulatory clinic
+                Collect one observation of achievement.
                 
-                Part B: Collect one observation of achievement.
+                Part B: Lab review, charting
+                Collect one observation of achievement.
                 
-                Part C: Collect at least one observation of achievement
-                ---	if supervisor including input from at least 3 individuals or
-                ---	if multisource feedback - feedback from at least 3 individuals`,
-                '3.15': `Part A: Collect 4 observations of achievement
-                -	At least one of each type of teaching 
+                Part C: Interactions with administrative/clinic staff
+                Collect at least one observation of achievement
+                -- if supervisor including input from at least 3 individuals or
+                -- if multisource feedback - feedback from at least 3 individuals`,
+                '3.15': `Part A: Teaching and coaching
+                Collect 4 observations of achievement
+                - At least one of each type of teaching 
                 - At least two different assessors
                 
-                Part B: Collect 4 observations of achievement.
+                Part B: Documenting assessments
+                Collect 4 observations of achievement.
                 
-                Part C: Collect feedback from at least 6 learners
+                Part C: Learner feedback 
+               Collect feedback from at least 6 learners
                 - At least one medical student
                 - At least one junior resident.`,
+                '3.16': `Review of resident’s submission of a scholarly project by supervisor.
+                Collect 1 observation of achievement.`,
                 '3.17': `Collect 4 observations of achievement
                 - At least one review of consult note/written communication to other MD
                 - At least one direct observation of communication with patient.`,
-                '3.19': `Part A: Collect 21 observations of achievement
+                '3.19': `Part A:Procedure
+                Collect 21 observations of achievement
                 - At least one of each procedure in the clinical setting
                 - At least 5 central line placements using ultrasound guidance
-                --- Must include different sites
+                  -- Must include different sites
                 - At least 3 thoracentesis using ultrasound guidance
                 - At least 3 paracentesis using ultrasound guidance
                 - At least 3 lumbar puncture
@@ -244,36 +248,8 @@ const programInfo = {
                 intubations
                 - At least 2 arterial line catheter insertions
                 
-                Part B: Log to track
-                -	Setting: clinical; simulation
-                -	Procedure: airway management & endotracheal intubation; arterial line catheter
-                insertion; central line placement; thoracentesis; paracentesis; lumbar puncture;
-                knee arthrocentesis
-                - Site: not applicable; femoral; internal jugular; subclavian; knee
-                - Use of ultrasound guidance: yes; no`
-            },
-            clinicalPresentation: {
-                '3.1': ["social", "undifferentiated condition", "multi-system"],
-                '3.2': ["undifferentiated", "new diagnosis", "chronic medical condition"],
-                '3.3': ["low", "medium", "high"],
-                '3.4': ["inpatient", "outpatient"],
-                '3.8': ["none", "invasive", "non-invasive"],
-                '3.9': ["consultations", "discharge summary", "progress notes"],
-                '3.19': ["airway management & endotracheal intubation", "non-invasive ventilation", "invasive ventilation", "arterial line catheter insertion", "central line placement", "thoracentesis", "paracentesis", "lumbar puncture", "joint arthrocentesis"]
-            },
-            patientDemographic: {
-                '3.1': ["transition planning", "ongoing management"],
-                '3.4': ["acute dyspnea", "asthma", "acute respiratory failure", "chest pain", "acute heart failure", "dysrhythmias", "edema", "headache", "Type 1 diabetes", "Type 2 diabetes", "gestational diabetes", "pre-existing hypertension", "gestational hypertension", "thromboembolic disease", "thrombocytopenia", "other"],
-                '3.19': ["not applicable", "femoral", "internal jugular", "subclavian", "knee"]
-            },
-            filterTitles: {
-                '3.1': ["Complexity", "Stage of Care"],
-                '3.2': ["Presentation"],
-                '3.3': ["Complexity"],
-                '3.4': ["Setting", "Presentation"],
-                '3.8': ["Ventilation"],
-                '3.9': ["Document"],
-                '3.19': ["Procedure", "Site"]
+                Part B: Submission of procedure log
+                Log to track.`
             },
             filterValuesDict: {
                 '3.1': {
@@ -284,31 +260,65 @@ const programInfo = {
                     'Presentation': ["undifferentiated", "new diagnosis", "chronic medical condition"]
                 },
                 '3.3': {
-                    'Complexity': ["low", "medium", "high"]
+                    'Complexity': ["low", "medium", "high"],
+                    'Type': ["Part A: Pre-operative assessment", "Part B: Post-operative management"]
                 },
                 '3.4': {
+                    'Type': ['Part A: Assessment and management', 'Part B: Counselling'],
                     'Setting': ["inpatient", "outpatient"],
+                    'Timing': ['antepartum', 'postpartum'],
                     'Presentation': ["acute dyspnea", "asthma", "acute respiratory failure", "chest pain", "acute heart failure", "dysrhythmias", "edema", "headache", "Type 1 diabetes", "Type 2 diabetes", "gestational diabetes", "pre-existing hypertension", "gestational hypertension", "thromboembolic disease", "thrombocytopenia", "other"]
                 },
-                '3.5': {},
-                '3.6': {},
+                '3.5': {
+                    'Type': ['Part A: Patient assessment', 'Part B: Counselling'],
+                    'Setting': ["inpatient", "outpatient"],
+                    'Issue': ['well woman', 'uncontrolled disease'],
+                },
+                '3.6': {
+                    'Type': ['Part A: Patient encounter/counselling', 'Part B: Integration into usual care'],
+                },
                 '3.7': {},
                 '3.8': {
-                    'Ventilation': ["none", "invasive", "non-invasive"]
+                    'Type': ['Part A: Patient care', 'Part B: Handover at transition of care', 'Part C: Crisis resource management'],
+                    'Ventilation': ["none", "invasive", "non-invasive"],
+                    'Observer Role': ["supervisor", "nurse", "other health care professional", "other resident", "student"]
                 },
                 '3.9': {
                     'Document': ["consultations", "discharge summary", "progress notes"]
                 },
-                '3.10': {},
-                '3.11': {},
-                '3.12': {},
-                '3.13': {},
-                '3.14': {},
-                '3.15': {},
+                '3.10': {
+                    'Scenario': ['patient/family', 'other health care professional(s)']
+                },
+                '3.11': {
+                    'Type': ['Part A: Holter, ABPM and PFT interpretation',
+                        'Part B: Procedure log',
+                        'Part C: Supervision and interpretation of exercise stress tests']
+                },
+                '3.12': {
+                    'Type': ['Part A: Interactions with team', 'Part B: Patient/time management']
+                },
+                '3.13': {
+                    'Complexity of consult list': ['low', 'medium', 'high']
+                },
+                '3.14': {
+                    'Type': ['Part A: Triage of new referrals to ambulatory clinic',
+                        'Part B: Lab review, charting',
+                        'Part C: Interactions with administrative/clinic staff']
+                },
+                '3.15': {
+                    'Type': ['Part A: Teaching and coaching', 'Part B: Documenting assessments', 'Part C: Learner feedback'],
+                    'Level of learner': ['medical student', 'junior resident'],
+                    'Type of teaching': ['bedside', 'didactic']
+                },
                 '3.16': {},
-                '3.17': {},
+                '3.17': {
+                    'Setting': ['inpatient', 'outpatient'],
+                    'Condition': ['acute', 'chronic'],
+                    'Observation Type': ["direct observation", "case review", "review of consult note/other documents"]
+                },
                 '3.18': {},
                 '3.19': {
+                    'Type': ['Part A: Procedure', 'Part B: Submission of procedure log'],
                     'Procedure': ["airway management & endotracheal intubation", "non-invasive ventilation", "invasive ventilation", "arterial line catheter insertion", "central line placement", "thoracentesis", "paracentesis", "lumbar puncture", "joint arthrocentesis"],
                     'Site': ["not applicable", "femoral", "internal jugular", "subclavian", "knee"]
                 }
@@ -330,9 +340,6 @@ const programInfo = {
                 - At least one that includes after hours coverage.`,
                 '4.2': `Collect 1 successful observation`
             },
-            clinicalPresentation: {},
-            patientDemographic: {},
-            filterTitles: {},
             filterValuesDict: {
                 '4.1': {},
                 '4.2': {}
