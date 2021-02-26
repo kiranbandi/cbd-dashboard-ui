@@ -11,12 +11,10 @@ export default (props) => {
         words_per_comment: 0, entrustment_score: 0
     }, printModeON } = props;
 
-
-    return <div className='faculty-MicroStatCard-group  m-b container printable-content'>
+    return <div className={'program-MicroStatCard-group  m-b container ' + (printModeON ? ' printable-content' : '')}>
         <div className="hr-divider">
             <h4
-                className="hr-divider-content"
-                style={printModeON ? { background: 'white', color: 'black' } : undefined}>
+                className="hr-divider-content">
                 Overall Acquisition Metrics
                 <InfoTip info={infoTooltipReference.programEvaluation.overallAcuisitionMetrics} />
             </h4>

@@ -40,4 +40,13 @@ body {
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+    // This is an onscreen banner that covers the page when pdf is being generated
+    .on-screen-cover-banner {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #25282f;
+        z-index: 500;
+        top: 0%;
+    }
 }

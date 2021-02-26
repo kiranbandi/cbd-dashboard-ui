@@ -8,6 +8,7 @@ import EPACompletionDistribution from '../ProgramEvaluationGroup/EPACompletionDi
 import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation';
 import savePagePDF from '../../utils/savePagePDF';
 import infoTooltipReference from '../../utils/infoTooltipReference';
+import moment from 'moment';
 
 const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP),
     (d) => ({ 'label': d + "-" + (Number(d) + 1), 'value': d }));
@@ -21,7 +22,7 @@ export default class ProgramDashboard extends Component {
             academicYear: { 'label': '2020-2021', 'value': '2020' },
             allRecords: [],
             residentList: [],
-            printModeON: false
+            printModeON: true
         };
         this._isMounted = false;
         this.onPrintClick = this.onPrintClick.bind(this);
@@ -29,7 +30,7 @@ export default class ProgramDashboard extends Component {
 
     onPrintClick(event) {
 
-        const { currentFaculty } = this.state;
+        const { programInfo } = this.props, { programName = 'Program' } = programInfo;
 
         this.setState({ printModeON: true });
         // give a gap of 2 seconds to ensure everything has changed
@@ -37,13 +38,13 @@ export default class ProgramDashboard extends Component {
         setTimeout(() => {
             // move to the top of the page
             window.scrollTo(0, 0);
-            let filename = 'Export.pdf';
+            let filename = programName + '_export_' + moment().format('DD_MMM') + '.pdf';
             // once printing is complete reset back to original state
             savePagePDF(filename, false, false, 'prog').finally(() => {
                 this._isMounted && this.setState({ printModeON: false });
             });
-            // wait a couple of seconds quick hack
-        }, 500)
+            // wait a couple of seconds, quick hack to fix bug
+        }, 500);
 
 
     }
@@ -90,12 +91,12 @@ export default class ProgramDashboard extends Component {
                         height='100px' width='100px'
                         color='#d6e5ff' delay={- 1} /> :
                     <div className='container-fluid'>
-                        {printModeON &&
-                            <div className='on-screen-cover-banner'>
-                                <h2 className='text-center m-t-lg text-primary'>Generating PDF Export, Please Wait...</h2>
-                            </div>}
                         {allRecords.length > 0 ?
-                            <div className='row'>
+                            <div>
+                                {printModeON &&
+                                    <div className='on-screen-cover-banner'>
+                                        <h2 className='text-center m-t-lg text-primary'>Generating Export of Program Metrics, Please Wait...</h2>
+                                    </div>}
                                 <ProgramAllYearsSummary
                                     width={fullWidth}
                                     allRecords={allRecords}

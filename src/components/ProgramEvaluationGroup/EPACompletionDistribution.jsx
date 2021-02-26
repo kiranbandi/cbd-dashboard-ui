@@ -131,7 +131,7 @@ export default class ProgramDashboard extends Component {
             y1={scaleY(d)}
             x2={width - margin}
             y2={scaleY(d)}
-            stroke={d === 1 ? 'white' : '#a9a1a1'}
+            stroke={d === 1 ? (printModeON ? 'black' : 'white') : '#a9a1a1'}
             opacity={d === 1 ? 1 : .5}
             key={d}
         ></line>);
@@ -151,13 +151,9 @@ export default class ProgramDashboard extends Component {
             key={d.epa}
             style={{ textAnchor: 'middle' }}>{NumberToEPAText(d.epa)}</text>);
 
-        return (<div
-            className='program-vis-box printable-content'
-            style={printModeON ? { background: 'white' } : undefined}>
+        return (<div className={('program-vis-box') + (printModeON ? ' printable-content' : '')}>
             <div>
-                <h3
-                    className='text-left m-a-0 pull-left'
-                    style={printModeON ? { color: 'black' } : undefined}>
+                <h3 className='text-left m-a-0 pull-left'>
                     EPA Completion Distribution
                             <InfoTip info={infoTooltipReference.programEvaluation.EPACompletionDistribution} />
                 </h3>

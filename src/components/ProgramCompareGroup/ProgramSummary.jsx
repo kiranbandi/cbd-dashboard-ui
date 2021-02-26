@@ -25,7 +25,7 @@ export default (props) => {
 
     const percentageSymbol = !showNA ? '%' : '';
 
-    return <div className='faculty-MicroStatCard-group  m-b container-fluid  printable-content'>
+    return <div className='program-MicroStatCard-group  m-b container-fluid  printable-content'>
         <div className="hr-divider">
             <h4
                 className="hr-divider-content"

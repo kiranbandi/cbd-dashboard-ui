@@ -16,7 +16,8 @@ export default class EPASpecRotation extends Component {
     }
 
     render() {
-        const { possibleAcademicYears, residentList, allRecords, normalizeByCount = true, width, printModeON } = this.props;
+        const { possibleAcademicYears, residentList, printModeON,
+            allRecords, normalizeByCount = true, width } = this.props;
 
         const programData = processAndFilterRecords(allRecords, residentList, this.state.academicYear.value, normalizeByCount)
 
@@ -34,12 +35,9 @@ export default class EPASpecRotation extends Component {
             }]
         }
 
-        return (<div className='program-vis-box printable-content'
-            style={printModeON ? { background: 'white' } : undefined}>
+        return (<div className={('program-vis-box') + (printModeON ? ' printable-content' : '')}>
             <div>
-                <h3
-                    className='text-left m-a-0 pull-left'
-                    style={printModeON ? { color: 'black' } : undefined}>
+                <h3 className='text-left m-a-0 pull-left'>
                     {normalizeByCount ? 'EPAs per Rotation' : 'EPA Overall Count'}
                     <InfoTip info={infoTooltipReference.programEvaluation.EPACountPerRotation} />
                 </h3>
