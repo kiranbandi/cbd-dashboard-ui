@@ -3,15 +3,7 @@
     .loading-spinner {
         margin: 100px auto;
     }
-    // This is an onscreen banner that covers the page when pdf is being generated 
-    .on-screen-cover-banner {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: #25282f;
-        z-index: 500;
-        top: 0%;
-    }
+
     // filter panel related styling
     .faculty-filter {
         .react-select-root {

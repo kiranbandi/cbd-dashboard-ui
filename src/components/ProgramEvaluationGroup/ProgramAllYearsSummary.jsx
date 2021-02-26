@@ -31,7 +31,7 @@ export default class ProgramBasePanel extends Component {
     }
 
     render() {
-        const { width, printModeON, possibleAcademicYears, allRecords } = this.props,
+        const { width, printModeON, possibleAcademicYears } = this.props,
             { summaryData } = this.state,
             custom_data = _.map(summaryData, (d, yearIndex) => {
                 return {
@@ -64,26 +64,15 @@ export default class ProgramBasePanel extends Component {
 
         return (
             <div
-                className='yearall-summary-wrapper printable-content'
-                style={printModeON ? { background: 'white', color: 'black' } : undefined}
-            >
+                className={('yearall-summary-wrapper') + (printModeON ? ' printable-content' : '')}>
                 <div className="hr-divider">
-                    <h4
-                        className="hr-divider-content"
-                        style={printModeON ? { background: 'white', color: 'black' } : undefined}
-                    >
+                    <h4 className="hr-divider-content">
                         Overall Acquisition Metrics By Year
                         <InfoTip info={infoTooltipReference.programEvaluation.overallAcuisitionMetricsYears} />
                     </h4>
                 </div>
-                <div
-                    className='program-part-container'
-                    style={printModeON ? { background: 'white', color: 'black' } : undefined}
-                >
-                    <h3
-                        className="part-year-title"
-                        style={printModeON ? { background: 'white', color: 'black' } : undefined}
-                    >
+                <div className='program-part-container'>
+                    <h3 className="part-year-title">
                         EPAs Acquired and Expired (Per resident)
                     </h3>
                     <div className='chart-container'>
@@ -113,14 +102,8 @@ export default class ProgramBasePanel extends Component {
                         </BarChart>
                     </div>
                 </div>
-                <div
-                    className='program-part-container'
-                    style={printModeON ? { background: 'white', color: 'black' } : undefined}
-                >
-                    <h3
-                        className="part-year-title"
-                        style={printModeON ? { background: 'white', color: 'black' } : undefined}
-                    >
+                <div className='program-part-container'>
+                    <h3 className="part-year-title">
                         EPA Rating Distribution
                     </h3>
                     <div className='chart-container'>
@@ -142,13 +125,8 @@ export default class ProgramBasePanel extends Component {
                     </div>
                 </div>
                 <div
-                    className='program-part-container'
-                    style={printModeON ? { background: 'white', color: 'black' } : undefined}
-                >
-                    <h3
-                        className="part-year-title"
-                        style={printModeON ? { background: 'white', color: 'black' } : undefined}
-                    >Monthly Distribution</h3>
+                    className='program-part-container'>
+                    <h3 className="part-year-title">Monthly Distribution</h3>
                     <div className='chart-container'>
                         <LineChart width={width / 2}
                             height={300} data={monthCountList}
@@ -172,13 +150,8 @@ export default class ProgramBasePanel extends Component {
                     </div>
                 </div>
                 <div
-                    className='program-part-container'
-                    style={printModeON ? { background: 'white', color: 'black' } : undefined}
-                >
-                    <h3
-                        className="part-year-title"
-                        style={printModeON ? { background: 'white', color: 'black' } : undefined}
-                    >
+                    className='program-part-container'>
+                    <h3 className="part-year-title">
                         Average Words Per Comment
                     </h3>
                     <div className='chart-container'>
