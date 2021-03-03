@@ -39,6 +39,8 @@ export { default as ProgramCountPlot } from './ProgramCompareGroup/ProgramCountP
 export { default as ProgramScoreDistribution } from './ProgramCompareGroup/ProgramScoreDistribution';
 export { default as ProgramStageDistribution } from './ProgramCompareGroup/ProgramStageDistribution';
 export { default as ProgramWordCount } from './ProgramCompareGroup/ProgramWordCount';
+export { default as ProgramFeedbackDistribution } from './ProgramCompareGroup/ProgramFeedbackDistribution';
+
 
 // Reusable components 
 export { default as FileUpload } from './ReusableComponents/FileUpload';

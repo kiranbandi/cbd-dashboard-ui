@@ -22,7 +22,7 @@ export default class ProgramDashboard extends Component {
             academicYear: { 'label': '2020-2021', 'value': '2020' },
             allRecords: [],
             residentList: [],
-            printModeON: true
+            printModeON: false
         };
         this._isMounted = false;
         this.onPrintClick = this.onPrintClick.bind(this);

@@ -6,7 +6,7 @@ import Switch from 'react-switch';
 import ReactSelect from 'react-select';
 import { ROTATION_SCHEDULE_MAP, PROGRAM_LIST } from '../utils/programInfo';
 import {
-    ProgramSummary, ProgramCountPlot, ProgramMonthlyPlot,
+    ProgramSummary, ProgramCountPlot, ProgramMonthlyPlot, ProgramFeedbackDistribution,
     ProgramScoreDistribution, ProgramWordCount, ProgramStageDistribution
 } from '../components';
 import savePagePDF from '../utils/savePagePDF';
@@ -81,9 +81,7 @@ export default class ProgramsCompare extends Component {
                 this._isMounted && this.setState({ printModeON: false });
             });
             // wait a couple of seconds quick hack
-        }, 500)
-
-
+        }, 500);
     }
 
     onSelectAcademicYear(academicYear) {
@@ -111,7 +109,7 @@ export default class ProgramsCompare extends Component {
 
         const moddedProgramData = _.map(programData, (d, i) => {
             // if anonymize is true then replace program name for all programs
-            // except for 'all' entry with P-Index.
+            // except for 'all' entry with P-Index/Alphabet.
             return {
                 ...d,
                 'programName': d.programName != 'Overall' ?
@@ -175,12 +173,17 @@ export default class ProgramsCompare extends Component {
                                     <ProgramScoreDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                     <ProgramWordCount width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
+                                <div className='text-center printable-content'
+                                    style={{ paddingTop: printModeON ? '200px' : '' }}>
+                                    <ProgramFeedbackDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramWordCount width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                </div>
                                 <ProgramMonthlyPlot width={overallWidth} printModeON={printModeON} programData={_.reverse([...moddedProgramData])} />
                             </div>}
-                        <button id='print-report' className="btn btn-primary print-button" onClick={this.onPrintClick}>
+                        {/* <button id='print-report' className="btn btn-primary print-button" onClick={this.onPrintClick}>
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Report</span>
-                        </button>
+                        </button> */}
                     </div>
                 }
 
