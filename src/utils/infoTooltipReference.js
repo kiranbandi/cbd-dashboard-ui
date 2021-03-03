@@ -56,6 +56,8 @@ export default {
         ResidentTrainingStageDistribution: `This stack chart displays the proportion of residents in each program that are in each stage of training (TTD, Foundations, Core, TTP). Mouse-over each row for additional details.`,
         EPARatingDistribution: `This stack chart displays the proportion of EPAs in each program that have been rated at each level of entrustment ('I had to do' to 'I didn't need to be there'). Mouse-over each row for additional details.`,
         EPAFeedbackWordCount: `This graph displays the average number of words contained within the completed EPAs of each program. The length of the feedback has been found to correlate with feedback quality.`,
-        MonthlyDistributionByProgram: `These graphs display the number of EPAs completed within each of the programs during each month of the selected year.`
+        MonthlyDistributionByProgram: `These graphs display the number of EPAs completed within each of the programs during each month of the selected year.`,
+        ProgramFeedbackDistribution: `This stack chart displays the proportion of residents in each program that have been given a particular type of feedback at their last CC Meeting. Mouse-over each row for additional details.`,
+
     }
 }
