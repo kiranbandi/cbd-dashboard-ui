@@ -25,7 +25,7 @@ export default class ProgramScoreDist extends Component {
             <div className='program-part-container'>
                 <div className="hr-divider">
                     <h4 className="hr-divider-content">
-                        Resident Feedback Distribution
+                        Resident Progress
                         <InfoTip info={infoTooltipReference.comparePrograms.ProgramFeedbackDistribution} />
                     </h4>
                 </div>

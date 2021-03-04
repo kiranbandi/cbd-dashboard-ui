@@ -392,7 +392,7 @@ const programInfo = {
                 },
                 '3.2': {
                     'Fetal Complication': ["not applicable", "preterm delivery (gestational age <32 weeks)", "multiples", "intrauterine fetal death", "malposition", "cord prolapse", "atypical/abnormal fetal heart rate tracing"],
-                    'Maternal Complication': ["not applicable", "chorioamnionitis", "trial of labour after cesarean section", "complicated induction", "severe hypertensive disorder of pregnancy", "pre-gestational diabetes", "maternal comorbidities (e.g., cardiac, GI, renal, pulmonary)", " 1st or 2nd stage dystocia", "intrapartum hemorrhage", "uterine rupture", "shock", "eclampsia", "other"]
+                    'Maternal Complication': ["not applicable", "chorioamnionitis", "trial of labour after cesarean section", "complicated induction", "severe hypertensive disorder of pregnancy", "pre-gestational diabetes", "maternal comorbidities (e.g., cardiac, GI, renal, pulmonary)", "1st or 2nd stage dystocia", "intrapartum hemorrhage", "uterine rupture", "shock", "eclampsia", "other"]
                 },
                 '3.3': {
                     'Procedure': ["vacuum", "outlet forceps (non-rotation)", "low forceps (non-rotation)", "rotational forceps", "perineal laceration", "shoulder dystocia", "internal podalic version", "breech extraction"],

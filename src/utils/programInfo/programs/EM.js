@@ -222,7 +222,7 @@ const programInfo = {
                 '3.11': [],
                 '3.12': [],
                 '3.13': ["complex wound repair", "central venous access with ultrasound guidance", "reduction of an extremity fracture", "lumbar puncture", "reduction of large joint dislocation", "regional anesthesia (e.g. large peripheral nerve block, not a digital nerve)", "thoracostomy tube insertion"],
-                '3.14': ["pericardial effusion and cardiac tamponade", "global estimation of left ventricular fraction", "pneumothorax", "hemothorax", "pleural effusion", "abdominal aortic aneurysm", "abdominal or pelvic free fluid", " first trimester intrauterine gestation"],
+                '3.14': ["pericardial effusion and cardiac tamponade", "global estimation of left ventricular fraction", "pneumothorax", "hemothorax", "pleural effusion", "abdominal aortic aneurysm", "abdominal or pelvic free fluid", "first trimester intrauterine gestation"],
                 '3.15': [],
                 '3.16': [],
                 '3.17': [],
@@ -302,7 +302,7 @@ const programInfo = {
                     'Demographic': ["infant", "child", "youth", "adult", "senior"]
                 },
                 '3.14': {
-                    'Clinical Presentation': ["pericardial effusion and cardiac tamponade", "global estimation of left ventricular fraction", "pneumothorax", "hemothorax", "pleural effusion", "abdominal aortic aneurysm", "abdominal or pelvic free fluid", " first trimester intrauterine gestation"],
+                    'Clinical Presentation': ["pericardial effusion and cardiac tamponade", "global estimation of left ventricular fraction", "pneumothorax", "hemothorax", "pleural effusion", "abdominal aortic aneurysm", "abdominal or pelvic free fluid", "first trimester intrauterine gestation"],
                     'Demographic': ["infant", "child", "youth", "adult", "senior"]
                 },
                 '3.15': {},
@@ -424,7 +424,7 @@ const programInfo = {
             },
             patientDemographic: {
                 '4.1': [],
-                '4.2': ["medical student", "off service resident", "EM resident", " other"],
+                '4.2': ["medical student", "off service resident", "EM resident", "other"],
                 '4.3': ["patient interaction", "family interaction", "physician interaction", "other health care professional interaction"],
                 '4.4': ["infant", "child", "youth", "adult", "senior"],
                 '4.5': ["infant", "child", "youth", "adult", "senior"],
@@ -439,7 +439,7 @@ const programInfo = {
                 },
                 '4.2': {
                     'Clinical Presentation': ["individual", "multiple"],
-                    'Demographic': ["medical student", "off service resident", "EM resident", " other"]
+                    'Demographic': ["medical student", "off service resident", "EM resident", "other"]
                 },
                 '4.3': {
                     'Demographic': ["patient interaction", "family interaction", "physician interaction", "other health care professional interaction"]
