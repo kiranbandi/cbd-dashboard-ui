@@ -6,8 +6,6 @@ var POSSIBLE_FEEDBACK = ['Accelerated', 'As Expected', 'Not as Expected', 'Not P
 
 export default function (allRecords = [], residentList = [], programList) {
 
-    // TODO in resident records , remove residents who have graduated
-
     // Remove all residents that have graduated
     let filteredResidentList = _.filter(residentList, (d) => !d.isGraduated);
 
@@ -56,9 +54,8 @@ export default function (allRecords = [], residentList = [], programList) {
             return latestFeedback.slice(-1)[0].rating;
         });
 
-        const sourceMap = program != 'all' ? PROGRAM_INFO[program].epaSourceMap : null;
-        const epaCompletionRate = sourceMap ? calculateEPACompletion(sourceMap, records) : [];
-
+        const sourceMap = program != 'all' ? PROGRAM_INFO[program].epaSourceMap : null,
+            epaCompletionRate = sourceMap ? calculateEPACompletion(sourceMap, records) : [];
 
         return {
             programName,
@@ -66,6 +63,7 @@ export default function (allRecords = [], residentList = [], programList) {
             rating_group: _.map([1, 2, 3, 4, 5], (d) => (ratingGroup[d] ? ratingGroup[d].length : 0)),
             current_phase_group: _.map(STAGES_LIST, (d) => (currentPhaseGroup[d] ? currentPhaseGroup[d].length : 0)),
             feedback_group: _.map(POSSIBLE_FEEDBACK, (d) => (feedbackGroup[d] ? feedbackGroup[d].length : 0)),
+            epa_completion_rate: [...epaCompletionRate],
             epa_count: records.length,
             expired_count: records.length - nonExpiredRecords.length,
             monthly_count: _.groupBy(nonExpiredRecords, (d) => moment(d.observation_date, 'YYYY-MM-DD').format('MMM')),
@@ -78,18 +76,14 @@ export default function (allRecords = [], residentList = [], programList) {
 }
 
 
-
-
 function calculateEPACompletion(epaSourceMap, records) {
 
     const epaObservationMap = {};
-
     // process base source map
     const nonSAEPAs = Object.values(epaSourceMap)
         .map(d => Object.entries(d.maxObservation).map(dd => ({ epa: dd[0], maxObservation: dd[1] })))
         .flat()
         .filter(d => epaSourceMap[d.epa.split('.')[0]].subRoot[d.epa].substring(0, 4) !== '(SA)');
-
     nonSAEPAs
         .forEach(d => epaObservationMap[d.epa] = { max: d.maxObservation, total: 0 });
 
@@ -112,7 +106,7 @@ function calculateEPACompletion(epaSourceMap, records) {
             map[epaGroup].max += currentEntry[1].max;
             map[epaGroup].total += currentEntry[1].total;
             return map;
-        }, {});
+        }, {})
 
     let epaCompletionList = Object.entries(epaObservationMap).map(d => {
         const result = {
@@ -120,31 +114,32 @@ function calculateEPACompletion(epaSourceMap, records) {
             percentageMax: roundTo2Decimal(d[1].max / epaGroupObservationMap[d[0].split('.')[0]].max),
             percentageTotal: roundTo2Decimal(d[1].total / epaGroupObservationMap[d[0].split('.')[0]].total),
         };
-        result.percentageOffset = roundTo2Decimal(result.percentageTotal / result.percentageMax);
 
         // sometimes some EPAs might not even have started and so their percentage remains at 0
-        if (isNaN(result.percentageOffset)) {
-            result.percentageOffset = 0;
-        }
+        // for them to avoid NaN problem due to zero in denominator, use or case with 1.
+        result.percentageOffset = roundTo2Decimal((result.percentageTotal || 0) / (result.percentageMax || 1));
+
         return result;
     });
 
     // group by the training state 
-    var groupedByTrainingStage = _.groupBy(epaCompletionList, (d) => d.epa[0]);
+    let groupedByTrainingStage = _.groupBy(epaCompletionList, (d) => d.epa[0]);
 
-    var a = _.map([1, 2, 3, 4], (stageID) => {
-        let totalDivergenceList = _.map(groupedByTrainingStage[stageID], (e) => {
-            var divergence = ((e.percentageOffset >= 1) ? e.percentageOffset - 1 : 1 - e.percentageOffset)
-            return divergence * 100;
+    return _.map([1, 2, 3, 4], (stageID) => {
+        let allDivergencesInStage = _.map(groupedByTrainingStage[stageID], (e) => {
+            // if the percentage offset is 1, divergence is zero
+            if (e.percentageOffset == 1) {
+                return 0;
+            }
+            else if (e.percentageOffset > 1) {
+                return (e.percentageOffset - 1) * 100
+            }
+            // if offset is less than 1 , get by how much it diverges from 1
+            return (1 - e.percentageOffset) * 100
         });
-        return _.sum(totalDivergenceList) / totalDivergenceList.length;
+        // Take an average of all the divergences in a training stage
+        return _.mean(allDivergencesInStage);
     });
-
-    console.log(a);
-
-
-    debugger;
-
 }
 
-var roundTo2Decimal = (d) => (Math.round(d * 100) / 100);
+let roundTo2Decimal = (d) => (Math.round(d * 100) / 100);

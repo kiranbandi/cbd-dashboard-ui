@@ -66,9 +66,9 @@ export default class ProgramDashboard extends Component {
             result.percentageOffset = result.percentageTotal / result.percentageMax;
 
             // sometimes some EPAs might not even have started and so their percentage remains at 0
-            if (isNaN(result.percentageOffset)) {
-                result.percentageOffset = 0;
-            }
+            // so replace with 0 for non valid values like NaN
+            result.percentageOffset = result.percentageOffset || 0;
+
             return result;
         });
 

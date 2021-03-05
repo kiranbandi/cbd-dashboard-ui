@@ -84,9 +84,9 @@ export default class ScheduleBlock extends Component {
                     averageColorLabel = 'green';
                 }
 
-                if (isNaN(averageRotationPercentage)) {
-                    averageRotationPercentage = '0';
-                }
+                // if NaN cast to zero
+                averageRotationPercentage = averageRotationPercentage || '0';
+
 
                 // if we also need to show the corresponding count per block 
                 if (isEPAperBlockVisible) {
