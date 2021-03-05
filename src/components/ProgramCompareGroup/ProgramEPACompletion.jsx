@@ -42,8 +42,8 @@ export default class ProgramCountPlot extends Component {
                     <h4
                         className="hr-divider-content"
                         style={printModeON ? { background: 'white', color: 'black' } : undefined}>
-                        EPA Completion Divergence Rate
-                        <InfoTip info={infoTooltipReference.comparePrograms.EPAFeedbackWordCount} />
+                        EPA Completion Divergence
+                        <InfoTip info={infoTooltipReference.comparePrograms.programEPAcompletionDivergence} />
                     </h4>
                 </div>
                 <div className='chart-container completion-rate-chart'
