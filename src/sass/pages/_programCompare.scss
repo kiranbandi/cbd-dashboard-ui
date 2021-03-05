@@ -18,7 +18,7 @@
         .react-select-root {
             width: 200px;
             display: inline-block;
-            &>div:first-child {
+            & > div:first-child {
                 z-index: 100;
             }
         }
@@ -37,6 +37,8 @@
     .program-part-container {
         display: inline-block;
         margin: 10px;
+        vertical-align: top;
+
         .chart-container {
             border-radius: 6px;
             background: white;
@@ -56,7 +58,7 @@
                 }
             }
             .switch-label {
-                font-size: 0.80em;
+                font-size: 0.8em;
                 font-weight: 500;
                 color: black;
             }
@@ -98,6 +100,51 @@
         color: white;
         margin-bottom: 15px;
         font-size: 1.4em;
+    }
+
+    .completion-rate-chart {
+        padding: 1em;
+        display: flex;
+        flex-direction: column;
+
+        .program-rate-wrapper {
+            display: flex;
+            flex: 1;
+
+            .program-rate-label {
+                flex-basis: 105px;
+                color: #666666;
+                font-weight: bold;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                margin-right: 5px;
+                text-align: right;
+            }
+
+            .program-rate-inner-wrapper {
+                flex-grow: 1;
+                display: flex;
+                justify-content: space-between;
+
+                .stage-label {
+                    flex-grow: 1;
+                    flex-basis: 0;
+                    justify-content: center;
+                    align-items: center;
+                    display: flex;
+                    border-radius: 30px 30px 30px 30px;
+                    margin-bottom: 1px;
+                    margin-top: 1px;
+                    margin-right: 2px;
+                    font-weight: bolder;
+
+                    b {
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
     }
 }
 

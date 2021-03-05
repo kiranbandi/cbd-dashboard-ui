@@ -11,7 +11,7 @@ export default (props) => {
     // For every year get all the datapoints and add them individually 
     // the data points are comma seperated or just a single string
     _.map(yearsList, (yearKey) => {
-        // // remove non numbers so that they dont screw up the plot
+        // remove non numbers so that they dont screw up the plot
         let dataPointArray = citeScoreData[yearKey].split(",").filter((d) => !isNaN(d))
         _.map(dataPointArray, (dataPoint) => {
             citeScoreList.push({ 'label': yearKey, 'value': +dataPoint })
@@ -52,8 +52,6 @@ export default (props) => {
         </text>
     })
 
-
-
     const yearLabelList = _.map(pointsList, (d, i) => {
         const yearlyLabel = isNaN((+d.label) + 1) ? d.label : d.label + '-' + ((+d.label) + 1);
         return <text
@@ -69,7 +67,7 @@ export default (props) => {
         <div className='cite-exam-score-container'>
             <div className="hr-divider">
                 <h4 className="hr-divider-content">
-                    Written Exam Scores 
+                    Written Exam Scores
                     <InfoTip info={infoTooltipReference.residentMetrics.writtenExamScores} />
                 </h4>
             </div>

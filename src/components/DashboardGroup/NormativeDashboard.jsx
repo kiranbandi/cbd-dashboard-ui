@@ -96,29 +96,18 @@ export default class NormativeDashboard extends Component {
                 let residentAllRecords = _.partition(recordsGroupedByResident[resident.username] || [], (d) => !d.isExpired);
                 let residentFilteredRecords = _.partition(filteredRecordsGroupedByResident[resident.username] || [], (d) => !d.isExpired);
 
-
                 let averageEPAsPerWeek = Math.round((residentAllRecords[0].length / weeksPassed) * 100) / 100;
                 let averageEPAsPerWeekPeriod = (weeksInPeriod != 0) ? Math.round((residentFilteredRecords[0].length / weeksInPeriod) * 100) / 100 : 0;
-
 
                 // get expiry rate percentages
                 let expiry_rate = Math.round((residentAllRecords[1].length / (residentAllRecords[0].length + residentAllRecords[1].length)) * 100);
                 let expiry_rate_period = Math.round((residentFilteredRecords[1].length / (residentFilteredRecords[0].length + residentFilteredRecords[1].length)) * 100);
 
-
                 // if values are NaN port them to zero
-                if (isNaN(averageEPAsPerWeek)) {
-                    averageEPAsPerWeek = 0;
-                }
-                if (isNaN(averageEPAsPerWeekPeriod)) {
-                    averageEPAsPerWeekPeriod = 0;
-                }
-                if (isNaN(expiry_rate)) {
-                    expiry_rate = 0;
-                }
-                if (isNaN(expiry_rate_period)) {
-                    expiry_rate_period = 0;
-                }
+                averageEPAsPerWeek = averageEPAsPerWeek || 0;
+                averageEPAsPerWeekPeriod = averageEPAsPerWeekPeriod || 0;
+                expiry_rate = expiry_rate || 0;
+                expiry_rate_period = expiry_rate_period || 0;
 
                 return {
                     'resident_name': resident.fullname,

@@ -4,7 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 const sixPointColorScale = ["#e15759", "#f28e2c", "#76b7b2", "#4e79a7", "#59a14f", "#bab0ab"];
-var POSSIBLE_FEEDBACK = ['Accelerated', 'As Expected', 'Not as Expected', 'Not Progressing', 'Inactive', 'No Data'];
+var POSSIBLE_FEEDBACK = ['Accelerated', 'As Expected', 'Not as Expected', 'Not Progressing', 'Inactive', 'No Feedback Available'];
 
 
 export default class ProgramScoreDist extends Component {

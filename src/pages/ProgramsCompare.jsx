@@ -6,7 +6,8 @@ import Switch from 'react-switch';
 import ReactSelect from 'react-select';
 import { ROTATION_SCHEDULE_MAP, PROGRAM_LIST } from '../utils/programInfo';
 import {
-    ProgramSummary, ProgramCountPlot, ProgramMonthlyPlot, ProgramFeedbackDistribution,
+    ProgramSummary, ProgramCountPlot, ProgramMonthlyPlot,
+    ProgramFeedbackDistribution, ProgramEPACompletion,
     ProgramScoreDistribution, ProgramWordCount, ProgramStageDistribution
 } from '../components';
 import savePagePDF from '../utils/savePagePDF';
@@ -176,7 +177,7 @@ export default class ProgramsCompare extends Component {
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
                                     <ProgramFeedbackDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
-                                    <ProgramWordCount width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramEPACompletion width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <ProgramMonthlyPlot width={overallWidth} printModeON={printModeON} programData={_.reverse([...moddedProgramData])} />
                             </div>}

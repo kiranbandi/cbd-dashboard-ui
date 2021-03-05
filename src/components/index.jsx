@@ -40,6 +40,7 @@ export { default as ProgramScoreDistribution } from './ProgramCompareGroup/Progr
 export { default as ProgramStageDistribution } from './ProgramCompareGroup/ProgramStageDistribution';
 export { default as ProgramWordCount } from './ProgramCompareGroup/ProgramWordCount';
 export { default as ProgramFeedbackDistribution } from './ProgramCompareGroup/ProgramFeedbackDistribution';
+export { default as ProgramEPACompletion } from './ProgramCompareGroup/ProgramEPACompletion';
 
 
 // Reusable components 
