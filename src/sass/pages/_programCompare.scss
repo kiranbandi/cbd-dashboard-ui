@@ -107,6 +107,11 @@
         display: flex;
         flex-direction: column;
 
+        .completion-rate-label {
+            color: black;
+            margin: 15px 0px 0px 0px;
+        }
+
         .program-rate-wrapper {
             display: flex;
             flex: 1;

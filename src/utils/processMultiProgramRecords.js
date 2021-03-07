@@ -114,7 +114,6 @@ function calculateEPACompletion(epaSourceMap, records) {
             percentageMax: roundTo2Decimal(d[1].max / epaGroupObservationMap[d[0].split('.')[0]].max),
             percentageTotal: roundTo2Decimal(d[1].total / epaGroupObservationMap[d[0].split('.')[0]].total),
         };
-
         // sometimes some EPAs might not even have started and so their percentage remains at 0
         // for them to avoid NaN problem due to zero in denominator, use or case with 1.
         result.percentageOffset = roundTo2Decimal((result.percentageTotal || 0) / (result.percentageMax || 1));
@@ -137,8 +136,15 @@ function calculateEPACompletion(epaSourceMap, records) {
             // if offset is less than 1 , get by how much it diverges from 1
             return (1 - e.percentageOffset) * 100
         });
+
+        let allTotalsInStage = _.map(groupedByTrainingStage[stageID], (e) => e.percentageTotal);
+
+        // Check for insufficient data in stage
+        // if all the EPAs are NaN itmeans all the totals were zero
+        let insufficientDataEh = _.countBy(allTotalsInStage, (d) => !isNaN(d)).false == allTotalsInStage.length;
+
         // Take an average of all the divergences in a training stage
-        return _.mean(allDivergencesInStage);
+        return insufficientDataEh || allDivergencesInStage.length == 0 ? -1 : _.mean(allDivergencesInStage);
     });
 }
 
