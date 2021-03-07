@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
-import { interpolateReds, interpolateGreys, scaleLinear } from 'd3';
+import { interpolateRdYlGn, scaleLinear } from 'd3';
 // The final stage is all combined together 
 const training_stage_codes = ['D', 'F', 'C', 'P', 'All'];
 
@@ -20,7 +20,7 @@ export default class ProgramCountPlot extends Component {
 
         let mapped_data = _.map(custom_data, ({ programName, epa_completion_rate }) => {
 
-            const meanOfProgram = _.mean(_.filter(epa_completion_rate, (d) => !isNaN(d)));
+            const meanOfProgram = _.mean(_.filter(epa_completion_rate, (d) => d != -1));
 
             return {
                 'label': programName,
@@ -28,9 +28,9 @@ export default class ProgramCountPlot extends Component {
                     const completionValue = stage == 'All' ? meanOfProgram : epa_completion_rate[stageIndex];
                     return {
                         stage,
-                        'label': !isNaN(completionValue) ? Math.round(+completionValue) + '%' : 'N/A',
-                        'background': completionValue ? interpolateReds(colorScale(completionValue)) : 'white',
-                        'color': completionValue ? interpolateGreys(1 - Math.round(colorScale(completionValue))) : 'black'
+                        'label': completionValue != -1 ? Math.round(+completionValue) + '%' : 'NA*',
+                        'background': completionValue != -1 ? interpolateRdYlGn(1 - colorScale(completionValue)) : 'white',
+                        'color': completionValue != -1 ? (colorScale(completionValue) >= 0.25 && colorScale(completionValue) <= 0.75 ? 'black' : 'white') : 'black'
                     };
                 })
             };
@@ -62,6 +62,7 @@ export default class ProgramCountPlot extends Component {
                             </span>
                         </div>
                     })}
+                    <p className='text-center completion-rate-label'> <b>*NA</b> - The training stage has no EPAs to complete or has insufficient data to detect a pattern.</p>
                 </div>
             </div>
         );
