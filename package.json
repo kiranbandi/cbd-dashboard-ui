@@ -11,7 +11,7 @@
         "d3"
     ],
     "scripts": {
-        "start": "webpack-dev-server --config ./build-config/webpack.config.js --watch-poll",
+        "start": "webpack serve --config ./build-config/webpack.config.js",
         "build": "webpack -p --config ./build-config/webpack.prod.config.js"
     },
     "author": "kiranbandi",
@@ -59,21 +59,21 @@
         "babel-preset-env": "^1.7.0",
         "babel-preset-react": "^6.16.0",
         "babel-preset-stage-0": "^6.22.0",
-        "css-loader": "^0.28.11",
+        "css-loader": "^5.1.1",
         "file-loader": "^1.1.11",
         "gh-pages": "^1.2.0",
         "html-webpack-harddisk-plugin": "^1.0.1",
         "html-webpack-plugin": "^3.2.0",
-        "image-webpack-loader": "^3.2.0",
+        "image-webpack-loader": "^7.0.1",
         "node-sass": "^4.14.1",
         "redux-devtools-extension": "^2.13.2",
-        "resolve-url-loader": "^2.3.0",
+        "resolve-url-loader": "^3.1.2",
         "sass-loader": "^7.0.3",
-        "style-loader": "^0.21.0",
+        "style-loader": "^2.0.0",
         "terser-webpack-plugin": "^3.0.6",
         "url-loader": "^1.0.1",
-        "webpack": "^4.12.0",
-        "webpack-cli": "^3.0.7",
+        "webpack": "^4.46.0",
+        "webpack-cli": "^4.5.0",
         "webpack-dev-server": "^3.11.1"
     }
 }
