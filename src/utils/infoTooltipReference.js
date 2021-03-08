@@ -58,7 +58,7 @@ export default {
         EPAFeedbackWordCount: `This graph displays the average number of words contained within the completed EPAs of each program. The length of the feedback has been found to correlate with feedback quality.`,
         MonthlyDistributionByProgram: `These graphs display the number of EPAs completed within each of the programs during each month of the selected year.`,
         ProgramFeedbackDistribution: `This stack chart displays the proportion of residents in each program that have been given a particular type of feedback at their last CC Meeting. Mouse-over each row for additional details.`,
-        programEPAcompletionDivergence: `This graph demonstrates for each program the EPA fill ratio divergence from the assessment plan across each training stage. So divergence is higher when EPAs in a stage are not being completed enough or are being completed too much (>100%) relative to the assessment plan. This graph can identify if EPAs are being filled out at an adequate rate so that investigations and interventions can occur to address anticipated shortfalls before residents reach the end of the stage.`
+        programEPAcompletionDivergence: `This graph demonstrates the degree of deviation from the EPA completion ratio outlined in each program's assessment plan for each training stage and overall. Divergence is higher when EPAs in a stage are over- and under-represented relative to the assessment plan. A heat map (0% green, 50% yellow, 100% red) highlights programs/stages of concern so that investigations and interventions can occur to address these deviations and ensure that residents are given adequate opportunity to complete all of the EPAs before they reach the end of their current stage of training.`
 
     }
 }

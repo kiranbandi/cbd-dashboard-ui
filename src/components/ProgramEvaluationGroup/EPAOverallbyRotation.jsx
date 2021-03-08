@@ -56,7 +56,7 @@ export default class EPASpecRotation extends Component {
                 <Bar
                     options={{ scaleBeginAtZero: true }}
                     data={lineData}
-                    width={width} height={370}
+                    width={width} height={415}
                     redraw={true} />
             </div>
         </div>)
