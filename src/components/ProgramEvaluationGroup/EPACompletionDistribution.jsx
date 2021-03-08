@@ -206,7 +206,7 @@ export default class ProgramDashboard extends Component {
                 {filteredRecords.length > 0 ?
                     <div>
                         <div className='stage-average-wrapper'>
-                            <span>Training Stage Average : </span>
+                            <span>Training Stage Average <InfoTip info={infoTooltipReference.programEvaluation.EPACompletionDistributionStage} />: </span>
                             {_.map(training_stage_codes, (stage, stageIndex) => {
 
                                 let stageValue = Math.round(stage == 'All' ? meanOfAllStages : completionByStageList[stageIndex]),
