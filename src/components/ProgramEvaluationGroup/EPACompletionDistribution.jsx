@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import ReactSelect from 'react-select';
 import moment from 'moment';
-import * as d3 from 'd3';
+import { scaleLinear, interpolateRdYlGn } from 'd3';
 import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 import { NumberToEPAText } from "../../utils/convertEPA";
+// The final stage is all combined together 
+const training_stage_codes = ['D', 'F', 'C', 'P', 'All'];
 
 export default class ProgramDashboard extends Component {
 
@@ -57,20 +59,51 @@ export default class ProgramDashboard extends Component {
                 return map;
             }, {});
 
-        const epaPercentageList = Object.entries(epaObservationMap).map(d => {
+        let epaPercentageList = Object.entries(epaObservationMap).map(d => {
             const result = {
                 epa: d[0],
-                percentageMax: d[1].max / epaGroupObservationMap[d[0].split('.')[0]].max,
-                percentageTotal: d[1].total / epaGroupObservationMap[d[0].split('.')[0]].total,
+                percentageMax: roundTo2Decimal(d[1].max / epaGroupObservationMap[d[0].split('.')[0]].max),
+                percentageTotal: roundTo2Decimal(d[1].total / epaGroupObservationMap[d[0].split('.')[0]].total),
             };
-            result.percentageOffset = result.percentageTotal / result.percentageMax;
-
             // sometimes some EPAs might not even have started and so their percentage remains at 0
-            // so replace with 0 for non valid values like NaN
-            result.percentageOffset = result.percentageOffset || 0;
+            // for them to avoid NaN problem due to zero in denominator, use or case with 1.
+            result.percentageOffset = roundTo2Decimal((result.percentageTotal || 0) / (result.percentageMax || 1));
 
             return result;
         });
+
+
+        // group by the training state 
+        let groupedByTrainingStage = _.groupBy(epaPercentageList, (d) => d.epa[0]);
+
+        let completionByStageList = _.map([1, 2, 3, 4], (stageID) => {
+            let allDivergencesInStage = _.map(groupedByTrainingStage[stageID], (e) => {
+                // if the percentage offset is 1, divergence is zero
+                if (e.percentageOffset == 1) {
+                    return 0;
+                }
+                else if (e.percentageOffset > 1) {
+                    return (e.percentageOffset - 1) * 100
+                }
+                // if offset is less than 1 , get by how much it diverges from 1
+                return (1 - e.percentageOffset) * 100
+            });
+
+            let allTotalsInStage = _.map(groupedByTrainingStage[stageID], (e) => e.percentageTotal);
+
+            // Check for insufficient data in stage
+            // if all the EPAs are NaN itmeans all the totals were zero
+            let insufficientDataEh = _.countBy(allTotalsInStage, (d) => !isNaN(d)).false == allTotalsInStage.length;
+
+            // Take an average of all the divergences in a training stage
+            return insufficientDataEh || allDivergencesInStage.length == 0 ? -1 : _.mean(allDivergencesInStage);
+        });
+
+        let meanOfAllStages = _.mean(_.filter(completionByStageList, (d) => d != -1));
+
+        // Create a color scale that maxes out at 100%
+        const averageColorScale = scaleLinear().domain([0, 100]).range([0, 1]);
+
 
         const height = 350, margin = 10, Xoffset = 50, Yoffset = 30;
 
@@ -79,17 +112,17 @@ export default class ProgramDashboard extends Component {
         // The last bar would go beyond the available width by 75%
         //  so that width is removed from the scale 
 
-        let minPercentageOffset = d3.min(epaPercentageList.map(d => +d.percentageOffset));
+        let minPercentageOffset = _.min(epaPercentageList.map(d => +d.percentageOffset));
         minPercentageOffset = Math.floor(minPercentageOffset * 10 / 5) / 10 * 5;
-        let maxPercentageOffset = d3.max(epaPercentageList.map(d => +d.percentageOffset));
+        let maxPercentageOffset = _.max(epaPercentageList.map(d => +d.percentageOffset));
         maxPercentageOffset = Math.ceil(maxPercentageOffset * 10 / 5) / 10 * 5;
         if (maxPercentageOffset > 10) {
             maxPercentageOffset = 10;
         }
 
         // create the X and Y scales and modify them based on the track type
-        const scaleX = d3.scaleLinear().range([Xoffset, width - margin - 0.75 * itemSize]).domain([0, epaPercentageList.length - 1]);
-        let scaleY = d3.scaleLinear().range([height - margin - Yoffset, margin]).domain([minPercentageOffset, maxPercentageOffset]).clamp(true);
+        const scaleX = scaleLinear().range([Xoffset, width - margin - 0.75 * itemSize]).domain([0, epaPercentageList.length - 1]);
+        let scaleY = scaleLinear().range([height - margin - Yoffset, margin]).domain([minPercentageOffset, maxPercentageOffset]).clamp(true);
 
         const xOne = scaleY(1);
         // create bars
@@ -171,12 +204,33 @@ export default class ProgramDashboard extends Component {
 
             <div className='col-xs-12 m-t'>
                 {filteredRecords.length > 0 ?
-                    <svg width={width} height={350}>
-                        <g>{axisTickLines}</g>
-                        <g>{axisTexts}</g>
-                        <g>{epaTexts}</g>
-                        <g>{bars}</g>
-                    </svg>
+                    <div>
+                        <div className='stage-average-wrapper'>
+                            <span>Training Stage Average : </span>
+                            {_.map(training_stage_codes, (stage, stageIndex) => {
+
+                                let stageValue = Math.round(stage == 'All' ? meanOfAllStages : completionByStageList[stageIndex]),
+                                    background = interpolateRdYlGn(1 - averageColorScale(stageValue)),
+                                    color = averageColorScale(stageValue) >= 0.25 && averageColorScale(stageValue) <= 0.75 ? 'black' : 'white';
+
+                                if (stageValue != -1) {
+                                    return <span
+                                        style={{ background, color }}
+                                        key={'stage-average-' + stage}
+                                        className='stage-average'>
+                                        {stage} - {stageValue}%
+                                        </span>
+                                }
+                                return;
+                            })}
+                        </div>
+                        <svg width={width} height={350}>
+                            <g>{axisTickLines}</g>
+                            <g>{axisTexts}</g>
+                            <g>{epaTexts}</g>
+                            <g>{bars}</g>
+                        </svg>
+                    </div>
                     : <h3 style={{ width }} className='error-code text-left m-b'>No Records</h3>
                 }
                 <div className='chart-tooltip' id="chartjs-tooltip-completion-distribution"></div>
@@ -191,3 +245,6 @@ function matchAcademicYear(recordDate, academicYear) {
     var timeObj = moment(recordDate, 'YYYY-MM-DD');
     return (timeObj.isBetween(moment('07/01/' + Number(academicYear), 'MM/DD/YYYY'), moment('06/30/' + (Number(academicYear) + 1), 'MM/DD/YYYY'), 'days', '[]'))
 }
+
+
+let roundTo2Decimal = (d) => (Math.round(d * 100) / 100);

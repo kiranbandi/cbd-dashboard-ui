@@ -10,6 +10,9 @@
         color: #4e79a7 !important;
         .icon {
             vertical-align: initial !important;
+            &:before {
+                top: 2.5px;
+            }
         }
     }
     // make sure no capitilization occurs if the tooltip is
