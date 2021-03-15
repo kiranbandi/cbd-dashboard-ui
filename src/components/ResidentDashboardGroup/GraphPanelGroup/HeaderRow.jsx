@@ -19,8 +19,11 @@ class HeaderRow extends Component {
             const achievedCount = +epaSourceMap[innerKey].achieved[epaID];
             // reset the completed to max amount
             achievedEPACount += Math.min(achievedCount ? achievedCount : 0, count);
-        })
+        });
 
+        // If all the sub EPAs in a stage are marked complete,
+        // then mark the stage as complete
+        let allSubEPAsComplete = _.reduce(epaSourceMap[innerKey].completed, (acc, d) => acc && d, true);
 
         if (residentFilter && residentFilter.username) {
             residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
@@ -34,8 +37,7 @@ class HeaderRow extends Component {
             }
         }
 
-        // TODO remap stages as sequential array instead of object so ordering doesnt
-        // screw things up
+        // TODO remap stages as sequential array instead of object so ordering doesnt screw things up
         let currentStageStatus = _.map(residentInfo.stageProgress)[+innerKey - 1];
 
         let percentageComplete = Math.round((achievedEPACount * 100) / requiredEPACount),
@@ -44,8 +46,8 @@ class HeaderRow extends Component {
         // remap NaN values to 0
         percentageComplete = isNaN(percentageComplete) ? 0 : percentageComplete;
 
-        if (currentStageStatus.completed) {
-            iconLabel = 'fa-check';
+        if (currentStageStatus.completed || allSubEPAsComplete) {
+            iconLabel = 'fa-check-circle';
             statusLabel = 'COMPLETE ';
             percentageComplete = '';
         }

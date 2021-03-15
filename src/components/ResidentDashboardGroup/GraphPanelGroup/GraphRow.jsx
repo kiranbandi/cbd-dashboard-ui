@@ -13,7 +13,6 @@ export default class GraphRow extends Component {
         super(props);
         this.state = { filterDict: {} };
         this.onHighlightChange = this.onHighlightChange.bind(this);
-
     }
 
     onHighlightChange(filterKey, filterValue) {
@@ -57,6 +56,8 @@ export default class GraphRow extends Component {
 
         // Get remaining count 
         const remainingCount = Math.max((maxObservation - achievedCount), 0);
+
+        const isEPAComplete = remainingCount == 0 || +epaSourceMap[epaSource.split(".")[0]].completed[epaSource];
 
         let firstMeasure = Math.min((recordedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
         let secondMeasure = Math.min((achievedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
@@ -149,7 +150,10 @@ export default class GraphRow extends Component {
                         firstMeasure={firstMeasure} />
 
                     <div className='card-container'>
-                        {true &&
+                        {isEPAComplete ?
+                            <div className='graph-card first-card'>
+                                <span className="fa fa-check-circle completed-check"></span>
+                            </div> :
                             <div className='graph-card first-card'>
                                 <span className='card-text'>{remainingCount}</span>
                                 <span className='card-title remaining-title'>TO GO</span>
@@ -159,7 +163,7 @@ export default class GraphRow extends Component {
                             <span className='card-title recorded-title'>OBSERVED</span>
                         </div>
                         <div className='graph-card'>
-                            <span className='card-text'>{maxObservation}</span>
+                            <span className='card-text'>{maxObservation == 0 ? 'N/A' : maxObservation}</span>
                             <span className='card-title required-title'>REQUIRED</span>
                         </div>
                         <div className='graph-card '>

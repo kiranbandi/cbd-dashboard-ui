@@ -51,8 +51,6 @@ export default function (username, residentInfo, learnerDataDump) {
 
 function getProgramInfo(epa_list, epaProgress, course_name) {
 
-    let rawEPAList = {};
-
     let defaultSourceMap = {
         1: {
             'ID': 'TTD',
@@ -121,7 +119,6 @@ function getProgramInfo(epa_list, epaProgress, course_name) {
 
     return {
         programName: course_name,
-        rawEPAList,
         rotationList: ["EM", "EM(PED)", "EM(RGNL)", "ACE", "ANESTHESIA", "CARDIO", "ICU", "GIM", "GEN SURG", "NEURO", "OBS/GYN", "OPTHO", "ORTHO", "OTHER", "PICU", "PLASTICS", "PSYCH", "SELECTIVE", "TOXICOLOGY", "TRAUMA", "TRANSPORT"],
         rotationRequired: {
             "ACE": 6,
