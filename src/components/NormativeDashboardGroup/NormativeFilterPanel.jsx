@@ -41,7 +41,7 @@ export default class NormativeFilterPanel extends Component {
 
                     <div className="checkbox custom-control text-center custom-checkbox">
                         <label className='filter-label'>
-                            {"Active Residents only"}
+                            {"Filter Residents with No records"}
                             <input id='filter-dateFilterActive' type="checkbox"
                                 checked={removeNoRecords} onChange={onNoRecordChange} />
                             <span className="custom-control-indicator"></span>

@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _, { compact } from 'lodash';
 import moment from 'moment';
 import { EPATextToNumber } from '../convertEPA';
 export default function (username, residentInfo, learnerDataDump) {
@@ -8,14 +8,6 @@ export default function (username, residentInfo, learnerDataDump) {
         contextual_variables = [] } = learnerDataDump,
         { fullname, epaProgress } = residentInfo;
 
-    // Fetch preset context variable map
-    const { contextual_variable_map } = window.saskDashboard;
-
-    // only consider assessments which are supervisor forms for now
-    // field notes and narratives and rubric forms are ignored I guess 
-    // Also filter out records which dont have a corresponding contextual variable map form ID
-    // this probably means they have not been defined yet
-    let valid_assessments = _.filter(assessments, (d) => d.form_shortname == 'cbme_supervisor' && contextual_variable_map[d.form_id]);
 
     // process and set the source map  
     const programInfo = getProgramInfo(advanced_search_epas, epaProgress, course_name);
@@ -31,26 +23,28 @@ export default function (username, residentInfo, learnerDataDump) {
         subGroupedContextualVariables[formID] = _.groupBy(values, (d) => d.dassessment_id);
     });
 
-    var residentData = _.map(valid_assessments, (record) => {
+    var residentData = _.map(assessments, (record) => {
 
-        const situationContextCollection = subGroupedContextualVariables[record.form_id][record.dassessment_id] || [];
+        const contextual_variables_by_form = subGroupedContextualVariables[record.form_id] || {},
+            situationContextCollection = contextual_variables_by_form[record.dassessment_id] || [];
 
         return {
             username,
             Date: moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD'),
-            EPA: EPATextToNumber(record.title.split('-')[1].trim()),
+            EPA: recordEPAtoNumber(record),
             Observer_Name: record.assessor,
-            Feedback: record.comment_response ? record.comment_response : '',
+            Feedback: processComments(record),
             Observer_Type: '',
             Professionalism_Safety: '',
             Rating: record.selected_iresponse_order == 0 ? 5 : record.selected_iresponse_order,
             Resident_Name: fullname,
             Situation_Context: _.map(situationContextCollection, (e) => e.item_text + " : " + e.text).join("\n"),
-            Type: '',
+            Type: record.form_type,
             situationContextCollection,
-            formID: record.form_id
+            formID: record.form_id,
+            scaleSize: record.rating_scale_responses.length || 0
         }
-    });
+    }).filter((d) => d.EPA != 'unmapped');
 
     return { programInfo, residentData };
 }
@@ -112,21 +106,17 @@ function getProgramInfo(epa_list, epaProgress, course_name) {
         const matchingEPA = _.find(epaProgress, (d) => d.objective_id == epa.target_id);
         const EPAID = EPATextToNumber(matchingEPA.objective_code);
 
-        if (epa.target_title.indexOf('Special Assessment') == -1) {
-            // set the EPA label
-            defaultSourceMap[EPAID[0]].subRoot[EPAID] = getEPATitle(epa.target_title);
-            // set the EPA required observation count 
-            defaultSourceMap[EPAID[0]].maxObservation[EPAID] = matchingEPA.total_assessments_required || 0;
-            // set the EPA achieved count 
-            defaultSourceMap[EPAID[0]].observed[EPAID] = matchingEPA.total_assessment_attempts || 0;
-            // set the observed count 
-            defaultSourceMap[EPAID[0]].achieved[EPAID] = matchingEPA.total_requirement_met_assessments || 0;
-            // set the completed flag 
-            defaultSourceMap[EPAID[0]].completed[EPAID] = matchingEPA.completed || false;
-        }
-        else {
-            // TODO also include special assessment EPAs 
-        }
+        // set the EPA label
+        defaultSourceMap[EPAID[0]].subRoot[EPAID] = getEPATitle(epa.target_title);
+        // set the EPA required observation count 
+        defaultSourceMap[EPAID[0]].maxObservation[EPAID] = matchingEPA.total_assessments_required || 0;
+        // set the EPA achieved count 
+        defaultSourceMap[EPAID[0]].observed[EPAID] = matchingEPA.total_assessment_attempts || 0;
+        // set the observed count 
+        defaultSourceMap[EPAID[0]].achieved[EPAID] = matchingEPA.total_requirement_met_assessments || 0;
+        // set the completed flag 
+        defaultSourceMap[EPAID[0]].completed[EPAID] = matchingEPA.completed || false;
+
     });
 
     return {
@@ -164,4 +154,46 @@ function getProgramInfo(epa_list, epaProgress, course_name) {
 
 function getEPATitle(title) {
     return title.slice(3).trim();
+}
+
+function recordEPAtoNumber(record) {
+    if (record.form_type == 'Supervisor Form') {
+        return EPATextToNumber(record.title.split('-')[1].trim());
+    }
+    else if (record.mapped_epas.length > 0) {
+        return EPATextToNumber(record.mapped_epas[0].objective_code || '');
+    }
+    else {
+        return 'unmapped';
+    }
+}
+
+function processComments(record) {
+    // if comments exists parse them
+    if (record.comments && record.comments.length > 0) {
+        // The comments can be of multiple types
+        // the comment of the type item_text: "Based on this..."
+        // are the regular feedback so add them in first
+        // sometimes there are multiple entries of this type, which can happen
+        // if they enter a comment first and then edit it and save it
+        // so get the longest comment 
+        let groupedComments = _.partition(record.comments, (d) => d.item_text.indexOf('Based on this') > -1);
+        // the grouped comments is an array the first index contains all comments which are the feedback type
+        // usually this is just one comment but sometimes the same entry gets
+        // written multiple times so in those cases reduce it to the longest one.
+        let comment = _.reduce(groupedComments[0], (acc, d) => d.comments.length > acc.length ? d.comments : acc, '');
+
+        // if the comment is non empty add an empty line after it.
+        comment = comment.length > 0 ? comment + '\n\n' : comment;
+
+        // loop over any other comments if they exist
+        _.map(groupedComments[1] || [], (d) => {
+            // for each , first add an empty line and then a gap line
+            // Also capitalize the item title
+            comment += d.item_text.toLocaleUpperCase() + ": " + d.comments + '\n\n';
+        });
+
+        return comment;
+    }
+    return '';
 }

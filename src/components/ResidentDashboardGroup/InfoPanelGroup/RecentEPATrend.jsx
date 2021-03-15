@@ -40,7 +40,9 @@ class RecentEPATrend extends Component {
             'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,
             'y': event.pageY - 50,
             'epa': epaText,
-            'feedback': data['Feedback'],
+            // Add an empty line to align info horizontally
+            'feedback': '\n' + data['Feedback'],
+            'type': data['Type'],
             'name': data['Observer_Name'],
             'date': data['Date'],
             // Add an empty line to align info horizontally

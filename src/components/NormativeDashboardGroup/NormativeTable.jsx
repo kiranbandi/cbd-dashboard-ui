@@ -14,7 +14,7 @@ const columns = [{
     maxWidth: 75
 },
 {
-    Header: 'Completed',
+    Header: 'Achieved',
     accessor: 'completedAssessments',
     className: 'text-center',
     maxWidth: 100

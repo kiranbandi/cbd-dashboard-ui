@@ -90,11 +90,11 @@ class NormativeGraph extends Component {
         };
 
         return (
-            <div className='normative-graph'>
+            <div className='normative-graph m-b'>
                 <div className='sub-filter'>
                     <div className='radio-button-container'>
                         <RadioButton value={'totalAssessments'} id={'track_totalAssessments'} className='track-radio' name='track-select'
-                            label={"Attempted EPAs"}
+                            label={"Completed EPAs"}
                             onChange={this.radioChange}
                             checked={trackType == 'totalAssessments'} />
                         <RadioButton value={'achievementRate'} id={'track_achievementRate'} className='track-radio' name='track-select'
@@ -106,7 +106,7 @@ class NormativeGraph extends Component {
                             onChange={this.radioChange}
                             checked={trackType == 'totalProgress'} />
                         <RadioButton value={'completedAssessments'} id={'track_completedAssessments'} className='track-radio' name='track-select'
-                            label={"Attempted vs Completed"}
+                            label={"Completed vs Achieved"}
                             onChange={this.radioChange}
                             checked={trackType == 'completedAssessments'} />
                     </div>

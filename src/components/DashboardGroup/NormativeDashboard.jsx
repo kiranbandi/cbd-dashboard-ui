@@ -30,25 +30,25 @@ class NormativeDashboard extends Component {
 
         return (
             <div className='normative-data-container'>
-                    <div>
-                        <NormativeFilterPanel
-                            currentStage={currentStage}
-                            removeNoRecords={removeNoRecords}
-                            onStageChange={this.onStageChange}
-                            onNoRecordChange={this.onNoRecordChange} />
-                        {filteredList.length > 0 ?
-                            <div className='normative-inner-root'>
-                                <NormativeGraph
-                                    width={overallWidth - (450)}
-                                    records={filteredList} />
-                                <NormativeTable
-                                    width={450}
-                                    records={filteredList} />
-                            </div> :
-                            <h3 className='text-primary text-center m-t-lg'>
-                                Sorry there are no {removeNoRecords ? 'active' : ''} residents in the selected training stage.
+                <div className='text-center'>
+                    <NormativeFilterPanel
+                        currentStage={currentStage}
+                        removeNoRecords={removeNoRecords}
+                        onStageChange={this.onStageChange}
+                        onNoRecordChange={this.onNoRecordChange} />
+                    {filteredList.length > 0 ?
+                        <div className='normative-inner-root'>
+                            <NormativeGraph
+                                width={overallWidth - (450)}
+                                records={filteredList} />
+                            <NormativeTable
+                                width={450}
+                                records={filteredList} />
+                        </div> :
+                        <h3 className='text-primary text-center m-t-lg'>
+                            Sorry there are no {removeNoRecords ? 'active' : ''} residents in the selected training stage.
                             </h3>}
-                    </div>
+                </div>
             </div>
         );
     }

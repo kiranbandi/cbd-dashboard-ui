@@ -73,11 +73,13 @@ class GraphPanel extends Component {
         actions.showTooltip(true, {
             'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,
             'y': event.pageY - 50,
-            'feedback': data['Feedback'],
+            // Add an empty line to align info horizontally
+            'feedback': '\n' + data['Feedback'],
             'name': data['Observer_Name'],
+            'type': data['Type'],
             'date': data['Date'],
             // Add an empty line to align info horizontally
-            'context': '\n'+data['Situation_Context'],
+            'context': '\n' + data['Situation_Context'],
             // show safety concerns in the tooltip only if they are non empty and not "No"
             "concern": (data['Professionalism_Safety'] != 0 && data['Professionalism_Safety'] != "No") ? data['Professionalism_Safety'] : ''
         });
