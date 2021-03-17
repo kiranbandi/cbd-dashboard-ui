@@ -30,12 +30,12 @@ export default (props) => {
                 {residentFilter.isAllData ?
                     <div className='row text-center m-t'>
                         <CardComponent title='Total EPAs Observed' type='primary' metric={totalEPAs} />
-                        <CardComponent title='Completion Rate' type='success' metric={totalProgress + '%'} />
+                        <CardComponent title='Progress Rate' type='success' metric={totalProgress + '%'} />
                         <CardComponent title='Achievement Rate' type='danger' metric={achievementRate + '%'} />
                     </div> :
                     <div className='row text-center'>
                         <CardComponent dual={true} title='Total EPAs Observed' type='primary' metric={totalEPAs} secondMetric={recordsInPeriodCount} />
-                        <CardComponent title='Completion Rate' type='success' metric={totalProgress + '%'} />
+                        <CardComponent title='Progress Rate' type='success' metric={totalProgress + '%'} />
                         <CardComponent title='Achievement Rate' type='danger' metric={achievementRate + '%'} />
                     </div>
                 }
