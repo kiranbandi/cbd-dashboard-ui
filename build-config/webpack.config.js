@@ -10,17 +10,12 @@ module.exports = {
         path: path.resolve("C:\\Users\\bvenk\\Sites\\elentra-1x-me\\www-root\\javascript"),
         filename: "sask-dashboard.js"
     },
-    devServer: {
-        inline: false,
-        hot: false,
-        contentBase: './build',
-        port: 8887,
-        watchOptions: {
-            ignored: [
-                path.resolve(__dirname, 'build'),
-                path.resolve(__dirname, 'node_modules')
-            ]
-        }
+    watch: true,
+    watchOptions: {
+        ignored: [
+            path.resolve(__dirname, 'build'),
+            path.resolve(__dirname, 'node_modules')
+        ]
     },
     plugins: [new webpack.DefinePlugin({
         'process.env': {
