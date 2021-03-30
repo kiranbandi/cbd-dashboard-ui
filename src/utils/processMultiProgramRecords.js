@@ -65,6 +65,7 @@ export function processMultiProgramRecords(allRecords = [], residentList = [], p
             feedback_group: _.map(POSSIBLE_FEEDBACK, (d) => (feedbackGroup[d] ? feedbackGroup[d].length : 0)),
             epa_completion_rate: [...averageDivergence],
             epa_percentage_list: [...epaPercentageList],
+            source_map: sourceMap,
             epa_count: records.length,
             expired_count: records.length - nonExpiredRecords.length,
             monthly_count: _.groupBy(nonExpiredRecords, (d) => moment(d.observation_date, 'YYYY-MM-DD').format('MMM')),

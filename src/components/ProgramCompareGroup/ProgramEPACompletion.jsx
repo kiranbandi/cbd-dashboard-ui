@@ -6,11 +6,31 @@ import { interpolateRdYlGn, scaleLinear } from 'd3';
 // The final stage is all combined together 
 const training_stage_codes = ['D', 'F', 'C', 'P', 'All'];
 
-export default class ProgramCountPlot extends Component {
+export default class ProgramEPACompletion extends Component {
+
+
+    constructor(props) {
+        super(props);
+        this.state = { selectedProgram: 0 };
+    }
+
+    onProgramWrapperClick = (event) => {
+        const selectedProgram = +event.currentTarget.id.split('-')[2];
+        this.setState({ selectedProgram });
+    }
 
     render() {
-        const { programData, width, printModeON } = this.props;
-        let custom_data = _.map(programData, ({ programName, epa_completion_rate, epa_percentage_list }) => ({ programName, epa_completion_rate, epa_percentage_list }));
+        const { programData, width, printModeON } = this.props,
+            { selectedProgram = 0 } = this.state;
+
+        let custom_data = _.map(programData,
+            ({ programName, source_map, epa_completion_rate, epa_percentage_list }) => ({
+                programName,
+                source_map,
+                epa_completion_rate,
+                epa_percentage_list
+            }));
+
 
         // Filter out Overall program since this metric doesnt make sense for overall
         // then flip the whole array
@@ -37,7 +57,7 @@ export default class ProgramCountPlot extends Component {
             };
         });
 
-        console.log(custom_data);
+        let activeProgramData = custom_data[selectedProgram];
 
         return (
             <div>
@@ -51,10 +71,12 @@ export default class ProgramCountPlot extends Component {
                         </h4>
                     </div>
                     <div className='chart-container completion-rate-chart'
-                        style={{ width, 'height': '600' + 'px' }}>
+                        style={{ 'width': width / 2, 'height': '630' + 'px' }}>
                         {_.map(mapped_data, (program, programIndex) => {
                             return <div key={'proram-rate-key-' + programIndex}
-                                className='program-rate-wrapper'>
+                                className={'program-rate-wrapper ' + (selectedProgram == programIndex ? 'selected' : '')}
+                                id={'program-map-' + programIndex}
+                                onClick={this.onProgramWrapperClick}>
                                 <span className='program-rate-label'>{program.label}</span>
                                 <span className='program-rate-inner-wrapper'>
                                     {_.map(program.data, ({ stage, label, background, color }, stageIndex) =>
@@ -68,21 +90,11 @@ export default class ProgramCountPlot extends Component {
                         })}
                         <p className='text-center completion-rate-label'> <b>*NA</b> - The training stage has no EPAs to complete or has insufficient data to detect a pattern.</p>
                     </div>
-                </div>
-                <div className='program-part-container'>
-                    <div className="hr-divider">
-                        <h4
-                            className="hr-divider-content"
-                            style={printModeON ? { background: 'white', color: 'black' } : undefined}>
-                            EPA Completion Divergence
-                        <InfoTip info={infoTooltipReference.comparePrograms.programEPAcompletionDivergence} />
-                        </h4>
-                    </div>
-                    {/* <SpecificEPACompletionDistribution
-                        epaSourceMap={epaSourceMap}
-                        epaPercentageList={epaPercentageList}
-                        averageDivergence={averageDivergence}
-                        width={width} /> */}
+                    <SpecificEPACompletionDistribution
+                        epaSourceMap={activeProgramData.source_map}
+                        epaPercentageList={activeProgramData.epa_percentage_list}
+                        height={600}
+                        width={width / 2} />
                 </div>
             </div>
         );

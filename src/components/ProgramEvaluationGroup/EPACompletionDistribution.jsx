@@ -5,13 +5,16 @@ import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 import { calculateEPACompletion } from '../../utils/processMultiProgramRecords';
 import EPACompletionChart from './EPACompletionChart';
+import { scaleLinear, interpolateRdYlGn } from 'd3';
+// The final stage is all combined together 
+const training_stage_codes = ['D', 'F', 'C', 'P', 'All'];
 
 export default class ProgramDashboard extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            academicYear: { 'label': '2020-2021', 'value': '2020' },
+            academicYear: { 'label': '2020-2021', 'value': '2020' }
         };
     }
 
@@ -28,6 +31,12 @@ export default class ProgramDashboard extends Component {
             .filter(d => matchAcademicYear(d.observation_date, academicYear.value)) : records;
 
         const { epaPercentageList = [], averageDivergence = [] } = calculateEPACompletion(epaSourceMap, filteredRecords);
+
+
+        let meanOfAllStages = _.mean(_.filter(averageDivergence, (d) => d != -1));
+        // Create a color scale that maxes out at 100%
+        const averageColorScale = scaleLinear().domain([0, 100]).range([0, 1]);
+
 
         return (<div className={('program-vis-box') + (printModeON ? ' printable-content' : '')}>
             {yearToggleEnabled && <div>
@@ -49,16 +58,34 @@ export default class ProgramDashboard extends Component {
 
             <div className='col-xs-12 m-t'>
                 {filteredRecords.length > 0 ?
-                    <EPACompletionChart
-                        epaSourceMap={epaSourceMap}
-                        epaPercentageList={epaPercentageList}
-                        averageDivergence={averageDivergence}
-                        width={width} />
+                    <div>
+                        <div className='stage-average-wrapper'>
+                            <span>Training Stage Average Deviation<InfoTip info={infoTooltipReference.programEvaluation.EPACompletionDistributionStage} />: </span>
+                            {_.map(training_stage_codes, (stage, stageIndex) => {
+
+                                let stageValue = Math.round(stage == 'All' ? meanOfAllStages : averageDivergence[stageIndex]),
+                                    background = interpolateRdYlGn(1 - averageColorScale(stageValue)),
+                                    color = averageColorScale(stageValue) >= 0.25 && averageColorScale(stageValue) <= 0.75 ? 'black' : 'white';
+
+                                if (stageValue != -1) {
+                                    return <span
+                                        style={{ background, color }}
+                                        key={'stage-average-' + stage}
+                                        className='stage-average'>
+                                        {stage} - {stageValue}%</span>
+                                }
+                            })}
+                        </div>
+                        <EPACompletionChart
+                            height={350}
+                            width={width}
+                            epaSourceMap={epaSourceMap}
+                            epaPercentageList={epaPercentageList} />
+                    </div>
                     : <h3 style={{ width }} className='error-code text-left m-b'>No Records</h3>
                 }
-                <div className='chart-tooltip' id="chartjs-tooltip-completion-distribution"></div>
             </div>
-            <s-tooltip follow-mouse orientation="top" border-width="1px" show-delay="0" style={{ fontFamily: 'inherit' }} attach-to=".epa-completion-distribution-chart-bar"></s-tooltip>
+
         </div>);
     };
 }

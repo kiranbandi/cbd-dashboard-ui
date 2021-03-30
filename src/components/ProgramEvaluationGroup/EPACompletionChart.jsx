@@ -1,24 +1,16 @@
 import React, { Component } from 'react';
 import { scaleLinear, interpolateRdYlGn } from 'd3';
-import { InfoTip } from '../';
-import infoTooltipReference from '../../utils/infoTooltipReference';
 import { NumberToEPAText } from "../../utils/convertEPA";
-// The final stage is all combined together 
-const training_stage_codes = ['D', 'F', 'C', 'P', 'All'];
+
 
 export default class EPACompletionChart extends Component {
 
     render() {
 
         const { epaSourceMap, epaPercentageList = [],
-            averageDivergence = [], width, printModeON } = this.props;
+            height, width, printModeON } = this.props,
 
-
-        let meanOfAllStages = _.mean(_.filter(averageDivergence, (d) => d != -1));
-        // Create a color scale that maxes out at 100%
-        const averageColorScale = scaleLinear().domain([0, 100]).range([0, 1]);
-
-        const height = 350, margin = 10, Xoffset = 50, Yoffset = 30;
+            margin = 10, Xoffset = 50, Yoffset = 30;
 
         // The size of the bar is 0.75% of the item size and rest is left as a gap
         const itemSize = epaPercentageList.length > 0 ? ((width - margin) / epaPercentageList.length) : 2;
@@ -39,7 +31,7 @@ export default class EPACompletionChart extends Component {
                 .domain([minPercentageOffset, maxPercentageOffset]).clamp(true);
 
         // If the bar widths are small, then hide the axisTickLines
-        const hideAxisTickLines = 0.75 * itemSize < 16;
+        const hideAxisTickLines = 0.75 * itemSize < 17;
 
         const xOne = scaleY(1);
         // create bars
@@ -74,6 +66,7 @@ export default class EPACompletionChart extends Component {
             (acc, group, groupIndex) => {
 
                 dividers.push(<line
+                    className='divider-line'
                     key={'divider-group-' + groupIndex}
                     stroke={'white'}
                     strokeWidth={3}
@@ -113,28 +106,8 @@ export default class EPACompletionChart extends Component {
             key={d.epa}
             style={{ textAnchor: 'middle' }}>{NumberToEPAText(d.epa)}</text>);
 
-        return (<div>
-            <div className='stage-average-wrapper'>
-                <span>Training Stage Average Deviation<InfoTip info={infoTooltipReference.programEvaluation.EPACompletionDistributionStage} />: </span>
-                {_.map(training_stage_codes, (stage, stageIndex) => {
-
-                    let stageValue = Math.round(stage == 'All' ? meanOfAllStages : averageDivergence[stageIndex]),
-                        background = interpolateRdYlGn(1 - averageColorScale(stageValue)),
-                        color = averageColorScale(stageValue) >= 0.25 && averageColorScale(stageValue) <= 0.75 ? 'black' : 'white';
-
-                    if (stageValue != -1) {
-                        return <span
-                            style={{ background, color }}
-                            key={'stage-average-' + stage}
-                            className='stage-average'>
-                            {stage} - {stageValue}%
-                            </span>
-                    }
-                    return;
-                })}
-            </div>
-
-            <svg width={width} height={350}>
+        return (<div className='specific-program-chart'>
+            <svg width={width} height={height}>
                 <g>{axisTickLines}</g>
                 <g>{axisTexts}</g>
                 {/* hide EPA labels if the chart is too small  */}
@@ -142,6 +115,7 @@ export default class EPACompletionChart extends Component {
                 <g>{bars}</g>
                 <g>{dividers}</g>
             </svg>
+            <s-tooltip follow-mouse orientation="top" border-width="1px" show-delay="0" style={{ fontFamily: 'inherit' }} attach-to=".epa-completion-distribution-chart-bar"></s-tooltip>
         </div>);
     };
 }

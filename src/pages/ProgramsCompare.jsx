@@ -90,7 +90,7 @@ export default class ProgramsCompare extends Component {
         this.setState({ academicYear, loaderState: true });
         // fetch data for that specific academic year
         getRecordsByYear(academicYear.value, false).then((records) => {
-            this.setState({ 'programData': processProgramRecords(records, this.state.residentList, PROGRAM_LIST) });
+            this.setState({ 'programData': processMultiProgramRecords(records, this.state.residentList, PROGRAM_LIST) });
         })
             // toggle loader again once the request completes
             .catch(() => { console.log("error in fetching records"); })
