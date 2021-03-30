@@ -1,0 +1,149 @@
+import React, { Component } from 'react';
+import { scaleLinear, interpolateRdYlGn } from 'd3';
+import { InfoTip } from '../';
+import infoTooltipReference from '../../utils/infoTooltipReference';
+import { NumberToEPAText } from "../../utils/convertEPA";
+// The final stage is all combined together 
+const training_stage_codes = ['D', 'F', 'C', 'P', 'All'];
+
+export default class EPACompletionChart extends Component {
+
+    render() {
+
+        const { epaSourceMap, epaPercentageList = [],
+            averageDivergence = [], width, printModeON } = this.props;
+
+
+        let meanOfAllStages = _.mean(_.filter(averageDivergence, (d) => d != -1));
+        // Create a color scale that maxes out at 100%
+        const averageColorScale = scaleLinear().domain([0, 100]).range([0, 1]);
+
+        const height = 350, margin = 10, Xoffset = 50, Yoffset = 30;
+
+        // The size of the bar is 0.75% of the item size and rest is left as a gap
+        const itemSize = epaPercentageList.length > 0 ? ((width - margin) / epaPercentageList.length) : 2;
+        // The last bar would go beyond the available width by 75%
+        //  so that width is removed from the scale 
+
+        let minPercentageOffset = _.min(epaPercentageList.map(d => +d.percentageOffset));
+        minPercentageOffset = Math.floor(minPercentageOffset * 10 / 5) / 10 * 5;
+        let maxPercentageOffset = _.max(epaPercentageList.map(d => +d.percentageOffset));
+        maxPercentageOffset = Math.min(Math.ceil(maxPercentageOffset * 10 / 5) / 10 * 5, 10);
+
+        // create the X and Y scales and modify them based on the track type
+        const scaleX = scaleLinear()
+            .range([Xoffset, width - margin - 0.75 * itemSize])
+            .domain([0, epaPercentageList.length - 1]),
+            scaleY = scaleLinear()
+                .range([height - margin - Yoffset, margin])
+                .domain([minPercentageOffset, maxPercentageOffset]).clamp(true);
+
+        // If the bar widths are small, then hide the axisTickLines
+        const hideAxisTickLines = 0.75 * itemSize < 16;
+
+        const xOne = scaleY(1);
+        // create bars
+        const bars = epaPercentageList.map((d, i) => (
+            <rect
+                className="epa-completion-distribution-chart-bar"
+                x={scaleX(i)}
+                y={scaleY(d.percentageOffset) <= xOne ? scaleY(d.percentageOffset) : xOne}
+                height={scaleY(d.percentageOffset) <= xOne ? xOne - scaleY(d.percentageOffset) : scaleY(d.percentageOffset) - xOne}
+                fill={(() => {
+                    const colorValue = d.percentageOffset > 1 ? Math.min(d.percentageOffset - 1, 1) : (1 - d.percentageOffset);
+                    return interpolateRdYlGn(1 - colorValue);
+                })()}
+                width={0.75 * itemSize}
+                stroke={d.percentageOffset > maxPercentageOffset ? 'white' : 'transparent'}
+                key={d.epa}
+                data-s-tooltip-text={
+                    (d.percentageOffset * 100).toFixed() + '%' +
+                    ' - ' + NumberToEPAText(d.epa) +
+                    ' - ' + epaSourceMap[d.epa.split('.')[0]].topic +
+                    ' - ' + epaSourceMap[d.epa.split('.')[0]].subRoot[d.epa]
+                }
+            ></rect>
+        ));
+
+        // Draw vertical lines between the different training phase groups
+        // so group the list by phase and then draw a dotten line a little 
+        // after the last element in each group
+
+        const dividers = [];
+        _.reduce(_.groupBy(epaPercentageList, (d) => d.epa.slice(0, 1)),
+            (acc, group, groupIndex) => {
+
+                dividers.push(<line
+                    key={'divider-group-' + groupIndex}
+                    stroke={'white'}
+                    strokeWidth={3}
+                    strokeDasharray={5}
+                    y1={scaleY.range()[0]}
+                    y2={scaleY.range()[1]}
+                    x1={scaleX(acc)}
+                    x2={scaleX(acc)}></line>);
+
+                return acc + group.length;
+            }, 0);
+
+
+        // create the vertical tick lines 
+        const axisTickLines = _.range(minPercentageOffset, maxPercentageOffset + .5, .5).map(d => <line
+            x1={Xoffset}
+            y1={scaleY(d)}
+            x2={width - margin}
+            y2={scaleY(d)}
+            stroke={d === 1 ? (printModeON ? 'black' : 'white') : '#a9a1a1'}
+            opacity={d === 1 ? 1 : .5}
+            key={d}
+        ></line>);
+
+        const axisTexts = _.range(minPercentageOffset, maxPercentageOffset + .5, .5).map(d => <text
+            x={5}
+            y={scaleY(d) + 5}
+            fontWeight='bold'
+            fill={d === 1 ? (printModeON ? 'black' : 'white') : '#a9a1a1'}
+            key={d}
+        >{(d * 100).toFixed() + '%'}</text>);
+
+        const epaTexts = epaPercentageList.map((d, i) => <text
+            x={scaleX(i) + (itemSize - (0.25 * itemSize)) / 2}
+            y={height - margin - Yoffset / 2}
+            fill='#a9a1a1'
+            key={d.epa}
+            style={{ textAnchor: 'middle' }}>{NumberToEPAText(d.epa)}</text>);
+
+        return (<div>
+            <div className='stage-average-wrapper'>
+                <span>Training Stage Average Deviation<InfoTip info={infoTooltipReference.programEvaluation.EPACompletionDistributionStage} />: </span>
+                {_.map(training_stage_codes, (stage, stageIndex) => {
+
+                    let stageValue = Math.round(stage == 'All' ? meanOfAllStages : averageDivergence[stageIndex]),
+                        background = interpolateRdYlGn(1 - averageColorScale(stageValue)),
+                        color = averageColorScale(stageValue) >= 0.25 && averageColorScale(stageValue) <= 0.75 ? 'black' : 'white';
+
+                    if (stageValue != -1) {
+                        return <span
+                            style={{ background, color }}
+                            key={'stage-average-' + stage}
+                            className='stage-average'>
+                            {stage} - {stageValue}%
+                            </span>
+                    }
+                    return;
+                })}
+            </div>
+
+            <svg width={width} height={350}>
+                <g>{axisTickLines}</g>
+                <g>{axisTexts}</g>
+                {/* hide EPA labels if the chart is too small  */}
+                {!hideAxisTickLines && <g>{epaTexts}</g>}
+                <g>{bars}</g>
+                <g>{dividers}</g>
+            </svg>
+        </div>);
+    };
+}
+
+

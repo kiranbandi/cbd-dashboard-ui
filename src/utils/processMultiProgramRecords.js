@@ -55,7 +55,7 @@ export function processMultiProgramRecords(allRecords = [], residentList = [], p
         });
 
         const sourceMap = program != 'all' ? PROGRAM_INFO[program].epaSourceMap : null,
-            epaCompletionRate = sourceMap ? calculateEPACompletion(sourceMap, records) : [];
+            { epaPercentageList = [], averageDivergence = [] } = sourceMap ? calculateEPACompletion(sourceMap, records) : {};
 
         return {
             programName,
@@ -63,7 +63,8 @@ export function processMultiProgramRecords(allRecords = [], residentList = [], p
             rating_group: _.map([1, 2, 3, 4, 5], (d) => (ratingGroup[d] ? ratingGroup[d].length : 0)),
             current_phase_group: _.map(STAGES_LIST, (d) => (currentPhaseGroup[d] ? currentPhaseGroup[d].length : 0)),
             feedback_group: _.map(POSSIBLE_FEEDBACK, (d) => (feedbackGroup[d] ? feedbackGroup[d].length : 0)),
-            epa_completion_rate: [...epaCompletionRate],
+            epa_completion_rate: [...averageDivergence],
+            epa_percentage_list: [...epaPercentageList],
             epa_count: records.length,
             expired_count: records.length - nonExpiredRecords.length,
             monthly_count: _.groupBy(nonExpiredRecords, (d) => moment(d.observation_date, 'YYYY-MM-DD').format('MMM')),
@@ -124,7 +125,7 @@ export function calculateEPACompletion(epaSourceMap, records) {
     // group by the training state 
     let groupedByTrainingStage = _.groupBy(epaPercentageList, (d) => d.epa[0]);
 
-    return _.map([1, 2, 3, 4], (stageID) => {
+    let averageDivergence = _.map([1, 2, 3, 4], (stageID) => {
         let allDivergencesInStage = _.map(groupedByTrainingStage[stageID], (e) => {
             // if the percentage offset is 1, divergence is zero
             if (e.percentageOffset == 1) {
@@ -146,6 +147,8 @@ export function calculateEPACompletion(epaSourceMap, records) {
         // Take an average of all the divergences in a training stage
         return insufficientDataEh || allDivergencesInStage.length == 0 ? -1 : _.mean(allDivergencesInStage);
     });
+
+    return { averageDivergence, epaPercentageList };
 
 }
 

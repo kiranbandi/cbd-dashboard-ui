@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getRecordsByYear, getAllResidentsList } from '../utils/requestServer';
-import { processProgramRecords } from '../utils/processMultiProgramRecords';
+import { processMultiProgramRecords } from '../utils/processMultiProgramRecords';
 import Loading from 'react-loading';
 import Switch from 'react-switch';
 import ReactSelect from 'react-select';
@@ -59,7 +59,7 @@ export default class ProgramsCompare extends Component {
                 return getRecordsByYear(this.state.academicYear.value, false);
             })
             .then((records) => {
-                this.setState({ residentList, 'programData': processProgramRecords(records, residentList, PROGRAM_LIST) });
+                this.setState({ residentList, 'programData': processMultiProgramRecords(records, residentList, PROGRAM_LIST) });
             })
             // toggle loader again once the request completes
             .catch(() => { console.log("error in fetching records"); })
