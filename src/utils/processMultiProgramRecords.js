@@ -4,7 +4,7 @@ import { STAGES_LIST, PROGRAM_INFO } from './programInfo';
 
 var POSSIBLE_FEEDBACK = ['Accelerated', 'As Expected', 'Not as Expected', 'Not Progressing', 'Inactive', 'No Data'];
 
-export default function (allRecords = [], residentList = [], programList) {
+export function processMultiProgramRecords(allRecords = [], residentList = [], programList) {
 
     // Remove all residents that have graduated
     let filteredResidentList = _.filter(residentList, (d) => !d.isGraduated);
@@ -76,7 +76,7 @@ export default function (allRecords = [], residentList = [], programList) {
 }
 
 
-function calculateEPACompletion(epaSourceMap, records) {
+export function calculateEPACompletion(epaSourceMap, records) {
 
     const epaObservationMap = {};
     // process base source map
@@ -108,7 +108,7 @@ function calculateEPACompletion(epaSourceMap, records) {
             return map;
         }, {})
 
-    let epaCompletionList = Object.entries(epaObservationMap).map(d => {
+    let epaPercentageList = Object.entries(epaObservationMap).map(d => {
         const result = {
             epa: d[0],
             percentageMax: roundTo2Decimal(d[1].max / epaGroupObservationMap[d[0].split('.')[0]].max),
@@ -122,7 +122,7 @@ function calculateEPACompletion(epaSourceMap, records) {
     });
 
     // group by the training state 
-    let groupedByTrainingStage = _.groupBy(epaCompletionList, (d) => d.epa[0]);
+    let groupedByTrainingStage = _.groupBy(epaPercentageList, (d) => d.epa[0]);
 
     return _.map([1, 2, 3, 4], (stageID) => {
         let allDivergencesInStage = _.map(groupedByTrainingStage[stageID], (e) => {
@@ -146,6 +146,7 @@ function calculateEPACompletion(epaSourceMap, records) {
         // Take an average of all the divergences in a training stage
         return insufficientDataEh || allDivergencesInStage.length == 0 ? -1 : _.mean(allDivergencesInStage);
     });
+
 }
 
 let roundTo2Decimal = (d) => (Math.round(d * 100) / 100);

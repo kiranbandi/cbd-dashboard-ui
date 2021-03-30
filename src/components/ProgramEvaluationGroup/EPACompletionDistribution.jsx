@@ -100,10 +100,8 @@ export default class ProgramDashboard extends Component {
         });
 
         let meanOfAllStages = _.mean(_.filter(completionByStageList, (d) => d != -1));
-
         // Create a color scale that maxes out at 100%
         const averageColorScale = scaleLinear().domain([0, 100]).range([0, 1]);
-
 
         const height = 350, margin = 10, Xoffset = 50, Yoffset = 30;
 
@@ -115,14 +113,19 @@ export default class ProgramDashboard extends Component {
         let minPercentageOffset = _.min(epaPercentageList.map(d => +d.percentageOffset));
         minPercentageOffset = Math.floor(minPercentageOffset * 10 / 5) / 10 * 5;
         let maxPercentageOffset = _.max(epaPercentageList.map(d => +d.percentageOffset));
-        maxPercentageOffset = Math.ceil(maxPercentageOffset * 10 / 5) / 10 * 5;
-        if (maxPercentageOffset > 10) {
-            maxPercentageOffset = 10;
-        }
+        maxPercentageOffset = Math.min(Math.ceil(maxPercentageOffset * 10 / 5) / 10 * 5, 10);
+
 
         // create the X and Y scales and modify them based on the track type
-        const scaleX = scaleLinear().range([Xoffset, width - margin - 0.75 * itemSize]).domain([0, epaPercentageList.length - 1]);
-        let scaleY = scaleLinear().range([height - margin - Yoffset, margin]).domain([minPercentageOffset, maxPercentageOffset]).clamp(true);
+        const scaleX = scaleLinear()
+            .range([Xoffset, width - margin - 0.75 * itemSize])
+            .domain([0, epaPercentageList.length - 1]),
+            scaleY = scaleLinear()
+                .range([height - margin - Yoffset, margin])
+                .domain([minPercentageOffset, maxPercentageOffset]).clamp(true);
+
+        // If the bar widths are small, then hide the axisTickLines
+        const hideAxisTickLines = 0.75 * itemSize < 16;
 
         const xOne = scaleY(1);
         // create bars
@@ -133,20 +136,10 @@ export default class ProgramDashboard extends Component {
                 y={scaleY(d.percentageOffset) <= xOne ? scaleY(d.percentageOffset) : xOne}
                 height={scaleY(d.percentageOffset) <= xOne ? xOne - scaleY(d.percentageOffset) : scaleY(d.percentageOffset) - xOne}
                 fill={(() => {
-                    switch (+d.epa.split('.')[0]) {
-                        case 1:
-                            return '#7FFFD4';
-                        case 2:
-                            return '#FFE4C4';
-                        case 3:
-                            return '#008B8B';
-                        case 4:
-                            return '#8FBC8F';
-                        default:
-                            return '#DC143C';
-                    }
+                    const colorValue = d.percentageOffset > 1 ? Math.min(d.percentageOffset - 1, 1) : (1 - d.percentageOffset);
+                    return interpolateRdYlGn(1 - colorValue);
                 })()}
-                width={itemSize - (0.25 * itemSize)}
+                width={0.75 * itemSize}
                 stroke={d.percentageOffset > maxPercentageOffset ? 'white' : 'transparent'}
                 key={d.epa}
                 data-s-tooltip-text={
@@ -157,6 +150,28 @@ export default class ProgramDashboard extends Component {
                 }
             ></rect>
         ));
+
+        // Draw vertical lines between the different training phase groups
+        // so group the list by phase and then draw a dotten line a little 
+        // after the last element in each group
+        let xAccumulator = 0;
+        const dividers = _.map(_.groupBy(epaPercentageList, (d) => d.epa.slice(0, 1)),
+            (group, groupIndex) => {
+
+                const dividerXposition = xAccumulator + group.length;
+                xAccumulator += dividerXposition;
+
+                return <line
+                    key={'divider-group-' + groupIndex}
+                    stroke={'white'}
+                    strokeWidth={3}
+                    strokeDasharray={5}
+                    y1={scaleY.range()[0]}
+                    y2={scaleY.range()[1]}
+                    x1={scaleX(dividerXposition)}
+                    x2={scaleX(dividerXposition)}></line>;
+            });
+
 
         // create the vertical tick lines 
         const axisTickLines = _.range(minPercentageOffset, maxPercentageOffset + .5, .5).map(d => <line
@@ -206,7 +221,7 @@ export default class ProgramDashboard extends Component {
                 {filteredRecords.length > 0 ?
                     <div>
                         <div className='stage-average-wrapper'>
-                            <span>Training Stage Average <InfoTip info={infoTooltipReference.programEvaluation.EPACompletionDistributionStage} />: </span>
+                            <span>Training Stage Average Deviation<InfoTip info={infoTooltipReference.programEvaluation.EPACompletionDistributionStage} />: </span>
                             {_.map(training_stage_codes, (stage, stageIndex) => {
 
                                 let stageValue = Math.round(stage == 'All' ? meanOfAllStages : completionByStageList[stageIndex]),
@@ -227,8 +242,10 @@ export default class ProgramDashboard extends Component {
                         <svg width={width} height={350}>
                             <g>{axisTickLines}</g>
                             <g>{axisTexts}</g>
-                            <g>{epaTexts}</g>
+                            {/* hide EPA labels if the chart is too small */}
+                            {!hideAxisTickLines && <g>{epaTexts}</g>}
                             <g>{bars}</g>
+                            <g>{dividers}</g>
                         </svg>
                     </div>
                     : <h3 style={{ width }} className='error-code text-left m-b'>No Records</h3>
