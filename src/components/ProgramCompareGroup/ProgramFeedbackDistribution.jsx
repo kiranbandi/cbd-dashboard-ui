@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
-const sixPointColorScale = ["#e15759", "#f28e2c", "#76b7b2", "#4e79a7", "#59a14f", "#bab0ab"];
+const sixPointColorScale = ["#59a14f", "#4e79a7", "#76b7b2", "#f28e2c", "#e15759", "#bab0ab"];
 var POSSIBLE_FEEDBACK = ['Accelerated', 'As Expected', 'Not as Expected', 'Not Progressing', 'Inactive', 'No Feedback Available'];
 
 

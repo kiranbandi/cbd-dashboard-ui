@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getRecordsByYear, getAllResidentsList } from '../utils/requestServer';
-import processProgramRecords from '../utils/processMultiProgramRecords';
+import { processMultiProgramRecords } from '../utils/processMultiProgramRecords';
 import Loading from 'react-loading';
 import Switch from 'react-switch';
 import ReactSelect from 'react-select';
@@ -59,7 +59,7 @@ export default class ProgramsCompare extends Component {
                 return getRecordsByYear(this.state.academicYear.value, false);
             })
             .then((records) => {
-                this.setState({ residentList, 'programData': processProgramRecords(records, residentList, PROGRAM_LIST) });
+                this.setState({ residentList, 'programData': processMultiProgramRecords(records, residentList, PROGRAM_LIST) });
             })
             // toggle loader again once the request completes
             .catch(() => { console.log("error in fetching records"); })
@@ -90,7 +90,7 @@ export default class ProgramsCompare extends Component {
         this.setState({ academicYear, loaderState: true });
         // fetch data for that specific academic year
         getRecordsByYear(academicYear.value, false).then((records) => {
-            this.setState({ 'programData': processProgramRecords(records, this.state.residentList, PROGRAM_LIST) });
+            this.setState({ 'programData': processMultiProgramRecords(records, this.state.residentList, PROGRAM_LIST) });
         })
             // toggle loader again once the request completes
             .catch(() => { console.log("error in fetching records"); })
@@ -166,21 +166,25 @@ export default class ProgramsCompare extends Component {
                                 <ProgramSummary programData={_.filter(moddedProgramData, (d) => d.programName != 'Overall')} printModeON={printModeON} />
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
-                                    <ProgramCountPlot width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
-                                    <ProgramStageDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramCountPlot width={(partWidth * 2)} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
                                     <ProgramScoreDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
-                                    <ProgramWordCount width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramStageDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
+                                    <ProgramWordCount width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                     <ProgramFeedbackDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
-                                    <ProgramEPACompletion width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                </div>
+                                <div className='text-center printable-content'
+                                    style={{ paddingTop: printModeON ? '200px' : '' }}>
+                                    <ProgramEPACompletion width={(partWidth * 2)} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <ProgramMonthlyPlot width={overallWidth} printModeON={printModeON} programData={_.reverse([...moddedProgramData])} />
                             </div>}
+                        {/* Disable print button */}
                         {/* <button id='print-report' className="btn btn-primary print-button" onClick={this.onPrintClick}>
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Report</span>

@@ -102,10 +102,32 @@
         font-size: 1.4em;
     }
 
+    .specific-program-chart {
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 20px;
+        border-radius: 6px;
+        background: white;
+        padding: 15px;
+
+        .divider-line {
+            stroke: darkgrey;
+        }
+
+        text {
+            fill: darkgray !important;
+        }
+
+        line {
+            stroke: darkgray !important;
+        }
+    }
+
     .completion-rate-chart {
         padding: 1em;
-        display: flex;
+        display: inline-flex;
         flex-direction: column;
+        vertical-align: top;
 
         .completion-rate-label {
             color: black;
@@ -115,6 +137,23 @@
         .program-rate-wrapper {
             display: flex;
             flex: 1;
+            cursor: pointer;
+            padding: 2px 2.5px 2px 2px;
+            border-radius: 25px;
+
+            &.selected {
+                background: #c9dada;
+                .program-rate-label {
+                    color: black;
+                }
+            }
+
+            &:hover {
+                background: #99bee4;
+                .program-rate-label {
+                    color: black;
+                }
+            }
 
             .program-rate-label {
                 flex-basis: 105px;
