@@ -6,12 +6,11 @@ import Switch from 'react-switch';
 import ReactSelect from 'react-select';
 import { ROTATION_SCHEDULE_MAP, PROGRAM_LIST } from '../utils/programInfo';
 import {
-    ProgramSummary, ProgramCountPlot, ProgramMonthlyPlot,
+    ProgramSummary, ProgramCountPlot, ProgramMonthlyPlot, NormalizedProgramCountPlot,
     ProgramFeedbackDistribution, ProgramEPACompletion,
     ProgramScoreDistribution, ProgramWordCount, ProgramStageDistribution
 } from '../components';
 import savePagePDF from '../utils/savePagePDF';
-
 
 
 const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP), (d) => (
@@ -166,7 +165,8 @@ export default class ProgramsCompare extends Component {
                                 <ProgramSummary programData={_.filter(moddedProgramData, (d) => d.programName != 'Overall')} printModeON={printModeON} />
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
-                                    <ProgramCountPlot width={(partWidth * 2)} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramCountPlot width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <NormalizedProgramCountPlot width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>

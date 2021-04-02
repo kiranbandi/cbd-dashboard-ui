@@ -36,6 +36,7 @@ export { default as ChecklistModal } from './ResidentDashboardGroup/ChecklistGro
 export { default as ProgramSummary } from './ProgramCompareGroup/ProgramSummary';
 export { default as ProgramMonthlyPlot } from './ProgramCompareGroup/ProgramMonthlyPlot';
 export { default as ProgramCountPlot } from './ProgramCompareGroup/ProgramCountPlot';
+export { default as NormalizedProgramCountPlot } from './ProgramCompareGroup/NormalizedProgramCountPlot';
 export { default as ProgramScoreDistribution } from './ProgramCompareGroup/ProgramScoreDistribution';
 export { default as ProgramStageDistribution } from './ProgramCompareGroup/ProgramStageDistribution';
 export { default as ProgramWordCount } from './ProgramCompareGroup/ProgramWordCount';

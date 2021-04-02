@@ -90,11 +90,11 @@ export default class ProgramEPACompletion extends Component {
                         })}
                         <p className='text-center completion-rate-label'> <b>*NA</b> - The training stage has no EPAs to complete or has insufficient data to detect a pattern.</p>
                     </div>
-                    <SpecificEPACompletionDistribution
+                    {!!activeProgramData && <SpecificEPACompletionDistribution
                         epaSourceMap={activeProgramData.source_map}
                         epaPercentageList={activeProgramData.epa_percentage_list}
                         height={600}
-                        width={width / 2} />
+                        width={width / 2} />}
                 </div>
             </div>
         );

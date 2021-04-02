@@ -43,26 +43,6 @@
             border-radius: 6px;
             background: white;
         }
-        .switch-container {
-            background: white;
-            padding: 5px 10px;
-            margin-left: 10px;
-            border-radius: 10px;
-            color: black;
-            .switch-inner {
-                display: inline-block;
-                vertical-align: middle;
-                margin-right: 5px;
-                label {
-                    margin-bottom: 0px !important;
-                }
-            }
-            .switch-label {
-                font-size: 0.8em;
-                font-weight: 500;
-                color: black;
-            }
-        }
     }
     .program-name-container {
         display: inline-block;

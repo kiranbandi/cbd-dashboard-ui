@@ -2,7 +2,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import { STAGES_LIST, PROGRAM_INFO } from './programInfo';
 
-var POSSIBLE_FEEDBACK = ['Accelerated', 'As Expected', 'Not as Expected', 'Not Progressing', 'Inactive', 'No Data'];
+var POSSIBLE_FEEDBACK = ["No Data", "Inactive", "Not Progressing", "Not as Expected", "As Expected", "Accelerated"];
 
 export function processMultiProgramRecords(allRecords = [], residentList = [], programList) {
 
@@ -15,8 +15,9 @@ export function processMultiProgramRecords(allRecords = [], residentList = [], p
     // group residents by program
     let residentsGroupedByProgram = _.groupBy(filteredResidentList, (d) => d.program);
 
-    // temporarily remove UG from program list
-    let filteredProgramList = _.filter(programList, (d) => d.value != 'UNDERGRADUATE');
+    // temporarily remove UG from program list 
+    // and also remove programs that dont have any data to ensure no empty entries 
+    let filteredProgramList = _.filter(programList, (d) => d.value != 'UNDERGRADUATE' && !!recordsGroupedByProgram[d.value]);
 
     // add an 'All' program to the grouped list and recordsgroup collection
     filteredProgramList.push({ value: "all", label: "Overall" });
