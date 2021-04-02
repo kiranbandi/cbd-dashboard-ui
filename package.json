@@ -12,7 +12,7 @@
     ],
     "scripts": {
         "start": "webpack serve --config ./build-config/webpack.config.js",
-        "build": "webpack -p --config ./build-config/webpack.prod.config.js"
+        "build": "webpack --config ./build-config/webpack.prod.config.js"
     },
     "author": "kiranbandi",
     "license": "MIT",
