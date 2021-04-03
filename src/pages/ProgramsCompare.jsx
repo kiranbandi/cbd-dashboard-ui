@@ -6,22 +6,25 @@ import Switch from 'react-switch';
 import ReactSelect from 'react-select';
 import { ROTATION_SCHEDULE_MAP, PROGRAM_LIST } from '../utils/programInfo';
 import {
-    ProgramSummary, ProgramCountPlot, ProgramMonthlyPlot, NormalizedProgramCountPlot,
+    ProgramSummary, ProgramCountPlot, ProgramMonthlyPlot,
+    NormalizedProgramCountPlot, SingleProgramSummary,
     ProgramFeedbackDistribution, ProgramEPACompletion,
     ProgramScoreDistribution, ProgramWordCount, ProgramStageDistribution
 } from '../components';
 import savePagePDF from '../utils/savePagePDF';
 
+var nonUGProgramList = _.filter(PROGRAM_LIST, (d) => d.value != 'UNDERGRADUATE');
 
 const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP), (d) => (
     { 'label': d + "-" + (Number(d) + 1), 'value': d }
 ));
 
 const alphabetList = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'],
+
     // we get the number of alphabets required based on the number of available programs
     // then we flip the list so the character ordering is easy to read and chart is 
     // rendered from bottom to top
-    anonymizeCharList = _.reverse(alphabetList.slice(0, PROGRAM_LIST.length - 1));
+    anonymizeCharList = _.reverse(alphabetList.slice(0, nonUGProgramList.length));
 
 
 export default class ProgramsCompare extends Component {
@@ -31,6 +34,8 @@ export default class ProgramsCompare extends Component {
         this.state = {
             academicYear: { 'label': '2020-2021', 'value': '2020' },
             loaderState: false,
+            // Default to the first program
+            activeProgram: nonUGProgramList[0].value,
             programData: [],
             residentList: [],
             anonymize: true,
@@ -42,6 +47,10 @@ export default class ProgramsCompare extends Component {
 
     componentWillUnmount() {
         this._isMounted = false;
+    }
+
+    onSelectProgram = (selectedProgram) => {
+        this.setState({ 'activeProgram': selectedProgram.value });
     }
 
     componentDidMount() {
@@ -58,7 +67,7 @@ export default class ProgramsCompare extends Component {
                 return getRecordsByYear(this.state.academicYear.value, false);
             })
             .then((records) => {
-                this.setState({ residentList, 'programData': processMultiProgramRecords(records, residentList, PROGRAM_LIST) });
+                this.setState({ residentList, 'programData': processMultiProgramRecords(records, residentList, nonUGProgramList) });
             })
             // toggle loader again once the request completes
             .catch(() => { console.log("error in fetching records"); })
@@ -89,32 +98,33 @@ export default class ProgramsCompare extends Component {
         this.setState({ academicYear, loaderState: true });
         // fetch data for that specific academic year
         getRecordsByYear(academicYear.value, false).then((records) => {
-            this.setState({ 'programData': processMultiProgramRecords(records, this.state.residentList, PROGRAM_LIST) });
+            this.setState({ 'programData': processMultiProgramRecords(records, this.state.residentList, nonUGProgramList) });
         })
             // toggle loader again once the request completes
             .catch(() => { console.log("error in fetching records"); })
             .finally(() => {
                 this._isMounted && this.setState({ loaderState: false });
             });
-
     }
 
     render() {
 
-        const { loaderState, programData, academicYear, anonymize, printModeON } = this.state;
+        const { loaderState, programData, activeProgram,
+            academicYear, anonymize, printModeON } = this.state;
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let overallWidth = document.body.getBoundingClientRect().width - 350,
             partWidth = overallWidth / 2;
 
         const moddedProgramData = _.map(programData, (d, i) => {
+            let isActiveProgram = d.program == activeProgram,
+                programName = d.programName;
             // if anonymize is true then replace program name for all programs
             // except for 'all' entry with P-Index/Alphabet.
-            return {
-                ...d,
-                'programName': d.programName != 'Overall' ?
-                    anonymize ? ('Program-' + anonymizeCharList[i]) : d.programName : d.programName,
+            if (!isActiveProgram && d.programName != 'Overall' && anonymize) {
+                programName = 'Program-' + anonymizeCharList[i];
             }
+            return { ...d, programName, isActiveProgram };
         });
 
         return (
@@ -124,8 +134,8 @@ export default class ProgramsCompare extends Component {
                         <h2 className='text-center m-t-lg text-primary'>Generating PDF Export, Please Wait...</h2>
                     </div>}
                 <div className='m-t text-center'>
-                    <div className='year-selection-box'>
-                        <h2 className='header'>Please Select Academic Year</h2>
+                    <div className='multi-selection-box'>
+                        <h2 className='header'>Academic Year</h2>
                         <div className='react-select-root'>
                             <ReactSelect
                                 value={academicYear}
@@ -134,8 +144,20 @@ export default class ProgramsCompare extends Component {
                                 onChange={this.onSelectAcademicYear} />
                         </div>
                     </div>
+
+                    <div className='multi-selection-box'>
+                        <h2 className='header'>Program</h2>
+                        <div className='react-select-root'>
+                            <ReactSelect
+                                value={_.find(nonUGProgramList, (e) => e.value == activeProgram)}
+                                options={nonUGProgramList}
+                                styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
+                                onChange={this.onSelectProgram} />
+                        </div>
+                    </div>
+
                     <span className='filter-switch-container'>
-                        <span className='switch-label'>Anonymize Programs</span>
+                        <span className='switch-label'>Anonymize Program Names</span>
                         <div className='switch-inner'>
                             <label htmlFor="material-switch-compare">
                                 <Switch
@@ -163,28 +185,29 @@ export default class ProgramsCompare extends Component {
                             <div>
                                 {/* dont include all program entry in the summary calculation */}
                                 <ProgramSummary programData={_.filter(moddedProgramData, (d) => d.programName != 'Overall')} printModeON={printModeON} />
+                                <SingleProgramSummary programData={_.find(moddedProgramData, (d) => d.isActiveProgram) || {}} printModeON={printModeON} />
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
-                                    <ProgramCountPlot width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
-                                    <NormalizedProgramCountPlot width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramCountPlot activeProgram={activeProgram} width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <NormalizedProgramCountPlot activeProgram={activeProgram} width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
-                                    <ProgramScoreDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
-                                    <ProgramStageDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramScoreDistribution activeProgram={activeProgram} width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramStageDistribution activeProgram={activeProgram} width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
-                                    <ProgramWordCount width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
-                                    <ProgramFeedbackDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramWordCount activeProgram={activeProgram} width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramFeedbackDistribution activeProgram={activeProgram} width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
-                                    <ProgramEPACompletion width={(partWidth * 2)} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramEPACompletion activeProgram={activeProgram} width={(partWidth * 2)} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <ProgramMonthlyPlot width={overallWidth} printModeON={printModeON} programData={_.reverse([...moddedProgramData])} />
                             </div>}
-                        {/* Disable print button */}
+                        {/* Disabled print button due to broken functionality */}
                         {/* <button id='print-report' className="btn btn-primary print-button" onClick={this.onPrintClick}>
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Report</span>

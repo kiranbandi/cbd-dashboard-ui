@@ -39,7 +39,7 @@ export default class ProgramCountPlot extends Component {
                         <Tooltip labelStyle={{ 'color': 'black' }}
                             wrapperStyle={{ 'fontWeight': 'bold' }} />
                         <Legend wrapperStyle={{ 'color': 'black' }} />
-                        <Bar dataKey="Words Per Comment" fill="#82ca9d" />
+                        <Bar isAnimationActive={false} dataKey="Words Per Comment" fill="#82ca9d" />
                         <ReferenceLine x={averageData["Words Per Comment"]} stroke="#82ca9d" strokeWidth='2' strokeDasharray="3 3" />
                     </BarChart>
                 </div>

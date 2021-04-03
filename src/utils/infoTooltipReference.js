@@ -53,6 +53,7 @@ export default {
     },
     comparePrograms: {
         OverallAcquisitionMetricsForAllPrograms: `These EPA metrics contextualize the EPAs that have been completed within all programs over the selected academic year. The 'EPA Rating' graphic demonstrates the number of EPAs that have been rated at each level of entrustment from 1 (I had to do) to 5 (I didn't need to be there). The 'Training Stage' graphic demonstrates the proportion of residents in each stage of training.`,
+        OverallAcquisitionMetricsForOneProgram: `These EPA metrics contextualize the EPAs that have been completed in the selected program over the selected academic year. The 'EPA Rating' graphic demonstrates the number of EPAs that have been rated at each level of entrustment from 1 (I had to do) to 5 (I didn't need to be there). The 'Training Stage' graphic demonstrates the proportion of residents in each stage of training.`,
         EPAsAcquiredAndExpired: `This graph displays the number of EPAs that have been completed and expired in each program. Mouse-over each row for additional details.`,
         EPAsAcquiredAndExpired: `This graph displays the number of EPAs that have been completed and expired in each program per resident. Mouse-over each row for additional details.`,
         ResidentTrainingStageDistribution: `This stack chart displays the proportion of residents in each program that are in each stage of training (TTD, Foundations, Core, TTP). Mouse-over each row for additional details.`,

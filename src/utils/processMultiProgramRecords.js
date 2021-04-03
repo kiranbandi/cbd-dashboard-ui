@@ -15,14 +15,14 @@ export function processMultiProgramRecords(allRecords = [], residentList = [], p
     // group residents by program
     let residentsGroupedByProgram = _.groupBy(filteredResidentList, (d) => d.program);
 
-    // temporarily remove UG from program list 
-    // and also remove programs that dont have any data to ensure no empty entries 
-    let filteredProgramList = _.filter(programList, (d) => d.value != 'UNDERGRADUATE' && !!recordsGroupedByProgram[d.value]);
+    // remove programs that dont have any data to ensure no empty entries 
+    let filteredProgramList = _.filter(programList, (d) => !!recordsGroupedByProgram[d.value]);
 
     // add an 'All' program to the grouped list and recordsgroup collection
     filteredProgramList.push({ value: "all", label: "Overall" });
+    // remove UG from students list, the records already come pre filtered without UG recs
     recordsGroupedByProgram['all'] = _.clone(allRecords);
-    residentsGroupedByProgram['all'] = _.filter(filteredResidentList, (d) => d != 'UNDERGRADUATE');
+    residentsGroupedByProgram['all'] = _.filter(filteredResidentList, (d) => d.program != 'UNDERGRADUATE');
 
 
     // convert the grouped records into list such that every group has 
@@ -59,6 +59,7 @@ export function processMultiProgramRecords(allRecords = [], residentList = [], p
             { epaPercentageList = [], averageDivergence = [] } = sourceMap ? calculateEPACompletion(sourceMap, records) : {};
 
         return {
+            program,
             programName,
             resident_count,
             rating_group: _.map([1, 2, 3, 4, 5], (d) => (ratingGroup[d] ? ratingGroup[d].length : 0)),

@@ -53,8 +53,8 @@ export default class NormalizedProgramCountPlot extends Component {
                                 }
                             }} />
                         <Legend wrapperStyle={{ 'color': 'black' }} />
-                        <Bar dataKey="EPAs Acquired" fill="#82ca9d" />
-                        <Bar dataKey="EPAs Expired" fill="#8884d8" />
+                        <Bar isAnimationActive={false} dataKey="EPAs Acquired" fill="#82ca9d" />
+                        <Bar isAnimationActive={false} dataKey="EPAs Expired" fill="#8884d8" />
                         <ReferenceLine x={averageData["EPAs Acquired"]} stroke="#82ca9d" strokeWidth='2' strokeDasharray="3 3" />
                         <ReferenceLine x={averageData["EPAs Expired"]} stroke="#8884d8" strokeWidth='2' strokeDasharray="3 3" />
                     </BarChart>

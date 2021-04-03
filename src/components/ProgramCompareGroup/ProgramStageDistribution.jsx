@@ -51,7 +51,7 @@ export default class ProgramCountPlot extends Component {
                             formatter={(value, name) => ([(Math.round(value * 10) / 10) + '%', name])} />
                         <Legend wrapperStyle={{ 'color': 'black' }} />
                         {_.map(moddedPhaseList, (phase_name, index) => {
-                            return <Bar key={'stacked-phase-' + index} stackId='a' dataKey={phase_name} fill={multiColorScale[index]} />
+                            return <Bar isAnimationActive={false} key={'stacked-phase-' + index} stackId='a' dataKey={phase_name} fill={multiColorScale[index]} />
                         })}
                     </BarChart>
                 </div>

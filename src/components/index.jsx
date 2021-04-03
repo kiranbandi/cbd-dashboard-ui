@@ -34,6 +34,7 @@ export { default as ChecklistModal } from './ResidentDashboardGroup/ChecklistGro
 
 // Components for Program Compare Dashboard to compare programs
 export { default as ProgramSummary } from './ProgramCompareGroup/ProgramSummary';
+export { default as SingleProgramSummary } from './ProgramCompareGroup/SingleProgramSummary';
 export { default as ProgramMonthlyPlot } from './ProgramCompareGroup/ProgramMonthlyPlot';
 export { default as ProgramCountPlot } from './ProgramCompareGroup/ProgramCountPlot';
 export { default as NormalizedProgramCountPlot } from './ProgramCompareGroup/NormalizedProgramCountPlot';

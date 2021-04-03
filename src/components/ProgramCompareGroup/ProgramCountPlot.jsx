@@ -45,13 +45,15 @@ export default class ProgramCountPlot extends Component {
                                 if (name == 'EPAs Acquired') {
                                     return [Math.round(value) + " (" + (props.payload.resident_count) + ' Residents)', name];
                                 }
-                                else {
-                                    return [Math.round(value), name];
-                                }
+                                else { return [Math.round(value), name] }
                             }} />
                         <Legend wrapperStyle={{ 'color': 'black' }} />
-                        <Bar dataKey="EPAs Acquired" fill="#82ca9d" />
-                        <Bar dataKey="EPAs Expired" fill="#8884d8" />
+                        <Bar background={() => {
+
+                            return 'red'
+
+                        }} isAnimationActive={false} dataKey="EPAs Acquired" fill="#82ca9d" />
+                        <Bar isAnimationActive={false} dataKey="EPAs Expired" fill="#8884d8" />
                     </BarChart>
                 </div>
             </div>
