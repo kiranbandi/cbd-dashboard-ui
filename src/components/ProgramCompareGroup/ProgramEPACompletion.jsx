@@ -37,7 +37,9 @@ export default class ProgramEPACompletion extends Component {
 
         let mapped_data = _.map(custom_data, ({ programName, program, epa_completion_rate }) => {
 
-            const meanOfProgram = _.mean(_.filter(epa_completion_rate, (d) => d != -1));
+            let meanOfProgram = _.mean(_.filter(epa_completion_rate, (d) => d != -1));
+            // If all the values are N/A then the mean will be NaN so skip that
+            if (isNaN(meanOfProgram)) { meanOfProgram = -1 };
 
             return {
                 'label': programName,

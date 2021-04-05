@@ -101,7 +101,7 @@ export function calculateEPACompletion(epaSourceMap, records) {
     filteredRecords
         .forEach(d => epaObservationMap[d.epa].total++);
 
-    const epaGroupObservationMap = Object.entries(epaObservationMap)
+    let epaGroupObservationMap = Object.entries(epaObservationMap)
         .reduce((map, currentEntry) => {
             const epaGroup = currentEntry[0].split('.')[0];
             if (!map[epaGroup]) {
@@ -110,9 +110,17 @@ export function calculateEPACompletion(epaSourceMap, records) {
             map[epaGroup].max += currentEntry[1].max;
             map[epaGroup].total += currentEntry[1].total;
             return map;
-        }, {})
+        }, {});
+
+    // In the group also tag data as insufficient,
+    // as atleast there sould be 2 times no the max number of required EPAs collected
+    // for us to start validating patterns.
+    _.map(epaGroupObservationMap, (d, i) => {
+        epaGroupObservationMap[i]['insufficientDataEh'] = (d.total < (2 * d.max));
+    });
 
     let epaPercentageList = Object.entries(epaObservationMap).map(d => {
+
         const result = {
             epa: d[0],
             percentageMax: roundTo2Decimal(d[1].max / epaGroupObservationMap[d[0].split('.')[0]].max),
@@ -141,11 +149,9 @@ export function calculateEPACompletion(epaSourceMap, records) {
             return (1 - e.percentageOffset) * 100
         });
 
-        let allTotalsInStage = _.map(groupedByTrainingStage[stageID], (e) => e.percentageTotal);
-
         // Check for insufficient data in stage
         // if all the EPAs are NaN itmeans all the totals were zero
-        let insufficientDataEh = _.countBy(allTotalsInStage, (d) => !isNaN(d)).false == allTotalsInStage.length;
+        let insufficientDataEh = epaGroupObservationMap[stageID] && epaGroupObservationMap[stageID]['insufficientDataEh'];
 
         // Take an average of all the divergences in a training stage
         return insufficientDataEh || allDivergencesInStage.length == 0 ? -1 : _.mean(allDivergencesInStage);
