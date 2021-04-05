@@ -5,7 +5,7 @@ import {
 } from 'recharts';
 import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
-
+import { customBackground } from './customBackground';
 
 export default class NormalizedProgramCountPlot extends Component {
 
@@ -15,6 +15,7 @@ export default class NormalizedProgramCountPlot extends Component {
         const custom_data = _.map(programData, (d, i) => {
             return {
                 'name': d.programName,
+                'isActiveProgram': d.isActiveProgram,
                 'resident_count': d.resident_count,
                 'EPAs Acquired': d.epa_count / (d.resident_count != 0 ? d.resident_count : 1),
                 'EPAs Expired': d.expired_count / (d.resident_count != 0 ? d.resident_count : 1)
@@ -53,8 +54,8 @@ export default class NormalizedProgramCountPlot extends Component {
                                 }
                             }} />
                         <Legend wrapperStyle={{ 'color': 'black' }} />
-                        <Bar isAnimationActive={false} dataKey="EPAs Acquired" fill="#82ca9d" />
-                        <Bar isAnimationActive={false} dataKey="EPAs Expired" fill="#8884d8" />
+                        <Bar background={customBackground} isAnimationActive={false} dataKey="EPAs Acquired" fill="#82ca9d" />
+                        <Bar background={customBackground} isAnimationActive={false} dataKey="EPAs Expired" fill="#8884d8" />
                         <ReferenceLine x={averageData["EPAs Acquired"]} stroke="#82ca9d" strokeWidth='2' strokeDasharray="3 3" />
                         <ReferenceLine x={averageData["EPAs Expired"]} stroke="#8884d8" strokeWidth='2' strokeDasharray="3 3" />
                     </BarChart>

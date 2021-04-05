@@ -188,26 +188,26 @@ export default class ProgramsCompare extends Component {
                                 <SingleProgramSummary programData={_.find(moddedProgramData, (d) => d.isActiveProgram) || {}} printModeON={printModeON} />
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
-                                    <ProgramCountPlot activeProgram={activeProgram} width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
-                                    <NormalizedProgramCountPlot activeProgram={activeProgram} width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramCountPlot width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <NormalizedProgramCountPlot width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
-                                    <ProgramScoreDistribution activeProgram={activeProgram} width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
-                                    <ProgramStageDistribution activeProgram={activeProgram} width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramScoreDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramStageDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
-                                    <ProgramWordCount activeProgram={activeProgram} width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
-                                    <ProgramFeedbackDistribution activeProgram={activeProgram} width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramWordCount width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramFeedbackDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
-                                    <ProgramEPACompletion activeProgram={activeProgram} width={(partWidth * 2)} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramEPACompletion width={(partWidth * 2)} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <ProgramMonthlyPlot width={overallWidth} printModeON={printModeON} programData={_.reverse([...moddedProgramData])} />
                             </div>}
-                        {/* Disabled print button due to broken functionality */}
+                        {/* Disabled print button due to broken feature */}
                         {/* <button id='print-report' className="btn btn-primary print-button" onClick={this.onPrintClick}>
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Report</span>

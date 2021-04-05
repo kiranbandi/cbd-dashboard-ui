@@ -3,7 +3,9 @@ import _ from 'lodash';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
-const sixPointColorScale =  ["#bab0ab", "#e15759", "#f28e2c", "#76b7b2", "#4e79a7", "#59a14f"];
+import { customBackgroundBorder } from './customBackground';
+
+const sixPointColorScale = ["#bab0ab", "#e15759", "#f28e2c", "#76b7b2", "#4e79a7", "#59a14f"];
 var POSSIBLE_FEEDBACK = ["No Feedback Available", "Inactive", "Not Progressing", "Not as Expected", "As Expected", "Accelerated"];
 
 
@@ -14,7 +16,7 @@ export default class ProgramScoreDist extends Component {
 
         const processedDataList = _.map(programData, (d) => {
             const total = _.sum(d.feedback_group);
-            let dataPoint = { 'name': d.programName };
+            let dataPoint = { 'name': d.programName, 'isActiveProgram': d.isActiveProgram };
             _.map(POSSIBLE_FEEDBACK, (rating, index) => {
                 dataPoint[rating] = total == 0 ? 0 : (d.feedback_group[index] / total) * 100;
             });
@@ -44,7 +46,8 @@ export default class ProgramScoreDist extends Component {
                             formatter={(value, name) => ([(Math.round(value * 10) / 10) + '%', name])} />
                         <Legend wrapperStyle={{ 'color': 'black' }} />
                         {_.map(POSSIBLE_FEEDBACK, (rating, index) => {
-                            return <Bar isAnimationActive={false} key={'stacked-rating-' + index} stackId='a' dataKey={rating} fill={sixPointColorScale[index]} />
+                            return <Bar background={customBackgroundBorder}
+                                isAnimationActive={false} key={'stacked-rating-' + index} stackId='a' dataKey={rating} fill={sixPointColorScale[index]} />
                         })}
                     </BarChart>
                 </div>

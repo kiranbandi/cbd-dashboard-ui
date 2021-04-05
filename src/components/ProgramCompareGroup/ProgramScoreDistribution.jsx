@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
+import { customBackgroundBorder } from './customBackground';
 
 const fivePointColorScale = ["#e15759", "#f28e2c", "#76b7b2", "#4e79a7", "#59a14f"];
 const moddedRatingList = _.map(fivePointColorScale, (d, i) => ('Rating-' + (i + 1)));
@@ -14,7 +15,7 @@ export default class ProgramScoreDist extends Component {
 
         const processedDataList = _.map(programData, (d) => {
             const total = _.sum(d.rating_group);
-            let dataPoint = { 'name': d.programName };
+            let dataPoint = { 'name': d.programName, 'isActiveProgram': d.isActiveProgram };
             _.map(moddedRatingList, (rating, index) => {
                 dataPoint[rating] = total == 0 ? 0 : (d.rating_group[index] / total) * 100;
             });
@@ -42,7 +43,8 @@ export default class ProgramScoreDist extends Component {
                             formatter={(value, name) => ([(Math.round(value * 10) / 10) + '%', name])} />
                         <Legend wrapperStyle={{ 'color': 'black' }} />
                         {_.map(moddedRatingList, (rating, index) => {
-                            return <Bar isAnimationActive={false} key={'stacked-rating-' + index} stackId='a' dataKey={rating} fill={fivePointColorScale[index]} />
+                            return <Bar background={customBackgroundBorder}
+                                isAnimationActive={false} key={'stacked-rating-' + index} stackId='a' dataKey={rating} fill={fivePointColorScale[index]} />
                         })}
                     </BarChart>
                 </div>

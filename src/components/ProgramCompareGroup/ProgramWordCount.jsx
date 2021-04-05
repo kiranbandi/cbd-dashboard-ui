@@ -5,6 +5,7 @@ import {
 } from 'recharts';
 import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
+import { customBackground } from './customBackground';
 
 
 export default class ProgramCountPlot extends Component {
@@ -12,7 +13,12 @@ export default class ProgramCountPlot extends Component {
 
     render() {
         const { programData, width, printModeON } = this.props,
-            custom_data = _.map(programData, (d, i) => ({ 'name': d.programName, 'Words Per Comment': d.words_per_comment }));
+            custom_data = _.map(programData, (d, i) =>
+            ({
+                'name': d.programName,
+                'isActiveProgram': d.isActiveProgram,
+                'Words Per Comment': d.words_per_comment
+            }));
 
         const averageData = custom_data.slice(-1)[0];
 
@@ -39,7 +45,7 @@ export default class ProgramCountPlot extends Component {
                         <Tooltip labelStyle={{ 'color': 'black' }}
                             wrapperStyle={{ 'fontWeight': 'bold' }} />
                         <Legend wrapperStyle={{ 'color': 'black' }} />
-                        <Bar isAnimationActive={false} dataKey="Words Per Comment" fill="#82ca9d" />
+                        <Bar background={customBackground} isAnimationActive={false} dataKey="Words Per Comment" fill="#82ca9d" />
                         <ReferenceLine x={averageData["Words Per Comment"]} stroke="#82ca9d" strokeWidth='2' strokeDasharray="3 3" />
                     </BarChart>
                 </div>

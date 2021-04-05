@@ -3,6 +3,7 @@ import { InfoTip } from '..';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 import SpecificEPACompletionDistribution from '../ProgramEvaluationGroup/EPACompletionChart';
 import { interpolateRdYlGn, scaleLinear } from 'd3';
+import _ from 'lodash';
 // The final stage is all combined together 
 const training_stage_codes = ['D', 'F', 'C', 'P', 'All'];
 
@@ -11,7 +12,12 @@ export default class ProgramEPACompletion extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { selectedProgram: 0 };
+        // If a program is active default to it as the selected program
+        this.state = {
+            selectedProgram:
+                _.findIndex(_.reverse(_.filter(props.programData, (d) => d.programName != 'Overall')),
+                    (d) => d.isActiveProgram) || 0
+        };
     }
 
     onProgramWrapperClick = (event) => {

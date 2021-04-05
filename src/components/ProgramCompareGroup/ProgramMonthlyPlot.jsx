@@ -18,6 +18,7 @@ export default class ProgramMonthyPlot extends Component {
             remappedData = _.map(programData, (d) => {
                 return {
                     'title': d.programName,
+                    'isActiveProgram': d.isActiveProgram,
                     'monthlyCount': {
                         labels: monthList,
                         datasets: [{
@@ -62,7 +63,9 @@ export default class ProgramMonthyPlot extends Component {
                 </div>
                 <div className='overall-wrapper'>
                     {_.map(remappedData, (d, i) => {
-                        return <div key={'compare-monthly-' + i} className='compare-monthly-box'>
+                        return <div
+                            style={{ 'background': d.isActiveProgram ? '#ccc' : 'none' }}
+                            key={'compare-monthly-' + i} className='compare-monthly-box'>
                             <Line
                                 options={{ 'scaleBeginAtZero': true }}
                                 data={d.monthlyCount}

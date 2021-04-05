@@ -121,15 +121,9 @@
             padding: 2px 2.5px 2px 2px;
             border-radius: 25px;
 
-            &.selected {
-                background: #c9dada;
-                .program-rate-label {
-                    color: black;
-                }
-            }
-
+            &.selected,
             &:hover {
-                background: #99bee4;
+                background: #ccc;
                 .program-rate-label {
                     color: black;
                 }

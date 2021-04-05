@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
-
+import { customBackground } from './customBackground';
 
 export default class ProgramCountPlot extends Component {
 
@@ -12,7 +12,9 @@ export default class ProgramCountPlot extends Component {
         // remove the overall count at the end of the array since that 
         // data distorts the graph
         const custom_data = _.map(programData, (d, i) => {
+
             return {
+                'isActiveProgram': d.isActiveProgram,
                 'name': d.programName,
                 'resident_count': d.resident_count,
                 'EPAs Acquired': d.epa_count,
@@ -48,12 +50,8 @@ export default class ProgramCountPlot extends Component {
                                 else { return [Math.round(value), name] }
                             }} />
                         <Legend wrapperStyle={{ 'color': 'black' }} />
-                        <Bar background={() => {
-
-                            return 'red'
-
-                        }} isAnimationActive={false} dataKey="EPAs Acquired" fill="#82ca9d" />
-                        <Bar isAnimationActive={false} dataKey="EPAs Expired" fill="#8884d8" />
+                        <Bar background={customBackground} isAnimationActive={false} dataKey="EPAs Acquired" fill="#82ca9d" />
+                        <Bar background={customBackground} isAnimationActive={false} dataKey="EPAs Expired" fill="#8884d8" />
                     </BarChart>
                 </div>
             </div>

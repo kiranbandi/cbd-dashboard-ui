@@ -4,6 +4,7 @@ import {
     BarChart, Bar, XAxis, YAxis,
     Tooltip, Legend
 } from 'recharts';
+import { customBackgroundBorder } from './customBackground';
 
 import _ from 'lodash';
 import { InfoTip } from '../';
@@ -21,7 +22,7 @@ export default class ProgramCountPlot extends Component {
 
         const processedDataList = _.map(programData, (d) => {
             const total = _.sum(d.current_phase_group);
-            let dataPoint = { 'name': d.programName };
+            let dataPoint = { 'name': d.programName, 'isActiveProgram': d.isActiveProgram };
             _.map(moddedPhaseList, (phase_name, index) => {
                 dataPoint[phase_name] = total == 0 ? 0 : (d.current_phase_group[index] / total) * 100;
             });
@@ -35,7 +36,7 @@ export default class ProgramCountPlot extends Component {
                         className="hr-divider-content"
                         style={printModeON ? { background: 'white', color: 'black' } : undefined}>
                         Resident Training Stage Distribution
-                        <InfoTip info={infoTooltipReference.comparePrograms.ResidentTrainingStageDistribution}/>
+                        <InfoTip info={infoTooltipReference.comparePrograms.ResidentTrainingStageDistribution} />
                     </h4>
                 </div>
                 <div className='chart-container'>
@@ -51,7 +52,8 @@ export default class ProgramCountPlot extends Component {
                             formatter={(value, name) => ([(Math.round(value * 10) / 10) + '%', name])} />
                         <Legend wrapperStyle={{ 'color': 'black' }} />
                         {_.map(moddedPhaseList, (phase_name, index) => {
-                            return <Bar isAnimationActive={false} key={'stacked-phase-' + index} stackId='a' dataKey={phase_name} fill={multiColorScale[index]} />
+                            return <Bar background={customBackgroundBorder}
+                                isAnimationActive={false} key={'stacked-phase-' + index} stackId='a' dataKey={phase_name} fill={multiColorScale[index]} />
                         })}
                     </BarChart>
                 </div>
