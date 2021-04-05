@@ -34,9 +34,9 @@ export default class ProgramDashboard extends Component {
 
 
         let meanOfAllStages = _.mean(_.filter(averageDivergence, (d) => d != -1));
+        meanOfAllStages = isNaN(meanOfAllStages) ? -1 : meanOfAllStages;
         // Create a color scale that maxes out at 100%
         const averageColorScale = scaleLinear().domain([0, 100]).range([0, 1]);
-
 
         return (<div className={('program-base-panel m-t m-b text-center') + (printModeON ? ' printable-content' : '')}>
             {yearToggleEnabled && <div>
@@ -73,6 +73,12 @@ export default class ProgramDashboard extends Component {
                                         key={'stage-average-' + stage}
                                         className='stage-average'>
                                         {stage} - {stageValue}%</span>
+                                }
+                                else {
+                                    return <span
+                                        key={'stage-average-' + stage}
+                                        className='stage-average'>
+                                        {stage} - N/A</span>
                                 }
                             })}
                         </div>

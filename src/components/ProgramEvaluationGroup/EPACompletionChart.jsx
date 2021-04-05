@@ -42,8 +42,18 @@ export default class EPACompletionChart extends Component {
                 y={scaleY(d.percentageOffset) <= xOne ? scaleY(d.percentageOffset) : xOne}
                 height={scaleY(d.percentageOffset) <= xOne ? xOne - scaleY(d.percentageOffset) : scaleY(d.percentageOffset) - xOne}
                 fill={(() => {
-                    const colorValue = d.percentageOffset > 1 ? Math.min(d.percentageOffset - 1, 1) : (1 - d.percentageOffset);
-                    return interpolateRdYlGn(1 - colorValue);
+                    if (d.percentageOffset < 0.3) {
+                        return '#f46d43';
+                    }
+                    else if (d.percentageOffset >= 0.3 && d.percentageOffset <= 0.7) {
+                        return '#fee08b';
+                    }
+                    else if (d.percentageOffset > 0.7 && d.percentageOffset <= 1.3) {
+                        return '#66bd63';
+                    }
+                    else {
+                        return '#d9ef8b';
+                    }
                 })()}
                 width={0.75 * itemSize}
                 stroke={d.percentageOffset > maxPercentageOffset ? 'white' : 'transparent'}
