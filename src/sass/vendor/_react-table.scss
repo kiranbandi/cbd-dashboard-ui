@@ -504,6 +504,7 @@
         }
         .rt-tbody .rt-tr-group {
             border-bottom: solid 2px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
             &:hover {
                 background: steelblue;
                 color: white;

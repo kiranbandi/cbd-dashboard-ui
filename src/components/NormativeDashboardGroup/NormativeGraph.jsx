@@ -32,14 +32,14 @@ class NormativeGraph extends Component {
 
     handleChartClick(event) {
 
-        const { actions, residentFilter } = this.props;
+        const { actions, residentFilter, residentList } = this.props;
 
         let datapoint = this.chartCtx && this.chartCtx.getBarsAtEvent(event);
         // if a valid resident name has been clicked
         if (datapoint && datapoint.length > 0) {
             // first get the resident username from the list
             // then check if the resident exists and then trigger a custom select resident action 
-            let resident = _.find(this.props.residentList, (d) => d.fullname == datapoint[0].label);
+            let resident = _.find(residentList, (d) => d.fullname == datapoint[0].label);
             if (resident) {
                 // set the username on the filter
                 residentFilter.username = resident.username;

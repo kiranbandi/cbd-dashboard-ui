@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactTable from 'react-table';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { switchToResidentDashboard } from '../../redux/actions/actions';
 
 const columns = [{
     Header: 'Name',
@@ -26,8 +29,7 @@ const columns = [{
     maxWidth: 130
 }];
 
-
-export default (props) => {
+let NormativeTable = (props) => {
 
     return (
         <div className='normative-table table-box' style={{ width: props.width }}>
@@ -37,9 +39,44 @@ export default (props) => {
                 defaultPageSize={10}
                 resizable={false}
                 className='-highlight'
+                getTdProps={(state, rowInfo, column, instance) => {
+                    return {
+                        onClick: (e, handleOriginal) => {
+                            const username = rowInfo.original.username,
+                                { actions, residentFilter, residentList } = props;
+                            // validate username to check if its non empty 
+                            if (username && username.length > 0) {
+                                // first get the resident username from the list
+                                // then check if the resident exists and then trigger a custom select resident action 
+                                let resident = _.find(residentList, (d) => d.username == username);
+                                if (resident) {
+                                    // set the username on the filter
+                                    residentFilter.username = resident.username;
+                                    actions.switchToResidentDashboard(resident, residentFilter);
+                                }
+                            }
+                        }
+                    }
+                }}
                 defaultSorted={[{ id: "fullname", desc: true }]} />
         </div>)
 
 }
 
+
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators({ switchToResidentDashboard }, dispatch)
+    };
+}
+
+function mapStateToProps(state) {
+    return {
+        residentList: state.oracle.residentList,
+        residentFilter: state.oracle.residentFilter
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NormativeTable);
 
