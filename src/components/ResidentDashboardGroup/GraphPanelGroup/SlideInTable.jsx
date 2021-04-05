@@ -28,7 +28,7 @@ const columns = [{
     filterMethod: customFilter
 },
 {
-    Header: 'Feedback',
+    Header: 'Comments',
     accessor: 'Feedback',
     className: 'feedback-cell',
     filterMethod: customFilter

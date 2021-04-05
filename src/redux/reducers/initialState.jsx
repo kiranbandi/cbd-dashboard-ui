@@ -7,7 +7,8 @@ export default {
     residentFilter: {
       isAllData: true,
       startDate: null,
-      endDate: null
+      endDate: null,
+      hideNoDataEPAs: false
     },
     isTooltipVisible: false,
     tooltipData: null,

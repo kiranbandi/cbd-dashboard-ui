@@ -39,6 +39,7 @@ class ResidentDashboard extends Component {
                                         // add some empty space around the sides
                                         width={width - 35} />}
                                     <GraphPanel
+                                        residentFilter={residentFilter}
                                         width={width}
                                         smallScreen={smallScreen} />
                                 </div> :

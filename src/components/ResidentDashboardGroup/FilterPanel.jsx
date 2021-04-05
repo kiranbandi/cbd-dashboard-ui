@@ -55,6 +55,14 @@ class FilterPanel extends Component {
 
     }
 
+    onHideNoRecordEPAs = (event) => {
+        let { residentFilter = {}, actions, residentData } = this.props;
+
+        residentFilter.hideNoDataEPAs = event.target.checked;
+        actions.setResidentFilter({ ...residentFilter });
+
+    }
+
     onDateFilterClick = (event) => {
         let { residentFilter = {}, actions, residentData } = this.props,
             { isAllData, startDate, endDate } = residentFilter;
@@ -110,7 +118,7 @@ class FilterPanel extends Component {
         const { filterLoaderState, residentList = []
             , residentFilter = {} } = this.props,
             { isAllData = true, username = '',
-                startDate, endDate } = residentFilter;
+                startDate, endDate, hideNoDataEPAs } = residentFilter;
         //  first convert the array into the format required by react-select 
         let modifiedResidentList = _.map(residentList, (d) => {
             return {
@@ -179,6 +187,15 @@ class FilterPanel extends Component {
                         focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                         onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
                     />
+
+                    <div className="checkbox custom-control text-center custom-checkbox">
+                        <label className='custom-checkbox-label'>
+                            Hide levels with no EPAs in the time period.
+                            <input id='filter-dateFilterActive' type="checkbox"
+                                checked={hideNoDataEPAs} onChange={this.onHideNoRecordEPAs} />
+                            <span className="custom-control-indicator"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
         );

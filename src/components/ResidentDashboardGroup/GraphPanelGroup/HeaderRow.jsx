@@ -9,7 +9,6 @@ class HeaderRow extends Component {
 
     render() {
 
-
         const { onEPALabelClick, innerKey, isCurrentSubRootVisible,
             epaSourceMap, residentList, residentFilter } = this.props;
         let requiredEPACount = 0, achievedEPACount = 0, residentInfo, currentPhase;

@@ -150,13 +150,13 @@ export default class GraphRow extends Component {
                         firstMeasure={firstMeasure} />
 
                     <div className='card-container'>
-                        {isEPAComplete ?
+                        {isEPAComplete && (maxObservation != 0) ?
                             <div className='graph-card first-card'>
                                 <span className="fa fa-check-circle completed-check"></span>
                             </div> :
                             <div className='graph-card first-card'>
-                                <span className='card-text'>{remainingCount}</span>
-                                <span className='card-title remaining-title'>TO GO</span>
+                                {(maxObservation != 0) && <span className='card-text'>{remainingCount}</span>}
+                                {(maxObservation != 0) && <span className='card-title remaining-title'>TO GO</span>}
                             </div>}
                         <div className='graph-card'>
                             <span className='card-text'>{recordedCount}</span>

@@ -41,7 +41,7 @@ class RecentEPATrend extends Component {
             'y': event.pageY - 50,
             'epa': epaText,
             // Add an empty line to align info horizontally
-            'feedback': '\n' + data['Feedback'],
+            'comments': '\n' + data['Feedback'],
             'type': data['Type'],
             'name': data['Observer_Name'],
             'date': data['Date'],

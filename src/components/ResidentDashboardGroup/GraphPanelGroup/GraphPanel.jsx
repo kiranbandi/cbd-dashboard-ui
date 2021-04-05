@@ -74,7 +74,7 @@ class GraphPanel extends Component {
             'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,
             'y': event.pageY - 50,
             // Add an empty line to align info horizontally
-            'feedback': '\n' + data['Feedback'],
+            'comments': '\n' + data['Feedback'],
             'name': data['Observer_Name'],
             'type': data['Type'],
             'date': data['Date'],
@@ -92,12 +92,14 @@ class GraphPanel extends Component {
 
     render() {
 
-        let { residentData,
+        let { residentData, residentFilter = {},
             isTooltipVisible,
             tooltipData, smallScreen, width,
             levelVisibilityOpenStatus, programInfo = {} } = this.props;
 
         const { openTableID, openFilterID, openPlanID } = this.state;
+
+        const { isAllData = true, hideNoDataEPAs = false } = residentFilter;
 
         // populate the source map from the program info
         let epaSourceMap = programInfo.epaSourceMap;
@@ -112,12 +114,30 @@ class GraphPanel extends Component {
             });
             // remove values that dont exist in the original source map 
             _.map(epaSourcesThatExist, (epaSource, epaRootKey) => {
-                epaSourcesThatExist[epaRootKey] = epaSource.filter((d) => epaSourceMap[epaRootKey].subRoot.hasOwnProperty(d));
+
+                const mappedStageList = epaSource.filter((d) => {
+                    const sourceMapExists = epaSourceMap[epaRootKey].subRoot.hasOwnProperty(d);
+                    const noMarkedData = _.filter(residentData[d] || [], (e) => e.mark).length == 0;
+                    // if the hide filter is on and no marked data exists remove the source by filtering it out
+                    if (!isAllData && hideNoDataEPAs && noMarkedData) return false;
+                    return sourceMapExists;
+                });
+
+                // After the filtering is done,
+                // if a stage is empty remove it
+                if (mappedStageList.length > 0) {
+                    epaSourcesThatExist[epaRootKey] = mappedStageList;
+                }
+                else {
+                    delete epaSourcesThatExist[epaRootKey];
+                }
+
             });
         }
 
         let widthOfRootGraphPanel = smallScreen ? (width + 50) : width;
         let widthPartition = smallScreen ? (width - 20) : (width / 4);
+
 
         return (
             <div>

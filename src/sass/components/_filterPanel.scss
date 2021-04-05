@@ -38,7 +38,7 @@
         padding: 10px 0px 10px 15px;
         margin-top: 5px;
         border-radius: 0px 0px 5px 5px;
-        width: 320px;
+        width: 325px;
         background: #e2eff5;
         @media (max-width: 768px) {
             width: 100%;
@@ -49,6 +49,11 @@
         }
         &.show-filter {
             display: block;
+        }
+
+        .custom-checkbox-label {
+            padding-left: 4px;
+            font-size: 14px;
         }
     }
     .name-box {
@@ -90,8 +95,8 @@
         }
     }
     .filter-label {
-        margin-right: 10px;
-        font-size: 15.5px;
+        padding-left: 4px;
+        font-size: 14px;
         font-weight: normal;
     }
     .checkbox {

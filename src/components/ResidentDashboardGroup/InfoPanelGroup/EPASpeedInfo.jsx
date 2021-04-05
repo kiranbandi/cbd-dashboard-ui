@@ -37,8 +37,7 @@ export default (props) => {
                         <CardComponent dual={true} title='Total EPAs Observed' type='primary' metric={totalEPAs} secondMetric={recordsInPeriodCount} />
                         <CardComponent title='Progress Rate' type='success' metric={totalProgress + '%'} />
                         <CardComponent title='Achievement Rate' type='danger' metric={achievementRate + '%'} />
-                    </div>
-                }
+                    </div>}
             </div>
             {!smallScreen &&
                 < WeeklyEPAChart
