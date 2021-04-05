@@ -49,8 +49,8 @@ export default class ProgramsCompare extends Component {
         this._isMounted = false;
     }
 
-    onSelectProgram = (selectedProgram) => {
-        this.setState({ 'activeProgram': selectedProgram.value });
+    onSelectProgram = ({ value }) => {
+        this.setState({ 'activeProgram': value });
     }
 
     componentDidMount() {
@@ -203,7 +203,8 @@ export default class ProgramsCompare extends Component {
                                 </div>
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
-                                    <ProgramEPACompletion width={(partWidth * 2)} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramEPACompletion activeProgram={activeProgram} onSelectProgram={this.onSelectProgram}
+                                        width={(partWidth * 2)} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <ProgramMonthlyPlot width={overallWidth} printModeON={printModeON} programData={_.reverse([...moddedProgramData])} />
                             </div>}

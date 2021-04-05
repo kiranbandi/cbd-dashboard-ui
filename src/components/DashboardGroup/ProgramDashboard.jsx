@@ -103,28 +103,21 @@ export default class ProgramDashboard extends Component {
                                     programInfo={programInfo}
                                     possibleAcademicYears={_.reverse(possibleAcademicYears.slice(1, -1))}
                                     printModeON={printModeON} />
+
+                                <EPACompletionDistribution
+                                    width={fullWidth}
+                                    possibleAcademicYears={possibleAcademicYears}
+                                    programInfo={programInfo}
+                                    records={allRecords}
+                                    printModeON={printModeON} />
+
                                 <ProgramBasePanel
                                     width={fullWidth - 50}
                                     allRecords={allRecords}
                                     programInfo={programInfo}
+                                    residentList={residentList}
                                     possibleAcademicYears={possibleAcademicYears}
                                     printModeON={printModeON} />
-
-                                <div className='container-fluid text-center'>
-                                    <EPAOverallbyRotation
-                                        width={fullWidth / 3}
-                                        programInfo={programInfo}
-                                        allRecords={allRecords}
-                                        residentList={residentList}
-                                        possibleAcademicYears={possibleAcademicYears}
-                                        printModeON={printModeON} />
-                                    <EPACompletionDistribution
-                                        width={fullWidth * (2 / 3)}
-                                        possibleAcademicYears={possibleAcademicYears}
-                                        programInfo={programInfo}
-                                        records={allRecords}
-                                        printModeON={printModeON} />
-                                </div>
                             </div>
                             : <h2 className='text-center text-danger m-t-lg'>No program data available currently</h2>}
                         <button

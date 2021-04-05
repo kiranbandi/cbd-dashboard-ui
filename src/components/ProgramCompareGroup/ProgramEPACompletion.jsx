@@ -10,29 +10,19 @@ const training_stage_codes = ['D', 'F', 'C', 'P', 'All'];
 export default class ProgramEPACompletion extends Component {
 
 
-    constructor(props) {
-        super(props);
-        // If a program is active default to it as the selected program
-        this.state = {
-            selectedProgram:
-                _.findIndex(_.reverse(_.filter(props.programData, (d) => d.programName != 'Overall')),
-                    (d) => d.isActiveProgram) || 0
-        };
-    }
-
     onProgramWrapperClick = (event) => {
-        const selectedProgram = +event.currentTarget.id.split('-')[2];
-        this.setState({ selectedProgram });
+        const value = event.currentTarget.id.split('-')[1];
+        this.props.onSelectProgram({ value });
     }
 
     render() {
-        const { programData, width, printModeON } = this.props,
-            { selectedProgram = 0 } = this.state;
+        const { programData, width, printModeON, activeProgram } = this.props;
 
         let custom_data = _.map(programData,
-            ({ programName, source_map, epa_completion_rate, epa_percentage_list }) => ({
+            ({ programName, program, source_map, epa_completion_rate, epa_percentage_list }) => ({
                 programName,
                 source_map,
+                program,
                 epa_completion_rate,
                 epa_percentage_list
             }));
@@ -45,12 +35,13 @@ export default class ProgramEPACompletion extends Component {
         // Create a color scale that maxes out at 100%
         const colorScale = scaleLinear().domain([0, 100]).range([0, 1]);
 
-        let mapped_data = _.map(custom_data, ({ programName, epa_completion_rate }) => {
+        let mapped_data = _.map(custom_data, ({ programName, program, epa_completion_rate }) => {
 
             const meanOfProgram = _.mean(_.filter(epa_completion_rate, (d) => d != -1));
 
             return {
                 'label': programName,
+                'programID': program,
                 'data': _.map(training_stage_codes, (stage, stageIndex) => {
                     const completionValue = stage == 'All' ? meanOfProgram : epa_completion_rate[stageIndex];
                     return {
@@ -63,7 +54,7 @@ export default class ProgramEPACompletion extends Component {
             };
         });
 
-        let activeProgramData = custom_data[selectedProgram];
+        const activeProgramData = _.find(custom_data, (d) => d.program == activeProgram);
 
         return (
             <div>
@@ -80,8 +71,8 @@ export default class ProgramEPACompletion extends Component {
                         style={{ 'width': width / 2, 'height': '630' + 'px' }}>
                         {_.map(mapped_data, (program, programIndex) => {
                             return <div key={'proram-rate-key-' + programIndex}
-                                className={'program-rate-wrapper ' + (selectedProgram == programIndex ? 'selected' : '')}
-                                id={'program-map-' + programIndex}
+                                className={'program-rate-wrapper ' + (activeProgram == program.programID ? 'selected' : '')}
+                                id={'pgm-' + program.programID}
                                 onClick={this.onProgramWrapperClick}>
                                 <span className='program-rate-label'>{program.label}</span>
                                 <span className='program-rate-inner-wrapper'>

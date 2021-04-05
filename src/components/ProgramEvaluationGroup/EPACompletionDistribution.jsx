@@ -38,7 +38,7 @@ export default class ProgramDashboard extends Component {
         const averageColorScale = scaleLinear().domain([0, 100]).range([0, 1]);
 
 
-        return (<div className={('program-vis-box') + (printModeON ? ' printable-content' : '')}>
+        return (<div className={('program-base-panel m-t m-b text-center') + (printModeON ? ' printable-content' : '')}>
             {yearToggleEnabled && <div>
                 <h3 className='text-left m-a-0 pull-left'>
                     EPA Completion Distribution
@@ -56,7 +56,7 @@ export default class ProgramDashboard extends Component {
                 </div>
             </div>}
 
-            <div className='col-xs-12 m-t'>
+            <div className='m-t-lg'>
                 {filteredRecords.length > 0 ?
                     <div>
                         <div className='stage-average-wrapper'>

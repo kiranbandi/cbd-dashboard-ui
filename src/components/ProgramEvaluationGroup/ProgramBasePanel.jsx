@@ -4,6 +4,7 @@ import processSingleProgramRecords from '../../utils/processSingleProgramRecords
 import Summary from '../ProgramEvaluationGroup/ProgramSummary';
 import EPAspecificRotation from '../ProgramEvaluationGroup/EPAspecificRotation';
 import RotationSpecificEPA from '../ProgramEvaluationGroup/RotationSpecificEPA';
+import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation';
 
 export default class ProgramBasePanel extends Component {
 
@@ -31,13 +32,14 @@ export default class ProgramBasePanel extends Component {
 
     render() {
 
-        const { allRecords, programInfo, possibleAcademicYears, width, printModeON } = this.props,
+        const { allRecords, programInfo, residentList,
+            possibleAcademicYears, width, printModeON } = this.props,
             { academicYear, selected } = this.state;
 
         const { recordsInYearAndPhase, summaryData } = processSingleProgramRecords(allRecords, academicYear, selected);
 
         return (
-            <div className='program-base-panel text-center m-a-md'>
+            <div className='program-base-panel text-center'>
                 <div className='row'>
                     <div className='year-selection-box'>
                         <h2 className='header'>Academic Year: </h2>
@@ -76,6 +78,14 @@ export default class ProgramBasePanel extends Component {
                         epaSourceMap={programInfo.epaSourceMap}
                         rotationList={programInfo.rotationList}
                         filteredRecords={recordsInYearAndPhase} />
+                    <EPAOverallbyRotation
+                        // 40px to account for margin around the boxes above
+                        width={(width + 140)}
+                        programInfo={programInfo}
+                        allRecords={allRecords}
+                        residentList={residentList}
+                        academicYear={academicYear}
+                        printModeON={printModeON} />
                 </div>
             </div>
         );

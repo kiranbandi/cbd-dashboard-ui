@@ -8,18 +8,12 @@ import infoTooltipReference from '../../utils/infoTooltipReference';
 
 export default class EPASpecRotation extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            academicYear: { 'label': '2020-2021', 'value': '2020' },
-        };
-    }
 
     render() {
-        const { possibleAcademicYears, residentList, printModeON,
+        const { residentList, printModeON, academicYear,
             allRecords, normalizeByCount = true, width } = this.props;
 
-        const programData = processAndFilterRecords(allRecords, residentList, this.state.academicYear.value, normalizeByCount)
+        const programData = processAndFilterRecords(allRecords, residentList, academicYear.value, normalizeByCount)
 
         let lineData = {
             labels: _.map(programData, (d) => d.label),
@@ -35,22 +29,12 @@ export default class EPASpecRotation extends Component {
             }]
         }
 
-        return (<div className={('program-vis-box') + (printModeON ? ' printable-content' : '')}>
+        return (<div className={('program-vis-box m-b ') + (printModeON ? ' printable-content' : '')}>
             <div>
                 <h3 className='text-left m-a-0 pull-left'>
                     {normalizeByCount ? 'EPAs per Rotation' : 'EPA Overall Count'}
                     <InfoTip info={infoTooltipReference.programEvaluation.EPACountPerRotation} />
                 </h3>
-                <div className='year-selection-box pull-right'>
-                    <h2 className='header'>Academic Year: </h2>
-                    <div className='react-select-root'>
-                        <ReactSelect
-                            value={this.state.academicYear}
-                            options={possibleAcademicYears}
-                            styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
-                            onChange={(academicYear) => this.setState({ academicYear })} />
-                    </div>
-                </div>
             </div>
             <div className='p-t'>
                 <Bar

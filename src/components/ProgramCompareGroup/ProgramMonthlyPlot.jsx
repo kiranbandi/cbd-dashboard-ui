@@ -71,7 +71,7 @@ export default class ProgramMonthyPlot extends Component {
                                 data={d.monthlyCount}
                                 width={350} height={300}
                                 redraw={true} />
-                            <h3 className='text-center text-primary'>{d.title}</h3>
+                            <h3 className='text-center'>{d.title}</h3>
                         </div>
                     })}
                 </div>

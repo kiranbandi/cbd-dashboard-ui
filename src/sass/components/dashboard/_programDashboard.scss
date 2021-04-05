@@ -5,12 +5,14 @@
         background: #1a1c22;
         padding-top: 20px;
         padding-bottom: 20px;
+        border-radius: 10px;
         .hr-divider {
             z-index: 2;
             margin: 0px 10%;
             .hr-divider-content {
                 background: #1a1c22;
                 font-size: 1.65em;
+                color: white;
             }
         }
         .program-part-container {
