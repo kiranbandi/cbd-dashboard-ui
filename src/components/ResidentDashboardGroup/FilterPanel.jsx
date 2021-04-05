@@ -124,7 +124,7 @@ class FilterPanel extends Component {
             return {
                 label: d.fullname + " (" + (d.totalProgress || 0) + "%)",
                 value: d.username,
-                currentPhase: d.currentPhase.split("-").join(" ").toUpperCase()
+                currentPhase: d.currentPhase ? d.currentPhase.split("-").join(" ").toUpperCase() : ''
             };
         })
         // then group the array based on current phase of resident

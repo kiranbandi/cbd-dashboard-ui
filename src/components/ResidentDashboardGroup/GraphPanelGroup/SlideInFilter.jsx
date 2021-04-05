@@ -90,11 +90,3 @@ export default class SlideInFilter extends Component {
             </div>)
     }
 }
-
-//  This takes in values that are comma seperated and splits them into an array
-// and also trims any leading or trailing whitespaces, additionally it also ignores commas in brackets
-// because the comma in that case is part of the option itself and not a seperator.
-function splitAndTrim(string) {
-    var regex = /,(?![^(]*\)) /;
-    return string.split(regex).map((s) => s.trim());
-}
