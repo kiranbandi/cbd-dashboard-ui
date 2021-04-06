@@ -18,7 +18,7 @@
         "clean": "rimraf build/*",
         "build": "npm run clean && npm run build-code",
         "start": "webpack --config ./build-config/webpack.config.js",
-        "build-code": "webpack -p --config ./build-config/webpack.prod.config.js"
+        "build-code": "webpack --config ./build-config/webpack.prod.config.js"
     },
     "author": "kiranbandi",
     "license": "MIT",

@@ -14,7 +14,9 @@ class Container extends Component {
     componentDidMount() {
         // Before the content is mounted, hide the sidebar if its shown, quick patch
         // to conserve visual space for charting
-        if (localStorage.sidebarClosed == 'open') { setTimeout(() => { jQuery('#sidebar-toggle').click() }, 10) }
+        if (localStorage.sidebarClosed == 'open' || jQuery('#grid-layout').hasClass('grid-sidebar')) {
+            setTimeout(() => { jQuery('#sidebar-toggle').click() }, 10);
+        }
 
         // Call the learner list API to get a list of all residents
         // for the select filter parameters and store the response in redux
