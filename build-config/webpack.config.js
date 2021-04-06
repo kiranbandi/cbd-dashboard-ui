@@ -8,7 +8,7 @@ module.exports = {
     entry: ['babel-polyfill', './src/app.jsx'],
     output: {
         path: path.resolve("C:\\Users\\bvenk\\Sites\\elentra-1x-me\\www-root\\javascript"),
-        filename: "sask-dashboard.js"
+        filename: "dynamic-dashboard.js"
     },
     watch: true,
     watchOptions: {
@@ -21,6 +21,8 @@ module.exports = {
         'process.env': {
             NODE_ENV: JSON.stringify('development')
         }
+    }), new webpack.optimize.LimitChunkCountPlugin({
+        maxChunks: 1
     }), new WriteFilePlugin()],
     module: {
         rules: require("./rules.config"),

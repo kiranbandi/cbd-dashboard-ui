@@ -23,7 +23,7 @@ export default function (username, residentInfo, learnerDataDump) {
         subGroupedContextualVariables[formID] = _.groupBy(values, (d) => d.dassessment_id);
     });
 
-    var residentData = _.map(assessments, (record) => {
+    var processedData = _.map(assessments, (record) => {
 
         const contextual_variables_by_form = subGroupedContextualVariables[record.form_id] || {},
             situationContextCollection = contextual_variables_by_form[record.dassessment_id] || [];
@@ -44,7 +44,12 @@ export default function (username, residentInfo, learnerDataDump) {
             formID: record.form_id,
             scaleSize: record.rating_scale_responses.length || 0
         }
-    }).filter((d) => d.EPA != 'unmapped');
+    });
+
+    var residentData = processedData.filter((d) => d.EPA != 'unmapped'),
+        // use this unmapped data in future to deal with forms that have been updated
+        // or archived and are no longer valid
+        unmappedData = processedData.filter((d) => d.EPA == 'unmapped');
 
     return { programInfo, residentData };
 }
@@ -160,9 +165,7 @@ function recordEPAtoNumber(record) {
     else if (record.mapped_epas.length > 0) {
         return EPATextToNumber(record.mapped_epas[0].objective_code || '');
     }
-    else {
-        return 'unmapped';
-    }
+    else { return 'unmapped' };
 }
 
 function processComments(record) {

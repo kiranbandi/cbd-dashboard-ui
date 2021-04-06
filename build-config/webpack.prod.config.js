@@ -7,7 +7,7 @@ module.exports = {
     entry: ['babel-polyfill', './src/app.jsx'],
     output: {
         path: path.resolve("build"),
-        filename: "sask-dashboard.js"
+        filename: "dynamic-dashboard.js"
     },
     plugins: [new webpack.DefinePlugin({
             'process.env': {
