@@ -1,4 +1,4 @@
-# CBD Dashboard UI
+# CBME Dashboard UI
 
 A react web application built on MERN Stack (MongoDB , Express , React and Node.JS) for visualizing data compiled from assessments by physician observers to enhance the Competency-Based medical Education model.
 
