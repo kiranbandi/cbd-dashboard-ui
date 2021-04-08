@@ -103,9 +103,9 @@ class FilterPanel extends Component {
             // fetch data from server based on the filter params
             getLearnerData(residentFilter.username, residentInfo)
                 .then((processedData) => {
-                    const { programInfo, residentData } = processedData;
+                    const { programInfo, residentData, rotationSchedule } = processedData;
                     // remap the data and set it on redux store
-                    mapDataAndMarkDatePeriod(residentData, residentFilter, programInfo, residentInfo, actions.setResidentData);
+                    mapDataAndMarkDatePeriod(residentData, residentFilter, programInfo, residentInfo, rotationSchedule, actions.setResidentData);
 
                 })
                 .finally(() => { actions.toggleFilterLoader(); });
@@ -226,7 +226,7 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(FilterPanel);
 
 
-function mapDataAndMarkDatePeriod(residentData, residentFilter, programInfo, residentInfo, setResidentData) {
+function mapDataAndMarkDatePeriod(residentData, residentFilter, programInfo, residentInfo, rotationSchedule, setResidentData) {
 
     const { isAllData, startDate, endDate } = residentFilter;
 
@@ -256,5 +256,5 @@ function mapDataAndMarkDatePeriod(residentData, residentFilter, programInfo, res
         })
     })
     // set the resident data onto redux store
-    setResidentData(groupedResidentData, residentInfo, programInfo);
+    setResidentData(groupedResidentData, residentInfo, programInfo, rotationSchedule);
 }

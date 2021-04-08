@@ -1,5 +1,6 @@
 @import 'epaSpeedInfo';
 @import 'recentEPATrend';
+@import 'rotationSchedule';
 
 // Import sub components then add in base level styling
 .info-panel {
@@ -52,3 +53,5 @@
         }
     }
 }
+
+

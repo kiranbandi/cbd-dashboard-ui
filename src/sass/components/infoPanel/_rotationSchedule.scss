@@ -1,0 +1,173 @@
+.schedule-box {
+    padding-bottom: 30px;
+    margin-bottom: 15px;
+
+    .hr-divider {
+        margin-bottom: 0px !important;
+    }
+
+    .rotation-tooltip {
+        position: absolute;
+        width: 400px;
+        background: #253b46;
+        min-height: 200px;
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 12px;
+        z-index: 100;
+        color: white;
+        span {
+            white-space: pre-wrap;
+        }
+    }
+
+    .button-wrapper {
+        position: relative;
+        height: 30px;
+        margin-bottom: 15px;
+    }
+
+    .all-historical-schedule {
+        margin-bottom: 15px;
+        .no-history-label {
+            font-size: 14px;
+            margin: -5px;
+        }
+    }
+    span.yearBox {
+        display: inline-block;
+        text-align: center;
+        padding: 4px 0;
+        border: 1px solid;
+        border-color: #ffffff;
+        background: #252830;
+        color: white;
+    }
+    .view-back-button {
+        position: absolute;
+        left: 30px;
+        font-weight: bold;
+        padding: 5px 8px;
+        .fa {
+            font-size: 16px;
+            margin-right: 4px;
+            vertical-align: text-bottom;
+        }
+        &.per-block-button {
+            left: 155px;
+        }
+        &.ref-card-button {
+            right: 30px;
+            left: inherit;
+        }
+        &.selected {
+            color: #ffffff;
+            background-color: #1997c6;
+            box-shadow: none;
+        }
+    }
+    span.yearname-label {
+        display: block;
+        position: absolute;
+        transform: rotate(-90deg) translate(-12px, -30px);
+        font-weight: bold;
+        color: #434857;
+    }
+    .schedule-box-rotation {
+        position: relative;
+        &.historical {
+            background: #23252b;
+            border-radius: 5px;
+            height: 47px;
+        }
+
+        height: 40px;
+        overflow: hidden;
+
+        .chart-line {
+            background: #283a5d;
+            border-radius: 30px;
+            display: block;
+            position: absolute;
+            height: 28px;
+            margin: 10px 0px;
+            color: white;
+            padding-top: 3px;
+            font-weight: 500;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            &.between-lot {
+                background: #bf6c07;
+            }
+            &.are-clickable {
+                cursor: pointer;
+            }
+        }
+
+        .chart-count {
+            border: 1.5px solid #434857;
+            border-radius: 30px;
+            display: block;
+            position: absolute;
+            height: 28px;
+            margin: 10px 0px;
+            background: #e2eff5;
+            padding-top: 3px;
+            font-weight: 500;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding-left: 1.5%;
+            
+            .count-chart {
+                border-radius: 30px;
+                position: absolute;
+                right: 0px;
+                height: 24px;
+                top: 0.5px;
+                padding: 3px 10px 3px 10px;
+                width: 55%;
+                text-align: center;
+                &.red {
+                    background: #b9525e;
+                }
+                &.dark-red {
+                    background: #f2001b;
+                }
+                &.green {
+                    background: #66c3a3;
+                }
+                &.dark-green {
+                    background: #00b93a;
+                }
+            }
+            .count-text {
+                display: inline-block;
+                position: absolute;
+                left: 0px;
+                height: 24px;
+                top: 0.5px;
+                padding: 3px 10px 3px 10px;
+                width: 45%;
+                text-align: center;
+                &.use-entire-width {
+                    width: 100%;
+                }
+            }
+        }
+        &.dual-block {
+            height: 75px;
+            .chart-line {
+                margin: 45px 0px;
+            }
+            &.historical {
+                height: 85px;
+            }
+        }
+    }
+
+    .custom-gannt-style-chart {
+        margin: 5px auto;
+        position: relative;
+        height: 30px;
+    }
+}

@@ -32,7 +32,7 @@ export function updateResidentData(residentData) {
     return { type: types.SET_RESIDENT_DATA, residentData };
 }
 
-export function setResidentData(residentData, residentInfo = false, programInfo) {
+export function setResidentData(residentData, residentInfo = false, programInfo, rotationSchedule = []) {
 
     let visibilityOpenStatus = {
         1: false,
@@ -69,6 +69,7 @@ export function setResidentData(residentData, residentInfo = false, programInfo)
             dispatch(setLevelVisibilityStatus(visibilityOpenStatus));
             dispatch({ type: types.SET_PROGRAM_INFO, programInfo });
             dispatch({ type: types.SET_RESIDENT_DATA, residentData });
+            dispatch({ type: types.SET_RESIDENT_SCHEDULE, rotationSchedule });
         };
     }
     // if not simply dispatch the change to residentData alone
@@ -78,12 +79,12 @@ export function setResidentData(residentData, residentInfo = false, programInfo)
 
 }
 
-export function setTooltipData(tooltipData) {
-    return { type: types.SET_TOOLTIP_DATA, tooltipData };
-}
-
 export function setProgramInfo(programInfo) {
     return { type: types.SET_PROGRAM_INFO, programInfo };
+}
+
+export function setTooltipData(tooltipData) {
+    return { type: types.SET_TOOLTIP_DATA, tooltipData };
 }
 
 export function showTooltip(isTooltipVisible, tooltipData) {
@@ -94,6 +95,19 @@ export function showTooltip(isTooltipVisible, tooltipData) {
         dispatch({ type: types.SET_TOOLTIP_VISIBILITY, isTooltipVisible });
     };
 }
+
+// Duplicate :-(
+export function showRotationTooltip(isRotationTooltipVisible, rotationTooltipData) {
+    return dispatch => {
+        if (!!rotationTooltipData) { dispatch(setRotationTooltipData(rotationTooltipData)) }
+        dispatch({ type: types.SET_RO_TOOLTIP_VISIBILITY, isRotationTooltipVisible });
+    };
+}
+
+export function setRotationTooltipData(rotationTooltipData) {
+    return { type: types.SET_RO_TOOLTIP_DATA, rotationTooltipData };
+}
+
 
 // Not so elegant solution  but its needed when a user needs to be automatically switched between dashboards
 export function switchToResidentDashboard(residentInfo, residentFilter) {
@@ -109,7 +123,7 @@ export function switchToResidentDashboard(residentInfo, residentFilter) {
         // fetch data from server based on the filter params
         getLearnerData(residentFilter.username, residentInfo)
             .then((processedData) => {
-                const { programInfo, residentData } = processedData;
+                const { programInfo, residentData, rotationSchedule } = processedData;
                 // mark records to so record is set in a date period filter
                 var markedResidentData = _.map(residentData, (d) => {
                     if (residentFilter.isAllData) { d.mark = false }
@@ -130,7 +144,7 @@ export function switchToResidentDashboard(residentInfo, residentFilter) {
                 })
                 // store the info of visibility of phase into resident info
                 residentInfo.openOnlyCurrentPhase = true;
-                dispatch(setResidentData(groupedResidentData, residentInfo, programInfo));
+                dispatch(setResidentData(groupedResidentData, residentInfo, programInfo, rotationSchedule));
             })
             .finally(() => { dispatch(toggleFilterLoader()); });
     };

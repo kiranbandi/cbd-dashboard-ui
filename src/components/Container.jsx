@@ -14,8 +14,12 @@ class Container extends Component {
     componentDidMount() {
         // Before the content is mounted, hide the sidebar if its shown, quick patch
         // to conserve visual space for charting
-        if (localStorage.sidebarClosed == 'open' || jQuery('#grid-layout').hasClass('grid-sidebar')) {
-            setTimeout(() => { jQuery('#sidebar-toggle').click() }, 10);
+        if (jQuery('#grid-layout').hasClass('grid-sidebar')) {
+            jQuery('#grid-layout').removeClass('grid-sidebar');
+            jQuery('#grid-layout').addClass('grid-no-sidebar');
+            jQuery('.inner-sidebar div').each(function () {
+                jQuery(this).addClass('hide');
+            });
         }
 
         // Call the learner list API to get a list of all residents

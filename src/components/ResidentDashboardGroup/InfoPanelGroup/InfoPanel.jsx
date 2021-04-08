@@ -5,6 +5,7 @@ import _ from 'lodash';
 import EPASpeedInfo from './EPASpeedInfo';
 import RecentEPATrend from './RecentEPATrend';
 import { toggleChecklistVisbility } from '../../../redux/actions/actions';
+import RotationSchedule from '../RotationScheduleGroup/RotationSchedule';
 
 class InfoPanel extends Component {
 
@@ -14,12 +15,14 @@ class InfoPanel extends Component {
 
     render() {
 
-        let { residentData, residentFilter,
+        let { residentData, residentFilter, rotationSchedule = [],
             programInfo, width, smallScreen, residentInfo } = this.props;
 
         return (
             <div className='info-panel'>
                 <div className='info-panel-inner'>
+                    {!!residentData && rotationSchedule.length > 0 &&
+                        <RotationSchedule width={width} rotationSchedule={rotationSchedule} />}
                     {!!residentData &&
                         <EPASpeedInfo
                             width={width}
@@ -28,7 +31,9 @@ class InfoPanel extends Component {
                             residentInfo={residentInfo}
                             residentFilter={residentFilter} />}
                     <div className="info-panel-subcharts-wrapper">
-                        {!smallScreen && <RecentEPATrend width={width} residentData={residentData} programInfo={programInfo} />}
+                        {!smallScreen &&
+                            <RecentEPATrend width={width}
+                                residentData={residentData} programInfo={programInfo} />}
                     </div>
                 </div>
             </div>
@@ -39,7 +44,8 @@ class InfoPanel extends Component {
 function mapStateToProps(state) {
     return {
         residentData: state.oracle.residentData,
-        programInfo: state.oracle.programInfo
+        programInfo: state.oracle.programInfo,
+        rotationSchedule: state.oracle.rotationSchedule
     };
 }
 

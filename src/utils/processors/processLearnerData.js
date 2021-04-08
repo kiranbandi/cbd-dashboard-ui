@@ -5,9 +5,8 @@ export default function (username, residentInfo, learnerDataDump) {
 
     let { advanced_search_epas = [],
         assessments = [], course_name = '',
-        contextual_variables = [] } = learnerDataDump,
+        contextual_variables = [], rotation_schedule = [] } = learnerDataDump,
         { fullname, epaProgress } = residentInfo;
-
 
     // process and set the source map  
     const programInfo = getProgramInfo(advanced_search_epas, epaProgress, course_name);
@@ -51,7 +50,11 @@ export default function (username, residentInfo, learnerDataDump) {
         // or archived and are no longer valid
         unmappedData = processedData.filter((d) => d.EPA == 'unmapped');
 
-    return { programInfo, residentData };
+    // process the rotation schedule data 
+
+    var rotationSchedule = processRotationSchedule(rotation_schedule);
+
+    return { programInfo, residentData, rotationSchedule };
 }
 
 function getProgramInfo(epa_list, epaProgress, course_name) {
@@ -196,4 +199,28 @@ function processComments(record) {
         return comment;
     }
     return '';
+}
+
+
+function processRotationSchedule(rotationList) {
+    return rotationList.map((r) => ({
+        ...r,
+        'start_date': moment(r.start_date, 'YYYY-MM-DD'),
+        'end_date': moment(r.end_date, 'YYYY-MM-DD'),
+        'academic_year': getAcademicYear(r.start_date),
+        'unique_id': r.block_id + '-' + r.rotation_id
+    }));
+}
+
+
+function getAcademicYear(startDate) {
+    const dateObject = moment(startDate, 'YYYY-MM-DD'), year = dateObject.year();
+    // The academic year is always the year number when the academic calendar starts
+    // so to get the academic year, we first get the year entry of the datapoint
+    // then if the datapoint is after July 1st then the academic year is that year number
+    // if not then the academic year is the previous year number.
+    if (dateObject.isSameOrAfter(moment('07/01/' + (+year), 'MM/DD/YYYY'))) {
+        return year;
+    }
+    return year - 1;
 }

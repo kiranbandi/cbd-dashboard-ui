@@ -12,6 +12,8 @@ export default function oracleReducer(state = initialState.oracle, action) {
       return Object.assign({}, state, { activeDashboard: action.activeDashboard })
     case types.SET_RESIDENT_LIST:
       return Object.assign({}, state, { residentList: action.residentList })
+    case types.SET_RESIDENT_SCHEDULE:
+      return Object.assign({}, state, { rotationSchedule: action.rotationSchedule })
     case types.SET_RESIDENT_FILTER:
       return Object.assign({}, state, { residentFilter: action.residentFilter })
     case types.SET_RESIDENT_DATA:
@@ -20,6 +22,10 @@ export default function oracleReducer(state = initialState.oracle, action) {
       return Object.assign({}, state, { isTooltipVisible: action.isTooltipVisible })
     case types.SET_TOOLTIP_DATA:
       return Object.assign({}, state, { tooltipData: action.tooltipData })
+    case types.SET_RO_TOOLTIP_VISIBILITY:
+      return Object.assign({}, state, { isRotationTooltipVisible: action.isRotationTooltipVisible })
+    case types.SET_RO_TOOLTIP_DATA:
+      return Object.assign({}, state, { rotationTooltipData: action.rotationTooltipData })
     case types.SET_VISIBILITY_OPEN_STATUS:
       return Object.assign({}, state, { visibilityOpenStatus: action.visibilityOpenStatus })
     case types.SET_PROGRAM_INFO:

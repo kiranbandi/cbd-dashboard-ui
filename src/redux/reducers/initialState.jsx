@@ -4,6 +4,7 @@ export default {
     filterLoaderState: false,
     activeDashboard: 'normative',
     residentData: null,
+    rotationSchedule: [],
     residentFilter: {
       isAllData: true,
       startDate: null,
@@ -12,6 +13,8 @@ export default {
     },
     isTooltipVisible: false,
     tooltipData: null,
+    isRotationTooltipVisible: false,
+    rotationTooltipData: null,
     visibilityOpenStatus: {
       1: true,
       2: true,
