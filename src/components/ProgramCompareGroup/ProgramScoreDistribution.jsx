@@ -43,7 +43,7 @@ export default class ProgramScoreDist extends Component {
                             formatter={(value, name) => ([(Math.round(value * 10) / 10) + '%', name])} />
                         <Legend wrapperStyle={{ 'color': 'black' }} />
                         {_.map(moddedRatingList, (rating, index) => {
-                            return <Bar background={customBackgroundBorder}
+                            return <Bar background={(index == 0) ? customBackgroundBorder : null}
                                 isAnimationActive={false} key={'stacked-rating-' + index} stackId='a' dataKey={rating} fill={fivePointColorScale[index]} />
                         })}
                     </BarChart>

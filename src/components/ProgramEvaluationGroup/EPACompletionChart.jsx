@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { scaleLinear, interpolateRdYlGn } from 'd3';
 import { NumberToEPAText } from "../../utils/convertEPA";
-
+import shortid from 'shortid';
 
 export default class EPACompletionChart extends Component {
 
@@ -34,10 +34,16 @@ export default class EPACompletionChart extends Component {
         const hideAxisTickLines = 0.75 * itemSize < 17;
 
         const xOne = scaleY(1);
+
+        // Random ID generated to mount event trigger for tooltip
+        // This is randomized so that the s-tooltip reattaches to 
+        // new visual elements that are created if any during a rerender
+        const tooltipAttachID = 'chart-bar-' + shortid();
+
         // create bars
         const bars = epaPercentageList.map((d, i) => (
             <rect
-                className="epa-completion-distribution-chart-bar"
+                className={tooltipAttachID}
                 x={scaleX(i)}
                 y={scaleY(d.percentageOffset) <= xOne ? scaleY(d.percentageOffset) : xOne}
                 height={scaleY(d.percentageOffset) <= xOne ? xOne - scaleY(d.percentageOffset) : scaleY(d.percentageOffset) - xOne}
@@ -125,7 +131,7 @@ export default class EPACompletionChart extends Component {
                 <g>{bars}</g>
                 <g>{dividers}</g>
             </svg>
-            <s-tooltip follow-mouse orientation="top" border-width="1px" show-delay="0" style={{ fontFamily: 'inherit' }} attach-to=".epa-completion-distribution-chart-bar"></s-tooltip>
+            <s-tooltip data-random={Math.random()} follow-mouse orientation="top" border-width="1px" show-delay="0" style={{ fontFamily: 'inherit' }} attach-to={"." + tooltipAttachID}></s-tooltip>
         </div>);
     };
 }
