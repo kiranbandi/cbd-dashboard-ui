@@ -140,7 +140,15 @@ export default class EPACompletionChart extends Component {
                 </div>
             </div>
 
-            <s-tooltip data-random={Math.random()} follow-mouse orientation="top" border-width="1px" show-delay="0" style={{ fontFamily: 'inherit' }} attach-to={"." + tooltipAttachID}></s-tooltip>
+            <s-tooltip
+                ref={el => el && el.forceUpdateAttachedElements()}
+                follow-mouse
+                orientation="top"
+                border-width="1px"
+                show-delay="0"
+                style={{ fontFamily: 'inherit' }}
+                attach-to={"." + tooltipAttachID}
+            ></s-tooltip>
         </div >);
     };
 }
