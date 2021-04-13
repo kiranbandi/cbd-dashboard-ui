@@ -133,10 +133,10 @@ export default class EPACompletionChart extends Component {
                         style={{ 'background': customColorScaleList[colorIndex] }}></span>)}
                 </div>
                 <div className='inner-label-wrapper'>
-                    <span>0%-25% under represented</span>
-                    <span>25%-75% relatively under represented</span>
+                    <span>0%-25% underrepresented</span>
+                    <span>25%-75% relatively underrepresented</span>
                     <span>75%-125% ideal range</span>
-                    <span> Over 125% over represented</span>
+                    <span> Over 125% overrepresented</span>
                 </div>
             </div>
 
