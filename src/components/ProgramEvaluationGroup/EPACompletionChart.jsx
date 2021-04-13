@@ -3,6 +3,8 @@ import { scaleLinear, interpolateRdYlGn } from 'd3';
 import { NumberToEPAText } from "../../utils/convertEPA";
 import shortid from 'shortid';
 
+const customColorScaleList = ['#f46d43', '#fee08b', '#66bd63', '#d9ef8b'];
+
 export default class EPACompletionChart extends Component {
 
     render() {
@@ -48,18 +50,10 @@ export default class EPACompletionChart extends Component {
                 y={scaleY(d.percentageOffset) <= xOne ? scaleY(d.percentageOffset) : xOne}
                 height={scaleY(d.percentageOffset) <= xOne ? xOne - scaleY(d.percentageOffset) : scaleY(d.percentageOffset) - xOne}
                 fill={(() => {
-                    if (d.percentageOffset < 0.3) {
-                        return '#f46d43';
-                    }
-                    else if (d.percentageOffset >= 0.3 && d.percentageOffset <= 0.7) {
-                        return '#fee08b';
-                    }
-                    else if (d.percentageOffset > 0.7 && d.percentageOffset <= 1.3) {
-                        return '#66bd63';
-                    }
-                    else {
-                        return '#d9ef8b';
-                    }
+                    if (d.percentageOffset < 0.25) { return customColorScaleList[0] }
+                    else if (d.percentageOffset >= 0.25 && d.percentageOffset <= 0.75) { return customColorScaleList[1] }
+                    else if (d.percentageOffset > 0.75 && d.percentageOffset <= 1.25) { return customColorScaleList[2] }
+                    else { return customColorScaleList[3] }
                 })()}
                 width={0.75 * itemSize}
                 stroke={d.percentageOffset > maxPercentageOffset ? 'white' : 'transparent'}
@@ -131,8 +125,23 @@ export default class EPACompletionChart extends Component {
                 <g>{bars}</g>
                 <g>{dividers}</g>
             </svg>
+
+            <div className='color-legend-wrapper' style={{ width }}>
+                <div className='inner-color-wrapper'>
+                    {_.map(_.times(4), (d, colorIndex) => <span key={'color-' + colorIndex}
+                        className='color-unit'
+                        style={{ 'background': customColorScaleList[colorIndex] }}></span>)}
+                </div>
+                <div className='inner-label-wrapper'>
+                    <span>0%-25% under represented</span>
+                    <span>25%-75% relatively under represented</span>
+                    <span>75%-125% ideal range</span>
+                    <span> Over 125% over represented</span>
+                </div>
+            </div>
+
             <s-tooltip data-random={Math.random()} follow-mouse orientation="top" border-width="1px" show-delay="0" style={{ fontFamily: 'inherit' }} attach-to={"." + tooltipAttachID}></s-tooltip>
-        </div>);
+        </div >);
     };
 }
 

@@ -59,29 +59,6 @@ export default class ProgramDashboard extends Component {
             <div className='m-t-lg'>
                 {filteredRecords.length > 0 ?
                     <div>
-                        <div className='stage-average-wrapper'>
-                            <span>Training Stage Average Deviation<InfoTip info={infoTooltipReference.programEvaluation.EPACompletionDistributionStage} />: </span>
-                            {_.map(training_stage_codes, (stage, stageIndex) => {
-
-                                let stageValue = Math.round(stage == 'All' ? meanOfAllStages : averageDivergence[stageIndex]),
-                                    background = interpolateRdYlGn(1 - averageColorScale(stageValue)),
-                                    color = averageColorScale(stageValue) >= 0.25 && averageColorScale(stageValue) <= 0.75 ? 'black' : 'white';
-
-                                if (stageValue != -1) {
-                                    return <span
-                                        style={{ background, color }}
-                                        key={'stage-average-' + stage}
-                                        className='stage-average'>
-                                        {stage} - {stageValue}%</span>
-                                }
-                                else {
-                                    return <span
-                                        key={'stage-average-' + stage}
-                                        className='stage-average'>
-                                        {stage} - N/A</span>
-                                }
-                            })}
-                        </div>
                         <EPACompletionChart
                             height={350}
                             width={width}

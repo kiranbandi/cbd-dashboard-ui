@@ -13,11 +13,14 @@ import {
 } from '../components';
 import savePagePDF from '../utils/savePagePDF';
 
-var nonUGProgramList = _.filter(PROGRAM_LIST, (d) => d.value != 'UNDERGRADUATE');
-
 const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP), (d) => (
     { 'label': d + "-" + (Number(d) + 1), 'value': d }
 ));
+
+// Add a empty placeholder
+let nonUGProgramList = _.filter(PROGRAM_LIST, (d) => d.value != 'UNDERGRADUATE');
+nonUGProgramList = [{ 'label': 'All', 'value': '' }, ...nonUGProgramList];
+
 
 const alphabetList = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'],
 
@@ -35,7 +38,7 @@ export default class ProgramsCompare extends Component {
             academicYear: { 'label': '2020-2021', 'value': '2020' },
             loaderState: false,
             // Default to the first program
-            activeProgram: nonUGProgramList[0].value,
+            activeProgram: '',
             programData: [],
             residentList: [],
             anonymize: true,

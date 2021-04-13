@@ -180,3 +180,54 @@
         white-space: pre-wrap;
     }
 }
+
+.color-legend-wrapper {
+    display: flex;
+    flex: 1;
+    padding: 15px 0px 10px 0px;
+
+    .color-unit {
+        flex-grow: 1;
+        height: 20px;
+        margin-top: 10px;
+    }
+
+    .legend-label {
+        width: 100px;
+        color: black;
+        font-weight: bold;
+    }
+}
+
+.specific-program-chart {
+    .color-legend-wrapper {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        margin: 0px auto;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        margin-top: -15px;
+
+        .inner-color-wrapper {
+            display: flex;
+            flex: 1;
+
+            .color-unit {
+                flex-grow: 1;
+                height: 20px;
+                margin-top: 10px;
+            }
+        }
+        .inner-label-wrapper {
+            display: flex;
+            flex: 1;
+            span {
+                flex-grow: 1;
+                font-weight: bold;
+                margin-top: 10px;
+                
+            }
+        }
+    }
+}

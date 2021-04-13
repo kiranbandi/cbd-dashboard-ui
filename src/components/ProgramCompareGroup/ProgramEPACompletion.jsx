@@ -88,11 +88,21 @@ export default class ProgramEPACompletion extends Component {
                             </div>
                         })}
                         <p className='text-center completion-rate-label'> <b>*NA</b> - The training stage has no EPAs to complete or has insufficient data to detect a pattern.</p>
+
+                        <div className='color-legend-wrapper'>
+                            <span className='legend-label'>0% - No Divergence</span>
+                            {_.map(_.times(100), (d, colorIndex) => <span key={'color-' + colorIndex}
+                                className='color-unit'
+                                style={{ 'background': interpolateRdYlGn(1 - (colorIndex / 100)) }}></span>)}
+                            <span className='legend-label'>100% - Over Divergence</span>
+                        </div>
+
                     </div>
                     {!!activeProgramData && <SpecificEPACompletionDistribution
                         epaSourceMap={activeProgramData.source_map}
                         epaPercentageList={activeProgramData.epa_percentage_list}
-                        height={600}
+                        // 65 pixels to account for the height of the color legend
+                        height={600 - 65}
                         width={width / 2} />}
                 </div>
             </div>

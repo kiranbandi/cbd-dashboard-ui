@@ -9,11 +9,13 @@ export default (props) => {
 
     const { programData = {}, printModeON } = props,
 
-        { epa_count = 'No Data', programName,
+        { epa_count = 'No Data', programName = '',
             expired_epa_percentage = '0', entrustment_score = 'N/A',
             words_per_comment = 'N/A', rating_group = [], current_phase_group = []
         } = programData;
 
+    // If a program is not selected hide this panel
+    if (programName == '') return '';
 
     return <div className='program-MicroStatCard-group  m-b container-fluid  printable-content'>
         <div className="hr-divider">
