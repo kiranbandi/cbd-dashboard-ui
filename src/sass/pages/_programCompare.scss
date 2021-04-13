@@ -195,7 +195,7 @@
     .legend-label {
         width: 100px;
         color: black;
-        font-weight: bold;
+        font-weight: bolder;
     }
 }
 
@@ -224,9 +224,9 @@
             flex: 1;
             span {
                 flex-grow: 1;
-                font-weight: bold;
                 margin-top: 10px;
-                
+                color: #929191;
+                font-weight: bolder;
             }
         }
     }
