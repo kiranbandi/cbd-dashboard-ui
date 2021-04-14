@@ -41,6 +41,7 @@ export default function (username, residentInfo, learnerDataDump) {
             Type: record.form_type,
             situationContextCollection,
             formID: record.form_id,
+            academic_year: getAcademicYear(moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD')),
             scaleSize: record.rating_scale_responses.length || 0
         }
     });
@@ -127,31 +128,6 @@ function getProgramInfo(epa_list, epaProgress, course_name) {
 
     return {
         programName: course_name,
-        rotationList: ["EM", "EM(PED)", "EM(RGNL)", "ACE", "ANESTHESIA", "CARDIO", "ICU", "GIM", "GEN SURG", "NEURO", "OBS/GYN", "OPTHO", "ORTHO", "OTHER", "PICU", "PLASTICS", "PSYCH", "SELECTIVE", "TOXICOLOGY", "TRAUMA", "TRANSPORT"],
-        rotationRequired: {
-            "ACE": 6,
-            "EM": 13,
-            "EM(REGINA)": 20,
-            "EM(PED)": 12,
-            "EM(RGNL)": 6,
-            "ANESTHESIA": 9,
-            "CARDIO": 8,
-            "ICU": 6,
-            "GIM": 8,
-            "GEN SURG": 7,
-            "NEURO": 4,
-            "OPTHO": 8,
-            "ORTHO": 4,
-            "PLASTICS": 6,
-            "SELECTIVE": 8,
-            "TRAUMA": 7,
-            "TOXICOLOGY": 4,
-            "TRANSPORT": 6,
-            "OBS/GYN": 4,
-            "PICU": 4,
-            "PSYCH": 4,
-            "OTHER": 4
-        },
         'epaSourceMap': { ...defaultSourceMap }
     }
 }
@@ -203,12 +179,12 @@ function processComments(record) {
 
 
 function processRotationSchedule(rotationList) {
-    return rotationList.map((r) => ({
+    return rotationList.map((r, rotationID) => ({
         ...r,
         'start_date': moment(r.start_date, 'YYYY-MM-DD'),
         'end_date': moment(r.end_date, 'YYYY-MM-DD'),
         'academic_year': getAcademicYear(r.start_date),
-        'unique_id': r.block_id + '-' + r.rotation_id
+        'unique_id': 'rotation-' + rotationID
     }));
 }
 

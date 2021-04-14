@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ScheduleBlock from './ScheduleBlock';
 import MonthLayer from './MonthLayer';
-import { showRotationTooltip } from '../../../redux/actions/actions';
+import { showRotationTooltip, updateResidentData, setResidentFilter } from '../../../redux/actions/actions';
 import RotationTooltip from './RotationTooltip';
 
 class RotatioSchedule extends Component {
@@ -27,10 +27,47 @@ class RotatioSchedule extends Component {
         this.setState({ isEPAperBlockVisible: !this.state.isEPAperBlockVisible });
     }
 
+    onScheduleBlockClick = (event) => {
+
+        const { rotationSchedule = [], actions,
+            residentData, residentFilter = {} } = this.props,
+            blockUniqueID = event.currentTarget.id.slice(9);
+
+        const block = _.find(rotationSchedule, (d) => d.unique_id == blockUniqueID) || false
+
+        if (block && block.start_date && block.end_date) {
+
+            const startDate = block.start_date, endDate = block.end_date;
+
+
+            //Set the dates and filter date props on the resident filter
+            actions.setResidentFilter({
+                ...residentFilter,
+                startDate, endDate,
+                'isAllData': false,
+                'hideNoDataEPAs': true
+            });
+
+            if (!!residentData) {
+                var updatedResidentData = {};
+                _.map(residentData, (epaList = [], epaKey) => {
+                    updatedResidentData[epaKey] = _.map(epaList, (d) => {
+                        if (!!startDate && !!endDate) {
+                            d.mark = moment(d.Date, 'YYYY-MM-DD').isBetween(startDate, endDate, 'days', '[]')
+                        }
+                        else { d.mark = false }
+                        return d;
+                    });
+                });
+                actions.updateResidentData(updatedResidentData);
+            }
+        }
+    }
+
 
     render() {
 
-        const { residentData = [], width, rotationSchedule = [],
+        const { residentData = {}, width, rotationSchedule = [],
             isRotationTooltipVisible, rotationTooltipData } = this.props,
             { isHistoryVisible, isEPAperBlockVisible } = this.state;
 
@@ -56,7 +93,8 @@ class RotatioSchedule extends Component {
         const currentSchedule = rotationScheduleYearGroup[currentAcademicYear] || [];
 
         // If a rotation schedule isnt available then dont render anything
-        if (currentSchedule.length == 0) { this.return; }
+        if (currentSchedule.length == 0 && historicalYears.length == 0) { return '' };
+
 
         return (
             <div className='schedule-box text-center hidden-xs'>
@@ -81,28 +119,29 @@ class RotatioSchedule extends Component {
                 {/* Display historical schedules if available */}
                 {isHistoryVisible && <div className='all-historical-schedule'>
                     {historicalYears.length > 0 ?
-                        _.map(historicalYears, (year) => {
-                            return <ScheduleBlock
-                                key={'yearblock-' + year}
-                                academicYear={year}
-                                isEPAperBlockVisible={isEPAperBlockVisible}
-                                residentData={recordsGroupedByAcademicYear[year]}
-                                scheduleList={rotationScheduleYearGroup[year]}
-                                widthAvailable={widthAvailable}
-                                showRotationTooltip={this.props.showRotationTooltip} />
-                        }) :
+                        _.map(historicalYears, (year) => <ScheduleBlock
+                            key={'yearblock-' + year}
+                            academicYear={year}
+                            isEPAperBlockVisible={isEPAperBlockVisible}
+                            residentData={recordsGroupedByAcademicYear[year]}
+                            scheduleList={rotationScheduleYearGroup[year]}
+                            widthAvailable={widthAvailable}
+                            onScheduleBlockClick={this.onScheduleBlockClick}
+                            showRotationTooltip={this.props.actions.showRotationTooltip} />) :
                         <h3 className='no-history-label'>No Historical Data available</h3>}
                 </div>}
                 {/* Display month list chronological as a reference map */}
                 <MonthLayer width={widthAvailable} />
                 {/* Display the current schedule */}
-                <ScheduleBlock
+                {currentSchedule.length > 0 ? <ScheduleBlock
                     academicYear={currentAcademicYear}
                     isEPAperBlockVisible={isEPAperBlockVisible}
                     residentData={recordsGroupedByAcademicYear[currentAcademicYear]}
                     scheduleList={currentSchedule}
                     widthAvailable={widthAvailable}
-                    showRotationTooltip={this.props.showRotationTooltip} />
+                    onScheduleBlockClick={this.onScheduleBlockClick}
+                    showRotationTooltip={this.props.actions.showRotationTooltip} /> :
+                    <p className='no-rotation-banner'>No rotation schedule available for academic year - {currentAcademicYear}</p>}
                 {/* code chunk to show rotation tooltip*/}
                 {isRotationTooltipVisible && <RotationTooltip {...rotationTooltipData} />}
             </div>);
@@ -112,13 +151,18 @@ class RotatioSchedule extends Component {
 function mapStateToProps(state) {
     return {
         isRotationTooltipVisible: state.oracle.isRotationTooltipVisible,
-        rotationTooltipData: state.oracle.rotationTooltipData
+        rotationTooltipData: state.oracle.rotationTooltipData,
+        residentFilter: state.oracle.residentFilter
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        showRotationTooltip: bindActionCreators(showRotationTooltip, dispatch)
+        actions: bindActionCreators({
+            showRotationTooltip,
+            setResidentFilter,
+            updateResidentData
+        }, dispatch)
     };
 }
 

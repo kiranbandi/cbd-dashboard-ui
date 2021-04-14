@@ -31,7 +31,7 @@
         margin-bottom: 15px;
         .no-history-label {
             font-size: 14px;
-            margin: -5px;
+            margin-top: -10px;
         }
     }
     span.yearBox {
@@ -95,7 +95,6 @@
             padding-top: 3px;
             font-weight: 500;
             text-overflow: ellipsis;
-            white-space: nowrap;
             &.between-lot {
                 background: #bf6c07;
             }
@@ -105,53 +104,29 @@
         }
 
         .chart-count {
-            border: 1.5px solid #434857;
             border-radius: 30px;
             display: block;
             position: absolute;
             height: 28px;
             margin: 10px 0px;
-            background: #e2eff5;
+            color: white;
+            background: #454545;
             padding-top: 3px;
             font-weight: 500;
             text-overflow: ellipsis;
             white-space: nowrap;
-            padding-left: 1.5%;
-            
-            .count-chart {
-                border-radius: 30px;
-                position: absolute;
-                right: 0px;
-                height: 24px;
-                top: 0.5px;
-                padding: 3px 10px 3px 10px;
-                width: 55%;
-                text-align: center;
-                &.red {
-                    background: #b9525e;
-                }
-                &.dark-red {
-                    background: #f2001b;
-                }
-                &.green {
-                    background: #66c3a3;
-                }
-                &.dark-green {
-                    background: #00b93a;
-                }
+
+            &.red {
+                background: #d0717c;
             }
-            .count-text {
-                display: inline-block;
-                position: absolute;
-                left: 0px;
-                height: 24px;
-                top: 0.5px;
-                padding: 3px 10px 3px 10px;
-                width: 45%;
-                text-align: center;
-                &.use-entire-width {
-                    width: 100%;
-                }
+            &.dark-red {
+                background: #e64759;
+            }
+            &.green {
+                background: #66c3a3;
+            }
+            &.dark-green {
+                background: #1bc98e;
             }
         }
         &.dual-block {
@@ -169,5 +144,10 @@
         margin: 5px auto;
         position: relative;
         height: 30px;
+    }
+
+    .no-rotation-banner {
+        margin-top: 12px;
+        font-size: 1.2em;
     }
 }

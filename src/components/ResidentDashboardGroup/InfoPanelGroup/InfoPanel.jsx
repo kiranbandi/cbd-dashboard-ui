@@ -22,7 +22,7 @@ class InfoPanel extends Component {
             <div className='info-panel'>
                 <div className='info-panel-inner'>
                     {!!residentData && rotationSchedule.length > 0 &&
-                        <RotationSchedule width={width} rotationSchedule={rotationSchedule} />}
+                        <RotationSchedule residentData={residentData} width={width} rotationSchedule={rotationSchedule} />}
                     {!!residentData &&
                         <EPASpeedInfo
                             width={width}

@@ -6,11 +6,6 @@ import _ from 'lodash';
 
 export default class ScheduleBlock extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = { showID: -1 };
-    }
-
     onMouseOver = (event) => {
         const { scheduleList, showRotationTooltip } = this.props,
             blockID = event.currentTarget.id.slice(9),
@@ -20,9 +15,9 @@ export default class ScheduleBlock extends Component {
             var pageWidth = document.body.getBoundingClientRect().width;
             showRotationTooltip(true, {
                 'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,
-                'y': event.pageY - 25,
-                'start_date': data['start_date'].format('DD/MM/YYYY'),
-                'end_date': data['end_date'].format('DD/MM/YYYY'),
+                'y': event.pageY + 20,
+                'start_date': data['start_date'].format('MMM Do, YYYY'),
+                'end_date': data['end_date'].format('MMM Do, YYYY'),
                 'name': data['rotation_name'],
                 'group': data['schedule_group'],
                 'site': data['site'],
@@ -35,10 +30,9 @@ export default class ScheduleBlock extends Component {
 
     render() {
 
-        const { scheduleList = [], isHistorical = false,
+        const { scheduleList = [],
             widthAvailable, isEPAperBlockVisible = false,
-            residentData, academicYear } = this.props,
-            { showID } = this.state;
+            residentData, academicYear, onScheduleBlockClick } = this.props;
 
         // create a pixel to day scale
         const scaleX = scaleLinear()
@@ -59,17 +53,15 @@ export default class ScheduleBlock extends Component {
         if (isEPAperBlockVisible) {
             // slot the records so they fall into respective periods
             _.map(residentData, (record) => {
-                let iterator = 0, slotted = false, recordStamp = moment(record.Date, 'YYYY-MM-DD');
-                while (!slotted && (iterator < scheduleDateList.length - 1)) {
-                    if (recordStamp.isBetween(sortedBlocks[iterator].start_date, sortedBlocks.end_date, 'days', '[]')) {
+                let iterator = 0, recordStamp = moment(record.Date, 'YYYY-MM-DD');
+                while (iterator <= (sortedBlocks.length - 1)) {
+                    if (recordStamp.isBetween(sortedBlocks[iterator].start_date, sortedBlocks[iterator].end_date, 'days', '[]')) {
                         epaPerBlockList[iterator] += 1;
-                        slotted = true;
                     }
                     iterator += 1;
                 }
             })
         }
-
 
         let scheduleChart = [], perBlockCountChart = [];
 
@@ -99,25 +91,22 @@ export default class ScheduleBlock extends Component {
                 key={"index-" + blockIndex}
                 id={'rotation-' + unique_id}
                 style={{ left: distanceFromLeft, width: blockWidth }}
+                onClick={onScheduleBlockClick}
                 onMouseOver={this.onMouseOver}
                 onMouseOut={this.onMouseOut}>
                 {rotation_abbrev}
             </span>);
 
 
-            if (unique_id == showID) {
-                console.log(rotationBlock);
-            }
-
             // Deal with EPA Count and colors 
-            let averageColorLabel = 'dark-green';
+            let averageColorLabel = 'no-color';
 
-            let averageRotationPercentage = 0.35;
+            let averageRotationPercentage = 0;
             if (epaPerBlockList[blockIndex] && rotationRequired != 0) {
                 averageRotationPercentage = (Number(epaPerBlockList[blockIndex]) || 0) / rotationRequired;
             }
 
-            if (averageRotationPercentage > 0 && averageRotationPercentage <= 0.25) {
+            if (averageRotationPercentage >= 0 && averageRotationPercentage <= 0.25) {
                 averageColorLabel = 'dark-red';
             }
             else if (averageRotationPercentage > 0 && averageRotationPercentage <= 0.50) {
@@ -126,20 +115,19 @@ export default class ScheduleBlock extends Component {
             else if (averageRotationPercentage > 0 && averageRotationPercentage <= 0.75) {
                 averageColorLabel = 'green';
             }
+            else if (averageRotationPercentage > 0.75) {
+                averageColorLabel = 'dark-green';
+            }
 
             // if we also need to show the corresponding count per block
             if (isEPAperBlockVisible) {
                 perBlockCountChart.push(<span
-                    className={'chart-count '}
+                    className={'chart-count ' + averageColorLabel}
                     key={"count-" + blockIndex}
                     style={{ left: distanceFromLeft, width: blockWidth }}>
                     <span className={'count-text use-entire-width'}>
-                        {epaPerBlockList[blockIndex] || '5'}
+                        {epaPerBlockList[blockIndex] || '-'}
                     </span>
-                    {/* {(averageRotationPercentage != 0) &&
-                        <span className={'count-chart ' + averageColorLabel}>
-                            {Math.round(averageRotationPercentage * 100) + "%"}
-                        </span>} */}
                 </span>)
             }
 
