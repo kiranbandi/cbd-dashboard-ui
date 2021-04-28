@@ -35,11 +35,11 @@ Drop a mail to the project lead Dr.Brent Thoma - brent.thoma@usask.ca
 
 ## Architecture 
 
-Please read the design document and the site map provided below, to get an understanding of the base architecture of the project.
+Links to the design document and the site map are provided below along with a snapshot of the minimum basic data requirements for the dashboard -
 
-https://github.com/kiranbandi/cbd-dashboard-ui/blob/master/cbd_sitemap.png
-
-https://github.com/kiranbandi/cbd-dashboard-ui/blob/master/design_document.pdf
+https://github.com/kiranbandi/cbd-dashboard-ui/blob/master/documentation/CBME%20Dashboard%20Design%20Document.pdf
+https://github.com/kiranbandi/cbd-dashboard-ui/blob/master/documentation/cbd_sitemap.png
+https://github.com/kiranbandi/cbd-dashboard-ui/blob/master/documentation/dataset%20requirement.png
 
 
 ## Features
