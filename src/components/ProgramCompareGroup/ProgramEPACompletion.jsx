@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { InfoTip } from '..';
 import infoTooltipReference from '../../utils/infoTooltipReference';
+import { STAGES_LIST } from '../../utils/programInfo';
 import SpecificEPACompletionDistribution from '../ProgramEvaluationGroup/EPACompletionChart';
 import { interpolateRdYlGn, scaleLinear } from 'd3';
 import _ from 'lodash';
@@ -87,7 +88,6 @@ export default class ProgramEPACompletion extends Component {
                                 </span>
                             </div>
                         })}
-                        <p className='text-center completion-rate-label'> <b>*NA</b> - The training stage has no EPAs to complete or has insufficient data to detect a pattern.</p>
 
                         <div className='color-legend-wrapper'>
                             <span className='legend-label'>0% - No Divergence</span>
@@ -96,13 +96,18 @@ export default class ProgramEPACompletion extends Component {
                                 style={{ 'background': interpolateRdYlGn(1 - (colorIndex / 100)) }}></span>)}
                             <span className='legend-label'>100% - Over Divergence</span>
                         </div>
-
+                        <p className='text-center completion-rate-label'> <b>*NA</b> - The training stage has no EPAs to complete or has insufficient data to detect a pattern.</p>
+                        <div className='stage-label-wrapper'>
+                            {['D', 'F', 'C', 'P'].map((d, i) =>
+                                <span key={'stage-label-'+i}><b>{d}</b>  {' - ' + STAGES_LIST[i].split('-').join(' ')}</span>
+                            )}
+                        </div>
                     </div>
                     {!!activeProgramData && <SpecificEPACompletionDistribution
                         epaSourceMap={activeProgramData.source_map}
                         epaPercentageList={activeProgramData.epa_percentage_list}
-                        // 65 pixels to account for the height of the color legend
-                        height={600 - 65}
+                        // 85 pixels to account for the height of the legends
+                        height={600 - 85}
                         width={width / 2} />}
                 </div>
             </div>

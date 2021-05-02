@@ -103,6 +103,16 @@
     .reel-in-left {
         margin-left: -1.25% !important;
     }
+
+    .stage-label-wrapper {
+        margin: 10px;
+        span {
+            color: white;
+            margin: 5px 10px;
+            text-transform: capitalize;
+        }
+    }
+    
     .program-vis-box {
         background: #1a1c22;
         padding: 20px;

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export function customBackground(dataPoint) {
     if (dataPoint.isActiveProgram) {
         return <rect key={dataPoint.key}
-            fill='#6f6f6f'
+            fill='#a09c9c'
             x={dataPoint.x} y={dataPoint.y}
             width={dataPoint.width} height={dataPoint.height} >
         </rect>

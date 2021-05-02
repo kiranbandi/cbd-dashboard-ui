@@ -4,9 +4,9 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 import { customBackgroundBorder } from './customBackground';
-
+import SCORE_LIST from '../../utils/programInfo/SCORE_LIST';
 const fivePointColorScale = ["#e15759", "#f28e2c", "#76b7b2", "#4e79a7", "#59a14f"];
-const moddedRatingList = _.map(fivePointColorScale, (d, i) => ('Rating-' + (i + 1)));
+const moddedRatingList = _.map(fivePointColorScale, (d, i) => SCORE_LIST[i].label);
 
 export default class ProgramScoreDist extends Component {
 

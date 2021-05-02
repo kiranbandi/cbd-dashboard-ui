@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import processSingleProgramRecords from '../../utils/processSingleProgramRecords';
 import {
-    Line, LineChart, CartesianGrid,
+    Line, LineChart,
     BarChart, Bar, XAxis,
     YAxis, Tooltip, Legend
 } from 'recharts';
 import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
-
+import SCORE_LIST from '../../utils/programInfo/SCORE_LIST';
 const fivePointColorScale = ["#e15759", "#f28e2c", "#76b7b2", "#4e79a7", "#59a14f"];
-const moddedRatingList = _.map(fivePointColorScale, (d, i) => ('Rating-' + (i + 1)));
+const moddedRatingList = _.map(fivePointColorScale, (d, i) => SCORE_LIST[i].label);
 const monthList = ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun"];
 
 
-export default class ProgramBasePanel extends Component {
+export default class ProgramAllYearSummary extends Component {
 
     constructor(props) {
         super(props);
@@ -71,7 +71,7 @@ export default class ProgramBasePanel extends Component {
                         <InfoTip info={infoTooltipReference.programEvaluation.overallAcuisitionMetricsYears} />
                     </h4>
                 </div>
-                <div className='program-part-container'>
+                <div className='program-part-container p-b'>
                     <h3 className="part-year-title">
                         EPAs Acquired and Expired (Per resident)
                     </h3>
@@ -102,7 +102,7 @@ export default class ProgramBasePanel extends Component {
                         </BarChart>
                     </div>
                 </div>
-                <div className='program-part-container'>
+                <div className='program-part-container p-b'>
                     <h3 className="part-year-title">
                         EPA Rating Distribution
                     </h3>
@@ -125,7 +125,7 @@ export default class ProgramBasePanel extends Component {
                     </div>
                 </div>
                 <div
-                    className='program-part-container'>
+                    className='program-part-container p-b'>
                     <h3 className="part-year-title">Monthly Distribution</h3>
                     <div className='chart-container'>
                         <LineChart width={width / 2}
@@ -150,7 +150,7 @@ export default class ProgramBasePanel extends Component {
                     </div>
                 </div>
                 <div
-                    className='program-part-container'>
+                    className='program-part-container p-b'>
                     <h3 className="part-year-title">
                         Average Words Per Comment
                     </h3>

@@ -104,6 +104,15 @@
         }
     }
 
+    .stage-label-wrapper {
+        margin: 10px;
+        span {
+            color: black;
+            margin: 5px 10px;
+            text-transform: capitalize;
+        }
+    }
+
     .completion-rate-chart {
         padding: 1em;
         display: inline-flex;
@@ -112,7 +121,7 @@
 
         .completion-rate-label {
             color: black;
-            margin: 15px 0px 0px 0px;
+            margin: 5px 0px 5px 0px;
         }
 
         .program-rate-wrapper {

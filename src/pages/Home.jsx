@@ -26,7 +26,7 @@ class Home extends Component {
           <p>These dashboards have been developed as part of a research project to determine the essential elements for presenting Competency-Based Medical Education dashboards. They display data from Competency By Design <a href="http://www.royalcollege.ca/rcsite/cbd/competence-by-design-cbd-e">(CBD)</a> assessment systems in intuitive ways that support the needs of learners, teachers, and program administrators.</p>
           <h1> Where is the data coming from ?</h1>
           <p>The data displayed on the dashboard has been compiled from assessment forms filled by physician observers based upon observations of EPAs (Entrustable Professional Activities) that are characteristic of each learners stage of training and discipline.</p>
-          <p>A demonstration of the dashboard in action can be found <a href='https://www.youtube.com/watch?v=hACPB0YyOyA'>here</a></p>
+          <p>A demonstration of the dashboard in action can be found <a href='https://www.youtube.com/watch?v=hACPB0YyOyA'>here</a>.</p>
         </div>
 
       </div>

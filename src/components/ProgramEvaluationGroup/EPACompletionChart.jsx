@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { scaleLinear, interpolateRdYlGn } from 'd3';
+import { scaleLinear } from 'd3';
 import { NumberToEPAText } from "../../utils/convertEPA";
 import shortid from 'shortid';
-
+import { STAGES_LIST } from '../../utils/programInfo';
 const customColorScaleList = ['#f46d43', '#fee08b', '#66bd63', '#d9ef8b'];
 
 export default class EPACompletionChart extends Component {
@@ -137,6 +137,11 @@ export default class EPACompletionChart extends Component {
                     <span>25%-75% relatively underrepresented</span>
                     <span>75%-125% ideal range</span>
                     <span> Over 125% overrepresented</span>
+                </div>
+                <div className='stage-label-wrapper'>
+                    {['D', 'F', 'C', 'P'].map((d, i) =>
+                        <span key={'stage-label-' + i}><b>{d}</b>  {' - ' + STAGES_LIST[i].split('-').join(' ')}</span>
+                    )}
                 </div>
             </div>
 
