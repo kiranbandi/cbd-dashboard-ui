@@ -85,12 +85,12 @@ export default class GraphRow extends Component {
                 const contexts = d.situationContextCollection;
                 highlight = true;
                 for (const filter of Object.keys(filterDict)) {
-                    if (filter && filterDict[filter]) {
+                    if (filter && filterDict[filter] && filterDict[filter].length > 0) {
                         hasValidFilter = true;
                         let relaventContext = _.find(contexts, (d) => d.item_text == filter);
 
                         if (relaventContext && relaventContext.text) {
-                            highlight = highlight && (relaventContext.text == filterDict[filter]);
+                            highlight = highlight && (filterDict[filter].indexOf(relaventContext.text) > -1);
                         }
                         else {
                             highlight = false;

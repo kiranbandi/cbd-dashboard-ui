@@ -12,10 +12,10 @@ export default class SlideInFilter extends Component {
     }
 
     onSelectChange(option, selectRef) {
-        this.props.onHighlightChange(selectRef.name, selectRef.action === 'clear' ? '' : option.value);
+        this.props.onHighlightChange(selectRef.name, selectRef.action === 'clear' ? [] : _.map(option, (e) => e.value));
     }
 
-    createSelect(label, optionArray = [], defaultValue) {
+    createSelect(label, optionArray = [], defaultValue = []) {
         let { data = [] } = this.props,
             // create a count map that is then merged with the text at the end
             optionCountMap = _.times(optionArray.length, () => 0);
@@ -55,8 +55,9 @@ export default class SlideInFilter extends Component {
                     <div className='select-container-filter'>
                         <Select
                             isClearable={true}
+                            isMulti={true}
                             name={label}
-                            value={(modifiedOptionArray.find(option => option.value === defaultValue)) || ''}
+                            value={(modifiedOptionArray.filter(option => defaultValue.indexOf(option.value) > -1)) || []}
                             options={modifiedOptionArray}
                             styles={selectStyles}
                             onChange={this.onSelectChange} />
