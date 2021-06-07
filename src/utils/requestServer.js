@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import axios from 'axios';
-import processLearnerList from './processors/processLearnerList';
+import processCourseData from './processors/processCourseData';
 import processLearnerData from './processors/processLearnerData';
 import endPoints from './endPoints';
 
@@ -17,7 +17,7 @@ requestServer.getLearnerList = function (params) {
             }
         })
             .then((response) => {
-                resolve(processLearnerList(response.data));
+                resolve(processCourseData(response.data));
             })
             .catch((err) => errorCallback(err, reject));
 

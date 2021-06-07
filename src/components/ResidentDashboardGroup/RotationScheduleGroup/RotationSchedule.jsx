@@ -15,7 +15,8 @@ class RotatioSchedule extends Component {
         this.showEPAsPerBlock = this.showEPAsPerBlock.bind(this);
         this.state = {
             isHistoryVisible: false,
-            isEPAperBlockVisible: false
+            isEPAperBlockVisible: false,
+            activeScheduleBlock: -1
         };
     }
 
@@ -31,14 +32,15 @@ class RotatioSchedule extends Component {
 
         const { rotationSchedule = [], actions,
             residentData, residentFilter = {} } = this.props,
-            blockUniqueID = event.currentTarget.id.slice(9);
+            activeScheduleBlock = event.currentTarget.id.slice(9);
 
-        const block = _.find(rotationSchedule, (d) => d.unique_id == blockUniqueID) || false
+        const block = _.find(rotationSchedule, (d) => d.unique_id == activeScheduleBlock) || false;
+
+        this.setState({ activeScheduleBlock });
 
         if (block && block.start_date && block.end_date) {
 
             const startDate = block.start_date, endDate = block.end_date;
-
 
             //Set the dates and filter date props on the resident filter
             actions.setResidentFilter({
@@ -68,8 +70,8 @@ class RotatioSchedule extends Component {
     render() {
 
         const { residentData = {}, width, rotationSchedule = [],
-            isRotationTooltipVisible, rotationTooltipData } = this.props,
-            { isHistoryVisible, isEPAperBlockVisible } = this.state;
+            isRotationTooltipVisible, rotationTooltipData, residentFilter } = this.props,
+            { isHistoryVisible, isEPAperBlockVisible, activeScheduleBlock } = this.state;
 
         //200px to offset the margin on both sides and vertical scroll bar width
         const widthAvailable = width - 25;
@@ -94,6 +96,9 @@ class RotatioSchedule extends Component {
 
         // If a rotation schedule isnt available then dont render anything
         if (currentSchedule.length == 0 && historicalYears.length == 0) { return '' };
+
+        // Only show active block is resident filter is off.
+        const activeScheduleBlockID = residentFilter.isAllData ? -1 : activeScheduleBlock;
 
 
         return (
@@ -122,6 +127,7 @@ class RotatioSchedule extends Component {
                         _.map(historicalYears, (year) => <ScheduleBlock
                             key={'yearblock-' + year}
                             academicYear={year}
+                            activeScheduleBlock={activeScheduleBlockID}
                             isEPAperBlockVisible={isEPAperBlockVisible}
                             residentData={recordsGroupedByAcademicYear[year]}
                             scheduleList={rotationScheduleYearGroup[year]}
@@ -134,6 +140,7 @@ class RotatioSchedule extends Component {
                 <MonthLayer width={widthAvailable} />
                 {/* Display the current schedule */}
                 {currentSchedule.length > 0 ? <ScheduleBlock
+                    activeScheduleBlock={activeScheduleBlockID}
                     academicYear={currentAcademicYear}
                     isEPAperBlockVisible={isEPAperBlockVisible}
                     residentData={recordsGroupedByAcademicYear[currentAcademicYear]}

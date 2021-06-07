@@ -10,11 +10,11 @@ module.exports = [{
 },
 {
     test: /\.scss$/,
-    loaders: ['style-loader', { 'loader': 'css-loader', options: { url: false } }, { 'loader': 'sass-loader', options: { url: false } }]
+    loaders: [{ loader: "style-loader" }, { 'loader': 'css-loader', options: { import: true, url: false } }, { 'loader': 'sass-loader', options: { url: false } }]
 },
 {
     test: /\.css/,
-    loaders: ['style-loader', { 'loader': 'css-loader', options: { url: false } }],
+    loaders: [{ loader: "style-loader" }, { 'loader': 'css-loader', options: { import: true, url: false } }],
 },
 {
     test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

@@ -101,6 +101,9 @@
             &.are-clickable {
                 cursor: pointer;
             }
+            &.active-block {
+                background: steelblue !important;
+            }
         }
 
         .chart-count {

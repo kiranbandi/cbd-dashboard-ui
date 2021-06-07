@@ -56,7 +56,7 @@ class NormativeGraph extends Component {
         let sortedRecords = _.sortBy(records, (d) => d[trackType]);
 
         let datasets = [{
-            label: "Completed",
+            label: "Achieved",
             fillColor: "rgba(28,168,221,.03)",
             strokeColor: "#43b98e",
             pointColor: "#43b98e",

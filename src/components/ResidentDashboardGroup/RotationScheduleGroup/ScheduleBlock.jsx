@@ -32,7 +32,7 @@ export default class ScheduleBlock extends Component {
 
         const { scheduleList = [],
             widthAvailable, isEPAperBlockVisible = false,
-            residentData, academicYear, onScheduleBlockClick } = this.props;
+            residentData, academicYear, onScheduleBlockClick, activeScheduleBlock } = this.props;
 
         // create a pixel to day scale
         const scaleX = scaleLinear()
@@ -85,9 +85,10 @@ export default class ScheduleBlock extends Component {
                 // Blocks should be atleast 5 pixels wide
                 blockWidth = Math.max(5, scaleX(daysInBlock));
 
+            const isBlockActive = activeScheduleBlock == unique_id ? ' active-block' : '';
 
             scheduleChart.push(<span
-                className={'text-truncate rotation-block-anchor chart-line are-clickable ' + isTodayInPeriod}
+                className={'text-truncate rotation-block-anchor chart-line are-clickable ' + isTodayInPeriod + isBlockActive}
                 key={"index-" + blockIndex}
                 id={'rotation-' + unique_id}
                 style={{ left: distanceFromLeft, width: blockWidth }}

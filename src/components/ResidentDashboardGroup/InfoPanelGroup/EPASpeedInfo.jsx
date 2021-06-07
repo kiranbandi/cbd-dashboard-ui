@@ -9,7 +9,7 @@ export default (props) => {
         residentDataList = _.flatMap(residentData);
 
     // Get the required Metrics 
-    let totalEPAs = residentDataList.length,
+    let totalEPAs = Math.max(residentInfo.totalAssessments, residentDataList.length),
         { achievementRate = 0, totalProgress = 0 } = residentInfo,
         recordsInPeriod, recordsInPeriodCount;
     // if there is a date range
