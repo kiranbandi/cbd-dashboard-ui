@@ -6,6 +6,7 @@ import SlideInTable from './SlideInTable';
 import SlideInFilter from './SlideInFilter';
 import infoTooltipReference from "../../../utils/infoTooltipReference";
 import { NumberToEPAText } from "../../../utils/convertEPA";
+import oScoreReference from "../../../utils/oScoreReference";
 
 export default class GraphRow extends Component {
 
@@ -66,12 +67,12 @@ export default class GraphRow extends Component {
         firstMeasure = isNaN(firstMeasure) ? 0 : firstMeasure;
         secondMeasure = isNaN(secondMeasure) ? 0 : secondMeasure;
 
-        const xScale = scaleLinear().domain([0, residentEPAData.length - 1]).range([marginHorizontal, width - marginHorizontal])
+        const xScale = scaleLinear().domain([0, residentEPAData.length - 1]).range([marginHorizontal + 20, width - marginHorizontal])
         const yScale = scaleLinear().domain([5, 1]).range([marginVertical, innerHeight - marginVertical])
 
         // Get the formID for the EPA and the corresponding contextual variable map
         const formID = residentEPAData.length > 0 ? residentEPAData[0].formID : '',
-            contextual_variable_map = window.saskDashboard.contextual_variable_map[formID],
+            contextual_variable_map = window.dynamicDashboard.contextual_variable_map[formID],
             isAnyFilterAvailable = contextual_variable_map && contextual_variable_map.length > 0,
             filterOptions = convertToFilterDict(contextual_variable_map, filterDict);
 
@@ -113,11 +114,21 @@ export default class GraphRow extends Component {
 
         const trackTrailPositions = _.map([...Array(5)], (d, i) => {
             return {
-                x: marginHorizontal,
-                dx: width - (2 * marginHorizontal),
+                x: marginHorizontal + 20,
+                dx: width - (2 * marginHorizontal) - 20,
                 y: yScale(i + 1)
             }
         });
+
+        const legends = _.map(oScoreReference, (d, i) => {
+            return {
+                x: marginHorizontal,
+                y: yScale(i + 1),
+                labelID: i + 1,
+                label: d
+            }
+        });
+
         const isAssessmentPlanAvailable = false;
 
         return (
@@ -167,7 +178,7 @@ export default class GraphRow extends Component {
                             <span className='card-title required-title'>REQUIRED</span>
                         </div>
                         <div className='graph-card '>
-                            <span className='card-text'>{achievedCount}</span>
+                            <span className='card-text'>{maxObservation == 0 ? 'N/A' : achievedCount}</span>
                             <span className='card-title achieved-title'>ACHIEVED</span>
                         </div>
                     </div>
@@ -176,6 +187,7 @@ export default class GraphRow extends Component {
                 <div style={{ width: smallScreen ? widthPartition : widthPartition * 2 }} className='inner-cell score-cell'>
                     <LineChart
                         trackTrailPositions={trackTrailPositions}
+                        legends={legends}
                         width={width}
                         data={scoreData}
                         epaSource={epaSource}

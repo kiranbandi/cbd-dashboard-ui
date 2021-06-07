@@ -25,8 +25,7 @@ class NormativeDashboard extends Component {
         const filteredList = removeNoRecords ?
             _.filter(residentsInPhase, (d) => d['totalAssessments'] > 0) : residentsInPhase;
 
-        //125px to offset the 30px margin on both sides and vertical scroll bar width
-        let overallWidth = document.getElementById('visual-summary-content-mount').getBoundingClientRect().width - 125;
+        let overallWidth = window.dynamicDashboard.mountWidth;
 
         return (
             <div className='normative-data-container'>

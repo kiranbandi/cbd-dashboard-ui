@@ -69,7 +69,7 @@ class GraphPanel extends Component {
         let { residentData, actions } = this.props;
         let pointId = event.target.id.split("-");
         let data = residentData[pointId[2]][pointId[4]];
-        var pageWidth = document.getElementById('visual-summary-content-mount').getBoundingClientRect().width;
+        var pageWidth = window.dynamicDashboard.mountWidth;
         actions.showTooltip(true, {
             'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,
             'y': event.pageY - 50,

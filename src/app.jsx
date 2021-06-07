@@ -17,6 +17,16 @@ import './utils/css/toolkit-light.scss';
 const store = configureStore();
 
 class App extends Component {
+
+  componentDidMount() {
+    // For the first time get the size of the visual summary mount point width
+    // and store it in a global variable used across the dashboard.
+    //125px to offset the 30px margin on both sides and vertical scroll bar width
+    window.dynamicDashboard = {};
+    window.dynamicDashboard.mountWidth = document.getElementById('visual-summary-content-mount').getBoundingClientRect().width - 125;
+  }
+
+
   render() {
     return (<Provider store={store}><Container><Dashboard /></Container></Provider>)
   }

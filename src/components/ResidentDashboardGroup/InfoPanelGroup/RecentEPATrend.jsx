@@ -5,8 +5,9 @@ import _ from 'lodash';
 import moment from 'moment';
 import { line, scaleLinear } from 'd3';
 import TrackTrails from '../GraphPanelGroup/TrackTrails';
+import TrackLegend from '../GraphPanelGroup/TrackLegend';
 import { showTooltip } from '../../../redux/actions/actions';
-
+import oScoreReference from '../../../utils/oScoreReference';
 
 class RecentEPATrend extends Component {
 
@@ -35,7 +36,7 @@ class RecentEPATrend extends Component {
             epaText = data['EPA'] + " - " + programInfo.epaSourceMap[tempEPA[0]].subRoot[data['EPA']];
 
 
-        var pageWidth = document.getElementById('visual-summary-content-mount').getBoundingClientRect().width;
+        var pageWidth = window.dynamicDashboard.mountWidth;
         actions.showTooltip(true, {
             'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,
             'y': event.pageY - 50,
@@ -81,17 +82,26 @@ class RecentEPATrend extends Component {
             innerHeight = 200,
             marginHorizontal = 25,
             marginVertical = 25,
-            xScale = scaleLinear().domain([0, dataList.length - 1]).range([marginHorizontal, width - marginHorizontal]),
+            xScale = scaleLinear().domain([0, dataList.length - 1]).range([marginHorizontal + 20, width - marginHorizontal]),
             yScale = scaleLinear().domain([5, 1]).range([marginVertical, innerHeight - marginVertical])
 
 
         const trackTrailPositions = _.map([...Array(5)], (d, i) => {
             return {
-                x: marginHorizontal,
-                dx: width - (2 * marginHorizontal),
+                x: marginHorizontal + 20,
+                dx: width - (2 * marginHorizontal) - 20,
                 y: yScale(i + 1)
             }
-        })
+        });
+
+        const legends = _.map(oScoreReference, (d, i) => {
+            return {
+                x: marginHorizontal,
+                y: yScale(i + 1),
+                labelID: i + 1,
+                label: d
+            }
+        });
 
         const pointList = dataList.map((d, i) => {
             return {
@@ -156,6 +166,7 @@ class RecentEPATrend extends Component {
                     {dataList.length <= 0 ?
                         <text x={(width - 190) / 2} y={innerHeight / 2} className="no-data-banner">No Records Available</text> :
                         <g>
+                            <TrackLegend legends={legends} />
                             <TrackTrails trackTrailPositions={trackTrailPositions} />
                             <path className='score-spark-line' d={d3Line(pointList)}></path>
                             {elementList}

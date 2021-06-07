@@ -7,9 +7,9 @@ export default function (learnerListDataDump) {
     // The following info is fetched only during course load 
     // to prevent repeated hits on server for the same info
     const stageMap = getStageMap();
-    window.saskDashboard = {};
+    window.dynamicDashboard = window.dynamicDashboard || {};
     // This info is used in the GraphRow.jsx component
-    window.saskDashboard.contextual_variable_map = _.groupBy(contextualVariableMap, (d) => d.form_id);
+    window.dynamicDashboard.contextual_variable_map = _.groupBy(contextualVariableMap, (d) => d.form_id);
 
     // First remap the metrics in metrics list into arrays from strings
     _.map(learnerMetricsList, (d, key) => { learnerMetricsList[key] = JSON.parse(d) });

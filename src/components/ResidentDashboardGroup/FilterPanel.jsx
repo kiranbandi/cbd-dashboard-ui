@@ -190,7 +190,7 @@ class FilterPanel extends Component {
 
                     <div className="checkbox custom-control text-center custom-checkbox">
                         <label className='custom-checkbox-label'>
-                            Hide levels with no EPAs in the time period.
+                        Hide EPAs with no assessments in the time period.
                             <input id='filter-dateFilterActive' type="checkbox"
                                 checked={hideNoDataEPAs} onChange={this.onHideNoRecordEPAs} />
                             <span className="custom-control-indicator"></span>

@@ -11,17 +11,15 @@ class ResidentDashboard extends Component {
 
     render() {
 
-        const { residentList = [], residentData, residentFilter } = this.props;
-        let residentInfo = false;
+        const { residentList = [], residentData, residentFilter } = this.props,
+            width = window.dynamicDashboard.mountWidth,
+            smallScreen = width < 600;
 
-        //125px to offset the 30px margin on both sides and vertical scroll bar width
-        let width = document.getElementById('visual-summary-content-mount').getBoundingClientRect().width - 125;
-        let smallScreen = width < 600;
+        let residentInfo = false;
 
         if (residentFilter && residentFilter.username) {
             residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
         }
-
 
         return (
             <div className='dashboard-root-resident m-t' >

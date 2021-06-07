@@ -1,6 +1,7 @@
 import React from 'react';
 import { line } from 'd3';
 import TrackTrails from './TrackTrails';
+import TrackLegend from './TrackLegend';
 
 export default (props) => {
 
@@ -52,11 +53,12 @@ export default (props) => {
         }
     })
 
-
+    // Add 30px extra height to the graph to fit in the buttons in the bottom
     return (
-        <svg height={props.innerHeight} width={props.width} className='score-svg' >
+        <svg height={props.innerHeight + 30} width={props.width} className='score-svg' >
             <path className='score-spark-line' d={d3Line(props.data)}></path>
             <TrackTrails trackTrailPositions={props.trackTrailPositions} />
+            <TrackLegend legends={props.legends} />
             <g>{elementList}</g>
         </svg>)
 }

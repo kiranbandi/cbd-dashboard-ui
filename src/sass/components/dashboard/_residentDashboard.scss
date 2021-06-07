@@ -2,4 +2,17 @@
     .loading-spinner {
         margin: 100px auto;
     }
+
+    // common for both info panel and graphpanel
+    .tracksLegendContainer {
+        circle {
+            fill: steelblue;
+            cursor: pointer;
+        }
+        text {
+            fill: white;
+            font-weight: bolder;
+            cursor: pointer;
+        }
+    }
 }
