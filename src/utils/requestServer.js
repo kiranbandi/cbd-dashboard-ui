@@ -495,7 +495,7 @@ function errorCallback(error, reject) {
     if (error.response && error.response.data) {
         // if its an authorization error, we simply redirect
         // the users to the paws login page
-        let loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + window.location.origin;
+        let loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent(window.location.origin + '/');
         if (error.response.status == 401) {
             //  handle token expiry gracefully and log the user back in 
             // with minimal effort.
