@@ -42,7 +42,7 @@ class NavBar extends Component {
         const { userDetails, onProgramChange } = this.props,
             { accessType = '', program, programList = [] } = userDetails,
             isUG = (program == 'UNDERGRADUATE'),
-            loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent(window.location.origin + '/');
+            loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent('https://cbme.usask.ca/');
 
         // pass in the program list that the user has access to so that he can switch between
         // them and ask for a different token
