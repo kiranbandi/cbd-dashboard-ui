@@ -30,7 +30,7 @@ class NormativeDashboard extends Component {
         let tableWidth = 450, graphMountWidth = overallWidth - tableWidth, smallScreen = false;
         // If the graph width is less than the radio button bar above it, span it to the full width and expand the table
         if (graphMountWidth < 660) {
-            graphMountWidth = tableWidth = overallWidth - 100;
+            graphMountWidth = tableWidth = overallWidth - 75;
             smallScreen = true;
         }
 

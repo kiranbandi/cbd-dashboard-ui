@@ -33,7 +33,7 @@ class NormativeGraph extends Component {
     handleChartClick(event) {
 
         const { actions, residentFilter, residentList } = this.props;
-        
+
         let datapoint = this.chartCtx && this.chartCtx.getBarsAtEvent(event);
         // if a valid resident name has been clicked
         if (datapoint && datapoint.length > 0) {
@@ -89,7 +89,7 @@ class NormativeGraph extends Component {
             scaleBeginAtZero: true
         };
 
-        
+
         return (
             <div className='normative-graph m-b'>
                 <div className='sub-filter'>
@@ -112,7 +112,7 @@ class NormativeGraph extends Component {
                             checked={trackType == 'completedAssessments'} />
                     </div>
                 </div>
-                <div onClick={this.handleChartClick}>
+                <div className='bar-chart-wrapper' style={{ 'width': width, 'height': 450 }} onClick={this.handleChartClick}>
                     <Bar
                         ref={r => this.chartCtx = r && r.getChart()}
                         redraw={true}
