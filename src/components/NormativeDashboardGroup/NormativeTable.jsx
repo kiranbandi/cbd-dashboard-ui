@@ -31,11 +31,17 @@ const columns = [{
 
 let NormativeTable = (props) => {
 
+    // For small screens the table spans the entire width so dont set any maxwidth 
+    const moddedColumns = _.map(columns, (column) => {
+        const { maxWidth, ...otherProps } = column;
+        return props.smallScreen ? { ...otherProps } : { ...column };
+    });
+
     return (
         <div className='normative-table table-box' style={{ width: props.width }}>
             <ReactTable
                 data={props.records}
-                columns={columns}
+                columns={moddedColumns}
                 defaultPageSize={10}
                 resizable={false}
                 className='-highlight'

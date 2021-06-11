@@ -109,9 +109,20 @@ function getProgramInfo(epa_list, epaProgress, course_name) {
 
     // Map over each EPA and append it to its corresponding entry in the sourcemap 
     _.map(epa_list, (epa) => {
+
         // first find the corresponding EPA from the progess list 
-        const matchingEPA = _.find(epaProgress, (d) => d.objective_id == epa.target_id);
-        const EPAID = EPATextToNumber(matchingEPA.objective_code);
+        let matchingEPA = _.find(epaProgress, (d) => d.objective_id == epa.target_id),
+            EPAID = false;
+
+        // If a matchine EPA is found use that for the EPA ID
+        if (matchingEPA) {
+            EPAID = EPATextToNumber(matchingEPA.objective_code);
+        }
+        // If not try to get an EPA ID from the title
+        else {
+            EPAID = EPATextToNumber(epa.target_label.split(':')[0].trim());
+            matchingEPA = {};
+        }
 
         // set the EPA label
         defaultSourceMap[EPAID[0]].subRoot[EPAID] = getEPATitle(epa.target_title);
@@ -136,6 +147,7 @@ function getProgramInfo(epa_list, epaProgress, course_name) {
 function getEPATitle(title) {
     return title.slice(3).trim();
 }
+
 
 function recordEPAtoNumber(record) {
     if (record.form_type == 'Supervisor Form') {

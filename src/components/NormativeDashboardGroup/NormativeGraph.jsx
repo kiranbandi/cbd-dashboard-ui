@@ -33,7 +33,7 @@ class NormativeGraph extends Component {
     handleChartClick(event) {
 
         const { actions, residentFilter, residentList } = this.props;
-
+        
         let datapoint = this.chartCtx && this.chartCtx.getBarsAtEvent(event);
         // if a valid resident name has been clicked
         if (datapoint && datapoint.length > 0) {
@@ -57,23 +57,23 @@ class NormativeGraph extends Component {
 
         let datasets = [{
             label: "Achieved",
-            fillColor: "rgba(28,168,221,.03)",
+            fillColor: "rgba(67,185,142,0.75)",
             strokeColor: "#43b98e",
             pointColor: "#43b98e",
-            pointStrokeColor: 'rgba(28,168,221,.03)',
-            pointHighlightFill: "rgba(28,168,221,.03)",
-            pointHighlightStroke: "rgba(220,220,220,1)",
+            pointStrokeColor: '#43b98e',
+            pointHighlightFill: "#43b98e",
+            pointHighlightStroke: "#43b98e",
             data: _.map(sortedRecords, (d) => d[trackType])
         }];
 
         if (trackType == 'completedAssessments') {
             datasets.push({
                 label: "Total",
-                fillColor: "rgba(151,187,205,0.2)",
+                fillColor: "rgba(151,187,205,0.75)",
                 strokeColor: "rgba(151,187,205,1)",
                 pointColor: "rgba(151,187,205,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
+                pointStrokeColor: "rgba(151,187,205,1)",
+                pointHighlightFill: "rgba(151,187,205,1)",
                 pointHighlightStroke: "rgba(151,187,205,1)",
                 data: _.map(sortedRecords, (d) => d['totalAssessments'])
             });
@@ -89,6 +89,7 @@ class NormativeGraph extends Component {
             scaleBeginAtZero: true
         };
 
+        
         return (
             <div className='normative-graph m-b'>
                 <div className='sub-filter'>
@@ -106,7 +107,7 @@ class NormativeGraph extends Component {
                             onChange={this.radioChange}
                             checked={trackType == 'totalProgress'} />
                         <RadioButton value={'completedAssessments'} id={'track_completedAssessments'} className='track-radio' name='track-select'
-                            label={"Total EPAs vs Achieved EPAs"}
+                            label={"Achieved EPAs vs Total EPAs"}
                             onChange={this.radioChange}
                             checked={trackType == 'completedAssessments'} />
                     </div>

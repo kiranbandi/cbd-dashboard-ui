@@ -25,7 +25,14 @@ class NormativeDashboard extends Component {
         const filteredList = removeNoRecords ?
             _.filter(residentsInPhase, (d) => d['totalAssessments'] > 0) : residentsInPhase;
 
-        let overallWidth = window.dynamicDashboard.mountWidth;
+        const overallWidth = window.dynamicDashboard.mountWidth;
+
+        let tableWidth = 450, graphMountWidth = overallWidth - tableWidth, smallScreen = false;
+        // If the graph width is less than the radio button bar above it, span it to the full width and expand the table
+        if (graphMountWidth < 660) {
+            graphMountWidth = tableWidth = overallWidth - 100;
+            smallScreen = true;
+        }
 
         return (
             <div className='normative-data-container'>
@@ -38,15 +45,16 @@ class NormativeDashboard extends Component {
                     {filteredList.length > 0 ?
                         <div className='normative-inner-root'>
                             <NormativeGraph
-                                width={overallWidth - (450)}
+                                width={graphMountWidth}
                                 records={filteredList} />
                             <NormativeTable
-                                width={450}
+                                width={tableWidth}
+                                smallScreen={smallScreen}
                                 records={filteredList} />
                         </div> :
                         <h3 className='text-primary text-center m-t-lg'>
                             Sorry there are no {removeNoRecords ? 'active' : ''} residents in the selected training stage.
-                            </h3>}
+                        </h3>}
                 </div>
             </div>
         );
