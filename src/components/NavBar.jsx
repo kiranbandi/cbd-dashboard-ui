@@ -31,9 +31,7 @@ class NavBar extends Component {
     logOut(event) {
         event.preventDefault();
         this.props.setLogoutData();
-
-
-        location.href = 'https://pawscas.usask.ca/cas-web/logout?url=' + encodeURIComponent(window.location.href);
+        location.href = 'https://pawscas.usask.ca/cas-web/logout?url=' + encodeURIComponent(window.location.origin + '/');
     }
 
 
@@ -42,7 +40,7 @@ class NavBar extends Component {
         const { userDetails, onProgramChange } = this.props,
             { accessType = '', program, programList = [] } = userDetails,
             isUG = (program == 'UNDERGRADUATE'),
-            loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent('https://cbme.usask.ca/');
+            loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent(window.location.origin + '/');
 
         // pass in the program list that the user has access to so that he can switch between
         // them and ask for a different token
@@ -60,7 +58,7 @@ class NavBar extends Component {
                         </button>
                         <Link data-toggle="collapse" data-target="#navbar" className="navbar-brand navbar-brand-emphasized" to='/'>
                             <span className="icon icon-home navbar-brand-icon"></span> Home
-                            </Link>
+                        </Link>
                     </div>
                     <div id="navbar" className="navbar-collapse collapse ">
 
@@ -74,14 +72,14 @@ class NavBar extends Component {
                                 <li>
                                     <Link to={isUG ? '/UGME/Admin' : '/PGME/Admin'}>
                                         <span className="icon icon-add-user"></span> Admin
-                                </Link>
+                                    </Link>
                                 </li>
                             }
                             {(accessType == 'super-admin') &&
                                 <li>
                                     <Link to={'Program-Compare'}>
                                         <span className="icon icon-layers"></span> Compare Programs
-                           </Link>
+                                    </Link>
                                 </li>
                             }
                             <li>
@@ -109,7 +107,7 @@ class NavBar extends Component {
                             <li> {this.props.logged_in ?
                                 <Link to='/Logout' onClick={this.logOut}>
                                     <span className="icon icon-log-out"></span> Logout
-                                        </Link>
+                                </Link>
                                 :
                                 <a href={loginRedirectURL}>
                                     <span style={logoIconStyle} className="paws-icon"></span>

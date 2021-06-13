@@ -120,14 +120,15 @@ export default class ProgramDashboard extends Component {
                                     printModeON={printModeON} />
                             </div>
                             : <h2 className='text-center text-danger m-t-lg'>No program data available currently</h2>}
-                        <button
+                        {/* TODO - Fix and enable export PDF */}
+                        {/* <button
                             id='print-report'
                             className="btn btn-primary print-button"
                             onClick={this.onPrintClick}>
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Report</span>
                             <s-tooltip border-width="1px" orientation="left" max-width="800px" show-delay="1000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.programEvaluation.Report}</s-tooltip>
-                        </button>
+                        </button> */}
                     </div>}
             </div >
         );

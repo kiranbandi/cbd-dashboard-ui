@@ -227,7 +227,8 @@ export default class FacultyDashboard extends Component {
                                 currentFacultyRecords={currentFacultyRecords} />
 
                         </div>
-                        <button
+                        {/* TODO Hiding export buttons because they are broken */}
+                        {/* <button
                             id='print-report' className="btn btn-primary print-button partaway"
                             onClick={this.onPrintClick}
                         >
@@ -243,7 +244,7 @@ export default class FacultyDashboard extends Component {
                             <span className="icon icon-download"></span>
                             <span className="icon-label">Condensed Report</span>
                             <s-tooltip border-width="1px" orientation="left" max-width="800px" show-delay="1000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.facultyDevlopment.reportAndCondensedReport}</s-tooltip>
-                        </button>
+                        </button> */}
                     </div>}
             </div>);
     }

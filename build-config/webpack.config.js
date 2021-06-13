@@ -15,8 +15,9 @@ module.exports = {
     devServer: {
         inline: true,
         contentBase: './build',
-        port: 8887,
+        port: 8080,
         https: true,
+        disableHostCheck: true,
         watchOptions: {
             ignored: [
                 path.resolve(__dirname, 'build'),
