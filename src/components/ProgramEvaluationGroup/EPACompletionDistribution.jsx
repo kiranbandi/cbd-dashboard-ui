@@ -5,9 +5,7 @@ import { InfoTip } from '../';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 import { calculateEPACompletion } from '../../utils/processMultiProgramRecords';
 import EPACompletionChart from './EPACompletionChart';
-import { scaleLinear, interpolateRdYlGn } from 'd3';
-// The final stage is all combined together 
-const training_stage_codes = ['D', 'F', 'C', 'P', 'All'];
+import { scaleLinear } from 'd3';
 
 export default class ProgramDashboard extends Component {
 
@@ -25,6 +23,8 @@ export default class ProgramDashboard extends Component {
             yearToggleEnabled = true, printModeON } = this.props,
             { academicYear } = this.state;
 
+        // Sub in an extra experimental option to look at data for last trailing year
+        const updatedAcademicYearsList = [...possibleAcademicYears, { 'label': 'Trailing last 12 months', 'value': 'trailing' }];
 
         const filteredRecords = yearToggleEnabled ? records
             // get the records in the selected year
@@ -42,14 +42,14 @@ export default class ProgramDashboard extends Component {
             {yearToggleEnabled && <div>
                 <h3 className='text-left m-a-0 pull-left'>
                     EPA Completion Distribution
-                            <InfoTip info={infoTooltipReference.programEvaluation.EPACompletionDistribution} />
+                    <InfoTip info={infoTooltipReference.programEvaluation.EPACompletionDistribution} />
                 </h3>
                 <div className='year-selection-box pull-right'>
                     <h2 className='header'>Academic Year: </h2>
                     <div className='react-select-root'>
                         <ReactSelect
                             value={academicYear}
-                            options={possibleAcademicYears}
+                            options={updatedAcademicYearsList}
                             styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
                             onChange={(academicYear) => this.setState({ academicYear })} />
                     </div>
@@ -75,7 +75,12 @@ export default class ProgramDashboard extends Component {
 
 function matchAcademicYear(recordDate, academicYear) {
     var timeObj = moment(recordDate, 'YYYY-MM-DD');
+    // If trailing academic year match only if record is in 12 months from today
+    if (academicYear == 'trailing') {
+        return (timeObj.isBetween(moment().subtract(12, 'months'), moment(), 'months', '[]'))
+    }
     return (timeObj.isBetween(moment('07/01/' + Number(academicYear), 'MM/DD/YYYY'), moment('06/30/' + (Number(academicYear) + 1), 'MM/DD/YYYY'), 'days', '[]'))
 }
+
 
 
