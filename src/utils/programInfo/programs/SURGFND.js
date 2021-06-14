@@ -51,22 +51,33 @@ const programInfo = {
                 '1.7': 1
             },
             assessmentInfo: {
+                '1.1': `Collect 1 observation of achievement`,
+                '1.2': `Collect 2 observations of achievement`,
                 '1.3': `Collect 2 observations of achievement
                 - At least 1 inpatient
                 - At least 1 outpatient`,
+                '1.4': `Collect 2 observations of achievement`,
+                '1.5': `Collect 1 observation of achievement`,
                 '1.6': `Collect 1 observation of achievement
                 - Wound must be at least 5 cm long`,
+                '1.7': `Collect 1 observation of achievement`
             },
-            clinicalPresentation: {},
-            patientDemographic: {},
-            filterTitles: {},
             filterValuesDict: {
                 '1.1': {},
-                '1.2': {},
-                '1.3': {},
+                '1.2': {
+                    'Scenario': ['clinical', 'simulated']
+                },
+                '1.3': {
+                    'Setting': ['inpatient', 'outpatient']
+                },
                 '1.4': {},
-                '1.5': {},
-                '1.6': {},
+                '1.5': {
+                    'Scenario': ['clinical', 'simulation']
+                },
+                '1.6': {
+                    'Scenario': ['clinical', 'simulation'],
+                    'Wound Size': ['< 2 cm', '2-5 cm', '>5 cm']
+                },
                 '1.7': {}
             }
         },
@@ -151,19 +162,49 @@ const programInfo = {
                 - At least 3 different junior learners
                 - At least 3 different senior residents or faculty.`
             },
-            clinicalPresentation: {},
-            patientDemographic: {},
-            filterTitles: {},
             filterValuesDict: {
-                '2.1': {},
-                '2.2': {},
-                '2.3': {},
-                '2.4': {},
-                '2.5': {},
-                '2.6': {},
-                '2.7': {},
-                '2.8': {},
-                '2.9': {}
+                '2.1': {
+                    'Type': ['Part A: Patient Assessment', 'Part B: Procedure'],
+                    'Case Complexity': ["low", "medium", "high"],
+                    'Presentation': ["hemodynamic", "airway/respiratory", "deceased level of consciousness/acute change in mental status", "sepsis"],
+                    'Procedure Type': ["needle thoracostomy", "tube thoracostomy", "central line insertion", "surgical airway"],
+                    'Setting': ['clinical', 'simulation']
+                },
+                '2.2': {
+                    'Type': ['Part A: ATLS Certification', 'Part B: Patient assessment'],
+                    'Resident Role': ['primary', 'secondary survey']
+                },
+                '2.3': {
+                    'Surgical Priority': ['elective', 'emergent'],
+                    'Patient risk category': ["low", "moderate", "high", "critically ill"]
+                },
+                '2.4': {
+                    'Procedure Type': ['elective', 'emergency'],
+                    'Setting': ['clinical', 'simulation']
+                },
+                '2.5': {
+                    'Type': ['Part A: Foundational aspects of procedures', 'Part B: Participating in a team'],
+                    'Role': ["surgeon", "nurse", "anesthetist", "other"]
+                },
+                '2.6': {
+                    'Resident Role': ["primary assistant to the operator", "secondary assistant to the operator"],
+                    'Observer Role': ["faculty", "fellow", "senior resident", "other"]
+                },
+                '2.7': {
+                    'Type': ['Part A: Postoperative Management', 'Part B: Collaborative Care'],
+                    'Stage of Management': ["post-op orders", "clinical management", "documentation of postop course", "discharge planning"],
+                    'Hospital stay': ["day surgery", "same day admit", "inpatients"],
+                    'Surgical Complexity': ["major procedure", "minor procedure"],
+                    'Patient Complexity': ["low", "medium", "high"],
+                    'Role': ["resident", "faculty", "nurse", "other health professional"]
+                },
+                '2.8': {
+                    'Complication Type': ["post-op fever", "low urine output", "hypotension", "chest pain", "shortness of breath", "bleeding", "delirium", "ileus"],
+                    'Hemodynamic Status': ['stable', 'unstable']
+                },
+                '2.9': {
+                    'Assessor’s Role': ['junior learner', 'senior resident', 'faculty']
+                }
             }
         },
         3: {
