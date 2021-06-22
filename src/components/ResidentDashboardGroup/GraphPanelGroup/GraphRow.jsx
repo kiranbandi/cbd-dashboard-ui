@@ -11,9 +11,9 @@ export default class GraphRow extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { filterDict: {} };
+        this.state = { filterDict: {}, updateMarkState: false };
         this.onHighlightChange = this.onHighlightChange.bind(this);
-
+        this.onMarkClick = this.onMarkClick.bind(this);
     }
 
     onHighlightChange(filterKey, filterValue) {
@@ -24,6 +24,13 @@ export default class GraphRow extends Component {
             const filterDict = this.state.filterDict;
             this.setState({ filterDict });
         }
+    }
+
+    onMarkClick() {
+        // Turn on marker loader 
+        this.setState({ 'updateMarkState': false });
+        // Make a promise call which when successful set the new state
+        debugger;
     }
 
     render() {
@@ -103,6 +110,9 @@ export default class GraphRow extends Component {
         const isAnyFilterAvailable = Object.keys((epaSourceMap[innerKey].filterValuesDict[epaSource]) || {}).length > 0;
         const isAssessmentPlanAvailable = epaSourceMap[innerKey].assessmentInfo && epaSourceMap[innerKey].assessmentInfo[epaSource];
 
+        // An EPA is complete if the CC Marks it as complete
+        const isEPAComplete = true, showMarkButton = true;
+
         return (
             <div className='text-xs-center'>
                 {/* widthly reduced slightly by 10px to facilitate extra gap at the last */}
@@ -133,11 +143,18 @@ export default class GraphRow extends Component {
                         firstMeasure={firstMeasure} />
 
                     <div className='card-container'>
-                        {!hideTogoNumbers &&
+                        {isEPAComplete ?
                             <div className='graph-card first-card'>
-                                <span className='card-text'>{remainingCount}</span>
-                                <span className='card-title remaining-title'>TO GO</span>
+                                <span className="icon icon-check"></span>
+                            </div> :
+                            <div className='graph-card first-card'>
+                                {!hideTogoNumbers &&
+                                    <span>
+                                        <span className='card-text'>{remainingCount}</span>
+                                        <span className='card-title remaining-title'>TO GO</span>
+                                    </span>}
                             </div>}
+
                         <div className='graph-card'>
                             <span className='card-text'>{recordedCount}</span>
                             <span className='card-title recorded-title'>OBSERVED</span>
@@ -146,10 +163,13 @@ export default class GraphRow extends Component {
                             <span className='card-text'>{maxObservation}</span>
                             <span className='card-title required-title'>REQUIRED</span>
                         </div>
-                        <div className='graph-card '>
+                        <div className='graph-card'>
                             <span className='card-text'>{expiredCount}</span>
                             <span className='card-title expired-title'>EXPIRED</span>
                         </div>
+                        {showMarkButton && <div className='graph-card'>
+                            <span className='btn btn-success-outline mark-button'>{isEPAComplete ? 'UnMark' : 'Mark as Complete'}</span>
+                        </div>}
                     </div>
 
                 </div>
