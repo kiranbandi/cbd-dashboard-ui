@@ -135,11 +135,13 @@ const programInfo = {
             filterValuesDict: {
                 '2.1': {
                     'Observation Type': ['direct', 'indirect'],
-                    'Setting': ["emergency room", "medicine inpatient unit", "surgery inpatient unit", "outpatient medicine clinic", "outpatient surgery clinic", "simulation", "other"]
+                    'Issue': ["abnormal investigation result", "abnormal vitals", "bowel/urinary dysfunction", "dizziness", "falls", "glycemic control", "line dysfunction", "minor bleeding", "nausea/vomiting", "subacute or progressive neurological decline", "pain", "rash", "sleep disturbance", "wound care", "non-urgent mental health and/or behavioral issues", "other (write in)"],
+                    'Setting': ["emergency room", "medicine inpatient unit", "surgery inpatient unit", "outpatient medicine clinic", "outpatient surgery clinic", "simulation"]
                 },
                 '2.2': {
                     'Observation Type': ['direct', 'indirect'],
-                    'Setting': ["emergency room", "medicine inpatient unit", "surgery inpatient unit", "outpatient medicine clinic", "outpatient surgery clinic", "simulation", "other"]
+                    'Medical Issue': ["acute joint swelling", "acute limb swelling", "acute wound deterioration", "altered level of consciousness", "altered neurological status", "angioedema/anaphylaxis", "chest pain", "code blue", "critical abnormal investigation result", "critical abnormal vitals", "falls/acute trauma", "major hemorrhage", "overdose", "palpitations", "pulseless limb", "respiratory distress", "severe acute pain", "urgent mental health and behavioral issues", "other (write in)"],
+                    'Setting': ["emergency room", "medicine inpatient unit", "surgery inpatient unit", "outpatient medicine clinic", "outpatient surgery clinic", "simulation"]
                 },
                 '2.3': {
                     'Observation Type': ['direct', 'indirect'],
@@ -231,33 +233,46 @@ const programInfo = {
             },
             filterValuesDict: {
                 '3.1': {
+                    'Focus of observation': ["history", "physical", "diagnosis and management"],
+                    'Rehabilitation population group ': ["amputee", "brain injury", "musculoskeletal", "neurological", "neuromuscular", "spinal cord injury", "stroke", "complex medical condition (burns/cancer/cardiorespiratory)", "other (write in)"],
+                    'Rehabilitation issue': ["not applicable", "advocacy", "agitation", "aphasia", "assistive devices (walkers, mobility aids)", "ataxia", "autonomic dysreflexia", "cognition", "mood disorder", "contracture", "dysarthria", "dysphagia", "exercise prescription", "heterotopic ossification", "immobilization complications", "falls", "fitness/wellbeing", "hobbies/avocation", "medical comorbidity management/surveillance", "neurogenic bladder", "neurogenic bowel", "orthotic management", "osteoporosis", "pain", "prosthetic management", "school needs", "seating/wheelchair issues", "seizure", "sexual dysfunction", "spasticity", "vocation needs", "wound management", "other (write in)"],
                     'Complexity': ['low', 'high'],
                     'Setting': ["inpatient rehabilitation", "outpatient physiatry clinic", "outpatient electrodiagnostic clinic", "consultation service"]
                 },
                 '3.2': {
+                    'Observation focus': ["history", "physical", "diagnosis and management"],
+                    'Rehabilitation population group': ["amputee", "brain injury", "musculoskeletal", "neurological", "neuromuscular", "spinal cord injury", "stroke", "complex medical condition(burns/cancer/cardiorespiratory)", "other (write in)"],
+                    'Rehabilitation issue': ["not applicable", "advocacy", "agitation", "aphasia", "assistive devices (walkers, mobility aids)", "ataxia", "autonomic dysreflexia", "cognition", "mood disorder", "contracture", "dysarthria", "dysphagia", "exercise prescription", "heterotopic ossification", "immobilization complications", "falls", "fitness/wellbeing", "hobbies/avocation", "medical comorbidity management/surveillance", "neurogenic bladder", "neurogenic bowel", "orthotic management", "osteoporosis", "pain", "prosthetic management", "school needs", "seating/wheelchair issues", "seizure", "sexual dysfunction", "spasticity", "vocation needs", "wound management", "other (write in)"],
                     'Complexity': ['low', 'high'],
                     'Setting': ["inpatient rehabilitation", "outpatient physiatry clinic", "outpatient electrodiagnostic clinic", "consultation service"]
                 },
                 '3.3': {
+                    'Observation type': ["direct", "indirect"],
+                    'Rehabilitation population group': ["amputee", "brain injury", "musculoskeletal", "neurological", "neuromuscular", "spinal cord injury", "stroke", "other diagnoses (burns/cancer/cardiorespiratory)", "other (write in)"],
                     'Setting': ["inpatient rehabilitation", "outpatient physiatry clinic", "outpatient electrodiagnostic clinic", "consultation service", "simulation"],
                     'Medical Issue': ["acute joint swelling", "acute limb swelling", "acute undifferentiated functional deterioration", "acute wound deterioration", "altered level of consciousness", "altered neurological status", "angioedema/anaphylaxis", "autonomic dysreflexia", "code blue", "critical abnormal investigation result", "critical abnormal vitals", "falls/acute trauma", "major hemorrhage", "overdose", "palpitations", "post-traumatic agitation", "pulseless limb", "respiratory distress", "severe acute pain", "urgent mental health and behavioral issues"]
                 },
                 '3.4': {
+                    'Observation type': ["direct", "indirect"],
+                    'Observation Focus': ["history", "physical examination", "management plan", "communication"],
                     'Setting': ["inpatient pediatric rehabilitation", "outpatient pediatric rehabilitation or transition clinic"],
-                    'Pediatric rehabilitation population': ["amputee/limb deficiency", "brain injury/tumour", "cerebral palsy", "spina bifida", "muscular dystrophy", "MSK (e.g., scoliosis, JIA, apophysitis, SCFE, osteochondritis dessicans)"]
+                    'Pediatric rehabilitation population': ["amputee/limb deficiency", "brain injury/tumour", "cerebral palsy", "spina bifida", "muscular dystrophy", "MSK (e.g., scoliosis, JIA, apophysitis, SCFE, osteochondritis dessicans)", "other (write in)"]
                 },
                 '3.5': {
+                    'Procedure': ["arthrocentesis and/or intra-articular injections – upper limb", "arthrocentesis and/or intra-articular injections-lower limb", "chemodenervation-upper proximal", "chemodenervation–upper distal", "chemodenervation-lower proximal", "chemodenervation–lower distal", "myofascial trigger point injection", "nerve block", "soft tissue injections-tendon sheath", "soft tissue injections–bursa", "superficial sharp debridement of wounds", "other"],
                     'Setting': ["consultation service", "inpatient rehabilitation", "outpatient physiatry", "electrodiagnostic clinic", "simulation"]
                 },
                 '3.6': {
                     'Type': ["Part A: Interpreting electrodiagnostic testing (NCS/EMG)", "Part B: Interpreting other investigations"],
                     'Complexity': ['low', 'high'],
                     'Observation Type': ['direct', 'indirect'],
+                    'Procedure': ["lower limb", "upper limb", "cranial/trunk"],
                     'Setting': ["consultation service", "inpatient unit", "outpatient clinic", "electrodiagnostic clinic", "simulation"]
                 },
                 '3.7': {
                     'Meeting Type': ["interprofessional family/care conference", "team conference/encounter"],
-                    'Setting': ["inpatient unit", "outpatient clinic", "simulation"]
+                    'Setting': ["inpatient unit", "outpatient clinic", "simulation"],
+                    'Patient Population': ["ABI", "amputee", "MSK", "neuromuscular", "neurological", "pediatric", "stroke", "SCI", "other (write in)"]
                 },
                 '3.8': {
                     "Type": ["Part A: Informal/bedside teaching", "Part B: Formal scheduled teaching"]
@@ -303,10 +318,13 @@ const programInfo = {
                 '4.5': `Collect 1 observation of achievement.`
             },
             filterValuesDict: {
-                '4.1': {},
+                '4.1': {
+                    'Experience Type': ["bed flow meeting", "billing for clinical encounters and forms", "booking and running senior’s clinic", "completion of forms", "completion of health records", "responding to requests from staff, other physicians & health professionals", "running any physiatry outpatient clinic", "running consultation service", "running inpatient service", "other (write in)"],
+                    'Setting': ["inpatient rehabilitation unit", "outpatient physiatry clinic", "consultation service"]
+                },
                 '4.2': {
                     'Type': ["Part A: Engaging in self-directed learning", "Part B: Participating in Mainport MOC"],
-                    'Learning Activity': ["MOC section 3 - knowledge ( accredited self-assessment program)", "MOC section 3 – performance (accredited simulation, chart audit, MSF, practice assessment)", "personal learning project/critical appraisal", "narrative on plans for improvement", "narrative on areas of interest and plan to address", "rotation specific teaching", "grand rounds presentations", "journal club presentations"]
+                    'Learning Activity': ["MOC section 3 - knowledge ( accredited self-assessment program)", "MOC section 3 – performance (accredited simulation, chart audit, MSF, practice assessment)", "personal learning project/critical appraisal", "narrative on plans for improvement", "narrative on areas of interest and plan to address", "rotation specific teaching", "grand rounds presentations", "journal club presentations", "other (write in)"]
                 },
                 '4.3': {},
                 '4.4': {
