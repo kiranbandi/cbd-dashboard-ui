@@ -178,6 +178,18 @@
                             display: inline-block;
                             margin: 2px;
                             padding: 1%;
+
+                            .mark-loader {
+                                display: inline-block;
+                                margin-left: 10px;
+                                margin-top: 2px;
+                            }
+
+                            .mark-label {
+                                font-size: 14px;
+                                vertical-align: super;
+                            }
+
                             &.first-card {
                                 .card-text {
                                     font-size: 45px;
@@ -223,9 +235,8 @@
 
                             .mark-button {
                                 display: block;
-                                font-size: 13px;
                                 font-weight: bolder;
-                                padding: 2px 10px;
+                                padding: 2px 10px 0px 10px;
                                 border-radius: 12px;
                                 cursor: pointer;
                                 text-transform: uppercase;

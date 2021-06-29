@@ -13,16 +13,13 @@ class HeaderRow extends Component {
         const { onEPALabelClick, innerKey, isCurrentSubRootVisible,
             epaSourceMap, residentData, residentList,
             hidePercentages, residentFilter, nonDemoMode } = this.props;
-        let requiredEPACount = 0, completedEPACount = 0, residentInfo, currentPhase;
+        let requiredEPACount = 0, completedEPACount = 0,
+            residentInfo, currentPhase, completionStatus = {};
 
-        _.map(epaSourceMap[innerKey].maxObservation, (count, epaID) => {
-            requiredEPACount += count;
-            // reset the completed to max amount
-            completedEPACount += Math.min(residentData[epaID] ? residentData[epaID].length : 0, count);
-        })
 
         if (residentFilter && residentFilter.username) {
             residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
+            completionStatus = residentInfo.completionStatus || {};
             if (residentInfo.currentPhase) {
                 switch (residentInfo.currentPhase) {
                     case 'transition-to-discipline': currentPhase = 1; break;
@@ -32,6 +29,14 @@ class HeaderRow extends Component {
                 }
             }
         }
+
+        _.map(epaSourceMap[innerKey].maxObservation, (maxCount, epaID) => {
+            // cap the completed to max amount, if the resident has done more than max required
+            let currentCompletedCount = Math.min(residentData[epaID] ? residentData[epaID].length : 0, maxCount);
+            requiredEPACount += maxCount;
+            // if an EPA has been marked complete then max out the completed count.
+            completedEPACount += !!completionStatus[epaID] ? maxCount : currentCompletedCount;
+        })
 
         let percentageComplete = Math.round((completedEPACount * 100) / requiredEPACount),
             statusLabel, iconLabel;
@@ -59,7 +64,7 @@ class HeaderRow extends Component {
             iconLabel = 'icon-check';
             percentageComplete = '';
         }
-        
+
         if (hidePercentages) {
             percentageComplete = '';
             iconLabel = iconLabel == 'icon-hour-glass' ? '' : iconLabel;

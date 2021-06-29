@@ -165,6 +165,19 @@ requestServer.updateExamscore = function (username, citeExamScore, oralExamScore
     });
 }
 
+requestServer.updateCompletionStatus = function (username, completionStatus) {
+    return new Promise((resolve, reject) => {
+        axios.post(endPoints.updateCompletionStatus + "/" + username, { completionStatus }, {
+            headers: { 'authorization': 'Bearer ' + sessionStorage.jwt }
+        })
+            .then((response) => {
+                const { data } = response.data;
+                resolve({ 'completionStatus': data.completionStatus });
+            })
+            .catch((err) => errorCallback(err, reject));
+    });
+}
+
 
 requestServer.getAllUsers = function () {
     return new Promise((resolve, reject) => {

@@ -2,11 +2,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { showTooltip, setLevelVisibilityStatus } from '../../../redux/actions/actions';
+import { showTooltip, setLevelVisibilityStatus, setResidentList } from '../../../redux/actions/actions';
 import GraphRow from './GraphRow';
 import HeaderRow from './HeaderRow';
 import Tooltip from './Tooltip';
-
 
 class GraphPanel extends Component {
 
@@ -95,7 +94,10 @@ class GraphPanel extends Component {
             nonDemoMode = false,
             tooltipData,
             epaSourceMap, smallScreen, width,
-            levelVisibilityOpenStatus, programInfo = {} } = this.props;
+            residentFilter,
+            residentList = [],
+            levelVisibilityOpenStatus, programInfo = {}, userType } = this.props,
+            residentInfo = false;
 
         const { hidePercentages = false, hideTogoNumbers } = programInfo;
 
@@ -116,6 +118,11 @@ class GraphPanel extends Component {
             _.map(epaSourcesThatExist, (epaSource, epaRootKey) => {
                 epaSourcesThatExist[epaRootKey] = epaSource.filter((d) => epaSourceMap[epaRootKey].subRoot.hasOwnProperty(d));
             });
+        }
+
+        // Get the residents corresponding completion status for each EPA
+        if (residentFilter && residentFilter.username) {
+            residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
         }
 
         let expiredResidentDataGrouped = _.groupBy(expiredResidentData, (d) => d.EPA);
@@ -166,17 +173,21 @@ class GraphPanel extends Component {
                                                     key={'inner-row-' + sourceKey}
                                                     innerKey={innerKey}
                                                     epaSource={epaSource}
+                                                    hideMarkButton={userType == 'resident'}
                                                     isTableVisible={epaSource == openTableID}
                                                     isFilterVisible={epaSource == openFilterID}
                                                     isPlanVisible={epaSource == openPlanID}
                                                     widthPartition={widthPartition}
                                                     epaSourceMap={epaSourceMap}
+                                                    residentInfo={residentInfo}
+                                                    residentList={residentList}
                                                     smallScreen={smallScreen}
                                                     hideTogoNumbers={hideTogoNumbers}
                                                     residentEPAData={residentData[epaSource] || []}
                                                     expiredResidentEPAData={expiredResidentDataGrouped[epaSource] || []}
                                                     onMouseOver={this.onMouseOver}
                                                     onMouseOut={this.onMouseOut}
+                                                    setResidentList={this.props.actions.setResidentList}
                                                     nonDemoMode={nonDemoMode}
                                                     onAssessmentPlanClick={this.onAssessmentPlanClick}
                                                     onTableExpandClick={this.onTableExpandClick}
@@ -195,10 +206,13 @@ class GraphPanel extends Component {
 
 function mapStateToProps(state) {
     return {
+        userType: state.oracle.userDetails.accessType,
         residentData: state.oracle.residentData,
         expiredResidentData: state.oracle.expiredResidentData,
         isTooltipVisible: state.oracle.isTooltipVisible,
         tooltipData: state.oracle.tooltipData,
+        residentFilter: state.oracle.residentFilter,
+        residentList: state.oracle.residentList,
         levelVisibilityOpenStatus: state.oracle.visibilityOpenStatus,
         programInfo: state.oracle.programInfo ? state.oracle.programInfo : {}
     };
@@ -209,7 +223,8 @@ function mapDispatchToProps(dispatch) {
         actions: bindActionCreators(
             {
                 showTooltip,
-                setLevelVisibilityStatus
+                setLevelVisibilityStatus,
+                setResidentList
             }, dispatch)
     };
 }
