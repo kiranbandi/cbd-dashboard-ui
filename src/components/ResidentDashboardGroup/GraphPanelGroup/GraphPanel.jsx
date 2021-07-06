@@ -74,7 +74,7 @@ class GraphPanel extends Component {
             'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,
             'y': event.pageY - 50,
             // Add an empty line to align info horizontally
-            'comments': '\n' + data['Feedback'],
+            'comments': data['Feedback'] ? '\n' + data['Feedback'] : '',
             'name': data['Observer_Name'],
             'type': data['Type'],
             'date': data['Date'],
