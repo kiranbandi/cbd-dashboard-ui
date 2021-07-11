@@ -44,7 +44,8 @@ class RecentEPATrend extends Component {
             // Add an empty line to align info horizontally
             'comments': data['Feedback'] ? '\n' + data['Feedback'] : '',
             'type': data['Type'],
-            'name': data['Observer_Name'],
+            'name': data['Assessor_Name'],
+            'group': data['Assessor_Group'],
             'date': data['Date'],
             // Add an empty line to align info horizontally
             'context': '\n' + data['Situation_Context']

@@ -8,14 +8,15 @@ const columns = [{
     maxWidth: 150,
     filterMethod: customFilter
 }, {
-    Header: 'Rating',
-    accessor: 'Rating',
-    maxWidth: 60,
+    Header: 'Entrustment Rating',
+    accessor: 'Rating_Text',
+    maxWidth: 200,
+    className: 'text-left',
     filterMethod: customFilter
 },
 {
-    Header: 'Observer Name',
-    accessor: 'Observer_Name',
+    Header: 'Assessor Name',
+    accessor: 'Assessor_Name',
     maxWidth: 150,
     className: 'text-left',
     filterMethod: customFilter
@@ -24,7 +25,7 @@ const columns = [{
     Header: 'Situation Context',
     accessor: 'Situation_Context',
     className: 'text-left situation-cell',
-    maxWidth: 350,
+    maxWidth: 250,
     filterMethod: customFilter
 },
 {

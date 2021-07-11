@@ -8,7 +8,8 @@ export default (props) =>
         {props.type && <p><b>FORM TYPE: </b><span>{props.type}</span> </p>}
         {props.rotation && <p><b>ROTATION: </b><span>{props.rotation}</span></p>}
         {props.context && <p><b>SITUATION CONTEXT: </b><span>{props.context}</span></p>}
-        {props.name && <p><b>OBSERVER NAME: </b><span>{props.name}</span></p>}
+        {props.name && <p><b>ASSESSOR NAME: </b><span>{props.name}</span></p>}
+        {props.group && <p className='text-capitalize'><b>ASSESSOR ROLE: </b><span>{props.group}</span></p>}
         {props.comments && <p><b>COMMENTS: </b><span>{props.comments}</span></p>}
         {props.concern && <p><b className='text-danger'>PROFESSIONALISM AND SAFETY CONCERN: </b><span >{props.concern}</span></p>}
     </div>;

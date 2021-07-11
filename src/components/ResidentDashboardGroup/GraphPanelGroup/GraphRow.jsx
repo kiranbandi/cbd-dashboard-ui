@@ -66,15 +66,19 @@ export default class GraphRow extends Component {
         // remap NaN values to 0
         firstMeasure = isNaN(firstMeasure) ? 0 : firstMeasure;
         secondMeasure = isNaN(secondMeasure) ? 0 : secondMeasure;
+        // Get the record rating scale
+        let scoreScale = residentEPAData.length > 0 ? residentEPAData[0].scale : oScoreReference;
 
         const xScale = scaleLinear().domain([0, residentEPAData.length - 1]).range([marginHorizontal + 20, width - marginHorizontal])
-        const yScale = scaleLinear().domain([5, 1]).range([marginVertical, innerHeight - marginVertical])
+        const yScale = scaleLinear().domain([scoreScale.length, 1]).range([marginVertical, innerHeight - marginVertical])
 
         // Get the formID for the EPA and the corresponding contextual variable map
         const formID = residentEPAData.length > 0 ? residentEPAData[0].formID : '',
             contextual_variable_map = window.dynamicDashboard.contextual_variable_map[formID],
             isAnyFilterAvailable = contextual_variable_map && contextual_variable_map.length > 0,
             filterOptions = convertToFilterDict(contextual_variable_map, filterDict);
+
+
 
         const scoreData = residentEPAData.map((d, i) => {
 
@@ -112,7 +116,7 @@ export default class GraphRow extends Component {
 
         });
 
-        const trackTrailPositions = _.map([...Array(5)], (d, i) => {
+        const trackTrailPositions = _.map(scoreScale, (d, i) => {
             return {
                 x: marginHorizontal + 20,
                 dx: width - (2 * marginHorizontal) - 20,
@@ -120,7 +124,7 @@ export default class GraphRow extends Component {
             }
         });
 
-        const legends = _.map(oScoreReference, (d, i) => {
+        const legends = _.map(scoreScale, (d, i) => {
             return {
                 x: marginHorizontal,
                 y: yScale(i + 1),

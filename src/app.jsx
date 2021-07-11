@@ -24,6 +24,13 @@ class App extends Component {
     //125px to offset the 30px margin on both sides and vertical scroll bar width
     window.dynamicDashboard = {};
     window.dynamicDashboard.mountWidth = document.getElementById('visual-summary-content-mount').getBoundingClientRect().width - 125;
+    
+    // Block Livepipe JS event handling error - React synthetic events block event firing
+    //  which needs to snubbed when the dashboard is active
+    document.stopObserving('mouseover');
+    document.stopObserving('mouseout');
+    document.stopObserving('mousewheel'); 
+    document.stopObserving('DOMMouseScroll'); 
   }
 
 
