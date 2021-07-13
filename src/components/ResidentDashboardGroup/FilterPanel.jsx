@@ -116,7 +116,7 @@ class FilterPanel extends Component {
     render() {
 
         const { filterLoaderState, residentList = []
-            , residentFilter = {}, dashboard_mode = 'faculty' } = this.props,
+            , residentFilter = {}, dashboard_mode = 'faculty', residentData } = this.props,
             { isAllData = true, username = '',
                 startDate, endDate, hideNoDataEPAs } = residentFilter;
         //  first convert the array into the format required by react-select 
@@ -142,11 +142,12 @@ class FilterPanel extends Component {
 
         const isFacultyMode = dashboard_mode != 'resident';
 
+        // If we are in resident mode and there is no data hide the filter panel
+        if (!isFacultyMode && _.flatMap(residentData).length == 0) { return null };
+
         return (
-            <div className={('filter-panel m-t center-align') + (isFacultyMode ? '' : 'smaller-wrapper')}>
-
+            <div className={('filter-panel m-t center-align ') + (isFacultyMode ? '' : 'smaller-wrapper')}>
                 <div className={('text-xs-center text-sm-left root-box ') + (isFacultyMode ? '' : 'smaller-box')}>
-
                     {isFacultyMode ? <div className='react-select-root-filter'>
                         <ReactSelect
                             placeholder='Select Resident...'
