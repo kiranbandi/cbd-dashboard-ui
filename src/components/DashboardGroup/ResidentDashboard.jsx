@@ -11,7 +11,7 @@ class ResidentDashboard extends Component {
 
     render() {
 
-        const { residentList = [], residentData, residentFilter } = this.props,
+        const { residentList = [], residentData, dashboard_mode, residentFilter } = this.props,
             width = window.dynamicDashboard.mountWidth,
             smallScreen = width < 600;
 
@@ -26,7 +26,7 @@ class ResidentDashboard extends Component {
                 <div className='m-t-md'>
                     {(residentList.length > 0) ?
                         <div>
-                            <FilterPanel />
+                            <FilterPanel dashboard_mode={dashboard_mode} />
                             {/* if the resident has no data hide everything */}
                             {+residentInfo.totalAssessments > 0 ?
                                 <div>

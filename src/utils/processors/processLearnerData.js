@@ -3,13 +3,13 @@ import moment from 'moment';
 import { EPATextToNumber } from '../convertEPA';
 export default function (username, residentInfo, learnerDataDump) {
 
-    let { advanced_search_epas = [], rating_scale_map = [],
+    let { dashboard_epas = [], rating_scale_map = [],
         assessments = [], course_name = '',
         contextual_variables = [], rotation_schedule = [] } = learnerDataDump,
         { fullname, epaProgress } = residentInfo;
 
     // process and set the source map  
-    const programInfo = getProgramInfo(advanced_search_epas, epaProgress, course_name);
+    const programInfo = getProgramInfo(dashboard_epas, epaProgress, course_name);
 
     // process the rating scale map
     // records come tagged with descriptor ID, we need to group the ratings by scale ID and then rate them by order.

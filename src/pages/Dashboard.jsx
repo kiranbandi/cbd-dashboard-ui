@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setActiveDashboard } from '../redux/actions/actions';
+import { setactivePage } from '../redux/actions/actions';
 import { ResidentDashboard, NormativeDashboard } from '../components';
 
 class DashboardRoot extends Component {
@@ -14,30 +14,32 @@ class DashboardRoot extends Component {
     onTabClick(event) {
         event.preventDefault();
         const boardId = event.target.id.split("-")[0];
-        this.props.actions.setActiveDashboard(boardId);
+        this.props.actions.setactivePage(boardId);
     }
 
 
     render() {
 
-        let { activeDashboard = 'resident' } = this.props;
+        let { activePage = 'resident' } = this.props,
+            { dashboard_mode = 'resident' } = dashboard_options;
 
         return (
             <div className='custom-dashboard-page-root' >
                 <div>
-                    <div className="hr-divider nav-pill-container-dashboard">
-                        <ul className="nav nav-pills hr-divider-content hr-divider-nav">
-                            <li className={activeDashboard == 'resident' ? 'active' : ''}>
-                                <a id='resident-tab' onClick={this.onTabClick} >RESIDENT METRICS</a>
-                            </li>
-                            <li className={activeDashboard == 'normative' ? 'active' : ''}>
-                                <a id='normative-tab' onClick={this.onTabClick} >NORMATIVE ASSESSMENT</a>
-                            </li>
-                        </ul>
-                    </div>
+                    {dashboard_mode != 'resident' &&
+                        <div className="hr-divider nav-pill-container-dashboard">
+                            <ul className="nav nav-pills hr-divider-content hr-divider-nav">
+                                <li className={activePage == 'resident' ? 'active' : ''}>
+                                    <a id='resident-tab' onClick={this.onTabClick} >RESIDENT METRICS</a>
+                                </li>
+                                <li className={activePage == 'normative' ? 'active' : ''}>
+                                    <a id='normative-tab' onClick={this.onTabClick} >NORMATIVE ASSESSMENT</a>
+                                </li>
+                            </ul>
+                        </div>}
                     <div className='control-inner-container'>
-                        {(activeDashboard == 'resident') && <ResidentDashboard />}
-                        {(activeDashboard == 'normative') && <NormativeDashboard />}
+                        {(activePage == 'resident') && <ResidentDashboard dashboard_mode={dashboard_mode} />}
+                        {(activePage == 'normative') && <NormativeDashboard />}
                     </div>
                 </div>
             </div>
@@ -49,13 +51,13 @@ class DashboardRoot extends Component {
 function mapStateToProps(state) {
     return {
         programInfo: state.oracle.programInfo,
-        activeDashboard: state.oracle.activeDashboard
+        activePage: state.oracle.activePage
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ setActiveDashboard }, dispatch)
+        actions: bindActionCreators({ setactivePage }, dispatch)
     };
 }
 

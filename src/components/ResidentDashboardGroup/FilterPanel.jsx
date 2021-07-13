@@ -116,7 +116,7 @@ class FilterPanel extends Component {
     render() {
 
         const { filterLoaderState, residentList = []
-            , residentFilter = {} } = this.props,
+            , residentFilter = {}, dashboard_mode = 'faculty' } = this.props,
             { isAllData = true, username = '',
                 startDate, endDate, hideNoDataEPAs } = residentFilter;
         //  first convert the array into the format required by react-select 
@@ -140,12 +140,14 @@ class FilterPanel extends Component {
 
         const currentSelectValue = _.find(modifiedResidentList, (d) => d.value == username) || null;
 
+        const isFacultyMode = dashboard_mode != 'resident';
+
         return (
-            <div className='filter-panel m-t center-align'>
+            <div className={('filter-panel m-t center-align') + (isFacultyMode ? '' : 'smaller-wrapper')}>
 
-                <div className='text-xs-center text-sm-left root-box'>
+                <div className={('text-xs-center text-sm-left root-box ') + (isFacultyMode ? '' : 'smaller-box')}>
 
-                    <div className='react-select-root-filter'>
+                    {isFacultyMode ? <div className='react-select-root-filter'>
                         <ReactSelect
                             placeholder='Select Resident...'
                             isSearchable={true}
@@ -159,19 +161,19 @@ class FilterPanel extends Component {
                                 })
                             }}
                             onChange={this.onResidentNameChange} />
-                    </div>
+                    </div> : <p className='date-filter-label'>Date Filter</p>}
 
                     <div className='filter-button-container'>
                         <button className={'btn btn-primary-outline ' + (!isAllData ? " active-button" : "not-active")}
                             onClick={this.onDateFilterClick} ><i className="fa fa-calendar" aria-hidden="true"></i></button>
                     </div>
 
-                    <div className='text-xs-left button-box'>
+                    {isFacultyMode && <div className='text-xs-left button-box'>
                         <button type="submit" className="filter-button btn btn-primary-outline" onClick={this.onSubmit}>
                             GET RECORDS
                             {filterLoaderState && <i className='fa fa-spinner fa-spin filter-loader'></i>}
                         </button>
-                    </div>
+                    </div>}
                 </div>
 
                 {/* let the elements be hidden by css style instead of react , to prevent dead elements value problem when submitting */}
@@ -190,7 +192,7 @@ class FilterPanel extends Component {
 
                     <div className="checkbox custom-control text-center custom-checkbox">
                         <label className='custom-checkbox-label'>
-                        Hide EPAs with no assessments in the time period.
+                            Hide EPAs with no assessments in the time period.
                             <input id='filter-dateFilterActive' type="checkbox"
                                 checked={hideNoDataEPAs} onChange={this.onHideNoRecordEPAs} />
                             <span className="custom-control-indicator"></span>

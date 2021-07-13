@@ -1,5 +1,12 @@
 .filter-panel {
     margin: 30px 30px 20px 30px;
+
+    &.smaller-wrapper {
+        margin-bottom: -15px !important;
+        margin-top: -15px !important;
+        margin-left: 5%;
+    }
+
     .root-box {
         border-radius: 5px;
         background: #e2eff5;
@@ -8,6 +15,16 @@
             padding: 10px;
         }
         width: 535px;
+
+        &.smaller-box {
+            width: 150px !important;
+        }
+
+        .date-filter-label {
+            display: inline-block;
+            margin: 15px;
+            font-size: 15px;
+        }
     }
     .button-box {
         display: inline-block;

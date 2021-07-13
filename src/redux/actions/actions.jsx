@@ -12,8 +12,8 @@ export function toggleLoader() {
     return { type: types.TOGGLE_LOADER };
 }
 
-export function setActiveDashboard(activeDashboard) {
-    return { type: types.SET_ACTIVE_DASHBOARD, activeDashboard };
+export function setactivePage(activePage) {
+    return { type: types.SET_ACTIVE_DASHBOARD, activePage };
 }
 
 export function toggleFilterLoader() {
@@ -113,7 +113,7 @@ export function setRotationTooltipData(rotationTooltipData) {
 export function switchToResidentDashboard(residentInfo, residentFilter) {
 
     return dispatch => {
-        dispatch(setActiveDashboard('resident'));
+        dispatch(setactivePage('resident'));
         // set all the parameters in the resident filter
         dispatch(setResidentFilter({ ...residentFilter }))
         // then clear any previously selected residents data

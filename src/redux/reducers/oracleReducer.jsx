@@ -9,7 +9,7 @@ export default function oracleReducer(state = initialState.oracle, action) {
     case types.TOGGLE_FILTER_LOADER:
       return Object.assign({}, state, { filterLoaderState: !state.filterLoaderState })
     case types.SET_ACTIVE_DASHBOARD:
-      return Object.assign({}, state, { activeDashboard: action.activeDashboard })
+      return Object.assign({}, state, { activePage: action.activePage })
     case types.SET_RESIDENT_LIST:
       return Object.assign({}, state, { residentList: action.residentList })
     case types.SET_RESIDENT_SCHEDULE:

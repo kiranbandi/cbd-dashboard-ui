@@ -22,15 +22,15 @@ class App extends Component {
     // For the first time get the size of the visual summary mount point width
     // and store it in a global variable used across the dashboard.
     //125px to offset the 30px margin on both sides and vertical scroll bar width
-    window.dynamicDashboard = {};
+    window.dynamicDashboard = window.dynamicDashboard || {};
     window.dynamicDashboard.mountWidth = document.getElementById('visual-summary-content-mount').getBoundingClientRect().width - 125;
-    
+
     // Block Livepipe JS event handling error - React synthetic events block event firing
     //  which needs to snubbed when the dashboard is active
     document.stopObserving('mouseover');
     document.stopObserving('mouseout');
-    document.stopObserving('mousewheel'); 
-    document.stopObserving('DOMMouseScroll'); 
+    document.stopObserving('mousewheel');
+    document.stopObserving('DOMMouseScroll');
   }
 
 

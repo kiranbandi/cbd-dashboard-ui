@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setResidentList } from '../redux/actions/actions';
-import { getLearnerList } from '../utils/requestServer';
+import { setResidentList, setResidentFilter, setResidentData } from '../redux/actions/actions';
+import { getLearnerList, getLearnerData } from '../utils/requestServer';
+import processCourseData from '../utils/processors/processCourseData';
 
 class Container extends Component {
 
@@ -22,13 +23,59 @@ class Container extends Component {
             });
         }
 
-        // Call the learner list API to get a list of all residents
-        // for the select filter parameters and store the response in redux
-        getLearnerList({ course_id, organisation_id, cperiod_id }).then((residentList) => {
+        const { dashboard_mode = 'resident' } = dashboard_options;
+
+        if (dashboard_mode != 'resident') {
+            // Call the learner list API to get a list of all residents
+            // for the select filter parameters and store the response in redux
+            getLearnerList({ course_id, organisation_id, cperiod_id }).then((residentList) => {
+                this.props.actions.setResidentList(residentList);
+            })
+                .catch((err) => { console.log(err) })
+                .finally(() => { this.setState({ showPresetLoader: false }) })
+        }
+        // If the dashboard is opened in single resident mode
+        // automatically prefetch data for the active resident
+        else {
+            const [learner_list = [], contextual_variable_map = []] = dashboard_options.dashboard_reference || [];            // process the resident list 
+            const residentList = processCourseData([learner_list, [], [], contextual_variable_map], 'resident');
+            // Set the resident list list 
             this.props.actions.setResidentList(residentList);
-        })
-            .catch((err) => { console.log(err) })
-            .finally(() => { this.setState({ showPresetLoader: false }) })
+            // Set the resident filter 
+            const { residentFilter } = this.props;
+            // Get resident data from the only resident in the list
+            const residentInfo = residentList[0];
+            residentFilter.username = residentInfo.username;
+            this.props.actions.setResidentFilter(residentFilter);
+            // fetch data from server based on the filter params
+            getLearnerData(residentFilter.username, residentInfo)
+                .then((processedData) => {
+                    const { programInfo, residentData, rotationSchedule } = processedData;
+                    // mark records to so record is set in a date period filter
+                    var markedResidentData = _.map(residentData, (d) => {
+                        if (residentFilter.isAllData) { d.mark = false }
+                        else if (!!residentFilter.startDate && !!residentFilter.endDate) {
+                            d.mark = moment(d.Date, 'YYYY-MM-DD').isBetween(residentFilter.startDate, residentFilter.endDate, 'days', '[]')
+                        }
+                        else { d.mark = false }
+                        return d;
+                    });
+                    // group data on the basis of EPA
+                    var groupedResidentData = _.groupBy(markedResidentData, (d) => d.EPA);
+                    // if uncommenced EPAs are needed to be seen then sub in empty records and 
+                    // sort records by Date --force
+                    _.map(programInfo.epaSourceMap, (source) => {
+                        _.map(source.subRoot, (epa, innerKey) => {
+                            groupedResidentData[innerKey] = _.sortBy(groupedResidentData[innerKey] || [], (d) => d.Date);
+                        })
+                    })
+                    // store the info of visibility of phase into resident info
+                    residentInfo.openOnlyCurrentPhase = true;
+                    this.props.actions.setResidentData(groupedResidentData, residentInfo, programInfo, rotationSchedule);
+                })
+                .finally(() => { this.setState({ showPresetLoader: false }) });
+        }
+
     }
 
 
@@ -47,8 +94,18 @@ class Container extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ setResidentList }, dispatch)
+        actions: bindActionCreators({
+            setResidentList,
+            setResidentFilter,
+            setResidentData
+        }, dispatch)
     };
 }
 
-export default connect(null, mapDispatchToProps)(Container);
+function mapStateToProps(state) {
+    return {
+        residentFilter: state.oracle.residentFilter
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Container);
