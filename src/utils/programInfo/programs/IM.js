@@ -5,11 +5,13 @@ const programInfo = {
     narrativesVisible: true,
     hidePercentages: true, //hide percentages in each training stage
     hideTogoNumbers: true, // hide count to go in each EPA
-    rotationList: ["(S) CTU", "(S) FLOAT", "(S) CCU", "(S) ID", "(S) NEPHRO", "(S) RESP", "(S) HEME", "(S) NEURO", "(S) EMERG", "(S) GASTRO", "(S) ENDO", "(S) AMBU", "(S) GIM", "(S) ICU", "(S) ONC", "(S) RHEUM", "(S) RESEARCH", "(S) ALLERGY", "(S) CSU", "(S) DERM", "(S) PALL", "(S) OTHER", "(R) CTU", "(R) FLOAT", "(R) CCU", "(R) ID", "(R) NEPHRO", "(R) RESP", "(R) HEME", "(R) NEURO", "(R) EMERG", "(R) GASTRO", "(R) ENDO", "(R) AMBU", "(R) GIM", "(R) ICU", "(R) ONC", "(R) RHEUM", "(R) RESEARCH", "(R) ALLERGY", "(R) CSU", "(R) DERM", "(R) PALL", "(R) OTHER"],
+    rotationList: ["(S) CTU", "(S) FLOAT", "(S) CCU", "(S) ELECTIVE", "(S) GERIATRIC", "(S) ID", "(S) NEPHRO", "(S) RESP", "(S) HEME", "(S) NEURO", "(S) EMERG", "(S) GASTRO", "(S) ENDO", "(S) AMBU", "(S) GIM", "(S) ICU", "(S) ONC", "(S) RHEUM", "(S) RESEARCH", "(S) ALLERGY", "(S) CSU", "(S) DERM", "(S) PALL", "(S) OTHER", "(R) CTU", "(R) FLOAT", "(R) CCU", "(R) ELECTIVE", "(R) GERIATRIC", "(R) ID", "(R) NEPHRO", "(R) RESP", "(R) HEME", "(R) NEURO", "(R) EMERG", "(R) GASTRO", "(R) ENDO", "(R) AMBU", "(R) GIM", "(R) ICU", "(R) ONC", "(R) RHEUM", "(R) RESEARCH", "(R) ALLERGY", "(R) CSU", "(R) DERM", "(R) PALL", "(R) OTHER"],
     rotationRequired: {
         "(S) CTU": 10,
         "(S) FLOAT": 10,
         "(S) CCU": 10,
+        "(S) ELECTIVE": 10,
+        "(S) GERIATRIC": 10,
         "(S) ID": 10,
         "(S) NEPHRO": 10,
         "(S) RESP": 10,
@@ -32,6 +34,8 @@ const programInfo = {
         "(R) CTU": 10,
         "(R) FLOAT": 10,
         "(R) CCU": 10,
+        "(R) ELECTIVE": 10,
+        "(R) GERIATRIC": 10,
         "(R) ID": 10,
         "(R) NEPHRO": 10,
         "(R) RESP": 10,
