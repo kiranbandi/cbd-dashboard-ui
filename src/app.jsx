@@ -1,11 +1,9 @@
-/*global $*/
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Dashboard } from './pages';
 import { Container } from './components';
 import configureStore from './redux/store/configureStore';
 import { Provider } from 'react-redux';
-import { applyPolyfills, defineCustomElements } from "@seanwong24/s-tooltip/loader";
 // Import and Initialize react-dates at the top of the app for use anywhere within
 import 'react-dates/initialize';
 //Root sass file for webpack to compile
@@ -40,6 +38,3 @@ class App extends Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('visual-summary-content-mount'));
-
-// For custom tooltip support 
-applyPolyfills().then(() => { defineCustomElements() });

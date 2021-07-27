@@ -20,24 +20,6 @@ object-assign
  * https://github.com/nnnick/Chart.js/blob/master/LICENSE.md
  */
 
-/*!
-DOMTokenList
-*/
-
-/*!
-Element.closest and Element.matches
-https://github.com/jonathantneal/closest
-Creative Commons Zero v1.0 Universal
-*/
-
-/*!
-Element.getRootNode()
-*/
-
-/*!
-Element.isConnected()
-*/
-
 /**
  * @license
  * Lodash <https://lodash.com/>

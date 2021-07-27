@@ -84,6 +84,7 @@ function getProgramInfo(epa_list, epaProgress, course_name) {
             observed: {},
             completed: {},
             achieved: {},
+            objectiveID: {},
             assessmentInfo: {},
             filterValuesDict: {}
         },
@@ -95,6 +96,7 @@ function getProgramInfo(epa_list, epaProgress, course_name) {
             observed: {},
             completed: {},
             achieved: {},
+            objectiveID: {},
             assessmentInfo: {},
             filterValuesDict: {}
         },
@@ -106,6 +108,7 @@ function getProgramInfo(epa_list, epaProgress, course_name) {
             observed: {},
             completed: {},
             achieved: {},
+            objectiveID: {},
             assessmentInfo: {},
             filterValuesDict: {}
         },
@@ -117,6 +120,7 @@ function getProgramInfo(epa_list, epaProgress, course_name) {
             observed: {},
             completed: {},
             achieved: {},
+            objectiveID: {},
             assessmentInfo: {},
             filterValuesDict: {}
         },
@@ -149,6 +153,8 @@ function getProgramInfo(epa_list, epaProgress, course_name) {
         defaultSourceMap[EPAID[0]].achieved[EPAID] = matchingEPA.total_requirement_met_assessments || 0;
         // set the completed flag 
         defaultSourceMap[EPAID[0]].completed[EPAID] = matchingEPA.completed || false;
+        // set the EPA objective ID 
+        defaultSourceMap[EPAID[0]].objectiveID[EPAID] = matchingEPA.objective_id || false;
     });
 
     return {

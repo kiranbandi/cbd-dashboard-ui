@@ -1,4 +1,3 @@
-/*global $*/
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -6,6 +5,7 @@ import { showTooltip, setLevelVisibilityStatus } from '../../../redux/actions/ac
 import GraphRow from './GraphRow';
 import HeaderRow from './HeaderRow';
 import Tooltip from './Tooltip';
+import { NumberToEPAText } from '../../../utils/convertEPA';
 
 
 class GraphPanel extends Component {
@@ -14,7 +14,8 @@ class GraphPanel extends Component {
         super(props);
         this.onMouseOver = this.onMouseOver.bind(this);
         this.onMouseOut = this.onMouseOut.bind(this);
-        this.onEPALabelClick = this.onEPALabelClick.bind(this);
+        this.onStageLabelClick = this.onStageLabelClick.bind(this);
+        this.onInfoClick = this.onInfoClick.bind(this);
         this.onTableExpandClick = this.onTableExpandClick.bind(this);
         this.onFilterExpandClick = this.onFilterExpandClick.bind(this);
         this.onAssessmentPlanClick = this.onAssessmentPlanClick.bind(this);
@@ -25,7 +26,34 @@ class GraphPanel extends Component {
         };
     }
 
-    onEPALabelClick(event) {
+    onInfoClick(event) {
+
+        const { programInfo } = this.props, { epaSourceMap } = programInfo;
+
+        event.stopPropagation();
+        // add in information about the EPA
+        const classID = event.target.className.split(" ")[4],
+            // remove "epa-" and then convert 1-1 to 1.1
+            epaSource = classID.slice(4).split('-').join('.');
+        // Get the objectiveID from source MAP *
+        const objectiveId = epaSourceMap[epaSource.split(".")[0]].objectiveID[epaSource];
+        // populate other info
+        let proxyId = this.props.residentFilter.username;
+        let courseId = course_id;
+        let epa = NumberToEPAText(epaSource.trim());
+        let options = {
+            firstName: '',
+            lastName: '',
+            titlePrepend: epa,
+            container: '.wrapper-' + classID,
+            placement: 'left',
+            // remove any attached popovers from DOM
+            onDestroy: () => { jQuery('.popover').remove() }
+        }
+        new ObjectiveRequirementDisplay(jQuery(document.getElementById('info-' + classID)), proxyId, courseId, objectiveId, options);
+    }
+
+    onStageLabelClick(event) {
         const clickedID = +event.currentTarget.className.split('label-index-')[1];
         let visibilityOpenStatus = { ...this.props.levelVisibilityOpenStatus };
         visibilityOpenStatus[clickedID] = !visibilityOpenStatus[clickedID];
@@ -34,7 +62,9 @@ class GraphPanel extends Component {
     }
 
     onTableExpandClick(event) {
-        const openTableID = event.target.className.split(" ")[3];
+        const classID = event.target.className.split(" ")[4],
+            // remove "epa-" and then convert 1-1 to 1.1
+            openTableID = classID.slice(4).split('-').join('.');
         // if already open close it , if not open it !
         if (event.target.className.indexOf('open-table') > -1) {
             this.setState({ openTableID: '', openFilterID: '' });
@@ -44,7 +74,9 @@ class GraphPanel extends Component {
         }
     }
     onFilterExpandClick(event) {
-        const openFilterID = event.target.className.split(" ")[3];
+        const classID = event.target.className.split(" ")[4],
+            // remove "epa-" and then convert 1-1 to 1.1
+            openFilterID = classID.slice(4).split('-').join('.');
         // if already open close it , if not open it !
         if (event.target.className.indexOf('open-filter') > -1) {
             this.setState({ openFilterID: '', openTableID: '' });
@@ -144,8 +176,6 @@ class GraphPanel extends Component {
             <div>
                 {epaSourcesThatExist && <div className='graph-panel-root'>
 
-                    <s-tooltip border-width="1px" show-delay="1000" style={{ fontFamily: 'inherit' }} attach-to=".s-tooltip-assessment-plan-button"></s-tooltip>
-
                     {/* code chunk to show tooltip*/}
                     {isTooltipVisible && <Tooltip {...tooltipData} />}
 
@@ -167,7 +197,7 @@ class GraphPanel extends Component {
 
                                     {/* EPA Label Row head that can be clicked to expand or collapse */}
                                     <HeaderRow
-                                        onEPALabelClick={this.onEPALabelClick}
+                                        onStageLabelClick={this.onStageLabelClick}
                                         innerKey={innerKey}
                                         smallScreen={smallScreen}
                                         isCurrentSubRootVisible={isCurrentSubRootVisible}
@@ -191,6 +221,7 @@ class GraphPanel extends Component {
                                                     onMouseOver={this.onMouseOver}
                                                     onMouseOut={this.onMouseOut}
                                                     onAssessmentPlanClick={this.onAssessmentPlanClick}
+                                                    onInfoClick={this.onInfoClick}
                                                     onTableExpandClick={this.onTableExpandClick}
                                                     onFilterExpandClick={this.onFilterExpandClick} />)
                                         })}

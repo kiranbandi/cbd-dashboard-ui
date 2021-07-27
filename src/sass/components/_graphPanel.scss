@@ -254,7 +254,7 @@
                 &.score-cell {
                     margin: 25px 0px 20px 0px;
                     position: relative;
-                    .fa {
+                    .fa-custom {
                         position: absolute;
                         font-size: 15px;
                         border-radius: 50px;
@@ -269,7 +269,7 @@
 
                         &.table-icon {
                             top: 175px;
-                            right: 20px;
+                            right: 55px;
                             color: #426a8c;
                             border: 2px solid #426a8c;
                             &.open-table {
@@ -279,10 +279,20 @@
                         }
                         &.filter-icon {
                             top: 175px;
-                            right: 55px;
+                            right: 90px;
                             color: #426a8c;
                             border: 2px solid #426a8c;
                             &.open-filter {
+                                background: #426a8c;
+                                color: white;
+                            }
+                        }
+                        &.info-icon {
+                            top: 175px;
+                            right: 20px;
+                            color: #426a8c;
+                            border: 2px solid #426a8c;
+                            &.open-info {
                                 background: #426a8c;
                                 color: white;
                             }

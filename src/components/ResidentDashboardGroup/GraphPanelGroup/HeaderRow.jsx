@@ -9,7 +9,7 @@ class HeaderRow extends Component {
 
     render() {
 
-        const { onEPALabelClick, innerKey, isCurrentSubRootVisible,
+        const { onStageLabelClick, innerKey, isCurrentSubRootVisible,
             epaSourceMap, residentList, residentFilter } = this.props;
         let requiredEPACount = 0, achievedEPACount = 0, residentInfo, currentPhase;
 
@@ -62,7 +62,7 @@ class HeaderRow extends Component {
         }
 
         return (
-            <div className={'text-xs-center text-sm-left inner-epa-head' + (isCurrentSubRootVisible ? ' bottom-line ' : ' ') + 'label-index-' + innerKey} onClick={onEPALabelClick}>
+            <div className={'text-xs-center text-sm-left inner-epa-head' + (isCurrentSubRootVisible ? ' bottom-line ' : ' ') + 'label-index-' + innerKey} onClick={onStageLabelClick}>
                 {isCurrentSubRootVisible ? <span className="fa fa-chevron-down"></span> : <span className="fa fa-chevron-right"></span>}
                 <span className='epa-label' >{epaSourceMap[innerKey].topic}</span>
                 <span className='epa-label-status' >{statusLabel}<span className={"fa " + iconLabel}></span> {percentageComplete}</span>

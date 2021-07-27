@@ -30,12 +30,12 @@ export default class GraphRow extends Component {
 
         const { filterDict } = this.state;
 
-        let { epaSource, isTableVisible, isPlanVisible, innerKey,
+        let { epaSource, isTableVisible, innerKey,
             widthPartition, smallScreen, epaSourceMap,
             residentEPAData,
-            onMouseOut, onMouseOver,
+            onMouseOut, onMouseOver, onInfoClick,
             onTableExpandClick, onFilterExpandClick,
-            onAssessmentPlanClick, isFilterVisible } = this.props;
+            isFilterVisible } = this.props;
 
         //  margin of 20px on either side reduces the available width by 40 
         // 15px bullet chart padding on either sides
@@ -133,7 +133,7 @@ export default class GraphRow extends Component {
             }
         });
 
-        const isAssessmentPlanAvailable = false;
+        const epaIDClass = 'epa-' + epaSource.split('.').join('-');
 
         return (
             <div className='text-xs-center'>
@@ -141,21 +141,7 @@ export default class GraphRow extends Component {
                 <div style={{ width: widthPartition - 10 }} className='inner-cell epa-title-cell'>
                     <span className='inner-offset-label'>
                         {NumberToEPAText(epaSource) + " - " + epaSourceMap[innerKey].subRoot[epaSource]}
-                        {isAssessmentPlanAvailable &&
-                            <span
-                                className={"s-tooltip-assessment-plan-button plan-icon fa-file-text " + (isPlanVisible ? ' open-plan' : ' ')}
-                                data-epa-source={epaSource}
-                                data-s-tooltip-text={infoTooltipReference.residentMetrics.showEPAPlan}
-                                onClick={onAssessmentPlanClick}>
-                            </span>}
                     </span>
-                    {isPlanVisible && isAssessmentPlanAvailable &&
-                        <div className="assessment-plan-box">
-                            <div> <b>Assessment Plan</b></div>
-                            <div className='assessment-plan-content'>
-                                {epaSourceMap[innerKey].assessmentInfo[epaSource] || ''}
-                            </div>
-                        </div>}
                 </div>
                 <div style={{ width: widthPartition }} className='inner-cell observation-cell'>
                     <BulletChart
@@ -188,7 +174,8 @@ export default class GraphRow extends Component {
                     </div>
 
                 </div>
-                <div style={{ width: smallScreen ? widthPartition : widthPartition * 2 }} className='inner-cell score-cell'>
+                <div style={{ width: smallScreen ? widthPartition : widthPartition * 2 }}
+                    className={'inner-cell score-cell' + ' wrapper-' + epaIDClass}>
                     <LineChart
                         trackTrailPositions={trackTrailPositions}
                         legends={legends}
@@ -200,13 +187,15 @@ export default class GraphRow extends Component {
                         onMouseOver={onMouseOver}
                         onMouseOut={onMouseOut} />
                     {!smallScreen &&
-                        <span className={"table-icon fa fa-book " + epaSource + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}>
-                            <s-tooltip border-width="1px" show-delay="1000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPATable}</s-tooltip>
+                        <span className={"table-icon fa fa-custom fa-book " + epaIDClass + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}>
                         </span>
                     }
                     {!smallScreen && isAnyFilterAvailable &&
-                        <span className={"fa filter-icon fa-sliders " + epaSource + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick}>
-                            <s-tooltip border-width="1px" show-delay="1000" style={{ fontFamily: 'inherit' }}>{infoTooltipReference.residentMetrics.showEPAFilter}</s-tooltip>
+                        <span className={"fa fa-custom filter-icon fa-sliders " + epaIDClass + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick}>
+                        </span>
+                    }
+                    {!smallScreen &&
+                        <span id={'info-' + epaIDClass} className={"fa fa-custom info-icon fa-info-circle " + epaIDClass} onClick={onInfoClick}>
                         </span>
                     }
 
