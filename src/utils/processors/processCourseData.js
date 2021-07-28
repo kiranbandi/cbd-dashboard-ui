@@ -2,7 +2,8 @@ import _ from 'lodash';
 
 export default function (learnerListDataDump, dashboardMode = 'faculty') {
 
-    let [learnerList, learnerMetricsList = [], assessmentList, contextualVariableMap] = learnerListDataDump;
+    let [learnerList, learnerMetricsList = [],
+        learner_assessment_counts = [], contextualVariableMap] = learnerListDataDump;
 
     // The following info is fetched only during course load 
     // to prevent repeated hits on server for the same info and stored locally
@@ -13,9 +14,6 @@ export default function (learnerListDataDump, dashboardMode = 'faculty') {
 
     // First remap the metrics in metrics list into arrays from strings
     _.map(learnerMetricsList, (d, key) => { learnerMetricsList[key] = JSON.parse(d) });
-
-    // Group assessments by proxy id and replace total assessments by count
-    const assessmentsGroupedByUsername = _.groupBy(assessmentList, (d) => d.proxy_id);
 
     // In resident dashboard mode, the course data only consists of info of one learner
     if (dashboardMode == 'resident') {
@@ -47,9 +45,10 @@ export default function (learnerListDataDump, dashboardMode = 'faculty') {
     else {
         // Then map these metrics` into the main learner list 
         return _.map(learnerList, (learner, learnerIndex) => {
-            // Get the total assessment count from all available EPAs
+            // Get the total assessment count for learner count list 
+            const matchingLearner = _.find(learner_assessment_counts, (e) => e['proxy_id'] == learner.proxy_id);
             // If a value is not available sub in the value from the learner metrics
-            const totalAssessmentCount = assessmentsGroupedByUsername[learner.proxy_id] ? assessmentsGroupedByUsername[learner.proxy_id].length : learner.total_assessments;
+            const totalAssessmentCount = matchingLearner ? +matchingLearner.assessment_count : learner.total_assessments;
 
             // update the achievement rate to reflect these new numbers
             const achievementRate = totalAssessmentCount !== 0 ? learnerMetricsList['completed_assessments'][learnerIndex] / totalAssessmentCount : 0;

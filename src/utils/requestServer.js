@@ -13,7 +13,7 @@ requestServer.getLearnerList = function (params) {
             'params': {
                 ...params,
                 'section': 'api-learner-progress-dashboard',
-                'method': 'get-learners-list-with-epa'
+                'method': 'get-learners-list-with-progress'
             }
         })
             .then((response) => {
