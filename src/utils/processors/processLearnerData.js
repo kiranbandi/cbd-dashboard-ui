@@ -1,4 +1,4 @@
-import _, { compact } from 'lodash';
+import _ from 'lodash';
 import moment from 'moment';
 import { EPATextToNumber } from '../convertEPA';
 export default function (username, residentInfo, learnerDataDump) {
@@ -13,8 +13,7 @@ export default function (username, residentInfo, learnerDataDump) {
 
     // process the rating scale map
     // records come tagged with descriptor ID, we need to group the ratings by scale ID and then rate them by order.
-    let scale_map = _.groupBy(rating_scale_map, (d) => d.scale_id),
-        descriptor_map = _.groupBy(rating_scale_map, (d) => d.descriptor_id);
+    let scale_map = _.groupBy(rating_scale_map, (d) => d.scale_id);
     // Order the ratings in a single scale so that they are in order based on the order tag
     _.map(scale_map, (scale, scale_id) => {
         scale_map[scale_id] = _.map(_.sortBy(scale, d => d.order), (e) => e.text);
@@ -164,9 +163,7 @@ function getProgramInfo(epa_list, epaProgress, course_name) {
 }
 
 
-function getEPATitle(title) {
-    return title.slice(3).trim();
-}
+let getEPATitle = (title) => title.slice(3).trim();
 
 
 function recordEPAtoNumber(record) {

@@ -1,0 +1,178 @@
+.supervisor-dashboard-container {
+    position: relative;
+    .loading-spinner {
+        margin: 100px auto;
+    }
+
+    .statcard-root {
+        &.micro-stat {
+            width: 175px;
+            vertical-align: text-top;
+        }
+    }
+
+    // filter panel related styling
+    .faculty-filter {
+        .react-select-root {
+            width: 445px;
+            display: inline-block;
+            .filter-label {
+                font-size: 1.1em;
+                margin-right: 10px;
+
+                & + div {
+                    display: inline-block !important;
+                    width: 375px;
+                    z-index: 20;
+                }
+            }
+        }
+        .date-box {
+            display: inline-block;
+            width: 235px;
+        }
+        .advanced-filter-box {
+            display: inline-block;
+            width: inherit;
+            padding: 10px 10px 10px 15px;
+        }
+    }
+    .faculty-MicroStatCard-group {
+        width: 1080px;
+        margin: 20px 0px;
+        display: inline-block;
+    }
+    .hr-divider {
+        margin: 0px 30px !important;
+    }
+    .all-faculty-table {
+        span.select-wrap {
+            display: none;
+        }
+        .ReactTable .rt-thead.-headerGroups {
+            background: #111316;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            .rt-th {
+                font-weight: bold;
+                text-transform: uppercase;
+                text-align: center;
+                padding: 5px 0px;
+                border-right: 1px solid rgba(255, 255, 255, 0.15);
+            }
+        }
+    }
+    .all-table-box {
+        margin: 25px;
+    }
+    .faculty-graph-box {
+        display: inline-block;
+        margin: 20px auto;
+        background: #f3f3f3;
+        padding: 10px 20px 20px 20px;
+        border-radius: 5px;
+        vertical-align: top;
+        .title-append {
+            margin-left: 10px;
+            color: #e64759;
+        }
+
+        .assessor-pie-box {
+            display: inline-block;
+        }
+    }
+
+    .supervisor-line-chart {
+        margin-top: 25px;
+        g circle {
+            cursor: pointer;
+        }
+        rect.hoverable-rectangle {
+            cursor: pointer;
+            &:hover {
+                fill: #1ca8dd;
+                opacity: 0.25;
+            }
+            &.faculty-rectangle {
+                opacity: 0.85;
+                fill: #1ca8dd;
+            }
+        }
+        text.faculty-highlight-label {
+            fill: #1ca8dd;
+            font-size: 1.35em;
+            opacity: 1;
+        }
+    }
+    .radar-chart-wrapper {
+        display: block;
+        text-align: center;
+        .radar-chart-inner {
+            display: inline-block;
+        }
+    }
+    .faculty-radar-chart {
+        display: inline-block;
+        margin: 22px auto;
+        vertical-align: top;
+        .recharts-text > * {
+            fill: white;
+            font-weight: bold;
+        }
+        .recharts-radar-polygon {
+            stroke-width: 4px;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    }
+    // force styling during printing
+    .printable-content {
+        .print-info {
+            background: white !important;
+            .hr-divider-content {
+                background: white !important;
+                font-weight: bold !important;
+            }
+        }
+        .faculty-graph-box {
+            background: white !important;
+            h3 {
+                color: #1a1c22 !important;
+            }
+        }
+        .table-box {
+            background: white;
+            .ReactTable {
+                .rt-thead {
+                    &.-header {
+                        border-radius: 10px 10px 0px 0px;
+                    }
+                    &.-filters {
+                        display: none;
+                    }
+                }
+                .rt-td {
+                    color: black;
+                }
+            }
+        }
+    }
+}
+
+.print-button {
+    position: fixed;
+    bottom: 35px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 16px;
+    z-index: 10;
+    right: 10px;
+    .icon-download {
+        margin-right: 10px;
+    }
+    &:hover {
+        border: 2px solid white;
+    }
+    &.partaway {
+        right: 200px;
+    }
+}

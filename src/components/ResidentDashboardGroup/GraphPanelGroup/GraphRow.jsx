@@ -4,7 +4,6 @@ import BulletChart from './BulletChart';
 import { scaleLinear } from 'd3';
 import SlideInTable from './SlideInTable';
 import SlideInFilter from './SlideInFilter';
-import infoTooltipReference from "../../../utils/infoTooltipReference";
 import { NumberToEPAText } from "../../../utils/convertEPA";
 import oScoreReference from "../../../utils/oScoreReference";
 

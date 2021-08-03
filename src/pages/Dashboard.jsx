@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setactivePage } from '../redux/actions/actions';
-import { ResidentDashboard, NormativeDashboard } from '../components';
+import { ResidentDashboard, NormativeDashboard, FacultyDashboard } from '../components';
 
 class DashboardRoot extends Component {
 
@@ -35,11 +35,15 @@ class DashboardRoot extends Component {
                                 <li className={activePage == 'normative' ? 'active' : ''}>
                                     <a id='normative-tab' onClick={this.onTabClick} >NORMATIVE ASSESSMENT</a>
                                 </li>
+                                <li className={activePage == 'supervisor' ? 'active' : ''}>
+                                    <a id='supervisor-tab' onClick={this.onTabClick} >FACULTY DEVELOPMENT</a>
+                                </li>
                             </ul>
                         </div>}
                     <div className='control-inner-container'>
                         {(activePage == 'resident') && <ResidentDashboard dashboard_mode={dashboard_mode} />}
                         {(activePage == 'normative') && <NormativeDashboard />}
+                        {(activePage == 'supervisor') && <FacultyDashboard />}
                     </div>
                 </div>
             </div>
