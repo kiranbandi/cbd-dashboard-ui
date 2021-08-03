@@ -4,7 +4,6 @@ import processCourseData from './processors/processCourseData';
 import processLearnerData from './processors/processLearnerData';
 import processAllLearnerData from './processors/processAllLearnerData';
 import endPoints from './endPoints';
-import './data';
 
 var requestServer = {};
 
