@@ -77,10 +77,10 @@ class RotatioSchedule extends Component {
         const widthAvailable = width - 25;
 
         // group rotation blocks by academic year 
-        const rotationScheduleYearGroup = _.groupBy(rotationSchedule, (e) => e['academic_year']);
+        const rotationScheduleYearGroup = _.groupBy(rotationSchedule, (e) => e['Academic_Year']);
 
         // group resident records also by academic year 
-        const recordsGroupedByAcademicYear = _.groupBy(_.flatMap(residentData), (f) => f['academic_year']);
+        const recordsGroupedByAcademicYear = _.groupBy(_.flatMap(residentData), (f) => f['Academic_Year']);
 
         // if the current month is before july then pick the last year  
         // moment months start from 0 (Jan) weirdly so also account for that

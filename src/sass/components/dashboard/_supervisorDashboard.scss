@@ -14,7 +14,7 @@
     // filter panel related styling
     .faculty-filter {
         .react-select-root {
-            width: 445px;
+            width: 350px;
             display: inline-block;
             .filter-label {
                 font-size: 1.1em;
@@ -22,7 +22,7 @@
 
                 & + div {
                     display: inline-block !important;
-                    width: 375px;
+                    width: 345px;
                     z-index: 20;
                 }
             }

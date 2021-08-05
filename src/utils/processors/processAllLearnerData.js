@@ -35,7 +35,7 @@ export default function (learnersDataDump) {
             Resident_Name: '',
             Type: record.form_type,
             formID: record.form_id,
-            academic_year: getAcademicYear(moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD')),
+            Academic_Year: getAcademicYear(moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD')),
             scale: scale_map[rating.scale_id] || ['Resident Entrustment']
         }
     });

@@ -53,15 +53,12 @@ export default function (username, residentInfo, learnerDataDump) {
             Type: record.form_type,
             situationContextCollection,
             formID: record.form_id,
-            academic_year: getAcademicYear(moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD')),
+            Academic_Year: getAcademicYear(moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD')),
             scale: scale_map[rating.scale_id] || ['Resident Entrustment']
         }
     });
 
-    var residentData = processedData.filter((d) => d.EPA != 'unmapped'),
-        // use this unmapped data in future to deal with forms that have been updated
-        // or archived and are no longer valid
-        unmappedData = processedData.filter((d) => d.EPA == 'unmapped');
+    var residentData = processedData.filter((d) => d.EPA != 'unmapped');
 
     // process the rotation schedule data 
     var rotationSchedule = processRotationSchedule(rotation_schedule);
@@ -212,7 +209,7 @@ function processRotationSchedule(rotationList) {
         ...r,
         'start_date': moment(r.start_date, 'YYYY-MM-DD'),
         'end_date': moment(r.end_date, 'YYYY-MM-DD'),
-        'academic_year': getAcademicYear(r.start_date),
+        'Academic_Year': getAcademicYear(r.start_date),
         'unique_id': 'rotation-' + rotationID
     }));
 }
