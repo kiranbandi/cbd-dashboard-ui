@@ -1,6 +1,8 @@
 import React from 'react';
 import { MicroStatCard, StatCard } from '../../';
 import WeeklyEPAChart from './WeeklyEPAChart';
+import infoTooltipReference from '../../../utils/infoTooltipReference';
+import ReactTooltip from 'react-tooltip';
 
 export default (props) => {
 
@@ -24,7 +26,8 @@ export default (props) => {
     return (
         <div className='epaSpeedBox'>
             <div className="hr-divider">
-                <h4 className="hr-divider-content"> ACQUISITION METRICS </h4>
+                <h4 className="hr-divider-content"> ACQUISITION METRICS  <i data-for='acq-infotip' data-tip={infoTooltipReference.residentMetrics.acquisitionMetricsForResident} className="fa fa-info-circle instant-tooltip-trigger"></i></h4>
+                <ReactTooltip id='acq-infotip' className='custom-react-tooltip' />
             </div>
             <div className='card-wrapper'>
                 {residentFilter.isAllData ?

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
+import ReactTooltip from 'react-tooltip';
 
 export default class FacultyGraph extends Component {
     constructor(props) {
@@ -16,7 +17,7 @@ export default class FacultyGraph extends Component {
         // 4) words_per_comment
 
         let { className, data, width, trackType, selectFaculty,
-            currentFaculty, title, titleValue } = this.props;
+            currentFaculty, title, titleValue, tooltipRef, tooltipID } = this.props;
 
         // sort the data list based on the overall value
         data = data.sort((a, b) => a[1] - b[1]);
@@ -115,13 +116,15 @@ export default class FacultyGraph extends Component {
             <h3 className="text-left m-b">
                 {title}
                 <b className='title-append'>{titleValue}</b>
+                <i data-for={tooltipID} data-tip={tooltipRef} className="fa fa-info-circle instant-tooltip-trigger"></i>
             </h3>
             <svg className='supervisor-line-chart' width={width} height={height} >
                 <path d={axisTickLines} fill="none" stroke="#564d4d4d" strokeWidth="2px"></path>
                 <g>{bars}</g>
                 <g>{axisTickTexts}</g>
                 <g>{hoverLines}</g>
-            </svg >
+            </svg>
+            <ReactTooltip id={tooltipID} className='custom-react-tooltip' />
         </div>);
 
     }

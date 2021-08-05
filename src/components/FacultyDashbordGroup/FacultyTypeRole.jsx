@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import { PieChart, Pie, Cell, Legend, Tooltip } from 'recharts';
 import { schemeCategory10 } from 'd3';
+import ReactTooltip from 'react-tooltip';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 export default class FacultyTypeRole extends PureComponent {
 
@@ -33,6 +35,7 @@ export default class FacultyTypeRole extends PureComponent {
                 <h3 className="text-left m-b">
                     {title}
                     {(currentFacultyGroup && currentFacultyRole) && <b className='title-append'>{capitalizeStr(currentFacultyGroup) + " (" + capitalizeStr(currentFacultyRole) + ")"}</b>}
+                    <i data-for={'faculty-typerole-infotip'} data-tip={infoTooltipReference.facultyDevlopment.groupAndRole} className="fa fa-info-circle instant-tooltip-trigger"></i>
                 </h3>
                 <div className='assessor-pie-box'>
                     <PieChart width={partWidth} height={300}>
@@ -81,7 +84,7 @@ export default class FacultyTypeRole extends PureComponent {
                     </PieChart>
                     <h4 className='assessor-pie-title'>Role</h4>
                 </div>
-
+                <ReactTooltip id={'faculty-typerole-infotip'} className='custom-react-tooltip' />
             </div>
         );
     }

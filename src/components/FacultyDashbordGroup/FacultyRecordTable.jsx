@@ -2,6 +2,8 @@ import React from 'react';
 import ReactTable from 'react-table';
 import { customFilter } from '../../utils/genericUtility';
 import { NumberToEPAText } from "../../utils/convertEPA";
+import ReactTooltip from 'react-tooltip';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 const columns = [{
     Header: 'Date',
@@ -9,7 +11,7 @@ const columns = [{
     maxWidth: 100,
     className: 'text-center',
     filterMethod: customFilter
-}, 
+},
 {
     Header: 'EPA',
     accessor: 'EPA',
@@ -63,6 +65,7 @@ export default (props) => {
         {currentFacultyRecords.length > 0 &&
             [<h3 key='faculty-table-title'>
                 Summary of EPAs by <span className='text-capitalize'>{currentFaculty} </span>
+                <i data-for={'faculty-table-infotip'} data-tip={infoTooltipReference.facultyDevlopment.summaryOfEPAsByFacultyName} className="fa fa-info-circle instant-tooltip-trigger"></i>
             </h3>,
             <ReactTable
                 key='faculty-table'
@@ -73,6 +76,7 @@ export default (props) => {
                 resizable={false}
                 filterable={true}
                 defaultSorted={[{ id: "observation_date", desc: true }]} />]}
+        <ReactTooltip id={'faculty-table-infotip'} className='custom-react-tooltip' />
     </div>
 
 }

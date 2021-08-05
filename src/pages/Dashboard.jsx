@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setactivePage } from '../redux/actions/actions';
 import { ResidentDashboard, NormativeDashboard, FacultyDashboard } from '../components';
+import infoTooltipReference from '../utils/infoTooltipReference';
 
 class DashboardRoot extends Component {
 
@@ -17,7 +18,6 @@ class DashboardRoot extends Component {
         this.props.actions.setactivePage(boardId);
     }
 
-
     render() {
 
         let { activePage = 'resident' } = this.props,
@@ -30,13 +30,13 @@ class DashboardRoot extends Component {
                         <div className="hr-divider nav-pill-container-dashboard">
                             <ul className="nav nav-pills hr-divider-content hr-divider-nav">
                                 <li className={activePage == 'resident' ? 'active' : ''}>
-                                    <a id='resident-tab' onClick={this.onTabClick} >RESIDENT METRICS</a>
+                                    <a data-tip={infoTooltipReference.residentMetrics.main} id='resident-tab' onClick={this.onTabClick} >RESIDENT METRICS</a>
                                 </li>
                                 <li className={activePage == 'normative' ? 'active' : ''}>
-                                    <a id='normative-tab' onClick={this.onTabClick} >NORMATIVE ASSESSMENT</a>
+                                    <a data-tip={infoTooltipReference.normativeAssessment.main} id='normative-tab' onClick={this.onTabClick} >NORMATIVE ASSESSMENT</a>
                                 </li>
                                 <li className={activePage == 'supervisor' ? 'active' : ''}>
-                                    <a id='supervisor-tab' onClick={this.onTabClick} >FACULTY DEVELOPMENT</a>
+                                    <a data-tip={infoTooltipReference.facultyDevlopment.main} id='supervisor-tab' onClick={this.onTabClick} >FACULTY DEVELOPMENT</a>
                                 </li>
                             </ul>
                         </div>}

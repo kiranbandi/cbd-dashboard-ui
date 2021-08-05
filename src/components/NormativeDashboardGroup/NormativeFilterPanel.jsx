@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactSelect from 'react-select';
 import getTrainingStages from '../../utils/getTrainingStages';
+import infoTooltipReference from '../../utils/infoTooltipReference';
+
 
 export default class NormativeFilterPanel extends Component {
     constructor(props) {
@@ -31,7 +33,7 @@ export default class NormativeFilterPanel extends Component {
                                     textAlign: 'left',
                                     textTransform: 'capitalize'
                                 }),
-                                singleValue:(styles) => ({
+                                singleValue: (styles) => ({
                                     ...styles,
                                     textTransform: 'capitalize'
                                 })
@@ -46,6 +48,7 @@ export default class NormativeFilterPanel extends Component {
                                 checked={removeNoRecords} onChange={onNoRecordChange} />
                             <span className="custom-control-indicator"></span>
                         </label>
+                        <i data-for='normative-instant-info' data-tip={infoTooltipReference.normativeAssessment.stages} className="fa fa-info-circle instant-tooltip-trigger"></i>
                     </div>
                 </div>
             </div>)

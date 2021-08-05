@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { setResidentList, setResidentFilter, setResidentData } from '../redux/actions/actions';
 import { getLearnerList, getLearnerData } from '../utils/requestServer';
 import processCourseData from '../utils/processors/processCourseData';
+import ReactTooltip from 'react-tooltip';
 
 class Container extends Component {
 
@@ -86,7 +87,10 @@ class Container extends Component {
                     <div className='text-center'>
                         <i className='fa fa-spinner fa-5x fa-spin m-t-lg' aria-hidden="true"></i>
                     </div>
-                    : <div id='container-body'> {this.props.children} </div>}
+                    : <div id='container-body'>
+                        {this.props.children}
+                        <ReactTooltip delayShow={500} className='custom-react-tooltip' />
+                    </div>}
             </div>
         );
     }

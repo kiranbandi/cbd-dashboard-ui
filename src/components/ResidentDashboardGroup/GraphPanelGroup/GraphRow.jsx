@@ -6,6 +6,8 @@ import SlideInTable from './SlideInTable';
 import SlideInFilter from './SlideInFilter';
 import { NumberToEPAText } from "../../../utils/convertEPA";
 import oScoreReference from "../../../utils/oScoreReference";
+import infoTooltipReference from '../../../utils/infoTooltipReference';
+import ReactTooltip from 'react-tooltip';
 
 export default class GraphRow extends Component {
 
@@ -186,18 +188,21 @@ export default class GraphRow extends Component {
                         onMouseOver={onMouseOver}
                         onMouseOut={onMouseOut} />
                     {!smallScreen &&
-                        <span className={"table-icon fa fa-custom fa-book " + epaIDClass + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}>
+                        <span data-for={'epa-buttontip-' + epaIDClass} data-tip={infoTooltipReference.residentMetrics.showEPATable}
+                            className={"table-icon fa fa-custom fa-book " + epaIDClass + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}>
                         </span>
                     }
                     {!smallScreen && isAnyFilterAvailable &&
-                        <span className={"fa fa-custom filter-icon fa-sliders " + epaIDClass + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick}>
+                        <span data-for={'epa-buttontip-' + epaIDClass} data-tip={infoTooltipReference.residentMetrics.showEPAFilter}
+                            className={"fa fa-custom filter-icon fa-sliders " + epaIDClass + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick}>
                         </span>
                     }
                     {!smallScreen &&
-                        <span id={'info-' + epaIDClass} className={"fa fa-custom info-icon fa-info-circle " + epaIDClass} onClick={onInfoClick}>
+                        <span data-for={'epa-buttontip-' + epaIDClass} data-tip={infoTooltipReference.residentMetrics.showObjectiveBreakdown}
+                            id={'info-' + epaIDClass} className={"fa fa-custom info-icon fa-info-circle " + epaIDClass} onClick={onInfoClick}>
                         </span>
                     }
-
+                    <ReactTooltip id={'epa-buttontip-' + epaIDClass} delayShow={500} className='custom-react-tooltip' />
                 </div>
                 {!smallScreen && isTableVisible &&
                     <SlideInTable

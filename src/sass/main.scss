@@ -13,6 +13,17 @@
         border: none !important;
     }
 
+    // common react tooltip styling
+    .custom-react-tooltip {
+        width: 350px;
+        text-transform: none !important;
+    }
+    // common react tooltip trigger styling
+    .instant-tooltip-trigger {
+        margin: 0px 10px;
+        font-size: 16px;
+    }
+
     // import components- contains each self-contained component in its own .scss partial
     @import "components/radioButton";
     @import "components/graphPanel";
@@ -21,12 +32,10 @@
     @import "components/filterPanel";
     @import "components/statcard";
     @import "components/tooltip";
-    @import 'components/facultyPie';
+    @import "components/facultyPie";
     @import "components/dashboard/residentDashboard";
     @import "components/dashboard/normativeDashboard";
-    @import 'components/dashboard/supervisorDashboard';
+    @import "components/dashboard/supervisorDashboard";
     // import pages contains page-specific styling
     @import "pages/dashboard";
-
-
 }

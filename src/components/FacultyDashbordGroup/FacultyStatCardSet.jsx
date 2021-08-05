@@ -2,10 +2,11 @@ import React from 'react';
 import { MicroStatCard } from '..';
 import FacultyScorePie from './FacultyScorePie';
 import PhaseSummaryPie from './PhaseSummaryPie';
+import ReactTooltip from 'react-tooltip';
 
 export default (props) => {
 
-    const { processedRecords = [], title, showNA = false } = props;
+    const { processedRecords = [], title, showNA = false, tooltipRef, tooltipID } = props;
 
     let EPACount = !showNA ? _.sumBy(processedRecords, (d) => d.epa_count) : 'N/A';
 
@@ -18,6 +19,7 @@ export default (props) => {
         <div className="hr-divider">
             <h4 className="hr-divider-content">
                 {title}
+                <i data-for={tooltipID} data-tip={tooltipRef} className="fa fa-info-circle instant-tooltip-trigger"></i>
             </h4>
         </div>
         <div className='text-center'>
@@ -27,6 +29,7 @@ export default (props) => {
             <FacultyScorePie data={ratingGroupSet} />
             <PhaseSummaryPie data={phaseGroupSet} />
         </div>
+        <ReactTooltip id={tooltipID} className='custom-react-tooltip' />
     </div>
 
 }

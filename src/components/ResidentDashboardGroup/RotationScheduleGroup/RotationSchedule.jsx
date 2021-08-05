@@ -6,6 +6,8 @@ import ScheduleBlock from './ScheduleBlock';
 import MonthLayer from './MonthLayer';
 import { showRotationTooltip, updateResidentData, setResidentFilter } from '../../../redux/actions/actions';
 import RotationTooltip from './RotationTooltip';
+import infoTooltipReference from '../../../utils/infoTooltipReference';
+import ReactTooltip from 'react-tooltip';
 
 class RotatioSchedule extends Component {
 
@@ -104,16 +106,23 @@ class RotatioSchedule extends Component {
         return (
             <div className='schedule-box text-center hidden-xs'>
                 <div className="hr-divider">
-                    <h4 className="hr-divider-content"> ROTATION SCHEDULE </h4>
+                    <h4 className="hr-divider-content"> ROTATION SCHEDULE 
+                        <i data-for='rotation-infotip' data-tip={infoTooltipReference.residentMetrics.rotationSchedule} className="fa fa-info-circle instant-tooltip-trigger"></i>
+                    </h4>
+                    <ReactTooltip className='custom-react-tooltip' id='rotation-infotip' />
                 </div>
                 <div className='button-wrapper'>
                     <button
+                        data-for='rotation-buttontip'
+                        data-tip={infoTooltipReference.residentMetrics.viewHistory}
                         onClick={this.showHistorySchedule}
                         className={'view-back-button btn btn-primary-outline' + (isHistoryVisible ? ' selected' : '')}>
                         <span className="fa fa-history"></span>
                         <span>View History</span>
                     </button>
                     <button
+                        data-for='rotation-buttontip'
+                        data-tip={infoTooltipReference.residentMetrics.viewEPAsBlock}
                         onClick={this.showEPAsPerBlock}
                         className={'view-back-button per-block-button btn btn-primary-outline' + (isEPAperBlockVisible ? ' selected' : '')}>
                         <span className="fa fa-database"></span>
@@ -151,6 +160,7 @@ class RotatioSchedule extends Component {
                     <p className='no-rotation-banner'>No rotation schedule available for academic year - {currentAcademicYear}</p>}
                 {/* code chunk to show rotation tooltip*/}
                 {isRotationTooltipVisible && <RotationTooltip {...rotationTooltipData} />}
+                <ReactTooltip delayShow={500} className='custom-react-tooltip' id='rotation-buttontip' />
             </div>);
     }
 }

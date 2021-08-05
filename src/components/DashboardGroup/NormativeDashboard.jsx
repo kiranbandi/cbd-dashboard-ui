@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { NormativeTable, NormativeFilterPanel, NormativeGraph } from '../';
+import ReactTooltip from 'react-tooltip';
 
 class NormativeDashboard extends Component {
     constructor(props) {
@@ -55,6 +56,7 @@ class NormativeDashboard extends Component {
                         <h3 className='text-primary text-center m-t-lg'>
                             Sorry there are no {removeNoRecords ? 'active' : ''} residents in the selected training stage.
                         </h3>}
+                    <ReactTooltip className='custom-react-tooltip' id='normative-instant-info' />
                 </div>
             </div>
         );

@@ -8,6 +8,8 @@ import TrackTrails from '../GraphPanelGroup/TrackTrails';
 import TrackLegend from '../GraphPanelGroup/TrackLegend';
 import { showTooltip } from '../../../redux/actions/actions';
 import oScoreReference from '../../../utils/oScoreReference';
+import infoTooltipReference from '../../../utils/infoTooltipReference';
+import ReactTooltip from 'react-tooltip';
 
 class RecentEPATrend extends Component {
 
@@ -146,7 +148,9 @@ class RecentEPATrend extends Component {
                 <div className="hr-divider">
                     <h4 className="hr-divider-content">
                         RECENT EPAs
+                        <i data-for='recent-infotip' data-tip={infoTooltipReference.residentMetrics.recentEPAs} className="fa fa-info-circle instant-tooltip-trigger"></i>
                     </h4>
+                    <ReactTooltip id='recent-infotip' className='custom-react-tooltip' />
                 </div>
                 <div className='recent-range-selection'>
                     <div className='name-box'>

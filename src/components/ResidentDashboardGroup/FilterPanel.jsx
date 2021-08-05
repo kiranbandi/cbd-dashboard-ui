@@ -11,6 +11,8 @@ import {
     toggleExamScore, setResidentData, updateResidentData
 } from '../../redux/actions/actions';
 import { DateRangePicker } from 'react-dates';
+import infoTooltipReference from '../../utils/infoTooltipReference';
+import ReactTooltip from 'react-tooltip';
 
 const MODDED_PHASE_LIST = getTrainingStages()
     .map((phase) => phase.split('-').join(" ").toUpperCase());
@@ -164,8 +166,10 @@ class FilterPanel extends Component {
                     </div> : <p className='date-filter-label'>Date Filter</p>}
 
                     <div className='filter-button-container'>
-                        <button className={'btn btn-primary-outline ' + (!isAllData ? " active-button" : "not-active")}
+                        <button data-for='date-buttontip' data-tip={infoTooltipReference.residentMetrics.dateFilter}
+                            className={'btn btn-primary-outline ' + (!isAllData ? " active-button" : "not-active")}
                             onClick={this.onDateFilterClick} ><i className="fa fa-calendar" aria-hidden="true"></i></button>
+                        <ReactTooltip id='date-buttontip' delayShow={500} className='custom-react-tooltip' />
                     </div>
 
                     {isFacultyMode && <div className='text-xs-left button-box'>

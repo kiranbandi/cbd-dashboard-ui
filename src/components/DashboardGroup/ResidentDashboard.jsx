@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FilterPanel, GraphPanel, InfoPanel } from '../';
 
-
 class ResidentDashboard extends Component {
 
     constructor(props) {

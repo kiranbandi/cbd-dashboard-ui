@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FacultyGraph from './FacultyGraph';
 import FacultyTypeRole from './FacultyTypeRole';
+import infoTooltipReference from '../../utils/infoTooltipReference';
 
 export default class FacultyGraphGroup extends Component {
     constructor(props) {
@@ -24,6 +25,8 @@ export default class FacultyGraphGroup extends Component {
         return (<div>
             {processedRecords.length > 0 && <div className='text-center'>
                 <FacultyGraph
+                    tooltipRef={infoTooltipReference.facultyDevlopment.totalEPAsObserved}
+                    tooltipID={'faculty-epacount-infotip'}
                     title={'Total EPAs Observed '}
                     titleValue={!!currentFacultyData ? currentFacultyData.epa_count : ''}
                     currentFaculty={currentFaculty}
@@ -32,6 +35,8 @@ export default class FacultyGraphGroup extends Component {
                     selectFaculty={selectFaculty}
                     width={(width / 2) - 50} />
                 <FacultyGraph
+                    tooltipRef={infoTooltipReference.facultyDevlopment.averageEntrustmentScore}
+                    tooltipID={'faculty-epascore-infotip'}
                     title={'Average Entrustment Score '}
                     titleValue={!!currentFacultyData ? currentFacultyData.entrustment_score : ''}
                     currentFaculty={currentFaculty}
@@ -40,6 +45,8 @@ export default class FacultyGraphGroup extends Component {
                     selectFaculty={selectFaculty}
                     width={(width / 2) - 50} />
                 <FacultyGraph
+                    tooltipRef={infoTooltipReference.facultyDevlopment.averageWordsPerComment}
+                    tooltipID={'faculty-comment-infotip'}
                     title={'Average Words Per Comment '}
                     titleValue={!!currentFacultyData ? currentFacultyData.words_per_comment : ''}
                     currentFaculty={currentFaculty}
