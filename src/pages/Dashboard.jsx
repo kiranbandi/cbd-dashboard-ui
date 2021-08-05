@@ -21,7 +21,7 @@ class DashboardRoot extends Component {
     render() {
 
         let { activePage = 'resident' } = this.props,
-            { dashboard_mode = 'resident' } = dashboard_options;
+            { dashboard_mode = 'resident', advanced_mode = 'disabled' } = dashboard_options;
 
         return (
             <div className='custom-dashboard-page-root' >
@@ -35,9 +35,9 @@ class DashboardRoot extends Component {
                                 <li className={activePage == 'normative' ? 'active' : ''}>
                                     <a data-tip={infoTooltipReference.normativeAssessment.main} id='normative-tab' onClick={this.onTabClick} >NORMATIVE ASSESSMENT</a>
                                 </li>
-                                <li className={activePage == 'supervisor' ? 'active' : ''}>
+                                {advanced_mode == 'enabled' && <li className={activePage == 'supervisor' ? 'active' : ''}>
                                     <a data-tip={infoTooltipReference.facultyDevlopment.main} id='supervisor-tab' onClick={this.onTabClick} >FACULTY DEVELOPMENT</a>
-                                </li>
+                                </li>}
                             </ul>
                         </div>}
                     <div className='control-inner-container'>
