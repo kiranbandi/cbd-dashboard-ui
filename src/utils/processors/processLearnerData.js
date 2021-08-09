@@ -5,7 +5,7 @@ export default function (username, residentInfo, learnerDataDump) {
 
     let { dashboard_epas = [], rating_scale_map = [],
         assessments = [], course_name = '',
-        contextual_variables = [], rotation_schedule = [] } = learnerDataDump,
+        contextual_variables = [], contextual_variables_map = [], rotation_schedule = [] } = learnerDataDump,
         { fullname, epaProgress } = residentInfo;
 
     // process and set the source map  
@@ -18,6 +18,9 @@ export default function (username, residentInfo, learnerDataDump) {
     _.map(scale_map, (scale, scale_id) => {
         scale_map[scale_id] = _.map(_.sortBy(scale, d => d.order), (e) => e.text);
     });
+
+    // This info is used in the GraphRow.jsx component
+    window.dynamicDashboard.contextual_variable_map = _.groupBy(contextual_variables_map, (d) => d.form_id);
 
     // Group the contextual variables by item code first 
     const groupedContextualVariables = _.groupBy(contextual_variables, (d) => d.item_code);
@@ -47,12 +50,13 @@ export default function (username, residentInfo, learnerDataDump) {
             Assessor_Group: getAssessorType(record['assessor_group'], record['assessor_role']),
             Professionalism_Safety: '',
             Rating: rating.order,
-            Rating_Text: '(' + rating.order + ') ' + rating.text,
+            Rating_Text: '(' + rating.order + ') ' + (rating.text || ''),
             Resident_Name: fullname,
             Situation_Context: _.map(situationContextCollection, (e) => e.item_text + " : " + e.text).join("\n"),
             Type: record.form_type,
             situationContextCollection,
             formID: record.form_id,
+            formTitle: record.title,
             Academic_Year: getAcademicYear(moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD')),
             scale: scale_map[rating.scale_id] || ['Resident Entrustment']
         }

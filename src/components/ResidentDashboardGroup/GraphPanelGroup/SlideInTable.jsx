@@ -35,10 +35,10 @@ const columns = [{
     filterMethod: customFilter
 }];
 
-
+// push the table to the left from its inner position and then add 35 pixels which is original margin to the left 
 export default (props) => {
     return (
-        <div className='table-box' style={{ width: (props.width * 4) - 75 }}>
+        <div className='table-box' style={{ width: (props.width * 4) - 75, 'marginLeft': (-1 * (2 * props.width) + 35) }}>
             <ReactTable
                 data={props.data}
                 columns={columns}

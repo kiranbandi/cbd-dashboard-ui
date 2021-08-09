@@ -2,16 +2,12 @@ import _ from 'lodash';
 
 export default function (learnerListDataDump, dashboardMode = 'faculty') {
 
-    let [learnerList, learnerMetricsList = [],
-        learner_assessment_counts = [], contextualVariableMap] = learnerListDataDump;
+    let [learnerList, learnerMetricsList = [], learner_assessment_counts = []] = learnerListDataDump;
 
     // The following info is fetched only during course load 
     // to prevent repeated hits on server for the same info and stored locally
     const stageMap = getStageMap();
     window.dynamicDashboard = window.dynamicDashboard || {};
-    // This info is used in the GraphRow.jsx component
-    window.dynamicDashboard.contextual_variable_map = _.groupBy(contextualVariableMap, (d) => d.form_id);
-
     // First remap the metrics in metrics list into arrays from strings
     _.map(learnerMetricsList, (d, key) => { learnerMetricsList[key] = JSON.parse(d) });
 

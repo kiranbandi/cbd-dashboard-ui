@@ -18,11 +18,9 @@ class GraphPanel extends Component {
         this.onInfoClick = this.onInfoClick.bind(this);
         this.onTableExpandClick = this.onTableExpandClick.bind(this);
         this.onFilterExpandClick = this.onFilterExpandClick.bind(this);
-        this.onAssessmentPlanClick = this.onAssessmentPlanClick.bind(this);
         this.state = {
             openTableID: '',
-            openFilterID: '',
-            openPlanID: ''
+            openFilterID: ''
         };
     }
 
@@ -31,10 +29,11 @@ class GraphPanel extends Component {
         const { programInfo } = this.props, { epaSourceMap } = programInfo;
 
         event.stopPropagation();
+
         // add in information about the EPA
         const classID = event.target.className.split(" ")[4],
-            // remove "epa-" and then convert 1-1 to 1.1
-            epaSource = classID.slice(4).split('-').join('.');
+            // remove "epa-formid-" and then convert 1-1 to 1.1
+            epaSource = classID.split('-').slice(2).join('.');
         // Get the objectiveID from source MAP *
         const objectiveId = epaSourceMap[epaSource.split(".")[0]].objectiveID[epaSource];
         // populate other info
@@ -63,8 +62,8 @@ class GraphPanel extends Component {
 
     onTableExpandClick(event) {
         const classID = event.target.className.split(" ")[4],
-            // remove "epa-" and then convert 1-1 to 1.1
-            openTableID = classID.slice(4).split('-').join('.');
+            // remove "epa-"
+            openTableID = classID.slice(4);
         // if already open close it , if not open it !
         if (event.target.className.indexOf('open-table') > -1) {
             this.setState({ openTableID: '', openFilterID: '' });
@@ -75,8 +74,8 @@ class GraphPanel extends Component {
     }
     onFilterExpandClick(event) {
         const classID = event.target.className.split(" ")[4],
-            // remove "epa-" and then convert 1-1 to 1.1
-            openFilterID = classID.slice(4).split('-').join('.');
+            // remove "epa-" 
+            openFilterID = classID.slice(4);
         // if already open close it , if not open it !
         if (event.target.className.indexOf('open-filter') > -1) {
             this.setState({ openFilterID: '', openTableID: '' });
@@ -86,22 +85,14 @@ class GraphPanel extends Component {
         }
     }
 
-    onAssessmentPlanClick() {
-        const openPlanID = event.target.dataset.epaSource;
-        // if already open close it , if not open it !
-        if (event.target.className.indexOf('open-plan') > -1) {
-            this.setState({ openPlanID: '' });
-        }
-        else {
-            this.setState({ openPlanID });
-        }
-    }
-
     onMouseOver(event) {
         let { residentData, actions } = this.props;
         let pointId = event.target.id.split("-");
-        let data = residentData[pointId[2]][pointId[4]];
-        var pageWidth = window.dynamicDashboard.mountWidth;
+        let dataList = residentData[pointId[4] + '.' + pointId[5]],
+            dataGroupedByForm = _.groupBy(dataList, (d) => d.formID),
+            data = dataGroupedByForm[pointId[3]][pointId[7]],
+            pageWidth = window.dynamicDashboard.mountWidth;
+
         actions.showTooltip(true, {
             'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,
             'y': event.pageY - 50,
@@ -130,7 +121,7 @@ class GraphPanel extends Component {
             tooltipData, smallScreen, width,
             levelVisibilityOpenStatus, programInfo = {} } = this.props;
 
-        const { openTableID, openFilterID, openPlanID } = this.state;
+        const { openTableID, openFilterID } = this.state;
 
         const { isAllData = true, hideNoDataEPAs = false } = residentFilter;
 
@@ -171,7 +162,6 @@ class GraphPanel extends Component {
         let widthOfRootGraphPanel = smallScreen ? (width + 50) : width;
         let widthPartition = smallScreen ? (width - 20) : (width / 4);
 
-
         return (
             <div>
                 {epaSourcesThatExist && <div className='graph-panel-root'>
@@ -211,16 +201,14 @@ class GraphPanel extends Component {
                                                     key={'inner-row-' + sourceKey}
                                                     innerKey={innerKey}
                                                     epaSource={epaSource}
-                                                    isTableVisible={epaSource == openTableID}
-                                                    isFilterVisible={epaSource == openFilterID}
-                                                    isPlanVisible={epaSource == openPlanID}
+                                                    openTableID={openTableID}
+                                                    openFilterID={openFilterID}
                                                     widthPartition={widthPartition}
                                                     epaSourceMap={epaSourceMap}
                                                     smallScreen={smallScreen}
                                                     residentEPAData={residentData[epaSource] || []}
                                                     onMouseOver={this.onMouseOver}
                                                     onMouseOut={this.onMouseOut}
-                                                    onAssessmentPlanClick={this.onAssessmentPlanClick}
                                                     onInfoClick={this.onInfoClick}
                                                     onTableExpandClick={this.onTableExpandClick}
                                                     onFilterExpandClick={this.onFilterExpandClick} />)

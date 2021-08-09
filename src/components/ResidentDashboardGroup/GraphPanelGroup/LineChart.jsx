@@ -11,7 +11,7 @@ export default (props) => {
         elementList = _.map(props.data, (d, i) => {
             if (!d.pureData.mark) {
                 return <circle
-                    id={'point-inner-' + props.epaSource + '-outer-' + i}
+                    id={'point-inner-' + props.epaIDClass + '-outer-' + i}
                     onMouseOver={props.onMouseOver}
                     onMouseOut={props.onMouseOut}
                     r={elementSize}
@@ -22,7 +22,7 @@ export default (props) => {
                 </circle>
             }
             return <polygon
-                id={'point-inner-' + props.epaSource + '-outer-' + i}
+                id={'point-inner-' + props.epaIDClass + '-outer-' + i}
                 points={(d.x - elementSize) + "," + d.y + " " + d.x + "," + (d.y + elementSize) + " " + (d.x + elementSize) + "," + d.y + " " + (d.x) + "," + (d.y - elementSize) + " " + (d.x - elementSize) + "," + (d.y)}
                 className='score-point'
                 onMouseOver={props.onMouseOver}

@@ -38,8 +38,8 @@ class Container extends Component {
         // If the dashboard is opened in single resident mode
         // automatically prefetch data for the active resident
         else {
-            const [learner_list = [], contextual_variable_map = []] = dashboard_options.dashboard_reference || [];            // process the resident list 
-            const residentList = processCourseData([learner_list, [], [], contextual_variable_map], 'resident');
+            const [learner_list = []] = dashboard_options.dashboard_reference || [];            // process the resident list 
+            const residentList = processCourseData([learner_list, [], []], 'resident');
             // Set the resident list list 
             this.props.actions.setResidentList(residentList);
             // Set the resident filter 

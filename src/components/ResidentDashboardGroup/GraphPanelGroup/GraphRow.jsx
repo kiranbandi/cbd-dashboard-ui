@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import LineChart from './LineChart';
 import BulletChart from './BulletChart';
-import { scaleLinear } from 'd3';
-import SlideInTable from './SlideInTable';
-import SlideInFilter from './SlideInFilter';
+import FormWrapper from './FormWrapper';
 import { NumberToEPAText } from "../../../utils/convertEPA";
-import oScoreReference from "../../../utils/oScoreReference";
-import infoTooltipReference from '../../../utils/infoTooltipReference';
-import ReactTooltip from 'react-tooltip';
+import _ from 'lodash';
 
 export default class GraphRow extends Component {
 
@@ -29,25 +24,11 @@ export default class GraphRow extends Component {
 
     render() {
 
-        const { filterDict } = this.state;
-
-        let { epaSource, isTableVisible, innerKey,
-            widthPartition, smallScreen, epaSourceMap,
-            residentEPAData,
-            onMouseOut, onMouseOver, onInfoClick,
-            onTableExpandClick, onFilterExpandClick,
-            isFilterVisible } = this.props;
+        let { epaSource, innerKey, widthPartition, smallScreen, epaSourceMap, residentEPAData } = this.props;
 
         //  margin of 20px on either side reduces the available width by 40 
         // 15px bullet chart padding on either sides
         const bulletInnerWidth = widthPartition - 70;
-
-        // margin of 10px on either side reduces the available width by 20
-        var marginVertical = 20;
-        var marginHorizontal = 20;
-        var height = 200;
-        var innerHeight = height - 20;
-        var width = (smallScreen ? widthPartition : widthPartition * 2) - 20;
 
         // Get the maximum required observations for each EPA from source MAP *
         const maxObservation = +epaSourceMap[epaSource.split(".")[0]].maxObservation[epaSource];
@@ -67,79 +48,30 @@ export default class GraphRow extends Component {
         // remap NaN values to 0
         firstMeasure = isNaN(firstMeasure) ? 0 : firstMeasure;
         secondMeasure = isNaN(secondMeasure) ? 0 : secondMeasure;
-        // Get the record rating scale
-        let scoreScale = residentEPAData.length > 0 ? residentEPAData[0].scale : oScoreReference;
 
-        const xScale = scaleLinear().domain([0, residentEPAData.length - 1]).range([marginHorizontal + 20, width - marginHorizontal])
-        const yScale = scaleLinear().domain([scoreScale.length, 1]).range([marginVertical, innerHeight - marginVertical])
+        // First group the data by Form IDs so that different forms are shown seperately
+        const epaDataGroupedByForm = _.groupBy(residentEPAData, (d) => d.formID);
 
-        // Get the formID for the EPA and the corresponding contextual variable map
-        const formID = residentEPAData.length > 0 ? residentEPAData[0].formID : '',
-            contextual_variable_map = window.dynamicDashboard.contextual_variable_map[formID],
-            isAnyFilterAvailable = contextual_variable_map && contextual_variable_map.length > 0,
-            filterOptions = convertToFilterDict(contextual_variable_map, filterDict);
+        // Only show form titles if multiple forms exist for a single EPA 
+        const showFormTitle = _.keys(epaDataGroupedByForm).length > 1;
 
-
-
-        const scoreData = residentEPAData.map((d, i) => {
-
-            let highlight = false;
-            let hasValidFilter = false;
-
-            if (isFilterVisible) {
-                const contexts = d.situationContextCollection;
-                highlight = true;
-                for (const filter of Object.keys(filterDict)) {
-                    if (filter && filterDict[filter] && filterDict[filter].length > 0) {
-                        hasValidFilter = true;
-                        let relaventContext = _.find(contexts, (d) => d.item_text == filter);
-
-                        if (relaventContext && relaventContext.text) {
-                            highlight = highlight && (filterDict[filter].indexOf(relaventContext.text) > -1);
-                        }
-                        else {
-                            highlight = false;
-                        }
-
-                    }
-                }
+        // Create a list of form titles and if a form title already exists add version number to it so
+        // that its distinguished to the user 
+        let formTitles = [];
+        _.map(epaDataGroupedByForm, (d) => {
+            let formTitle = d[0].formTitle;
+            if (formTitles.map((d) => d.key).indexOf(formTitle) == -1) {
+                formTitles.push({ 'key': formTitle, 'label': 'V1 - ' + formTitle });
             }
-
-            highlight = highlight && hasValidFilter;
-
-            return {
-                x: xScale(i),
-                y: yScale(d.Rating),
-                highlight,
-                pureData: d,
-                concern: (d.Professionalism_Safety != '' && d.Professionalism_Safety != "No")
-            };
-
-        });
-
-        const trackTrailPositions = _.map(scoreScale, (d, i) => {
-            return {
-                x: marginHorizontal + 20,
-                dx: width - (2 * marginHorizontal) - 20,
-                y: yScale(i + 1)
+            else {
+                let existingTitles = _.filter(formTitles, (d) => d.key == formTitle);
+                formTitles.push({ 'key': formTitle, 'label': 'V' + (existingTitles.length + 1) + ' - ' + formTitle });
             }
         });
-
-        const legends = _.map(scoreScale, (d, i) => {
-            return {
-                x: marginHorizontal,
-                y: yScale(i + 1),
-                labelID: i + 1,
-                label: d
-            }
-        });
-
-        const epaIDClass = 'epa-' + epaSource.split('.').join('-');
 
         return (
             <div className='text-xs-center'>
-                {/* widthly reduced slightly by 10px to facilitate extra gap at the last */}
-                <div style={{ width: widthPartition - 10 }} className='inner-cell epa-title-cell'>
+                <div style={{ width: widthPartition }} className='inner-cell epa-title-cell'>
                     <span className='inner-offset-label'>
                         {NumberToEPAText(epaSource) + " - " + epaSourceMap[innerKey].subRoot[epaSource]}
                     </span>
@@ -173,67 +105,27 @@ export default class GraphRow extends Component {
                             <span className='card-title achieved-title'>ACHIEVED</span>
                         </div>
                     </div>
-
                 </div>
-                <div style={{ width: smallScreen ? widthPartition : widthPartition * 2 }}
-                    className={'inner-cell score-cell' + ' wrapper-' + epaIDClass}>
-                    <LineChart
-                        trackTrailPositions={trackTrailPositions}
-                        legends={legends}
-                        width={width}
-                        data={scoreData}
-                        epaSource={epaSource}
-                        smallScreen={smallScreen}
-                        innerHeight={innerHeight}
-                        onMouseOver={onMouseOver}
-                        onMouseOut={onMouseOut} />
-                    {!smallScreen &&
-                        <span data-for={'epa-buttontip-' + epaIDClass} data-tip={infoTooltipReference.residentMetrics.showEPATable}
-                            className={"table-icon fa fa-custom fa-book " + epaIDClass + (isTableVisible ? ' open-table' : ' ')} onClick={onTableExpandClick}>
-                        </span>
-                    }
-                    {!smallScreen && isAnyFilterAvailable &&
-                        <span data-for={'epa-buttontip-' + epaIDClass} data-tip={infoTooltipReference.residentMetrics.showEPAFilter}
-                            className={"fa fa-custom filter-icon fa-sliders " + epaIDClass + (isFilterVisible ? ' open-filter' : ' ')} onClick={onFilterExpandClick}>
-                        </span>
-                    }
-                    {!smallScreen &&
-                        <span data-for={'epa-buttontip-' + epaIDClass} data-tip={infoTooltipReference.residentMetrics.showObjectiveBreakdown}
-                            id={'info-' + epaIDClass} className={"fa fa-custom info-icon fa-info-circle " + epaIDClass} onClick={onInfoClick}>
-                        </span>
-                    }
-                    <ReactTooltip id={'epa-buttontip-' + epaIDClass} delayShow={500} className='custom-react-tooltip' />
+                <div style={{ width: smallScreen ? widthPartition : widthPartition * 2 }} className='inner-cell score-cell'>
+                    {_.map(_.keys(epaDataGroupedByForm), (epa_form_id, formNumberIndex) =>
+                        <FormWrapper
+                            key={epaSource + '-' + epa_form_id}
+                            formID={epa_form_id}
+                            epaSource={epaSource}
+                            formTitle={showFormTitle ? formTitles[formNumberIndex].label : ''}
+                            openFilterID={this.props.openFilterID}
+                            openTableID={this.props.openTableID}
+                            widthPartition={widthPartition}
+                            epaSourceMap={epaSourceMap}
+                            smallScreen={smallScreen}
+                            residentEPAData={epaDataGroupedByForm[epa_form_id]}
+                            onMouseOver={this.props.onMouseOver}
+                            onMouseOut={this.props.onMouseOut}
+                            onInfoClick={this.props.onInfoClick}
+                            onTableExpandClick={this.props.onTableExpandClick}
+                            onFilterExpandClick={this.props.onFilterExpandClick} />)}
                 </div>
-                {!smallScreen && isTableVisible &&
-                    <SlideInTable
-                        data={residentEPAData}
-                        width={widthPartition} />}
-                {!smallScreen && isFilterVisible &&
-                    <SlideInFilter
-                        data={scoreData}
-                        width={widthPartition}
-                        innerKey={innerKey}
-                        epaSource={epaSource}
-                        epaSourceMap={epaSourceMap}
-                        onHighlightChange={this.onHighlightChange}
-                        filterDict={filterDict}
-                        filterOptions={filterOptions} />}
             </div>
         );
     }
-}
-
-// This takes in values that are in contextual variable map format
-// of elentra and converts them into a more easily consumable form needed for the dashboard
-// as a array of options with a title
-function convertToFilterDict(contextual_variable_map, filterDict) {
-    let filterGroup = _.groupBy(contextual_variable_map, (d) => d.objective_parent_name);
-    // set the options simply as the obective title
-    return _.map(filterGroup, (options, filterKey) => {
-        return {
-            'label': filterKey,
-            'options': _.map(options, (d) => d.objective_name),
-            'selected': filterDict[filterKey] || ''
-        };
-    });
 }

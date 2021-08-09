@@ -195,6 +195,20 @@
                         margin-left: 0px;
                     }
                 }
+
+                .form-wrapper {
+                    margin-bottom: 10px;
+                    position: relative;
+
+                    .chart-form-title{
+                        margin-top: 5px;
+                    }
+                }
+
+                &.epa-title-cell {
+                    padding-right: 10px;
+                }
+
                 &.observation-cell {
                     margin: 25px 0px 20px 0px;
                     .observation-svg {
