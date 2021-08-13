@@ -29,7 +29,7 @@ export default class GraphRow extends Component {
 
         const { filterDict } = this.state;
 
-        let { epaSource, widthPartition, smallScreen, epaSourceMap, formID, openFilterID, openTableID,
+        let { epaSource, widthPartition, smallScreen, formID, openFilterID, openTableID,
             residentEPAData, formTitle = '', onMouseOut, onMouseOver, onInfoClick,
             onTableExpandClick, onFilterExpandClick } = this.props;
 
@@ -145,7 +145,6 @@ export default class GraphRow extends Component {
                         data={scoreData}
                         width={widthPartition}
                         epaSource={epaSource}
-                        epaSourceMap={epaSourceMap}
                         onHighlightChange={this.onHighlightChange}
                         filterDict={filterDict}
                         filterOptions={filterOptions} />}

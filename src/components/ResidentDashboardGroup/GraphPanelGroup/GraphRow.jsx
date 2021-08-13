@@ -24,23 +24,23 @@ export default class GraphRow extends Component {
 
     render() {
 
-        let { epaSource, innerKey, widthPartition, smallScreen, epaSourceMap, residentEPAData } = this.props;
+        let { epaSource, widthPartition, smallScreen, epaSourceMap, residentEPAData } = this.props;
 
         //  margin of 20px on either side reduces the available width by 40 
         // 15px bullet chart padding on either sides
         const bulletInnerWidth = widthPartition - 70;
 
         // Get the maximum required observations for each EPA from source MAP *
-        const maxObservation = +epaSourceMap[epaSource.split(".")[0]].maxObservation[epaSource];
+        const maxObservation = +epaSourceMap.maxObservation[epaSource] || 0;
         // Get recorded observation count
         const recordedCount = residentEPAData.length;
         // Get achieved count based on values set by server
-        const achievedCount = +epaSourceMap[epaSource.split(".")[0]].achieved[epaSource];
+        const achievedCount = +epaSourceMap.achieved[epaSource] || 0;
 
         // Get remaining count 
         const remainingCount = Math.max((maxObservation - achievedCount), 0);
 
-        const isEPAComplete = remainingCount == 0 || +epaSourceMap[epaSource.split(".")[0]].completed[epaSource];
+        const isEPAComplete = remainingCount == 0 || (epaSourceMap.completed[epaSource] || false);
 
         let firstMeasure = Math.min((recordedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
         let secondMeasure = Math.min((achievedCount / maxObservation) * bulletInnerWidth, bulletInnerWidth);
@@ -73,7 +73,7 @@ export default class GraphRow extends Component {
             <div className='text-xs-center'>
                 <div style={{ width: widthPartition }} className='inner-cell epa-title-cell'>
                     <span className='inner-offset-label'>
-                        {NumberToEPAText(epaSource) + " - " + epaSourceMap[innerKey].subRoot[epaSource]}
+                        {NumberToEPAText(epaSource) + " - " + epaSourceMap.subRoot[epaSource]}
                     </span>
                 </div>
                 <div style={{ width: widthPartition }} className='inner-cell observation-cell'>
@@ -116,7 +116,6 @@ export default class GraphRow extends Component {
                             openFilterID={this.props.openFilterID}
                             openTableID={this.props.openTableID}
                             widthPartition={widthPartition}
-                            epaSourceMap={epaSourceMap}
                             smallScreen={smallScreen}
                             residentEPAData={epaDataGroupedByForm[epa_form_id]}
                             onMouseOver={this.props.onMouseOver}

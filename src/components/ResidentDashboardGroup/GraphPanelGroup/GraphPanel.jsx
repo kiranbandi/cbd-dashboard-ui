@@ -180,7 +180,19 @@ class GraphPanel extends Component {
                     <div style={{ width: widthOfRootGraphPanel }} className='panel-inner-root'>
                         {_.map(epaSourcesThatExist, (epaSources, innerKey) => {
 
-                            let isCurrentSubRootVisible = levelVisibilityOpenStatus[innerKey];
+                            let isCurrentSubRootVisible = levelVisibilityOpenStatus[innerKey],
+                                epaSpecificSourceMap = epaSourceMap[innerKey] || {
+                                    'ID': 'N/A',
+                                    'topic': 'N/A',
+                                    subRoot: {},
+                                    maxObservation: {},
+                                    observed: {},
+                                    completed: {},
+                                    achieved: {},
+                                    objectiveID: {},
+                                    assessmentInfo: {},
+                                    filterValuesDict: {}
+                                };
 
                             return (
                                 <div className="inner-sub-root" key={'sub-root-' + innerKey}>
@@ -191,7 +203,7 @@ class GraphPanel extends Component {
                                         innerKey={innerKey}
                                         smallScreen={smallScreen}
                                         isCurrentSubRootVisible={isCurrentSubRootVisible}
-                                        epaSourceMap={epaSourceMap} />
+                                        epaSourceMap={epaSpecificSourceMap} />
 
                                     {/* Actual Row data containing labels and bullet and line charts */}
                                     <div className={'inner-graph-row ' + (isCurrentSubRootVisible ? 'show-row' : 'hide-row')}>
@@ -204,7 +216,7 @@ class GraphPanel extends Component {
                                                     openTableID={openTableID}
                                                     openFilterID={openFilterID}
                                                     widthPartition={widthPartition}
-                                                    epaSourceMap={epaSourceMap}
+                                                    epaSourceMap={epaSpecificSourceMap}
                                                     smallScreen={smallScreen}
                                                     residentEPAData={residentData[epaSource] || []}
                                                     onMouseOver={this.onMouseOver}
