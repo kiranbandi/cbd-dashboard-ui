@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setactivePage } from '../redux/actions/actions';
-import { ResidentDashboard, NormativeDashboard, FacultyDashboard } from '../components';
+import { ResidentDashboard, NormativeDashboard, FacultyDashboard, ProgramDashboard } from '../components';
 import infoTooltipReference from '../utils/infoTooltipReference';
 
 class DashboardRoot extends Component {
@@ -38,12 +38,16 @@ class DashboardRoot extends Component {
                                 {advanced_mode == 'enabled' && <li className={activePage == 'supervisor' ? 'active' : ''}>
                                     <a data-tip={infoTooltipReference.facultyDevlopment.main} id='supervisor-tab' onClick={this.onTabClick} >FACULTY DEVELOPMENT</a>
                                 </li>}
+                                {advanced_mode == 'enabled' && <li className={activePage == 'program' ? 'active' : ''}>
+                                    <a data-tip={infoTooltipReference.programEvaluation.main} id='program-tab' onClick={this.onTabClick} >PROGRAM EVALUATION</a>
+                                </li>}
                             </ul>
                         </div>}
                     <div className='control-inner-container'>
                         {(activePage == 'resident') && <ResidentDashboard dashboard_mode={dashboard_mode} />}
                         {(activePage == 'normative') && <NormativeDashboard />}
                         {(activePage == 'supervisor') && <FacultyDashboard />}
+                        {(activePage == 'program') && <ProgramDashboard />}
                     </div>
                 </div>
             </div>

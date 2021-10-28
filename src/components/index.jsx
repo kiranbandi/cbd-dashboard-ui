@@ -2,6 +2,7 @@
 export { default as ResidentDashboard } from './DashboardGroup/ResidentDashboard';
 export { default as NormativeDashboard } from './DashboardGroup/NormativeDashboard';
 export { default as FacultyDashboard } from './DashboardGroup/FacultyDashboard';
+export { default as ProgramDashboard } from './DashboardGroup/ProgramDashboard';
 
 // Components for Normative Dashboard to compare residents
 export { default as NormativeTable } from './NormativeDashboardGroup/NormativeTable';

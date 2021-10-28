@@ -2,7 +2,7 @@ export default {
   oracle: {
     loaderState: false,
     filterLoaderState: false,
-    activePage: dashboard_options.dashboard_mode == 'resident' ? 'resident' : 'normative',
+    activePage: dashboard_options.dashboard_mode == 'resident' ? 'resident' : 'program',
     residentData: null,
     rotationSchedule: [],
     residentFilter: {

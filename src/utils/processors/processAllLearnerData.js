@@ -21,6 +21,7 @@ export default function (learnersDataDump) {
         const rating = _.find(rating_scale_map, d => d.descriptor_id == record.selected_descriptor_id) || { 'order': 1 };
 
         return {
+            username: record.proxy_id,
             Date: moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD'),
             EPA: recordEPAtoNumber(record),
             phaseTag: getRecordPhaseCode(record).toUpperCase(),
