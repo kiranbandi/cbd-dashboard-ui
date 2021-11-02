@@ -65,7 +65,7 @@ export default class ProgramAllYearSummary extends Component {
 
         return (
             <div
-                className={'yearall-summary-wrapper'}>
+                className={'yearall-summary-wrapper m-b'}>
                 <div className="hr-divider">
                     <h4 className="hr-divider-content">
                         Overall Acquisition Metrics By Year

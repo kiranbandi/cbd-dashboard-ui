@@ -2,6 +2,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import processCourseData from './processors/processCourseData';
 import processLearnerData from './processors/processLearnerData';
+import tagRecordsWithRotation from './processors/tagRecordsWithRotation';
 import processAllLearnerData from './processors/processAllLearnerData';
 import endPoints from './endPoints';
 
@@ -69,7 +70,7 @@ requestServer.getAllData = function () {
     });
 }
 
-requestServer.getRotationSchedules = function (residentList = []) {
+requestServer.getRotationSchedules = function (residentList = [], allRecords) {
     return new Promise((resolve, reject) => {
         if (localCache.rotationSchedules.length == 0) {
             axios.get(endPoints.assessments, {
@@ -82,13 +83,13 @@ requestServer.getRotationSchedules = function (residentList = []) {
                 .then((response) => {
                     // store in local cache
                     localCache.rotationSchedules = response.data;
-                    resolve(processAllLearnerData(response.data));
+                    resolve(tagRecordsWithRotation(response.data, allRecords));
                 })
                 .catch((err) => errorCallback(err, reject));
         }
         else {
             // stub in delay
-            setTimeout(() => { resolve(processAllLearnerData(localCache.rotationSchedules)); }, 100);
+            setTimeout(() => { resolve(tagRecordsWithRotation(localCache.rotationSchedules, allRecords)); }, 100);
         }
 
     });

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import ReactSelect from 'react-select';
+// import ReactSelect from 'react-select';
 import processSingleProgramRecords from '../../utils/processSingleProgramRecords';
 import Summary from '../ProgramEvaluationGroup/ProgramSummary';
-import EPAspecificRotation from '../ProgramEvaluationGroup/EPAspecificRotation';
-import RotationSpecificEPA from '../ProgramEvaluationGroup/RotationSpecificEPA';
+// import EPAspecificRotation from '../ProgramEvaluationGroup/EPAspecificRotation';
+// import RotationSpecificEPA from '../ProgramEvaluationGroup/RotationSpecificEPA';
 import EPAOverallbyRotation from '../ProgramEvaluationGroup/EPAOverallbyRotation';
 
 export default class ProgramBasePanel extends Component {
@@ -15,32 +15,32 @@ export default class ProgramBasePanel extends Component {
             selected: 'all',
             rotationCount: {}
         };
-        this.selectionChange = this.selectionChange.bind(this);
-        this.onSelectAcademicYear = this.onSelectAcademicYear.bind(this);
+        // this.selectionChange = this.selectionChange.bind(this);
+        // this.onSelectAcademicYear = this.onSelectAcademicYear.bind(this);
     }
 
-    selectionChange(event) {
-        event.preventDefault();
-        let selected = event.target.className.split(" ")[1].split("-")[2];
-        this.setState({ selected });
-    }
+    // selectionChange(event) {
+    //     event.preventDefault();
+    //     let selected = event.target.className.split(" ")[1].split("-")[2];
+    //     this.setState({ selected });
+    // }
 
-    onSelectAcademicYear(academicYear) {
-        this.setState({ academicYear });
-    }
+    // onSelectAcademicYear(academicYear) {
+    //     this.setState({ academicYear });
+    // }
 
 
     render() {
 
         const { allRecords, programInfo, residentList,
-            possibleAcademicYears, width, printModeON } = this.props,
+            possibleAcademicYears, width } = this.props,
             { academicYear, selected } = this.state;
 
-        const { recordsInYearAndPhase, summaryData } = processSingleProgramRecords(allRecords, academicYear, selected);
+        const { recordsInYearAndPhase, summaryData } = processSingleProgramRecords(allRecords, possibleAcademicYears[0]);
 
         return (
             <div className='program-base-panel text-center'>
-                <div className='row'>
+                {/* <div className='row'>
                     <div className='year-selection-box'>
                         <h2 className='header'>Academic Year: </h2>
                         <div className='react-select-root'>
@@ -66,10 +66,10 @@ export default class ProgramBasePanel extends Component {
                             </div>
                         })}
                     </div>
-                </div>
-                <div className='row'>
-                    <Summary data={summaryData} printModeON={printModeON} />
-                    <EPAspecificRotation
+                </div> */}
+                <div className='row m-t'>
+                    <Summary data={summaryData} possibleAcademicYears={possibleAcademicYears} />
+                    {/* <EPAspecificRotation
                         width={width / 2}
                         epaSourceMap={programInfo.epaSourceMap}
                         filteredRecords={recordsInYearAndPhase} />
@@ -77,15 +77,11 @@ export default class ProgramBasePanel extends Component {
                         width={width / 2}
                         epaSourceMap={programInfo.epaSourceMap}
                         rotationList={programInfo.rotationList}
-                        filteredRecords={recordsInYearAndPhase} />
+                        filteredRecords={recordsInYearAndPhase} /> */}
                     <EPAOverallbyRotation
                         // 40px to account for margin around the boxes above
-                        width={(width + 140)}
-                        programInfo={programInfo}
-                        allRecords={allRecords}
-                        residentList={residentList}
-                        academicYear={academicYear}
-                        printModeON={printModeON} />
+                        width={(width)}
+                        allRecords={recordsInYearAndPhase} />
                 </div>
             </div>
         );

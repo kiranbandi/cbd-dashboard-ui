@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { getAllData, getRotationSchedules } from '../../utils/requestServer';
 import _ from 'lodash';
 import ProgramAllYearsSummary from '../ProgramEvaluationGroup/ProgramAllYearsSummary';
-// import ProgramBasePanel from '../ProgramEvaluationGroup/ProgramBasePanel';
+import ProgramBasePanel from '../ProgramEvaluationGroup/ProgramBasePanel';
 // import infoTooltipReference from '../../utils/infoTooltipReference';
 // import moment from 'moment';
 
@@ -30,18 +30,17 @@ export default class ProgramDashboard extends Component {
 
         getAllData()
             .then(({ allResidentRecords, dashboard_epas }) => {
-                // create a list of academic years 
+                // create a list of acad emic years 
                 let academicYearList = _.map(_.groupBy(allResidentRecords, (d) => d.Academic_Year), (recs, key) => ({ 'label': key, 'value': key }))
                     .sort((previous, current) => previous.label.localeCompare(current.label));
-                // sub in a value at the front of the list for 'ALL'
-                academicYearList.unshift({ 'label': 'All', 'value': 'ALL' });
                 let residentList = _.keys(_.groupBy(allResidentRecords, (d) => d.username));
                 // set the values on the state 
-                this._isMounted && this.setState({ allResidentRecords, academicYearList, 'epa_list': [...dashboard_epas], isLoaderVisible: false });
-                return getRotationSchedules(residentList);
+                this._isMounted && this.setState({ academicYearList, 'epa_list': [...dashboard_epas] });
+                return getRotationSchedules(residentList, allResidentRecords);
             })
-            .then(() => {
-                debugger;
+            .then((allResidentRecords) => {
+                // set the values on the state 
+                this._isMounted && this.setState({ allResidentRecords, isLoaderVisible: false });
             })
             // toggle loader again once the request completes
             .catch(() => {
@@ -60,6 +59,7 @@ export default class ProgramDashboard extends Component {
         const { allResidentRecords = [], academicYearList = [], epa_list } = this.state,
             fullWidth = document.body.getBoundingClientRect().width - 300;
 
+
         return (
             <div className='m-a dashboard-root-program m-b-lg' >
                 {this.state.isLoaderVisible ?
@@ -72,13 +72,11 @@ export default class ProgramDashboard extends Component {
                                 <ProgramAllYearsSummary
                                     width={fullWidth}
                                     allRecords={allResidentRecords}
-                                    possibleAcademicYears={_.reverse(academicYearList.slice(1))} />
-                                {/* <ProgramBasePanel
+                                    possibleAcademicYears={_.reverse(academicYearList)} />
+                                <ProgramBasePanel
                                     width={fullWidth - 50}
-                                    allRecords={allRecords}
-                                    programInfo={programInfo}
-                                    residentList={residentList}
-                                    possibleAcademicYears={possibleAcademicYears} /> */}
+                                    allRecords={allResidentRecords}
+                                    possibleAcademicYears={_.reverse(academicYearList)} />
                             </div>
                             : <h2 className='text-primary text-center m-t-lg'>No program data available currently</h2>}
                     </div>}
