@@ -19,25 +19,39 @@ export default class UGNormativePanel extends Component {
     }
 
     onClick(event) {
-        const value = event.target.id.slice(3).split('_').join(' ');
-        this.props.onStudentSelect({ value });
+        const nsid = event.target.id.slice(3).split('_').join(' ');
+        this.props.onStudentSelect({ nsid });
     }
 
 
 
     render() {
 
-        const { stackByScore } = this.state, { rawDump = [], width, currentStudent = '' } = this.props;
+        const { stackByScore } = this.state, { recordData = [], width, currentStudent = '', academicYear } = this.props;
 
-        let residentGroupedRecords = _.groupBy(rawDump, (d) => d.nsid),
+        let residentGroupedRecords = _.groupBy(recordData, (d) => d.nsid),
             // nsid , number of records , records in date period, name
             data = _.map(residentGroupedRecords, (d, key) => ([key, d.length, 0, d[0].name]));
 
-        const height = 500, margin = 50,
+        let height = 500, margin = 50,
             itemSize = data.length > 0 ? ((width - margin) / data.length) : 2,
-            // create the X and Y scales
-            scaleX = d3.scaleLinear().range([margin, width - margin - 0.75 * itemSize]).domain([0, data.length - 1]),
-            scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, d3.max(data.map(d => Math.max(d[1], d[2])))]);
+            chartWidth = width;
+
+        // if item size is too big set it to 50px
+        if (itemSize > 50) {
+            chartWidth = chartWidth / 2;
+            itemSize = data.length > 0 ? ((chartWidth - margin) / data.length) : 2;
+        }
+
+        let dataMax = d3.max(data.map(d => Math.max(d[1], d[2])));
+
+        // set it to nearest multiple of 25
+        dataMax = 25 * Math.ceil(dataMax / 25);
+
+
+        // create the X and Y scales
+        let scaleX = d3.scaleLinear().range([margin, chartWidth - margin - 0.75 * itemSize]).domain([0, data.length - 1]),
+            scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, dataMax]);
 
         // sort the data list based on the overall value
         data = data.sort((a, b) => a[1] - b[1]);
@@ -56,7 +70,7 @@ export default class UGNormativePanel extends Component {
                     x={scaleX(i)}
                     y={scaleY(scoreShare[0] + scoreShare[1] + scoreShare[2])}
                     height={height - margin - scaleY(scoreShare[0] + scoreShare[1] + scoreShare[2])}
-                    fill={d[3] == currentStudent ? 'yellow' : "#2ca02c"}
+                    fill={d[0] == currentStudent ? 'yellow' : "#2ca02c"}
                     width={itemSize - (0.25 * itemSize)}
                     stroke={'transparent'}
                     key={d[0] + '-stack-1'}
@@ -66,7 +80,7 @@ export default class UGNormativePanel extends Component {
                     x={scaleX(i)}
                     y={scaleY(scoreShare[0] + scoreShare[1])}
                     height={height - margin - scaleY(scoreShare[0] + scoreShare[1])}
-                    fill={d[3] == currentStudent ? 'yellow' : "#1f77b4"}
+                    fill={d[0] == currentStudent ? 'yellow' : "#1f77b4"}
                     width={itemSize - (0.25 * itemSize)}
                     stroke={'transparent'}
                     key={d[0] + '-stack-2'}
@@ -75,7 +89,7 @@ export default class UGNormativePanel extends Component {
                     x={scaleX(i)}
                     y={scaleY(scoreShare[0])}
                     height={height - margin - scaleY(scoreShare[0])}
-                    fill={d[3] == currentStudent ? 'yellow' : "#d62728"}
+                    fill={d[0] == currentStudent ? 'yellow' : "#d62728"}
                     width={itemSize - (0.25 * itemSize)}
                     stroke={'transparent'}
                     key={d[0] + '-stack-3'}
@@ -87,7 +101,7 @@ export default class UGNormativePanel extends Component {
                     x={scaleX(i)}
                     y={scaleY(d[1])}
                     height={height - margin - scaleY(d[1])}
-                    fill={d[3] == currentStudent ? 'yellow' : "#1ca8dd"}
+                    fill={d[0] == currentStudent ? 'yellow' : "#1ca8dd"}
                     width={itemSize - (0.25 * itemSize)}
                     stroke={'transparent'}
                     key={d[0] + '-stack-3'}
@@ -95,10 +109,7 @@ export default class UGNormativePanel extends Component {
                 </rect>
             }
 
-
         });
-
-        let dataMax = d3.max(data.map(d => Math.max(d[1], d[2])));
 
         // this fuctional automatically set the tick format based on the track type
         const axisTickTextsFormat = d => {
@@ -109,7 +120,7 @@ export default class UGNormativePanel extends Component {
         // create the 5 vertical tick lines 
         let axisTickLines = _.times(5, (index) => {
             let verticalPosition = dataMax * (index / 4);
-            return d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[margin, verticalPosition], [width - margin, verticalPosition]])
+            return d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[margin, verticalPosition], [chartWidth - margin, verticalPosition]])
         })
 
         // The numbers of the Y axis ticks are created and format
@@ -123,7 +134,7 @@ export default class UGNormativePanel extends Component {
         const hoverLines = data.map((d, i) => {
             return <rect
                 className={'hoverable-rectangle'}
-                id={'ug_' + d[3].split(' ').join('_')}
+                id={'ug_' + d[0].split(' ').join('_')}
                 x={scaleX(i)}
                 y={margin}
                 height={height - (2 * margin)}
@@ -138,15 +149,16 @@ export default class UGNormativePanel extends Component {
         });
 
         return (<div className='ug-normative-container'>
-            <div className="checkbox custom-control text-center custom-checkbox">
+            {/* <div className="checkbox custom-control text-center custom-checkbox">
                 <label className='filter-label'>
                     {"Show Score Distribution"}
                     <input id='toggle-stack' type="checkbox"
                         checked={stackByScore} onChange={this.toggleStackFlag} />
                     <span className="custom-control-indicator"></span>
                 </label>
-            </div>
-            <svg className='supervisor-line-chart' width={width} height={height} >
+            </div> */}
+            <h3 className='ug-year-label'>{'Academic Year: ' + academicYear}</h3>
+            <svg className='supervisor-line-chart' width={chartWidth} height={height} >
                 <path d={axisTickLines} fill="none" stroke="#564d4d4d" strokeWidth="2px"></path>
                 <g>{bars}</g>
                 <g>{axisTickTexts}</g>

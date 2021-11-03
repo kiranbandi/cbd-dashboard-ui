@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getRecordsByYear, getUser } from '../../../utils/requestServer';
+import processUGRecords from '../../../utils/processUGRecords';
 import Loading from 'react-loading';
 import UGStudentFilterPanel from '../UGStudentFilterPanel';
 import UGGraphGroup from '../UGGraphGroup';
 import UGNormativePanel from './UGNormativePanel';
 import UGInfoPanel from './UGInfoPanel';
 import moment from 'moment';
+import _ from 'lodash';
 const possibleCohorts = ["2020", "2021", "2022", "2023", "2024", "2025"];
-
-const capitalizeStr = (str, lower = false) => (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, match => match.toUpperCase());
 
 
 class UGStudentDashboard extends Component {
@@ -17,10 +17,11 @@ class UGStudentDashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cohort: '2021',
+            cohort: '2022',
             isLoaderVisible: false,
+            availableAcademicYearsInData: [],
             studentRecords: [],
-            rawDump: [],
+            groupedByYear: [],
             studentList: [],
             startDate: '',
             endDate: '',
@@ -45,30 +46,21 @@ class UGStudentDashboard extends Component {
         this.setState({ isLoaderVisible: true });
         getRecordsByYear(cohort)
             .then((data) => {
-
-                let studentRecords = _.map(data, (d) => ({
-                    'epa': d.epa,
-                    'name': capitalizeStr(d.resident_name),
-                    'nsid': d.username,
-                    'observer_name': d.observer_name,
-                    'date': d.observation_date,
-                    'rating': d.rating,
-                    'rotation': d.rotationTag,
-                    'feedback': d.feedback,
-                    'patient_type': d.situation_context,
-                    'admission_type': d.professionalism_safety
-                }));
+                let studentRecords = processUGRecords(data);
                 // store raw dump before filtering for normative dashboard
-                let rawDump = _.clone(studentRecords);
+                let groupedByYear = _.groupBy(studentRecords, (d) => d.academicYear),
+                    availableAcademicYearsInData = _.keys(groupedByYear).sort((a, b) => b - a);
+
                 const studentList = _.map(_.groupBy(studentRecords, (d) => d.nsid),
-                    (records) => ({ name: records[0].name, records }))
+                    (records) => ({ name: records[0].name, nsid: records[0].nsid, records }))
                     .sort((a, b) => a.name.localeCompare(b.name));
 
                 // set records and raw dump on the state 
                 this._isMounted && this.setState({
                     studentList,
                     studentRecords,
-                    rawDump
+                    groupedByYear,
+                    availableAcademicYearsInData
                 });
             })
             // toggle loader again once the request completes
@@ -91,16 +83,15 @@ class UGStudentDashboard extends Component {
     }
 
     onStudentSelect(option) {
-        const { studentList } = this.state, currentStudent = option.value;
+        const { studentList } = this.state, currentStudent = option.nsid;
         // set currentStudent name 
-        this.setState({ currentStudent: option.value });
+        this.setState({ currentStudent });
         // then check if its valid, then turn on loader fetch the students details
         if (currentStudent != '') {
             this.setState({ isStudentInfoLoaderVisible: true });
             // Get nsid of the student from his records
-            const username = _.find(studentList, (d) => d.name == option.value).records[0].nsid;
             // get users rotation schedule and other related information
-            getUser(username)
+            getUser(currentStudent)
                 .then((studentData) => {
                     const { currentPhase = '', programStartDate,
                         rotationSchedule = {}, longitudinalSchedule = {} } = studentData;
@@ -129,8 +120,8 @@ class UGStudentDashboard extends Component {
         const { studentList, currentStudent,
             dateFilterActive, currentRotation,
             isStudentInfoLoaderVisible, showUncommencedEPA,
-            startDate, endDate, studentRecords,
-            rawDump, studentInfo = false } = this.state;
+            startDate, endDate, studentRecords, availableAcademicYearsInData,
+            groupedByYear, studentInfo = false } = this.state;
 
         const { accessType = 'resident', programInfo } = this.props,
             { rotationList } = programInfo;
@@ -138,16 +129,17 @@ class UGStudentDashboard extends Component {
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let width = document.body.getBoundingClientRect().width - 125;
 
-        let currentStudentRecords = _.filter(studentRecords, (d) => d.name == currentStudent)
-            .map((d) => {
-                if (!dateFilterActive) { d.mark = false }
-                else {
-                    d.mark = moment(d.date, 'YY-MM-DD')
-                        .isAfter(moment(startDate, 'MM/DD/YYYY')) &&
-                        moment(d.date, 'YY-MM-DD').isBefore(moment(endDate, 'MM/DD/YYYY'))
-                }
-                return d;
-            });
+        let currentStudentRecords = _.filter(studentRecords, (d) => d.nsid == currentStudent) || [];
+
+        currentStudentRecords.map((d) => {
+            if (!dateFilterActive) { d.mark = false }
+            else {
+                d.mark = moment(d.date, 'YYYY-MM-DD')
+                    .isAfter(moment(startDate, 'MM/DD/YYYY')) &&
+                    moment(d.date, 'YYYY-MM-DD').isBefore(moment(endDate, 'MM/DD/YYYY'))
+            }
+            return d;
+        });
 
         currentStudentRecords = _.map(currentStudentRecords, (d) => {
             d.rotationMark = (d.rotation == currentRotation);
@@ -155,6 +147,7 @@ class UGStudentDashboard extends Component {
         })
 
         const { cohort = '' } = this.state;
+
 
         return (
             <div className='dashboard-root-resident m-t ug-student-dashboard' >
@@ -188,13 +181,16 @@ class UGStudentDashboard extends Component {
                                 onStudentSelect={this.onStudentSelect}
                                 onRotationSelect={this.onRotationSelect}
                                 onSubmit={this.onSubmit} />
-                            {accessType != 'resident' && rawDump.length > 0 &&
-                                <UGNormativePanel
-                                    onStudentSelect={this.onStudentSelect}
-                                    currentStudent={currentStudent}
-                                    // normalise extra width
-                                    width={width + 65}
-                                    rawDump={rawDump} />}
+
+                            {accessType != 'resident' && availableAcademicYearsInData.length > 0 &&
+                                <div>{_.map(availableAcademicYearsInData, (academicYear) =>
+                                    <UGNormativePanel
+                                        academicYear={academicYear}
+                                        onStudentSelect={this.onStudentSelect}
+                                        currentStudent={currentStudent}
+                                        // normalise extra width
+                                        width={width + 65}
+                                        recordData={groupedByYear[academicYear]} />)}</div>}
 
                             {isStudentInfoLoaderVisible ?
                                 <Loading className='loading-spinner' type='spin' height='100px' width='100px' color='#d6e5ff' delay={- 1} /> :
