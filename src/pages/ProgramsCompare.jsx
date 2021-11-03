@@ -197,11 +197,11 @@ export default class ProgramsCompare extends Component {
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
                                     <ProgramScoreDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
-                                    <ProgramStageDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramWordCount width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <div className='text-center printable-content'
                                     style={{ paddingTop: printModeON ? '200px' : '' }}>
-                                    <ProgramWordCount width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
+                                    <ProgramStageDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                     <ProgramFeedbackDistribution width={partWidth} programData={moddedProgramData} printModeON={printModeON} />
                                 </div>
                                 <div className='text-center printable-content'

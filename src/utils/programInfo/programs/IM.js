@@ -65,6 +65,7 @@ const programInfo = {
                 "1.2": "Identifying and assessing unstable patients, providing initial management, and obtaining help",
                 "1.3": "Performing the basic procedures of Internal Medicine"
             },
+            hideIfNoData: ['1.3'],
             "maxObservation": {
                 "1.1": 2,
                 "1.2": 3,

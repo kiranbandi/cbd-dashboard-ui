@@ -14,8 +14,8 @@ export default class StudentFilterPanel extends Component {
             onCheckboxChange, dateFilterActive } = this.props;
 
         // Process student names so they match the react select format
-        const studentOptions = _.map(studentList, (d) => ({ 'label': d.name, 'value': d.name }));
-        const currentStudentValue = _.find(studentOptions, (d) => d.label == currentStudent) || null;
+        const studentOptions = _.map(studentList, (d) => ({ 'label': d.name, 'value': d.name, 'nsid': d.nsid }));
+        const currentStudentValue = _.find(studentOptions, (d) => d.nsid == currentStudent) || null;
 
         // Process rotation names so they match the react select format
         let rotationOptions = _.map(rotationList, (d) => ({ 'label': d, 'value': d }));

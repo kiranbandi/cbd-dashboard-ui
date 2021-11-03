@@ -117,7 +117,17 @@ class GraphPanel extends Component {
             // remove values that dont exist in the original source map 
             _.map(epaSourcesThatExist, (epaSource, epaRootKey) => {
                 epaSourcesThatExist[epaRootKey] = epaSource.filter((d) => epaSourceMap[epaRootKey].subRoot.hasOwnProperty(d));
+                // For the EPAs in the hideIfNoData list, if there is no data, filter them out from the list 
+                let hiddenEPAList = epaSourceMap[epaRootKey].hideIfNoData || [];
+                epaSourcesThatExist[epaRootKey] = epaSource.filter((d) => {
+                    // if an EPA exists in the hidden list and it has no data then no need to show it
+                    if (hiddenEPAList.indexOf(d) > -1 && residentData[d].length == 0) {
+                        return false;
+                    }
+                    return true;
+                });
             });
+
         }
 
         // Get the residents corresponding completion status for each EPA
