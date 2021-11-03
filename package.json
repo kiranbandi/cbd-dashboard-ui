@@ -20,7 +20,7 @@
         "@seanwong24/s-tooltip": "^1.1.0",
         "axios": "^0.21.1",
         "canvg": "^3.0.4",
-        "chart.js": "^1.1.1",
+        "chart.js": "^2.9.4",
         "computed-style-to-inline-style": "^3.0.0",
         "d3": "^5.5.0",
         "file-saver": "^2.0.2",
