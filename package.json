@@ -44,7 +44,7 @@
         "redux-thunk": "^2.3.0",
         "shortid": "^2.2.15",
         "toastr": "^2.1.4",
-        "xlsx": "^0.14.1"
+        "xlsx": "^0.17.0"
     },
     "devDependencies": {
         "babel-core": "^6.26.3",
