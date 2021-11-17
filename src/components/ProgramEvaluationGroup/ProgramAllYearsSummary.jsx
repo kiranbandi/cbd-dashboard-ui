@@ -76,6 +76,8 @@ export default class ProgramAllYearSummary extends Component {
                 <div className='program-part-container p-b'>
                     <h3 className="part-year-title">
                         EPAs Acquired Per Resident
+                        <i data-for={'EPAsAcquiredAndExpired'} data-tip={infoTooltipReference.programEvaluation.EPAsAcquiredAndExpired} className="fa fa-info-circle instant-tooltip-trigger"></i>
+                        <ReactTooltip id={'EPAsAcquiredAndExpired'} className='custom-react-tooltip' />
                     </h3>
                     <div className='chart-container'>
                         <BarChart width={width / 2} height={300}
@@ -107,6 +109,8 @@ export default class ProgramAllYearSummary extends Component {
                 <div className='program-part-container p-b'>
                     <h3 className="part-year-title">
                         EPA Rating Distribution
+                        <i data-for={'EPARatingDistribution'} data-tip={infoTooltipReference.programEvaluation.EPARatingDistribution} className="fa fa-info-circle instant-tooltip-trigger"></i>
+                        <ReactTooltip id={'EPARatingDistribution'} className='custom-react-tooltip' />
                     </h3>
                     <div className='chart-container'>
                         <BarChart width={width / 2} height={300}
@@ -128,7 +132,10 @@ export default class ProgramAllYearSummary extends Component {
                 </div>
                 <div
                     className='program-part-container p-b'>
-                    <h3 className="part-year-title">Monthly Distribution</h3>
+                    <h3 className="part-year-title">Monthly Distribution
+                        <i data-for={'EPAMonthlyDistribution'} data-tip={infoTooltipReference.programEvaluation.EPAMonthlyDistribution} className="fa fa-info-circle instant-tooltip-trigger"></i>
+                        <ReactTooltip id={'EPAMonthlyDistribution'} className='custom-react-tooltip' />
+                    </h3>
                     <div className='chart-container'>
                         <LineChart width={width / 2}
                             height={300} data={monthCountList}
@@ -151,10 +158,13 @@ export default class ProgramAllYearSummary extends Component {
                         </LineChart>
                     </div>
                 </div>
-                <div
+                <div 
                     className='program-part-container p-b'>
                     <h3 className="part-year-title">
                         Average Words Per Comment
+                        <i data-for={'EPAFeedbackWordCount'} data-tip={infoTooltipReference.programEvaluation.EPAFeedbackWordCount} className="fa fa-info-circle instant-tooltip-trigger"></i>
+                        <ReactTooltip id={'EPAFeedbackWordCount'} className='custom-react-tooltip' />
+            
                     </h3>
                     <div className='chart-container'>
                         <BarChart width={width / 2} height={300}

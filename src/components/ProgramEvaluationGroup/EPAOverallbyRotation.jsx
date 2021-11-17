@@ -1,48 +1,74 @@
 import React, { Component } from 'react';
-import moment from 'moment';
-import { Bar } from 'react-chartjs';
 import ReactTooltip from 'react-tooltip';
 import infoTooltipReference from '../../utils/infoTooltipReference';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
+import ReactSelect from 'react-select';
+
+const ScheduleClassifications = [{ 'value': 'scheduleTag', 'label': 'Schedule Group' },
+{ 'value': 'serviceTag', 'label': 'Service' },
+{ 'value': 'siteTag', 'label': 'Site' },
+{ 'value': 'rotationTag', 'label': 'Rotation Name' }];
 
 export default class EPAOverallbyRotation extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            'classificationCriteria': { 'value': 'scheduleTag', 'label': 'Schedule Group' }
+        }
+    }
+
+    onClassificationSelect = (option) => { this.setState({ 'classificationCriteria': option }) };
 
     render() {
-        const { residentList, printModeON, academicYear,
-            allRecords, normalizeByCount = false, width } = this.props;
+        const { printModeON,
+            allRecords, normalizeByCount = false, width } = this.props,
+            { classificationCriteria } = this.state;
 
-        let programData = _.map(_.groupBy(allRecords, (d) => d.rotationTag), (group, groupName) => ({ 'label': groupName, 'value': group.length }));
+        let programData = _.map(_.groupBy(allRecords, (d) => d[classificationCriteria.value]), (group, groupName) => ({ 'Rotation Name': groupName, 'EPAs completed in Rotation': group.length }));
         // sort by value
-        programData = _.reverse(_.sortBy(programData, (d) => d.value));
+        programData = _.reverse(_.sortBy(programData, (d) => d['EPAs completed in Rotation']));
 
-        let lineData = {
-            labels: _.map(programData, (d) => d.label),
-            datasets: [{
-                label: "Rotations",
-                fillColor: "rgba(28,168,221,.03)",
-                strokeColor: "#43b98e",
-                pointColor: "#43b98e",
-                pointStrokeColor: 'rgba(28,168,221,.03)',
-                pointHighlightFill: "rgba(28,168,221,.03)",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data: _.map(programData, (d) => d.value)
-            }]
-        }
+        let variableHeight = programData.length * 30;
+        // clamp to a minimum of 300 pixels
+        variableHeight = variableHeight < 300 ? 300 : variableHeight;
 
         return (<div className={('program-vis-box m-b ') + (printModeON ? ' printable-content' : '')}>
-            <div>
-                <h3 className='text-left m-a-0 pull-left'>
+            <div className='text-left'>
+                <h3 className='text-left'>
                     {normalizeByCount ? 'EPAs per Rotation' : 'EPA Rotation Distribution'}
                     <i data-for={'rotationDist'} data-tip={infoTooltipReference.programEvaluation.rotationDist} className="fa fa-info-circle instant-tooltip-trigger"></i>
                     <ReactTooltip id={'rotationDist'} className='custom-react-tooltip' />
                 </h3>
+                <div className='react-select-root'>
+                    <label className='filter-label'> Rotation Classification
+                        <i data-for='rotationClassification' data-tip={infoTooltipReference.programEvaluation.rotationClassification} className="fa fa-info-circle instant-tooltip-trigger"></i>
+                        <ReactTooltip id={'rotationClassification'} className='custom-react-tooltip' />
+                    </label>
+                    <ReactSelect
+                        placeholder='Select Rotation Classification...'
+                        value={classificationCriteria}
+                        options={ScheduleClassifications}
+                        styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
+                        onChange={this.onClassificationSelect} />
+                </div>
             </div>
-            <div className='p-t'>
-                <Bar
-                    options={{ scaleBeginAtZero: true }}
-                    data={lineData}
-                    width={width - 50} height={415}
-                    redraw={true} />
+            <div className='chart-container'>
+                <BarChart width={width} height={variableHeight}
+                    data={programData}
+                    layout="vertical"
+                    barGap={0}
+                    barCategoryGap={'20%'}
+                    margin={{ left: 25, right: 30, top: 10, bottom: 10 }}>
+                    <XAxis style={{ fill: 'black', 'fontWeight': 'bolder' }}
+                        type="number" />
+                    <YAxis style={{ 'fontSize': '12px' }}
+                        width={250} tickSize={0} tickMargin={5}
+                        type="category" axisLine={false} dataKey="Rotation Name" />
+                    <Tooltip labelStyle={{ 'color': 'black' }}
+                        wrapperStyle={{ 'fontWeight': 'bold' }} />
+                    <Bar dataKey="EPAs completed in Rotation" fill="#43b98e" />
+                </BarChart>
             </div>
         </div>)
     };

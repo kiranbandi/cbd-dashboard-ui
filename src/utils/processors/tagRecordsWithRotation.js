@@ -4,8 +4,7 @@ import moment from 'moment';
 
 export default function (rotationSchedules, allRecords) {
 
-    let mappedRotationSchedule={};
-
+    let mappedRotationSchedule = {};
     _.map(rotationSchedules, (schedule, username) => {
         let processedSchedule = processRotationSchedule(schedule);
         mappedRotationSchedule[username] = _.groupBy(processedSchedule, (d) => d.Academic_Year);
@@ -17,8 +16,12 @@ export default function (rotationSchedules, allRecords) {
             recordDate = moment(record.Date, 'YYYY-MM-DD');
 
         let matchedRotation = _.find(userScheduleInYear, (d) => recordDate.isBetween(d.start_date, d.end_date, 'days', '[]'));
-        let rotationTag = matchedRotation ? matchedRotation.schedule_group : 'No schedule';
-        return { ...record, rotationTag };
+
+        let scheduleTag = matchedRotation ? matchedRotation.schedule_group : 'No Schedule Available',
+            rotationTag = matchedRotation ? matchedRotation.rotation_name : 'No Rotation Available',
+            serviceTag = matchedRotation ? matchedRotation.service : 'No Service Available',
+            siteTag = matchedRotation ? matchedRotation.site : 'No Site Available';
+        return { ...record, rotationTag, scheduleTag, serviceTag, siteTag };
     });
 }
 

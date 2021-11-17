@@ -32,6 +32,22 @@
                 vertical-align: text-top;
             }
         }
+
+        .react-select-root {
+            width: 350px;
+            display: inline-block;
+            margin: 10px 0px 20px 0px;
+            .filter-label {
+                font-size: 1.2em;
+                margin-right: 10px;
+                font-weight: normal;
+                & + div {
+                    display: inline-block !important;
+                    width: 345px;
+                    z-index: 20;
+                }
+            }
+        }
     }
     .program-MicroStatCard-group {
         margin-bottom: 20px;
