@@ -13,7 +13,10 @@ export default class FacultyDashboard extends Component {
         this.state = {
             currentFaculty: 'ALL',
             currentAcademicYear: 'ALL',
+            currentDepartment: 'ALL',
             facultyList: [],
+            academicYearList: [],
+            departmentList: [],
             sliderValue: 5,
             epa_list: [],
             // list of all resident records
@@ -27,6 +30,7 @@ export default class FacultyDashboard extends Component {
     onSliderChange = (sliderValue) => { this.setState({ sliderValue }) }
     onFacultySelect = (option) => { this.setState({ currentFaculty: option.value }) }
     onCurrentAcademicYearSelect = (option) => { this.setState({ currentAcademicYear: option.value }) }
+    onCurrentDepartmentSelect = (option) => { this.setState({ currentDepartment: option.value }) }
 
     componentDidMount() {
         this._isMounted = true;
@@ -41,13 +45,18 @@ export default class FacultyDashboard extends Component {
                 // create a list of academic years 
                 let academicYearList = _.map(_.groupBy(allResidentRecords, (d) => d.Academic_Year), (recs, key) => ({ 'label': key, 'value': key }))
                     .sort((previous, current) => previous.label.localeCompare(current.label));
+                // create a list of all department
+                let departmentList = _.map(_.groupBy(allResidentRecords, (d) => d.Assessor_Department), (recs, key) => ({ 'label': capitalizeStr(key.toLocaleLowerCase()), 'value': key }))
+                    .sort((previous, current) => previous.label.localeCompare(current.label));
 
                 // sub in a value at the front of the list for 'ALL'
                 facultyList.unshift({ 'label': 'All', 'value': 'ALL' });
                 // sub in a value at the front of the list for 'ALL'
                 academicYearList.unshift({ 'label': 'All', 'value': 'ALL' });
+                // sub in a value at the front of the list for 'ALL'
+                departmentList.unshift({ 'label': 'All', 'value': 'ALL' });
                 // set the values on the state 
-                this._isMounted && this.setState({ allResidentRecords, facultyList, academicYearList, 'epa_list': [...dashboard_epas], isLoaderVisible: false });
+                this._isMounted && this.setState({ allResidentRecords, facultyList, academicYearList, departmentList, 'epa_list': [...dashboard_epas], isLoaderVisible: false });
             })
             // toggle loader again once the request completes
             .catch(() => {
@@ -63,10 +72,10 @@ export default class FacultyDashboard extends Component {
 
     render() {
 
-        const { facultyList = [], academicYearList = [], allResidentRecords = [],
-            currentFaculty, currentAcademicYear, epa_list = [], sliderValue } = this.state;
+        const { facultyList = [], departmentList = [], academicYearList = [], allResidentRecords = [],
+            currentFaculty, currentAcademicYear, currentDepartment, epa_list = [], sliderValue } = this.state;
 
-        const processedRecords = processFacultyMap(allResidentRecords, epa_list, currentAcademicYear, sliderValue),
+        const processedRecords = processFacultyMap(allResidentRecords, epa_list, currentAcademicYear, currentDepartment, sliderValue),
             currentFacultyRecords = _.filter(processedRecords, (d) => d.faculty_name == currentFaculty),
             overallWidth = window.dynamicDashboard.mountWidth;
 
@@ -90,11 +99,14 @@ export default class FacultyDashboard extends Component {
                         <FacultyFilterPanel
                             facultyList={filteredFacultyList}
                             academicYearList={academicYearList}
+                            departmentList={departmentList}
                             currentFaculty={currentFaculty}
+                            currentDepartment={currentDepartment}
                             currentAcademicYear={currentAcademicYear}
                             sliderValue={sliderValue}
                             onSliderChange={this.onSliderChange}
                             onCurrentAcademicYearSelect={this.onCurrentAcademicYearSelect}
+                            onCurrentDepartmentSelect={this.onCurrentDepartmentSelect}
                             onFacultySelect={this.onFacultySelect} />
 
                         <div className='m-a'>
@@ -121,3 +133,5 @@ export default class FacultyDashboard extends Component {
     }
 
 }
+
+const capitalizeStr = (str, lower = false) => (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, match => match.toUpperCase());

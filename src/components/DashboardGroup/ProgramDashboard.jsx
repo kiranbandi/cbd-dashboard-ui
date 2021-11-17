@@ -3,11 +3,7 @@ import { getAllData, getRotationSchedules } from '../../utils/requestServer';
 import _ from 'lodash';
 import ProgramAllYearsSummary from '../ProgramEvaluationGroup/ProgramAllYearsSummary';
 import ProgramBasePanel from '../ProgramEvaluationGroup/ProgramBasePanel';
-// import infoTooltipReference from '../../utils/infoTooltipReference';
-// import moment from 'moment';
 
-// const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP),
-//     (d) => ({ 'label': d + "-" + (Number(d) + 1), 'value': d }));
 
 export default class ProgramDashboard extends Component {
 
@@ -74,7 +70,8 @@ export default class ProgramDashboard extends Component {
                                     allRecords={allResidentRecords}
                                     possibleAcademicYears={_.reverse(academicYearList)} />
                                 <ProgramBasePanel
-                                    width={fullWidth - 50}
+                                    width={fullWidth}
+                                    epa_list={epa_list}
                                     allRecords={allResidentRecords}
                                     possibleAcademicYears={_.reverse(academicYearList)} />
                             </div>

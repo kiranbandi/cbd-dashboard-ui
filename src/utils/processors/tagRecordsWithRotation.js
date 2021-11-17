@@ -4,30 +4,28 @@ import moment from 'moment';
 
 export default function (rotationSchedules, allRecords) {
 
+    let mappedRotationSchedule={};
+
     _.map(rotationSchedules, (schedule, username) => {
         let processedSchedule = processRotationSchedule(schedule);
-        rotationSchedules[username] = _.groupBy(processedSchedule, (d) => d.Academic_Year);
+        mappedRotationSchedule[username] = _.groupBy(processedSchedule, (d) => d.Academic_Year);
     });
 
     return _.map(allRecords, (record) => {
-
-        let allUserSchedules = rotationSchedules[record.username] || {},
+        let allUserSchedules = mappedRotationSchedule[record.username] || {},
             userScheduleInYear = allUserSchedules[record.Academic_Year] || [],
             recordDate = moment(record.Date, 'YYYY-MM-DD');
 
         let matchedRotation = _.find(userScheduleInYear, (d) => recordDate.isBetween(d.start_date, d.end_date, 'days', '[]'));
-
         let rotationTag = matchedRotation ? matchedRotation.schedule_group : 'No schedule';
-
         return { ...record, rotationTag };
-
     });
 }
 
 
-
 function processRotationSchedule(rotationList) {
-    return rotationList.map((r, rotationID) => ({
+
+    return _.map(rotationList, (r, rotationID) => ({
         ...r,
         'start_date': moment(r.start_date, 'YYYY-MM-DD'),
         'end_date': moment(r.end_date, 'YYYY-MM-DD'),

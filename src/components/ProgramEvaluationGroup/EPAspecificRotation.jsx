@@ -10,7 +10,7 @@ export default class EPASpecRotation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedEPA: { 'label': 'D1', 'value': '1.1' }
+            selectedEPA: -1
         };
         this.onSelectChange = this.onSelectChange.bind(this);
     }
@@ -21,20 +21,10 @@ export default class EPASpecRotation extends Component {
 
     render() {
 
-        const { filteredRecords, width, epaSourceMap } = this.props,
+        const { filteredRecords, width, epa_list } = this.props,
             { selectedEPA } = this.state;
 
-        let templateEpaSourceMap = _.cloneDeep(epaSourceMap);
-        // remove references to special assessments if any
-        _.map(templateEpaSourceMap, (epaSource, key) => {
-            _.map(epaSource.subRoot, (epa, epaKey) => {
-                if (epa.indexOf('(SA)') > -1) {
-                    delete templateEpaSourceMap[key].subRoot[epaKey];
-                    delete templateEpaSourceMap[key].maxObservation[epaKey];
-                }
-            })
-        });
-
+        debugger;
 
         const groupedEPAList = _.map(templateEpaSourceMap, (d) => ({
             'label': d.topic,

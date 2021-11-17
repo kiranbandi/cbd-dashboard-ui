@@ -68,14 +68,14 @@ export default class ProgramAllYearSummary extends Component {
                 className={'yearall-summary-wrapper m-b'}>
                 <div className="hr-divider">
                     <h4 className="hr-divider-content">
-                        Overall Acquisition Metrics By Year
+                        Overall Acquisition Metrics
                         <i data-for={'overallAcuisitionMetricsYears'} data-tip={infoTooltipReference.programEvaluation.overallAcuisitionMetricsYears} className="fa fa-info-circle instant-tooltip-trigger"></i>
                     </h4>
                     <ReactTooltip id={'overallAcuisitionMetricsYears'} className='custom-react-tooltip' />
                 </div>
                 <div className='program-part-container p-b'>
                     <h3 className="part-year-title">
-                        EPAs Acquired and Expired (Per resident)
+                        EPAs Acquired Per Resident
                     </h3>
                     <div className='chart-container'>
                         <BarChart width={width / 2} height={300}

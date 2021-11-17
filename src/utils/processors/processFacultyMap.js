@@ -2,13 +2,18 @@ import * as d3 from 'd3';
 const phaseList = ['D', 'F', 'C', 'P'];
 import { EPATextToNumber } from '../convertEPA';
 
-export default function (allResidentRecords = [], epas = [], currentAcademicYear, minimumRequired) {
+export default function (allResidentRecords = [], epas = [], currentAcademicYear, currentDepartment, minimumRequired) {
 
     let allResidentRecordsClone = _.clone(allResidentRecords);
     // if the  current Academic Year is ALL or not selected then use all resident records as in,
     // if not filter out all records that were marked in that rotation
     if (currentAcademicYear != 'ALL' && currentAcademicYear != '') {
         allResidentRecordsClone = _.filter(allResidentRecords, (d) => d.Academic_Year == currentAcademicYear);
+    }
+
+    // Filter by department
+    if (currentDepartment != 'ALL' && currentDepartment != '') {
+        allResidentRecordsClone = _.filter(allResidentRecordsClone, (d) => d.Assessor_Department == currentDepartment);
     }
 
     // now group the records by the faculty name

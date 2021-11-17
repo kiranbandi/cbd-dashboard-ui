@@ -8,7 +8,7 @@ import endPoints from './endPoints';
 
 var requestServer = {};
 
-var localCache = { 'dataStore': [], 'rotationSchedules': [] };
+var localCache = { 'dataStore': [] };
 
 requestServer.getLearnerList = function (params) {
     return new Promise((resolve, reject) => {
@@ -66,32 +66,22 @@ requestServer.getAllData = function () {
             // stub in delay
             setTimeout(() => { resolve(processAllLearnerData(localCache.dataStore)); }, 100);
         }
-
     });
 }
 
 requestServer.getRotationSchedules = function (residentList = [], allRecords) {
     return new Promise((resolve, reject) => {
-        if (localCache.rotationSchedules.length == 0) {
-            axios.get(endPoints.assessments, {
-                'params': {
-                    'proxy_ids': residentList.join(','),
-                    'section': 'api-learner-progress-dashboard',
-                    'method': 'get-learners-schedules'
-                }
+        axios.get(endPoints.assessments, {
+            'params': {
+                'proxy_ids': residentList.join(','),
+                'section': 'api-learner-progress-dashboard',
+                'method': 'get-learners-schedules'
+            }
+        })
+            .then((response) => {
+                resolve(tagRecordsWithRotation(response.data, allRecords));
             })
-                .then((response) => {
-                    // store in local cache
-                    localCache.rotationSchedules = response.data;
-                    resolve(tagRecordsWithRotation(response.data, allRecords));
-                })
-                .catch((err) => errorCallback(err, reject));
-        }
-        else {
-            // stub in delay
-            setTimeout(() => { resolve(tagRecordsWithRotation(localCache.rotationSchedules, allRecords)); }, 100);
-        }
-
+            .catch((err) => errorCallback(err, reject));
     });
 }
 

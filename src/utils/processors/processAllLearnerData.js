@@ -27,9 +27,10 @@ export default function (learnersDataDump) {
             phaseTag: getRecordPhaseCode(record).toUpperCase(),
             Assessor_Name: record.assessor,
             Feedback: processComments(record),
-            Assessor_Group: record['assessor_group'],
-            Assessor_Role: record['assessor_role'],
-            Assessor_Type: record['assessor_type'],
+            Assessor_Group: sanitise(record['assessor_group'], 'No Group'),
+            Assessor_Role: sanitise(record['assessor_role'], 'No Role'),
+            Assessor_Type: sanitise(record['assessor_type'], 'No Type'),
+            Assessor_Department: sanitise(record['assessor_department'], 'No Department'),
             Professionalism_Safety: '',
             Rating: rating.order,
             Rating_Text: '(' + rating.order + ') ' + rating.text,
@@ -46,6 +47,16 @@ export default function (learnersDataDump) {
     return { allResidentRecords, dashboard_epas };
 }
 
+
+function sanitise(value, placeholder) {
+    if (value) {
+        if (value == 'null' || value == 'undefined') {
+            return placeholder;
+        }
+        return value;
+    }
+    return placeholder;
+}
 function recordEPAtoNumber(record) {
     if (record.mapped_epas.length > 0) {
         return EPATextToNumber(record.mapped_epas[0].objective_code || '');

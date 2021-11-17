@@ -22,15 +22,15 @@
     }
 
     .program-base-panel {
-        background: #1a1c22;
         padding: 25px 20px 20px 20px;
         border-radius: 10px;
-        margin-top: 5px;
-        .program-vis-box {
-            background: #25282f;
-        }
-        .hr-divider-content {
-            background: #1a1c22;
+        margin-top: 30px;
+
+        .statcard-root {
+            &.micro-stat {
+                width: 175px;
+                vertical-align: text-top;
+            }
         }
     }
     .program-MicroStatCard-group {
@@ -102,8 +102,8 @@
     }
 
     .program-vis-box {
-        background: #1a1c22;
-        padding: 20px;
+        background: #f3f3f3;
+        padding: 35px;
         border-radius: 10px;
         display: inline-block;
         margin: 5px;

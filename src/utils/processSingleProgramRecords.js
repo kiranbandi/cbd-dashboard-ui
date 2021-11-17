@@ -1,13 +1,12 @@
 import _ from 'lodash';
 import moment from 'moment';
 
-export default function (allRecords = [], academicYear, trainingPhase = 'all') {
-
+export default function (allRecords = [], academicYear, trainingPhase = 'A') {
     // remove records that dont have a rotation or a phase tag as  they might be erroneous
     // as also consider only records that lie in that given academic year
     let recordsInYear = _.filter(allRecords, (d) => matchAcademicYear(d.Date, academicYear.value)),
         // then consider only records that were attained by residents in that phase
-        recordsInYearAndPhase = trainingPhase == 'all' ? recordsInYear : _.filter(recordsInYear, (d) => d.phaseTag == trainingPhase);
+        recordsInYearAndPhase = trainingPhase == 'A' ? recordsInYear : _.filter(recordsInYear, (d) => d.phaseTag == trainingPhase);
 
     // for some calculations we can ignore the expired records as for them the metrics dont
     // exist so we filter them out from the list
