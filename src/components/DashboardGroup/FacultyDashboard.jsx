@@ -40,7 +40,7 @@ export default class FacultyDashboard extends Component {
         getAllData()
             .then(({ allResidentRecords, dashboard_epas }) => {
                 // create a list of all faculty 
-                let facultyList = _.map(_.groupBy(allResidentRecords, (d) => d.Assessor_Name), (recs, key) => ({ 'label': key + " (" + recs.length + ")", 'value': key }))
+                let facultyList = _.map(_.groupBy(allResidentRecords, (d) => d.Assessor_Name), (recs, key) => ({ 'label': key, 'value': key }))
                     .sort((previous, current) => previous.label.localeCompare(current.label));
                 // create a list of academic years 
                 let academicYearList = _.map(_.groupBy(allResidentRecords, (d) => d.Academic_Year), (recs, key) => ({ 'label': key, 'value': key }))
