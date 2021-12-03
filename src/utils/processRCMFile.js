@@ -63,7 +63,7 @@ export default function (rawData, programInfo = {
 
                         // if the row has the name of the resident store it and then move on
                         if (dataInColumnOne.indexOf('Learner') > -1) {
-                            residentName = dataInColumnOne.split(" - ")[1];
+                            residentName = (dataInColumnOne.split(" - ")[1]).trim();
                         }
                         // if the row is about the EPA then store the EPA number and move on
                         else if (dataInColumnOne.indexOf('EPA') > -1) {
