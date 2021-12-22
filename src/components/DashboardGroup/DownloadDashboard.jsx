@@ -72,8 +72,6 @@ export default class ExportDataTab extends Component {
         try {
             let data = await getAllData();
             if (data) {
-
-                debugger;
                 this.setState({
                     data: _.map(data, (d) => {
                         d.epa = NumberToEPAText(d.epa);
