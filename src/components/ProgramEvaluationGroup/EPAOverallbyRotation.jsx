@@ -15,34 +15,19 @@ export default class EPAOverallbyRotation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            'removedGroups': ['No Schedule Available'],
             'classificationCriteria': { 'value': 'rotationTag', 'label': 'Rotation Name' }
         }
     }
 
-    componentDidUpdate(prevProps) {
-        // If a new set of schedule groups come in default to everything selected except no schedule
-        if (!_.isEqual(this.props.scheduleGroups, prevProps.scheduleGroups)) {
-            this.setState({ removedGroups: ['No Schedule Available'] });
-        }
-    }
 
     onClassificationSelect = (option) => { this.setState({ 'classificationCriteria': option }) };
-
-    onActiveGroupsSelect = (options) => {
-        // create a list of available schedule group filters 
-        let scheduleGroupOptions = _.map(this.props.scheduleGroups, e => ({ 'value': e, 'label': e }));
-        let activeOptions = _.map(options, e => e.value);
-        let removedGroups = _.map(_.filter(scheduleGroupOptions, (g) => activeOptions.indexOf(g.value) == -1), f => f.value);
-        this.setState({ removedGroups });
-    };
 
     render() {
         const { printModeON,
             allRecords, normalizeByCount = false, width } = this.props,
-            { classificationCriteria, removedGroups } = this.state;
+            { classificationCriteria } = this.state;
 
-        let recordsFilteredByGroup = _.filter(allRecords, (d) => removedGroups.indexOf(d.scheduleTag) == -1);
+        let recordsFilteredByGroup = _.filter(allRecords, (d) => d.scheduleTag.indexOf('No Schedule Available') == -1);
 
         let programData = _.map(_.groupBy(recordsFilteredByGroup, (d) => d[classificationCriteria.value]), (group, groupName) => ({ 'Rotation Name': groupName, 'EPAs completed': group.length }));
         // sort by value
@@ -102,7 +87,7 @@ export default class EPAOverallbyRotation extends Component {
                     <Bar dataKey={"EPAs completed"} fill="#43b98e" />
                 </BarChart>
             </div> :
-                <h2 className='text-primary text-center m-t-lg' style={{ width }}>No Data available for the selected criteria.</h2>}
+                <h3 className='text-primary text-center m-t-lg' style={{ width }}>No rotation schedules available for the selected course and criteria.</h3>}
 
         </div>)
     };

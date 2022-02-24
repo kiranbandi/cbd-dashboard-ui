@@ -13,7 +13,7 @@ export default (props) => {
         <div className='text-center'>
             <MicroStatCard style={{ display: 'inline' }} title='Residents With Records' type='primary' metric={data.resident_count} />
             <MicroStatCard style={{ display: 'inline' }} title='Total EPAs observed' type='info' metric={data.epa_count} />
-            <MicroStatCard style={{ display: 'inline' }} title='Average EPA Score' type='primary' metric={data.entrustment_score} />
+            <MicroStatCard style={{ display: 'inline' }} title='Average EPA Score' type='success' metric={data.entrustment_score} />
             <MicroStatCard style={{ display: 'inline' }} title='Average words per comment' type='danger' metric={data.words_per_comment} />
             <FacultyScorePie dateFilterActive={false} data={data.rating_group} />
         </div>
