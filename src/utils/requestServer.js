@@ -69,7 +69,7 @@ requestServer.getAllData = function () {
     });
 }
 
-requestServer.getRotationSchedules = function (residentList = [], allRecords) {
+requestServer.getRotationSchedules = function (residentList = [], allRecords, courseName) {
     return new Promise((resolve, reject) => {
         axios.get(endPoints.assessments, {
             'params': {
@@ -79,7 +79,7 @@ requestServer.getRotationSchedules = function (residentList = [], allRecords) {
             }
         })
             .then((response) => {
-                resolve(tagRecordsWithRotation(response.data, allRecords));
+                resolve(tagRecordsWithRotation(response.data, allRecords, courseName));
             })
             .catch((err) => errorCallback(err, reject));
     });

@@ -26,9 +26,12 @@ export default function (allRecords = [], academicYear, trainingPhase = 'A') {
         if (month_count.hasOwnProperty(monthKey)) { month_count[monthKey] += 1 } else { month_count[monthKey] = 1 }
     });
 
+    // Also return a list of unique schedule groups in the data if available
+    let scheduleGroups = _.keys(_.groupBy(recordsInYearAndPhase, (d) => d.scheduleTag)).sort();
 
     return {
         recordsInYearAndPhase,
+        scheduleGroups,
         'summaryData': {
             resident_count,
             epa_count,

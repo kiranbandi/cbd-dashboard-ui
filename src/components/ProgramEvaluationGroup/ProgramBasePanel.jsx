@@ -33,7 +33,7 @@ export default class ProgramBasePanel extends Component {
 
         const selectedAcademicYear = possibleAcademicYears[academicYear];
 
-        const { recordsInYearAndPhase, summaryData } = processSingleProgramRecords(allRecords, selectedAcademicYear);
+        const { recordsInYearAndPhase, scheduleGroups, summaryData } = processSingleProgramRecords(allRecords, selectedAcademicYear);
 
         return (
             <div className='program-base-panel text-center'>
@@ -64,6 +64,7 @@ export default class ProgramBasePanel extends Component {
                     <EPAOverallbyRotation
                         // 40px to account for margin around the boxes above
                         width={(width)}
+                        scheduleGroups={scheduleGroups}
                         allRecords={recordsInYearAndPhase} />
                 </div>
             </div>

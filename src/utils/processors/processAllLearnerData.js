@@ -44,7 +44,10 @@ export default function (learnersDataDump) {
 
     let allResidentRecords = processedData.filter((d) => d.EPA != 'unmapped');
 
-    return { allResidentRecords, dashboard_epas };
+
+    // If the course name has course code in it, remove 
+
+    return { allResidentRecords, dashboard_epas, 'courseName': course_name };
 }
 
 

@@ -32,7 +32,6 @@ export default {
         groupAndRole: `The following pie charts show the distribution of the different assessor roles and groups. If a faculty is selected, their group and role are shown in the chart title in red.`
     },
     programEvaluation: {
-        
         main: `This dashboard organizes all of the EPAs that have been completed for residents in the program by the rotation and year they were completed during with the goal of informing program evaluation.`,
         EPAsAcquiredAndExpired: `This graph displays the number of EPAs that have been completed per resident in each year.`,
         EPARatingDistribution: `This stack chart displays the proportion of EPAs in each year that have been rated at each level of entrustment ('I had to do' to 'I didn't need to be there'). Mouse-over each row for additional details.`,
@@ -45,7 +44,8 @@ export default {
         EPACompletionDistributionStage: `These values show the degree of deviation from the EPA completion ratio outlined in the program's assessment plan for each training stage and overall. Divergence is higher when EPAs in a stage are over- and under-represented relative to the assessment plan. A heat map (0% green, 50% yellow, 100% red) highlights programs/stages of concern so that investigations and interventions can occur to address these deviations and ensure that residents are given adequate opportunity to complete all of the EPAs before they reach the end of their current stage of training.`,
         EPACountPerRotation: `This graph demonstrates the average number of EPAs completed on a given rotation for residents in your program. It is calculated by dividing the number of EPAs completed by your residents when they are on that rotation by the number of times residents from your program have completed that rotation. The data from previous academic years can be reviewed by adjusting the drop-down menu.`,
         rotationDist:`This graph shows the total number of EPAs completed in a given rotation by residents in your program.`,
-        rotationClassification:`Group the records based on different rotation criteria such as the name of the rotation, its schedule group or the site where the rotation was performed.`,
+        rotationGroupFilter:`Use this filter to restrict data to a particular schedule group. By default this is set to the current active program if a matching schedule group is found with the same name.`,
+        rotationClassification:`Use this to group the records based on different rotation criteria such as the name of the rotation, its schedule group or the site where the rotation was performed.`,
         EPAFeedbackWordCount: `This graph displays the average number of words contained within the completed EPAs of each year. The length of the feedback has been found to correlate with feedback quality.`,
         EPAMonthlyDistribution: `This graph visualizes the number of EPA observations submitted per month over multiple years. It is intended to identify increases and decreases in EPA assessments over seasons and years.`,
     }

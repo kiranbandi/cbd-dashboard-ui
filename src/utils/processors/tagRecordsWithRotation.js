@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 
-
-export default function (rotationSchedules, allRecords) {
+export default function (rotationSchedules, allRecords, courseName) {
 
     let mappedRotationSchedule = {};
     _.map(rotationSchedules, (schedule, username) => {
@@ -14,6 +13,11 @@ export default function (rotationSchedules, allRecords) {
         let allUserSchedules = mappedRotationSchedule[record.username] || {},
             userScheduleInYear = allUserSchedules[record.Academic_Year] || [],
             recordDate = moment(record.Date, 'YYYY-MM-DD');
+
+        // Filter rotation schedules that are set by the course schedule group
+        // other schedule groups are ignored. 
+        userScheduleInYear = _.filter(userScheduleInYear, s => courseName.indexOf(s.schedule_group) > -1);
+
 
         let matchedRotation = _.find(userScheduleInYear, (d) => recordDate.isBetween(d.start_date, d.end_date, 'days', '[]'));
 

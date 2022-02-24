@@ -34,17 +34,16 @@
         }
 
         .react-select-root {
-            width: 350px;
-            display: inline-block;
-            margin: 10px 0px 20px 0px;
+            width: 750px;
+            margin: 20px 0px 20px 0px;
             .filter-label {
                 font-size: 1.2em;
                 margin-right: 10px;
                 font-weight: normal;
+                width: 225px;
                 & + div {
                     display: inline-block !important;
                     width: 345px;
-                    z-index: 20;
                 }
             }
         }

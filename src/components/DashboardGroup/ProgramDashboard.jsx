@@ -25,14 +25,14 @@ export default class ProgramDashboard extends Component {
         this.setState({ isLoaderVisible: true });
 
         getAllData()
-            .then(({ allResidentRecords, dashboard_epas }) => {
+            .then(({ allResidentRecords, dashboard_epas, courseName }) => {
                 // create a list of acad emic years 
                 let academicYearList = _.map(_.groupBy(allResidentRecords, (d) => d.Academic_Year), (recs, key) => ({ 'label': key, 'value': key }))
                     .sort((previous, current) => previous.label.localeCompare(current.label));
                 let residentList = _.keys(_.groupBy(allResidentRecords, (d) => d.username));
                 // set the values on the state 
                 this._isMounted && this.setState({ academicYearList, 'epa_list': [...dashboard_epas] });
-                return getRotationSchedules(residentList, allResidentRecords);
+                return getRotationSchedules(residentList, allResidentRecords, courseName);
             })
             .then((allResidentRecords) => {
                 // set the values on the state 
