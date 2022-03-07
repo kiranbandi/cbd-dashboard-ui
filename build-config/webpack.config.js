@@ -12,30 +12,29 @@ module.exports = {
         filename: "bundle.js",
         publicPath: "/assets/bundle"
     },
+    watchOptions: {
+        ignored: [
+            path.resolve(__dirname, 'build'),
+            path.resolve(__dirname, 'node_modules')
+        ]
+    },
     devServer: {
-        inline: true,
-        contentBase: './build',
+        static: './build',
         port: 8080,
         https: true,
-        disableHostCheck: true,
-        watchOptions: {
-            ignored: [
-                path.resolve(__dirname, 'build'),
-                path.resolve(__dirname, 'node_modules')
-            ]
-        }
+        allowedHosts: "all",
     },
     plugins: [new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('development')
-            }
-        }),
-        new HtmlWebpackPlugin({
-            filename: '../../../../build/index.html',
-            template: './src/assets/index.template.html',
-            alwaysWriteToDisk: true
-        }),
-        new HtmlWebpackHarddiskPlugin()
+        'process.env': {
+            NODE_ENV: JSON.stringify('development')
+        }
+    }),
+    new HtmlWebpackPlugin({
+        filename: '../../../../build/index.html',
+        template: './src/assets/index.template.html',
+        alwaysWriteToDisk: true
+    }),
+    new HtmlWebpackHarddiskPlugin()
     ],
     module: {
         rules: require("./rules.config"),
