@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Bar } from 'react-chartjs';
+// import { Bar } from 'react-chartjs';
 import { RadioButton } from '../';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 
 export default class NormativeGraph extends Component {
 
@@ -11,29 +12,17 @@ export default class NormativeGraph extends Component {
             dualTracks: true
         };
         this.radioChange = this.radioChange.bind(this);
-        this.onCheckboxChange = this.onCheckboxChange.bind(this);
-        this.handleChartClick = this.handleChartClick.bind(this);
-    }
 
-    onCheckboxChange() {
-        this.setState({ dualTracks: !this.state.dualTracks });
     }
 
     radioChange(event) {
         this.setState({ trackType: event.target.value });
     }
 
-
-    handleChartClick(event) {
-        let datapoint = this.chartCtx && this.chartCtx.getBarsAtEvent(event);
+    handleChartClick = (resident) => {
         // if a valid resident name has been clicked
-        if (datapoint && datapoint.length > 0) {
-
-            debugger;
-            // first get the resident username from the list
-            // then check if the resident exists and then trigger a custom select resident 
-            let resident = _.find(this.props.residentList, (d) => d == datapoint[0].label);
-            if (resident) { this.props.selectResident(resident) }
+        if (resident && resident.username.length > 0) {
+            this.props.selectResident(resident.username);
         }
     }
 
@@ -43,26 +32,13 @@ export default class NormativeGraph extends Component {
 
         let sortedRecords = _.sortBy(records, (d) => d[trackType]);
 
-        let datasets = [{
-            label: "Overall",
-            fillColor: "rgba(28,168,221,.03)",
-            strokeColor: "#43b98e",
-            pointColor: "#43b98e",
-            pointStrokeColor: 'rgba(28,168,221,.03)',
-            pointHighlightFill: "rgba(28,168,221,.03)",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: _.map(sortedRecords, (d) => d[trackType])
-        }];
-
-        // create Bar object for chart
-        const BarData = {
-            labels: _.map(sortedRecords, (d) => d.resident_name),
-            datasets
-        }
-
-        let BarOptions = {
-            scaleBeginAtZero: true
-        };
+        const custom_data = _.map(sortedRecords, (d, i) => {
+            return {
+                'Resident': d.resident_name,
+                'username': d.username,
+                [createLabel(trackType)]: d[trackType],
+            }
+        });
 
         return (
             <div className='normative-graph'>
@@ -82,13 +58,18 @@ export default class NormativeGraph extends Component {
                             checked={trackType == 'expiry_rate'} />
                     </div>
                 </div>
-                <div className='canvas-wrapper' onClick={this.handleChartClick}>
-                    <Bar
-                        ref={r => this.chartCtx = r && r.getChart()}
-                        redraw={true}
-                        options={BarOptions}
-                        data={BarData}
-                        width={width} height={450} />
+                <div className='chart-container'>
+                    <BarChart width={width} height={400}
+                        data={custom_data}
+                        barGap={0}
+                        barCategoryGap={'10%'}
+                        margin={{ left: 25, right: 30, top: 10, bottom: 10 }}>
+                        <XAxis style={{ fill: 'black', 'fontWeight': 'bolder' }} dataKey="Resident" />
+                        <YAxis />
+                        <Tooltip labelStyle={{ 'color': 'black' }} allowEscapeViewBox={{ x: false, y: true }} wrapperStyle={{ 'fontWeight': 'bold' }} />
+                        <Legend wrapperStyle={{ 'color': 'black' }} />
+                        <Bar onClick={this.handleChartClick} isAnimationActive={true} dataKey={createLabel(trackType)} fill="rgb(78, 121, 167)" />
+                    </BarChart>
                 </div>
 
             </div>)
@@ -96,6 +77,5 @@ export default class NormativeGraph extends Component {
 
 }
 
-
-
-
+const createLabel = (s) => capitalizeStr(s.split('_').join(' '));
+const capitalizeStr = (str, lower = false) => (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, match => match.toUpperCase());

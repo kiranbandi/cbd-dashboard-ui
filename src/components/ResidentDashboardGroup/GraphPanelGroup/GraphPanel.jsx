@@ -93,6 +93,7 @@ class GraphPanel extends Component {
             isTooltipVisible,
             nonDemoMode = false,
             tooltipData,
+            hideMarkButton = false,
             epaSourceMap, smallScreen, width,
             residentFilter,
             residentList = [],
@@ -183,7 +184,7 @@ class GraphPanel extends Component {
                                                     key={'inner-row-' + sourceKey}
                                                     innerKey={innerKey}
                                                     epaSource={epaSource}
-                                                    hideMarkButton={userType == 'resident'}
+                                                    hideMarkButton={hideMarkButton ? true : (userType == 'resident')}
                                                     isTableVisible={epaSource == openTableID}
                                                     isFilterVisible={epaSource == openFilterID}
                                                     isPlanVisible={epaSource == openPlanID}

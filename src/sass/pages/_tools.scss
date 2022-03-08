@@ -71,9 +71,28 @@
     }
 
     .normative-graph {
-        .canvas-wrapper {
+        .chart-container {
             background: white;
-            padding: 20px;
+        }
+
+        .recharts-bar-rectangle {
+            cursor: pointer;
+        }
+    }
+
+    .normative-table {
+        .rt-tr-group {
+            cursor: pointer !important;
+        }
+    }
+
+    .upload-custom {
+        .react-select-root-filter {
+            margin: 10px 20px !important;
+        }
+
+        .advanced-filter-box {
+            width: 400px !important;
         }
     }
 }

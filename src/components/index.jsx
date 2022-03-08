@@ -15,7 +15,7 @@ export { default as UCNormativeDashboard } from './DashboardGroup/UCNormativeDas
 // Components for Normative Dashboard to compare residents
 export { default as NormativeTable } from './NormativeDashboardGroup/NormativeTable';
 export { default as NormativeFilterPanel } from './NormativeDashboardGroup/NormativeFilterPanel';
-export { default as UCNormativeGraph } from './NormativeDashboardGroup/NormativeGraph';
+export { default as UCNormativeGraph } from './NormativeDashboardGroup/UCNormativeGraph';
 export { default as NormativeGraph } from './NormativeDashboardGroup/NormativeGraph';
 
 // Components for Faculty Dashboard to compare residents
@@ -29,6 +29,7 @@ export { default as GraphPanel } from './ResidentDashboardGroup/GraphPanelGroup/
 export { default as InfoPanel } from './ResidentDashboardGroup/InfoPanelGroup/InfoPanel';
 export { default as ExpiredRecordTable } from './ResidentDashboardGroup/ExpiredRecordTable';
 export { default as FilterPanel } from './ResidentDashboardGroup/FilterPanel';
+export { default as UCFilterPanel } from './ResidentDashboardGroup/UCFilterPanel';
 export { default as InfoCardsPanel } from './ResidentDashboardGroup/InfoCardsPanel';
 export { default as NarrativeTable } from './ResidentDashboardGroup/NarrativeTable';
 export { default as ChecklistModal } from './ResidentDashboardGroup/ChecklistGroup/ChecklistModal';

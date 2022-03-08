@@ -18,7 +18,7 @@ export default class NormativeDashboard extends Component {
         const startDate = document.getElementById('normative-filter-startDate') && document.getElementById('normative-filter-startDate').value;
         const endDate = document.getElementById('normative-filter-endDate') && document.getElementById('normative-filter-endDate').value;
 
-        const { residentData = [], residentList = [] } = this.props, residentRecords = _.flatten(residentData);
+        const { residentDataList = [], residentList = [] } = this.props, residentRecords = _.flatten(residentDataList);
 
         // filter the records by dates
         let filteredRecords = _.filter(residentRecords, (d) => {
@@ -31,8 +31,8 @@ export default class NormativeDashboard extends Component {
             const recordsGroupedByResident = _.groupBy(residentRecords, (d) => d.username),
                 filteredRecordsGroupedByResident = _.groupBy(filteredRecords, (d) => d.username);
 
-            return _.map(residentList, (resident, residentIndex) => {
-                let username = resident + "_" + residentIndex;
+            return _.map(residentList, (resident) => {
+                let username = resident.username;
                 // Let the first day the resident gets a record be the start date 
                 let firstResidentRecord = recordsGroupedByResident[username] ? recordsGroupedByResident[username][0] : { 'Date': '2018-07-01' };
                 let residentStartDate = moment(firstResidentRecord.Date, "YYYY-MM-DD");
@@ -60,7 +60,8 @@ export default class NormativeDashboard extends Component {
                 expiry_rate_period = expiry_rate_period || 0;
 
                 return {
-                    'resident_name': resident,
+                    username,
+                    'resident_name': resident.fullname,
                     'record_count': residentAllRecords[0].length,
                     'epa_per_week': averageEPAsPerWeek,
                     'expiry_rate': expiry_rate,
@@ -80,17 +81,18 @@ export default class NormativeDashboard extends Component {
         let overallWidth = document.body.getBoundingClientRect().width - 125 - 475;
 
         return (
-            <div className='normative-data-container'>
+            <div className='normative-data-container m-b-md'>
                 {processedRecords.length > 0 &&
                     <div className='normative-inner-root'>
+                        <h2 className='text-primary m-t m-b text-center'>Normative Dashboard</h2>
                         <UCNormativeGraph
                             residentList={this.props.residentList}
                             width={overallWidth}
-                            residentSelect={this.props.selectResident}
+                            selectResident={this.props.selectResident}
                             records={processedRecords} />
                         <NormativeTable
                             width={475}
-                            residentSelect={this.props.selectResident}
+                            selectResident={this.props.selectResident}
                             records={processedRecords} />
                     </div>}
             </div>
