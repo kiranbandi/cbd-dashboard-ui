@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import {
   NotFound, Home, Dashboard,
-  Tools, Admin, UGDashboard,
+  Tools, UCalgary, Admin, UGDashboard,
   ProgramsCompare, UGAdmin
 } from './pages';
 import { Container } from './components';
@@ -36,6 +36,7 @@ class App extends Component {
             <Route path='UGME/Admin' component={UGAdmin} onEnter={checkAdminStatus} />
             <Route path='Program-Compare' component={ProgramsCompare} onEnter={checkAdminStatus} />
             <Route path='Tools' component={Tools} />
+            <Route path='ucalgary' component={UCalgary} />
             <Route path='*' component={NotFound} />
           </Route>
         </Router>

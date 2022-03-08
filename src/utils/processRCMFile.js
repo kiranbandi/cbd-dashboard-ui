@@ -1,4 +1,4 @@
-import XLSX from 'xlsx';
+import { read, utils } from 'xlsx';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -9,11 +9,11 @@ export default function (rawData, programInfo = {
     return new Promise((resolve, reject) => {
         try {
 
-            var workbook = XLSX.read((new Uint8Array(rawData)), {
+            var workbook = read((new Uint8Array(rawData)), {
                 type: 'array'
             });
-            var dataInRows = XLSX.utils.sheet_to_json(workbook.Sheets['EPA Observations']);
-            var narrativeInRows = XLSX.utils.sheet_to_json(workbook.Sheets['Narratives']);
+            var dataInRows = utils.sheet_to_json(workbook.Sheets['EPA Observations']);
+            var narrativeInRows = utils.sheet_to_json(workbook.Sheets['Narratives']);
             var dataStore = [];
             var residentName = '';
             var tempEPA = '';
@@ -215,9 +215,7 @@ export default function (rawData, programInfo = {
                 'narrativeData': processNarratives(narrativeInRows, residentName),
                 epaSourceMap
             });
-        } catch (e) {
-            reject();
-        };
+        } catch (e) { reject() };
     })
 }
 

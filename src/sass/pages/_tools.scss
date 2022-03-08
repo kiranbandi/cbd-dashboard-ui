@@ -6,17 +6,17 @@
         font-weight: bold;
     }
     p.tools-text {
-        font-size: 1.20em;
+        font-size: 1.2em;
     }
     .process-btn {
         line-height: 25px;
         .sample-span {
             vertical-align: top;
-            &+.icon {
+            & + .icon {
                 margin-left: 10px;
                 font-size: 20px;
             }
-            &+div {
+            & + div {
                 margin-left: 10px;
                 vertical-align: top;
                 display: inline-block;
@@ -24,11 +24,56 @@
         }
         .process-span {
             vertical-align: top;
-            &+div {
+            & + div {
                 margin-left: 10px;
                 vertical-align: top;
                 display: inline-block;
             }
+        }
+    }
+
+    // new styles
+    .upload-text-box {
+        background: #1a1c22;
+        font-size: 1.15em;
+        padding: 20px 10px;
+        margin: 20px 0px;
+    }
+
+    .react-select-root-filter {
+        width: 250px;
+        display: inline-block;
+        margin: 10px 0px;
+    }
+
+    .dropzone-container {
+        display: flex;
+        flex-direction: column;
+        font-family: sans-serif;
+        .dropzone {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+            border-width: 4px;
+            border-radius: 2px;
+            border-color: #eeeeee;
+            border-style: dashed;
+            background-color: #292323;
+            color: #bdbdbd;
+            margin-top: 20px;
+            outline: none;
+            text-transform: capitalize;
+            font-size: 1.1em;
+            transition: border 0.24s ease-in-out;
+        }
+    }
+
+    .normative-graph {
+        .canvas-wrapper {
+            background: white;
+            padding: 20px;
         }
     }
 }

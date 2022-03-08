@@ -99,6 +99,24 @@ export default (props) => {
                 defaultPageSize={10}
                 resizable={false}
                 className='-highlight'
+                getTdProps={(state, rowInfo, column, instance) => {
+                    return {
+                        onClick: (e, handleOriginal) => {
+                            const username = rowInfo.original.username, {residentSelect } = props;
+                            // validate username to check if its non empty 
+                            if (username && username.length > 0) {
+                                // first get the resident username from the list
+                                // then check if the resident exists and then trigger a custom select resident action 
+                                let resident = _.find(residentList, (d) => d.username == username);
+                                if (resident) {
+                                    // set the username on the filter
+                                    residentFilter.username = resident.username;
+                                    actions.switchToResidentDashboard(resident, residentFilter);
+                                }
+                            }
+                        }
+                    }
+                }}
                 defaultSorted={[{ id: "resident_name", desc: true }]} />
         </div>)
 

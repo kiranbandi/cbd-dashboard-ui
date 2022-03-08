@@ -10,11 +10,12 @@ export { default as ProgramDashboard } from './DashboardGroup/ProgramDashboard';
 export { default as FacultyDashboard } from './DashboardGroup/FacultyDashboard';
 export { default as DownloadDashboard } from './DashboardGroup/DownloadDashboard';
 export { default as NormativeDashboard } from './DashboardGroup/NormativeDashboard';
-
+export { default as UCNormativeDashboard } from './DashboardGroup/UCNormativeDashboard';
 
 // Components for Normative Dashboard to compare residents
 export { default as NormativeTable } from './NormativeDashboardGroup/NormativeTable';
 export { default as NormativeFilterPanel } from './NormativeDashboardGroup/NormativeFilterPanel';
+export { default as UCNormativeGraph } from './NormativeDashboardGroup/NormativeGraph';
 export { default as NormativeGraph } from './NormativeDashboardGroup/NormativeGraph';
 
 // Components for Faculty Dashboard to compare residents
