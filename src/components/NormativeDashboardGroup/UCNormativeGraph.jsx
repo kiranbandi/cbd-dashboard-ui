@@ -64,7 +64,7 @@ export default class NormativeGraph extends Component {
                         barGap={0}
                         barCategoryGap={'10%'}
                         margin={{ left: 25, right: 30, top: 10, bottom: 10 }}>
-                        <XAxis style={{ fill: 'black', 'fontWeight': 'bolder' }} dataKey="Resident" />
+                        <XAxis interval={0} style={{ fill: 'black', 'fontWeight': 'bolder' }} dataKey="Resident" />
                         <YAxis />
                         <Tooltip labelStyle={{ 'color': 'black' }} allowEscapeViewBox={{ x: false, y: true }} wrapperStyle={{ 'fontWeight': 'bold' }} />
                         <Legend wrapperStyle={{ 'color': 'black' }} />

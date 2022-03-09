@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { UCNormativeDashboard, GraphPanel, UCFilterPanel, NarrativeTable, ExpiredRecordTable } from '../components';
 import getFileByPath from '../utils/getFileByPath';
 import processRCMFile from '../utils/processRCMFile';
-import { setResidentData, setProgramInfo, setResidentFilter, setNarrativeData } from '../redux/actions/actions';
+import { setResidentData, setProgramInfo, setResidentFilter, setNarrativeData, setResidentList } from '../redux/actions/actions';
 import toastr from '../utils/toastr';
 import Loading from 'react-loading';
 import moment from 'moment';
@@ -38,22 +38,23 @@ class UCalgaryDashboard extends Component {
 
     componentWillUnmount() {
         //When moving out of the tab force reload the page to avoid side effects from this page to main dashboard
-        location.reload();
+        // location.reload();
     }
 
-    selectResident = (resident) => {
+    selectResident = (resident = '', showUncommencedEPA = true, openOnlyCurrentPhase = true) => {
 
         let { residentFilter = {}, actions, programInfo } = this.props;
 
         const { dataStore } = this.state,
             { residentDataList = [], narrativeDataList = [], residentList = [] } = dataStore;
 
-
-        // residentFilter.startDate = document.getElementById('filter-startDate-resident').value;
-        // residentFilter.endDate = document.getElementById('filter-endDate-resident').value;
+        // If a resident is provided use it, if not use the preset in the resident filter
+        residentFilter.username = resident.length > 0 ? resident : residentFilter.username;
+        residentFilter.startDate = document.getElementById('filter-startDate-resident').value;
+        residentFilter.endDate = document.getElementById('filter-endDate-resident').value;
 
         // Fitler out resident info from the list 
-        let residentIndex = _.findIndex(residentList, (d) => d.username == resident),
+        let residentIndex = _.findIndex(residentList, (d) => d.username == residentFilter.username),
             residentInfo = residentList[residentIndex],
             residentData = residentDataList[residentIndex],
             narrativeData = narrativeDataList[residentIndex];
@@ -80,7 +81,7 @@ class UCalgaryDashboard extends Component {
             // also if uncommenced EPAs are needed to be seen then sub in empty records
             _.map(programInfo.epaSourceMap, (source) => {
                 _.map(source.subRoot, (epa, innerKey) => {
-                    if (!groupedResidentData.hasOwnProperty(innerKey)) {
+                    if (showUncommencedEPA && !groupedResidentData.hasOwnProperty(innerKey)) {
                         groupedResidentData[innerKey] = [];
                     }
                     if (groupedResidentData[innerKey]) {
@@ -89,7 +90,7 @@ class UCalgaryDashboard extends Component {
                 })
             })
             // store the info of visibility of phase into resident info
-            residentInfo.openOnlyCurrentPhase = true;
+            residentInfo.openOnlyCurrentPhase = openOnlyCurrentPhase;
             actions.setResidentData(groupedResidentData, residentInfo);
             // mark records in the selected date range with a flag
             var markedNarrativeData = _.map(narrativeData, (d) => {
@@ -113,7 +114,12 @@ class UCalgaryDashboard extends Component {
     }
 
     async onProcessFile() {
+
         event.preventDefault();
+        // clear data in the dashboard 
+        this.props.actions.setResidentList([]);
+        this.props.actions.setNarrativeData([]);
+        this.props.actions.setResidentData(null);
 
         const { fileList = [], program } = this.state;
 
@@ -134,9 +140,10 @@ class UCalgaryDashboard extends Component {
                     // Then process the RCM file and extract its contents
                     let processedOutput = await processRCMFile(fileContents, { 'programName': program });
                     // set resident name from user list 
-                    let { data, residentName = '', narrativeData = [] } = processedOutput;
+                    let { data, residentPhase = '', residentName = '', narrativeData = [] } = processedOutput;
+
                     // store the corresponding data into datastore and remap the username
-                    dataStore.residentList.push({ 'fullname': residentName, 'username': residentName + '_' + residentCount });
+                    dataStore.residentList.push({ 'fullname': residentName, 'currentPhase': residentPhase, 'username': residentName + '_' + residentCount });
                     dataStore.residentDataList.push(_.map(data, d => ({ ...d, 'username': residentName + '_' + residentCount })));
                     dataStore.narrativeDataList.push(_.map(narrativeData, d => ({ ...d, 'username': residentName + '_' + residentCount })));
                     // increase the resident count
@@ -147,12 +154,15 @@ class UCalgaryDashboard extends Component {
             }
             // only show dashboard if data is available after processing files
             dataReady = dataStore.residentList.length > 0;
+
             // turn the loader off and set the process status 
             this.setState({ processing: false, dataStore, dataReady });
 
             if (dataStore.residentList.length > 0) {
+                this.props.actions.setResidentList(dataStore.residentList);
                 this.selectResident(dataStore.residentList[0].username);
             }
+
         }
         else {
             toastr["error"]("Please select a program and add a file first.", "ERROR");
@@ -161,7 +171,7 @@ class UCalgaryDashboard extends Component {
 
     render() {
         const { processing, dataReady, program = '', fileList = [], dataStore } = this.state,
-            { residentDataList = [], narrativeDataList = [], residentList = [] } = dataStore;
+            { residentDataList = [], residentList = [] } = dataStore;
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let width = document.body.getBoundingClientRect().width - 125;
@@ -209,10 +219,10 @@ class UCalgaryDashboard extends Component {
                     <div className='container-fluid m-t-lg'>
                         <UCNormativeDashboard selectResident={this.selectResident} residentList={residentList} residentDataList={residentDataList} />
                     </div>}
-                {/* {dataReady && <UCFilterPanel selectResident={this.selectResident} residentList={residentList} />} */}
                 {dataReady &&
                     <div>
                         <h2 className='text-primary m-t text-center'>Resident Dashboard</h2>
+                        <UCFilterPanel selectResident={this.selectResident} residentList={residentList} />
                         <GraphPanel
                             hideMarkButton={true}
                             nonDemoMode={true}
@@ -229,7 +239,8 @@ class UCalgaryDashboard extends Component {
 
 function mapStateToProps(state) {
     return {
-        programInfo: state.oracle.programInfo
+        programInfo: state.oracle.programInfo,
+        residentFilter: state.oracle.residentFilter,
     };
 }
 
@@ -239,6 +250,7 @@ function mapDispatchToProps(dispatch) {
             setResidentData,
             setProgramInfo,
             setResidentFilter,
+            setResidentList,
             setNarrativeData
         }, dispatch)
     };

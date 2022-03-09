@@ -11,12 +11,13 @@ export default function (rawData, programInfo = {
 
             var workbook = read((new Uint8Array(rawData)), {
                 type: 'array'
-            });
-            var dataInRows = utils.sheet_to_json(workbook.Sheets['EPA Observations']);
-            var narrativeInRows = utils.sheet_to_json(workbook.Sheets['Narratives']);
-            var dataStore = [];
-            var residentName = '';
-            var tempEPA = '';
+            }),
+                dataInRows = utils.sheet_to_json(workbook.Sheets['EPA Observations']),
+                narrativeInRows = utils.sheet_to_json(workbook.Sheets['Narratives']),
+                dataStore = [],
+                residentName = '',
+                residentPhase = '',
+                tempEPA = '';
 
             // Dummy empty source map that is populated on the fly if and when used 
             var epaSourceMap = {
@@ -60,10 +61,12 @@ export default function (rawData, programInfo = {
                     if (_.keys(row).indexOf('Observation Summary Report') > -1) {
                         var dataInColumnOne = row['Observation Summary Report'];
 
-
                         // if the row has the name of the resident store it and then move on
                         if (dataInColumnOne.indexOf('Learner') > -1) {
                             residentName = (dataInColumnOne.split(" - ")[1]).trim();
+                            // The data is separated by "-", to avoid bugs with learner names with "-" in them,
+                            // we look for the last instance of "-" and then strip and parse from there.
+                            residentPhase = dataInColumnOne.slice(_.findLastIndex(dataInColumnOne.split(''), d => d == '-') + 1).trim().toLocaleLowerCase().split(' ').join('-');
                         }
                         // if the row is about the EPA then store the EPA number and move on
                         else if (dataInColumnOne.indexOf('EPA') > -1) {
@@ -210,7 +213,8 @@ export default function (rawData, programInfo = {
             }
 
             resolve({
-                'residentName': residentName,
+                residentName,
+                residentPhase,
                 'data': dataStore,
                 'narrativeData': processNarratives(narrativeInRows, residentName),
                 epaSourceMap

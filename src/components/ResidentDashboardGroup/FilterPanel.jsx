@@ -150,7 +150,7 @@ class FilterPanel extends Component {
                 isAllData = false,
                 username = '',
                 startDate = moment().format('MM/DD/YYYY'),
-                endDate = moment().format('MM/DDF/YYYY')
+                endDate = moment().format('MM/DD/YYYY')
             } = residentFilter,
             { isFilterOpen } = this.state;
 
