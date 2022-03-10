@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import FileSaver from 'file-saver'
+import FileSaver from 'file-saver';
 
 export default function(columnNames = ['Date', 'Resident Name', 'EPA', 'Observer Name', 'Observer Type', 'Rating', 'Type', 'Situation Context', 'Feedback', 'Professionalism Safety', 'EPA Expired']) {
     var { rcmData = [] } = window.emCBD;

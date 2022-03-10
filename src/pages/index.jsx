@@ -1,7 +1,7 @@
 export { default as NotFound } from './NotFound';
 export { default as Home } from './Home';
 export { default as Tools } from './Tools';
-export { default as UCalgary } from './UCalgary';
+export { default as EPAProcessor } from './EPAProcessor';
 export { default as Dashboard } from './Dashboard';
 export { default as Admin } from './Admin';
 export { default as ProgramsCompare } from './ProgramsCompare';
