@@ -12,8 +12,6 @@ import FileSaver from 'file-saver';
 import Dropzone from 'react-dropzone';
 import { PROGRAM_INFO, PROGRAM_LIST } from '../utils/programInfo';
 
-var programs = [];
-
 // remove UG from program list
 const programList = _.filter(PROGRAM_LIST, e => e.value != 'UNDERGRADUATE');
 
@@ -119,7 +117,7 @@ class UCalgaryDashboard extends Component {
         event.preventDefault();
 
         const { fileList = [] } = this.state;
-        let epa_codes_list = [], epa_assessments_list = [];
+        let overallProgramMap = {};
 
         if (fileList.length > 0) {
             // turn on file processing loader
@@ -138,6 +136,7 @@ class UCalgaryDashboard extends Component {
                     // Filter out the ones which dont have an effective end date meaning they are actually active now 
                     const filtered_epa_codes = _.filter(epa_codes, d => !d.EPA_END_DATE),
                         filtered_epa_assessments = _.filter(epa_assessments, d => !d.EPA_END_DATE);
+
 
                     let programInfo = {
                         programName: filtered_epa_codes[0].SPECIALTY_NAME_ENG,
@@ -204,16 +203,7 @@ class UCalgaryDashboard extends Component {
                     });
                     // set the source map onto program info
                     programInfo['epaSourceMap'] = epaSourceMap;
-
-                    var fileName = programInfo.programName + '.json';
-
-                    // Create a blob of the data
-                    var fileToSave = new Blob([JSON.stringify(programInfo, undefined, 2)], {
-                        type: 'application/json'
-                    })
-                    // Save the file
-                    // saveAs(fileToSave, fileName);
-                    programs.push(programInfo.programName);
+                    overallProgramMap[programInfo.programName] = programInfo;
 
                 } catch (error) {
                     console.log(error);
@@ -221,10 +211,11 @@ class UCalgaryDashboard extends Component {
                 }
             }
 
-
-            console.log(programs);
-
-
+            // Create a blob of the data
+            var fileToSave = new Blob([JSON.stringify(overallProgramMap)], {
+                type: 'application/json'
+            })
+            saveAs(fileToSave, 'programOverallMap.json');
 
         }
         else {
