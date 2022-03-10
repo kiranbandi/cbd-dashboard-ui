@@ -11,10 +11,10 @@ import moment from 'moment';
 import _ from 'lodash';
 import ReactSelect from 'react-select';
 import Dropzone from 'react-dropzone';
-import { PROGRAM_INFO, PROGRAM_LIST } from '../utils/programInfo';
+import programOverallMap from '../utils/programOverallMap.json';
 
 // remove UG from program list
-const programList = _.filter(PROGRAM_LIST, e => e.value != 'UNDERGRADUATE');
+const programList = _.map(_.keys(programOverallMap), e => ({ 'label': e, 'value': e }));
 
 class UCalgaryDashboard extends Component {
 
@@ -109,7 +109,7 @@ class UCalgaryDashboard extends Component {
 
     onProgramChange = (e) => {
         const program = e.value;
-        this.props.actions.setProgramInfo(PROGRAM_INFO[program]);
+        this.props.actions.setProgramInfo(programOverallMap[program]);
         this.setState({ program });
     }
 
