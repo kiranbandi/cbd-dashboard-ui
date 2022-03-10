@@ -38,7 +38,7 @@ class UCalgaryDashboard extends Component {
 
     componentWillUnmount() {
         //When moving out of the tab force reload the page to avoid side effects from this page to main dashboard
-        // location.reload();
+        location.reload();
     }
 
     selectResident = (resident = '', showUncommencedEPA = true, openOnlyCurrentPhase = true) => {
