@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import {
   NotFound, Home, Dashboard,
-  Tools, UCalgary, Admin, UGDashboard,
-  ProgramsCompare, UGAdmin
+  Tools, Admin, UGDashboard,
+  ProgramsCompare, UGAdmin, ElentraProcessor
 } from './pages';
 import { Container } from './components';
 import configureStore from './redux/store/configureStore';
@@ -35,8 +35,9 @@ class App extends Component {
             <Route path='UGME/Dashboard' component={UGDashboard} onEnter={checkloginStatus} />
             <Route path='UGME/Admin' component={UGAdmin} onEnter={checkAdminStatus} />
             <Route path='Program-Compare' component={ProgramsCompare} onEnter={checkAdminStatus} />
-            <Route path='Tools' component={Tools} />
-            <Route path='ucalgary' component={UCalgary} />
+            <Route path='Tools' type='upload' component={Tools} />
+            <Route path='ucalgary' component={Tools} />
+            <Route path='Elentra-Processor' component={ElentraProcessor} />
             <Route path='*' component={NotFound} />
           </Route>
         </Router>
