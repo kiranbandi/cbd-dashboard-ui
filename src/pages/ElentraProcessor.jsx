@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import getFileByPath from '../utils/getFileByPath';
-import processRCMFile from '../utils/processRCMFile';
 import { setResidentData, setProgramInfo, setResidentFilter, setNarrativeData, setResidentList } from '../redux/actions/actions';
 import toastr from '../utils/toastr';
 import Loading from 'react-loading';
 import moment from 'moment';
 import _ from 'lodash';
 import Dropzone from 'react-dropzone';
-import programOverallMap from '../utils/programOverallMap.json';
 import FileSaver from 'file-saver';
 
 class ElentraProcessor extends Component {
@@ -79,9 +77,9 @@ class ElentraProcessor extends Component {
                             observerType = 'faculty',
                             ratings = mapRating(d[rating]),
                             type = '',
-                            situationContext = d.slice(lastUpdatedBy + 1, rating).join(','),
+                            situationContext = d.slice(lastUpdatedBy + 1, rating).join(', '),
                             feedback = constructFeedback(d[rating], d[nextSteps]),
-                            safetyConcerns = d[safety] + ' ' + d[professionalism],
+                            safetyConcerns = (d[safety] || '') + ' ' + (d[professionalism] || ''),
                             expired = false;
 
                         return [date, residentName, epa_code, observerName, observerType, ratings, type, situationContext, feedback, safetyConcerns, expired];
@@ -195,13 +193,16 @@ function mapRating(r) {
     else if (rating.indexOf("I didn't need to be") > -1) {
         return 5;
     }
+    else if (rating.indexOf("I did not need to be") > -1) {
+        return 5;
+    }
     else {
         return 'unmapped';
     }
 }
 
-function constructFeedback(rating, nextSteps) {
-    const comments = rating.split("\n\nComments")[1];
+function constructFeedback(rating, nextSteps = '') {
+    const comments = rating.split("\n\nComments: \n")[1];
     return comments + nextSteps;
 }
 
