@@ -36,7 +36,6 @@ class App extends Component {
             <Route path='UGME/Admin' component={UGAdmin} onEnter={checkAdminStatus} />
             <Route path='Program-Compare' component={ProgramsCompare} onEnter={checkAdminStatus} />
             <Route path='Tools' type='upload' component={Tools} />
-            <Route path='ucalgary' component={Tools} />
             <Route path='Elentra-Processor' component={ElentraProcessor} />
             <Route path='*' component={NotFound} />
           </Route>

@@ -171,8 +171,7 @@ class Tools extends Component {
 
     render() {
         const { processing, dataReady, program = '', fileList = [], dataStore } = this.state,
-            { residentDataList = [], residentList = [] } = dataStore,
-            { route } = this.props, { type = 'calgary' } = route;
+            { residentDataList = [], residentList = [] } = dataStore;
 
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
@@ -181,8 +180,7 @@ class Tools extends Component {
         return (
             <div className='tools-root m-t text-xs-left text-sm-left m-b-lg' >
                 <div className='container'>
-                    {type == 'calgary' ? <h2 className='text-left text-primary text-center'>University of Calgary - CBME Dashboard</h2> :
-                        <h2 className='text-left text-primary text-center'>Royal College of Medicine Observation Report Visualizer</h2>}
+                    <h2 className='text-left text-primary text-center'> Royal College ePortfolio Observation Report Visualizer</h2>
                     <p className='upload-text-box'> This is a online toolkit designed to visualize CBME data in realtime from RCM (Royal College of Medicine) export files.
 
                         To use this dashboard, <br />first <b>select the relevent program</b> that the resident belongs to
