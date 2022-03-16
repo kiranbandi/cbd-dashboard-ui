@@ -1,18 +1,21 @@
-// import base - contains global styles, such as resets, typography, colors
-@import "vendor/toastr";
-@import "vendor/react-table";
 @import "vendor/toolkit";
-// import components- contains each self-contained component in its own .scss partial
-@import "components/container";
-@import "components/radioButton";
-@import "components/graphPanel";
-@import "components/expiredRecordTable";
-@import "components/narrativeTable";
-@import "components/filterPanel";
-@import "components/tooltip";
-@import "components/dashboard/residentDashboard";
-@import "components/dashboard/normativeDashboard";
-// import pages contains page-specific styling
-@import "pages/dashboard";
-@import "pages/tools";
-// import UG component styling
+@import "vendor/toastr";
+
+#dashboard-content-mount {
+    // import base - contains global styles, such as resets, typography, colors
+
+    @import "vendor/react-table";
+    // import components- contains each self-contained component in its own .scss partial
+    @import "components/container";
+    @import "components/radioButton";
+    @import "components/graphPanel";
+    @import "components/expiredRecordTable";
+    @import "components/narrativeTable";
+    @import "components/filterPanel";
+    @import "components/tooltip";
+    @import "components/dashboard/residentDashboard";
+    @import "components/dashboard/normativeDashboard";
+    // import pages contains page-specific styling
+    @import "pages/dashboard";
+    @import "pages/tools";
+}

@@ -40,19 +40,12 @@
             display: inline-block;
             vertical-align: top;
             margin: 0px auto;
+            color: black;
             span.select-wrap {
                 display: none;
             }
-            .ReactTable .rt-thead.-headerGroups {
-                background: #111316;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-                .rt-th {
-                    font-weight: bold;
-                    text-transform: uppercase;
-                    text-align: center;
-                    padding: 5px 0px;
-                    border-right: 1px solid rgba(255, 255, 255, 0.15);
-                }
+            .ReactTable .rt-thead.-header {
+                color: white;
             }
         }
         .normative-graph {

@@ -178,14 +178,13 @@ class Tools extends Component {
         let width = document.body.getBoundingClientRect().width - 125;
 
         return (
-            <div className='tools-root m-t text-xs-left text-sm-left p-b' >
-                <div className='container'>
-                    <h2 className='text-left text-primary text-center'>University of Calgary - CBME Dashboard</h2>
+            <div className='tools-root text-xs-left text-sm-left p-b' >
+                <div className='container-fluid'>
+                    <h2 className='text-left text-primary text-center'>ePortfolio Observation Report Visualizer</h2>
                     <p className='upload-text-box'> This is a online toolkit designed to visualize CBME data in realtime from RCM (Royal College of Medicine) export files.
 
-                        To use this dashboard, <br />first <b>select the relevent program</b> that the resident belongs to
+                        To use this dashboard, first <b>select the relevent program</b> that the resident belongs to
                         and then <b>upload their RCM export file</b>.
-                        <br />
                         Data for several residents can be uploaded at the same time by dragging and dropping their files onto the upload panel below.
                     </p>
 
@@ -205,14 +204,14 @@ class Tools extends Component {
                                 <div className='dropzone' {...getRootProps()}>
                                     <input {...getInputProps()} />
                                     <p>Drag and drop files here</p>
-                                    {fileList.length > 0 && <h4 className='text-info'>{fileList.length} {fileList.length == 1 ? 'file' : 'files'} added</h4>}
+                                    {fileList.length > 0 && <h4 className='text-primary'>{fileList.length} {fileList.length == 1 ? 'file' : 'files'} added</h4>}
                                 </div>
                             </section>
                         )}
                     </Dropzone>
                     <button className="btn btn-primary-outline m-t process-btn" onClick={this.onProcessFile}>
                         <span className='process-span'>{"VISUALIZE"} </span>
-                        {processing && <Loading type='spin' height='25px' width='25px' color='#d6e5ff' delay={-1} />}
+                        {processing && <Loading type='spin' height='25px' width='25px' color='black' delay={-1} />}
                     </button>
                 </div>
 

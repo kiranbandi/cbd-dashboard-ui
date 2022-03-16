@@ -12,7 +12,7 @@ export default {
         recentEPAs: `This graph displays the most recently completed EPAs by time (oldest to newest on the horizontal axis) and entrustment score ('I had to do' to 'I didn't need to be there on the vertical axis).  The drop-down menu can load the last 10, last 25, last 1 month, or last 3 months of EPAs. Mousing over each EPA displays additional EPA details.`,
         competenceCommitteeFeedbackAndResidentProgress: `This graph displays feedback from previous Competence Committees by time (oldest to newest on the horizontal axis) and rating (inactive to accelerated on the vertical axis). Promotion between stages is indicated by green lines. This information will only appear if this feedback has been entered into the dashboard (this can be done by a program administrator).`,
         showEPAPlan: `Click to view the assessment plan for this EPA.`,
-        showEPATable: `Clicking the 'open book' icon opens a sortable, searchable graph displaying detailed information on each EPA. This information can also be seen by mousing-over individual EPAs.`,
+        showEPATable: `Clicking the 'open book' icon opens a sortable, searchable table displaying detailed information on each EPA. This information can also be seen by mousing-over individual EPAs.`,
         showEPAFilter: `Clicking the 'gears' icon opens a list of drop-down menus for contextual variables. When one or more contextual variable is selected the EPAs containing that variable will turn from black to pink.`,
         viewNarratives: `This table displays data from non-EPA-specific narratives submitted to Mainport ePortfolio.`,
         viewExpiredEPAs: `This table displays data from EPAs the resident has sent which have expired.`

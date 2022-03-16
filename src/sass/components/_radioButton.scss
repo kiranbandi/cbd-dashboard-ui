@@ -4,7 +4,7 @@
 [type="radio"]:not(:checked) {
     position: absolute;
     left: -9999px;
-    &+label {
+    & + label {
         position: relative;
         padding-left: 28px;
         cursor: pointer;
@@ -14,8 +14,8 @@
         text-transform: uppercase;
         font-size: 1em;
     }
-    &+label:before {
-        content: '';
+    & + label:before {
+        content: "";
         position: absolute;
         left: 0;
         top: 0;
@@ -25,10 +25,10 @@
         border-radius: 100%;
         background: #fff;
     }
-    &+label:after {
-        content: '';
-        width: 10px;
-        height: 10px;
+    & + label:after {
+        content: "";
+        width: 12px;
+        height: 12px;
         background: #2a747a;
         position: absolute;
         top: 4px;
@@ -39,13 +39,13 @@
     }
 }
 
-[type="radio"]:not(:checked)+label:after {
+[type="radio"]:not(:checked) + label:after {
     opacity: 0;
     -webkit-transform: scale(0);
     transform: scale(0);
 }
 
-[type="radio"]:checked+label:after {
+[type="radio"]:checked + label:after {
     opacity: 1;
     -webkit-transform: scale(1);
     transform: scale(1);
