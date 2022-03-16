@@ -4,12 +4,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import _ from 'lodash';
-import Loading from 'react-loading';
 import ReactSelect from 'react-select';
-import { getResidentData, getNarratives } from '../../utils/requestServer';
 import { STAGES_LIST } from '../../utils/programInfo';
 import {
-    toggleFilterLoader, setResidentFilter, toggleExamScore,
+    setResidentFilter,
     setResidentData, setNarrativeData
 } from '../../redux/actions/actions';
 
@@ -99,7 +97,7 @@ class UCFilterPanel extends Component {
                 <div className='text-xs-center text-sm-left root-box'>
 
                     <div className='react-select-root-filter'>
-                        <ReactSelect 
+                        <ReactSelect
                             placeholder='Select Resident...'
                             isSearchable={true}
                             value={currentSelectValue}
@@ -182,11 +180,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         actions: bindActionCreators({
-            toggleFilterLoader,
             setResidentFilter,
             setResidentData,
-            setNarrativeData,
-            toggleExamScore
+            setNarrativeData
         }, dispatch)
     };
 }

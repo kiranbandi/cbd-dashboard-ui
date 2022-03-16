@@ -6,8 +6,6 @@ import SlideInTable from './SlideInTable';
 import SlideInFilter from './SlideInFilter';
 import infoTooltipReference from "../../../utils/infoTooltipReference";
 import { NumberToEPAText } from "../../../utils/convertEPA";
-import { updateCompletionStatus } from "../../../utils/requestServer";
-import Loading from 'react-loading';
 
 export default class GraphRow extends Component {
 
@@ -15,7 +13,6 @@ export default class GraphRow extends Component {
         super(props);
         this.state = { filterDict: {}, markStateLoading: false };
         this.onHighlightChange = this.onHighlightChange.bind(this);
-        this.onMarkClick = this.onMarkClick.bind(this);
     }
 
     onHighlightChange(filterKey, filterValue) {
@@ -28,33 +25,6 @@ export default class GraphRow extends Component {
         }
     }
 
-    onMarkClick() {
-        // Turn on marker loader 
-        this.setState({ 'markStateLoading': true });
-
-        let { residentInfo, residentList, setResidentList, epaSource } = this.props;
-        let { completionStatus = {} } = residentInfo;
-
-        // toggle the completion status for selected EPA
-        completionStatus[epaSource] = !(completionStatus[epaSource] || false);
-
-        // Set the completion status and once successful set it back on residentlist
-        updateCompletionStatus(residentInfo.username, completionStatus)
-            .then((response) => {
-                // set the completion status on the resident list 
-                _.map(residentList, (r) => {
-                    if (r.username == residentInfo.username) {
-                        r.completionStatus = _.cloneDeep(response.completionStatus);
-                    }
-                });
-                setResidentList(residentList);
-            })
-            // toggle loader once request is completed
-            .finally(() => {
-                this.setState({ 'markStateLoading': false });
-            });
-
-    }
 
     render() {
 
@@ -192,11 +162,6 @@ export default class GraphRow extends Component {
                             <span className='card-text'>{expiredCount}</span>
                             <span className='card-title expired-title'>EXPIRED</span>
                         </div>
-                        {!hideMarkButton && nonDemoMode && <div className='graph-card'>
-                            <button onClick={this.onMarkClick} className='btn btn-success mark-button'>
-                                <span className='mark-label'>{isEPAComplete ? 'UnMark' : 'Mark as Complete'}</span>
-                                {markStateLoading && <Loading type='spin' className='mark-loader' height='20px' width='20px' color='white' delay={-1} />}</button>
-                        </div>}
                     </div>
 
                 </div>

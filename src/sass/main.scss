@@ -1,34 +1,18 @@
 // import base - contains global styles, such as resets, typography, colors
-@import 'vendor/toastr';
-@import 'vendor/react-table';
+@import "vendor/toastr";
+@import "vendor/react-table";
+@import "vendor/toolkit";
 // import components- contains each self-contained component in its own .scss partial
-@import 'components/container';
-@import 'components/navbar';
-@import 'components/radioButton';
-@import 'components/fileUpload';
-@import 'components/graphPanel';
-@import 'components/infoPanel/infoPanel';
-@import 'components/infoCardPanel';
-@import 'components/expiredRecordTable';
-@import 'components/narrativeTable';
-@import 'components/filterPanel';
-@import 'components/statcard';
-@import 'components/modal';
-@import 'components/tooltip';
-@import 'components/checklistModal';
-@import 'components/facultyPie';
-@import 'components/dashboard/residentDashboard';
-@import 'components/dashboard/supervisorDashboard';
-@import 'components/dashboard/programDashboard';
-@import 'components/dashboard/normativeDashboard';
-@import 'components/dashboard/exportData';
+@import "components/container";
+@import "components/radioButton";
+@import "components/graphPanel";
+@import "components/expiredRecordTable";
+@import "components/narrativeTable";
+@import "components/filterPanel";
+@import "components/tooltip";
+@import "components/dashboard/residentDashboard";
+@import "components/dashboard/normativeDashboard";
 // import pages contains page-specific styling
-@import 'pages/home';
-@import 'pages/notFound';
-@import 'pages/dashboard';
-@import 'pages/tools';
-@import 'pages/admin';
-@import 'pages/programCompare';
-// import UG component styling 
-@import 'components/UGcomponents/studentDashboard';
-
+@import "pages/dashboard";
+@import "pages/tools";
+// import UG component styling

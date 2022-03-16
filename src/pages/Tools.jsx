@@ -38,7 +38,7 @@ class Tools extends Component {
 
     componentWillUnmount() {
         //When moving out of the tab force reload the page to avoid side effects from this page to main dashboard
-        location.reload();
+        // location.reload();
     }
 
     selectResident = (resident = '', showUncommencedEPA = true, openOnlyCurrentPhase = true) => {
@@ -171,18 +171,16 @@ class Tools extends Component {
 
     render() {
         const { processing, dataReady, program = '', fileList = [], dataStore } = this.state,
-            { residentDataList = [], residentList = [] } = dataStore,
-            { route } = this.props, { type = 'calgary' } = route;
+            { residentDataList = [], residentList = [] } = dataStore;
 
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let width = document.body.getBoundingClientRect().width - 125;
 
         return (
-            <div className='tools-root m-t text-xs-left text-sm-left m-b-lg' >
+            <div className='tools-root m-t text-xs-left text-sm-left p-b' >
                 <div className='container'>
-                    {type == 'calgary' ? <h2 className='text-left text-primary text-center'>University of Calgary - CBME Dashboard</h2> :
-                        <h2 className='text-left text-primary text-center'>Royal College of Medicine Observation Report Visualizer</h2>}
+                    <h2 className='text-left text-primary text-center'>University of Calgary - CBME Dashboard</h2>
                     <p className='upload-text-box'> This is a online toolkit designed to visualize CBME data in realtime from RCM (Royal College of Medicine) export files.
 
                         To use this dashboard, <br />first <b>select the relevent program</b> that the resident belongs to
@@ -223,7 +221,7 @@ class Tools extends Component {
                         <UCNormativeDashboard selectResident={this.selectResident} residentList={residentList} residentDataList={residentDataList} />
                     </div>}
                 {dataReady &&
-                    <div>
+                    <div className='p-b-lg'>
                         <h2 className='text-primary m-t text-center'>Resident Dashboard</h2>
                         <UCFilterPanel selectResident={this.selectResident} residentList={residentList} />
                         <GraphPanel

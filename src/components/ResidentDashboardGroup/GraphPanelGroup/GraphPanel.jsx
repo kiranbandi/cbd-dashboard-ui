@@ -97,7 +97,7 @@ class GraphPanel extends Component {
             epaSourceMap, smallScreen, width,
             residentFilter,
             residentList = [],
-            levelVisibilityOpenStatus, programInfo = {}, userType } = this.props,
+            levelVisibilityOpenStatus, programInfo = {} } = this.props,
             residentInfo = false;
 
         const { hidePercentages = false, hideTogoNumbers } = programInfo;
@@ -184,7 +184,6 @@ class GraphPanel extends Component {
                                                     key={'inner-row-' + sourceKey}
                                                     innerKey={innerKey}
                                                     epaSource={epaSource}
-                                                    hideMarkButton={hideMarkButton ? true : (userType == 'resident')}
                                                     isTableVisible={epaSource == openTableID}
                                                     isFilterVisible={epaSource == openFilterID}
                                                     isPlanVisible={epaSource == openPlanID}
@@ -217,7 +216,6 @@ class GraphPanel extends Component {
 
 function mapStateToProps(state) {
     return {
-        userType: state.oracle.userDetails.accessType,
         residentData: state.oracle.residentData,
         expiredResidentData: state.oracle.expiredResidentData,
         isTooltipVisible: state.oracle.isTooltipVisible,
