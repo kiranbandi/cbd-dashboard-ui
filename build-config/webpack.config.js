@@ -10,7 +10,7 @@ module.exports = {
     output: {
         path: __dirname + '/build/assets/bundle',
         filename: "bundle.js",
-        publicPath: "/assets/bundle"
+        publicPath: "assets/bundle"
     },
     watchOptions: {
         ignored: [
