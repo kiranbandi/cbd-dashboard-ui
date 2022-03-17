@@ -43,10 +43,15 @@ export default {
         EPACompletionDistribution: `This graph demonstrates which EPAs are not being completed enough (<100%) and which are being completed too much (>100%) relative to the assessment plan for your discipline. Simply put, it will readily identify any EPAs within your program that are not getting filled out at an adequate rate so that investigations and interventions can occur to address anticipated shortfalls before residents reach the end of the stage. The percentage values are calculated within each stage using data from all of the EPAs completed in the selected academic year using the following equation: 100 * (Number of TTD 1 EPAs completed / Number of TTD EPAs completed) / (Number of TTD 1 EPAs needed / Number of TTD EPAs needed). Previous years can be loaded using the drop-down menu.`,
         EPACompletionDistributionStage: `These values show the degree of deviation from the EPA completion ratio outlined in the program's assessment plan for each training stage and overall. Divergence is higher when EPAs in a stage are over- and under-represented relative to the assessment plan. A heat map (0% green, 50% yellow, 100% red) highlights programs/stages of concern so that investigations and interventions can occur to address these deviations and ensure that residents are given adequate opportunity to complete all of the EPAs before they reach the end of their current stage of training.`,
         EPACountPerRotation: `This graph demonstrates the average number of EPAs completed on a given rotation for residents in your program. It is calculated by dividing the number of EPAs completed by your residents when they are on that rotation by the number of times residents from your program have completed that rotation. The data from previous academic years can be reviewed by adjusting the drop-down menu.`,
-        rotationDist:`This graph shows the total number of EPAs completed in a given rotation by residents in your program. By default only rotation schedules where the program is the scheduling group are shown here.`,
-        rotationGroupFilter:`Use this filter to restrict data to a particular schedule group. By default this is set to the current active program if a matching schedule group is found with the same name.`,
-        rotationClassification:`Use this to group the records based on different rotation criteria such as the name of the rotation or the site where the rotation was performed.`,
+        rotationDist: `This graph shows the total number of EPAs completed in a given rotation by residents in your program. By default only rotation schedules where the program is the scheduling group are shown here.`,
+        rotationGroupFilter: `Use this filter to restrict data to a particular schedule group. By default this is set to the current active program if a matching schedule group is found with the same name.`,
+        rotationClassification: `Use this to group the records based on different rotation criteria such as the name of the rotation or the site where the rotation was performed.`,
         EPAFeedbackWordCount: `This graph displays the average number of words contained within the completed EPAs of each year. The length of the feedback has been found to correlate with feedback quality.`,
         EPAMonthlyDistribution: `This graph visualizes the number of EPA observations submitted per month over multiple years. It is intended to identify increases and decreases in EPA assessments over seasons and years.`,
+    },
+
+    rotationModule: {
+        main: `This page lets you import one45 rotation schedule data into the dashboard by academic year.`
     }
+
 }

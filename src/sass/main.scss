@@ -40,3 +40,61 @@
     // import pages contains page-specific styling
     @import "pages/dashboard";
 }
+
+.year-selection-box {
+    z-index: 100;
+    display: inline-block;
+
+    .header {
+        display: inline-block;
+        margin-right: 20px;
+    }
+    .react-select-root {
+        width: 225px;
+        display: inline-block;
+        & > div:first-child {
+            z-index: 100;
+        }
+    }
+    margin-right: 30px;
+}
+
+.rotation-upload-wrapper {
+
+    .upload-file-container {
+        margin-top: 15px;
+        .inputfile {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+        .icon {
+            padding-left: 10px;
+        }
+
+        p.upload-text {
+            background: #e0e7ed;
+            padding: 10px;
+            margin-right: 10px !important;
+            display: inline-block;
+            border-radius: 2px;
+        }
+        label {
+            vertical-align: inherit;
+            padding: 3px 10px;
+        }
+    }
+
+    .fa-spinner {
+        margin-left: 10px;
+    }
+
+    h4 {
+        display: inline-block;
+        margin: 0px 15px 0px 0px;
+        font-size: 15px !important;
+    }
+}

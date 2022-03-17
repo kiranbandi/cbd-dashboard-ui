@@ -4719,100 +4719,6 @@ a.thumbnail.active {
     color: #555;
 }
 
-.alert {
-    padding: 15px;
-    margin-bottom: 21px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-}
-
-.alert h4 {
-    margin-top: 0;
-    color: inherit;
-}
-
-.alert .alert-link {
-    font-weight: bold;
-}
-
-.alert>p,
-.alert>ul {
-    margin-bottom: 0;
-}
-
-.alert>p+p {
-    margin-top: 5px;
-}
-
-.alert-dismissable,
-.alert-dismissible {
-    padding-right: 35px;
-}
-
-.alert-dismissable .close,
-.alert-dismissible .close {
-    position: relative;
-    top: -2px;
-    right: -21px;
-    color: inherit;
-}
-
-.alert-success {
-    background-color: #1BC98E;
-    border-color: #1BC98E;
-    color: #e7fcf5;
-}
-
-.alert-success hr {
-    border-top-color: #18b37e;
-}
-
-.alert-success .alert-link {
-    color: #baf6e2;
-}
-
-.alert-info {
-    background-color: #9F86FF;
-    border-color: #9F86FF;
-    color: #ffffff;
-}
-
-.alert-info hr {
-    border-top-color: #8b6cff;
-}
-
-.alert-info .alert-link {
-    color: #e6e6e6;
-}
-
-.alert-warning {
-    background-color: #E4D836;
-    border-color: #E4D836;
-    color: #ffffff;
-}
-
-.alert-warning hr {
-    border-top-color: #e1d420;
-}
-
-.alert-warning .alert-link {
-    color: #e6e6e6;
-}
-
-.alert-danger {
-    background-color: #E64759;
-    border-color: #E64759;
-    color: #ffffff;
-}
-
-.alert-danger hr {
-    border-top-color: #e33145;
-}
-
-.alert-danger .alert-link {
-    color: #ccffff;
-}
-
 @-webkit-keyframes progress-bar-stripes {
     from {
         background-position: 40px 0;
@@ -6382,33 +6288,6 @@ button.close {
     .text-lg-center {
         text-align: center;
     }
-}
-
-.alert-dark {
-    background-color: rgba(0, 0, 0, 0.9);
-    border-color: rgba(0, 0, 0, 0.8);
-    color: #fff;
-}
-
-.alert-dark hr {
-    border-top-color: rgba(0, 0, 0, 0.8);
-}
-
-.alert-dark .alert-link {
-    color: #e6e6e6;
-}
-
-.alert-dark .close {
-    text-shadow: 0 1px 0 #000;
-}
-
-.alert-dark .close:hover,
-.alert-dark .close:focus {
-    color: #fff;
-}
-
-.alert-full {
-    border-radius: 0;
 }
 
 .btn {

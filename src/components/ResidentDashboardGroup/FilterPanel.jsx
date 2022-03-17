@@ -154,7 +154,7 @@ class FilterPanel extends Component {
                             placeholder='Select Resident...'
                             isSearchable={true}
                             value={currentSelectValue}
-                            options={groupedResidentList}
+                            options={groupedResidentList} 
                             styles={{
                                 option: (styles, { isSelected }) => ({
                                     ...styles,

@@ -27,7 +27,7 @@ export default class ProgramDashboard extends Component {
         getAllData()
             .then(({ allResidentRecords, dashboard_epas, courseName }) => {
                 // create a list of acad emic years 
-                let academicYearList = _.map(_.groupBy(allResidentRecords, (d) => d.Academic_Year), (recs, key) => ({ 'label': key, 'value': key }))
+                let academicYearList = _.map(_.groupBy(allResidentRecords, (d) => d.Academic_Year), (recs, key) => ({ 'label': 'July ' + key + ' - June ' + (+key + 1), 'value': key }))
                     .sort((previous, current) => previous.label.localeCompare(current.label));
                 let residentList = _.keys(_.groupBy(allResidentRecords, (d) => d.username));
                 // set the values on the state 

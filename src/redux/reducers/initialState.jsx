@@ -3,6 +3,7 @@ export default {
     loaderState: false,
     filterLoaderState: false,
     activePage: dashboard_options.dashboard_mode == 'resident' ? 'resident' : 'normative',
+    userType: dashboard_options.user_type == 'medtech' ? 'medtech' : 'non-admin',
     residentData: null,
     rotationSchedule: [],
     residentFilter: {

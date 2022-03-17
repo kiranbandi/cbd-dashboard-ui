@@ -85,6 +85,18 @@ requestServer.getRotationSchedules = function (residentList = [], allRecords, co
     });
 }
 
+requestServer.setRotationSchedules = function (rotation_data) {
+    return new Promise((resolve, reject) => {
+        var course_preference_request = jQuery.ajax({
+            url: endPoints.assessments + "?section=api-learner-progress-dashboard",
+            type: "POST",
+            data: { "method": "set-learners-schedules", "rotation_data": JSON.stringify(rotation_data) }
+        });
+        jQuery.when(course_preference_request).done(function (data) { resolve(data) });
+    });
+}
+
+
 function errorCallback(error, reject) {
     console.log(error);
     if (error.response && error.response.data) {

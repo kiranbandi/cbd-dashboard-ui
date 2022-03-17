@@ -43,7 +43,7 @@ export default class FacultyDashboard extends Component {
                 let facultyList = _.map(_.groupBy(allResidentRecords, (d) => d.Assessor_Name), (recs, key) => ({ 'label': key, 'value': key }))
                     .sort((previous, current) => previous.label.localeCompare(current.label));
                 // create a list of academic years 
-                let academicYearList = _.map(_.groupBy(allResidentRecords, (d) => d.Academic_Year), (recs, key) => ({ 'label': key, 'value': key }))
+                let academicYearList = _.map(_.groupBy(allResidentRecords, (d) => d.Academic_Year), (recs, key) => ({ 'label': 'July ' + key + ' - June ' + (+key + 1), 'value': key }))
                     .sort((previous, current) => previous.label.localeCompare(current.label));
                 // create a list of all department
                 let departmentList = _.map(_.groupBy(allResidentRecords, (d) => d.Assessor_Department), (recs, key) => ({ 'label': capitalizeStr(key.toLocaleLowerCase()), 'value': key }))

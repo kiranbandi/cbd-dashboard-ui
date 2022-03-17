@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setactivePage } from '../redux/actions/actions';
-import { ResidentDashboard, NormativeDashboard, FacultyDashboard, ProgramDashboard } from '../components';
+import {
+    ResidentDashboard, NormativeDashboard,
+    FacultyDashboard, ProgramDashboard,
+    RotationImport
+} from '../components';
 import infoTooltipReference from '../utils/infoTooltipReference';
 
 class DashboardRoot extends Component {
@@ -21,7 +25,8 @@ class DashboardRoot extends Component {
     render() {
 
         let { activePage = 'resident' } = this.props,
-            { dashboard_mode = 'resident', advanced_mode = 'disabled' } = dashboard_options;
+            { dashboard_mode = 'resident', advanced_mode = 'disabled', user_type = 'non-admin' } = dashboard_options;
+
 
         return (
             <div className='custom-dashboard-page-root' >
@@ -41,6 +46,9 @@ class DashboardRoot extends Component {
                                 {advanced_mode == 'enabled' && <li className={activePage == 'program' ? 'active' : ''}>
                                     <a data-tip={infoTooltipReference.programEvaluation.main} id='program-tab' onClick={this.onTabClick} >PROGRAM EVALUATION</a>
                                 </li>}
+                                {user_type == 'medtech' && <li className={activePage == 'rotation' ? 'active' : ''}>
+                                    <a data-tip={infoTooltipReference.rotationModule.main} id='rotation-tab' onClick={this.onTabClick} > SCHEDULE IMPORT</a>
+                                </li>}
                             </ul>
                         </div>}
                     <div className='control-inner-container'>
@@ -48,6 +56,7 @@ class DashboardRoot extends Component {
                         {(activePage == 'normative') && <NormativeDashboard />}
                         {(activePage == 'supervisor') && <FacultyDashboard />}
                         {(activePage == 'program') && <ProgramDashboard />}
+                        {(activePage == 'rotation') && <RotationImport />}
                     </div>
                 </div>
             </div>
