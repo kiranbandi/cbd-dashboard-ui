@@ -14,6 +14,7 @@ export { default as NormativeGraph } from './NormativeDashboardGroup/NormativeGr
 export { default as GraphPanel } from './ResidentDashboardGroup/GraphPanelGroup/GraphPanel';
 export { default as InfoPanel } from './ResidentDashboardGroup/InfoPanelGroup/InfoPanel';
 export { default as FilterPanel } from './ResidentDashboardGroup/FilterPanel';
+export { default as ExpiredRecordTable } from './ResidentDashboardGroup/ExpiredRecordTable';
 
 // Components for Faculty Dashboard to compare residents
 export { default as FacultyFilterPanel } from './FacultyDashbordGroup/FacultyFilterPanel';

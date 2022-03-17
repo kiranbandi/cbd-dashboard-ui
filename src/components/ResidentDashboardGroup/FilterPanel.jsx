@@ -104,9 +104,9 @@ class FilterPanel extends Component {
             // fetch data from server based on the filter params
             getLearnerData(residentFilter.username, residentInfo)
                 .then((processedData) => {
-                    const { programInfo, residentData, rotationSchedule } = processedData;
+                    const { programInfo, residentData, rotationSchedule, expiredData } = processedData;
                     // remap the data and set it on redux store
-                    mapDataAndMarkDatePeriod(residentData, residentFilter, programInfo, residentInfo, rotationSchedule, actions.setResidentData);
+                    mapDataAndMarkDatePeriod(residentData, residentFilter, programInfo, residentInfo, rotationSchedule, expiredData, actions.setResidentData);
 
                 })
                 .finally(() => { actions.toggleFilterLoader(); });
@@ -154,7 +154,7 @@ class FilterPanel extends Component {
                             placeholder='Select Resident...'
                             isSearchable={true}
                             value={currentSelectValue}
-                            options={groupedResidentList} 
+                            options={groupedResidentList}
                             styles={{
                                 option: (styles, { isSelected }) => ({
                                     ...styles,
@@ -232,7 +232,7 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(FilterPanel);
 
 
-function mapDataAndMarkDatePeriod(residentData, residentFilter, programInfo, residentInfo, rotationSchedule, setResidentData) {
+function mapDataAndMarkDatePeriod(residentData, residentFilter, programInfo, residentInfo, rotationSchedule, expiredData, setResidentData) {
 
     const { isAllData, startDate, endDate } = residentFilter;
 
@@ -262,5 +262,5 @@ function mapDataAndMarkDatePeriod(residentData, residentFilter, programInfo, res
         })
     })
     // set the resident data onto redux store
-    setResidentData(groupedResidentData, residentInfo, programInfo, rotationSchedule);
+    setResidentData(groupedResidentData, residentInfo, programInfo, rotationSchedule, expiredData);
 }

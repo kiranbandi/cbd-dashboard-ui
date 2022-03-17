@@ -32,7 +32,7 @@ export function updateResidentData(residentData) {
     return { type: types.SET_RESIDENT_DATA, residentData };
 }
 
-export function setResidentData(residentData, residentInfo = false, programInfo, rotationSchedule = []) {
+export function setResidentData(residentData, residentInfo = false, programInfo, rotationSchedule = [], expiredData = []) {
 
     let visibilityOpenStatus = {
         1: false,
@@ -69,12 +69,14 @@ export function setResidentData(residentData, residentInfo = false, programInfo,
             dispatch(setLevelVisibilityStatus(visibilityOpenStatus));
             dispatch({ type: types.SET_PROGRAM_INFO, programInfo });
             dispatch({ type: types.SET_RESIDENT_DATA, residentData });
+            dispatch({ type: types.SET_EXPIRED_DATA, expiredData });
             dispatch({ type: types.SET_RESIDENT_SCHEDULE, rotationSchedule });
         };
     }
     // if not simply dispatch the change to residentData alone
     return dispatch => {
         dispatch({ type: types.SET_RESIDENT_DATA, residentData });
+        dispatch({ type: types.SET_EXPIRED_DATA, expiredData });
     };
 
 }
@@ -123,7 +125,7 @@ export function switchToResidentDashboard(residentInfo, residentFilter) {
         // fetch data from server based on the filter params
         getLearnerData(residentFilter.username, residentInfo)
             .then((processedData) => {
-                const { programInfo, residentData, rotationSchedule } = processedData;
+                const { programInfo, residentData, rotationSchedule, expiredData } = processedData;
                 // mark records to so record is set in a date period filter
                 var markedResidentData = _.map(residentData, (d) => {
                     if (residentFilter.isAllData) { d.mark = false }
@@ -144,7 +146,7 @@ export function switchToResidentDashboard(residentInfo, residentFilter) {
                 })
                 // store the info of visibility of phase into resident info
                 residentInfo.openOnlyCurrentPhase = true;
-                dispatch(setResidentData(groupedResidentData, residentInfo, programInfo, rotationSchedule));
+                dispatch(setResidentData(groupedResidentData, residentInfo, programInfo, rotationSchedule, expiredData));
             })
             .finally(() => { dispatch(toggleFilterLoader()); });
     };

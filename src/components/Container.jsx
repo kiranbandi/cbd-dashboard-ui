@@ -51,7 +51,7 @@ class Container extends Component {
             // fetch data from server based on the filter params
             getLearnerData(residentFilter.username, residentInfo)
                 .then((processedData) => {
-                    const { programInfo, residentData, rotationSchedule } = processedData;
+                    const { programInfo, residentData, rotationSchedule, expiredData } = processedData;
                     // mark records to so record is set in a date period filter
                     var markedResidentData = _.map(residentData, (d) => {
                         if (residentFilter.isAllData) { d.mark = false }
@@ -72,7 +72,7 @@ class Container extends Component {
                     })
                     // store the info of visibility of phase into resident info
                     residentInfo.openOnlyCurrentPhase = true;
-                    this.props.actions.setResidentData(groupedResidentData, residentInfo, programInfo, rotationSchedule);
+                    this.props.actions.setResidentData(groupedResidentData, residentInfo, programInfo, rotationSchedule, expiredData);
                 })
                 .finally(() => { this.setState({ showPresetLoader: false }) });
         }

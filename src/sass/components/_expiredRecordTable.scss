@@ -1,0 +1,40 @@
+.expired-box {
+    background: #1a1c22;
+    margin: 0px 50px 0px 50px;
+    border-radius: 5px;
+    .fa {
+        vertical-align: middle;
+        margin-left: 7px;
+        margin-right: 5px;
+        font-size: 15px;
+        width: auto;
+        height: auto;
+        background: none;
+    }
+    h4 {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        color: white;
+        text-transform: none;
+        width: 100%;
+        cursor: pointer;
+        border-radius: 5px 5px 0px 0px;
+        padding: 10px 3px;
+        font-size: 18px;
+        display: inline-block;
+        font-family: sans-serif;
+    }
+    .table-box {
+        margin: 0px auto 10px auto;
+        padding: 10px;
+        border-top: 2px solid #666e83;
+        border-radius: 0px 0px 5px 5px;
+        display: block;
+        .ReactTable .rt-tbody .rt-td {
+            text-align: center;
+        }
+        &.hidden-table-box {
+            display: none;
+        }
+    }
+}

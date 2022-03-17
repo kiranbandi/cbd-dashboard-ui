@@ -166,6 +166,10 @@ object-assign
 
 /*! decimal.js-light v2.5.1 https://github.com/MikeMcl/decimal.js-light/LICENCE */
 
+/*! sheetjs (C) 2013-present SheetJS -- http://sheetjs.com */
+
+/*! xlsx.js (C) 2013-present SheetJS -- http://sheetjs.com */
+
 /**
  * @license
  * Lodash <https://lodash.com/>

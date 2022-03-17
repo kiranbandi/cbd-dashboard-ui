@@ -8,6 +8,7 @@ export default function (username, residentInfo, learnerDataDump) {
         contextual_variables = [], contextual_variables_map = [], rotation_schedule = [] } = learnerDataDump,
         { fullname, epaProgress } = residentInfo;
 
+
     // process and set the source map  
     const programInfo = getProgramInfo(dashboard_epas, epaProgress, course_name);
 
@@ -58,16 +59,24 @@ export default function (username, residentInfo, learnerDataDump) {
             formID: record.form_id,
             formTitle: record.title,
             Academic_Year: getAcademicYear(moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD')),
-            scale: scale_map[rating.scale_id] || ['Resident Entrustment']
+            scale: scale_map[rating.scale_id] || ['Resident Entrustment'],
+            progress: record.progress,
+            Expiry_Date: record.expiry_date
         }
     });
 
-    var residentData = processedData.filter((d) => d.EPA != 'unmapped');
+    // remove unmapped assessments
+    let validAssessmentData = processedData.filter((d) => d.EPA != 'unmapped');
+
+    // Group assessments by progress type and only consider the complete assessments 
+    const assessmentDataGroup = _.groupBy(validAssessmentData, d => d.progress),
+        residentData = assessmentDataGroup['complete'] || [],
+        expiredData = _.filter(assessmentDataGroup['inprogress'], d => moment().isAfter(moment(d.Expiry_Date, 'MMM DD, YYYY')));
 
     // process the rotation schedule data 
     var rotationSchedule = processRotationSchedule(rotation_schedule);
 
-    return { programInfo, residentData, rotationSchedule };
+    return { programInfo, residentData, rotationSchedule, expiredData };
 }
 
 // If group and role are same just return group, if not add the role type to the group

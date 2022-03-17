@@ -5,6 +5,7 @@ export default {
     activePage: dashboard_options.dashboard_mode == 'resident' ? 'resident' : 'normative',
     userType: dashboard_options.user_type == 'medtech' ? 'medtech' : 'non-admin',
     residentData: null,
+    expiredData: null,
     rotationSchedule: [],
     residentFilter: {
       isAllData: true,

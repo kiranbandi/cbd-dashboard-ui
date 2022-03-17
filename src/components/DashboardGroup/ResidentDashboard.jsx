@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FilterPanel, GraphPanel, InfoPanel } from '../';
+import { FilterPanel, GraphPanel, InfoPanel, ExpiredRecordTable } from '../';
 
 class ResidentDashboard extends Component {
 
@@ -38,6 +38,8 @@ class ResidentDashboard extends Component {
                                     <GraphPanel
                                         residentFilter={residentFilter}
                                         width={width}
+                                        smallScreen={smallScreen} />
+                                    <ExpiredRecordTable
                                         smallScreen={smallScreen} />
                                 </div> :
                                 <h3 className='text-primary text-center m-t-lg'>
