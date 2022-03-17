@@ -4,6 +4,7 @@ export { default as NormativeDashboard } from './DashboardGroup/NormativeDashboa
 export { default as FacultyDashboard } from './DashboardGroup/FacultyDashboard';
 export { default as ProgramDashboard } from './DashboardGroup/ProgramDashboard';
 export { default as RotationImport } from './DashboardGroup/RotationImport';
+export { default as OversightDashboard } from './DashboardGroup/OversightDashboard';
 
 // Components for Normative Dashboard to compare residents
 export { default as NormativeTable } from './NormativeDashboardGroup/NormativeTable';

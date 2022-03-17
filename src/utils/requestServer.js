@@ -45,27 +45,19 @@ requestServer.getLearnerData = function (username, residentInfo) {
     });
 }
 
-requestServer.getAllData = function () {
+requestServer.getAllData = function (course = false) {
     return new Promise((resolve, reject) => {
-        if (localCache.dataStore.length == 0) {
-            axios.get(endPoints.assessments, {
-                'params': {
-                    'course_id': course_id,
-                    'section': 'api-learner-progress-dashboard',
-                    'method': 'get-all-learner-assessments'
-                }
+        axios.get(endPoints.assessments, {
+            'params': {
+                'course_id': course ? course : course_id,
+                'section': 'api-learner-progress-dashboard',
+                'method': 'get-all-learner-assessments'
+            }
+        })
+            .then((response) => {
+                resolve(processAllLearnerData(response.data));
             })
-                .then((response) => {
-                    // store in local cache
-                    localCache.dataStore = response.data;
-                    resolve(processAllLearnerData(response.data));
-                })
-                .catch((err) => errorCallback(err, reject));
-        }
-        else {
-            // stub in delay
-            setTimeout(() => { resolve(processAllLearnerData(localCache.dataStore)); }, 100);
-        }
+            .catch((err) => errorCallback(err, reject));
     });
 }
 

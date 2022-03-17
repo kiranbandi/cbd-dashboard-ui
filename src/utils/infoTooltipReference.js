@@ -51,6 +51,10 @@ export default {
         EPAMonthlyDistribution: `This graph visualizes the number of EPA observations submitted per month over multiple years. It is intended to identify increases and decreases in EPA assessments over seasons and years.`,
     },
 
+    programOversight:{
+        main: `This dashboard lets you compare metrics among different programs for the purpose of program oversight.`,
+    },
+
     rotationModule: {
         main: `This page lets you import one45 rotation schedule data into the dashboard by academic year.`
     }
