@@ -115,7 +115,7 @@ export default class FacultyGraph extends Component {
         return (<div className={'faculty-graph-box m-r m-b ' + className}>
             <h3 className="text-left m-b">
                 {title}
-                <b className='title-append'>{titleValue}</b>
+                <b className='title-append'>{titleValue}{(trackType == 'expiry_rate' && titleValue) ? '%' : ''}</b>
                 <i data-for={tooltipID} data-tip={tooltipRef} className="fa fa-info-circle instant-tooltip-trigger"></i>
             </h3>
             <svg className='supervisor-line-chart' width={width} height={height} >

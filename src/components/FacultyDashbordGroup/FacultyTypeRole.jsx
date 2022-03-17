@@ -7,7 +7,7 @@ import infoTooltipReference from '../../utils/infoTooltipReference';
 export default class FacultyTypeRole extends PureComponent {
 
     render() {
-        const { title, width, data = [], currentFaculty, currentFacultyData } = this.props;
+        const { title, width, data = [], currentFacultyData } = this.props;
 
         const flatRecords = _.flatMap(data, (d) => d.records);
 

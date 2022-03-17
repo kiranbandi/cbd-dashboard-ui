@@ -14,6 +14,8 @@ export default class FacultyGraphGroup extends Component {
 
         // format the data into the required format for a graph component
         const data_epa_count = _.map(processedRecords, (d) => [d.faculty_name, d.epa_count]);
+        // format the data into the required format for a graph component
+        const data_expired_rate = _.map(processedRecords, (d) => [d.faculty_name, d.expiry_rate]);
         // entrustment_score data
         // for entrustment scores since we cannot show EPA scores that havent been graded we remove the expired ones
         const data_entrustment_score = _.map(processedRecords, (d) => [d.faculty_name, d.entrustment_score]);
@@ -32,6 +34,16 @@ export default class FacultyGraphGroup extends Component {
                     currentFaculty={currentFaculty}
                     trackType={'epa_count'}
                     data={data_epa_count}
+                    selectFaculty={selectFaculty}
+                    width={(width / 2) - 50} />
+                <FacultyGraph
+                    tooltipRef={infoTooltipReference.facultyDevlopment.EPAExpiryRate}
+                    tooltipID={'faculty-expired-rate-infotip'}
+                    title={'EPA Expiry Rate'}
+                    titleValue={!!currentFacultyData ? currentFacultyData.expiry_rate : ''}
+                    currentFaculty={currentFaculty}
+                    trackType={'expiry_rate'}
+                    data={data_expired_rate}
                     selectFaculty={selectFaculty}
                     width={(width / 2) - 50} />
                 <FacultyGraph

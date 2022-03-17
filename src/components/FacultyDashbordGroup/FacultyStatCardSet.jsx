@@ -12,6 +12,7 @@ export default (props) => {
 
     let averageEPAScore = !showNA ? Math.round((_.meanBy(processedRecords, (d) => d.entrustment_score) || 0) * 100) / 100 : 'N/A',
         averageWords = !showNA ? Math.round(_.meanBy(processedRecords, (d) => d.words_per_comment) || 0) : 'N/A',
+        averageExpiryRate = !showNA ? Math.round(_.meanBy(processedRecords, (d) => d.expiry_rate) || 0) : 'N/A',
         ratingGroupSet = !showNA ? _.reduce(processedRecords, (acc, d) => _.map(acc, (inner_d, i) => (inner_d + d.rating_group[i])), [0, 0, 0, 0, 0]) : [],
         phaseGroupSet = !showNA ? _.reduce(processedRecords, (acc, d) => _.map(acc, (inner_d, i) => (inner_d + d.phase_group[i])), [0, 0, 0, 0]) : [];
 
@@ -24,8 +25,9 @@ export default (props) => {
         </div>
         <div className='text-center'>
             <MicroStatCard style={{ display: 'inline' }} title='Total EPAs observed' type='success' metric={EPACount} />
-            <MicroStatCard style={{ display: 'inline' }} title='Average EPA Score' type='primary' metric={averageEPAScore} />
-            <MicroStatCard style={{ display: 'inline' }} title='Average words per comment' type='danger' metric={averageWords} />
+            <MicroStatCard style={{ display: 'inline' }} title='Mean EPA Score' type='primary' metric={averageEPAScore} />
+            <MicroStatCard style={{ display: 'inline' }} title='EPA Expiry Rate' type='danger' metric={averageExpiryRate + (averageExpiryRate != 'NA' ? '%' : '')} />
+            <MicroStatCard style={{ display: 'inline' }} title='Mean words per comment' type='info' metric={averageWords} />
             <FacultyScorePie data={ratingGroupSet} />
             <PhaseSummaryPie data={phaseGroupSet} />
         </div>

@@ -38,12 +38,13 @@ export default function (learnersDataDump) {
             Type: record.form_type,
             formID: record.form_id,
             Academic_Year: getAcademicYear(moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD')),
-            scale: scale_map[rating.scale_id] || ['Resident Entrustment']
+            scale: scale_map[rating.scale_id] || ['Resident Entrustment'],
+            progress: record.progress,
+            Expiry_Date: record.expiry_date
         }
     });
 
     let allResidentRecords = processedData.filter((d) => d.EPA != 'unmapped');
-
 
     // If the course name has course code in it, remove 
 
