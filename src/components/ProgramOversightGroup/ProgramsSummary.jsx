@@ -178,7 +178,7 @@ export default class ProgramsSummary extends Component {
                 </div>
 
 
-                <div className="hr-divider m-t-md">
+                <div className="hr-divider p-t-lg">
                     <h4 className="hr-divider-content">
                         Monthly Metrics
                         <i data-for={'overallAcuisitionMetricsYears'} data-tip={infoTooltipReference.programEvaluation.overallAcuisitionMetricsYears} className="fa fa-info-circle instant-tooltip-trigger"></i>
@@ -195,13 +195,14 @@ export default class ProgramsSummary extends Component {
 
                     return <div key={'monthly-chart-wrapper-' + pID} className='program-part-container p-b' >
                         <div className='chart-container'>
-                            <LineChart width={width / 4}
+                            <h4 className='p-a text-center'>{p.program}</h4>
+                            <LineChart width={width / 3}
                                 height={300} data={monthCountList}
                                 margin={{ left: 25, right: 30, top: 15, bottom: 30 }}>
                                 <XAxis style={{ 'fontWeight': 'bolder' }}
-                                    width={105} tickSize={0} tickMargin={10}
+                                    width={10} tickSize={0} tickMargin={10}
                                     type="category" axisLine={false} dataKey="month" />
-                                <YAxis />
+                                <YAxis width={15} />
                                 <Tooltip labelStyle={{ 'color': 'black' }} wrapperStyle={{ 'fontWeight': 'bold' }} />
                                 <Legend wrapperStyle={{ bottom: 0 }} height={32} />
                                 <Line

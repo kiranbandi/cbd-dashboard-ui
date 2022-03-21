@@ -5,13 +5,13 @@ import { EPATextToNumber } from '../convertEPA';
 
 export default function (learnersDataDump) {
 
-    let { dashboard_epas = [], rating_scale_map = { 'rating_scale_map': '[]' }, assessments = [], course_name = '' } = learnersDataDump;
+    let { dashboard_epas = [], rating_scale_map = [], assessments = [], course_name = '' } = learnersDataDump;
 
-    let assessments_fixed = _.map(assessments, (e) => ({ ...e, 'comments': JSON.parse(e.comments), 'mapped_epas': JSON.parse(e.mapped_epas) }));
+    let assessments_fixed = _.map(assessments, (e) => ({ ...e,  }));
 
     // process the rating scale map
     // records come tagged with descriptor ID, we need to group the ratings by scale ID and then rate them by order.
-    let scale_map = _.groupBy(JSON.parse(rating_scale_map.rating_scale_map), (d) => d.scale_id);
+    let scale_map = _.groupBy(rating_scale_map, (d) => d.scale_id);
     // Order the ratings in a single scale so that they are in order based on the order tag
     _.map(scale_map, (scale, scale_id) => {
         scale_map[scale_id] = _.map(_.sortBy(scale, d => d.order), (e) => e.text);
@@ -20,7 +20,7 @@ export default function (learnersDataDump) {
     var processedData = _.map(assessments_fixed, (record) => {
 
         // Map the rating for the record based on the descriptor ID
-        const rating = _.find(JSON.parse(rating_scale_map.rating_scale_map), d => d.descriptor_id == record.selected_descriptor_id) || { 'order': 1 };
+        const rating = _.find(rating_scale_map, d => d.descriptor_id == record.selected_descriptor_id) || { 'order': 1 };
 
         return {
             username: record.proxy_id,
