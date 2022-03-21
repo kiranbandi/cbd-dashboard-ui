@@ -3,6 +3,9 @@ import { getAllData, getRotationSchedules } from '../../utils/requestServer';
 import _ from 'lodash';
 import ProgramAllYearsSummary from '../ProgramEvaluationGroup/ProgramAllYearsSummary';
 import ProgramBasePanel from '../ProgramEvaluationGroup/ProgramBasePanel';
+import moment from 'moment';
+import downloadCSV from '../../utils/downloadCSV';
+import { NumberToEPAText } from "../../utils/convertEPA";
 
 
 export default class ProgramDashboard extends Component {
@@ -49,6 +52,41 @@ export default class ProgramDashboard extends Component {
         this._isMounted = false;
     }
 
+    downloadReport = () => {
+
+        const { allResidentRecords = [] } = this.state;
+
+        if (allResidentRecords.length > 0) {
+            downloadCSV([
+                'Academic Year',
+                'Encounter Date',
+                'Expiry Date',
+                'Resident',
+                'Assessor',
+                'Assessor Role',
+                'EPA',
+                'Rating',
+                'Feedback',
+                'Type',
+                'Progress']
+                , _.map(allResidentRecords, e =>
+                ([e['Academic_Year'] || '',
+                e['Date'] || '',
+                moment(e.Expiry_Date, 'MMM DD, YYYY').format('YYYY-MM-DD'),
+                e['Resident_Name'] || '',
+                e['Assessor_Name'] || '',
+                e['Assessor_Role'] || '',
+                NumberToEPAText(String(e['EPA'])),
+                e['Rating'] || '',
+                e['Feedback'] || '',
+                e['Type'] || '',
+                e['isExpired'] ? 'expired' : e['progress']
+                ])),
+                'program-data-report');
+        }
+
+    }
+
 
     render() {
 
@@ -65,6 +103,9 @@ export default class ProgramDashboard extends Component {
                     <div className='container-fluid'>
                         {allResidentRecords.length > 0 ?
                             <div>
+                                <div className='text-right m-r-md m-t-md'>
+                                    <button onClick={this.downloadReport} className='btn btn btn-primary-outline'> <i className="fa fa-download"></i> Export Program Data</button>
+                                </div>
                                 <ProgramAllYearsSummary
                                     width={fullWidth}
                                     allRecords={allResidentRecords}

@@ -4,7 +4,7 @@ import { getAllData } from '../../utils/requestServer';
 import processFacultyMap from '../../utils/processors/processFacultyMap';
 import {
     FacultyFilterPanel, FacultyInfoGroup,
-    FacultyRecordTable, FacultyGraphGroup
+    FacultyRecordTable, FacultyGraphGroup, FacultyExpiredRecordTable
 } from '../';
 
 export default class FacultyDashboard extends Component {
@@ -123,6 +123,11 @@ export default class FacultyDashboard extends Component {
                                 currentFaculty={currentFaculty} />
 
                             <FacultyRecordTable
+                                currentFaculty={currentFaculty}
+                                width={overallWidth}
+                                currentFacultyRecords={currentFacultyRecords} />
+
+                            <FacultyExpiredRecordTable
                                 currentFaculty={currentFaculty}
                                 width={overallWidth}
                                 currentFacultyRecords={currentFacultyRecords} />

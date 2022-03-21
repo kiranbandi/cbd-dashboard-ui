@@ -7,7 +7,7 @@ export default function (learnersDataDump) {
 
     let { dashboard_epas = [], rating_scale_map = [], assessments = [], course_name = '' } = learnersDataDump;
 
-    let assessments_fixed = _.map(assessments, (e) => ({ ...e,  }));
+    let assessments_fixed = _.map(assessments, (e) => ({ ...e, }));
 
     // process the rating scale map
     // records come tagged with descriptor ID, we need to group the ratings by scale ID and then rate them by order.
@@ -36,13 +36,14 @@ export default function (learnersDataDump) {
             Professionalism_Safety: '',
             Rating: rating.order,
             Rating_Text: '(' + rating.order + ') ' + rating.text,
-            Resident_Name: '',
+            Resident_Name: record['resident'] || '',
             Type: record.form_type,
             formID: record.form_id,
             Academic_Year: getAcademicYear(moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD')),
             scale: scale_map[rating.scale_id] || ['Resident Entrustment'],
             progress: record.progress,
-            Expiry_Date: record.expiry_date
+            Expiry_Date: record.expiry_date,
+            isExpired: ((record.progress == 'inprogress') && (moment().isAfter(moment(record.expiry_date, 'MMM DD, YYYY'))))
         }
     });
 

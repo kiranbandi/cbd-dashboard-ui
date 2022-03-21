@@ -52,6 +52,7 @@ export default function (allResidentRecords = [], epas = [], currentAcademicYear
         return {
             faculty_name,
             'records': completedRecords,
+            expiredRecords,
             rating_group: _.map([1, 2, 3, 4, 5], (d) => (ratingGroup[d] ? ratingGroup[d].length : 0)),
             epaGroup: _.map([...epaList], (d) => epaGroup[d.key] ? epaGroup[d.key].length : 0),
             phase_group: _.map(phaseList, (d) => (trainingPhaseGroup[d] ? trainingPhaseGroup[d].length : 0)),

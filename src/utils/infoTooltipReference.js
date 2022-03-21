@@ -30,6 +30,7 @@ export default {
         averageEntrustmentScore: `This chart displays the average entrustment score of EPAs completed by each faculty member. Mouse-over for each faculty's name and click to highlight that faculty member's data. If a faculty is selected, their average entrustment score is shown in the chart title in red. `,
         averageWordsPerComment: `This chart displays the average number of words per comment included with the EPAs completed by each faculty member. Mouse-over for each faculty's name and click to highlight that faculty member's data. If a faculty is selected, their average words per comment metric is shown in the chart title in red. `,
         summaryOfEPAsByFacultyName: `This table displays EPAs completed by the selected Faculty. It is searchable (click the white box) and sortable (click the column header).`,
+        summaryOfEPAsByExpiredFacultyName:`This table displays Expired EPAs that were not completed by the selected Faculty. It is searchable (click the white box) and sortable (click the column header) and can be exported as CSV file.`,
         groupAndRole: `The following pie charts show the distribution of the different assessor roles and groups. If a faculty is selected, their group and role are shown in the chart title in red.`
     },
     programEvaluation: {

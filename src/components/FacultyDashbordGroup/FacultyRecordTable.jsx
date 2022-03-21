@@ -13,10 +13,17 @@ const columns = [{
     filterMethod: customFilter
 },
 {
+    Header: 'Resident',
+    accessor: 'Resident_Name',
+    maxWidth: 200,
+    className: 'text-center',
+    filterMethod: customFilter
+},
+{
     Header: 'EPA',
-    accessor: 'EPA',
+    accessor: 'modded_epa',
     maxWidth: 50,
-    className: 'epa-cell',
+    className: 'epa-cell text-center',
     filterMethod: customFilter
 },
 {
@@ -47,19 +54,8 @@ export default (props) => {
     else {
         // In the table show only records that have not been expired
         innerRecords = currentFacultyRecords[0].records || [];
-        innerRecords = _.filter(innerRecords, (d) => !d.isExpired);
-
     }
 
-    const getPageSizeOptions = () => {
-        if (innerRecords.length < 5) {
-            return [innerRecords.length];
-        } else {
-            const optionList = [5];
-            for (let i = 5; i < innerRecords.length; optionList.push(i = (i * 2 > innerRecords.length ? innerRecords.length : i * 2)));
-            return optionList;
-        }
-    }
 
     return <div className='table-box' style={{ width: width }}>
         {currentFacultyRecords.length > 0 &&
@@ -69,10 +65,9 @@ export default (props) => {
             </h3>,
             <ReactTable
                 key='faculty-table'
-                data={(_.map(innerRecords, (d) => ({ ...d, 'epa': NumberToEPAText(d.epa) })))}
+                data={(_.map(innerRecords, (d) => ({ ...d, 'modded_epa': NumberToEPAText(d.EPA) })))}
                 columns={columns}
                 defaultPageSize={10}
-                pageSizeOptions={getPageSizeOptions()}
                 resizable={false}
                 filterable={true}
                 defaultSorted={[{ id: "observation_date", desc: true }]} />]}
