@@ -40,6 +40,26 @@
     @import "components/dashboard/programDashboard";
     // import pages contains page-specific styling
     @import "pages/dashboard";
+
+    .dashboard-root-program {
+        .multi-selection-box {
+            z-index: 100;
+            display: inline-block;
+
+            .header {
+                font-weight: normal;
+                font-size: 17px;
+            }
+            .react-select-root {
+                width: 350px;
+                display: inline-block;
+                & > div:first-child {
+                    z-index: 100;
+                }
+            }
+            margin-right: 30px;
+        }
+    }
 }
 
 .year-selection-box {
@@ -61,7 +81,6 @@
 }
 
 .rotation-upload-wrapper {
-
     .upload-file-container {
         margin-top: 15px;
         .inputfile {

@@ -46,9 +46,9 @@ class DashboardRoot extends Component {
                                 {advanced_mode == 'enabled' && <li className={activePage == 'program' ? 'active' : ''}>
                                     <a data-tip={infoTooltipReference.programEvaluation.main} id='program-tab' onClick={this.onTabClick} >PROGRAM EVALUATION</a>
                                 </li>}
-                                {/* {advanced_mode == 'enabled' && <li className={activePage == 'oversight' ? 'active' : ''}>
+                                {advanced_mode == 'enabled' && <li className={activePage == 'oversight' ? 'active' : ''}>
                                     <a data-tip={infoTooltipReference.programOversight.main} id='oversight-tab' onClick={this.onTabClick} >PROGRAM OVERSIGHT</a>
-                                </li>} */}
+                                </li>}
                                 {user_type == 'medtech' && <li className={activePage == 'rotation' ? 'active' : ''}>
                                     <a data-tip={infoTooltipReference.rotationModule.main} id='rotation-tab' onClick={this.onTabClick} > SCHEDULE IMPORT</a>
                                 </li>}
@@ -59,7 +59,7 @@ class DashboardRoot extends Component {
                         {(activePage == 'normative') && <NormativeDashboard />}
                         {(activePage == 'supervisor') && <FacultyDashboard />}
                         {(activePage == 'program') && <ProgramDashboard />}
-                        {/* {(activePage == 'oversight') && <OversightDashboard />} */}
+                        {(activePage == 'oversight') && <OversightDashboard />}
                         {(activePage == 'rotation') && <RotationImport />}
                     </div>
                 </div>
