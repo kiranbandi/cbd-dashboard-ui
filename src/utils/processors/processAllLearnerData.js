@@ -7,8 +7,6 @@ export default function (learnersDataDump) {
 
     let { dashboard_epas = [], rating_scale_map = [], assessments = [], course_name = '' } = learnersDataDump;
 
-    let assessments_fixed = _.map(assessments, (e) => ({ ...e, }));
-
     // process the rating scale map
     // records come tagged with descriptor ID, we need to group the ratings by scale ID and then rate them by order.
     let scale_map = _.groupBy(rating_scale_map, (d) => d.scale_id);
@@ -17,18 +15,17 @@ export default function (learnersDataDump) {
         scale_map[scale_id] = _.map(_.sortBy(scale, d => d.order), (e) => e.text);
     });
 
-    var processedData = _.map(assessments_fixed, (record) => {
-
+    var processedData = _.map(assessments, (record) => {
         // Map the rating for the record based on the descriptor ID
         const rating = _.find(rating_scale_map, d => d.descriptor_id == record.selected_descriptor_id) || { 'order': 1 };
-
+        const record_mapped_epas = JSON.parse(record.mapped_epas);
         return {
             username: record.proxy_id,
             Date: moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD'),
-            EPA: recordEPAtoNumber(record),
-            phaseTag: getRecordPhaseCode(record).toUpperCase(),
+            EPA: recordEPAtoNumber(record, record_mapped_epas),
+            phaseTag: getRecordPhaseCode(record_mapped_epas).toUpperCase(),
             Assessor_Name: record.assessor,
-            Feedback: processComments(record),
+            Feedback: processComments(JSON.parse(record.comments)),
             Assessor_Group: sanitise(record['assessor_group'], 'No Group'),
             Assessor_Role: sanitise(record['assessor_role'], 'No Role'),
             Assessor_Type: sanitise(record['assessor_type'], 'No Type'),
@@ -39,7 +36,7 @@ export default function (learnersDataDump) {
             Resident_Name: record['resident'] || '',
             Type: record.form_type,
             formID: record.form_id,
-            Academic_Year: getAcademicYear(moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD')),
+            Academic_Year: record.academic_year,
             scale: scale_map[rating.scale_id] || ['Resident Entrustment'],
             progress: record.progress,
             Expiry_Date: record.expiry_date,
@@ -48,8 +45,6 @@ export default function (learnersDataDump) {
     });
 
     let allResidentRecords = processedData.filter((d) => d.EPA != 'unmapped');
-
-    // If the course name has course code in it, remove 
 
     return { allResidentRecords, dashboard_epas, 'courseName': course_name };
 }
@@ -64,9 +59,9 @@ function sanitise(value, placeholder) {
     }
     return placeholder;
 }
-function recordEPAtoNumber(record) {
-    if (record.mapped_epas.length > 0) {
-        return EPATextToNumber(record.mapped_epas[0].objective_code || '');
+function recordEPAtoNumber(record, record_mapped_epa_list) {
+    if (record_mapped_epa_list.length > 0) {
+        return EPATextToNumber(record_mapped_epa_list[0].objective_code || '');
     }
     else if (record.form_type == 'Supervisor Form') {
         return EPATextToNumber(record.title.split('-')[1].trim());
@@ -74,23 +69,23 @@ function recordEPAtoNumber(record) {
     else { return 'unmapped' };
 }
 
-function getRecordPhaseCode(record) {
-    if (record.mapped_epas.length > 0) {
-        return (record.mapped_epas[0].stage_code || '0');
+function getRecordPhaseCode(mapped_epas) {
+    if (mapped_epas.length > 0) {
+        return (mapped_epas[0].stage_code || '0');
     }
     else { return '0' };
 }
 
-function processComments(record) {
+function processComments(record_comments) {
     // if comments exists parse them
-    if (record.comments && record.comments.length > 0) {
+    if (record_comments && record_comments.length > 0) {
         // The comments can be of multiple types
         // the comment of the type label: "Based on this..."
         // are the regular feedback so add them in first
         // sometimes there are multiple entries of this type, which can happen
         // if they enter a comment first and then edit it and save it
         // so get the longest comment 
-        let groupedComments = _.partition(record.comments, (d) => d.label.indexOf('Based on this') > -1);
+        let groupedComments = _.partition(record_comments, (d) => d.label.indexOf('Based on this') > -1);
         // the grouped comments is an array the first index contains all comments which are the feedback type
         // usually this is just one comment but sometimes the same entry gets
         // written multiple times so in those cases reduce it to the longest one.
@@ -111,17 +106,5 @@ function processComments(record) {
     return '';
 }
 
-
-function getAcademicYear(startDate) {
-    const dateObject = moment(startDate, 'YYYY-MM-DD'), year = dateObject.year();
-    // The academic year is always the year number when the academic calendar starts
-    // so to get the academic year, we first get the year entry of the datapoint
-    // then if the datapoint is after July 1st then the academic year is that year number
-    // if not then the academic year is the previous year number.
-    if (dateObject.isSameOrAfter(moment('07/01/' + (+year), 'MM/DD/YYYY'))) {
-        return year;
-    }
-    return year - 1;
-}
 
 

@@ -8,6 +8,7 @@ export default function (username, residentInfo, learnerDataDump) {
         contextual_variables = [], contextual_variables_map = [], rotation_schedule = [] } = learnerDataDump,
         { fullname, epaProgress } = residentInfo;
 
+    let assessments_fixed = _.map(assessments, (e) => ({ ...e, 'comments': JSON.parse(e.comments), 'mapped_epas': JSON.parse(e.mapped_epas) }));
 
     // process and set the source map  
     const programInfo = getProgramInfo(dashboard_epas, epaProgress, course_name);
@@ -34,7 +35,7 @@ export default function (username, residentInfo, learnerDataDump) {
         subGroupedContextualVariables[formID] = _.groupBy(values, (d) => d.dassessment_id);
     });
 
-    var processedData = _.map(assessments, (record) => {
+    var processedData = _.map(assessments_fixed, (record) => {
 
         const contextual_variables_by_form = subGroupedContextualVariables[record.form_id] || {},
             situationContextCollection = contextual_variables_by_form[record.dassessment_id] || [];

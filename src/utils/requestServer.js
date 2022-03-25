@@ -8,56 +8,55 @@ import endPoints from './endPoints';
 
 var requestServer = {};
 
-var localCache = { 'dataStore': [] };
 
 requestServer.getLearnerList = function (params) {
     return new Promise((resolve, reject) => {
-
-        axios.get(endPoints.assessments, {
-            'params': {
-                ...params,
-                'section': 'api-learner-progress-dashboard',
-                'method': 'get-learners-list-with-progress'
+        let get_learner_data = jQuery.ajax({
+            url: endPoints.assessments + "?section=api-learner-progress-dashboard",
+            type: "POST",
+            data: {
+                "method": "get-learners-list-with-progress",
+                ...params
             }
-        })
-            .then((response) => {
-                resolve(processCourseData(response.data));
-            })
-            .catch((err) => errorCallback(err, reject));
+        });
 
+        jQuery.when(get_learner_data)
+            .done(function (data = '{}') { resolve(processCourseData(JSON.parse(data))) })
+            .fail(e => errorCallback(e, reject));
     });
 }
 
 requestServer.getLearnerData = function (username, residentInfo) {
     return new Promise((resolve, reject) => {
-        axios.get(endPoints.assessments, {
-            'params': {
-                'proxy_id': username,
-                'course_id': course_id,
-                'section': 'api-learner-progress-dashboard',
-                'method': 'get-learner-assessments'
+
+        let get_learner_data = jQuery.ajax({
+            url: endPoints.assessments + "?section=api-learner-progress-dashboard",
+            type: "POST",
+            data: {
+                "method": "get-learner-assessments",
+                "course_id": course_id,
+                'proxy_id': username
             }
-        })
-            .then((response) => {
-                resolve(processLearnerData(username, residentInfo, response.data));
-            })
-            .catch((err) => errorCallback(err, reject));
+        });
+
+        jQuery.when(get_learner_data)
+            .done(function (data = '{}') { resolve(processLearnerData(username, residentInfo, JSON.parse(data))) })
+            .fail(e => errorCallback(e, reject));
     });
 }
 
 requestServer.getAllData = function (course = false) {
     return new Promise((resolve, reject) => {
-        axios.get(endPoints.assessments, {
-            'params': {
-                'course_id': course ? course : course_id,
-                'section': 'api-learner-progress-dashboard',
-                'method': 'get-all-learner-assessments'
-            }
-        })
-            .then((response) => {
-                resolve(processAllLearnerData(response.data));
-            })
-            .catch((err) => errorCallback(err, reject));
+
+        let get_all_learners_data = jQuery.ajax({
+            url: endPoints.assessments + "?section=api-learner-progress-dashboard",
+            type: "POST",
+            data: { "method": "get-all-learner-assessments", "course_id": course ? course : course_id }
+        });
+
+        jQuery.when(get_all_learners_data)
+            .done(function (data) { resolve(processAllLearnerData(JSON.parse(data))) })
+            .fail(e => errorCallback(e, reject));
     });
 }
 
@@ -79,23 +78,19 @@ requestServer.getRotationSchedules = function (residentList = [], allRecords, co
 
 requestServer.setRotationSchedules = function (rotation_data) {
     return new Promise((resolve, reject) => {
-        var course_preference_request = jQuery.ajax({
+        let set_rotation_request = jQuery.ajax({
             url: endPoints.assessments + "?section=api-learner-progress-dashboard",
             type: "POST",
             data: { "method": "set-learners-schedules", "rotation_data": JSON.stringify(rotation_data) }
         });
-        jQuery.when(course_preference_request).done(function (data) { resolve(data) });
+        jQuery.when(set_rotation_request).done(function (data) { resolve(data) });
     });
 }
 
 
 function errorCallback(error, reject) {
     console.log(error);
-    if (error.response && error.response.data) {
-        alert("Sorry there was an error in connecting to the server, Please try reloading the page");
-    } else {
-        alert("Sorry there was an error in connecting to the server, Please try reloading the page");
-    }
+    alert("Sorry there was an error in connecting to the server, Please try reloading the page");
     reject();
 }
 
