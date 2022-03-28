@@ -197,13 +197,13 @@ function mapRating(r) {
         return 5;
     }
     else {
-        return 'unmapped';
+        return rating;
     }
 }
 
 function constructFeedback(rating, nextSteps = '') {
     const comments = rating.split("\n\nComments: \n")[1];
-    return comments + nextSteps;
+    return (comments || '') + nextSteps;
 }
 
 
