@@ -62,7 +62,8 @@ export default function (username, residentInfo, learnerDataDump) {
             Academic_Year: getAcademicYear(moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD')),
             scale: scale_map[rating.scale_id] || ['Resident Entrustment'],
             progress: record.progress,
-            Expiry_Date: record.expiry_date
+            Expiry_Date: record.expiry_date,
+            isExpired: ((record.progress == 'inprogress') && (moment().isAfter(moment(record.expiry_date, 'MMM DD, YYYY'))))
         }
     });
 
@@ -72,7 +73,7 @@ export default function (username, residentInfo, learnerDataDump) {
     // Group assessments by progress type and only consider the complete assessments 
     const assessmentDataGroup = _.groupBy(validAssessmentData, d => d.progress),
         residentData = assessmentDataGroup['complete'] || [],
-        expiredData = _.filter(assessmentDataGroup['inprogress'], d => moment().isAfter(moment(d.Expiry_Date, 'MMM DD, YYYY')));
+        expiredData = _.filter(assessmentDataGroup['inprogress'], d => d.isExpired);
 
     // process the rotation schedule data 
     var rotationSchedule = processRotationSchedule(rotation_schedule);

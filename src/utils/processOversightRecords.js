@@ -1,13 +1,13 @@
 import _ from 'lodash';
 import moment from 'moment';
 
-export default function (allRecords = [], trainingPhase = 'A') {
+export default function (allRecords = [], academicYear) {
 
-
+    const recordsInYear = _.filter(allRecords, d => d.Academic_Year == academicYear.value);
     // group records by completion status 
-    const assessmentGroup = _.groupBy(allRecords, d => d.progress),
+    const assessmentGroup = _.groupBy(recordsInYear, d => d.progress),
         programRecords = assessmentGroup['complete'] || [],
-        expiredRecords = _.filter(assessmentGroup['inprogress'], d => moment().isAfter(moment(d.Expiry_Date, 'MMM DD, YYYY')));
+        expiredRecords = _.filter(assessmentGroup['inprogress'], d => d.isExpired);
 
     // for some calculations we can ignore the expired records as for them the metrics dont
     // exist so we filter them out from the list

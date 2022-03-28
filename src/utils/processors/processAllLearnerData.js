@@ -15,11 +15,14 @@ export default function (learnersDataDump) {
         scale_map[scale_id] = _.map(_.sortBy(scale, d => d.order), (e) => e.text);
     });
 
-    var processedData = _.map(assessments, (record) => {
+    let allResidentRecords = [];
+
+    _.map(assessments, (record) => {
         // Map the rating for the record based on the descriptor ID
         const rating = _.find(rating_scale_map, d => d.descriptor_id == record.selected_descriptor_id) || { 'order': 1 };
         const record_mapped_epas = JSON.parse(record.mapped_epas);
-        return {
+
+        let assessment_record = {
             username: record.proxy_id,
             Date: moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD'),
             EPA: recordEPAtoNumber(record, record_mapped_epas),
@@ -41,11 +44,12 @@ export default function (learnersDataDump) {
             progress: record.progress,
             Expiry_Date: record.expiry_date,
             isExpired: ((record.progress == 'inprogress') && (moment().isAfter(moment(record.expiry_date, 'MMM DD, YYYY'))))
+        };
+
+        if (assessment_record.EPA != 'unmapped') {
+            allResidentRecords.push(assessment_record);
         }
     });
-
-    let allResidentRecords = processedData.filter((d) => d.EPA != 'unmapped');
-
     return { allResidentRecords, dashboard_epas, 'courseName': course_name };
 }
 
@@ -63,7 +67,7 @@ function recordEPAtoNumber(record, record_mapped_epa_list) {
     if (record_mapped_epa_list.length > 0) {
         return EPATextToNumber(record_mapped_epa_list[0].objective_code || '');
     }
-    else if (record.form_type == 'Supervisor Form') {
+    else if (record.form_type == 'Supervisor Form' && record.title.indexOf('-') > -1) {
         return EPATextToNumber(record.title.split('-')[1].trim());
     }
     else { return 'unmapped' };

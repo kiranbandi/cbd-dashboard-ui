@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { Line } from 'react-chartjs';
+import { Line, CartesianGrid, XAxis, YAxis, Tooltip, ComposedChart, Area } from 'recharts';
 
 export default class WeeklyEPAChart extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
-
     render() {
-
 
         const { residentData, residentFilter, width } = this.props,
             residentDataList = _.flatMap(residentData);
@@ -41,62 +35,57 @@ export default class WeeklyEPAChart extends Component {
             startDate = startDate.subtract(1, 'week');
 
         }
-
         // reverse the week list so its from oldest to current
         weekList = _.reverse(weekList);
-
-        let datasets = [{
-            label: "EPA Count by Week",
-            fillColor: "rgba(28,168,221,0.05)",
-            strokeColor: "steelblue",
-            pointColor: "steelblue",
-            data: _.map(weekList, (d) => d.count)
-        }];
-
+        // Show an area chart spadding a timeperiod if one is selected
+        const isPeriodActive = !residentFilter.isAllData;
+        let periodWeekIDcollection = [];
         // if there is a date range
-        if (!residentFilter.isAllData) {
+        if (isPeriodActive) {
 
             let filterStart = moment(residentFilter.startDate, 'MM/DD/YYYY'),
                 filterEnd = moment(residentFilter.endDate, 'MM/DD/YYYY');
 
             //  if a date period is selected count all the weekIDs in that period
             // then if that weekID exists in the last 25 weeks chart mark it so its highlighted
-            let periodWeekIDcollection = [];
             while (filterStart.isBefore(filterEnd)) {
                 const periodweekNumber = filterStart.week(),
                     periodyearNumber = filterStart.year();
                 periodWeekIDcollection.push(periodweekNumber + "-" + periodyearNumber);
                 filterStart = filterStart.add(1, 'week');
             }
-
-            datasets.push({
-                label: "EPA Count by Week in Selected Range",
-                fillColor: "rgba(28,168,221,0.35)",
-                strokeColor: "rgba(28,168,221,0)",
-                pointColor: "rgba(28,168,221,0)",
-                data: _.map(weekList, (d) => {
-                    return periodWeekIDcollection.indexOf(d.weekID) > -1 ? d.count : 0;
-                })
-            });
         }
         // create line object for chart
-        const lineData = {
-            labels: _.map(weekList, (d) => d.label),
-            datasets
-        }
+        const chartData = _.map(weekList, (d) => ({
+            'week': d.label,
+            'EPA count in week': d.count,
+            'EPA count in period': periodWeekIDcollection.indexOf(d.weekID) > -1 ? d.count : 0
+        }));
 
-        let lineOptions = {
-            scaleBeginAtZero: true,
-            animation: false
-        };
 
         return (
             <div className='resident-weekly-graph'>
-                <Line
-                    redraw={true}
-                    options={lineOptions}
-                    data={lineData}
-                    width={width} height={200} />
+                <ComposedChart width={width}
+                    height={200} data={chartData}
+                    margin={{ left: 5, right: 5, top: 5, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis type="category" dataKey="week" />
+                    <YAxis width={15} />
+                    <Tooltip labelStyle={{ 'color': 'black' }} />
+                    <Line
+                        isAnimationActive={false}
+                        type="monotone"
+                        dataKey={'EPA count in week'}
+                        stroke={'steelblue'}
+                        strokeWidth={3} />
+                    {isPeriodActive &&
+                        <Area
+                            isAnimationActive={false}
+                            type="monotone"
+                            dataKey={'EPA count in period'}
+                            stroke={'rgba(70, 130, 180,0.5)'}
+                            strokeWidth={3} />}
+                </ComposedChart>
             </div>)
     }
 

@@ -48,7 +48,7 @@ export default class OversightDashboard extends Component {
                 });
         }
     }
-    
+
     componentDidMount() {
         this._isMounted = true;
 
@@ -113,9 +113,10 @@ export default class OversightDashboard extends Component {
                             <div>
                                 <ProgramsSummary
                                     width={fullWidth}
+                                    academicYear={academicYear}
                                     programList={_.reverse(moddedProgramList)} />
                             </div>
-                            : <h2 className='text-primary text-center m-t-lg'>No program data available currently</h2>}
+                            : <h3 className='text-primary text-center m-t-lg'>No program data available currently</h3>}
                     </div>}
             </div >
         );

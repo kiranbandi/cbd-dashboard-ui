@@ -102,7 +102,7 @@ export default class ProgramAllYearSummary extends Component {
                                 }} />
                             <Legend wrapperStyle={{ bottom: 0 }} height={32} />
                             <Bar dataKey="EPAs Acquired" fill="#82ca9d" />
-                            {/* <Bar dataKey="EPAs Expired" fill="#8884d8" /> */}
+                            <Bar dataKey="EPAs Expired" fill="#8884d8" />
                         </BarChart>
                     </div>
                 </div>
@@ -142,7 +142,7 @@ export default class ProgramAllYearSummary extends Component {
                             margin={{ left: 25, right: 30, top: 15, bottom: 30 }}>
                             <XAxis style={{ 'fontWeight': 'bolder' }}
                                 width={105} tickSize={0} tickMargin={10}
-                                type="category" axisLine={false} dataKey="month" />
+                                type="category" dataKey="month" />
                             <YAxis />
                             <Tooltip labelStyle={{ 'color': 'black' }} wrapperStyle={{ 'fontWeight': 'bold' }} />
                             <Legend wrapperStyle={{ bottom: 0 }} height={32} />

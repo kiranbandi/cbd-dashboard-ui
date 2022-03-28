@@ -31,7 +31,7 @@ export default (props) => {
             </div>
             <div className='card-wrapper'>
                 {residentFilter.isAllData ?
-                    <div className='row text-center m-t'>
+                    <div className='row text-center'>
                         <CardComponent title='Total EPAs Observed' type='primary' metric={totalEPAs} />
                         <CardComponent title='Progress Rate' type='success' metric={totalProgress + '%'} />
                         <CardComponent title='Achievement Rate' type='danger' metric={achievementRate + '%'} />

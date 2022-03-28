@@ -24,10 +24,10 @@ export default class ProgramsSummary extends Component {
     }
 
     componentDidMount() {
-        const { programList } = this.props;
+        const { programList, academicYear } = this.props;
         let summaryData = [];
         _.map(programList,
-            (program) => summaryData.push(processOversightRecords(window.global_summary[program.value])['summaryData']));
+            (program) => summaryData.push(processOversightRecords(window.global_summary[program.value], academicYear)['summaryData']));
         this.setState({ summaryData });
     }
 
@@ -196,12 +196,12 @@ export default class ProgramsSummary extends Component {
                     return <div key={'monthly-chart-wrapper-' + pID} className='program-part-container p-b' >
                         <div className='chart-container'>
                             <h4 className='p-a text-center'>{p.program}</h4>
-                            <LineChart width={width / 3}
+                            <LineChart width={(width / 3) * 0.95}
                                 height={300} data={monthCountList}
                                 margin={{ left: 25, right: 30, top: 15, bottom: 30 }}>
                                 <XAxis style={{ 'fontWeight': 'bolder' }}
                                     width={10} tickSize={0} tickMargin={10}
-                                    type="category" axisLine={false} dataKey="month" />
+                                    type="category" dataKey="month" />
                                 <YAxis width={15} />
                                 <Tooltip labelStyle={{ 'color': 'black' }} wrapperStyle={{ 'fontWeight': 'bold' }} />
                                 <Legend wrapperStyle={{ bottom: 0 }} height={32} />

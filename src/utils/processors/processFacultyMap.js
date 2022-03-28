@@ -28,7 +28,7 @@ export default function (allResidentRecords = [], epas = [], currentAcademicYear
         // group records by completion status 
         const assessmentGroup = _.groupBy(records, d => d.progress),
             completedRecords = assessmentGroup['complete'] || [],
-            expiredRecords = _.filter(assessmentGroup['inprogress'], d => moment().isAfter(moment(d.Expiry_Date, 'MMM DD, YYYY')));
+            expiredRecords = _.filter(assessmentGroup['inprogress'], d => d.isExpired);
 
         // group records by training phase
         const trainingPhaseGroup = _.groupBy(completedRecords, (d) => d.phaseTag);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Bar } from 'react-chartjs';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import { RadioButton } from '../';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -30,23 +30,19 @@ class NormativeGraph extends Component {
     }
 
 
-    handleChartClick(event) {
-
+    handleChartClick(datapoint) {
         const { actions, residentFilter, residentList } = this.props;
-
-        let datapoint = this.chartCtx && this.chartCtx.getBarsAtEvent(event);
         // if a valid resident name has been clicked
-        if (datapoint && datapoint.length > 0) {
+        if (datapoint && datapoint.activeLabel.length > 0) {
             // first get the resident username from the list
             // then check if the resident exists and then trigger a custom select resident action 
-            let resident = _.find(residentList, (d) => d.fullname == datapoint[0].label);
+            let resident = _.find(residentList, (d) => d.fullname == datapoint.activeLabel);
             if (resident) {
                 // set the username on the filter
                 residentFilter.username = resident.username;
                 actions.switchToResidentDashboard(resident, residentFilter);
             }
         }
-
     }
 
     render() {
@@ -55,40 +51,27 @@ class NormativeGraph extends Component {
 
         let sortedRecords = _.sortBy(records, (d) => d[trackType]);
 
-        let datasets = [{
-            label: "Achieved",
-            fillColor: "rgba(67,185,142,0.75)",
-            strokeColor: "#43b98e",
-            pointColor: "#43b98e",
-            pointStrokeColor: '#43b98e',
-            pointHighlightFill: "#43b98e",
-            pointHighlightStroke: "#43b98e",
-            data: _.map(sortedRecords, (d) => d[trackType])
-        }];
-
-        if (trackType == 'completedAssessments') {
-            datasets.push({
-                label: "Total",
-                fillColor: "rgba(151,187,205,0.75)",
-                strokeColor: "rgba(151,187,205,1)",
-                pointColor: "rgba(151,187,205,1)",
-                pointStrokeColor: "rgba(151,187,205,1)",
-                pointHighlightFill: "rgba(151,187,205,1)",
-                pointHighlightStroke: "rgba(151,187,205,1)",
-                data: _.map(sortedRecords, (d) => d['totalAssessments'])
-            });
-        }
-
-        // create Bar object for chart
-        const BarData = {
-            labels: _.map(sortedRecords, (d) => d.fullname),
-            datasets
-        }
-
-        let BarOptions = {
-            scaleBeginAtZero: true
+        const chartLabelMap = {
+            'totalAssessments': 'Total EPAs',
+            'achievementRate': 'Achievement Rate',
+            'totalProgress': 'Progress(%)',
+            'completedAssessments': 'Achieved EPAs'
         };
 
+        const showAchievedAndTotal = trackType == 'completedAssessments';
+
+        // create Bar object for chart
+        const barData = _.map(sortedRecords, (d) => {
+            let barDatapoint = {
+                'username': d.username,
+                'name': d.fullname,
+                [chartLabelMap[trackType]]: d[trackType]
+            };
+            if (showAchievedAndTotal) {
+                barDatapoint[chartLabelMap['totalAssessments']] = d['totalAssessments'];
+            }
+            return barDatapoint;
+        });
 
         return (
             <div className='normative-graph m-b'>
@@ -112,13 +95,20 @@ class NormativeGraph extends Component {
                             checked={trackType == 'completedAssessments'} />
                     </div>
                 </div>
-                <div className='bar-chart-wrapper' style={{ 'width': width, 'height': 450 }} onClick={this.handleChartClick}>
-                    <Bar
-                        ref={r => this.chartCtx = r && r.getChart()}
-                        redraw={true}
-                        options={BarOptions}
-                        data={BarData}
-                        width={width} height={450} />
+                <div className='bar-chart-wrapper'>
+                    <BarChart width={width} height={450}
+                        data={barData}
+                        cursor={'pointer'}
+                        layout="horizontal"
+                        onClick={this.handleChartClick}
+                        margin={{ left: 5, right: 5, top: 5, bottom: 5 }}>
+                        <Tooltip labelStyle={{ 'color': 'black' }} />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Legend wrapperStyle={{ bottom: 0 }} height={20} />
+                        {showAchievedAndTotal && <Bar dataKey={chartLabelMap['totalAssessments']} fill="#8884d8" />}
+                        <Bar dataKey={chartLabelMap[trackType]} fill="#82ca9d" />
+                    </BarChart>
                 </div>
             </div>)
     }
@@ -141,6 +131,4 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NormativeGraph);
-
-
 
