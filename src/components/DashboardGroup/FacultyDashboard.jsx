@@ -17,7 +17,6 @@ export default class FacultyDashboard extends Component {
             facultyList: [],
             academicYearList: [],
             departmentList: [],
-            sliderValue: 5,
             epa_list: [],
             // list of all resident records
             allResidentRecords: [],
@@ -27,7 +26,6 @@ export default class FacultyDashboard extends Component {
     }
 
     onFacultyClick = (event) => { this.setState({ 'currentFaculty': event.target.id.slice(12).split('--').join(' ') }) }
-    onSliderChange = (sliderValue) => { this.setState({ sliderValue }) }
     onFacultySelect = (option) => { this.setState({ currentFaculty: option.value }) }
     onCurrentAcademicYearSelect = (option) => { this.setState({ currentAcademicYear: option.value }) }
     onCurrentDepartmentSelect = (option) => { this.setState({ currentDepartment: option.value }) }
@@ -73,9 +71,9 @@ export default class FacultyDashboard extends Component {
     render() {
 
         const { facultyList = [], departmentList = [], academicYearList = [], allResidentRecords = [],
-            currentFaculty, currentAcademicYear, currentDepartment, epa_list = [], sliderValue } = this.state;
+            currentFaculty, currentAcademicYear, currentDepartment, epa_list = [] } = this.state;
 
-        const processedRecords = processFacultyMap(allResidentRecords, epa_list, currentAcademicYear, currentDepartment, sliderValue),
+        const processedRecords = processFacultyMap(allResidentRecords, epa_list, currentAcademicYear, currentDepartment),
             currentFacultyRecords = _.filter(processedRecords, (d) => d.faculty_name == currentFaculty),
             overallWidth = window.dynamicDashboard.mountWidth;
 
@@ -103,8 +101,6 @@ export default class FacultyDashboard extends Component {
                             currentFaculty={currentFaculty}
                             currentDepartment={currentDepartment}
                             currentAcademicYear={currentAcademicYear}
-                            sliderValue={sliderValue}
-                            onSliderChange={this.onSliderChange}
                             onCurrentAcademicYearSelect={this.onCurrentAcademicYearSelect}
                             onCurrentDepartmentSelect={this.onCurrentDepartmentSelect}
                             onFacultySelect={this.onFacultySelect} />

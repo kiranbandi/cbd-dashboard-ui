@@ -3,7 +3,7 @@ const phaseList = ['D', 'F', 'C', 'P'];
 import { EPATextToNumber } from '../convertEPA';
 import moment from 'moment';
 
-export default function (allResidentRecords = [], epas = [], currentAcademicYear, currentDepartment, minimumRequired) {
+export default function (allResidentRecords = [], epas = [], currentAcademicYear, currentDepartment) {
 
     let allResidentRecordsClone = _.clone(allResidentRecords);
     // if the  current Academic Year is ALL or not selected then use all resident records as in,
@@ -20,13 +20,6 @@ export default function (allResidentRecords = [], epas = [], currentAcademicYear
     // now group the records by the faculty name
     let recordsGroupedByFaculty = _.groupBy(allResidentRecordsClone, (d) => d.Assessor_Name),
         epaList = createEPAList(epas);
-
-    // remove faculty that dont meet the required minimum
-    _.map(recordsGroupedByFaculty, (records, key) => {
-        if (records.length < minimumRequired) {
-            delete recordsGroupedByFaculty[key];
-        }
-    });
 
     // convert the grouped records into lists such that every group has 
     // a faculty name and then a list of the all required parameters

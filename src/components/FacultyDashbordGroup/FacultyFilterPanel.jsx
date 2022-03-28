@@ -2,22 +2,13 @@ import React, { Component } from 'react';
 import ReactSelect from 'react-select';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 import ReactTooltip from 'react-tooltip';
-
-import Slider from 'rc-slider';
-import 'rc-slider/assets/index.css';
-
 export default class FacultyFilterPanel extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
 
         const { facultyList, academicYearList, departmentList,
             currentFaculty, currentAcademicYear, currentDepartment,
-            onFacultySelect, onCurrentAcademicYearSelect, onCurrentDepartmentSelect
-            ,
-            sliderValue = 5, onSliderChange } = this.props;
+            onFacultySelect, onCurrentAcademicYearSelect, onCurrentDepartmentSelect } = this.props;
 
         // Process faculty names so they match the react select format
         const currentFacultyValue = _.find(facultyList, (d) => d.value == currentFaculty) || null;
@@ -64,15 +55,6 @@ export default class FacultyFilterPanel extends Component {
                             options={facultyList}
                             styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
                             onChange={onFacultySelect} />
-                    </div>
-
-                    <div className='slider-container'>
-                        <label className='filter-label'>Filter out Faculty with &lt; </label>
-                        <h2>{sliderValue}</h2>
-                        <label className='filter-label'>records
-                            <i data-for='faculty-infotip' data-tip={infoTooltipReference.facultyDevlopment.filterOutFacultyWithMinimumRecords} className="fa fa-info-circle instant-tooltip-trigger"></i>
-                        </label>
-                        <Slider min={0} max={25} step={1} defaultValue={sliderValue} onAfterChange={onSliderChange} />
                     </div>
                     <ReactTooltip id='faculty-infotip' className='custom-react-tooltip' />
                 </div>

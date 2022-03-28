@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import ReactSelect from 'react-select';
 import processSingleProgramRecords from '../../utils/processSingleProgramRecords';
 import Summary from './ProgramSummary';
-import EPAspecificRotation from './EPAspecificRotation';
-import RotationSpecificEPA from './RotationSpecificEPA';
 import EPAOverallbyRotation from './EPAOverallbyRotation';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 import ReactTooltip from 'react-tooltip';
