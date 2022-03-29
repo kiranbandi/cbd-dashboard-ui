@@ -20,7 +20,7 @@ requestServer.getLearnerList = function (params) {
             }
         });
         jQuery.when(get_learner_data)
-            .done(function (data = '{}') { resolve(processCourseData(JSON.parse(data))) })
+            .done(function (data = '{}') { resolve(processCourseData(data)) })
             .fail(e => errorCallback(e, reject));
     });
 }
@@ -37,7 +37,7 @@ requestServer.getLearnerData = function (username, residentInfo) {
             }
         });
         jQuery.when(get_learner_data)
-            .done(function (data = '{}') { resolve(processLearnerData(username, residentInfo, JSON.parse(data))) })
+            .done(function (data = '{}') { resolve(processLearnerData(username, residentInfo, data)) })
             .fail(e => errorCallback(e, reject));
     });
 }
@@ -50,7 +50,7 @@ requestServer.getAllData = function (course = false) {
             data: { "method": "get-all-learner-assessments", "course_id": course ? course : course_id }
         });
         jQuery.when(get_all_learners_data)
-            .done(function (data) { resolve(processAllLearnerData(JSON.parse(data))) })
+            .done(function (data) { resolve(processAllLearnerData(data)) })
             .fail(e => errorCallback(e, reject));
     });
 }
@@ -63,7 +63,7 @@ requestServer.getRotationSchedules = function (residentList = [], allRecords, co
             data: { "method": "get-learners-schedules", "proxy_ids": residentList.join(',') }
         });
         jQuery.when(get_all_learners_data)
-            .done(function (data) { resolve(tagRecordsWithRotation(JSON.parse(data), allRecords, courseName)) })
+            .done(function (data) { resolve(tagRecordsWithRotation(data, allRecords, courseName)) })
             .fail(e => errorCallback(e, reject));
     });
 }

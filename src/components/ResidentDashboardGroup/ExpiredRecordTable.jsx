@@ -10,12 +10,12 @@ import moment from 'moment';
 const columns = [{
     Header: 'Encounter Date',
     accessor: 'Date',
-    className: 'text-left',
+    className: 'text-center',
     filterMethod: customFilter
 }, {
     Header: 'Expiry Date',
     accessor: 'Expiry_Date',
-    className: 'text-left',
+    className: 'text-center',
     filterMethod: customFilter
 }, {
     Header: 'EPA',
@@ -25,7 +25,7 @@ const columns = [{
 {
     Header: 'Assessor Name',
     accessor: 'Assessor_Name',
-    className: 'text-left',
+    className: 'text-center',
     filterMethod: customFilter
 }];
 
