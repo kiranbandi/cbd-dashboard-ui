@@ -3,7 +3,7 @@ import moment from 'moment';
 import { EPATextToNumber } from '../convertEPA';
 
 
-export default function (learnersDataDump) {
+export default function (dashboard = '', learnersDataDump) {
 
     let { dashboard_epas = [], rating_scale_map = [], assessments = [], course_name = '' } = learnersDataDump;
 
@@ -17,29 +17,40 @@ export default function (learnersDataDump) {
 
     let allResidentRecords = [];
 
+    let facultyStore = [],
+        academicYearStore = [],
+        departmentStore = [],
+        residentStore = [];
+
     _.map(assessments, (record) => {
         // Map the rating for the record based on the descriptor ID
         const rating = _.find(rating_scale_map, d => d.descriptor_id == record.selected_descriptor_id) || { 'order': 1 };
-        const record_mapped_epas = JSON.parse(record.mapped_epas);
+
+        const record_mapped_epas = JSON.parse(record.mapped_epas),
+            username = record.proxy_id,
+            Resident_Name = record['resident'] || '',
+            Academic_Year = record['academic_year'],
+            Assessor_Name = record['assessor'],
+            Assessor_Department = sanitise(record['assessor_department'], 'No Department').split(';');
 
         let assessment_record = {
-            username: record.proxy_id,
+            username,
             Date: moment(record.encounter_date, 'MMM DD, YYYY').format('YYYY-MM-DD'),
             EPA: recordEPAtoNumber(record, record_mapped_epas),
             phaseTag: getRecordPhaseCode(record_mapped_epas).toUpperCase(),
-            Assessor_Name: record.assessor,
+            Assessor_Name,
             Feedback: processComments(JSON.parse(record.comments)),
             Assessor_Group: sanitise(record['assessor_group'], 'No Group'),
             Assessor_Role: sanitise(record['assessor_role'], 'No Role'),
             Assessor_Type: sanitise(record['assessor_type'], 'No Type'),
-            Assessor_Department: sanitise(record['assessor_department'], 'No Department'),
+            Assessor_Department,
             Professionalism_Safety: '',
             Rating: rating.order,
             Rating_Text: '(' + rating.order + ') ' + rating.text,
-            Resident_Name: record['resident'] || '',
+            Resident_Name,
             Type: record.form_type,
             formID: record.form_id,
-            Academic_Year: record.academic_year,
+            Academic_Year,
             scale: scale_map[rating.scale_id] || ['Resident Entrustment'],
             progress: record.progress,
             Expiry_Date: record.expiry_date,
@@ -48,8 +59,44 @@ export default function (learnersDataDump) {
 
         if (assessment_record.EPA != 'unmapped') {
             allResidentRecords.push(assessment_record);
+            facultyStore.push(Assessor_Name);
+            academicYearStore.push(Academic_Year);
+            departmentStore.push(Assessor_Department);
+            residentStore.push(username);
         }
+
     });
+
+    if (dashboard == 'faculty') {
+        // create a list of all faculty 
+        let facultyList = _.map(_.uniq(facultyStore), value => ({ 'label': value, value }))
+            .sort((previous, current) => previous.label.localeCompare(current.label));
+        // create a list of all academic years 
+        let academicYearList = _.map(_.uniq(academicYearStore), value => ({ 'label': value + '-' + (+value + 1), value }))
+            .sort((previous, current) => previous.label.localeCompare(current.label));
+        let departmentList = _.map(_.uniq(_.flatten(departmentStore)), value => ({ 'label': value, value }))
+            .sort((previous, current) => previous.label.localeCompare(current.label));
+
+        // sub in a value at the front of the list for 'ALL'
+        facultyList.unshift({ 'label': 'All', 'value': 'ALL' });
+        // sub in a value at the front of the list for 'ALL'
+        academicYearList.unshift({ 'label': 'All', 'value': 'ALL' });
+        // sub in a value at the front of the list for 'ALL'
+        departmentList.unshift({ 'label': 'All', 'value': 'ALL' });
+
+        return { allResidentRecords, dashboard_epas, facultyList, academicYearList, departmentList };
+    }
+
+    else if (dashboard == 'program') {
+        // create a list of all academic years 
+        let academicYearList = _.map(_.uniq(academicYearStore), value => ({ 'label': value + '-' + (+value + 1), value }))
+            .sort((previous, current) => previous.label.localeCompare(current.label));
+        // create a list of all faculty 
+        let residentList = _.map(_.uniq(residentStore), value => value);
+        
+        return { allResidentRecords, dashboard_epas, residentList, academicYearList, 'courseName': course_name };
+    }
+
     return { allResidentRecords, dashboard_epas, 'courseName': course_name };
 }
 

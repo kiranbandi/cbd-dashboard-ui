@@ -14,7 +14,7 @@ export default function (allResidentRecords = [], epas = [], currentAcademicYear
 
     // Filter by department
     if (currentDepartment != 'ALL' && currentDepartment != '') {
-        allResidentRecordsClone = _.filter(allResidentRecordsClone, (d) => d.Assessor_Department == currentDepartment);
+        allResidentRecordsClone = _.filter(allResidentRecordsClone, (d) => d.Assessor_Department.indexOf(currentDepartment) > -1);
     }
 
     // now group the records by the faculty name

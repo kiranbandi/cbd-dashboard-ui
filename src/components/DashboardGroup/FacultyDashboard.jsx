@@ -35,24 +35,8 @@ export default class FacultyDashboard extends Component {
         // turn loader on
         this.setState({ isLoaderVisible: true });
 
-        getAllData()
-            .then(({ allResidentRecords, dashboard_epas }) => {
-                // create a list of all faculty 
-                let facultyList = _.map(_.groupBy(allResidentRecords, (d) => d.Assessor_Name), (recs, key) => ({ 'label': key, 'value': key }))
-                    .sort((previous, current) => previous.label.localeCompare(current.label));
-                // create a list of academic years 
-                let academicYearList = _.map(_.groupBy(allResidentRecords, (d) => d.Academic_Year), (recs, key) => ({ 'label': 'July ' + key + ' - June ' + (+key + 1), 'value': key }))
-                    .sort((previous, current) => previous.label.localeCompare(current.label));
-                // create a list of all department
-                let departmentList = _.map(_.groupBy(allResidentRecords, (d) => d.Assessor_Department), (recs, key) => ({ 'label': capitalizeStr(key.toLocaleLowerCase()), 'value': key }))
-                    .sort((previous, current) => previous.label.localeCompare(current.label));
-
-                // sub in a value at the front of the list for 'ALL'
-                facultyList.unshift({ 'label': 'All', 'value': 'ALL' });
-                // sub in a value at the front of the list for 'ALL'
-                academicYearList.unshift({ 'label': 'All', 'value': 'ALL' });
-                // sub in a value at the front of the list for 'ALL'
-                departmentList.unshift({ 'label': 'All', 'value': 'ALL' });
+        getAllData('faculty')
+            .then(({ allResidentRecords, dashboard_epas, facultyList, departmentList, academicYearList }) => {
                 // set the values on the state 
                 this._isMounted && this.setState({ allResidentRecords, facultyList, academicYearList, departmentList, 'epa_list': [...dashboard_epas], isLoaderVisible: false });
             })

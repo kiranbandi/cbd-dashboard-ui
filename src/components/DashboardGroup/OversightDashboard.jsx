@@ -31,7 +31,7 @@ export default class OversightDashboard extends Component {
         if (courses.length > 0) {
             // turn loader on
             this.setState({ isLoaderVisible: true, moddedProgramList: [] });
-            Promise.all(courses.map((c) => getAllData(c)))
+            Promise.all(courses.map((c) => getAllData('oversight', c)))
                 .then((course_data_list) => {
                     // create a list of acad emic years 
                     let moddedProgramList = _.map(_.sortBy(course_data_list, d => d.allResidentRecords.length || 0), (e, index) => {

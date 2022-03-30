@@ -42,7 +42,7 @@ requestServer.getLearnerData = function (username, residentInfo) {
     });
 }
 
-requestServer.getAllData = function (course = false) {
+requestServer.getAllData = function (dashboard = '', course = false) {
     return new Promise((resolve, reject) => {
         let get_all_learners_data = jQuery.ajax({
             url: ELENTRA_API,
@@ -50,7 +50,7 @@ requestServer.getAllData = function (course = false) {
             data: { "method": "get-all-learner-assessments", "course_id": course ? course : course_id }
         });
         jQuery.when(get_all_learners_data)
-            .done(function (data) { resolve(processAllLearnerData(data)) })
+            .done(function (data) { resolve(processAllLearnerData(dashboard, data)) })
             .fail(e => errorCallback(e, reject));
     });
 }
