@@ -60,7 +60,6 @@ export default class OversightDashboard extends Component {
         }
 
         this.setState({ programList });
-
     }
 
     componentWillUnmount() {

@@ -32,27 +32,28 @@ class DashboardRoot extends Component {
             <div className='custom-dashboard-page-root' >
                 <div>
                     {dashboard_mode != 'resident' &&
-                        <div className="hr-divider nav-pill-container-dashboard">
-                            <ul className="nav nav-pills hr-divider-content hr-divider-nav">
+                        <div className='no-printing'>
+                            <ul className="dashboard-navigation clearfix">
                                 <li className={activePage == 'resident' ? 'active' : ''}>
-                                    <a data-tip={infoTooltipReference.residentMetrics.main} id='resident-tab' onClick={this.onTabClick} >RESIDENT METRICS</a>
+                                    <a data-tip={infoTooltipReference.residentMetrics.main} id='resident-tab' onClick={this.onTabClick} >Resident Metrics</a>
                                 </li>
                                 <li className={activePage == 'normative' ? 'active' : ''}>
-                                    <a data-tip={infoTooltipReference.normativeAssessment.main} id='normative-tab' onClick={this.onTabClick} >NORMATIVE ASSESSMENT</a>
+                                    <a data-tip={infoTooltipReference.normativeAssessment.main} id='normative-tab' onClick={this.onTabClick} >Normative Assessment</a>
                                 </li>
                                 {advanced_mode == 'enabled' && <li className={activePage == 'supervisor' ? 'active' : ''}>
-                                    <a data-tip={infoTooltipReference.facultyDevlopment.main} id='supervisor-tab' onClick={this.onTabClick} >FACULTY DEVELOPMENT</a>
+                                    <a data-tip={infoTooltipReference.facultyDevlopment.main} id='supervisor-tab' onClick={this.onTabClick} >Faculty Development</a>
                                 </li>}
                                 {advanced_mode == 'enabled' && <li className={activePage == 'program' ? 'active' : ''}>
-                                    <a data-tip={infoTooltipReference.programEvaluation.main} id='program-tab' onClick={this.onTabClick} >PROGRAM EVALUATION</a>
+                                    <a data-tip={infoTooltipReference.programEvaluation.main} id='program-tab' onClick={this.onTabClick} >Program Evaluation</a>
                                 </li>}
                                 {advanced_mode == 'enabled' && <li className={activePage == 'oversight' ? 'active' : ''}>
-                                    <a data-tip={infoTooltipReference.programOversight.main} id='oversight-tab' onClick={this.onTabClick} >PROGRAM OVERSIGHT</a>
+                                    <a data-tip={infoTooltipReference.programOversight.main} id='oversight-tab' onClick={this.onTabClick} >Program Oversight</a>
                                 </li>}
                                 {user_type == 'medtech' && <li className={activePage == 'rotation' ? 'active' : ''}>
-                                    <a data-tip={infoTooltipReference.rotationModule.main} id='rotation-tab' onClick={this.onTabClick} > SCHEDULE IMPORT</a>
+                                    <a data-tip={infoTooltipReference.rotationModule.main} id='rotation-tab' onClick={this.onTabClick} > Schedule Import</a>
                                 </li>}
                             </ul>
+                            <div className='clearfix'></div>
                         </div>}
                     <div className='control-inner-container'>
                         {(activePage == 'resident') && <ResidentDashboard dashboard_mode={dashboard_mode} />}

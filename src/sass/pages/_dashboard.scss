@@ -1,26 +1,69 @@
 .custom-dashboard-page-root {
-    .hr-divider {
-        .nav-pills {
-            a {
-                font-size: 15px;
-                padding: 10px 10px;
-                margin: 10px;
-                font-weight: bold !important;
-                cursor: pointer;
-            }
-            @media (max-width: 768px) {
-                li {
-                    float: none;
-                }
-            }
+    .dashboard-navigation {
+        a {
+            color: black;
+            cursor: pointer;
+            line-height: 17px;
+            text-decoration: none;
         }
-        margin:40px 30px;
+    }
+
+    .control-inner-container {
+        margin-top: 10px;
     }
     p.info-text {
-        font-size: 1.10em;
+        font-size: 1.1em;
         margin: 15px;
     }
     .text-capitalize {
         text-transform: capitalize;
+    }
+
+    .custom-select-wrapper {
+        padding: 10px 0px 10px 15px;
+        border-radius: 0px 0px 5px 5px;
+        width: max-content;
+        background: #e2eff5;
+
+        .multi-selection-box {
+            z-index: 100;
+            display: inline-block;
+
+            .header {
+                font-weight: normal;
+                font-size: 15px;
+                display: inline-block;
+                margin: 10px auto;
+                margin-right: 15px;
+            }
+            .react-select-root {
+                width: 350px;
+                display: inline-block;
+                & > div:first-child {
+                    z-index: 100;
+                }
+                input {
+                    min-height: inherit !important;
+                }
+            }
+        }
+    }
+
+    .year-selection-box {
+        z-index: 100;
+        display: inline-block;
+
+        .header {
+            display: inline-block;
+            margin-right: 20px;
+        }
+        .react-select-root {
+            width: 225px;
+            display: inline-block;
+            & > div:first-child {
+                z-index: 100;
+            }
+        }
+        margin-right: 30px;
     }
 }

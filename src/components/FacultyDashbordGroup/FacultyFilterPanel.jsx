@@ -6,31 +6,31 @@ export default class FacultyFilterPanel extends Component {
 
     render() {
 
-        const { facultyList, academicYearList, departmentList,
-            currentFaculty, currentAcademicYear, currentDepartment,
-            onFacultySelect, onCurrentAcademicYearSelect, onCurrentDepartmentSelect } = this.props;
+        const { facultyList, facultyGroupList, departmentList,
+            currentFaculty, currentFacultyGroup, currentDepartment,
+            onFacultySelect, onCurrentFacultyGroupSelect, onCurrentDepartmentSelect } = this.props;
 
         // Process faculty names so they match the react select format
         const currentFacultyValue = _.find(facultyList, (d) => d.value == currentFaculty) || null;
         // Process academic years so they match the react select format
-        const currentAcademicYearValue = _.find(academicYearList, (d) => d.value == currentAcademicYear) || null;
+        const currentFacultyGroupValue = _.find(facultyGroupList, (d) => d.value == currentFacultyGroup) || null;
         // Process academic years so they match the react select format
         const currentDepartmentValue = _.find(departmentList, (d) => d.value == currentDepartment) || null;
 
         return (
-            <div className='filter-panel faculty-filter'>
+            <div className='filter-panel faculty-filter no-printing'>
                 <div className='text-xs-left advanced-filter-box normative-filter-box'>
                     <div className='react-select-root'>
-                        <label className='filter-label'>Academic Year
-                            <i data-for='faculty-infotip' data-tip={infoTooltipReference.facultyDevlopment.filterYear} className="fa fa-info-circle instant-tooltip-trigger"></i>
+                        <label className='filter-label'>Assessor Group
+                            <i data-for='faculty-infotip' data-tip={infoTooltipReference.facultyDevlopment.filterAssessorGroup} className="fa fa-info-circle instant-tooltip-trigger"></i>
                         </label>
                         <ReactSelect
-                            placeholder='Select Academic Year...'
+                            placeholder='Select Assessor Group...'
                             isSearchable={true}
-                            value={currentAcademicYearValue}
-                            options={academicYearList}
+                            value={currentFacultyGroupValue}
+                            options={facultyGroupList}
                             styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left' }) }}
-                            onChange={onCurrentAcademicYearSelect} />
+                            onChange={onCurrentFacultyGroupSelect} />
                     </div>
                     <div className='react-select-root'>
                         <label className='filter-label'>Department

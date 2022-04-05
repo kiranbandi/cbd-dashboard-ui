@@ -21,8 +21,8 @@ class ResidentDashboard extends Component {
         }
 
         return (
-            <div className='dashboard-root-resident m-t' >
-                <div className='m-t-md'>
+            <div className='dashboard-root-resident'>
+                <div>
                     {(residentList.length > 0) ?
                         <div>
                             <FilterPanel dashboard_mode={dashboard_mode} />

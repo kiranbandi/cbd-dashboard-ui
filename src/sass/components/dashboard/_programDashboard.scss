@@ -206,29 +206,20 @@
         }
     }
 
-    // force styling during printing
-    .printable-content {
-        .hr-divider-content {
-            background: white !important;
+    .faculty-graph-box {
+        display: inline-block;
+        margin: 20px auto;
+        background: #f3f3f3;
+        padding: 10px 20px 20px 20px;
+        border-radius: 5px;
+        vertical-align: top;
+        .title-append {
+            margin-left: 10px;
+            color: #e64759;
         }
 
-        &.yearall-summary-wrapper,
-        &.program-vis-box,
-        &.program-MicroStatCard-group {
-            background: white !important;
-            color: black !important;
-            h3 {
-                color: #1a1c22 !important;
-            }
-        }
-
-        .program-part-container,
-        .part-year-title {
-            background: white !important;
-            color: black !important;
-            h3 {
-                color: #1a1c22 !important;
-            }
+        .assessor-pie-box {
+            display: inline-block;
         }
     }
 }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import FacultyGraph from './FacultyGraph';
-import FacultyTypeRole from './FacultyTypeRole';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 
 export default class FacultyGraphGroup extends Component {
@@ -10,7 +9,7 @@ export default class FacultyGraphGroup extends Component {
 
     render() {
 
-        const { width, processedRecords, allResidentRecords, selectFaculty, currentFaculty, all } = this.props;
+        const { width, processedRecords, selectFaculty, currentFaculty } = this.props;
 
         // format the data into the required format for a graph component
         const data_epa_count = _.map(processedRecords, (d) => [d.faculty_name, d.epa_count]);
@@ -66,12 +65,6 @@ export default class FacultyGraphGroup extends Component {
                     data={data_words_per_comment}
                     selectFaculty={selectFaculty}
                     width={(width / 2) - 50} />
-                <FacultyTypeRole
-                    title={'Assessor Group and Role Distribution'}
-                    width={(width / 2) - 50}
-                    data={processedRecords}
-                    currentFacultyData={currentFacultyData}
-                    currentFaculty={currentFaculty} />
             </div>}
         </div>
 

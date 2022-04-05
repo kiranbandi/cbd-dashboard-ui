@@ -4,6 +4,7 @@ import processSingleProgramRecords from '../../utils/processSingleProgramRecords
 import Summary from './ProgramSummary';
 import EPAOverallbyRotation from './EPAOverallbyRotation';
 import infoTooltipReference from '../../utils/infoTooltipReference';
+import FacultyTypeRole from '../FacultyDashbordGroup/FacultyTypeRole';
 import ReactTooltip from 'react-tooltip';
 
 export default class ProgramBasePanel extends Component {
@@ -23,7 +24,7 @@ export default class ProgramBasePanel extends Component {
 
     render() {
 
-        let { allRecords, possibleAcademicYears, width, epa_list } = this.props, { academicYear } = this.state;
+        let { allRecords, possibleAcademicYears, width } = this.props, { academicYear } = this.state;
         // keep the default the most recent academic year
         if (academicYear == -1) {
             academicYear = possibleAcademicYears.length - 1;
@@ -59,6 +60,10 @@ export default class ProgramBasePanel extends Component {
                 </div>
                 <div className='row m-t'>
                     <Summary data={summaryData} possibleAcademicYears={possibleAcademicYears} />
+                    <FacultyTypeRole
+                        title={'Faculty Type, Group and Role Distribution'}
+                        width={width - 50}
+                        data={recordsInYearAndPhase} />
                     <EPAOverallbyRotation
                         // 40px to account for margin around the boxes above
                         width={(width)}

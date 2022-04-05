@@ -12,11 +12,11 @@ export default class FacultyGraph extends Component {
         // The data will be in the format [name, value, value in date period]
         // The track type can be one of the following:
         // 1) epa_count
-        // 2) expired_epa_percentage
+        // 2) expiry_rate
         // 3) entrustment_score 
         // 4) words_per_comment
 
-        let { className, data, width, trackType, selectFaculty,
+        let { className = '', data, width, trackType, selectFaculty,
             currentFaculty, title, titleValue, tooltipRef, tooltipID } = this.props;
 
         // sort the data list based on the overall value
@@ -58,6 +58,8 @@ export default class FacultyGraph extends Component {
             switch (trackType) {
                 case 'epa_count':
                     return Math.round(d);
+                case 'expiry_rate':
+                    return d + '%';
                 case 'entrustment_score':
                     return d.toFixed(0);
                 case 'words_per_comment':

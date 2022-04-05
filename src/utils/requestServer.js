@@ -42,12 +42,16 @@ requestServer.getLearnerData = function (username, residentInfo) {
     });
 }
 
-requestServer.getAllData = function (dashboard = '', course = false) {
+requestServer.getAllData = function (dashboard = '', academic_year = '', course = false) {
     return new Promise((resolve, reject) => {
         let get_all_learners_data = jQuery.ajax({
             url: ELENTRA_API,
             type: "POST",
-            data: { "method": "get-all-learner-assessments", "course_id": course ? course : course_id }
+            data: {
+                "method": "get-all-learner-assessments",
+                "course_id": course ? course : course_id,
+                academic_year
+            }
         });
         jQuery.when(get_all_learners_data)
             .done(function (data) { resolve(processAllLearnerData(dashboard, data)) })

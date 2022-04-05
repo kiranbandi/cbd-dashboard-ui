@@ -1,5 +1,4 @@
 .filter-panel {
-    margin: 30px 30px 20px 30px;
 
     &.smaller-wrapper {
         margin-bottom: -25px !important;
@@ -14,7 +13,7 @@
             width: 100%;
             padding: 10px;
         }
-        width: 535px;
+        width: 515px;
 
         &.smaller-box {
             width: 150px !important;
@@ -53,7 +52,6 @@
     }
     .advanced-filter-box {
         padding: 10px 0px 10px 15px;
-        margin-top: 5px;
         border-radius: 0px 0px 5px 5px;
         width: 370px;
         background: #e2eff5;
@@ -66,6 +64,7 @@
         }
         &.show-filter {
             display: block;
+            margin-top: 5px;
         }
 
         .custom-checkbox-label {
@@ -132,12 +131,10 @@
         }
     }
     .filter-button {
-        font-size: 16px;
-        font-weight: bold;
         .filter-loader {
             margin-left: 10px;
             display: inline-block;
-            font-size: 20px;
+            font-size: 18px;
         }
         @media (max-width: 768px) {
             font-size: 13px;

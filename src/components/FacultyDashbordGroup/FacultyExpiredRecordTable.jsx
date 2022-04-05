@@ -88,7 +88,7 @@ export default class FacultyExpiredRecordTable extends Component {
             innerRecords = currentFacultyRecords[0].expiredRecords || [];
         }
 
-        return <div className='table-box m-t-lg' style={{ width: width }}>
+        return <div className='table-box m-t-lg no-printing' style={{ width: width }}>
             {currentFacultyRecords.length > 0 &&
                 [<h3 key='faculty-table-title'>
                     Summary of Expired EPAs by <span className='text-capitalize'>{currentFaculty} </span>

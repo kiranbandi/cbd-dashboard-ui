@@ -18,8 +18,8 @@ export default class NormativeFilterPanel extends Component {
             currentStageEntry = _.find(trainingStageList, (d) => d.value == currentStage) || trainingStageList[0];
 
         return (
-            <div className='filter-panel'>
-                <div className='text-xs-left advanced-filter-box normative-filter-box'>
+            <div className='filter-panel text-left p-b'>
+                <div className='text-left advanced-filter-box normative-filter-box'>
 
                     <div className='react-select-root-filter'>
                         <ReactSelect

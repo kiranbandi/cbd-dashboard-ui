@@ -19,7 +19,7 @@ export default {
     facultyDevlopment: {
         main: `This dashboard organizes all of the EPAs that have been completed for residents in the program by the Faculty member that completed them with the goal of informing faculty development.`,
         filterFaculty: `Select a specific faculty member for their metrics to be highlighted. Alternatively you can click on any of the bars in the charts below to select that faculty.`,
-        filterYear: `Select an academic year to only look at assessments completed in that year.`,
+        filterAssessorGroup: `Select an assessor to only look at assessments completed by users in that group. This filter can be used to remove or include student assessors.`,
         filterDepartment: `Select a department to only look at assessments completed by assessors from that department.`,
         acquisitionMetricsForAllFaculty: `These are the amalgamated metrics for EPAs completed by all Faculty in a given rotation. Mouse-over the EPA Rating visual to see the proportion of EPAs rated at each level of entrustment. Mouse-over the Training Stage visual to see the proportion of EPAs completed in each stage of training.`,
         acquisitionMetricsForSingleFaculty: `These are the metrics for EPAs completed by the selected Faculty. Mouse-over the EPA Rating visual to see the proportion of EPAs rated at each level of entrustment. Mouse-over the Training Stage visual to see the proportion of EPAs completed in each stage of training.`,
@@ -30,12 +30,12 @@ export default {
         averageWordsPerComment: `This chart displays the average number of words per comment included with the EPAs completed by each faculty member. Mouse-over for each faculty's name and click to highlight that faculty member's data. If a faculty is selected, their average words per comment metric is shown in the chart title in red. `,
         summaryOfEPAsByFacultyName: `This table displays EPAs completed by the selected Faculty. It is searchable (click the white box) and sortable (click the column header).`,
         summaryOfEPAsByExpiredFacultyName:`This table displays Expired EPAs that were not completed by the selected Faculty. It is searchable (click the white box) and sortable (click the column header) and can be exported as CSV file.`,
-        groupAndRole: `The following pie charts show the distribution of the different assessor roles and groups. If a faculty is selected, their group and role are shown in the chart title in red.`
     },
     programEvaluation: {
         main: `This dashboard organizes all of the EPAs that have been completed for residents in the program by the rotation and year they were completed during with the goal of informing program evaluation.`,
         EPAsAcquiredAndExpired: `This graph displays the number of EPAs that have been completed per resident in each year.`,
         EPARatingDistribution: `This stack chart displays the proportion of EPAs in each year that have been rated at each level of entrustment ('I had to do' to 'I didn't need to be there'). Mouse-over each row for additional details.`,
+        TypeAndGroupAndRole: `The following pie charts show the distribution of the different assessor types, roles and groups. Assessor roles and groups are only available for "internal" assessors.`,
         overallAcuisitionMetricsYears: `These EPA metrics contextualize the EPAs that have been completed within your program across different academic years`,
         overallAcuisitionMetricsbyYear: `These EPA metrics contextualize the EPAs that have been completed within your program over the selected academic year.`,
         overallAcuisitionMetrics: `These EPA metrics contextualize the EPAs that have been completed within your program over every selected academic year. The 'EPA Rating' graphic demonstrates the number of EPAs that have been rated at each level of entrustment from 1 (I had to do) to 5 (I didn't need to be there).`,

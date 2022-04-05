@@ -57,7 +57,7 @@ export default (props) => {
     }
 
 
-    return <div className='table-box' style={{ width: width }}>
+    return <div className='table-box no-printing' style={{ width: width }}>
         {currentFacultyRecords.length > 0 &&
             [<h3 key='faculty-table-title'>
                 Summary of EPAs by <span className='text-capitalize'>{currentFaculty} </span>

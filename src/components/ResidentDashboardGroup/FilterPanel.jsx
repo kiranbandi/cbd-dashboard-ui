@@ -147,7 +147,7 @@ class FilterPanel extends Component {
         if (!isFacultyMode && _.flatMap(residentData).length == 0) { return null };
 
         return (
-            <div className={('filter-panel m-t center-align ') + (isFacultyMode ? '' : 'smaller-wrapper')}>
+            <div className={('filter-panel center-align') + (isFacultyMode ? '' : 'smaller-wrapper')}>
                 <div className={('text-xs-center text-sm-left root-box ') + (isFacultyMode ? '' : 'smaller-box')}>
                     {isFacultyMode ? <div className='react-select-root-filter'>
                         <ReactSelect

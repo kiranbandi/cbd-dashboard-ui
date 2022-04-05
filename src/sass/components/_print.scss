@@ -1,0 +1,29 @@
+.print-title {
+    display: none;
+}
+
+@media print {
+    * {
+        text-shadow: none !important;
+        color: #000 !important;
+        background: initial !important;
+        box-shadow: none !important;
+    }
+
+    .print-title {
+        display: block !important;
+    }
+
+    .supervisor-dashboard-container {
+        zoom: 45%;
+    }
+
+    #page #content {
+        width: 100% !important;
+    }
+
+    @page {
+        margin: 0.2cm !important;
+        size: portrait;
+    }
+}
