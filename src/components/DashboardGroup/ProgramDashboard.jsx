@@ -99,7 +99,7 @@ export default class ProgramDashboard extends Component {
 
     render() {
 
-        const { academicYears, allResidentRecords = [], academicYearList = [] } = this.state,
+        const { academicYears, allResidentRecords = [] } = this.state,
             fullWidth = document.body.getBoundingClientRect().width - 300;
 
         return (

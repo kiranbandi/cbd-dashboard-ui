@@ -27,6 +27,13 @@ class DashboardRoot extends Component {
         let { activePage = 'resident' } = this.props,
             { dashboard_mode = 'resident', advanced_mode = 'disabled', user_type = 'non-admin' } = dashboard_options;
 
+        // Determine if the user has access to multiple programs to show the program oversight dashboard
+        let showProgramOversight = false;
+        // A user needs to have access to atleast 3 programs to be able to see the oversight dashboard and compare them
+        const course_picker = document.getElementById('cbme-course-picker');
+        if (advanced_mode == 'enabled' && course_picker && course_picker.options.length > 2) {
+            showProgramOversight = true;
+        }
 
         return (
             <div className='custom-dashboard-page-root' >
@@ -46,7 +53,7 @@ class DashboardRoot extends Component {
                                 {advanced_mode == 'enabled' && <li className={activePage == 'program' ? 'active' : ''}>
                                     <a data-tip={infoTooltipReference.programEvaluation.main} id='program-tab' onClick={this.onTabClick} >Program Evaluation</a>
                                 </li>}
-                                {advanced_mode == 'enabled' && <li className={activePage == 'oversight' ? 'active' : ''}>
+                                {showProgramOversight && <li className={activePage == 'oversight' ? 'active' : ''}>
                                     <a data-tip={infoTooltipReference.programOversight.main} id='oversight-tab' onClick={this.onTabClick} >Program Oversight</a>
                                 </li>}
                                 {user_type == 'medtech' && <li className={activePage == 'rotation' ? 'active' : ''}>

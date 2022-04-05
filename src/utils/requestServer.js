@@ -6,7 +6,6 @@ import processAllLearnerData from './processors/processAllLearnerData';
 
 const ELENTRA_API = ENTRADA_URL + "/assessments" + "?section=api-learner-progress-dashboard";
 
-
 var requestServer = {};
 
 requestServer.getLearnerList = function (params) {
@@ -21,6 +20,22 @@ requestServer.getLearnerList = function (params) {
         });
         jQuery.when(get_learner_data)
             .done(function (data = '{}') { resolve(processCourseData(data)) })
+            .fail(e => errorCallback(e, reject));
+    });
+}
+
+requestServer.getAssessmentCountByProgram = function (params) {
+    return new Promise((resolve, reject) => {
+        let get_learner_data = jQuery.ajax({
+            url: ELENTRA_API,
+            type: "POST",
+            data: {
+                "method": "get-assessment-count-by-program",
+                ...params
+            }
+        });
+        jQuery.when(get_learner_data)
+            .done(function (data = '[]') { resolve(data) })
             .fail(e => errorCallback(e, reject));
     });
 }
