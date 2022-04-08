@@ -93,7 +93,7 @@ export default class FacultyExpiredRecordTable extends Component {
                 [<h3 key='faculty-table-title'>
                     Summary of Expired EPAs by <span className='text-capitalize'>{currentFaculty} </span>
                     <i data-for={'faculty-table-infotip'} data-tip={infoTooltipReference.facultyDevlopment.summaryOfEPAsByExpiredFacultyName} className="fa fa-info-circle instant-tooltip-trigger"></i>
-                    <button onClick={this.downloadReport} className='m-l btn btn btn-primary-outline'> <i data-for={'faculty-table-infotip'} data-tip={infoTooltipReference.facultyDevlopment.summaryOfEPAsByFacultyName} className="fa fa-download"></i> Download Table</button>
+                    <button onClick={this.downloadReport} className='m-l btn btn btn-primary-outline'> <i className="fa fa-download"></i> Download Table</button>
 
                 </h3>,
                 <ReactTable

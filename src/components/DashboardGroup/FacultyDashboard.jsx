@@ -146,12 +146,12 @@ export default class FacultyDashboard extends Component {
 
                                     {currentFaculty != 'ALL' &&
                                         <div className='text-right m-r-md m-t-md no-printing'>
-                                            <button onClick={this.downloadReport} className='btn btn btn-primary-outline'> <i className="fa fa-download"></i> Print Faculty Report</button>
+                                            <button onClick={this.downloadReport} className='btn btn btn-primary-outline'> <i className="fa fa-download"></i> Print Assessor Report</button>
                                         </div>}
 
                                     <h3 className='print-title text-center'> Faculty Dashboard Report : {courseName}</h3>
                                     <h3 className='print-title text-center'> Academic Year : {academicYear.label} </h3>
-                                    <h3 className='print-title text-center m-b'> Faculty : {currentFaculty}</h3>
+                                    <h3 className='print-title text-center m-b'> Assessor : {currentFaculty}</h3>
 
                                     <FacultyInfoGroup
                                         width={overallWidth}

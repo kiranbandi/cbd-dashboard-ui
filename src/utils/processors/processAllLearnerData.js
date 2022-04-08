@@ -46,7 +46,7 @@ export default function (dashboard = '', learnersDataDump) {
             Assessor_Department,
             Professionalism_Safety: '',
             Rating: rating.order,
-            Rating_Text: '(' + rating.order + ') ' + rating.text,
+            Rating_Text: '(' + rating.order + ') ' + (rating.text || ''),
             Resident_Name,
             Type: record.form_type,
             formID: record.form_id,

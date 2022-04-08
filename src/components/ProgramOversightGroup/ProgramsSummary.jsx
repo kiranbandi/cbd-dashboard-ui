@@ -74,7 +74,7 @@ export default class ProgramsSummary extends Component {
                 <div className='program-part-container p-b'>
                     <h3 className="part-year-title">
                         EPAs Acquired
-                        <i data-for={'EPAsAcquiredAndExpired'} data-tip={infoTooltipReference.programEvaluation.EPAsAcquiredAndExpired} className="fa fa-info-circle instant-tooltip-trigger"></i>
+                        <i data-for={'EPAsAcquiredAndExpired'} data-tip={infoTooltipReference.programOversight.EPAsAcquiredAndExpired} className="fa fa-info-circle instant-tooltip-trigger"></i>
                         <ReactTooltip id={'EPAsAcquiredAndExpired'} className='custom-react-tooltip' />
                     </h3>
                     <div className='chart-container'>
@@ -102,7 +102,7 @@ export default class ProgramsSummary extends Component {
                 <div className='program-part-container p-b'>
                     <h3 className="part-year-title">
                         EPAs Acquired Per Resident
-                        <i data-for={'EPAsAcquiredAndExpired'} data-tip={infoTooltipReference.programEvaluation.EPAsAcquiredAndExpired} className="fa fa-info-circle instant-tooltip-trigger"></i>
+                        <i data-for={'EPAsAcquiredAndExpired'} data-tip={infoTooltipReference.programOversight.EPAsAcquiredAndExpiredPerResident} className="fa fa-info-circle instant-tooltip-trigger"></i>
                         <ReactTooltip id={'EPAsAcquiredAndExpired'} className='custom-react-tooltip' />
                     </h3>
                     <div className='chart-container'>
@@ -155,7 +155,7 @@ export default class ProgramsSummary extends Component {
                     className='program-part-container p-b'>
                     <h3 className="part-year-title">
                         Mean Words Per Comment
-                        <i data-for={'EPAFeedbackWordCount'} data-tip={infoTooltipReference.programEvaluation.EPAFeedbackWordCount} className="fa fa-info-circle instant-tooltip-trigger"></i>
+                        <i data-for={'EPAFeedbackWordCount'} data-tip={infoTooltipReference.programOversight.EPAFeedbackWordCount} className="fa fa-info-circle instant-tooltip-trigger"></i>
                         <ReactTooltip id={'EPAFeedbackWordCount'} className='custom-react-tooltip' />
                     </h3>
                     <div className='chart-container'>
@@ -181,7 +181,7 @@ export default class ProgramsSummary extends Component {
                 <div className="hr-divider p-t-lg">
                     <h4 className="hr-divider-content">
                         Monthly Metrics
-                        <i data-for={'overallAcuisitionMetricsYears'} data-tip={infoTooltipReference.programEvaluation.overallAcuisitionMetricsYears} className="fa fa-info-circle instant-tooltip-trigger"></i>
+                        <i data-for={'overallAcuisitionMetricsYears'} data-tip={infoTooltipReference.programOversight.monthlyMetrics} className="fa fa-info-circle instant-tooltip-trigger"></i>
                     </h4>
                 </div>
                 {_.map(custom_data, (p, pID) => {

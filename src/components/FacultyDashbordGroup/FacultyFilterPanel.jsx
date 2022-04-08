@@ -45,11 +45,11 @@ export default class FacultyFilterPanel extends Component {
                             onChange={onCurrentDepartmentSelect} />
                     </div>
                     <div className='react-select-root'>
-                        <label className='filter-label'>Faculty
+                        <label className='filter-label'>Assessor
                             <i data-for='faculty-infotip' data-tip={infoTooltipReference.facultyDevlopment.filterFaculty} className="fa fa-info-circle instant-tooltip-trigger"></i>
                         </label>
                         <ReactSelect
-                            placeholder='Select Faculty...'
+                            placeholder='Select Assessor...'
                             isSearchable={true}
                             value={currentFacultyValue}
                             options={facultyList}

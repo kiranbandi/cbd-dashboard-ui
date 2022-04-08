@@ -30,7 +30,10 @@ export default function (allResidentRecords = [], currentFacultyGroup, currentDe
         // group records by training phase
         const trainingPhaseGroup = _.groupBy(completedRecords, (d) => d.phaseTag);
         // group records by rating
-        const ratingGroup = _.groupBy(completedRecords, (d) => d.Rating);
+        // Also for rating group since we map the data to a 5 point scale
+        // we only consider forms with a scale of size 5 and are Supervisor Forms
+        let validScaleRecords = _.filter(completedRecords, (d) => ((d.Type == "Supervisor Form") && (d.scale.length >= 5)));
+        const ratingGroup = _.groupBy(validScaleRecords, (d) => d.Rating);
 
         let expiry_rate = Math.round((expiredRecords.length / (completedRecords.length + expiredRecords.length)) * 100);
         if (isNaN(expiry_rate)) {
@@ -45,7 +48,7 @@ export default function (allResidentRecords = [], currentFacultyGroup, currentDe
             phase_group: _.map(phaseList, (d) => (trainingPhaseGroup[d] ? trainingPhaseGroup[d].length : 0)),
             epa_count: completedRecords.length,
             expiry_rate,
-            entrustment_score: Math.round((_.mean(completedRecords.map(dd => +dd.Rating || 0)) || 0) * 100) / 100,
+            entrustment_score: Math.round((_.mean(validScaleRecords.map(dd => +dd.Rating || 0)) || 0) * 100) / 100,
             words_per_comment: Math.round(_.mean(completedRecords.map(dd => dd.Feedback.split(" ").length)) || 0)
         }
     })

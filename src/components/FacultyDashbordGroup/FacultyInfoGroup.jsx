@@ -12,13 +12,13 @@ export default (props) => {
             <FacultyStatCardSet
                 tooltipRef={infoTooltipReference.facultyDevlopment.acquisitionMetricsForAllFaculty}
                 tooltipID={'faculty-acq-all-infotip'}
-                title={"Acquisition Metrics for All Faculty in Program"}
+                title={"Acquisition Metrics for All Assessors in Program"}
                 processedRecords={processedRecords}
                 dateFilterActive={dateFilterActive} />
             {(currentFaculty !== 'ALL' && currentFaculty !== '') && <FacultyStatCardSet
                 tooltipRef={infoTooltipReference.facultyDevlopment.acquisitionMetricsForSingleFaculty}
                 tooltipID={'faculty-acq-selected-infotip'}
-                title={"Acquisition Metrics for Faculty - " + currentFaculty}
+                title={"Acquisition Metrics for Assessor - " + currentFaculty}
                 showNA={currentFaculty == 'ALL'}
                 processedRecords={currentFaculty == 'ALL' ? [] : currentFacultyRecords}
                 dateFilterActive={dateFilterActive} />}

@@ -17,24 +17,24 @@ export default {
         stages: `Select a resident stage to chart the EPA metrics of the residents currently in that stage. By default EPA metrics are mapped for all stages combined. Additional information can be reviewed by selecting the respective graph using the radio buttons below. Finally residents without any data are filtered out by default but this can be toggled using the checkbox.`
     },
     facultyDevlopment: {
-        main: `This dashboard organizes all of the EPAs that have been completed for residents in the program by the Faculty member that completed them with the goal of informing faculty development.`,
-        filterFaculty: `Select a specific faculty member for their metrics to be highlighted. Alternatively you can click on any of the bars in the charts below to select that faculty.`,
+        main: `This dashboard organizes all of the EPAs that have been completed for residents in the program by the assessor that completed them with the goal of informing faculty development.`,
+        filterFaculty: `Select a specific assessor for their metrics to be highlighted. Alternatively you can click on any of the bars in the charts below to select that assessor.`,
         filterAssessorGroup: `Select an assessor to only look at assessments completed by users in that group. This filter can be used to remove or include student assessors.`,
         filterDepartment: `Select a department to only look at assessments completed by assessors from that department.`,
-        acquisitionMetricsForAllFaculty: `These are the amalgamated metrics for EPAs completed by all Faculty in a given rotation. Mouse-over the EPA Rating visual to see the proportion of EPAs rated at each level of entrustment. Mouse-over the Training Stage visual to see the proportion of EPAs completed in each stage of training.`,
-        acquisitionMetricsForSingleFaculty: `These are the metrics for EPAs completed by the selected Faculty. Mouse-over the EPA Rating visual to see the proportion of EPAs rated at each level of entrustment. Mouse-over the Training Stage visual to see the proportion of EPAs completed in each stage of training.`,
-        EPADistribution: `This spider plot displays the breadth of the EPAs that the Faculty member completes. A Faculty that fills out EPAs in proportion to the program's requirements would display a perfect circle.`,
-        totalEPAsObserved: `This chart displays the number of EPAs observed by each faculty member. Mouse-over for each faculty's name and click to highlight that faculty member's data. If a faculty is selected, their EPA count is shown in the chart title in red.`,
-        EPAExpiryRate: `This chart displays the percentage of EPAs sent to each faculty member that expired before completion. Mouse-over for each faculty's name and click to highlight that faculty member's data. `,
-        averageEntrustmentScore: `This chart displays the average entrustment score of EPAs completed by each faculty member. Mouse-over for each faculty's name and click to highlight that faculty member's data. If a faculty is selected, their average entrustment score is shown in the chart title in red. `,
-        averageWordsPerComment: `This chart displays the average number of words per comment included with the EPAs completed by each faculty member. Mouse-over for each faculty's name and click to highlight that faculty member's data. If a faculty is selected, their average words per comment metric is shown in the chart title in red. `,
-        summaryOfEPAsByFacultyName: `This table displays EPAs completed by the selected Faculty. It is searchable (click the white box) and sortable (click the column header).`,
-        summaryOfEPAsByExpiredFacultyName:`This table displays Expired EPAs that were not completed by the selected Faculty. It is searchable (click the white box) and sortable (click the column header) and can be exported as CSV file.`,
+        acquisitionMetricsForAllFaculty: `These are the amalgamated metrics for EPAs completed by all assessors in a given academic year. Mouse-over the EPA Rating visual to see the proportion of EPAs rated at each level of entrustment (EPAs completed on Supervisor Forms with 5 point O score scales are only considered for this metric). Mouse-over the Training Stage visual to see the proportion of EPAs completed in each stage of training.`,
+        acquisitionMetricsForSingleFaculty: `These are the metrics for EPAs completed by the selected Assessor. Mouse-over the EPA Rating visual to see the proportion of EPAs rated at each level of entrustment. Mouse-over the Training Stage visual to see the proportion of EPAs completed in each stage of training.`,
+        totalEPAsObserved: `This chart displays the number of EPAs observed by each assessor. Mouse-over for each assessor's name and click to highlight that assessor's data. If an assessor is selected, their EPA count is shown in the chart title in red.`,
+        EPAExpiryRate: `This chart displays the percentage of EPAs sent to each assessor that expired before completion. Mouse-over for each assessor's name and click to highlight that assessor's data. `,
+        averageEntrustmentScore: `This chart displays the average entrustment score of EPAs completed by each assessor. Mouse-over for each assessor's name and click to highlight that assessor's data. If an assessor is selected, their average entrustment score is shown in the chart title in red. This chart only considers assessments that have been completed on "Supervisor Forms" that have a standard 5 point "O score" scale.`,
+        averageWordsPerComment: `This chart displays the average number of words per comment included with the EPAs completed by each assessor. Mouse-over for each assessor's name and click to highlight that assessor's data. If an assessor is selected, their average words per comment metric is shown in the chart title in red. `,
+        summaryOfEPAsByFacultyName: `This table displays EPAs completed by the selected assessor. It is searchable (click the white box) and sortable (click the column header).`,
+        summaryOfEPAsByExpiredFacultyName: `This table displays Expired EPAs that were not completed by the selected assessor. It is searchable (click the white box) and sortable (click the column header) and can be exported as CSV file.`,
     },
     programEvaluation: {
         main: `This dashboard organizes all of the EPAs that have been completed for residents in the program by the rotation and year they were completed during with the goal of informing program evaluation.`,
-        EPAsAcquiredAndExpired: `This graph displays the number of EPAs that have been completed per resident in each year.`,
-        EPARatingDistribution: `This stack chart displays the proportion of EPAs in each year that have been rated at each level of entrustment ('I had to do' to 'I didn't need to be there'). Mouse-over each row for additional details.`,
+        EPAsAcquiredAndExpired: `This graph displays the number of EPAs that have been completed and expired in each year in the program.`,
+        EPAsAcquiredAndExpiredPerResident: `This graph displays the number of EPAs that have been completed and expired per resident in each year in the program.`,
+        EPARatingDistribution: `This stack chart displays the proportion of EPAs in each year that have been rated at each level of entrustment ('I had to do' to 'I didn't need to be there'). Mouse-over each row for additional details. This chart only considers assessments that have been completed on "Supervisor Forms" that have a standard 5 point "O score" scale.`,
         TypeAndGroupAndRole: `The following pie charts show the distribution of the different assessor types, roles and groups. Assessor roles and groups are only available for "internal" assessors.`,
         overallAcuisitionMetricsYears: `These EPA metrics contextualize the EPAs that have been completed within your program across different academic years`,
         overallAcuisitionMetricsbyYear: `These EPA metrics contextualize the EPAs that have been completed within your program over the selected academic year.`,
@@ -45,12 +45,16 @@ export default {
         rotationDist: `This graph shows the total number of EPAs completed in a given rotation by residents in your program. By default only rotation schedules where the program is the scheduling group are shown here.`,
         rotationGroupFilter: `Use this filter to restrict data to a particular schedule group. By default this is set to the current active program if a matching schedule group is found with the same name.`,
         rotationClassification: `Use this to group the records based on different rotation criteria such as the name of the rotation or the site where the rotation was performed.`,
-        EPAFeedbackWordCount: `This graph displays the average number of words contained within the completed EPAs of each year. The length of the feedback has been found to correlate with feedback quality.`,
+        EPAFeedbackWordCount: `This graph displays the average number of words contained within the completed EPAs of each year. The length of the feedback has been found to correlate with the quality of feedback and so a higher word count is preferable.`,
         EPAMonthlyDistribution: `This graph visualizes the number of EPA observations submitted per month over multiple years. It is intended to identify increases and decreases in EPA assessments over seasons and years.`,
     },
 
-    programOversight:{
+    programOversight: {
         main: `This dashboard lets you compare metrics among different programs for the purpose of program oversight.`,
+        EPAsAcquiredAndExpired: `This graph displays the number of EPAs that have been completed and expired in each year by program.`,
+        EPAsAcquiredAndExpiredPerResident: `This graph displays the number of EPAs that have been completed and expired per resident in each year by program. The dotted line represents the average completed EPA count per resident for all the selected programs.`,
+        EPAFeedbackWordCount: `This graph displays the average number of words contained within the completed EPAs of each year. The dotted line represents the mean value of all the selected programs. The length of the feedback has been found to correlate with the quality of feedback and so a higher word count is preferable.`,
+        monthlyMetrics: "These are a collection of graphs that visualize the completed and expired count by month through the academic year for each program individually."
     },
 
     rotationModule: {

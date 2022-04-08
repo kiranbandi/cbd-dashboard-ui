@@ -76,7 +76,7 @@ export default class ProgramAllYearSummary extends Component {
                 <div className='program-part-container p-b'>
                     <h3 className="part-year-title">
                         EPAs Acquired Per Resident
-                        <i data-for={'EPAsAcquiredAndExpired'} data-tip={infoTooltipReference.programEvaluation.EPAsAcquiredAndExpired} className="fa fa-info-circle instant-tooltip-trigger"></i>
+                        <i data-for={'EPAsAcquiredAndExpired'} data-tip={infoTooltipReference.programEvaluation.EPAsAcquiredAndExpiredPerResident} className="fa fa-info-circle instant-tooltip-trigger"></i>
                         <ReactTooltip id={'EPAsAcquiredAndExpired'} className='custom-react-tooltip' />
                     </h3>
                     <div className='chart-container'>
