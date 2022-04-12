@@ -18,7 +18,9 @@
         "clean": "rimraf build/*",
         "build": "npm run clean && npm run build-code",
         "start": "webpack --config ./build-config/webpack.config.js",
-        "build-code": "webpack --config ./build-config/webpack.prod.config.js"
+        "build-code": "webpack --config ./build-config/webpack.prod.config.js",
+        "generate-stats":"webpack --config ./build-config/webpack.prod.config.js --json > stats.json",
+        "analyze":"webpack-bundle-analyzer stats.json"
     },
     "author": "kiranbandi",
     "license": "MIT",
@@ -66,6 +68,7 @@
         "terser-webpack-plugin": "^3.0.6",
         "url-loader": "^1.0.1",
         "webpack": "^4.46.0",
+        "webpack-bundle-analyzer": "^4.5.0",
         "webpack-dev-server": "^3.11.2",
         "write-file-webpack-plugin": "^4.5.1"
     }
