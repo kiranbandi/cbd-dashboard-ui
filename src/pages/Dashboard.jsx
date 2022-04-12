@@ -31,7 +31,7 @@ class DashboardRoot extends Component {
         let showProgramOversight = false;
         // A user needs to have access to atleast 3 programs to be able to see the oversight dashboard and compare them
         const course_picker = document.getElementById('cbme-course-picker');
-        if (advanced_mode == 'enabled' && course_picker && course_picker.options.length > 2) {
+        if (advanced_mode == 'enabled' && course_picker && course_picker.options.length >= 2) {
             showProgramOversight = true;
         }
 

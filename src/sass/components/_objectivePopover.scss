@@ -168,3 +168,11 @@ input:checked + .slider:before {
 .slider:before {
     border-radius: 50%;
 }
+
+
+.objective-progress-popover .popover-content .list-heading {
+    font-size: 14px !important;
+    font-weight: bold !important;
+    padding-bottom: 10px;
+    padding-top: 5px;
+}
