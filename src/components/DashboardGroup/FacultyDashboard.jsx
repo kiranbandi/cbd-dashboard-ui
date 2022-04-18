@@ -8,6 +8,7 @@ import {
     FacultyRecordTable, FacultyGraphGroup, FacultyExpiredRecordTable
 } from '../';
 import { currentAcademicYear, possibleAcademicYears } from '../../utils/getAcademicYears';
+import downloadCSV from '../../utils/downloadCSV';
 
 export default class FacultyDashboard extends Component {
     constructor(props) {
@@ -75,7 +76,7 @@ export default class FacultyDashboard extends Component {
     componentWillUnmount() { this._isMounted = false }
 
 
-    downloadReport = () => {
+    printDashboard = () => {
         jQuery('.clearfix.inner-content').children('').each(function (i, r) {
             if (r.id !== 'cbme-dashboard') { jQuery(r).addClass('no-printing') }
         });
@@ -85,6 +86,23 @@ export default class FacultyDashboard extends Component {
 
         alert('You will be prompted to print the page by your browser. You can also save the report by selecting "Save as PDF" instead.');
         window.print();
+    }
+
+    downloadReport = () => {
+
+        const { allResidentRecords = [], academicYear, currentFaculty, currentFacultyGroup, currentDepartment } = this.state;
+
+        const processedRecords = processFacultyMap(allResidentRecords, currentFacultyGroup, currentDepartment),
+            relevantData = _.map(processedRecords, d => {
+                let expiredCount = d.expiredRecords.length,
+                    completedCount = d.records.length,
+                    inProgressCount = d.inProgressRecords.length,
+                    overallCount = completedCount + inProgressCount + expiredCount;
+                return [d.faculty_name, overallCount, completedCount, inProgressCount, expiredCount];
+            }),
+            csvData = currentFaculty == 'ALL' ? relevantData : _.filter(relevantData, (d) => d[0] == currentFaculty);
+
+        downloadCSV(['Assessor', 'Overall Assessments', 'Completed', 'In progress', 'Expired'], csvData, academicYear.label + '-' + 'assessor-report');
     }
 
 
@@ -144,10 +162,10 @@ export default class FacultyDashboard extends Component {
 
                                 <div className='m-a'>
 
-                                    {currentFaculty != 'ALL' &&
-                                        <div className='text-right m-r-md m-t-md no-printing'>
-                                            <button onClick={this.downloadReport} className='btn btn btn-primary-outline'> <i className="fa fa-download"></i> Print Assessor Report</button>
-                                        </div>}
+                                    <div className='text-right m-r-md m-t-md no-printing'>
+                                        <button onClick={this.downloadReport} className='btn btn btn-primary-outline m-r'> <i className="fa fa-download"></i> Donwload Assessor Report</button>
+                                        {currentFaculty != 'ALL' && <button onClick={this.printDashboard} className='btn btn btn-primary-outline'> <i className="fa fa-download"></i> Print Assessor Dashboard</button>}
+                                    </div>
 
                                     <h3 className='print-title text-center'> Faculty Dashboard Report : {courseName}</h3>
                                     <h3 className='print-title text-center'> Academic Year : {academicYear.label} </h3>

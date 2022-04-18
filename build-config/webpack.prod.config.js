@@ -4,6 +4,7 @@ var path = require("path");
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
+    mode: 'production',
     entry: ['babel-polyfill', './src/app.jsx'],
     output: {
         path: path.resolve("build"),
