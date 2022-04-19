@@ -163,7 +163,7 @@ export default class FacultyDashboard extends Component {
                                 <div className='m-a'>
 
                                     <div className='text-right m-r-md m-t-md no-printing'>
-                                        <button onClick={this.downloadReport} className='btn btn btn-primary-outline m-r'> <i className="fa fa-download"></i> Donwload Assessor Report</button>
+                                        <button onClick={this.downloadReport} className='btn btn btn-primary-outline m-r'> <i className="fa fa-download"></i> Download Assessor Report</button>
                                         {currentFaculty != 'ALL' && <button onClick={this.printDashboard} className='btn btn btn-primary-outline'> <i className="fa fa-download"></i> Print Assessor Dashboard</button>}
                                     </div>
 
