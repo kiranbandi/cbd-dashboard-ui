@@ -59,14 +59,16 @@ class ElentraProcessor extends Component {
 
                     const allLines = CSVToArray(fileContents),
                         epaCode = allLines[2][1].slice(0, 3).trim(),
-                        indices = allLines[3],
-                        dataLines = allLines.slice(3, allLines.length),
+                        columnHeadersIndex = allLines[3].length > 4 ? 3 : 4,
+                        indices = allLines[columnHeadersIndex],
+                        dataLines = allLines.slice(columnHeadersIndex, allLines.length),
                         dateIndex = _.findIndex(indices, (d) => d.indexOf('Date Completed') > -1),
                         lastUpdatedBy = _.findIndex(indices, (d) => d.indexOf('Last Updated By') > -1),
                         rating = _.findIndex(indices, (d) => d.indexOf('Based on this') > -1),
                         safety = _.findIndex(indices, (d) => d.indexOf('patient safety concerns') > -1),
                         professionalism = _.findIndex(indices, (d) => d.indexOf('professionalism concerns') > -1),
                         nextSteps = _.findIndex(indices, (d) => d.indexOf('Next Steps') > -1);
+
 
                     let data = _.map(_.filter(dataLines, e => e[7] == 'complete'), (d) => {
 
@@ -174,7 +176,7 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(ElentraProcessor);
 
 
-function mapRating(r) {
+function mapRating(r = '') {
 
     const rating = r.split("\n\nComments")[0];
 
@@ -201,8 +203,9 @@ function mapRating(r) {
     }
 }
 
-function constructFeedback(rating, nextSteps = '') {
+function constructFeedback(rating = '', nextSteps = '') {
     const comments = rating.split("\n\nComments: \n")[1];
+
     return (comments || '') + nextSteps;
 }
 
