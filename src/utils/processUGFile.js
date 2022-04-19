@@ -53,7 +53,7 @@ export default function (rawData, residentList) {
                             'observer_type': '',
                             year_tag,
                             'rating': rating == 'low' ? 1 : rating == 'high' ? 3 : 2,
-                            'rotationTag': setRotation(row[8].toLowerCase().trim()),
+                            'rotationTag': row[8].toLowerCase().trim(),
                             'feedback': row[9].trim(),
                             // patient type is rewritten under situation_context
                             'situation_context': row[10].toLowerCase().trim(),
@@ -71,47 +71,6 @@ export default function (rawData, residentList) {
             reject();
         };
     })
-}
-
-function setRotation(rotation) {
-
-    let tag = '';
-
-    switch (rotation) {
-        case "family medicine":
-            tag = 'Family';
-            break;
-        case "electives":
-            tag = 'Elective';
-            break;
-        case "obstetrics and gynecology":
-            tag = 'OBS/GYN';
-            break;
-        case "selectives":
-            tag = "Selective";
-            break;
-        case "psychiatry":
-            tag = 'Psych';
-            break;
-        case "pediatrics":
-            tag = 'PED';
-            break;
-        case "surgery":
-            tag = 'Surgery';
-            break;
-        case "internal medicine":
-            tag = 'Medicine';
-            break;
-        case "emergency medicine":
-            tag = 'EM';
-            break;
-        case "anaesthesia":
-            tag = 'Anesthesia';
-            break;
-        default:
-            tag = 'Medicine';
-    }
-    return tag;
 }
 
 

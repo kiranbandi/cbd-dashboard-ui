@@ -64,13 +64,15 @@ export default class ProgramDashboard extends Component {
     render() {
 
         const { allRecords, cohort } = this.state,
-            { epaSourceMap, rotationList } = this.props.programInfo;
+            { epaSourceMap } = this.props.programInfo;
 
         let width = document.body.getBoundingClientRect().width - 250, filteredRecords = [];
         // for small screens use all available width
         width = width < 800 ? width : width / 2;
         // then Filter out records which belong to the selected cohort
         filteredRecords = _.filter(allRecords, (d) => d.year_tag == cohort.value);
+
+        const rotationList = _.keys(_.groupBy(filteredRecords, d => d.rotationTag));
 
         return (
             <div className='m-a dashboard-root-program' >

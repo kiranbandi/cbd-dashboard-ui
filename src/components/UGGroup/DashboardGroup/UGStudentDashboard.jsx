@@ -124,7 +124,7 @@ class UGStudentDashboard extends Component {
             groupedByYear, studentInfo = false } = this.state;
 
         const { accessType = 'resident', programInfo } = this.props,
-            { rotationList } = programInfo;
+            rotationList = _.keys(_.groupBy(studentRecords, d => d.rotation));
 
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let width = document.body.getBoundingClientRect().width - 125;
