@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { line } from "d3-shape";
 import { scaleLinear } from 'd3-scale';
 import ReactTooltip from 'react-tooltip';
-
-let max = {};
+import _ from 'lodash';
 
 export default class FacultyGraph extends Component {
     constructor(props) {

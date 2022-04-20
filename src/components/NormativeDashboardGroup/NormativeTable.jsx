@@ -3,6 +3,7 @@ import ReactTable from 'react-table';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { switchToResidentDashboard } from '../../redux/actions/actions';
+import _ from 'lodash';
 
 const columns = [{
     Header: 'Name',

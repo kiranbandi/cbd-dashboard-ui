@@ -5,7 +5,7 @@ const WriteFilePlugin = require('write-file-webpack-plugin');
 'use strict';
 module.exports = {
     mode: 'development',
-    entry: ['babel-polyfill', './src/app.jsx'],
+    entry: ['./src/app.jsx'],
     output: {
         path: path.resolve("C:\\Users\\bvenk\\Sites\\elentra-1x-me\\www-root\\javascript"),
         filename: "visual-summary.js"

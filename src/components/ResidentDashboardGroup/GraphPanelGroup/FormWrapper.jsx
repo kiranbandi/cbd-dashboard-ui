@@ -6,7 +6,7 @@ import SlideInFilter from './SlideInFilter';
 import oScoreReference from "../../../utils/oScoreReference";
 import infoTooltipReference from '../../../utils/infoTooltipReference';
 import ReactTooltip from 'react-tooltip';
-
+import _ from 'lodash';
 export default class GraphRow extends Component {
 
     constructor(props) {

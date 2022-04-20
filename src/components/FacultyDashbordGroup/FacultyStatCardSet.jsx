@@ -3,6 +3,7 @@ import { MicroStatCard } from '..';
 import FacultyScorePie from './FacultyScorePie';
 import PhaseSummaryPie from './PhaseSummaryPie';
 import ReactTooltip from 'react-tooltip';
+import _ from 'lodash';
 
 export default (props) => {
 

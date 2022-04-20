@@ -6,6 +6,7 @@ import ReactTooltip from 'react-tooltip';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 import downloadCSV from '../../utils/downloadCSV';
 import moment from 'moment';
+import _ from 'lodash';
 
 const columns = [{
     Header: 'Date',

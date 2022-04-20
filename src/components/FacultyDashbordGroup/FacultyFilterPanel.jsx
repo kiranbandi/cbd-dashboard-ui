@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactSelect from 'react-select';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 import ReactTooltip from 'react-tooltip';
+import _ from 'lodash';
 export default class FacultyFilterPanel extends Component {
 
     render() {

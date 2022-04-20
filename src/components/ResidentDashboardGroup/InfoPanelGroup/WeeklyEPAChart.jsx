@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { Line, CartesianGrid, XAxis, YAxis, Tooltip, ComposedChart, Area } from 'recharts';
+import _ from 'lodash';
 
 export default class WeeklyEPAChart extends Component {
 

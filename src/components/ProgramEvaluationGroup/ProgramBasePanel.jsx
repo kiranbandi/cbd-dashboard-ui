@@ -6,7 +6,7 @@ import EPAOverallbyRotation from './EPAOverallbyRotation';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 import FacultyTypeRole from '../FacultyDashbordGroup/FacultyTypeRole';
 import ReactTooltip from 'react-tooltip';
-
+import _ from 'lodash';
 export default class ProgramBasePanel extends Component {
 
     constructor(props) {

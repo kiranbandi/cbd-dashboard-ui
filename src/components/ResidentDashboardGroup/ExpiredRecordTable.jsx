@@ -6,6 +6,7 @@ import infoTooltipReference from '../../utils/infoTooltipReference';
 import { NumberToEPAText } from "../../utils/convertEPA";
 import ReactTooltip from 'react-tooltip';
 import moment from 'moment';
+import _ from 'lodash';
 
 const columns = [{
     Header: 'Encounter Date',

@@ -6,9 +6,7 @@ import processAllLearnerData from './processors/processAllLearnerData';
 
 const ELENTRA_API = ENTRADA_URL + "/assessments" + "?section=api-learner-progress-dashboard";
 
-var requestServer = {};
-
-requestServer.getLearnerList = function (params) {
+export function getLearnerList(params) {
     return new Promise((resolve, reject) => {
         let get_learner_data = jQuery.ajax({
             url: ELENTRA_API,
@@ -24,7 +22,7 @@ requestServer.getLearnerList = function (params) {
     });
 }
 
-requestServer.getAssessmentCountByProgram = function (params) {
+export function getAssessmentCountByProgram(params) {
     return new Promise((resolve, reject) => {
         let get_learner_data = jQuery.ajax({
             url: ELENTRA_API,
@@ -40,7 +38,7 @@ requestServer.getAssessmentCountByProgram = function (params) {
     });
 }
 
-requestServer.getLearnerData = function (username, residentInfo) {
+export function getLearnerData(username, residentInfo) {
     return new Promise((resolve, reject) => {
         let get_learner_data = jQuery.ajax({
             url: ELENTRA_API,
@@ -57,7 +55,7 @@ requestServer.getLearnerData = function (username, residentInfo) {
     });
 }
 
-requestServer.getAllData = function (dashboard = '', academic_year = '', course = false) {
+export function getAllData(dashboard = '', academic_year = '', course = false) {
     return new Promise((resolve, reject) => {
         let get_all_learners_data = jQuery.ajax({
             url: ELENTRA_API,
@@ -74,7 +72,7 @@ requestServer.getAllData = function (dashboard = '', academic_year = '', course 
     });
 }
 
-requestServer.getRotationSchedules = function (residentList = [], allRecords, courseName) {
+export function getRotationSchedules(residentList = [], allRecords, courseName) {
     return new Promise((resolve, reject) => {
         let get_all_learners_data = jQuery.ajax({
             url: ELENTRA_API,
@@ -87,7 +85,7 @@ requestServer.getRotationSchedules = function (residentList = [], allRecords, co
     });
 }
 
-requestServer.setRotationSchedules = function (rotation_data) {
+export function setRotationSchedules(rotation_data) {
     return new Promise((resolve, reject) => {
         let set_rotation_request = jQuery.ajax({
             url: ELENTRA_API,
@@ -106,5 +104,4 @@ function errorCallback(error, reject) {
     reject();
 }
 
-module.exports = requestServer;
 

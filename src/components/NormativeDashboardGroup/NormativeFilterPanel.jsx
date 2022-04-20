@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactSelect from 'react-select';
 import getTrainingStages from '../../utils/getTrainingStages';
 import infoTooltipReference from '../../utils/infoTooltipReference';
-
+import _ from 'lodash';
 
 export default class NormativeFilterPanel extends Component {
     constructor(props) {

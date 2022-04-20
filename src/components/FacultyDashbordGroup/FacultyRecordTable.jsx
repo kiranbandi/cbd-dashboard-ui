@@ -5,6 +5,7 @@ import { NumberToEPAText } from "../../utils/convertEPA";
 import ReactTooltip from 'react-tooltip';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 import downloadCSV from '../../utils/downloadCSV';
+import _ from 'lodash';
 
 const columns = [{
     Header: 'Date',

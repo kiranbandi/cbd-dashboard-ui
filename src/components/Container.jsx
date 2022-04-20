@@ -6,6 +6,7 @@ import { getLearnerList, getLearnerData } from '../utils/requestServer';
 import processCourseData from '../utils/processors/processCourseData';
 import ReactTooltip from 'react-tooltip';
 import moment from 'moment';
+import _ from 'lodash';
 class Container extends Component {
 
     constructor(props) {

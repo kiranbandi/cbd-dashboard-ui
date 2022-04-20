@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FilterPanel, GraphPanel, InfoPanel, ExpiredRecordTable } from '../';
-
+import _ from 'lodash';
 class ResidentDashboard extends Component {
 
     constructor(props) {

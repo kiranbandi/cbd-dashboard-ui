@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default function () {
     // access the training stages 
     // TODO training stages only for one level not multiple

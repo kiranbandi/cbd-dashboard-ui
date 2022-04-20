@@ -6,7 +6,7 @@ import GraphRow from './GraphRow';
 import HeaderRow from './HeaderRow';
 import Tooltip from './Tooltip';
 import { NumberToEPAText } from '../../../utils/convertEPA';
-
+import _ from 'lodash';
 
 class GraphPanel extends Component {
 

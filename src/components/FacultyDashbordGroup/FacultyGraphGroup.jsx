@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FacultyGraph from './FacultyGraph';
 import infoTooltipReference from '../../utils/infoTooltipReference';
-
+import _ from 'lodash';
 export default class FacultyGraphGroup extends Component {
     constructor(props) {
         super(props);

@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 import EPASpeedInfo from './EPASpeedInfo';
 import RecentEPATrend from './RecentEPATrend';
-import { toggleChecklistVisbility } from '../../../redux/actions/actions';
 import RotationSchedule from '../RotationScheduleGroup/RotationSchedule';
 
 class InfoPanel extends Component {
@@ -49,10 +48,5 @@ function mapStateToProps(state) {
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators({ toggleChecklistVisbility }, dispatch)
-    };
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(InfoPanel);
+export default connect(mapStateToProps, null)(InfoPanel);

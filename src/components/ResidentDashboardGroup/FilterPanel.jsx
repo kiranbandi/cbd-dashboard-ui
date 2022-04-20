@@ -7,8 +7,7 @@ import ReactSelect from 'react-select';
 import { getLearnerData } from '../../utils/requestServer';
 import getTrainingStages from '../../utils/getTrainingStages';
 import {
-    toggleFilterLoader, setResidentFilter,
-    toggleExamScore, setResidentData, updateResidentData
+    toggleFilterLoader, setResidentFilter, setResidentData, updateResidentData
 } from '../../redux/actions/actions';
 import { DateRangePicker } from 'react-dates';
 import infoTooltipReference from '../../utils/infoTooltipReference';
@@ -223,7 +222,6 @@ function mapDispatchToProps(dispatch) {
             toggleFilterLoader,
             setResidentFilter,
             setResidentData,
-            toggleExamScore,
             updateResidentData
         }, dispatch)
     };

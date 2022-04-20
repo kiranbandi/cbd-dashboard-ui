@@ -2,6 +2,7 @@ import React from "react";
 import { pie, arc } from "d3-shape";
 import { scaleOrdinal } from 'd3-scale';
 import { format } from "d3-format";
+import _ from 'lodash';
 
 const fourPointColorScale = ["#f28e2c", "#76b7b2", "#4e79a7", "#59a14f"];
 const phaseMiniLabelList = ['D', 'F', 'C', 'P'];

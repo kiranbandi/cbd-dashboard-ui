@@ -4,7 +4,7 @@ import { RadioButton } from '../';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { switchToResidentDashboard } from '../../redux/actions/actions';
-
+import _ from 'lodash';
 class NormativeGraph extends Component {
 
     constructor(props) {

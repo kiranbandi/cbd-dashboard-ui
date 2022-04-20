@@ -3,6 +3,8 @@ import processSingleProgramRecords from '../../utils/processSingleProgramRecords
 import { Line, LineChart, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 import ReactTooltip from 'react-tooltip';
+import _ from 'lodash';
+
 const SCORE_LIST = [{ "scoreID": "1", "label": "1 - I had to do" },
 { "scoreID": "2", "label": "2 - I had to talk them through" },
 { "scoreID": "3", "label": "3 - I needed to prompt" },

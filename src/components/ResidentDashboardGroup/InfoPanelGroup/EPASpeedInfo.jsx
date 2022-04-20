@@ -3,6 +3,7 @@ import { MicroStatCard, StatCard } from '../../';
 import WeeklyEPAChart from './WeeklyEPAChart';
 import infoTooltipReference from '../../../utils/infoTooltipReference';
 import ReactTooltip from 'react-tooltip';
+import _ from 'lodash';
 
 export default (props) => {
 

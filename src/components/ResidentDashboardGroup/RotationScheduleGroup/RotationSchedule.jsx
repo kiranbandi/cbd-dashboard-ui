@@ -8,7 +8,7 @@ import { showRotationTooltip, updateResidentData, setResidentFilter } from '../.
 import RotationTooltip from './RotationTooltip';
 import infoTooltipReference from '../../../utils/infoTooltipReference';
 import ReactTooltip from 'react-tooltip';
-
+import _ from 'lodash';
 class RotatioSchedule extends Component {
 
     constructor(props) {

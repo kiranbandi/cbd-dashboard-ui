@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { scaleLinear } from 'd3-scale';
 import { NumberToEPAText } from "../../utils/convertEPA";
 import shortid from 'shortid';
+import _ from 'lodash';
 import { STAGES_LIST } from '../../utils/programInfo';
 const customColorScaleList = ['#f46d43', '#fee08b', '#66bd63', '#d9ef8b'];
 

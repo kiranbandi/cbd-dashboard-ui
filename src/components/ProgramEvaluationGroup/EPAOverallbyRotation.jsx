@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
 import infoTooltipReference from '../../utils/infoTooltipReference';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 import ReactSelect from 'react-select';
+import _ from 'lodash';
 
 const ScheduleClassifications = [
     { 'value': 'rotationTag', 'label': 'Rotation Name' },
