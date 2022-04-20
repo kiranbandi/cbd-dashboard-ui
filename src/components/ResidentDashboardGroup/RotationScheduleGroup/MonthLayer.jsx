@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { scaleLinear } from 'd3';
+import { scaleLinear } from 'd3-scale';
 
 export default (props) => {
 

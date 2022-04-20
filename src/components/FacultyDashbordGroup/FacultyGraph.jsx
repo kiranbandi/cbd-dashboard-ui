@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { scaleLinear, max, line } from "d3";
+import { line } from "d3-shape";
+import { scaleLinear } from 'd3-scale';
 import ReactTooltip from 'react-tooltip';
+
+let max = {};
 
 export default class FacultyGraph extends Component {
     constructor(props) {
@@ -23,6 +26,7 @@ export default class FacultyGraph extends Component {
         data = data.sort((a, b) => a[1] - b[1]);
 
         const height = 350, margin = 10, Xoffset = 50;
+        const dataMax = data[data.length - 1][1];
 
         // The size of the bar is 0.75% of the item size and rest is left as a gap
         const itemSize = data.length > 0 ? ((width - margin) / data.length) : 2;
@@ -31,7 +35,7 @@ export default class FacultyGraph extends Component {
 
         // create the X and Y scales and modify them based on the track type
         const scaleX = scaleLinear().range([Xoffset, width - margin - 0.75 * itemSize]).domain([0, data.length - 1]);
-        let scaleY = scaleLinear().range([height - margin, margin]).domain([0, max(data.map(d => d[1]))]);
+        let scaleY = scaleLinear().range([height - margin, margin]).domain([0, dataMax]);
         // epa score scale doesnt vary based on max values but its always between 0 and 5
         if (trackType == 'entrustment_score') {
             scaleY = scaleLinear().range([height - margin, margin]).domain([0, 5]);
@@ -50,8 +54,6 @@ export default class FacultyGraph extends Component {
                 opacity='0.50'>
             </rect>
         });
-
-        let dataMax = max(data.map(d => d[1]));
 
         // this fuctional automatically set the tick format based on the track type
         const axisTickTextsFormat = d => {

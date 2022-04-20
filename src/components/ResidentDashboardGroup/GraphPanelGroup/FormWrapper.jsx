@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import LineChart from './LineChart';
-import { scaleLinear } from 'd3';
+import { scaleLinear } from 'd3-scale';
 import SlideInTable from './SlideInTable';
 import SlideInFilter from './SlideInFilter';
 import oScoreReference from "../../../utils/oScoreReference";

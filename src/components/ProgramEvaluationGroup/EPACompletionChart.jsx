@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { scaleLinear } from 'd3';
+import { scaleLinear } from 'd3-scale';
 import { NumberToEPAText } from "../../utils/convertEPA";
 import shortid from 'shortid';
 import { STAGES_LIST } from '../../utils/programInfo';

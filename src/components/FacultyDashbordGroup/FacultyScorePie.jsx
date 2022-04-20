@@ -1,5 +1,7 @@
 import React from "react";
-import { pie, arc, format, scaleOrdinal } from "d3";
+import { pie, arc } from "d3-shape";
+import { scaleOrdinal } from 'd3-scale';
+import { format } from "d3-format";
 
 const fivePointColorScale = ["#e15759", "#f28e2c", "#76b7b2", "#4e79a7", "#59a14f"];
 
@@ -28,6 +30,7 @@ const Pie = props => {
         .outerRadius(outerRadius);
 
     const formatter = format(".2f");
+
     const data = createPie(pieData);
 
     const colourScale = props.isUG ? fivePointColorScale.slice(0, 3) : fivePointColorScale;

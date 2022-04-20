@@ -1,5 +1,5 @@
 import React from 'react';
-import { line } from 'd3';
+import { line } from 'd3-shape';
 import TrackTrails from './TrackTrails';
 import TrackLegend from './TrackLegend';
 

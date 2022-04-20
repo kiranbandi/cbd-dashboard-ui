@@ -8,7 +8,7 @@ module.exports = {
     entry: ['babel-polyfill', './src/app.jsx'],
     output: {
         path: path.resolve("C:\\Users\\bvenk\\Sites\\elentra-1x-me\\www-root\\javascript"),
-        filename: "dynamic-dashboard.js"
+        filename: "visual-summary.js"
     },
     watch: true,
     watchOptions: {
@@ -21,7 +21,13 @@ module.exports = {
         'process.env': {
             NODE_ENV: JSON.stringify('development')
         }
-    }), new webpack.optimize.LimitChunkCountPlugin({
+    }),
+    // Ignore all locale files of moment.js
+    new webpack.IgnorePlugin({
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/,
+    }),
+    new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1
     }), new WriteFilePlugin()],
     module: {

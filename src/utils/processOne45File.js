@@ -1,17 +1,16 @@
-import { read, utils } from 'xlsx';
+// xlsx parsing library is globally loaded as variable XLSX in the php code - to reduce bundle size.
 import _ from 'lodash';
 import moment from 'moment';
-
 
 export default function (rawData, academic_year) {
 
     return new Promise((resolve, reject) => {
         try {
 
-            var workbook = read((new Uint8Array(rawData)), {
+            var workbook = XLSX.read((new Uint8Array(rawData)), {
                 type: 'array'
             }),
-                dataInRows = utils.sheet_to_json(workbook.Sheets['Rot List']);
+                dataInRows = XLSX.utils.sheet_to_json(workbook.Sheets['Rot List']);
 
             let iteratorIndex = 0,
                 maxLength = dataInRows.length,
