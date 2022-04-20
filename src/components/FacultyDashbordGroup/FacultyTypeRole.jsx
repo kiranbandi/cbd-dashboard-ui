@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import { PieChart, Pie, Cell, Legend, Tooltip } from 'recharts';
-import { schemeCategory10 } from 'd3';
 import ReactTooltip from 'react-tooltip';
 import infoTooltipReference from '../../utils/infoTooltipReference';
 
+const schemeCategory10 = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
 export default class FacultyTypeRole extends PureComponent {
 
     render() {

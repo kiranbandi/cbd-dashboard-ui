@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as d3 from 'd3';
+import { scaleLinear, max, line } from "d3";
 import ReactTooltip from 'react-tooltip';
 
 export default class FacultyGraph extends Component {
@@ -30,11 +30,11 @@ export default class FacultyGraph extends Component {
         //  so that width is removed from the scale 
 
         // create the X and Y scales and modify them based on the track type
-        const scaleX = d3.scaleLinear().range([Xoffset, width - margin - 0.75 * itemSize]).domain([0, data.length - 1]);
-        let scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, d3.max(data.map(d => d[1]))]);
+        const scaleX = scaleLinear().range([Xoffset, width - margin - 0.75 * itemSize]).domain([0, data.length - 1]);
+        let scaleY = scaleLinear().range([height - margin, margin]).domain([0, max(data.map(d => d[1]))]);
         // epa score scale doesnt vary based on max values but its always between 0 and 5
         if (trackType == 'entrustment_score') {
-            scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, 5]);
+            scaleY = scaleLinear().range([height - margin, margin]).domain([0, 5]);
         }
 
         // create bars
@@ -51,7 +51,7 @@ export default class FacultyGraph extends Component {
             </rect>
         });
 
-        let dataMax = d3.max(data.map(d => d[1]));
+        let dataMax = max(data.map(d => d[1]));
 
         // this fuctional automatically set the tick format based on the track type
         const axisTickTextsFormat = d => {
@@ -71,7 +71,7 @@ export default class FacultyGraph extends Component {
         // create the 5 vertical tick lines 
         let axisTickLines = _.times(5, (index) => {
             let verticalPosition = dataMax * (index / 4);
-            return d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[Xoffset, verticalPosition], [width - margin, verticalPosition]])
+            return line().x(d => d[0]).y(d => scaleY(d[1]))([[Xoffset, verticalPosition], [width - margin, verticalPosition]])
         })
 
         // The numbers of the Y axis ticks are created and format
@@ -87,7 +87,7 @@ export default class FacultyGraph extends Component {
         if (trackType == 'entrustment_score') {
             axisTickLines = _.times(6, (index) => {
                 let verticalPosition = index;
-                return d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[Xoffset, verticalPosition], [width - margin, verticalPosition]])
+                return line().x(d => d[0]).y(d => scaleY(d[1]))([[Xoffset, verticalPosition], [width - margin, verticalPosition]])
             })
             axisTickTexts = _.map(axisTickLines, (unused, index) => {
                 return <text key={'axis-tick' + index}

@@ -1,5 +1,5 @@
 import React from "react";
-import * as d3 from "d3";
+import { pie, arc, format, scaleOrdinal } from "d3";
 
 const fivePointColorScale = ["#e15759", "#f28e2c", "#76b7b2", "#4e79a7", "#59a14f"];
 
@@ -19,22 +19,20 @@ const Pie = props => {
         return pieDataSum ? Math.round((d / pieDataSum) * 10000) / 100 : 0;
     });
 
-    const createPie = d3
-        .pie()
+    const createPie = pie()
         .value(d => d)
         .sort(null);
 
-    const createArc = d3
-        .arc()
+    const createArc = arc()
         .innerRadius(innerRadius)
         .outerRadius(outerRadius);
 
-    const format = d3.format(".2f");
+    const formatter = format(".2f");
     const data = createPie(pieData);
 
     const colourScale = props.isUG ? fivePointColorScale.slice(0, 3) : fivePointColorScale;
 
-    const colors = d3.scaleOrdinal(fivePointColorScale);
+    const colors = scaleOrdinal(fivePointColorScale);
 
     const showNA = pieData.length == 0 || _.sum(pieData) == 0;
 
@@ -53,7 +51,7 @@ const Pie = props => {
                                 index={i}
                                 createArc={createArc}
                                 colors={colors}
-                                format={format}
+                                format={formatter}
                             />
                         ))}
                     </g>
