@@ -10,16 +10,9 @@ module.exports = [{
 },
 {
     test: /\.scss$/,
-    use: [{ loader: "style-loader" }, { 'loader': 'css-loader', options: { import: true, url: false } }, { 'loader': 'sass-loader', options: { url: false } }]
+    use: [{ loader: "style-loader" }, { 'loader': 'css-loader', options: { import: true, url: false } }, { 'loader': 'sass-loader' }]
 },
 {
     test: /\.css/,
     use: [{ loader: "style-loader" }, { 'loader': 'css-loader', options: { import: true, url: false } }],
-},
-{
-    test: /\.(jpe?g|png|gif|svg)$/i,
-    use: [
-        'file?hash=sha512&digest=hex&name=[hash].[ext]',
-        'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
-    ]
 }]

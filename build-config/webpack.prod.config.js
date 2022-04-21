@@ -15,7 +15,7 @@ module.exports = {
             NODE_ENV: JSON.stringify('production')
         }
     }),
-    // Ignore all locale files of moment.js
+    // Ignore all locale files of moment.js to reduce final bundle size
     new webpack.IgnorePlugin({
         resourceRegExp: /^\.\/locale$/,
         contextRegExp: /moment$/,
