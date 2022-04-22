@@ -1,6 +1,8 @@
 # CBME Elentra Visual Summary Module
 
-This is standalone adaptation of a series of dashboards originally developed at the University of Saskatchewan as a research project to visualize resident EPA data [(publication)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7082472/). This version has been modified to work within the Elentra ecosystem as an auxiliary page (visual summary) that loads along with the existing CBME dashboards in Elentra.
+This is standalone adaptation of a series of dashboards originally developed at the University of Saskatchewan as a research project to visualize resident EPA data [(publication)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7082472/). This version has been modified to work within the Elentra ecosystem as an auxiliary page (visual summary) that loads along with the existing CBME dashboards in Elentra. 
+
+A user guide for the dashboard suite can be found at [documentation](https://github.com/kiranbandi/cbd-dashboard-ui/blob/visual-summary/documentation/user_guide.pdf).
 
 ## Getting Started
 
@@ -39,4 +41,6 @@ This will output a `visual-summary.js` file into the build folder. That then nee
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/kiranbandi/cbd-dashboard-ui/blob/visual-summary/LICENSE) file for details
+
+https://github.com/kiranbandi/cbd-dashboard-ui/blob/visual-summary/documentation/user_guide.pdf
