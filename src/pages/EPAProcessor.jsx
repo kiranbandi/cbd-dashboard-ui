@@ -186,21 +186,39 @@ class UCalgaryDashboard extends Component {
                     });
 
                     // group the epa assessments by the EPA key 
-                    const grouped_epa_keys = _.groupBy(filtered_epa_assessments, d => d.STAGE_ID + '.' + d.EPA_SEQUENCE + '.' + d.OBSERVATIONS);
-                    _.map(grouped_epa_keys, (filter_data) => {
-                        // use the first datapoint as a reference
-                        const datapoint = filter_data[0];
-                        epaSourceMap[datapoint.STAGE_ID]['maxObservation'][datapoint.STAGE_ID + '.' + datapoint.EPA_SEQUENCE] = +datapoint.OBSERVATIONS;
-                        epaSourceMap[datapoint.STAGE_ID]['assessmentInfo'][datapoint.STAGE_ID + '.' + datapoint.EPA_SEQUENCE] = datapoint.ASMNT_DETAILS_ENG;
+                    const grouped_epa_keys = _.groupBy(filtered_epa_assessments, d => d.STAGE_ID + '.' + d.EPA_SEQUENCE);
+                    _.map(grouped_epa_keys, (filter_data, epa_key) => {
 
-                        let filterDictionary = {};
-                        // only use single value contextual variables since that is the only filter type 
-                        _.map(_.filter(filter_data, g => g.DISPLAY_TYPE == 'SINGLE VALUE'), c => {
-                            filterDictionary[c.CONTEXT_ENG] = c.CONTEXT_VALUES_ENG.split(';').map(l => l.trim());
+                        // For the same EPA Key there can be mutiple form types and part types 
+                        // So then group by part type
+                        let grouped_by_part = _.groupBy(filter_data, d => d.PLAN_PART);
+
+                        let maxObservation = 0, assessmentInfo = '', filterValuesDict = { 'Part': [] };
+
+                        _.map(grouped_by_part, (epa_data) => {
+
+                            // use the first datapoint as a reference
+                            const datapoint = epa_data[0];
+
+                            const form_part_type = datapoint.ASMNT_TITLE_ENG;
+                            // Add the form part type as a contextual value filter
+                            filterValuesDict['Part'].push(form_part_type);
+                            // Add the assessment info along with the part type, if there is already text in there add a new line
+                            assessmentInfo = (assessmentInfo.length > 0 ? assessmentInfo + '\n' : '') + (form_part_type + '\n' + datapoint.ASMNT_DETAILS_ENG);
+                            maxObservation += +datapoint.OBSERVATIONS;
+
+                            // only use single value contextual variables since that is the only filter type 
+                            _.map(_.filter(epa_data, g => g.DISPLAY_TYPE == 'SINGLE VALUE'), c => {
+                                filterValuesDict[c.CONTEXT_ENG] = c.CONTEXT_VALUES_ENG.split(';').map(l => l.trim());
+                            });
+
                         });
-                        epaSourceMap[datapoint.STAGE_ID]['filterValuesDict'][datapoint.STAGE_ID + '.' + datapoint.EPA_SEQUENCE] = { ...filterDictionary };
 
+                        epaSourceMap[epa_key.split('.')[0]]['maxObservation'][epa_key] = maxObservation;
+                        epaSourceMap[epa_key.split('.')[0]]['assessmentInfo'][epa_key] = assessmentInfo;
+                        epaSourceMap[epa_key.split('.')[0]]['filterValuesDict'][epa_key] = { ...filterValuesDict };
                     });
+
                     // set the source map onto program info
                     programInfo['epaSourceMap'] = epaSourceMap;
                     overallProgramMap[programInfo.programName] = programInfo;
