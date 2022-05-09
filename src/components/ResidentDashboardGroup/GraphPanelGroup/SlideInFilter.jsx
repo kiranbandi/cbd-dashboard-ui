@@ -12,44 +12,26 @@ export default class SlideInFilter extends Component {
     }
 
     onSelectChange(option, selectRef) {
-        const { clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter } = this.props;
-        const { filterDict } = this.props;
         this.props.onHighlightChange(selectRef.name, selectRef.action === 'clear' ? '' : option.value);
-
-        // if (selectRef.name == 'cp') {
-        //     this.props.onHighlightChange(selectRef.action == 'clear' ? '' : option.value, patientDemographicFilter, typeFilter, directVsIndirectFilter, staffObservationfilter);
-        // }
-        // else if (selectRef.name == 'dm') {
-        //     this.props.onHighlightChange(clinicalFilter, selectRef.action == 'clear' ? '' : option.value, typeFilter, directVsIndirectFilter, staffObservationfilter);
-        // }
-        // else if (selectRef.name == 'tp') {
-        //     this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, selectRef.action == 'clear' ? '' : option.value.substring(0, 6), directVsIndirectFilter, staffObservationfilter);
-        // }
-        // else if (selectRef.name == 'di') {
-        //     this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, typeFilter, selectRef.action == 'clear' ? '' : option.value, staffObservationfilter);
-        // }
-        // else if (selectRef.name == 'so') {
-        //     this.props.onHighlightChange(clinicalFilter, patientDemographicFilter, typeFilter, directVsIndirectFilter, selectRef.action == 'clear' ? '' : option.value);
-        // }
     }
 
     createSelect(
         label,
         optionArray = [],
-        // filterKey,
-        defaultValue,
-        accessor = value => value
+        defaultValue
     ) {
         let { data = [] } = this.props,
             // create a count map that is then merged with the text at the end
             optionCountMap = _.times(optionArray.length, () => 0);
 
+
         data.map(record => {
-            const context = splitAndTrim(record.pureData.Situation_Context);
+            const context = splitAndTrimAndRemoveSpaces(record.pureData.Situation_Context);
             context.map((contextType, contextIndex) => {
                 // if a particular value is in the array then find its position and 
                 //  increase the count in that position by 1
-                let index = optionArray.map(option => accessor(option)).indexOf(contextType);
+                let index = optionArray.map(option => splitAndTrimAndRemoveSpaces(option)[0]).indexOf(contextType);
+
                 if (index >= 0) {
                     // if the option is other then make sure it is not in the first place since 
                     //  the first place is normally for situation and there is a chance this could be other too
@@ -63,7 +45,7 @@ export default class SlideInFilter extends Component {
         const modifiedOptionArray = _.map(optionArray, (option, index) => {
             return {
                 label: option + " (" + optionCountMap[index] + ") ",
-                value: accessor(option)
+                value: option
             }
         });
 
@@ -78,7 +60,6 @@ export default class SlideInFilter extends Component {
                     <div className='select-container-filter'>
                         <Select
                             isClearable={true}
-                            // name={filterKey}
                             name={label}
                             // react select needs a value and so we need to set it in a complicated way with a function
                             //  need to find a more elegant solution in future
@@ -104,27 +85,22 @@ export default class SlideInFilter extends Component {
         const { innerKey, epaSource, width, filterDict, onHighlightChange, epaSourceMap } = this.props;
 
         const innerTitles = Object.keys(epaSourceMap[innerKey]['filterValuesDict'][epaSource]) || ["Clinical Presentation", "Demographic"];
+        
 
-        const data = this.props.data.map(d => d.pureData);
         return (
             <div className='filter-box' style={{ width: (width * 4) - 75 }}>
-                {
-                    innerTitles.map(title => {
-                        const shouldDisplay = epaSourceMap[innerKey]['filterValuesDict'][epaSource][title].every(d => {
-                            const [value, minRequired] = d.split('\f');
-                            if (minRequired) {
-                                return data.filter(dd => splitAndTrim(dd.Situation_Context).indexOf(value) > -1).length >= minRequired;
-                            } else {
-                                return true;
-                            }
-                        })
-                        return shouldDisplay ? this.createSelect(
+                {innerTitles.map(title => {
+                    if (title == 'Type' && epaSourceMap[innerKey]['filterValuesDict'][epaSource][title].length == 1) {
+                        return null;
+                    }
+                    else {
+                        return this.createSelect(
                             title,
-                            epaSourceMap[innerKey]['filterValuesDict'][epaSource][title].map(d=> d.split('\f')[0]),
-                            filterDict[title],
-                            title === 'Type' ? value => value.substring(0, 6) : undefined
-                        ) : null;
-                    })}
+                            epaSourceMap[innerKey]['filterValuesDict'][epaSource][title],
+                            filterDict[title]
+                        );
+                    }
+                })}
                 <div className='inner-button-box'>
                     <button type="submit"
                         className="btn btn-primary-outline icon-container"
@@ -139,7 +115,7 @@ export default class SlideInFilter extends Component {
 //  This takes in values that are comma seperated and splits them into an array
 // and also trims any leading or trailing whitespaces, additionally it also ignores commas in brackets
 // because the comma in that case is part of the option itself and not a seperator.
-function splitAndTrim(string) {
+function splitAndTrimAndRemoveSpaces(string) {
     var regex = /,(?![^(]*\)) /;
-    return string.split(regex).map((s) => s.trim());
+    return string.split(regex).map((s) => s.split(' ').join(''));
 }

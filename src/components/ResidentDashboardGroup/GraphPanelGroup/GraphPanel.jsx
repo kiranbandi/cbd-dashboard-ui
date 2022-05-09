@@ -70,7 +70,7 @@ class GraphPanel extends Component {
         let data = residentData[pointId[2]][pointId[4]];
         var pageWidth = document.body.getBoundingClientRect().width;
         actions.showTooltip(true, {
-            'x': event.pageX + 400 > pageWidth ? event.pageX - 400 : event.pageX,
+            'x': event.pageX + 400 > pageWidth ? event.pageX - 420 : event.pageX,
             'y': event.pageY - 50,
             'feedback': data['Feedback'],
             'name': data['Observer_Name'],
@@ -104,8 +104,14 @@ class GraphPanel extends Component {
 
         const { openTableID, openFilterID, openPlanID } = this.state;
 
-        // if there is no source map provided then use the Emergency medicine Template Map
-        epaSourceMap = !!epaSourceMap ? epaSourceMap : programInfo.epaSourceMap;
+        // Get the residents corresponding completion status for each EPA
+        // and sub in their relevant source map if available
+        // Also if there is no source map then use the alternate source map for each resident based on the data in the uploaded file
+        let alternateSourceMap = {};
+        if (residentFilter && residentFilter.username) {
+            residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
+            alternateSourceMap = (_.find(window.alternateSourceMapList, (resident) => resident.username == residentFilter.username) || {}).alternateSourceMap;
+        }
 
         // if no data then set flag to false if not group data by root key
         let epaSourcesThatExist = false;
@@ -115,26 +121,8 @@ class GraphPanel extends Component {
             _.map(epaSourcesThatExist, (epaSource) => {
                 epaSource.sort((a, b) => Number(a.split(".")[1]) - Number(b.split(".")[1]));
             });
-            // remove values that dont exist in the original source map 
-            _.map(epaSourcesThatExist, (epaSource, epaRootKey) => {
-                epaSourcesThatExist[epaRootKey] = epaSource.filter((d) => epaSourceMap[epaRootKey].subRoot.hasOwnProperty(d));
-                // For the EPAs in the hideIfNoData list, if there is no data, filter them out from the list 
-                let hiddenEPAList = epaSourceMap[epaRootKey].hideIfNoData || [];
-                epaSourcesThatExist[epaRootKey] = epaSource.filter((d) => {
-                    // if an EPA exists in the hidden list and it has no data then no need to show it
-                    if (hiddenEPAList.indexOf(d) > -1 && residentData[d].length == 0) {
-                        return false;
-                    }
-                    return true;
-                });
-            });
-
         }
 
-        // Get the residents corresponding completion status for each EPA
-        if (residentFilter && residentFilter.username) {
-            residentInfo = _.find(residentList, (resident) => resident.username == residentFilter.username);
-        }
 
         let expiredResidentDataGrouped = _.groupBy(expiredResidentData, (d) => d.EPA);
 
@@ -189,6 +177,7 @@ class GraphPanel extends Component {
                                                     isPlanVisible={epaSource == openPlanID}
                                                     widthPartition={widthPartition}
                                                     epaSourceMap={epaSourceMap}
+                                                    alternateSourceMap={alternateSourceMap}
                                                     residentInfo={residentInfo}
                                                     residentList={residentList}
                                                     smallScreen={smallScreen}

@@ -9,8 +9,8 @@ module.exports = {
     entry: ['babel-polyfill', './src/app.jsx'],
     output: {
         path: path.resolve("build/assets/bundle"),
-        filename: "cbme-dashboard.js",
-        publicPath: "assets/bundle/"
+        filename: "bundle.js",
+        publicPath: "/assets/bundle/"
     },
     plugins: [new webpack.DefinePlugin({
         'process.env': {
@@ -26,7 +26,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
         filename: '../../index.html',
-        template: './src/assets/index.template.html'
+        template: './src/assets/index.template.html',
+        alwaysWriteToDisk: true
     })
     ],
     module: {

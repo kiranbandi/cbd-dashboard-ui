@@ -8,9 +8,9 @@ module.exports = {
     mode: 'development',
     entry: ['babel-polyfill', './src/app.jsx'],
     output: {
-        path: __dirname + '/build/assets/bundle',
+        path: path.resolve("build/assets/bundle"),
         filename: "bundle.js",
-        publicPath: "assets/bundle"
+        publicPath: "/assets/bundle/"
     },
     watchOptions: {
         ignored: [
@@ -30,7 +30,7 @@ module.exports = {
         }
     }),
     new HtmlWebpackPlugin({
-        filename: '../../../../build/index.html',
+        filename: '../../index.html',
         template: './src/assets/index.template.html',
         alwaysWriteToDisk: true
     }),

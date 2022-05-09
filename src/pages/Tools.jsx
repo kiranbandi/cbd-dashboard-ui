@@ -128,6 +128,8 @@ class Tools extends Component {
             narrativeDataList: [],
             residentList: []
         }, dataReady = false, residentCount = 0;
+        // Store a list of Alternate source Maps applicable to each resident from their file in global window
+        window.alternateSourceMapList = [];
 
         if (fileList.length > 0 && program.length > 0) {
             // turn on file processing loader
@@ -140,12 +142,15 @@ class Tools extends Component {
                     // Then process the RCM file and extract its contents
                     let processedOutput = await processRCMFile(fileContents, { 'programName': program });
                     // set resident name from user list 
-                    let { data, residentPhase = '', residentName = '', narrativeData = [] } = processedOutput;
+                    let { data, residentPhase = '', residentName = '', narrativeData = [], alternateSourceMap = {} } = processedOutput;
 
                     // store the corresponding data into datastore and remap the username
                     dataStore.residentList.push({ 'fullname': residentName, 'currentPhase': residentPhase, 'username': residentName + '_' + residentCount });
                     dataStore.residentDataList.push(_.map(data, d => ({ ...d, 'username': residentName + '_' + residentCount })));
                     dataStore.narrativeDataList.push(_.map(narrativeData, d => ({ ...d, 'username': residentName + '_' + residentCount })));
+                    // Store residents source map for backup reference
+                    window.alternateSourceMapList.push({ 'username': residentName + '_' + residentCount, alternateSourceMap });
+
                     // increase the resident count
                     residentCount += 1;
                 } catch (error) {

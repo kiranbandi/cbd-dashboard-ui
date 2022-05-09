@@ -83,6 +83,7 @@ export default function (rawData, programInfo = {
                             var requiredObservations = 0;
                             if (dataInRows[iteratorIndex + 1].__EMPTY.indexOf('Collect') > -1) {
                                 requiredObservations = +dataInRows[iteratorIndex + 1].__EMPTY.split('Collect ')[1].split(" ")[0];
+                                // typo in some files
                             } else if (dataInRows[iteratorIndex + 1].__EMPTY.indexOf('Collest') > -1) {
                                 // special scenario because of typo that occurs when files are created by the portal
                                 requiredObservations = +dataInRows[iteratorIndex + 1].__EMPTY.split('Collest ')[1].split(" ")[0];
@@ -185,7 +186,7 @@ export default function (rawData, programInfo = {
                                             'Observer_Type': dataPoint.__EMPTY_1,
                                             'Rating': epaRating,
                                             'Type': dataPoint.__EMPTY_3,
-                                            'Situation_Context': dataPoint.__EMPTY_4,
+                                            'Situation_Context': !!dataPoint.__EMPTY_4 ? dataPoint.__EMPTY_4 + ", " + dataPoint.__EMPTY_3 : dataPoint.__EMPTY_3,
                                             'Feedback': dataPoint.__EMPTY_5,
                                             'Professionalism_Safety': dataPoint.__EMPTY_6,
                                             'isExpired': false
@@ -217,7 +218,7 @@ export default function (rawData, programInfo = {
                 residentPhase,
                 'data': dataStore,
                 'narrativeData': processNarratives(narrativeInRows, residentName),
-                epaSourceMap
+                'alternateSourceMap': { ...epaSourceMap }
             });
         } catch (e) { reject() };
     })
@@ -239,8 +240,8 @@ function findYearTag(timeStamp) {
 
 function findAcademicYear(timeStamp) {
     var timeObj = moment(timeStamp, 'YYYY-MM-DD');
-    // very poor implementation written in under 60 secs 
-    // need to replace when I have enough time
+    // very poor implementation written in under 60 secs but it works
+    // need to replace this function with a more elegant way when I get time
     if (timeObj.isBetween(moment('07/01/2018', 'MM/DD/YYYY'), moment('06/30/2019', 'MM/DD/YYYY'), 'days', '[]')) {
         return '2018';
     } else if (timeObj.isBetween(moment('07/01/2019', 'MM/DD/YYYY'), moment('06/30/2020', 'MM/DD/YYYY'), 'days', '[]')) {
@@ -253,8 +254,15 @@ function findAcademicYear(timeStamp) {
         return '2022';
     } else if (timeObj.isBetween(moment('07/01/2023', 'MM/DD/YYYY'), moment('06/30/2024', 'MM/DD/YYYY'), 'days', '[]')) {
         return '2023';
+    } else if (timeObj.isBetween(moment('07/01/2024', 'MM/DD/YYYY'), moment('06/30/2025', 'MM/DD/YYYY'), 'days', '[]')) {
+        return '2024';
+    } else if (timeObj.isBetween(moment('07/01/2025', 'MM/DD/YYYY'), moment('06/30/2026', 'MM/DD/YYYY'), 'days', '[]')) {
+        return '2025';
+    } else if (timeObj.isBetween(moment('07/01/2026', 'MM/DD/YYYY'), moment('06/30/2027', 'MM/DD/YYYY'), 'days', '[]')) {
+        return '2026';
     }
-    return '2024';
+
+    return '2027';
 }
 
 

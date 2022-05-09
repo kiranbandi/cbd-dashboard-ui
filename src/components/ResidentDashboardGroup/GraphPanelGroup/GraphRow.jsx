@@ -11,7 +11,7 @@ export default class GraphRow extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { filterDict: {}, markStateLoading: false };
+        this.state = { filterDict: {} };
         this.onHighlightChange = this.onHighlightChange.bind(this);
     }
 
@@ -28,15 +28,15 @@ export default class GraphRow extends Component {
 
     render() {
 
-        const { filterDict, markStateLoading = false } = this.state;
+        const { filterDict } = this.state;
 
         let { epaSource, isTableVisible, isPlanVisible, innerKey,
-            widthPartition, smallScreen, epaSourceMap,
+            widthPartition, smallScreen, epaSourceMap, alternateSourceMap,
             residentEPAData, expiredResidentEPAData,
             onMouseOut, onMouseOver, hideTogoNumbers,
             onTableExpandClick, onFilterExpandClick,
             onAssessmentPlanClick,
-            nonDemoMode, isFilterVisible, residentInfo = {}, hideMarkButton = true } = this.props;
+            nonDemoMode, isFilterVisible, residentInfo = {} } = this.props;
 
         let completionStatus = residentInfo.completionStatus || {};
 
@@ -51,8 +51,10 @@ export default class GraphRow extends Component {
         var innerHeight = height - 20;
         var width = (smallScreen ? widthPartition : widthPartition * 2) - 20;
 
-        // Get the maximum required observations for each EPA from source MAP *
-        const maxObservation = +epaSourceMap[epaSource.split(".")[0]].maxObservation[epaSource];
+        // Get the maximum required observations for each EPA from source MAP
+        // If the source map doesnt have the EPA (could be old archived EPA) then get it from Alternate source map
+        const maxObservation = epaSourceMap[innerKey].maxObservation[epaSource] ?
+            +epaSourceMap[innerKey].maxObservation[epaSource] : +alternateSourceMap[innerKey].maxObservation[epaSource];
 
         // Get recorded observation count
         const recordedCount = residentEPAData.length;
@@ -72,12 +74,13 @@ export default class GraphRow extends Component {
             let hasValidFilter = false;
 
             if (isFilterVisible) {
-                const context = splitAndTrim(d.Situation_Context);
+                const context = splitAndTrimAndRemoveSpaces(d.Situation_Context);
                 highlight = true;
+
                 for (const filter of Object.values(filterDict)) {
                     if (filter) {
                         hasValidFilter = true;
-                        highlight = highlight && context.indexOf(filter) > -1;
+                        highlight = highlight && context.indexOf(splitAndTrimAndRemoveSpaces(filter)[0]) > -1;
                     }
                 }
 
@@ -102,9 +105,13 @@ export default class GraphRow extends Component {
             }
         });
 
-        const isAnyFilterAvailable = Object.keys((epaSourceMap[innerKey].filterValuesDict[epaSource]) || {}).length > 0;
-        const isAssessmentPlanAvailable = epaSourceMap[innerKey].assessmentInfo && epaSourceMap[innerKey].assessmentInfo[epaSource];
+        const validFilterTitles = _.filter(Object.keys((epaSourceMap[innerKey].filterValuesDict[epaSource]) || {}), e =>
+            epaSourceMap[innerKey]['filterValuesDict'][epaSource][e].length > 1);
 
+        const isAnyFilterAvailable = validFilterTitles.length > 0;
+        const isAssessmentPlanAvailable = epaSourceMap[innerKey].assessmentInfo && epaSourceMap[innerKey].assessmentInfo[epaSource];
+        // if the EPA is archived get the title from alternate source map 
+        const EPATitle = NumberToEPAText(epaSource) + " - " + (epaSourceMap[innerKey].subRoot[epaSource] || '(ARCHIVED) ' + alternateSourceMap[innerKey].subRoot[epaSource]);
         // An EPA is complete if the CC Marks it as complete
         const isEPAComplete = completionStatus[epaSource] || false;
 
@@ -113,7 +120,7 @@ export default class GraphRow extends Component {
                 {/* widthly reduced slightly by 10px to facilitate extra gap at the last */}
                 <div style={{ width: widthPartition - 10 }} className='inner-cell epa-title-cell'>
                     <span className='inner-offset-label'>
-                        {NumberToEPAText(epaSource) + " - " + epaSourceMap[innerKey].subRoot[epaSource]}
+                        {EPATitle}
                         {isAssessmentPlanAvailable &&
                             <span
                                 className={"s-tooltip-assessment-plan-button icon plan-icon icon-layers " + (isPlanVisible ? ' open-plan' : ' ')}
@@ -208,7 +215,7 @@ export default class GraphRow extends Component {
 //  This takes in values that are comma seperated and splits them into an array
 // and also trims any leading or trailing whitespaces, additionally it also ignores commas in brackets
 // because the comma in that case is part of the option itself and not a seperator.
-function splitAndTrim(string) {
+function splitAndTrimAndRemoveSpaces(string) {
     var regex = /,(?![^(]*\)) /;
-    return string.split(regex).map((s) => s.trim());
+    return string.split(regex).map((s) => s.split(' ').join(''));
 }
