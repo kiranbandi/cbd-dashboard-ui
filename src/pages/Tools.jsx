@@ -6,6 +6,7 @@ import getFileByPath from '../utils/getFileByPath';
 import processRCMFile from '../utils/processRCMFile';
 import { setResidentData, setProgramInfo, setResidentFilter, setNarrativeData, setResidentList } from '../redux/actions/actions';
 import toastr from '../utils/toastr';
+import downloadCSV from '../utils/downloadCSV';
 import Loading from 'react-loading';
 import moment from 'moment';
 import _ from 'lodash';
@@ -113,6 +114,20 @@ class Tools extends Component {
         this.setState({ program });
     }
 
+    downloadFile = (event) => {
+        // process the file and download it as a csv
+        event.preventDefault();
+
+        window.emCBD = {
+            'rcmData': _.map(_.flatMap(this.state.dataStore.residentDataList), (_r) => [_r.Date, _r.Resident_Name, _r.EPA, _r.Observer_Name,
+            _r.Observer_Type, _r.Rating, _r.Type, _r.Situation_Context,
+            _r.Feedback, _r.Professionalism_Safety, _r.isExpired || false])
+        };
+        downloadCSV(['Date', 'Resident Name', 'EPA', 'Observer Name',
+            'Observer Type', 'Rating', 'Type', 'Situation Context', 'Feedback', 'Professionalism Safety', 'EPA Expired']);
+
+    }
+
     async onProcessFile() {
 
         event.preventDefault();
@@ -180,7 +195,7 @@ class Tools extends Component {
         return (
             <div className='tools-root m-t text-xs-left text-sm-left m-b-lg' >
                 <div className='container'>
-                    <h2 className='text-left text-primary text-center'> Royal College ePortfolio Observation Report Visualizer</h2>
+                    <h2 className='text-left text-primary text-center'>ePortfolio Observation Report Visualizer</h2>
                     <p className='upload-text-box'> This is a online toolkit designed to visualize CBME data in realtime from RCM (Royal College of Medicine) export files.
 
                         To use this dashboard, <br />first <b>select the relevent program</b> that the resident belongs to
@@ -214,6 +229,12 @@ class Tools extends Component {
                         <span className='process-span'>{"VISUALIZE"} </span>
                         {processing && <Loading type='spin' height='25px' width='25px' color='#d6e5ff' delay={-1} />}
                     </button>
+
+                    {dataReady && (residentList.length > 1) && <button className="btn btn-primary-outline m-t m-l process-btn" onClick={this.downloadFile}>
+                        <span className='process-span'>{"EXPORT DATA as a CSV"} </span>
+                        {processing && <Loading type='spin' height='25px' width='25px' color='#d6e5ff' delay={-1} />}
+                    </button>}
+
                 </div>
 
                 {dataReady && (residentList.length > 1) &&
