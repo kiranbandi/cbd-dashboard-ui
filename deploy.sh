@@ -6,9 +6,9 @@ npm run build
 # stop nginx  server
 sudo systemctl stop nginx
 # clear old assets
-rm -rf /var/www/html/
+rm -rf /var/www/html/demo/
 # copy new assets
-cp -a build/. /var/www/html/
+cp -a build/. /var/www/html/demo/
 # restart nginx server
 sudo systemctl start nginx
 echo "Deploy complete successfully"
