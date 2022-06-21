@@ -2,15 +2,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
-import {
-  NotFound, Home, Dashboard,
-  Tools, Admin, UGDashboard,
-  ProgramsCompare, UGAdmin, ElentraProcessor
-} from './pages';
+import { NotFound, Home, Dashboard } from './pages';
 import { Container } from './components';
 import configureStore from './redux/store/configureStore';
 import { Provider } from 'react-redux';
-import { checkloginStatus, checkAdminStatus } from './utils/authorization';
 import processQueryParams from './utils/processQueryParams';
 import { applyPolyfills, defineCustomElements } from "@seanwong24/s-tooltip/loader";
 
@@ -30,13 +25,7 @@ class App extends Component {
         <Router history={hashHistory}>
           <Route path='/' component={Container} pawsTicket={pawsTicket}>
             <IndexRoute component={Home} />
-            <Route path='PGME/Dashboard' component={Dashboard} onEnter={checkloginStatus} />
-            <Route path='PGME/Admin' component={Admin} onEnter={checkAdminStatus} />
-            <Route path='UGME/Dashboard' component={UGDashboard} onEnter={checkloginStatus} />
-            <Route path='UGME/Admin' component={UGAdmin} onEnter={checkAdminStatus} />
-            <Route path='Program-Compare' component={ProgramsCompare} onEnter={checkAdminStatus} />
-            <Route path='Tools' type='upload' component={Tools} />
-            <Route path='Elentra-Processor' component={ElentraProcessor} />
+            <Route path='PGME/Dashboard' component={Dashboard} />
             <Route path='*' component={NotFound} />
           </Route>
         </Router>

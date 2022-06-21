@@ -7,287 +7,17 @@ var requestServer = {};
 
 requestServer.requestLogin = function (ticket) {
     return new Promise((resolve, reject) => {
-        axios.post(endPoints.login, { ticket, isDevSite: (process.env.NODE_ENV == 'development') })
-            .then((response) => { resolve(response.data) })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
-
-requestServer.reIssueToken = function (program) {
-    return new Promise((resolve, reject) => {
-        axios.post(endPoints.reIssueToken, { program }, {
-            headers: { 'authorization': 'Bearer ' + sessionStorage.jwt }
-        })
-            .then((response) => {
-                resolve(response.data)
-            })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
-
-
-requestServer.registerUser = function (userData) {
-
-    let {
-        username,
-        fullname,
-        email,
-        accessType,
-        accessList = '',
-        currentPhase,
-        rotationSchedule,
-        isGraduated = false,
-        longitudinalSchedule,
-        programStartDate,
-        promotedDate
-    } = userData;
-
-    return new Promise((resolve, reject) => {
-        if (username.length == 0) {
-            toastr["error"]("NSID cannot be empty", "CREATE USER ERROR");
-            reject();
-        } else if (fullname.length == 0 || email.length == 0) {
-            toastr["error"]("fullname or email is empty", "CREATE USER ERROR");
-            reject();
-        } else {
-            axios.post(endPoints.register, {
-                username,
-                fullname,
-                email,
-                accessList,
-                accessType,
-                isGraduated,
-                currentPhase,
-                rotationSchedule,
-                longitudinalSchedule,
-                programStartDate,
-                promotedDate
-            }, {
-                headers: { 'authorization': 'Bearer ' + sessionStorage.jwt }
-            })
-                .then((response) => {
-                    toastr["success"]("User " + username + " created successfully");
-                    resolve();
-                })
-                .catch((err) => errorCallback(err, reject));
-        }
-    });
-}
-
-requestServer.updateUser = function (userData) {
-
-    let {
-        username,
-        email,
-        fullname,
-        accessType,
-        accessList,
-        currentPhase,
-        rotationSchedule,
-        longitudinalSchedule,
-        isGraduated,
-        programStartDate,
-        promotedDate
-    } = userData;
-
-    return new Promise((resolve, reject) => {
-        if (username.length == 0 || email.length == 0 || fullname.length == 0) {
-            toastr["error"]("NSID or email or fullname cannot be empty", "UPDATE USER ERROR");
-            reject();
-        } else {
-            axios.post(endPoints.updateUser + "/" + username, {
-                username,
-                email,
-                accessList,
-                fullname,
-                accessType,
-                currentPhase,
-                isGraduated,
-                rotationSchedule,
-                longitudinalSchedule,
-                programStartDate,
-                promotedDate
-            }, {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.jwt
-                }
-            })
-                .then((response) => {
-                    toastr["success"]("User " + username + " updated successfully");
-                    resolve();
-                })
-                .catch((err) => errorCallback(err, reject));
-        }
-    });
-}
-
-
-requestServer.updateCCFeedbackList = function (username, ccFeedbackList) {
-
-    return new Promise((resolve, reject) => {
-        axios.post(endPoints.updateCCFeedbackList + "/" + username, {
-            ccFeedbackList
-        }, {
-            headers: {
-                'authorization': 'Bearer ' + sessionStorage.jwt
-            }
-        })
-            .then((response) => {
-                toastr["success"]("CC Feedback for " + username + " was updated successfully");
-                resolve(response.data.data.ccFeedbackList);
-            })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
-
-
-requestServer.updateExamscore = function (username, citeExamScore, oralExamScore) {
-    return new Promise((resolve, reject) => {
-        axios.post(endPoints.updateExamscore + "/" + username, {
-            citeExamScore,
-            oralExamScore
-        }, {
-            headers: {
-                'authorization': 'Bearer ' + sessionStorage.jwt
-            }
-        })
-            .then((response) => {
-                toastr["success"]("Exam scores for " + username + " was updated successfully");
-                const {
-                    data
-                } = response.data;
-                resolve({
-                    'citeExamScore': data.citeExamScore,
-                    'oralExamScore': data.oralExamScore
-                });
-            })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
-
-requestServer.updateCompletionStatus = function (username, completionStatus) {
-    return new Promise((resolve, reject) => {
-        axios.post(endPoints.updateCompletionStatus + "/" + username, { completionStatus }, {
-            headers: { 'authorization': 'Bearer ' + sessionStorage.jwt }
-        })
-            .then((response) => {
-                const { data } = response.data;
-                resolve({ 'completionStatus': data.completionStatus });
-            })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
-
-
-requestServer.getAllUsers = function () {
-    return new Promise((resolve, reject) => {
-        axios.get(endPoints.allUsers, {
-            headers: {
-                'authorization': 'Bearer ' + sessionStorage.jwt
-            }
-        })
-            .then((response) => {
-                resolve(response.data.map((user) => {
-                    const { username, fullname, accessType } = user;
-                    return {
-                        username,
-                        fullname,
-                        accessType
-                    }
-                }))
-            })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
-
-requestServer.getUser = function (username) {
-    return new Promise((resolve, reject) => {
-        axios.get(endPoints.getUser + "/" + username, {
-            headers: {
-                'authorization': 'Bearer ' + sessionStorage.jwt
-            }
-        })
-            .then((response) => {
-                resolve(response.data)
-            })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
-
-//  only difference being the API method get vs delete , should I combine both 
-//  would this be over engineering shit !
-requestServer.deleteUser = function (username) {
-    return new Promise((resolve, reject) => {
-        axios.delete(endPoints.getUser + "/" + username, {
-            headers: {
-                'authorization': 'Bearer ' + sessionStorage.jwt
-            }
-        })
-            .then((response) => {
-                toastr["success"]("User " + username + " deleted successfully");
-                resolve(response.data)
-            })
-            .catch((err) => errorCallback(err, reject));
+        const userData = { "username": "vkb698", "accessType": "super-admin", "accessList": "", "program": "EM", "token": "test_token", "programList": ["SURGFND"] };
+        resolve(userData);
     });
 }
 
 requestServer.getResidentList = function (filterGraduated = false) {
     return new Promise((resolve, reject) => {
-        axios.get(endPoints.residents, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
-            .then((response) => {
-                if (filterGraduated) {
-                    resolve(_.filter(response.data, (d) => !d.isGraduated));
-                } else {
-                    resolve(response.data);
-                }
-            })
-            .catch((err) => errorCallback(err, reject));
+        resolve(residentList);
     });
 }
 
-requestServer.getAllResidentsList = function (filterGraduated = false) {
-    return new Promise((resolve, reject) => {
-        axios.get(endPoints.residentsAll, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
-            .then((response) => {
-                if (filterGraduated) {
-                    resolve(_.filter(response.data, (d) => !d.isGraduated));
-                } else {
-                    resolve(response.data);
-                }
-            })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
-
-requestServer.getObserverData = function (observername) {
-    return new Promise((resolve, reject) => {
-        axios.post(endPoints.recordsByObserver, { observername }, { headers: { 'authorization': 'Bearer ' + sessionStorage.jwt } })
-            .then((response) => {
-                if (response.data.length == 0) {
-                    toastr["error"]("No records found", "ERROR");
-                    resolve([]);
-                } else {
-                    var recordsList = response.data.map((record) => {
-                        return {
-                            Date: record.observation_date,
-                            EPA: record.epa,
-                            Feedback: record.feedback,
-                            Observer_Name: record.observer_name,
-                            Observer_Type: record.observer_type,
-                            Professionalism_Safety: record.professionalism_safety,
-                            Rating: record.rating,
-                            Resident_Name: record.resident_name,
-                            Situation_Context: record.situation_context,
-                            Type: record.type,
-                            isExpired: record.isExpired || false
-                        }
-                    })
-                    resolve(recordsList);
-                }
-            })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
 
 requestServer.getResidentData = function (username) {
     return new Promise((resolve, reject) => {
@@ -316,72 +46,6 @@ requestServer.getResidentData = function (username) {
                     })
                     resolve(recordsList);
                 }
-            })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
-
-
-requestServer.setUGRecords = function (records, yearTag = '') {
-    var recordsList = records.map((record) => {
-        return {
-            ...record,
-            isExpired: false,
-            phaseTag: ''
-        }
-    })
-    return new Promise((resolve, reject) => {
-        axios.post(endPoints.setRecords, {
-            username: 'all',
-            recordsList,
-            yearTag
-        }, {
-            headers: {
-                'authorization': 'Bearer ' + sessionStorage.jwt
-            }
-        })
-            .then((response) => {
-                resolve(response.data)
-            })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
-
-
-requestServer.setRecords = function (records, username, yearTag) {
-
-    var recordsList = records.map((record) => {
-        return {
-            username,
-            observation_date: record.Date,
-            year_tag: record.yearTag,
-            epa: record.EPA,
-            feedback: record.Feedback,
-            observer_name: record.Observer_Name,
-            observer_type: record.Observer_Type,
-            professionalism_safety: record.Professionalism_Safety,
-            rating: record.Rating,
-            resident_name: record.Resident_Name,
-            situation_context: record.Situation_Context,
-            type: record.Type,
-            isExpired: record.isExpired,
-            phaseTag: record.phaseTag,
-            rotationTag: record.rotationTag
-        }
-    })
-
-    return new Promise((resolve, reject) => {
-        axios.post(endPoints.setRecords, {
-            username,
-            recordsList,
-            yearTag
-        }, {
-            headers: {
-                'authorization': 'Bearer ' + sessionStorage.jwt
-            }
-        })
-            .then((response) => {
-                resolve(response.data)
             })
             .catch((err) => errorCallback(err, reject));
     });
@@ -428,103 +92,405 @@ requestServer.getNarratives = function (username) {
     });
 }
 
-requestServer.setNarratives = function (narratives, username, yearTag) {
-
-    var narrativesList = narratives.map((narrative) => {
-        return {
-            username,
-            ...narrative
-        }
-    })
-
-    return new Promise((resolve, reject) => {
-        axios.post(endPoints.setNarratives, {
-            username,
-            narrativesList,
-            yearTag
-        }, {
-            headers: {
-                'authorization': 'Bearer ' + sessionStorage.jwt
-            }
-        })
-            .then((response) => {
-                resolve(response.data)
-            })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
-
-// APIs for task lists
-requestServer.getTaskList = function (username) {
-    return new Promise((resolve, reject) => {
-        axios.get(endPoints.getTaskList + "/" + username, {
-            headers: {
-                'authorization': 'Bearer ' + sessionStorage.jwt
-            }
-        })
-            .then((response) => {
-                resolve(response.data ? response.data.taskList || [] : [])
-            })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
-
-requestServer.setTaskList = function (username, taskList) {
-    return new Promise((resolve, reject) => {
-        axios.post(endPoints.setTaskList, {
-            username,
-            taskList
-        }, {
-            headers: {
-                'authorization': 'Bearer ' + sessionStorage.jwt
-            }
-        })
-            .then((response) => {
-                resolve(response.data)
-            })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
-
-
-requestServer.getRecordsByYear = function (academicYear = '', programSpecific = true) {
-    return new Promise((resolve, reject) => {
-        axios.post(endPoints.getRecordsByYear, {
-            academicYear,
-            programSpecific
-        }, {
-            headers: {
-                'authorization': 'Bearer ' + sessionStorage.jwt
-            }
-        })
-            .then((response) => {
-                resolve(response.data)
-            })
-            .catch((err) => errorCallback(err, reject));
-    });
-}
-
 function errorCallback(error, reject) {
-    if (error.response && error.response.data) {
-        // if its an authorization error, we simply redirect
-        // the users to the paws login page
-        let loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent(window.location.origin + '/');
-        if (error.response.status == 401) {
-            //  handle token expiry gracefully and log the user back in 
-            // with minimal effort.
-            toastr["error"]("Your session has expired, please wait while we log you back in again.", "ERROR");
-            window.setTimeout(() => {
-                window.location.replace(loginRedirectURL)
-            }, 2500);
-
-        } else {
-            toastr["error"](error.response.data.message, "ERROR")
-        }
-
-    } else {
-        toastr["error"]("Error connecting to the server", "ERROR")
-    }
+    toastr["error"]("Error connecting to the server", "ERROR")
     reject();
 }
 
 module.exports = requestServer;
+
+
+
+let residentList = [
+    {
+        "promotedDate": [
+            "06/12/2018",
+            "06/12/2018",
+            "12/08/2020"
+        ],
+        "ccFeedbackList": [
+            {
+                "feedback": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique dicta ratione aperiam incidunt ex aut ducimus consequatur sapiente praesentium quis?",
+                "meetingDate": "06/18/2019",
+                "rating": "As Expected"
+            },
+            {
+                "feedback": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique dicta ratione aperiam incidunt ex aut ducimus consequatur sapiente praesentium quis?",
+                "meetingDate": "09/18/2018",
+                "rating": "As Expected"
+            }
+        ],
+        "_id": "5c36756045cf18296dc91b5f",
+        "username": "qsp760",
+        "fullname": "John Doe",
+        "currentPhase": "transition-to-practice",
+        "programStartDate": "2016-07-01T06:00:00.000Z",
+        "rotationSchedule": {
+            "2016": [
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM"
+            ],
+            "2017": [
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM"
+            ],
+            "2018": [
+                "EM(PED)",
+                "EM",
+                "EM(RGNL)",
+                "ICU",
+                "EM",
+                "ANESTHESIA",
+                "EM",
+                "SELECTIVE",
+                "EM",
+                "ORTHO",
+                "EM(REGINA)",
+                "ICU",
+                "EM"
+            ],
+            "2019": [
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "ACE",
+                "EM(RGNL)",
+                "ACE",
+                "TRANSPORT",
+                "ACE",
+                "ACE",
+                "PICU",
+                "TOXICOLOGY",
+                "EM"
+            ],
+            "2020": [
+                "EM",
+                "TRAUMA",
+                "ICU",
+                "EM(PED)",
+                "EM",
+                "EM(REGINA)",
+                "TRAUMA",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "TRANSPORT",
+                "EM(PED)"
+            ]
+        },
+        "uploadedData": "2021-07-07T06:00:00.000Z",
+        "longitudinalSchedule": {
+            "2018": "ADMIN / REGIONAL EM / EMS",
+            "2019": "MASTERS"
+        },
+        "citeExamScore": {
+            "2016": "60",
+            "2017": "52",
+            "2018": "37, 2",
+            "2019": "23,5",
+            "2020": "27,20"
+        },
+        "isGraduated": false,
+        "oralExamScore": {
+            "2018": [
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "65"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "50"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "75"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "75"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "70"
+                }
+            ],
+            "2019": [
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "80"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "70"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "70"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "80"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "75"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "50"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "85"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "90"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "60"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "80"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "60"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "70"
+                }
+            ]
+        },
+        "id": "5c36795345cf18296dc91ba9"
+    },
+    {
+        "promotedDate": [
+            "10/01/2017",
+            "06/30/2018"
+        ],
+        "ccFeedbackList": [],
+        "_id": "5c36798145cf18296dc91baa",
+        "username": "grw749",
+        "fullname": "Jane Doe",
+        "currentPhase": "core-of-discipline",
+        "programStartDate": "2017-07-01T06:00:00.000Z",
+        "rotationSchedule": {
+            "2017": [
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM"
+            ],
+            "2018": [
+                "GIM",
+                "EM",
+                "SELECTIVE",
+                "PLASTICS",
+                "GEN SURG",
+                "EM(REGINA)",
+                "EM",
+                "EM",
+                "EM(PED)",
+                "NEURO",
+                "EM",
+                "EM",
+                "EM"
+            ],
+            "2019": [
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM"
+            ],
+            "2020": [
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM",
+                "EM"
+            ]
+        },
+        "uploadedData": "2019-07-08T06:00:00.000Z",
+        "citeExamScore": {
+            "2017": "56",
+            "2018": "22, 13"
+        },
+        "longitudinalSchedule": "",
+        "isGraduated": false,
+        "oralExamScore": {
+            "2018": ""
+        },
+        "id": "5c36798145cf18296dc91baa"
+    },
+    {
+        "promotedDate": [
+            "07/01/2018",
+            "07/01/2018",
+            "09/18/2018"
+        ],
+        "ccFeedbackList": [
+            {
+                "feedback": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                "meetingDate": "06/18/2019",
+                "rating": "As Expected"
+            },
+            {
+                "feedback": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                "meetingDate": "09/18/2018",
+                "rating": "As Expected"
+            },
+            {
+                "feedback": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                "meetingDate": "12/11/2018",
+                "rating": "As Expected"
+            },
+            {
+                "feedback": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                "meetingDate": "03/12/2019",
+                "rating": "As Expected"
+            }
+        ],
+        "_id": "5c3679b245cf18296dc91bab",
+        "username": "hkc445",
+        "fullname": "Ben Doe",
+        "currentPhase": "transition-to-practice",
+        "programStartDate": "2018-07-01T06:00:00.000Z",
+        "rotationSchedule": {
+            "2018": [
+                "EM",
+                "TRAUMA",
+                "EM",
+                "EM(PED)",
+                "EM",
+                "PLASTICS",
+                "CARDIO",
+                "ORTHO",
+                "EM",
+                "OTHER",
+                "OTHER",
+                "OTHER",
+                "OTHER"
+            ],
+            "2019": [
+                "SELECTIVE",
+                "EM",
+                "EM",
+                "SELECTIVE",
+                "OTHER",
+                "OTHER",
+                "OTHER",
+                "OTHER",
+                "OTHER",
+                "OTHER",
+                "OTHER",
+                "OTHER",
+                "OTHER"
+            ]
+        },
+        "uploadedData": "2019-11-12T06:00:00.000Z",
+        "citeExamScore": {
+            "2018": "69, 53"
+        },
+        "longitudinalSchedule": "",
+        "isGraduated": false,
+        "oralExamScore": {
+            "2018": [
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "80"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "90"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "100"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "95"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "100"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "95"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "85"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "80"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "80"
+                },
+                {
+                    "narrative": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt laudantium excepturi aliquid voluptates aut nesciunt nulla dolor quisquam illo deleniti.",
+                    "value": "85"
+                }
+            ]
+        },
+        "id": "5c3679b245cf18296dc91bab"
+    }
+];

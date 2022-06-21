@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { setActiveDashboard } from '../redux/actions/actions';
 import {
     ResidentDashboard, ProgramDashboard,
-    FacultyDashboard, Modal, ChecklistModal,
+    FacultyDashboard, Modal,
     NormativeDashboard, DownloadDashboard
 } from '../components';
 import infoTooltipReference from '../utils/infoTooltipReference';
@@ -40,7 +40,6 @@ class DashboardRoot extends Component {
         return (
             <div className='dashboard-page-root' >
                 {isModalVisible && <Modal infoCard={infoCard} />}
-                {isChecklistVisible && <ChecklistModal />}
                 {boardsLevel == '1' &&
                     <div>
                         <s-tooltip border-width="1px" show-delay="1000" style={{ fontFamily: 'inherit' }} attach-to=".dashboard-tab"></s-tooltip>
