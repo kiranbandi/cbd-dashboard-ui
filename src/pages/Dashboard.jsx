@@ -65,9 +65,9 @@ class DashboardRoot extends Component {
                                         PROGRAM EVALUATION
                                     </a>
                                 </li>
-                                <li className={activeDashboard == 'table' ? 'active' : ''}>
+                                {/* <li className={activeDashboard == 'table' ? 'active' : ''}>
                                     <a id='table-tab' onClick={this.onTabClick}>EXPORT DATA</a>
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
                         <div className='control-inner-container'>

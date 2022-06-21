@@ -13,7 +13,6 @@ import moment from 'moment';
 const possibleAcademicYears = _.map(_.keys(ROTATION_SCHEDULE_MAP),
     (d) => ({ 'label': d + "-" + (Number(d) + 1), 'value': d }));
 
-
 export default class ProgramDashboard extends Component {
 
     constructor(props) {

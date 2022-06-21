@@ -192,7 +192,7 @@ export default class GraphRow extends Component {
                             <span className='card-text'>{expiredCount}</span>
                             <span className='card-title expired-title'>EXPIRED</span>
                         </div>
-                        {!hideMarkButton && nonDemoMode && <div className='graph-card'>
+                        {false && <div className='graph-card'>
                             <button onClick={this.onMarkClick} className='btn btn-success mark-button'>
                                 <span className='mark-label'>{isEPAComplete ? 'UnMark' : 'Mark as Complete'}</span>
                                 {markStateLoading && <Loading type='spin' className='mark-loader' height='20px' width='20px' color='white' delay={-1} />}</button>
