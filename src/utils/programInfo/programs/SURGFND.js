@@ -85,82 +85,88 @@ const programInfo = {
             'ID': 'F',
             'topic': 'Foundations of Discipline (F)',
             subRoot: {
-                "2.1": "Providing initial management for critically ill surgical patients",
-                "2.2": "Providing initial management for trauma patients.",
-                "2.3": "Assessing and performing risk optimization for preoperative patients in preparation for surgery",
-                "2.4": "Providing patient education and informed consent in preparation for surgical care",
-                "2.5": "Demonstrating the fundamental aspects of surgical procedures",
+                "2.1": "Providing initial management for critically ill surgical patients.",
+                "2.2": "Inserting central venous lines.",
+                "2.3": "Providing initial management for trauma patients.",
+                "2.4": "Providing risk assessment and management for preoperative patients in preparation for surgery.",
+                "2.5": "Providing patient education and informed consent in preparation for surgical care.",
                 "2.6": "Participating in surgical procedures",
                 "2.7": "Managing uncomplicated postoperative surgical patients",
                 "2.8": "Managing postoperative patients with complications",
                 "2.9": "Supervising junior learners in the clinical setting"
             },
             maxObservation: {
-                '2.1': 7,
+                '2.1': 3,
                 '2.2': 2,
-                '2.3': 4,
-                '2.4': 3,
-                '2.5': 4,
+                '2.3': 2,
+                '2.4': 4,
+                '2.5': 3,
                 '2.6': 4,
-                '2.7': 8,
+                '2.7': 6,
                 '2.8': 8,
-                '2.9': 6
+                '2.9': 3
             },
             assessmentInfo: {
-                '2.1': `Part A: Patient Assessment
-                Collect 3 observations of achievement
-                - At least 2 different presentations.
-                
-                Part B: Procedure
-                Collect 4 observations of achievement
-                - At least one needle thoracostomy
-                - At least one tube thoracostomy
-                - At least one surgical airway
-                - At least one central venous line insertion`,
-                '2.2': `Part A: ATLS Certification
-                Submission of the certificate of course completion upon successful completion of ATLS
-                course, to the Competence Committee.
+                '2.1': `Part A: Critically ill
 
-                Part B: Patient assessment
-                Direct observation by trauma team leader.
-                
+                Direct observation or case discussion by supervisor (surgeon, physician, senior resident or fellow)
+                Collect 3 observations of achievement
+                - At least 2 different presentations
+                - No more than 1 observation in a simulation setting
+                - At least 2 different assessors`,
+                '2.2': `Part A: Central venous
+
+                Direct observation by supervisor (surgeon, physician, senior resident or fellow)
                 Collect 2 observations of achievement
-                - At least one each primary and secondary survey.`,
-                '2.3': `Collect 4 observations of achievement
-                - At least one elective, one emergent
-                - At least one high risk
-                - At least one critically ill
-                - At least 2 assessors`,
-                '2.4': `Collect 3 observations of achievement
-                - At least 2 different assessors
-                - At least one emergency procedure
-                - At least one elective procedure
-                - At least two in clinical setting`,
-                '2.5': `Part A: Collect 4 observations of achievement
-                - At least 2 by faculty
-                - At least 2 different types of procedures
-                - At least 2 different assessors.
-                
-                Part B: Collect feedback from at least 6 observers
-                - At least one each of surgeon, nurse, and anesthetist.`,
+                - No more than 1 in a simulation setting
+                - At least 2 different assessors`,
+                '2.3': `Part A: Trauma
+
+                Direct observation by trauma team leader, fellow or senior resident with trauma experience
+                Collect 2 observations of achievement
+                - At least 1 each primary and secondary survey`,
+                '2.4': `Part A: Pre-op optimization
+
+                Direct or indirect observation by supervisor (surgeon, senior resident or fellow)
+                Collect 4 observations of achievement
+                - At least 1 elective
+                - At least 1 emergent
+                - At least 1 high risk 
+                - At least 2 different assessors`,
+                '2.5': `Part A: Consent
+
+                Direct observation by supervisor (surgeon, senior resident or fellow)
+                Collect 3 observations of achievement
+                - At least 1 emergency procedure
+                - At least 1 elective procedure
+                - At least 2 in clinical settings
+                - At least 2 different assessors`,
                 '2.6': `Collect 4 observations of achievement
                 - At least 2 by faculty
                 - At least 2 different types of procedures
                 - At least 2 different assessors.`,
-                '2.7': `Part A: Collect 8 observations of achievement
-                - At least 2 from each stage of management
-                - A range of hospital stays
-                - A range of patient complexity
-                - At least 4 different assessors.
+                '2.7': `Part A: Postoperative management
+
+                Direct observation or case discussion by supervisor (surgeon, senior resident or fellow)
+                Collect 4 observations of achievement
+                - At least 2 high complexity patients
+                - At least 2 different assessors
                 
-                Part B: Collect feedback from at least 6 observers
-                - At least 2 different roles`,
+                Part B: Collaborative care
+                
+                Direct observation and/or case discussion by supervisor, with input from members of the clinical team
+                Collect feedback on at least 2 occasions
+                - At least 3 observers for each encounter
+                - At least 2 different team member roles for each encounter`,
                 '2.8': `Collect 8 observations of achievement
                 - At least 4 different complications
                 - At least 3 assessors.`,
-                '2.9': `Collect 6 observations of achievement
-                - At least 3 different junior learners
-                - At least 3 different senior residents or faculty.`
+                '2.9': `Part A: Supervising Juniors
+
+                Direct observation by supervisor (surgeon, senior resident or fellow) or junior learners (medical students) 
+                Collect 3 observations of achievement
+                - At least 2 different senior residents or faculty.`
+
             },
             filterValuesDict: {
                 '2.1': {
