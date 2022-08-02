@@ -10,7 +10,7 @@ import _ from 'lodash';
 import Dropzone from 'react-dropzone';
 import FileSaver from 'file-saver';
 
-class ElentraProcessor extends Component {
+class ExportProcessor extends Component {
 
     constructor(props) {
         super(props);
@@ -25,24 +25,11 @@ class ElentraProcessor extends Component {
         this.onProcessFile = this.onProcessFile.bind(this);
     }
 
-    componentDidMount() {
-        // On this tab make residentData null so that it doesnt interfere with data from the other tabs
-        this.props.actions.setResidentData(null);
-    }
-
-    componentWillUnmount() {
-        //When moving out of the tab force reload the page to avoid side effects from this page to main dashboard
-        location.reload();
-    }
-
 
     async onProcessFile() {
 
         event.preventDefault();
-        // clear data in the dashboard 
-        this.props.actions.setResidentList([]);
-        this.props.actions.setNarrativeData([]);
-        this.props.actions.setResidentData(null);
+
 
         const { fileList = [] } = this.state;
 
@@ -54,71 +41,58 @@ class ElentraProcessor extends Component {
             // Process each uploaded file seperately
             for (const [fileIndex, file] of fileList.entries()) {
                 try {
+
                     // First get the file by its file path
-                    const fileContents = await getFileByPath(file, true);
+                    const fileContents = await getFileByPath(file, true),
+                        allLines = CSVToArray(fileContents.trim()),
+                        dataMap = allLines.slice(1).map((d) => {
+                            return {
+                                'Date': d[0],
+                                'Resident Name': 'resident-' + d[1],
+                                'EPA': d[2],
+                                'Observer Name': 'observer-' + d[3],
+                                'Observer Type': d[4],
+                                'Rating': d[5],
+                                'Type': d[6],
+                                'Situation Context': d[7],
+                                'Feedback': d[8],
+                                'Professionalism Safety': d[9],
+                                'EPA Expired': d[10]
+                            }
+                        });
 
-                    const allLines = CSVToArray(fileContents),
-                        epaCode = allLines[2][1].slice(0, 3).trim(),
-                        columnHeadersIndex = allLines[3].length > 4 ? 3 : 4,
-                        indices = allLines[columnHeadersIndex],
-                        dataLines = allLines.slice(columnHeadersIndex, allLines.length),
-                        dateIndex = _.findIndex(indices, (d) => d.indexOf('Date Completed') > -1),
-                        lastUpdatedBy = _.findIndex(indices, (d) => d.indexOf('Last Updated By') > -1),
-                        rating = _.findIndex(indices, (d) => d.indexOf('Based on this') > -1),
-                        safety = _.findIndex(indices, (d) => d.indexOf('patient safety concerns') > -1),
-                        professionalism = _.findIndex(indices, (d) => d.indexOf('professionalism concerns') > -1),
-                        nextSteps = _.findIndex(indices, (d) => d.indexOf('Next Steps') > -1);
+                    let p = dataMap.map(d => {
 
-
-                    let data = _.map(_.filter(dataLines, e => e[7] == 'complete'), (d) => {
-
-                        const date = moment(d[dateIndex], 'YY-MM-DD').format('YYYY-MM-DD'),
-                            residentName = _.reverse(d[1].split(',')).join(" "),
-                            epa_code = epaCode,
-                            observerName = d[2],
-                            observerType = 'faculty',
-                            ratings = mapRating(d[rating]),
-                            type = '',
-                            situationContext = d.slice(lastUpdatedBy + 1, rating).join(', '),
-                            feedback = constructFeedback(d[rating], d[nextSteps]),
-                            safetyConcerns = (d[safety] || '') + ' ' + (d[professionalism] || ''),
-                            expired = false;
-
-                        return [date, residentName, epa_code, observerName, observerType, ratings, type, situationContext, feedback, safetyConcerns, expired];
+                        return {
+                            "username": d['Resident Name'].toLowerCase().split('-').join('-dummy-'),
+                            "observation_date": d['Date'],
+                            "year_tag": findYearTag(d['Date']),
+                            "epa": d['EPA'],
+                            "feedback": d['Feedback'],
+                            "observer_name": d['Observer Name'],
+                            "observer_type": d['Observer Type'],
+                            "professionalism_safety": d['Professionalism Safety'],
+                            "rating": d['Rating'],
+                            "resident_name": d['Resident Name'],
+                            "situation_context": d['Situation Context'],
+                            "type": d['Type'],
+                            "isExpired": d['EPA Expired'] == 'TRUE',
+                            "phaseTag": "F",
+                            "rotationTag": "EM",
+                            "program": "EM"
+                        };
                     });
-
-                    store = store.concat(data);
-
-
+                    window.p = p;
                 } catch (error) {
                     console.log(error);
                     toastr["error"]("There was an error in processing file - " + file.name, "ERROR");
                 }
             }
 
-            const columnNames = ['Date', 'Resident Name', 'EPA', 'Observer Name', 'Observer Type', 'Rating', 'Type', 'Situation Context', 'Feedback', 'Professionalism Safety', 'EPA Expired'];
-            // Escaping strings in quotes to evade fuckery because of
-            // commas within the strings that can cause the csv file 
-            // format to be changed
-            var convertedData = _.map(store, (dataPoint) => {
-                return _.map(dataPoint, (value) => {
-                    if (typeof (value) == 'string') {
-                        //  quick fix hashes seem to be breaking the code so we will replace them with enclosed text of hash
-                        if (value.indexOf("#") > -1) {
-                            value = value.split("#").join("-hash-");
-                        }
-                        return '"' + value.split('"').join('""') + '"';
-                    } else return '"' + value + '"';
-                }).join(',');
-            });
 
-            // Add file headers to top of the file
-            convertedData.unshift(columnNames);
-            var blob = new Blob([convertedData.join("\n")], { type: "text/csv;charset=utf-8" });
+            var blob = new Blob([JSON.stringify(p)], { type: 'application/json' });
             var timeStamp = (new Date()).toString().split("GMT")[0];
-            FileSaver.saveAs(blob, "rcm-data" + "-" + timeStamp + ".csv");
-
-
+            FileSaver.saveAs(blob, "residentData" + "-" + timeStamp + ".json");
 
             // turn the loader off and set the process status 
             this.setState({ processing: false });
@@ -131,8 +105,6 @@ class ElentraProcessor extends Component {
         return (
             <div className='tools-root m-t text-xs-left text-sm-left m-b-lg' >
                 <div className='container'>
-                    <h2 className='text-left text-primary text-center'>Elentra Export Processor</h2>
-                    <p className='upload-text-box'> This is a online toolkit designed to merge and process Elentra export files (Assessment Tool Data Extract Tool) into a more manageable format.</p>
                     <Dropzone onDrop={fileList => this.setState({ fileList })}>
                         {({ getRootProps, getInputProps }) => (
                             <section className='dropzone-container'>
@@ -173,7 +145,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ElentraProcessor);
+export default connect(mapStateToProps, mapDispatchToProps)(ExportProcessor);
 
 
 function mapRating(r = '') {
@@ -252,4 +224,16 @@ function CSVToArray(CSV_string, delimiter) {
         rows[rows.length - 1].push(matched_value);
     }
     return rows; // Return the parsed data Array
+}
+
+function findYearTag(timeStamp) {
+    var year = moment(timeStamp, 'YYYY-MM-DD').year();
+    // Jan 1st of the given year
+    var startDate = moment('01/01/' + year, 'MM/DD/YYYY');
+    // Jun 30th of the same year
+    var endDate = moment('06/30/' + year, 'MM/DD/YYYY');
+    if (moment(timeStamp, 'YYYY-MM-DD').isBetween(startDate, endDate, 'days', '[]')) {
+        return year + '-1';
+    }
+    return year + '-2';
 }

@@ -7,12 +7,12 @@ import { getResidentData, getNarratives } from '../../utils/requestServer';
 
 export function loginSuccess(isUG = false) {
     let { state = { nextPathname: isUG ? '/UGME/Dashboard' : '/PGME/Dashboard' } } = hashHistory.getCurrentLocation();
-    hashHistory.push(state.nextPathname);
+    // hashHistory.push(state.nextPathname);
     return { type: types.LOG_IN_SUCCESS };
 }
 
 export function logOutUser() {
-    hashHistory.push("/");
+    // hashHistory.push("/");
     return { type: types.LOG_OUT };
 }
 
