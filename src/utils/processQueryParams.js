@@ -3,7 +3,7 @@ export default function() {
     if (query.indexOf('ticket') == -1) {
         return {};
     } else {
-        window.history.pushState({}, document.title, "/");
+        window.history.pushState({}, document.title, "/demo/");
         return (/^[?#]/.test(query) ? query.slice(1) : query)
             .split('&')
             .reduce((params, param) => {
