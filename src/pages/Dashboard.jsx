@@ -26,7 +26,7 @@ class DashboardRoot extends Component {
     render() {
 
         let { userType, isModalVisible, infoCard, isChecklistVisible,
-            programInfo, activeDashboard = 'resident', route } = this.props,
+            programInfo, activeDashboard = 'normative', route } = this.props,
             { pawsTicket = '' } = route,
             boardsLevel = '0';
 
@@ -37,6 +37,10 @@ class DashboardRoot extends Component {
             boardsLevel = '2';
         }
 
+        let residentDashboardEnabled = pawsTicket == '1867';
+        // set to window ticket
+        window.residentDashboardEnabled = residentDashboardEnabled;
+
         return (
             <div className='dashboard-page-root' >
                 {isModalVisible && <Modal infoCard={infoCard} />}
@@ -45,7 +49,7 @@ class DashboardRoot extends Component {
                         <s-tooltip border-width="1px" show-delay="1000" style={{ fontFamily: 'inherit' }} attach-to=".dashboard-tab"></s-tooltip>
                         <div className="hr-divider nav-pill-container-dashboard">
                             <ul className="nav nav-pills hr-divider-content hr-divider-nav">
-                                {(pawsTicket == '1867') && <li className={activeDashboard == 'resident' ? 'active' : ''}>
+                                {residentDashboardEnabled && <li className={activeDashboard == 'resident' ? 'active' : ''}>
                                     <a id='resident-tab' className="dashboard-tab" onClick={this.onTabClick} data-s-tooltip-text={infoTooltipReference.residentMetrics.main}>
                                         RESIDENT METRICS
                                     </a>
@@ -68,11 +72,11 @@ class DashboardRoot extends Component {
                             </ul>
                         </div>
                         <div className='control-inner-container'>
-                            {(activeDashboard == 'resident' && pawsTicket == '1867') && <ResidentDashboard />}
+                            {(activeDashboard == 'resident' && residentDashboardEnabled) && <ResidentDashboard />}
                             {(activeDashboard == 'supervisor') && <FacultyDashboard programInfo={programInfo} />}
                             {(activeDashboard == 'program') && <ProgramDashboard programInfo={programInfo} />}
                             {(activeDashboard == 'table') && <DownloadDashboard />}
-                            {(activeDashboard == 'normative') && <NormativeDashboard />}
+                            {(activeDashboard == 'normative') && <NormativeDashboard/>}
                         </div>
                     </div>}
             </div >

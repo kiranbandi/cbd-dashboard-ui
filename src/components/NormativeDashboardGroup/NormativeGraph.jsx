@@ -40,7 +40,7 @@ class NormativeGraph extends Component {
             // first get the resident username from the list
             // then check if the resident exists and then trigger a custom select resident action 
             let resident = _.find(this.props.residentList, (d) => d.fullname == datapoint[0].label);
-            if (resident) {
+            if (resident && window.residentDashboardEnabled) {
                 // set the username on the filter
                 residentFilter.username = resident.username;
                 actions.switchToResidentDashboard(resident, residentFilter, programInfo);

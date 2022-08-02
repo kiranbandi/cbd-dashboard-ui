@@ -165,7 +165,7 @@ export function setLoginData(userDetails) {
             dispatch({ type: types.SET_RESIDENT_DATA, residentData: null });
             dispatch({ type: types.SET_EXPIRED_RESIDENT_DATA, expiredResidentData: [] });
             dispatch({ type: types.SET_NARRATIVE_DATA, narrativeData: [] });
-            dispatch({ type: types.SET_ACTIVE_DASHBOARD, activeDashboard: 'resident' });
+            dispatch({ type: types.SET_ACTIVE_DASHBOARD, activeDashboard: 'normative' });
             dispatch(setResidentFilter({ isAllData: true }))
             // then set user details and program information
             dispatch(setUserDetails(userDetails));
