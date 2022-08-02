@@ -26,7 +26,7 @@ class App extends Component {
           <Route path='/' component={Container} pawsTicket={pawsTicket}>
             <IndexRoute component={Home} />
             <Route path='export-processor' component={ExportProcessor} />
-            <Route path='PGME/Dashboard' component={Dashboard} />
+            <Route path='PGME/Dashboard' component={Dashboard} pawsTicket={pawsTicket}/>
             <Route path='*' component={NotFound} />
           </Route>
         </Router>
