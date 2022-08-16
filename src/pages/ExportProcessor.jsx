@@ -9,7 +9,7 @@ import moment from 'moment';
 import _ from 'lodash';
 import Dropzone from 'react-dropzone';
 import FileSaver from 'file-saver';
-
+import residentList from '../utils/randomData/residentList';
 class ExportProcessor extends Component {
 
     constructor(props) {
@@ -61,6 +61,9 @@ class ExportProcessor extends Component {
                             }
                         });
 
+
+                    console.log(residentList);
+
                     let p = dataMap.map(d => {
 
                         return {
@@ -83,6 +86,7 @@ class ExportProcessor extends Component {
                         };
                     });
                     window.p = p;
+
                 } catch (error) {
                     console.log(error);
                     toastr["error"]("There was an error in processing file - " + file.name, "ERROR");
@@ -90,9 +94,9 @@ class ExportProcessor extends Component {
             }
 
 
-            var blob = new Blob([JSON.stringify(p)], { type: 'application/json' });
-            var timeStamp = (new Date()).toString().split("GMT")[0];
-            FileSaver.saveAs(blob, "residentData" + "-" + timeStamp + ".json");
+            // var blob = new Blob([JSON.stringify(p)], { type: 'application/json' });
+            // var timeStamp = (new Date()).toString().split("GMT")[0];
+            // FileSaver.saveAs(blob, "residentData" + "-" + timeStamp + ".json");
 
             // turn the loader off and set the process status 
             this.setState({ processing: false });

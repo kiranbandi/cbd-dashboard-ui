@@ -34,8 +34,6 @@ const PROGRAM_INFO = {
 export { PROGRAM_INFO };
 export { default as ROTATION_SCHEDULE_MAP }
 from './ROTATION_SCHEDULE_MAP';
-export { default as UG_ROTATION_MAP }
-from './UG_ROTATION_MAP';
 export { default as CARDS_LIST }
 from './CARDS_LIST';
 export { default as STAGES_LIST }
