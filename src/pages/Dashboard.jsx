@@ -37,6 +37,8 @@ class DashboardRoot extends Component {
             boardsLevel = '2';
         }
 
+        // opening through the ticket 1867 would allow users to view resient dashboard
+        // https://cbme.usask.ca/demo/?ticket=1867
         let residentDashboardEnabled = pawsTicket == '1867';
         // set to window ticket
         window.residentDashboardEnabled = residentDashboardEnabled;

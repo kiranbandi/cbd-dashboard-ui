@@ -10,6 +10,7 @@ import _ from 'lodash';
 import Dropzone from 'react-dropzone';
 import FileSaver from 'file-saver';
 import residentList from '../utils/randomData/residentList';
+import { ROTATION_SCHEDULE_MAP } from '../utils/programInfo';
 class ExportProcessor extends Component {
 
     constructor(props) {
@@ -31,9 +32,8 @@ class ExportProcessor extends Component {
         event.preventDefault();
 
 
-        const { fileList = [] } = this.state;
-
-        let store = [];
+        const { fileList = [] } = this.state,
+            { rotationList } = this.props.programInfo;
 
         if (fileList.length > 0) {
             // turn on file processing loader
@@ -62,14 +62,12 @@ class ExportProcessor extends Component {
                         });
 
 
-                    console.log(residentList);
-
                     let p = dataMap.map(d => {
-
                         return {
                             "username": d['Resident Name'].toLowerCase().split('-').join('-dummy-'),
                             "observation_date": d['Date'],
                             "year_tag": findYearTag(d['Date']),
+                            "academic_year": findYear(d['Date']),
                             "epa": d['EPA'],
                             "feedback": d['Feedback'],
                             "observer_name": d['Observer Name'],
@@ -85,18 +83,66 @@ class ExportProcessor extends Component {
                             "program": "EM"
                         };
                     });
-                    window.p = p;
 
+
+
+                    let data_grouped_by_residents = _.groupBy(p, e => e.username);
+
+                    let data_store = [];
+
+                    _.map(_.keys(data_grouped_by_residents), r_username => {
+
+                        let residentData = data_grouped_by_residents[r_username],
+                            userInFile = _.find(residentList, (d) => d.username == r_username) || {},
+                            { username = '', rotationSchedule = {}, promotedDate = [] } = userInFile;
+
+                        if (username.length > 0) {
+                            //  append every record with two tags 
+                            // first phase tag is to identify which phase resident was in when the epa was completed
+                            // the second tag is the rotation tag to identify which rotation the resident was in
+                            _.map(residentData, (record, recordID) => {
+                                // get the rotation list for the academic year in which the record lies
+                                let rotationScheduleList = ROTATION_SCHEDULE_MAP[record.academic_year];
+                                //  find the rotation slot in which the record lies
+                                let rotationIndex = _.findIndex(rotationScheduleList, (slotStart, slotIndex) => {
+                                    const periodStartDate = moment(slotStart, "DD-MMM-YYYY"),
+                                        endingDate = moment(rotationScheduleList[slotIndex + 1], "DD-MMM-YYYY");
+                                    return moment(record.observation_date, 'YYYY-MM-DD').isBetween(periodStartDate, endingDate, 'days', '(]');
+                                })
+                                // find the rotation in which the resident was during that slot
+                                let rotationTag = rotationSchedule[record.academic_year] ?
+                                    (rotationSchedule[record.academic_year][rotationIndex] ?
+                                        rotationSchedule[record.academic_year][rotationIndex] : rotationList[0]) : rotationList[0];
+                                let phaseList = ['TTD', 'F', 'CORE', 'TP'], phaseIndex = 0;
+                                // code block for assigning phase tag
+                                if (promotedDate.length > 0) {
+                                    phaseIndex = _.reduce(promotedDate, (accu, dateStamp, dateStampIndex) => {
+                                        // datestamp is the date on which the user was promoted to the next phase
+                                        // if the record is after the datestamp it means record is in the next phase
+                                        if (moment(record.observation_date, 'YYYY-MM-DD').isAfter(moment(dateStamp, 'MM/DD/YYYY'))) {
+                                            return dateStampIndex + 1;
+                                        }
+                                        // if not return the accumulator which has the index of the last matching phase
+                                        return accu;
+                                    }, 0);
+                                }
+                                // tag the record with the two tags
+                                residentData[recordID]['phaseTag'] = phaseList[phaseIndex];
+                                residentData[recordID]['rotationTag'] = rotationTag;
+                            });
+                        }
+                        data_store = data_store.concat(residentData);
+                    });
+                    window.p = data_store;
                 } catch (error) {
                     console.log(error);
                     toastr["error"]("There was an error in processing file - " + file.name, "ERROR");
                 }
             }
 
-
-            // var blob = new Blob([JSON.stringify(p)], { type: 'application/json' });
-            // var timeStamp = (new Date()).toString().split("GMT")[0];
-            // FileSaver.saveAs(blob, "residentData" + "-" + timeStamp + ".json");
+            var blob = new Blob([JSON.stringify(p)], { type: 'application/json' });
+            var timeStamp = (new Date()).toString().split("GMT")[0];
+            FileSaver.saveAs(blob, "residentData" + "-" + timeStamp + ".json");
 
             // turn the loader off and set the process status 
             this.setState({ processing: false });
@@ -241,3 +287,16 @@ function findYearTag(timeStamp) {
     }
     return year + '-2';
 }
+
+function findYear(timeStamp) {
+    var year = moment(timeStamp, 'YYYY-MM-DD').year();
+    // Jan 1st of the given year
+    var startDate = moment('01/01/' + year, 'MM/DD/YYYY');
+    // Jun 30th of the same year
+    var endDate = moment('06/30/' + year, 'MM/DD/YYYY');
+    if (moment(timeStamp, 'YYYY-MM-DD').isBetween(startDate, endDate, 'days', '[]')) {
+        return year - 1;
+    }
+    return year;
+}
+
