@@ -24,7 +24,7 @@ export default function (rawData, residentList) {
                     // if the student doesnt exist then skip them and add their name 
                     // to the unmapped list 
                     if (row[3].includes('mail')) {
-                        username = row[3].slice(0, 6).toLowerCase().trim();
+                        username = row[3].trim().slice(0, 6).toLowerCase().trim();
                     } else if (row[3].includes('.')) {
                         let residentNameFromMailEntry = row[3]
                             // removes trailing @mail.usask.ca
