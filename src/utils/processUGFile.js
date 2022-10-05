@@ -6,7 +6,7 @@ export default function (rawData, residentList) {
     return new Promise((resolve, reject) => {
         try {
             // parse the csv file and remove empty entries
-            let records = _.filter(CSVToArray(rawData, ','), (d) => d.length == '12');
+            let records = _.filter(CSVToArray(rawData, ','), (d) => d.length >= '12');
             let studentRecords = [],
                 unmappedList = [];
             // remove the 1st head row ,as it contains column names, 
