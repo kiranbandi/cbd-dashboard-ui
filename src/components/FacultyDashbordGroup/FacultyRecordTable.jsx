@@ -74,7 +74,7 @@ export default (props) => {
             </h3>,
             <ReactTable
                 key='faculty-table'
-                data={(_.map(innerRecords, (d) => ({ ...d, 'epa': NumberToEPAText(d.epa) })))}
+                data={(_.map(innerRecords, (d) => ({ ...d, 'epa': props.isUG ? d.epa : NumberToEPAText(d.epa) })))}
                 columns={columns}
                 defaultPageSize={10}
                 pageSizeOptions={getPageSizeOptions()}

@@ -222,6 +222,7 @@ export default class FacultyDashboard extends Component {
                                 currentFaculty={currentFaculty} />
 
                             <FacultyRecordTable
+                                isUG={true}
                                 currentFaculty={currentFaculty}
                                 width={printModeON ? 1100 : overallWidth}
                                 currentFacultyRecords={currentFacultyRecords} />
