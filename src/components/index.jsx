@@ -40,5 +40,6 @@ export { default as InfoTip } from './ReusableComponents/InfoTip';
 export { default as NavBar } from './NavBar';
 export { default as Container } from './Container';
 
-
-
+// Components for the Undergraduate Dashboard
+export { default as UGProgramDashboard } from './UGGroup/DashboardGroup/UGProgramDashboard';
+export { default as UGFacultyDashboard } from './UGGroup/DashboardGroup/UGFacultyDashboard';

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setActiveDashboard } from '../redux/actions/actions';
+import { setActiveDashboard, setLoginData } from '../redux/actions/actions';
+import { requestLogin } from '../utils/requestServer';
 import {
     ResidentDashboard, ProgramDashboard,
     FacultyDashboard, Modal,
@@ -20,6 +21,12 @@ class DashboardRoot extends Component {
         event.preventDefault();
         const boardId = event.target.id.split("-")[0];
         this.props.actions.setActiveDashboard(boardId);
+    }
+
+    componentDidMount() {
+        requestLogin()
+            .then((user) => { this.props.actions.setLoginData(user) })
+            .catch((err) => { console.log(err) });
     }
 
 
@@ -78,7 +85,7 @@ class DashboardRoot extends Component {
                             {(activeDashboard == 'supervisor') && <FacultyDashboard programInfo={programInfo} />}
                             {(activeDashboard == 'program') && <ProgramDashboard programInfo={programInfo} />}
                             {(activeDashboard == 'table') && <DownloadDashboard />}
-                            {(activeDashboard == 'normative') && <NormativeDashboard/>}
+                            {(activeDashboard == 'normative') && <NormativeDashboard />}
                         </div>
                     </div>}
             </div >
@@ -100,7 +107,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ setActiveDashboard }, dispatch)
+        actions: bindActionCreators({ setActiveDashboard, setLoginData }, dispatch)
     };
 }
 

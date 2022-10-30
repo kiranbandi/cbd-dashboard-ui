@@ -37,7 +37,12 @@ export default class NavBar extends Component {
                         <ul className='nav navbar-nav'>
                             <li>
                                 <Link to={'/PGME/Dashboard'}>
-                                    <span className="icon icon-line-graph"></span> Dashboard
+                                    <span className="icon icon-line-graph"></span> PGME Dashboard
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to={'/UGME/Dashboard'}>
+                                    <span className="icon icon-area-graph"></span> UGME Dashboard
                                 </Link>
                             </li>
                         </ul>

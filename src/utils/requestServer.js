@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import axios from 'axios';
 import residentData from './randomData/residentData';
 import residentList from './randomData/residentList';
 
@@ -6,8 +7,9 @@ var requestServer = {};
 
 requestServer.requestLogin = function (ticket) {
     return new Promise((resolve, reject) => {
-        const userData = { "username": "vkb698", "accessType": "super-admin", "accessList": "", "program": "EM", "token": "test_token", "programList": ["EM"] };
-        resolve(userData);
+        const PGUserData = { "username": "testuserName", "accessType": "super-admin", "accessList": "", "program": "EM", "token": "test_token", "programList": ["EM"] },
+            UGUserData = { "username": "testuserName", "accessType": "super-admin", "accessList": "", "program": "UNDERGRADUATE", "token": "test_token", "programList": ["UNDERGRADUATE"] };
+        resolve(ticket == 'UG' ? UGUserData : PGUserData);
     });
 }
 
@@ -16,7 +18,6 @@ requestServer.getResidentList = function (filterGraduated = false) {
         resolve(residentList);
     });
 }
-
 
 requestServer.getResidentData = function (username) {
     return new Promise((resolve, reject) => {
@@ -40,16 +41,24 @@ requestServer.getResidentData = function (username) {
     });
 }
 
-requestServer.getAllData = function () {
+requestServer.getAllData = function (program) {
     return new Promise((resolve, reject) => {
-        resolve([...residentData]);
+        if (program == 'UG') {
+            axios.get("assets/files/UGSampleData.json")
+                .then((response) => {
+                    let UGResidentData = response.data;
+                    resolve([...UGResidentData]);
+                });
+        }
+        else {
+            resolve([...residentData]);
+        }
     });
 }
 
 // APIs for narratives
 requestServer.getNarratives = function (username) {
     return new Promise((resolve, reject) => {
-
         var narrativeList = _.filter(residentData, e => e.username == username).map((record) => {
             return {
                 username,

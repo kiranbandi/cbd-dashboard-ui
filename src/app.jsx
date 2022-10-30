@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
-import { NotFound, Home, Dashboard, ExportProcessor } from './pages';
+import { NotFound, Home, Dashboard, UGDashboard, ExportProcessor } from './pages';
 import { Container } from './components';
 import configureStore from './redux/store/configureStore';
 import { Provider } from 'react-redux';
@@ -26,7 +26,8 @@ class App extends Component {
           <Route path='/' component={Container} pawsTicket={pawsTicket}>
             <IndexRoute component={Home} />
             <Route path='export-processor' component={ExportProcessor} />
-            <Route path='PGME/Dashboard' component={Dashboard} pawsTicket={pawsTicket}/>
+            <Route path='PGME/Dashboard' component={Dashboard} pawsTicket={pawsTicket} />
+            <Route path='UGME/Dashboard' component={UGDashboard} pawsTicket={pawsTicket} />
             <Route path='*' component={NotFound} />
           </Route>
         </Router>
