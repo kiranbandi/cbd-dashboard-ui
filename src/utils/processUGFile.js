@@ -45,7 +45,7 @@ export default function (rawData, residentList) {
                     }
                     if (username && year_tag) {
                         studentRecords.push({
-                            'epa': Number(row[0].slice(3)),
+                            'epa': processEPA(row[0].toLowerCase()),
                             'resident_name': resident_name,
                             username,
                             'observer_name': row[4].trim(),
@@ -71,6 +71,18 @@ export default function (rawData, residentList) {
             reject();
         };
     })
+}
+
+// temporary stub 7A and 7B into just 7 until the map is updated. 
+function processEPA(text) {
+    let epa = text.slice(3);
+    if (epa.indexOf('a') > -1 || epa.indexOf('b') > -1) {
+        epa = '7';
+    }
+    else if (!Number(epa)) {
+        epa = '7';
+    }
+    return Number(epa);
 }
 
 
