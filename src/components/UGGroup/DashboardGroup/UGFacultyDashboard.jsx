@@ -94,8 +94,9 @@ export default class FacultyDashboard extends Component {
             recordsInRotation = _.filter(allResidentRecords, (d) => d.rotationTag == currentRotation);
         }
         // create a list of all faculty within the records in that rotation
-        let facultyList = _.map(_.groupBy(recordsInRotation, (d) => d.observer_name),
-            (records, key) => ({ 'label': key })).sort((previous, current) => previous.label.localeCompare(current.label));
+        let facultyList = _.sortBy(_.map(_.groupBy(recordsInRotation, (d) => d.observer_name),
+            (records, key) => ({ 'label': key })), [(a) => _.toNumber(_.replace(a.label, /[^0-9]/g, ""))]);
+
         // sub in a value at the front of the list for 'ALL'
         facultyList.unshift({ 'label': 'ALL' });
         this.setState({ currentRotation: option.value, facultyList, currentFaculty: 'ALL' });
@@ -129,8 +130,9 @@ export default class FacultyDashboard extends Component {
                     'count': records.length,
                 })).sort((a, b) => b.count - a.count);
                 // create a list of all faculty 
-                let facultyList = _.map(_.groupBy(allResidentRecords, (d) => d.observer_name),
-                    (records, key) => ({ 'label': key })).sort((previous, current) => previous.label.localeCompare(current.label));
+                let facultyList = _.sortBy(_.map(_.groupBy(allResidentRecords, (d) => d.observer_name),
+                (records, key) => ({ 'label': key })), [(a) => _.toNumber(_.replace(a.label, /[^0-9]/g, ""))]);
+
                 // sub in a value at the front of the list for 'ALL'
                 facultyList.unshift({ 'label': 'ALL' });
                 // set the values on the state 
