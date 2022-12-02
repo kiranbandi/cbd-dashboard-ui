@@ -188,7 +188,6 @@ class Tools extends Component {
         const { processing, dataReady, program = '', fileList = [], dataStore } = this.state,
             { residentDataList = [], residentList = [] } = dataStore;
 
-
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let width = document.body.getBoundingClientRect().width - 125;
 
@@ -230,7 +229,7 @@ class Tools extends Component {
                         {processing && <Loading type='spin' height='25px' width='25px' color='#d6e5ff' delay={-1} />}
                     </button>
 
-                    {dataReady && (residentList.length > 1) && <button className="btn btn-primary-outline m-t m-l process-btn" onClick={this.downloadFile}>
+                    {dataReady && (residentList.length >= 1) && <button className="btn btn-primary-outline m-t m-l process-btn" onClick={this.downloadFile}>
                         <span className='process-span'>{"EXPORT DATA as a CSV"} </span>
                         {processing && <Loading type='spin' height='25px' width='25px' color='#d6e5ff' delay={-1} />}
                     </button>}
