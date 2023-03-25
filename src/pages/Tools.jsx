@@ -13,8 +13,9 @@ import ReactSelect from 'react-select';
 import Dropzone from 'react-dropzone';
 import programOverallMap from '../utils/programOverallMap.json';
 
-// remove UG from program list
-const programList = _.map(_.keys(programOverallMap), e => ({ 'label': e, 'value': e }));
+// sort program list alphabetically
+const programList = _.map(_.keys(programOverallMap), e => ({ 'label': e, 'value': e })).
+    sort((a, b) => a.label.localeCompare(b.label));
 
 class Tools extends Component {
 
