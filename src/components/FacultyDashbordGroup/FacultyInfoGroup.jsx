@@ -21,11 +21,11 @@ export default (props) => {
                 processedRecords={currentFaculty == 'ALL' ? [] : currentFacultyRecords}
                 dateFilterActive={dateFilterActive} />
         </div>
-        <FacultyRadarChart
+        {/* <FacultyRadarChart
             isUG={isUG}
             width={width}
             processedRecords={processedRecords}
             currentFacultyRecords={currentFacultyRecords}
-            programInfo={programInfo} />
+            programInfo={programInfo} /> */}
     </div>
 }

@@ -2,7 +2,7 @@ import moment from 'moment';
 import * as d3 from 'd3';
 const phaseList = ['TTD', 'F', 'CORE', 'TP'];
 
-export default function(allResidentRecords = [], currentRotation, startDate, endDate, dateFilterActive, minimumRequired, programInfo) {
+export default function (allResidentRecords = [], currentRotation, startDate, endDate, dateFilterActive, minimumRequired, programInfo) {
 
     // create a epa list to map epa distribution
     let epaList = getEPAList(programInfo.epaSourceMap);
@@ -53,6 +53,10 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
             // group records by EPA
             epaGroup = _.groupBy(records, (d) => d.epa);
 
+            let NLP_SCore = d3.mean(nonExpiredRecords.map(dd => Math.min(dd.feedback.split(" ").length / 10, 5))) || 0
+
+           
+
         return {
             faculty_name,
             records,
@@ -68,7 +72,7 @@ export default function(allResidentRecords = [], currentRotation, startDate, end
             expired_epa_percentage_period: recordsInPeriod.length > 0 ? Math.round(recordsInPeriod.filter(dd => dd.isExpired).length / recordsInPeriod.length * 100) : 0,
             entrustment_score: Math.round((d3.mean(nonExpiredRecords.map(dd => +dd.rating || 0)) || 0) * 100) / 100,
             entrustment_score_period: recordsInPeriod.length > 0 ? Math.round((d3.mean(nonExpiredRecordsInPeriod.map(dd => +dd.rating || 0)) || 0) * 100) / 100 : 0,
-            words_per_comment: Math.round(d3.mean(nonExpiredRecords.map(dd => dd.feedback.split(" ").length)) || 0),
+            words_per_comment: Math.round(NLP_SCore*100)/100,
             words_per_comment_period: recordsInPeriod.length > 0 ? Math.round(d3.mean(nonExpiredRecordsInPeriod.map(dd => dd.feedback.split(" ").length)) || 0) : 0
         }
     })

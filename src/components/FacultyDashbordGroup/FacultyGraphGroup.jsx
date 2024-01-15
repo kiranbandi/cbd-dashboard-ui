@@ -72,7 +72,7 @@ export default class FacultyGraphGroup extends Component {
                     selectFaculty={selectFaculty}
                     width={(width / 2) - 50} />
                 <FacultyGraph
-                    title={'Average Words Per Comment '}
+                    title={'Average Qual Score '}
                     className={'printable-graph-4'}
                     titleValue={!!currentFacultyData ? currentFacultyData.words_per_comment : ''}
                     secondTitleValue={!!currentFacultyData ? currentFacultyData.words_per_comment_period : ''}
