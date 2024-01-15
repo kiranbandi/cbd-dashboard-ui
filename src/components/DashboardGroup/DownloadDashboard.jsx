@@ -56,11 +56,10 @@ export default class ExportDataTab extends Component {
         event.preventDefault();
 
         var data = this._reactTable.getResolvedState().sortedData.map(d => d._original);
-
         window.emCBD = {
-            'rcmData': _.map(data, (_r) => [_r.observation_date, _r.resident_name, _r.epa, _r.observer_name, _r.observer_type, _r.rating, _r.type, _r.situation_context, _r.feedback, _r.professionalism_safety, _r.isExpired || false])
+            'rcmData': _.map(data, (_r) => [_r.id, _r.observation_date, _r.resident_name, _r.epa, _r.observer_name, _r.observer_type, _r.rating, _r.type, _r.situation_context, _r.feedback, _r.professionalism_safety, _r.isExpired || false])
         };
-        downloadCSV(['Date', 'Resident Name', 'EPA', 'Observer Name', 'Observer Type', 'Rating', 'Type', 'Situation Context', 'Feedback', 'Professionalism Safety', 'EPA Expired']);
+        downloadCSV(['ID', 'Date', 'Resident Name', 'EPA', 'Observer Name', 'Observer Type', 'Rating', 'Type', 'Situation Context', 'Feedback', 'Professionalism Safety', 'EPA Expired']);
     }
 
     async fetchData(event) {
