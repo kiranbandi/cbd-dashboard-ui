@@ -20,7 +20,7 @@ export default function(columnNames = ['Date', 'Resident Name', 'EPA', 'Observer
 
     // Add file headers to top of the file
     convertedData.unshift(columnNames);
-    var blob = new Blob([convertedData.join("\n")], { type: "text/csv;charset=utf-8" });
+    var blob = new Blob(["\ufeff"+convertedData.join("\n")], { type: "text/csv;charset=utf-8" });
     var timeStamp = (new Date()).toString().split("GMT")[0];
     FileSaver.saveAs(blob, "rcm-data" + "-" + timeStamp + ".csv");
 }
