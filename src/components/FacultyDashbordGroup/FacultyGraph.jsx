@@ -16,11 +16,15 @@ export default class FacultyGraph extends Component {
         // 2) expired_epa_percentage
         // 3) entrustment_score 
         // 4) words_per_comment
+        // 5) qual_score
+        // 6) suggestion_percentage
 
         let { className, data, width, trackType,
             isUG = false, printModeON = false, selectFaculty,
             currentFaculty, title, titleValue, secondTitleValue,
             dateFilterActive, startDate, endDate } = this.props;
+
+
 
         // sort the data list based on the overall value
         data = data.sort((a, b) => a[1] - b[1]);
@@ -32,11 +36,17 @@ export default class FacultyGraph extends Component {
         // The last bar would go beyond the available width by 75%
         //  so that width is removed from the scale 
 
+
+        let dataMax = d3.max(data.map(d => Math.max(d[1], d[2])));
+        if (trackType == 'expired_epa_percentage' || trackType == 'suggestion_percentage') {
+            dataMax = 100;
+        }
+
         // create the X and Y scales and modify them based on the track type
         const scaleX = d3.scaleLinear().range([Xoffset, width - margin - 0.75 * itemSize]).domain([0, data.length - 1]);
-        let scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, d3.max(data.map(d => Math.max(d[1], d[2])))]);
+        let scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, dataMax]);
         // epa score scale doesnt vary based on max values but its always between 0 and 5
-        if (trackType == 'entrustment_score') {
+        if (trackType == 'entrustment_score' || trackType == 'qual_score') {
             if (isUG) {
                 scaleY = d3.scaleLinear().range([height - margin, margin]).domain([0, 3]);
             }
@@ -77,7 +87,7 @@ export default class FacultyGraph extends Component {
             });
         }
 
-        let dataMax = d3.max(data.map(d => Math.max(d[1], d[2])));
+
 
 
         // this fuctional automatically set the tick format based on the track type
@@ -87,13 +97,16 @@ export default class FacultyGraph extends Component {
                     return Math.round(d);
                 case 'expired_epa_percentage':
                     return d + '%';
+                case 'suggestion_percentage':
+                    return d + '%';
                 case 'entrustment_score':
+                    return d.toFixed(0);
+                case 'qual_score':
                     return d.toFixed(0);
                 case 'words_per_comment':
                     return Math.round(d);
             }
         };
-
 
         // create the 5 vertical tick lines 
         let axisTickLines = _.times(5, (index) => {
@@ -109,9 +122,8 @@ export default class FacultyGraph extends Component {
             </text>
         })
 
-
         // for entrustment score we have 6 lines and special axis texts
-        if (trackType == 'entrustment_score') {
+        if (trackType == 'entrustment_score' || trackType == 'qual_score') {
             axisTickLines = _.times(isUG ? 4 : 6, (index) => {
                 let verticalPosition = index;
                 return d3.line().x(d => d[0]).y(d => scaleY(d[1]))([[Xoffset, verticalPosition], [width - margin, verticalPosition]])
@@ -137,7 +149,8 @@ export default class FacultyGraph extends Component {
                 key={d[0]}
                 opacity={0}
                 onClick={selectFaculty}>
-                <title>{d[0] + '\nOverall: ' + (this.props.trackType == 'expired_epa_percentage' ? d[1] + '%' : d[1]) + '\nPeriod: ' + (this.props.trackType == 'expired_epa_percentage' ? d[2] + '%' : d[2])}</title>
+                <title>{d[0] + '\nOverall: ' + ((this.props.trackType == 'expired_epa_percentage' || this.props.trackType == 'suggestion_percentage') ? d[1] + '%' : d[1]) +
+                    '\nPeriod: ' + ((this.props.trackType == 'expired_epa_percentage' || this.props.trackType == 'suggestion_percentage') ? d[2] + '%' : d[2])}</title>
             </rect>
         });
 
@@ -168,6 +181,10 @@ export default class FacultyGraph extends Component {
                 return infoTooltipReference.facultyDevlopment.averageEntrustmentScore;
             case 'Average Words Per Comment ':
                 return infoTooltipReference.facultyDevlopment.averageWordsPerComment;
+            case 'Quality of Assessment for Learning score (QuAL score)':
+                return infoTooltipReference.facultyDevlopment.qualScore;
+            case 'Suggestion Given Rate':
+                return infoTooltipReference.facultyDevlopment.suggestionGiven;
         }
     }
 }

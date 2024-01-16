@@ -25,6 +25,8 @@ export default class FacultyDashboard extends Component {
             facultyList: [],
             // list of all resident records
             allResidentRecords: [],
+            qualScores: [],
+            qualScoreEnabled: false,
             // values of the date period selection
             startDate: '',
             endDate: '',
@@ -71,8 +73,6 @@ export default class FacultyDashboard extends Component {
         else {
             toastr["error"]("Please Select a faculty first to export their report", "EXPORT ERROR");
         }
-
-
     }
 
     onSliderChange(sliderValue) {
@@ -106,42 +106,62 @@ export default class FacultyDashboard extends Component {
         this.setState({ currentFaculty: option.value });
     }
 
-
     onSubmit() {
         const startDate = document.getElementById('faculty-filter-startDate') && document.getElementById('faculty-filter-startDate').value;
         const endDate = document.getElementById('faculty-filter-endDate') && document.getElementById('faculty-filter-endDate').value;
         this.setState({ startDate, endDate });
     }
 
-
     componentDidMount() {
         this._isMounted = true;
         // turn loader on
         this.setState({ isLoaderVisible: true });
 
-        getAllData()
-            .then((allResidentRecords) => {
-                let recordsGroupedByRotation = _.groupBy(allResidentRecords, (d) => d.rotationTag);
-                // sub in another category called "ALL" which is essentially all the records 
-                recordsGroupedByRotation['ALL'] = allResidentRecords;
-                // create a list with the name and count of each rotation
-                let rotationList = _.map(recordsGroupedByRotation, (records, key) => ({
-                    'label': key,
-                    'count': records.length,
-                })).sort((a, b) => b.count - a.count);
-                // create a list of all faculty 
-                let facultyList = _.map(_.groupBy(allResidentRecords, (d) => d.observer_name),
-                    (records, key) => ({ 'label': key })).sort((previous, current) => previous.label.localeCompare(current.label));
-                // sub in a value at the front of the list for 'ALL'
-                facultyList.unshift({ 'label': 'ALL' });
-                // set the values on the state 
-                this._isMounted && this.setState({ allResidentRecords, rotationList, facultyList, isLoaderVisible: false });
+        const { programInfo } = this.props, { programName = 'Program' } = programInfo;
+
+        let qualScores = [];
+
+        fetch(`/assets/files/sample_${programName}_scores.csv`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not OK");
+                }
+                else {
+                    return response.text();
+                }
             })
-            // toggle loader again once the request completes
-            .catch(() => {
-                console.log("error in fetching all resident records");
-                this._isMounted && this.setState({ allResidentRecords, isLoaderVisible: false });
-            });
+            .then((response) => {
+                qualScores = CSVToArray(response);
+            })
+            .finally(() => {
+                // irrespective of whether qual scores are available or not, proceed with processing the resident records
+                getAllData()
+                    .then((allResidentRecords) => {
+                        let recordsGroupedByRotation = _.groupBy(allResidentRecords, (d) => d.rotationTag);
+                        // sub in another category called "ALL" which is essentially all the records 
+                        recordsGroupedByRotation['ALL'] = allResidentRecords;
+                        // create a list with the name and count of each rotation
+                        let rotationList = _.map(recordsGroupedByRotation, (records, key) => ({
+                            'label': key,
+                            'count': records.length,
+                        })).sort((a, b) => b.count - a.count);
+                        // create a list of all faculty 
+                        let facultyList = _.map(_.groupBy(allResidentRecords, (d) => d.observer_name),
+                            (records, key) => ({ 'label': key })).sort((previous, current) => previous.label.localeCompare(current.label));
+                        // sub in a value at the front of the list for 'ALL'
+                        facultyList.unshift({ 'label': 'ALL' });
+
+                        const qualScoreEnabled = qualScores.length > 0;
+
+                        // set the values on the state 
+                        this._isMounted && this.setState({ allResidentRecords, qualScores, qualScoreEnabled, rotationList, facultyList, isLoaderVisible: false });
+                    })
+                    // toggle loader again once the request completes
+                    .catch(() => {
+                        console.log("error in fetching all resident records");
+                        this._isMounted && this.setState({ allResidentRecords, isLoaderVisible: false });
+                    });
+            })
     }
 
     componentWillUnmount() {
@@ -151,12 +171,12 @@ export default class FacultyDashboard extends Component {
 
     render() {
 
-        const { rotationList = [], facultyList = [], allResidentRecords = [],
+        const { rotationList = [], qualScores = [], facultyList = [], allResidentRecords = [],
             startDate, endDate, dateFilterActive, sliderValue,
-            printModeON, currentRotation, currentFaculty } = this.state,
+            printModeON, currentRotation, currentFaculty, qualScoreEnabled = false } = this.state,
             { programInfo } = this.props;
 
-        const processedRecords = processFacultyRecords(allResidentRecords, currentRotation, startDate, endDate, dateFilterActive, sliderValue, programInfo),
+        const processedRecords = processFacultyRecords(allResidentRecords, currentRotation, startDate, endDate, dateFilterActive, sliderValue, programInfo, qualScores),
             currentFacultyRecords = _.filter(processedRecords, (d) => d.faculty_name == currentFaculty);
         //125px to offset the 30px margin on both sides and vertical scroll bar width
         let overallWidth = document.body.getBoundingClientRect().width - 125;
@@ -173,6 +193,7 @@ export default class FacultyDashboard extends Component {
                 return facultyWithEnoughRecords.indexOf(d.label) > -1;
             }
         });
+
 
         return (
             <div className='supervisor-dashboard-container'>
@@ -212,6 +233,7 @@ export default class FacultyDashboard extends Component {
                                 currentRotation={currentRotation} />
 
                             <FacultyGraphGroup
+                                qualScoreEnabled={qualScoreEnabled}
                                 printModeON={printModeON}
                                 width={printModeON ? 1450 : overallWidth}
                                 processedRecords={processedRecords}
@@ -222,6 +244,7 @@ export default class FacultyDashboard extends Component {
                                 currentFaculty={currentFaculty} />
 
                             <FacultyRecordTable
+                                qualScoreEnabled={qualScoreEnabled}
                                 currentFaculty={currentFaculty}
                                 width={printModeON ? 1100 : overallWidth}
                                 currentFacultyRecords={currentFacultyRecords} />
@@ -249,4 +272,51 @@ export default class FacultyDashboard extends Component {
             </div>);
     }
 
+}
+
+
+// https: //stackoverflow.com/questions/36288375/how-to-parse-csv-data-that-contains-newlines-in-field-using-javascript
+
+function CSVToArray(CSV_string, delimiter) {
+    delimiter = (delimiter || ","); // user-supplied delimeter or default comma
+
+    var pattern = new RegExp( // regular expression to parse the CSV values.
+        ( // Delimiters:
+            "(\\" + delimiter + "|\\r?\\n|\\r|^)" +
+            // Quoted fields.
+            "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
+            // Standard fields.
+            "([^\"\\" + delimiter + "\\r\\n]*))"
+        ), "gi"
+    );
+
+    var rows = [
+        []
+    ]; // array to hold our data. First row is column headers.
+    // array to hold our individual pattern matching groups:
+    var matches = false; // false if we don't find any matches
+    // Loop until we no longer find a regular expression match
+    while (matches = pattern.exec(CSV_string)) {
+        var matched_delimiter = matches[1]; // Get the matched delimiter
+        // Check if the delimiter has a length (and is not the start of string)
+        // and if it matches field delimiter. If not, it is a row delimiter.
+        if (matched_delimiter.length && matched_delimiter !== delimiter) {
+            // Since this is a new row of data, add an empty row to the array.
+            rows.push([]);
+        }
+        var matched_value;
+        // Once we have eliminated the delimiter, check to see
+        // what kind of value was captured (quoted or unquoted):
+        if (matches[2]) { // found quoted value. unescape any double quotes.
+            matched_value = matches[2].replace(
+                new RegExp("\"\"", "g"), "\""
+            );
+        } else { // found a non-quoted value
+            matched_value = matches[3];
+        }
+        // Now that we have our value string, let's add
+        // it to the data array.
+        rows[rows.length - 1].push(matched_value);
+    }
+    return rows; // Return the parsed data Array
 }
