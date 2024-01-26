@@ -223,6 +223,7 @@ export default class FacultyDashboard extends Component {
                         <div className={printModeON ? 'printable-content m-a' : ''}
                             ref={el => (this.printRef = el)}>
                             <FacultyInfoGroup
+                                qualScoreEnabled={qualScoreEnabled}
                                 printModeON={printModeON}
                                 programInfo={programInfo}
                                 width={printModeON ? 1450 : overallWidth}

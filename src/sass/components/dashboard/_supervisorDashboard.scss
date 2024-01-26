@@ -31,6 +31,10 @@
         width: 1080px;
         margin: 20px 0px;
         display: inline-block;
+
+        &.qualscore-added {
+            width: inherit;
+        }
     }
     .hr-divider {
         margin: 0px 30px !important;

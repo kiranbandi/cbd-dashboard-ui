@@ -137,7 +137,7 @@ export default (props) => {
                 {qualScoreEnabled &&
                     <div>
                         <p key={'line-break-1'} >Overall QuAL Score: 0 (Minimal) - 5 (Excellent)</p>
-                        <p key={'line-break-2'} >Evidence Score: 0 (No comment at all) - 4 (Full Description)</p>
+                        <p key={'line-break-2'} >Evidence Score: 0 (No comment at all) - 3 (Full Description)</p>
                         <p key={'line-break-3'} >Suggestion Given: Yes/No</p>
                         <p key={'line-break-4'} >Suggestion Linked to Behavior Descibed: Yes/No</p>
                     </div>}

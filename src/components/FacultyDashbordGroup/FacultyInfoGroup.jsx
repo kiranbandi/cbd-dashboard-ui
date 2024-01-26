@@ -5,17 +5,21 @@ import FacultyRadarChart from './FacultyRadarChart';
 export default (props) => {
 
     const { isUG = false, width, currentRotation, currentFaculty, dateFilterActive,
-        processedRecords, currentFacultyRecords, programInfo } = props;
+        processedRecords, currentFacultyRecords, programInfo, qualScoreEnabled } = props;
 
+    const containerWidth = qualScoreEnabled ? '100%' : '1120px';
+    
     return <div className='text-center'>
-        <div className='print-info' style={{ 'display': 'inline-block', 'width': '1120px' }}>
+        <div className='print-info' style={{ 'display': 'inline-block', 'width': containerWidth }}>
             <FacultyStatCardSet
                 isUG={isUG}
+                qualScoreEnabled={qualScoreEnabled}
                 title={"Acquisition Metrics for All Faculty in Rotation - " + currentRotation}
                 processedRecords={processedRecords}
                 dateFilterActive={dateFilterActive} />
             <FacultyStatCardSet
                 isUG={isUG}
+                qualScoreEnabled={qualScoreEnabled}
                 title={"Acquisition Metrics for Faculty - " + currentFaculty}
                 showNA={currentFaculty == 'ALL'}
                 processedRecords={currentFaculty == 'ALL' ? [] : currentFacultyRecords}
