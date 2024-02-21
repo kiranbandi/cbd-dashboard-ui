@@ -45,7 +45,7 @@ export default (props) => {
 
     return <div className={'faculty-MicroStatCard-group ' + (qualScoreEnabled ? 'qualscore-added' : '')}>
         <div className="hr-divider">
-            <h4 className="hr-divider-content">InfoTip
+            <h4 className="hr-divider-content">
                 {title}
                 <InfoTip info={title.match('Acquisition Metrics for All Faculty in Rotation') ? infoTooltipReference.facultyDevlopment.acquisitionMetricsForAllFaculty : infoTooltipReference.facultyDevlopment.acquisitionMetricsForSingleFaculty} />
             </h4>
