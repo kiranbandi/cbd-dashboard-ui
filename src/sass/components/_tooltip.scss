@@ -8,8 +8,20 @@
         margin: 0px 5px;
         padding: 1px 2px 0px 2px !important;
         color: #4e79a7 !important;
+
+        &.small {
+            padding: 0px 2px !important;
+            background: none;
+            margin: 0px 0px 0px -4px;
+            color: inherit !important;
+            &.icon {
+                color: white !important;
+                font-size: inherit !important;
+            }
+        }
         .icon {
             vertical-align: initial !important;
+
             &:before {
                 top: 2.5px;
             }

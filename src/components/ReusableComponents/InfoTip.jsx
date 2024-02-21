@@ -2,10 +2,10 @@ import React from 'react';
 
 export default (props) => {
 
-    const { info } = props;
+    const { info, small = false } = props;
 
     return <span className='tooltip-wrapper'>
-        <a className='tooltip-anchor'>
+        <a className={`tooltip-anchor ${small ? 'small' : ''}`}>
             <span className="icon icon-info-with-circle"></span>
             <s-tooltip
                 follow-mouse

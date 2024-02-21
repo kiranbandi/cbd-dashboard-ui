@@ -66,36 +66,36 @@ const columns_with_qualscore = [{
     filterMethod: customFilter
 },
 {
+    Header: 'Feedback',
+    accessor: 'feedback',
+    className: 'feedback-cell',
+    filterMethod: customFilter
+},
+{
     Header: 'QuAL',
     accessor: 'qual',
     maxWidth: 75,
-    className: 'text-center',
+    className: 'text-center bg-qual',
     filterMethod: customFilter
 },
 {
     Header: 'Evidence',
     accessor: 'q1',
     maxWidth: 75,
-    className: 'text-center',
+    className: 'text-center bg-qual',
     filterMethod: customFilter
 },
 {
-    Header: 'Suggestion',
+    Header: 'Suggestion Given',
     accessor: 'q2i',
-    maxWidth: 75,
-    className: 'text-center',
+    maxWidth: 145,
+    className: 'text-center bg-qual',
     filterMethod: customFilter
 }, {
-    Header: 'Linked',
+    Header: 'Suggestion Linked',
     accessor: 'q3i',
-    maxWidth: 75,
-    className: 'text-center',
-    filterMethod: customFilter
-},
-{
-    Header: 'Feedback',
-    accessor: 'feedback',
-    className: 'feedback-cell',
+    maxWidth: 145,
+    className: 'text-center bg-qual',
     filterMethod: customFilter
 }];
 
@@ -131,12 +131,12 @@ export default (props) => {
         {currentFacultyRecords.length > 0 &&
             [<h3 key='faculty-table-title'>
                 Summary of EPAs by <span className='text-capitalize'>{currentFaculty} </span>
-                <InfoTip info={infoTooltipReference.facultyDevlopment.summaryOfEPAsByFacultyName} />
+                <InfoTip info={qualScoreEnabled ? infoTooltipReference.facultyDevlopment.summaryOfEPAsByFacultyNameQual : infoTooltipReference.facultyDevlopment.summaryOfEPAsByFacultyName} />
             </h3>,
             <div>
                 {qualScoreEnabled &&
                     <div>
-                        <p key={'line-break-1'} >Overall QuAL Score: 0 (Minimal) - 5 (Excellent)</p>
+                        <p key={'line-break-1'} >Overall QuAL Score: 0 (Minimally helpful for Trainees) - 5 (Very Helpful for Trainees)</p>
                         <p key={'line-break-2'} >Evidence Score: 0 (No comment at all) - 3 (Full Description)</p>
                         <p key={'line-break-3'} >Suggestion Given: Yes/No</p>
                         <p key={'line-break-4'} >Suggestion Linked to Behavior Descibed: Yes/No</p>

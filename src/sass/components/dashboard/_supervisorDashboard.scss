@@ -4,13 +4,19 @@
         margin: 100px auto;
     }
 
+    .bg-qual {
+        background: #615f95;
+        font-weight: bolder;
+        border: 2px solid #24272e !important;
+    }
+
     // filter panel related styling
     .faculty-filter {
         .react-select-root {
             width: 330px;
             display: inline-block;
             .filter-label {
-                &+div {
+                & + div {
                     display: inline-block !important;
                     width: 250px;
                     z-index: 20;
@@ -43,6 +49,7 @@
         span.select-wrap {
             display: none;
         }
+
         .ReactTable .rt-thead.-headerGroups {
             background: #111316;
             border-bottom: 1px solid rgba(255, 255, 255, 0.15);
@@ -102,8 +109,8 @@
         display: inline-block;
         margin: 22px auto;
         vertical-align: top;
-        .recharts-text>* {
-            filL: white;
+        .recharts-text > * {
+            fill: white;
             font-weight: bold;
         }
         .recharts-radar-polygon {

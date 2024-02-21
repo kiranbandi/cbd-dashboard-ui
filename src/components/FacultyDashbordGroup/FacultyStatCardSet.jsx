@@ -45,7 +45,7 @@ export default (props) => {
 
     return <div className={'faculty-MicroStatCard-group ' + (qualScoreEnabled ? 'qualscore-added' : '')}>
         <div className="hr-divider">
-            <h4 className="hr-divider-content">
+            <h4 className="hr-divider-content">InfoTip
                 {title}
                 <InfoTip info={title.match('Acquisition Metrics for All Faculty in Rotation') ? infoTooltipReference.facultyDevlopment.acquisitionMetricsForAllFaculty : infoTooltipReference.facultyDevlopment.acquisitionMetricsForSingleFaculty} />
             </h4>
@@ -58,8 +58,8 @@ export default (props) => {
                     <MicroStatCard style={{ display: 'inline' }} dual={true} title='Average EPA Score' type='primary' metric={averageEPAScore} secondMetric={averageEPAScorePeriod} />
                     <MicroStatCard style={{ display: 'inline' }} dual={true} title='Average words per comment' type='danger' metric={averageWords} secondMetric={averageWordsPeriod} />
 
-                    {qualScoreEnabled && <MicroStatCard style={{ display: 'inline' }} dual={true} title='Average QuAL Score' type='primary' metric={averageQuALScore} secondMetric={averageQuALScorePeriod} />}
-                    {qualScoreEnabled && <MicroStatCard style={{ display: 'inline' }} dual={true} title='EPAs with Suggestions' type='info' metric={averageEPASuggestionpercentage + percentageSymbol} secondMetric={averageEPASuggestionpercentagePeriod + percentageSymbol} />}
+                    {qualScoreEnabled && <MicroStatCard tooltip={true} tooltipText={infoTooltipReference.facultyDevlopment.qualscoreStat} style={{ display: 'inline' }} dual={true} title='Average QuAL Score' type='primary' metric={averageQuALScore} secondMetric={averageQuALScorePeriod} />}
+                    {qualScoreEnabled && <MicroStatCard tooltip={true} tooltipText={infoTooltipReference.facultyDevlopment.suggestionStat} style={{ display: 'inline' }} dual={true} title='Suggestion Rate' type='info' metric={averageEPASuggestionpercentage + percentageSymbol} secondMetric={averageEPASuggestionpercentagePeriod + percentageSymbol} />}
 
                     <FacultyScorePie dateFilterActive={dateFilterActive} isUG={isUG} data={ratingGroupSet} />
                     {!isUG && <PhaseSummaryPie data={phaseGroupSet} />}
@@ -70,8 +70,8 @@ export default (props) => {
                     <MicroStatCard style={{ display: 'inline' }} title='Average EPA Score' type='primary' metric={averageEPAScore} />
                     <MicroStatCard style={{ display: 'inline' }} title='Average words per comment' type='danger' metric={averageWords} />
 
-                    {qualScoreEnabled && <MicroStatCard style={{ display: 'inline' }} title='Average QuAL Score' type='primary' metric={averageQuALScore} />}
-                    {qualScoreEnabled && <MicroStatCard style={{ display: 'inline' }} title='EPAs with Suggestions' type='info' metric={averageEPASuggestionpercentage + percentageSymbol} />}
+                    {qualScoreEnabled && <MicroStatCard tooltip={true} tooltipText={infoTooltipReference.facultyDevlopment.qualscoreStat} style={{ display: 'inline' }} title='Average QuAL Score' type='primary' metric={averageQuALScore} />}
+                    {qualScoreEnabled && <MicroStatCard tooltip={true} tooltipText={infoTooltipReference.facultyDevlopment.suggestionStat} style={{ display: 'inline' }} title='Suggestion Rate' type='info' metric={averageEPASuggestionpercentage + percentageSymbol} />}
                     <FacultyScorePie dateFilterActive={dateFilterActive} isUG={isUG} data={ratingGroupSet} />
                     {!isUG && <PhaseSummaryPie data={phaseGroupSet} />}
                 </div>
