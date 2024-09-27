@@ -75,8 +75,8 @@ export default class GraphRow extends Component {
 
         let scoreData = _.map(sortedData, (d, i) => {
 
-            const record_admission_type = d.admission_type == 'in patient' ? 'in' : d.admission_type == 'out patient' ? 'out' : 'na';
-            const record_patient_type = d.patient_type == 'adult' ? 'adult' : d.patient_type == 'pediatrics' ? 'child' : 'na';
+            const record_admission_type = d.admission_type == 'inpatient' ? 'in' : d.admission_type == 'outpatient' ? 'out' : 'na';
+            const record_patient_type = d.patient_type == 'adult' ? 'adult' : d.patient_type == 'pediatric' ? 'pediatric' : 'na';
 
             let highlight = false;
             if (admission_type.length > 0 && patient_type.length > 0) {
