@@ -16,9 +16,9 @@ export default (props) => {
                     ADULT <b>{patient_type_group['adult'] ? patient_type_group['adult'].length : 0}</b>
                 </div>
                 <div onClick={onHighlightChange}
-                    id={'patient-type-child'}
-                    className={'sub-group-filter ' + ((patient_type == 'child') ? 'active' : '')}>
-                    CHILD <b>{patient_type_group['child'] ? patient_type_group['child'].length : 0}</b>
+                    id={'patient-type-pediatric'}
+                    className={'sub-group-filter ' + ((patient_type == 'pediatric') ? 'active' : '')}>
+                    CHILD <b>{patient_type_group['pediatric'] ? patient_type_group['pediatric'].length : 0}</b>
                 </div>
                 <div onClick={onHighlightChange}
                     id={'patient-type-na'}
