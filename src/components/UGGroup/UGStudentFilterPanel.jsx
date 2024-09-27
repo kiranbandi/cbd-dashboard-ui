@@ -28,7 +28,7 @@ export default class StudentFilterPanel extends Component {
         return (
             <div className='filter-panel faculty-filter'>
                 <div className='text-xs-left advanced-filter-box normative-filter-box'>
-
+                
                     <div style={{ width: 200, 'display': 'inline-block', 'marginRight': '10px' }}>
                         <ReactSelect
                             placeholder='Select Student...'
@@ -48,15 +48,6 @@ export default class StudentFilterPanel extends Component {
                             styles={{ option: (styles) => ({ ...styles, color: 'black', textAlign: 'left', 'textTransform': 'capitalize' }) }}
                             onChange={onRotationSelect} />
                     </div>
-
-                    <div className="checkbox custom-control text-center custom-checkbox">
-                        <label className='filter-label'>
-                            {"Show Uncommenced EPAs"}
-                            <input id='filter-toggleUC' type="checkbox" checked={showUncommencedEPA} onChange={showUncommencedEPAToggle} />
-                            <span className="custom-control-indicator"></span>
-                        </label>
-                    </div>
-
 
                     <div className="checkbox custom-control text-center custom-checkbox">
                         <label className='filter-label'>
@@ -92,7 +83,11 @@ export default class StudentFilterPanel extends Component {
                         </button>
                     </div>}
 
+                    <p className='m-t m-b-0'> * When a rotation is selected, observations corresponding to that rotation turn into bigger points while the rest appear smaller.</p>
+                    <p> * When a date period is set, observations that fall into the selected time period turn into diamond shaped points.</p>
+
                 </div>
+
             </div>)
     }
 

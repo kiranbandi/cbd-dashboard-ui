@@ -39,6 +39,11 @@
             }
         }
     }
+    .supervisor-line-chart-info-box {
+        margin: -10px auto;
+        padding: 5px;
+        background: #1a1c22;
+    }
     .graph-panel-root {
         .title-root {
             background: #25282f;
@@ -62,14 +67,14 @@
             display: inline-block;
             .graph-card {
                 position: absolute;
-                top: 36px;
-                left: 20px;
+                top: 0px;
+                left: 25px;
                 width: 100px;
             }
         }
     }
     .icon.table-icon {
-        top: 126px !important;
+        top: 166px !important;
         left: 20px !important;
     }
     .filter-box-sub {
