@@ -60,40 +60,15 @@ export default class GraphRow extends Component {
         // margin of 10px on either side reduces the available width by 20
         var marginVertical = 40;
         var marginHorizontal = 40;
-        var height = 180;
+        var height = 220;
         var innerHeight = height - 20;
         var width = (smallScreen ? widthPartition : widthPartition * 2) - 20;
 
-        // Get the maximum required observations for each EPA from source MAP 
-        const maxObservation = +epaSourceMap.maxObservation[epaSource];
-
         // Get recorded observation count
         const recordedCount = studentEPAData.length;
-        // Get performance for each rating type
-        let lowCount = studentEPAData.filter((record) => +record.rating == 1).length;
-        let mediumCount = studentEPAData.filter((record) => +record.rating == 2).length;
-        let highCount = studentEPAData.filter((record) => +record.rating == 3).length;
-        // Get remaining count 
-        const remainingCount = Math.max((maxObservation - recordedCount), 0);
-        // if the sum of any combination is more than the max , then we just max the chart out
-        if (highCount >= maxObservation) {
-            highCount = maxObservation;
-            mediumCount = 0;
-            lowCount = 0;
-        }
-        else if ((highCount + mediumCount) >= maxObservation) {
-            mediumCount = maxObservation - highCount;
-            lowCount = 0;
-        }
-        else if ((highCount + mediumCount + lowCount) > maxObservation) {
-            lowCount = maxObservation - mediumCount - highCount;
-        }
-        const percentageArray = [((highCount / maxObservation) * 100),
-        ((mediumCount / maxObservation) * 100), ((lowCount / maxObservation) * 100),
-        ((remainingCount / maxObservation) * 100)].map((d) => ({ 'value': d }));
 
         const xScale = scaleLinear().domain([0, studentEPAData.length - 1]).range([marginHorizontal, width - marginHorizontal])
-        const yScale = scaleLinear().domain([3, 1]).range([marginVertical, innerHeight - marginVertical])
+        const yScale = scaleLinear().domain([5, 1]).range([marginVertical, innerHeight - marginVertical])
 
 
         let sortedData = _.sortBy(_.clone(studentEPAData), (d) => d.date);
@@ -127,7 +102,7 @@ export default class GraphRow extends Component {
         });
 
 
-        const trackTrailPositions = _.map([...Array(3)], (d, i) => {
+        const trackTrailPositions = _.map([...Array(5)], (d, i) => {
             return {
                 x: marginHorizontal,
                 dx: width - (2 * marginHorizontal),
@@ -147,13 +122,9 @@ export default class GraphRow extends Component {
                     <div className='card-container'>
 
                         <div className='chart-wrapper'>
-                            <PieChart
-                                data={percentageArray}
-                                width={150} height={150}
-                                innerRadius={50} outerRadius={75} />
                             <div className='graph-card first-card'>
-                                <span className='card-text'>{remainingCount}</span>
-                                <span className='card-title remaining-title'>TO GO</span>
+                                <span className='card-text'>{recordedCount}</span>
+                                <span className='card-label'>Completed</span>
                             </div>
                         </div>
                         <UGStudentSubFilter

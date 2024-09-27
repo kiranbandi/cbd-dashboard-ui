@@ -37,7 +37,7 @@ class DashboardRoot extends Component {
             <div className='dashboard-page-root' >
                 {boardsLevel == '1' &&
                     <div>
-                        <div className="hr-divider nav-pill-container-dashboard">
+                        {/* <div className="hr-divider nav-pill-container-dashboard">
                             <ul className="nav nav-pills hr-divider-content hr-divider-nav">
                                 <li className={activeDashboard == 'student' ? 'active' : ''}>
                                     <a id='student-tab' onClick={this.onTabClick} >STUDENT METRICS</a>
@@ -52,16 +52,16 @@ class DashboardRoot extends Component {
                                     <a id='table-tab' onClick={this.onTabClick}>EXPORT DATA</a>
                                 </li>
                             </ul>
-                        </div>
+                        </div> */}
                         <div className='control-inner-container'>
                             {(activeDashboard == 'student') && <UGStudentDashboard />}
-                            {(activeDashboard == 'supervisor') && <UGFacultyDashboard programInfo={programInfo} />}
+                            {/* {(activeDashboard == 'supervisor') && <UGFacultyDashboard programInfo={programInfo} />}
                             {(activeDashboard == 'program') && <UGProgramDashboard programInfo={programInfo} />}
                             {(activeDashboard == 'table') && <UGDownloadDashboard />}
-                            {(activeDashboard == 'normative') && <UGStub />}
+                            {(activeDashboard == 'normative') && <UGStub />} */}
                         </div>
                     </div>}
-                {boardsLevel == '0' && <UGStudentDashboard programInfo={programInfo} />}
+                {boardsLevel == '0' && <h4 class="m-t-lg text-center">Sorry you dont have access to view the dashboard at the moment. Please contact your program administrator for access</h4>}
             </div >
         );
     }
