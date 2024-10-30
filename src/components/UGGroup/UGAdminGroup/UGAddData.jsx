@@ -99,7 +99,7 @@ export default class AddData extends Component {
             }
 
             try {
-            // await setUGRecords(processedData);
+            await setUGRecords(processedData);
             toastr["success"]("UGME Data has been successfully updated", "SUCCESS");
             } catch (error) {
                 toastr["error"]("Sorry there was an error in processing the uploaded files", "ERROR");
