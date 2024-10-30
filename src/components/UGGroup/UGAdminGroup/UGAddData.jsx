@@ -74,8 +74,8 @@ export default class AddData extends Component {
                                 "observer_name": observerName,
                                 "observation_date": moment(d["Evaluation completed date"],'DD-MMM-YYYY').format('YYYY-MM-DD'),
                                 "observer_type": "",
-                                "year_tag": d["Target grad year"],
-                                "rating": d["Observation Rating: (Numerical Answer)"],
+                                "year_tag": String(d["Target grad year"]),
+                                "rating": String(d["Observation Rating: (Numerical Answer)"]),
                                 "rotationTag": d["Rotation / course:"].trim().toLocaleLowerCase(),
                                 "feedback": feedback,
                                 // patient type is rewritten under situation_context
@@ -99,7 +99,7 @@ export default class AddData extends Component {
             }
 
             try {
-            await setUGRecords(processedData);
+            await setUGRecords(epaDataList);
             toastr["success"]("UGME Data has been successfully updated", "SUCCESS");
             } catch (error) {
                 toastr["error"]("Sorry there was an error in processing the uploaded files", "ERROR");
