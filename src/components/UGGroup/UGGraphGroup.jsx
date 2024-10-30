@@ -42,7 +42,7 @@ class GraphPanel extends Component {
             'feedback': data['feedback'],
             'name': data['observer_name'],
             'date': data['date'],
-            'context': data['patient_type'] + " " + data['admission_type'],
+            'context': data['patient_type'] + (data['admission_type']? (" , "+data['admission_type']):""),
             'rotation': data['rotation']
         });
 
