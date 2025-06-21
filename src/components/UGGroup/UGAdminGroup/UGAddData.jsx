@@ -54,7 +54,7 @@ export default class AddData extends Component {
                         return store;
                     });
 
-                    let processedData = remappedData.map((d) => {
+                    let processedData = remappedData.filter(d=>(d["Target email"] && d["Target email"].length>0)).map((d) => {
 
                         let handoverAssessor = d["Name of assessor completing this form:"] || d["Name of assessor completing this EPA form:"] || d["Their first name and last name:"];
                         let observerName = handoverAssessor? handoverAssessor: d["Evaluator first name"]+" "+(d["Evaluator middle name"]?d["Evaluator middle name"]+" ":"")+d["Evaluator last name"];
@@ -66,7 +66,7 @@ export default class AddData extends Component {
                         let feedback = d["Narrative feedback to the learner (include any concerns about professionalism):"];
         
                         feedback = handoverType? "Handover Type: " + handoverType + ", Feedback: " + feedback: feedback;
-        
+                        
                         return {
                                 "epa": String(Number(d["Form name"].slice(19,21))),
                                 "resident_name": d["Target first name"]+" "+(d["Target middle name"]?d["Target middle name"]+" ":"")+d["Target last name"],
@@ -99,7 +99,8 @@ export default class AddData extends Component {
             }
 
             try {
-            await setUGRecords(epaDataList);
+                debugger
+            // await setUGRecords(epaDataList);
             toastr["success"]("UGME Data has been successfully updated", "SUCCESS");
             } catch (error) {
                 toastr["error"]("Sorry there was an error in processing the uploaded files", "ERROR");
