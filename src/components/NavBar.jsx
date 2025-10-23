@@ -31,7 +31,7 @@ class NavBar extends Component {
     logOut(event) {
         event.preventDefault();
         this.props.setLogoutData();
-        location.href = 'https://pawscas.usask.ca/cas-web/logout?url=' + encodeURIComponent(window.location.origin + '/');
+        location.href = 'https://pawscas.usask.ca/cas-web/logout?url=' + encodeURIComponent(window.location.href);
     }
 
 
@@ -40,7 +40,7 @@ class NavBar extends Component {
         const { userDetails, onProgramChange } = this.props,
             { accessType = '', program, programList = [] } = userDetails,
             isUG = (program == 'UNDERGRADUATE'),
-            loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent(window.location.origin + '/');
+            loginRedirectURL = 'https://cas.usask.ca/cas/login?service=' + encodeURIComponent(window.location.href);
 
         // pass in the program list that the user has access to so that he can switch between
         // them and ask for a different token
