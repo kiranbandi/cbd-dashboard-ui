@@ -2,6 +2,7 @@ const path = require('path');
 var webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
+const Dotenv = require('dotenv-webpack');
 
 'use strict';
 module.exports = {
@@ -29,6 +30,7 @@ module.exports = {
             NODE_ENV: JSON.stringify('development')
         }
     }),
+    new Dotenv(),
     new HtmlWebpackPlugin({
         filename: '../../../../build/index.html',
         template: './src/assets/index.template.html',

@@ -2,48 +2,6 @@
 
 A react web application built on MERN Stack (MongoDB , Express , React and Node.JS) for visualizing data compiled from assessments by physician observers to enhance the Competency-Based medical Education model.
 
-This is the repository for the front-end code,the corresponding backend-code is available here:
-https://github.com/kiranbandi/cbd-dashboard-server
-
-**WARNING**: This is a work in progress in its pre-alpha state. It is completely functional, so feel free to fork it and try it out but expect changes that break your code in future versions.
-
-## WEB Demo
-
-The current version of the CBD Dashboard is live at :  
-https://cbme.usask.ca
-
-### Issues,Bugs and Feature Requests
-If something doesnt work or you have noticed a bug please create an issue using the template provided
-alternatively you can also drop a mail to the developer contact address below.
-
-Since this project is supported by funding from the University of Saskatchewan we wont be
-able to support major Feature Requests unless they come through the official channels 
-but if there is something tiny that you might want the tool to have please drop a mail to
-the contact address below. 
-
-Also the current development history of the tool including new features that we are working on 
-can be seen here - https://trello.com/b/SuLCQr1u/cbd-design-board
-
-## Contact 
-This project is sponsored by the Emergency Department at University of Saskatchewan.
-
-For bugs, feature requests -
-Drop a mail to the developer at venkat.bandi@usask.ca or bvenkatkiran@gmail.com
-
-To get a demo of the tool - 
-Drop a mail to the project lead Dr.Brent Thoma - brent.thoma@usask.ca
-
-## Architecture 
-
-Links to the design document and the site map are provided below along with a snapshot of the minimum basic data requirements for the dashboard -
-
-https://github.com/kiranbandi/cbd-dashboard-ui/blob/master/documentation/CBME%20Dashboard%20Design%20Document.pdf
-
-https://github.com/kiranbandi/cbd-dashboard-ui/blob/master/documentation/cbd_sitemap.png
-
-https://github.com/kiranbandi/cbd-dashboard-ui/blob/master/documentation/dataset%20requirement.png
-
-
 ## Features
 
 ### Resident Dashboard

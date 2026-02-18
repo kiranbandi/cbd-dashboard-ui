@@ -1,8 +1,4 @@
-var devEndpoint = 'https://cbme.usask.ca/api/';
-// When testing a local server uncomment the line below but for most
-// cases we will be working with the prod server
-devEndpoint = 'http://localhost:8081/api/'
-var endPointRoot = process.env.NODE_ENV == 'development' ? devEndpoint : '/epa-dashboard/api/';
+var endPointRoot = process.env.NODE_ENV == 'development' ? process.env.DEV_ENDPOINT : process.env.PROD_ENDPOINT;
 
 var endPoints = {
     // end points for users

@@ -1,7 +1,7 @@
 import toastr from './toastr';
 
 var authorization = {};
-
+// TODO Updated redirect path name based on deployment path
 authorization.checkloginStatus = function(nextState, replace) {
     if (!sessionStorage.jwt) {
         toastr["error"]("Please Login to view the requested page", "Authorization Error");

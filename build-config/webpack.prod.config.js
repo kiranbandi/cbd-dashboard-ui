@@ -3,6 +3,7 @@ var webpack = require("webpack");
 var path = require("path");
 const TerserPlugin = require('terser-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     mode: 'production',
@@ -18,6 +19,7 @@ module.exports = {
             NODE_ENV: JSON.stringify('production')
         }
     }),
+    new Dotenv(),
     new TerserPlugin({
         parallel: true,
         terserOptions: { ecma: 6 }
